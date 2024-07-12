@@ -74,8 +74,169 @@
                         <div id="chart-25"></div>  
                         </div>
                     </div>
-                 </div>    
+                 </div> 
+                 <div class="row">
+                    <div class="col-lg-6">
+                    <div class="inner-block table-block cal-table">
+                        <div class="head">Suppliers - Least Complaints</div>
+                        <div id="chart-36"></div>
+                    </div>
+                    </div>
+
+
+                    <div class="col-lg-6">
+                    <div class="inner-block table-block cal-table">
+                        <div class="head">Defects By Products</div>
+                        {{-- <div id="chart-23"></div> --}}
+                    <div id="chart-37"></div>  
+                    </div>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-lg-6">
+                <div class="inner-block table-block cal-table">
+                    <div class="head">Total Defect Qty. Total Downtime Minutes</div>
+                    <div id="chart-38"></div>
+                </div>
+                </div>
+
+
+                <div class="col-lg-6">
+                <div class="inner-block table-block cal-table">
+                    <div class="head">Total Defect Quantity</div>
+                    {{-- <div id="chart-23"></div> --}}
+                <div id="chart-39"></div>  
+                </div>
             </div>
+         </div>   
+            </div>
+ <script>
+    var options = {
+          series: [{
+          name: 'Total Defect Qty.',
+          type: 'column',
+          data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
+        }, {
+          name: 'Total Downtime Minutes',
+          type: 'line',
+          data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
+        }],
+          chart: {
+          height: 350,
+          type: 'line',
+        },
+        stroke: {
+          width: [0, 4]
+        },
+        title: {
+          text: 'By Material Type'
+        },
+        dataLabels: {
+          enabled: true,
+          enabledOnSeries: [1]
+        },
+        labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
+        xaxis: {
+          type: 'datetime'
+        },
+        yaxis: [{
+          title: {
+            text: 'Total Defect Qty.',
+          },
+        
+        }, {
+          opposite: true,
+          title: {
+            text: 'Total Downtime Minutes',
+          }
+        }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart-38"), options);
+        chart.render();
+ </script>
+ <script>
+    var options = {
+          series: [{
+            name: "Session Duration",
+            data: [45, 52, 38, 24, 33, 26, 21, 90, 6, 8, 15, 10]
+          },
+          
+          {
+            name: 'Total Visits',
+            data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
+          }
+        ],
+          chart: {
+          height: 350,
+          type: 'line',
+          zoom: {
+            enabled: false
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          width: [5, 7, 5],
+          curve: 'straight',
+          dashArray: [0, 8, 5]
+        },
+        title: {
+          text: 'By Month Year',
+          align: 'left'
+        },
+        legend: {
+          tooltipHoverFormatter: function(val, opts) {
+            return val + ' - <strong>' + opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] + '</strong>'
+          }
+        },
+        markers: {
+          size: 0,
+          hover: {
+            sizeOffset: 6
+          }
+        },
+        xaxis: {
+          categories: ['01 Jan', '02 Jan', '03 Jan', '04 Jan', '05 Jan', '06 Jan', '07 Jan', '08 Jan', '09 Jan',
+            '10 Jan', '11 Jan', '12 Jan'
+          ],
+        },
+        tooltip: {
+          y: [
+            {
+              title: {
+                formatter: function (val) {
+                  return val + " (mins)"
+                }
+              }
+            },
+            {
+              title: {
+                formatter: function (val) {
+                  return val + " per session"
+                }
+              }
+            },
+            {
+              title: {
+                formatter: function (val) {
+                  return val;
+                }
+              }
+            }
+          ]
+        },
+        grid: {
+          borderColor: '#f1f1f1',
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart-39"), options);
+        chart.render();
+      
+      
+ </script>
         </div>
     </div>
 
@@ -814,7 +975,198 @@
 
     var chart = new ApexCharts(document.querySelector("#chart-35"), options);
     chart.render();
+
+
+    // =========================
+    
  </script>
+ <script>
+    var options = {
+         series: [
+         {
+           name: 'Supplier',
+           data: [
+             {
+               x: 'Supplier A',
+               y: 1292,
+               goals: [
+                 {
+                   name: 'Expected',
+                   value: 1400,
+                   strokeHeight: 5,
+                   strokeColor: '#aaadbf'
+                 }
+               ]
+             },
+             {
+               x: 'Supplier B',
+               y: 4432,
+               goals: [
+                 {
+                   name: 'Expected',
+                   value: 5400,
+                   strokeHeight: 5,
+                   strokeColor: '#aaadbf'
+                 }
+               ]
+             },
+             {
+               x: 'Supplier C',
+               y: 5423,
+               goals: [
+                 {
+                   name: 'Expected',
+                   value: 5200,
+                   strokeHeight: 5,
+                   strokeColor: '#aaadbf'
+                 }
+               ]
+             },
+             {
+               x: 'Supplier D',
+               y: 6653,
+               goals: [
+                 {
+                   name: 'Expected',
+                   value: 6500,
+                   strokeHeight: 5,
+                   strokeColor: '#aaadbf'
+                 }
+               ]
+             },
+             {
+               x: 'Supplier E',
+               y: 8133,
+               goals: [
+                 {
+                   name: 'Expected',
+                   value: 6600,
+                   strokeHeight: 13,
+                   strokeWidth: 0,
+                   strokeLineCap: 'round',
+                   strokeColor: '#aaadbf'
+                 }
+               ]
+             },
+             
+           ]
+         }
+       ],
+         chart: {
+         height: 350,
+         type: 'bar'
+       },
+       plotOptions: {
+         bar: {
+           columnWidth: '60%'
+         }
+       },
+       colors: ['#3FA2F6'],
+       dataLabels: {
+         enabled: false
+       },
+       legend: {
+         show: true,
+         showForSingleSeries: true,
+       //   customLegendItems: ['', ''],
+         markers: {
+           // fillColors: ['#', '#']
+         }
+       }
+       };
+
+       var chart = new ApexCharts(document.querySelector("#chart-36"), options);
+       chart.render();
+
+       // ===================================
+       
+     
+</script>
+<script>
+    var options = {
+series: [{
+name: 'Inflation',
+data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8]
+}],
+chart: {
+height: 350,
+type: 'bar',
+},
+plotOptions: {
+bar: {
+borderRadius: 10,
+dataLabels: {
+  position: 'top', // top, center, bottom
+},
+}
+},
+dataLabels: {
+enabled: true,
+formatter: function (val) {
+return val + "%";
+},
+offsetY: -20,
+style: {
+fontSize: '12px',
+colors: ["#304758"]
+}
+},
+
+xaxis: {
+categories: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
+position: 'top',
+axisBorder: {
+show: false
+},
+axisTicks: {
+show: false
+},
+crosshairs: {
+fill: {
+  type: 'gradient',
+  gradient: {
+    colorFrom: '#D8E3F0',
+    colorTo: '#BED1E6',
+    stops: [0, 100],
+    opacityFrom: 0.4,
+    opacityTo: 0.5,
+  }
+}
+},
+tooltip: {
+enabled: true,
+}
+},
+yaxis: {
+axisBorder: {
+show: false
+},
+axisTicks: {
+show: false,
+},
+labels: {
+show: false,
+formatter: function (val) {
+  return val + "%";
+}
+}
+
+},
+title: {
+text: 'Products',
+floating: true,
+offsetY: 330,
+align: 'center',
+style: {
+color: '#444'
+}
+}
+};
+
+var chart = new ApexCharts(document.querySelector("#chart-37"), options);
+chart.render();
+
+</script>
     <script>
         VirtualSelect.init({
             ele: '#cft, #edit_recipents'
@@ -1205,6 +1557,8 @@ var options = {
 
         var chart = new ApexCharts(document.querySelector("#chart-25"), options);
         chart.render();
+
+        
     //   ===============================================chart new added 6 ==
     var options = {
           series: [44, 55, 41, 17, 15],

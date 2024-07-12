@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\rcms;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SetDivision;
@@ -43,8 +42,9 @@ class FormDivisionController extends Controller
             return redirect('rcms/supplier-site');
         } elseif ($request->process_name == "SCAR") {
             return redirect('rcms/scar');
+        } elseif ($request->process_name == "Supplier Audit") {
+            return redirect('supplier_audit_index');
         } elseif ($request->process_name == "New Document") {
-
             $new = new SetDivision;
             $new->division_id = $request->division_id;
             $new->process_id = $request->process_id;

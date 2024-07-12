@@ -242,10 +242,10 @@
         <div class="login-form-block" style="background-image: url('{{ asset('user/images/background1.jpg') }}')">
             <div class="top-block">
                 <div style="display: flex;" class="logo ">
-<div class="v_logo">
-    <img src="{{ asset('user/images/vidhyagxp.png') }}" alt="..." class="w-100 h-100" style="scale: 1;">
-</div>        
 <div class="n_logo">
+    <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-100 h-100" style="scale: 0.7;">
+</div>        
+<div class="n_logo" style="    width: 195px;">
     <img src="{{ asset('user/images/nirvana.png') }}" alt="..." class="w-100 h-100" style="scale:1;">
 </div>            
                 </div>

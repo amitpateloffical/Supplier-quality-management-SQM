@@ -311,7 +311,7 @@ $users = DB::table('users')->select('id', 'name')->get();
 
             <!-- Tab links -->
             <div class="cctab">
-                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Supplier/Manufacturer/Vender</button>
+                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Supplier/Manufacturer/Vendor</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Supplier Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Score Card</button>
@@ -776,7 +776,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                 <td><input type="date" name="certificationData[0][expiryDate]"></td>
                                                 <td><input type="text" name="certificationData[0][supportingDoc]"></td>
                                                 <td><input type="text" name="certificationData[0][remarks]"></td>
-                                                <td><input type="text" class="Action" name="" readonly></td>
+                                                <td><input type="text" class="Removebtn" name="" readonly></td>
                                             @endif
                                         </tbody>
                                     </table>
@@ -808,14 +808,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="">Vender</label>
+                                    <label for="">Vendor</label>
                                     <input type="text" name="vendor_name" value="{{ $data->vendor_name }}" placeholder="Enter Vendor Name">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="manufacturer">Vender ID</label>
-                                    <input type="text" name="vendor_id" value="{{ $data->vendor_id }}" placeholder="Enter Vendor ID">
+                                    <label for="manufacturer">Vendor ID</label>
+                                    <input type="text"  name="vendor_id" value="{{ $data->vendor_id }}" placeholder="Enter Vendor ID">
                                 </div>
                             </div>
                             <div class="col-lg-6">

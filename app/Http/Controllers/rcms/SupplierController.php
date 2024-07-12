@@ -74,7 +74,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('logo_attachment')) {
                 foreach ($request->file('logo_attachment') as $file) {
-                    $name = "CC" . '-logo_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "Supplier" . '-logo_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -86,7 +86,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('supplier_attachment')) {
                 foreach ($request->file('supplier_attachment') as $file) {
-                    $name = "CC" . '-supplier_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "Supplier" . '-supplier_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -102,7 +102,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('HOD_attachment')) {
                 foreach ($request->file('HOD_attachment') as $file) {
-                    $name = "CC" . '-HOD_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "Supplier" . '-HOD_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -171,7 +171,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('QA_reviewer_attachment')) {
                 foreach ($request->file('QA_reviewer_attachment') as $file) {
-                    $name = "CC" . '-QA_reviewer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "Supplier" . '-QA_reviewer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -204,12 +204,109 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('QA_head_attachment')) {
                 foreach ($request->file('QA_head_attachment') as $file) {
-                    $name = "CC" . '-QA_head_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "Supplier" . '-QA_head_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
             $supplier->QA_head_attachment = json_encode($files);
+        }
+
+        /************ Additional Attchment Code ************/
+        if (!empty($request->iso_certificate_attachment)) {
+            $files = [];
+            if ($request->hasfile('iso_certificate_attachment')) {
+                foreach ($request->file('iso_certificate_attachment') as $file) {
+                    $name = "Supplier" . '-iso_certificate_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->iso_certificate_attachment = json_encode($files);
+        }
+
+        if (!empty($request->gi_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('gi_additional_attachment')) {
+                foreach ($request->file('gi_additional_attachment') as $file) {
+                    $name = "Supplier" . '-gi_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->gi_additional_attachment = json_encode($files);
+        }
+
+        if (!empty($request->hod_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_additional_attachment')) {
+                foreach ($request->file('hod_additional_attachment') as $file) {
+                    $name = "Supplier" . '-hod_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->hod_additional_attachment = json_encode($files);
+        }
+
+        if (!empty($request->supplier_detail_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('supplier_detail_additional_attachment')) {
+                foreach ($request->file('supplier_detail_additional_attachment') as $file) {
+                    $name = "Supplier" . '-supplier_detail_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->supplier_detail_additional_attachment = json_encode($files);
+        }
+
+        if (!empty($request->score_card_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('score_card_additional_attachment')) {
+                foreach ($request->file('score_card_additional_attachment') as $file) {
+                    $name = "Supplier" . '-score_card_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->score_card_additional_attachment = json_encode($files);
+        }
+
+        if (!empty($request->qa_reviewer_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('qa_reviewer_additional_attachment')) {
+                foreach ($request->file('qa_reviewer_additional_attachment') as $file) {
+                    $name = "Supplier" . '-qa_reviewer_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->qa_reviewer_additional_attachment = json_encode($files);
+        }
+
+        if (!empty($request->risk_assessment_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('risk_assessment_additional_attachment')) {
+                foreach ($request->file('risk_assessment_additional_attachment') as $file) {
+                    $name = "Supplier" . '-risk_assessment_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->risk_assessment_additional_attachment = json_encode($files);
+        }
+
+        if (!empty($request->qa_head_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('qa_head_additional_attachment')) {
+                foreach ($request->file('qa_head_additional_attachment') as $file) {
+                    $name = "Supplier" . '-qa_head_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->qa_head_additional_attachment = json_encode($files);
         }
 
         $record = RecordNumber::first();
@@ -1487,7 +1584,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('logo_attachment')) {
                 foreach ($request->file('logo_attachment') as $file) {
-                    $name = "CC" . '-logo_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "Supplier" . '-logo_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1499,7 +1596,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('supplier_attachment')) {
                 foreach ($request->file('supplier_attachment') as $file) {
-                    $name = "CC" . '-supplier_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "Supplier" . '-supplier_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1515,7 +1612,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('HOD_attachment')) {
                 foreach ($request->file('HOD_attachment') as $file) {
-                    $name = "CC" . '-HOD_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "Supplier" . '-HOD_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1584,7 +1681,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('QA_reviewer_attachment')) {
                 foreach ($request->file('QA_reviewer_attachment') as $file) {
-                    $name = "CC" . '-QA_reviewer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "Supplier" . '-QA_reviewer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1617,7 +1714,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('QA_head_attachment')) {
                 foreach ($request->file('QA_head_attachment') as $file) {
-                    $name = "CC" . '-QA_head_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "Supplier" . '-QA_head_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1625,6 +1722,103 @@ class SupplierController extends Controller
             $supplier->QA_head_attachment = json_encode($files);
         }
 
+        /************ Additional Attchment Code ************/
+        if (!empty($request->iso_certificate_attachment)) {
+            $files = [];
+            if ($request->hasfile('iso_certificate_attachment')) {
+                foreach ($request->file('iso_certificate_attachment') as $file) {
+                    $name = "Supplier" . '-iso_certificate_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->iso_certificate_attachment = json_encode($files);
+        }
+
+        if (!empty($request->gi_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('gi_additional_attachment')) {
+                foreach ($request->file('gi_additional_attachment') as $file) {
+                    $name = "Supplier" . '-gi_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->gi_additional_attachment = json_encode($files);
+        }
+
+        if (!empty($request->hod_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_additional_attachment')) {
+                foreach ($request->file('hod_additional_attachment') as $file) {
+                    $name = "Supplier" . '-hod_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->hod_additional_attachment = json_encode($files);
+        }
+
+        if (!empty($request->supplier_detail_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('supplier_detail_additional_attachment')) {
+                foreach ($request->file('supplier_detail_additional_attachment') as $file) {
+                    $name = "Supplier" . '-supplier_detail_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->supplier_detail_additional_attachment = json_encode($files);
+        }
+
+        if (!empty($request->score_card_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('score_card_additional_attachment')) {
+                foreach ($request->file('score_card_additional_attachment') as $file) {
+                    $name = "Supplier" . '-score_card_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->score_card_additional_attachment = json_encode($files);
+        }
+
+        if (!empty($request->qa_reviewer_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('qa_reviewer_additional_attachment')) {
+                foreach ($request->file('qa_reviewer_additional_attachment') as $file) {
+                    $name = "Supplier" . '-qa_reviewer_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->qa_reviewer_additional_attachment = json_encode($files);
+        }
+
+        if (!empty($request->risk_assessment_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('risk_assessment_additional_attachment')) {
+                foreach ($request->file('risk_assessment_additional_attachment') as $file) {
+                    $name = "Supplier" . '-risk_assessment_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->risk_assessment_additional_attachment = json_encode($files);
+        }
+
+        if (!empty($request->qa_head_additional_attachment)) {
+            $files = [];
+            if ($request->hasfile('qa_head_additional_attachment')) {
+                foreach ($request->file('qa_head_additional_attachment') as $file) {
+                    $name = "Supplier" . '-qa_head_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $supplier->qa_head_additional_attachment = json_encode($files);
+        }
+        
         $supplier->update();
 
         $certificationData = SupplierGrid::where(['supplier_id' => $supplier->id, 'identifier' =>'CertificationData'])->firstOrCreate();

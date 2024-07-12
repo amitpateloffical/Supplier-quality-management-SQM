@@ -318,7 +318,7 @@ $users = DB::table('users')->select('id', 'name')->get();
 
             <!-- Tab links -->
             <div class="cctab">
-                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Supplier/Manufacturer/Vender</button>
+                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Supplier/Manufacturer/Vendor</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Supplier Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Score Card</button>
@@ -604,7 +604,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Audit Attachments">Attached Files</label>
+                                    <label for="Audit Attachments">File Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div disabled class="file-attachment-list" id="supplier_attachment">
@@ -627,6 +627,33 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="gi_additional_attachment">Additional Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div disabled class="file-attachment-list" id="gi_additional_attachment">
+                                            @if ($data->gi_additional_attachment)
+                                                @foreach (json_decode($data->gi_additional_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="gi_additional_attachment[]" oninput="addMultipleFiles(this, 'gi_additional_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Related URLs">Related URLs</label>
@@ -705,6 +732,33 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="hod_additional_attachment">Additional Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div disabled class="file-attachment-list" id="hod_additional_attachment">
+                                            @if ($data->hod_additional_attachment)
+                                                @foreach (json_decode($data->hod_additional_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>hod_additional_attachment
+                                            <input type="file" id="myfile" name="hod_additional_attachment[]" oninput="addMultipleFiles(this, 'hod_additional_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
@@ -773,7 +827,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                                 name="certificationData[{{ $loop->index }}][remarks]"
                                                                 value="{{ isset($gridData['remarks']) ? $gridData['remarks'] : '' }}">
                                                         </td>
-                                                        <td><input type="text" class="Removebtn" name="Action[]" readonly></td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                     </tr>
                                                 @endforeach
                                             @else
@@ -784,7 +838,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                 <td><input type="date" name="certificationData[0][expiryDate]"></td>
                                                 <td><input type="text" name="certificationData[0][supportingDoc]"></td>
                                                 <td><input type="text" name="certificationData[0][remarks]"></td>
-                                                <td><input type="text" class="Action" name="" readonly></td>
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             @endif
                                         </tbody>
                                     </table>
@@ -816,13 +870,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="">Vender</label>
+                                    <label for="">Vendor</label>
                                     <input type="text" name="vendor_name" value="{{ $data->vendor_name }}" placeholder="Enter Vendor Name">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="manufacturer">Vender ID</label>
+                                    <label for="manufacturer">Vendor ID</label>
                                     <input type="text" name="vendor_id" value="{{ $data->vendor_id }}" placeholder="Enter Vendor ID">
                                 </div>
                             </div>
@@ -994,6 +1048,34 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="iso_certificate_attachment">ISO Ceritificate Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div disabled class="file-attachment-list" id="iso_certificate_attachment">
+                                            @if ($data->iso_certificate_attachment)
+                                                @foreach (json_decode($data->iso_certificate_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="iso_certificate_attachment[]" oninput="addMultipleFiles(this, 'iso_certificate_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Contracts">Contracts</label>
@@ -1055,6 +1137,32 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="Compliance Risk">Compliance Risk</label>
                                     <textarea id="compliance_risk" type="text" name="compliance_risk" value="{{ $data->compliance_risk }}">{{ $data->compliance_risk  }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="supplier_detail_additional_attachment">Additional Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div disabled class="file-attachment-list" id="supplier_detail_additional_attachment">
+                                            @if ($data->supplier_detail_additional_attachment)
+                                                @foreach (json_decode($data->supplier_detail_additional_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="supplier_detail_additional_attachment[]" oninput="addMultipleFiles(this, 'supplier_detail_additional_attachment')" multiple>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1304,6 +1412,33 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="score_card_additional_attachment">Additional Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div disabled class="file-attachment-list" id="score_card_additional_attachment">
+                                            @if ($data->score_card_additional_attachment)
+                                                @foreach (json_decode($data->score_card_additional_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="score_card_additional_attachment[]" oninput="addMultipleFiles(this, 'score_card_additional_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             {{-- <div class="col-12 sub-head">
                                 Total Score
                             </div>
@@ -1378,6 +1513,32 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="QA_reviewer_attachment[]" oninput="addMultipleFiles(this, 'QA_reviewer_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="qa_reviewer_additional_attachment">Additional Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div disabled class="file-attachment-list" id="qa_reviewer_additional_attachment">
+                                            @if ($data->qa_reviewer_additional_attachment)
+                                                @foreach (json_decode($data->qa_reviewer_additional_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="qa_reviewer_additional_attachment[]" oninput="addMultipleFiles(this, 'qa_reviewer_additional_attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -1540,6 +1701,32 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 </div>
                             </div>
 
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="risk_assessment_additional_attachment">Additional Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div disabled class="file-attachment-list" id="risk_assessment_additional_attachment">
+                                            @if ($data->risk_assessment_additional_attachment)
+                                                @foreach (json_decode($data->risk_assessment_additional_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="risk_assessment_additional_attachment[]" oninput="addMultipleFiles(this, 'risk_assessment_additional_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             {{-- <div class="sub-head">
                                 Results
                             </div>
@@ -1608,6 +1795,32 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="QA_head_attachment[]" oninput="addMultipleFiles(this, 'QA_head_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="qa_head_additional_attachment">Additional Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div disabled class="file-attachment-list" id="qa_head_additional_attachment">
+                                            @if ($data->qa_head_additional_attachment)
+                                                @foreach (json_decode($data->qa_head_additional_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="qa_head_additional_attachment[]" oninput="addMultipleFiles(this, 'qa_head_additional_attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>

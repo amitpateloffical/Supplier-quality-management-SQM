@@ -548,7 +548,7 @@ Route::post('updateSupplierAudit/{id}', [SupplierAuditController::class, 'update
 Route::post('SupplierAuditStateChange_view/{id}', [SupplierAuditController::class, 'SupplierAuditStateChange'])->name('SupplierAuditStateChange_view');
 Route::post('RejectStateAuditee/{id}', [SupplierAuditController::class, 'RejectStateChange'])->name('RejectStateAuditee');
 Route::post('CancelStateExternalAudit/{id}', [SupplierAuditController::class, 'externalAuditCancel'])->name('CancelStateExternalAudit');
-Route::get('AuditTrialSupplierShow/{id}', [SupplierAuditController::class, 'AuditTrialSupplierShow'])->name('ShowexternalAuditTrial');
+Route::get('showSupplierAuditTrail/{id}', [SupplierAuditController::class, 'AuditTrialSupplierShow'])->name('showSupplierAuditTrail');
 Route::get('ExternalAuditTrialDetails/{id}', [SupplierAuditController::class, 'AuditTrialExternalDetails'])->name('ExternalAuditTrialDetailsShow');
 Route::post('child_external/{id}', [SupplierAuditController::class, 'child_external'])->name('childexternalaudit');
 Route::get('auditReport/{id}', [SupplierAuditController::class, 'auditReport'])->name('SupplierAuditTrialReport');

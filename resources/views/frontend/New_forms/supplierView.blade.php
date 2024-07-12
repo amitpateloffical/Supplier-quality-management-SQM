@@ -210,7 +210,7 @@ function addMultipleFiles(input, block_id) {
                         <!-- {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}} -->
                         <button class="button_theme1"> <a class="text-white"
-                                href="{{ route('ShowexternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
+                                href="{{ route('showSupplierAuditTrail', $data->id) }}"> Audit Trail </a> </button>
 
                         @if ($data->stage == 1 && (in_array(13, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">

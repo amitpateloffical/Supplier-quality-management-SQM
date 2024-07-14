@@ -164,7 +164,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('supplier-site-store', [SupplierSiteController::class, 'store'])->name('supplier-site-store');
             Route::get('supplier-site-show/{id}', [SupplierSiteController::class, 'show']);
             Route::post('supplier-site-update/{id}', [SupplierSiteController::class, 'update'])->name('supplier-site-update');
-            Route::get('supplier-single-report/{id}', [SupplierSiteController::class, 'singleReport']);
+            Route::get('supplier-site-single-report/{id}', [SupplierSiteController::class, 'singleReport']);
             Route::get('supplier-site-audit-trail/{id}', [SupplierSiteController::class, 'auditTrail']);
             Route::get('supplier-site-audit-trail-pdf/{id}', [SupplierSiteController::class, 'auditTrailPdf']);
             Route::post('supplier-site-send-stage/{id}', [SupplierSiteController::class, 'supplierSendStage'])->name('supplier-site-send-stage');

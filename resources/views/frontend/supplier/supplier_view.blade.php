@@ -695,13 +695,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="HOD_comment">HOD Comment</label>
+                                    <label for="HOD_comment">HOD Comments</label>
                                     <textarea type="text" name="HOD_comment" value="{{ $data->HOD_comment }}" placeholder="Enter HOD Comment" id="HOD_comment">{{ $data->HOD_comment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="HOD_attachment">HOD Attachment</label>
+                                    <label for="HOD_attachment">HOD Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div disabled class="file-attachment-list" id="HOD_attachment">
@@ -744,7 +744,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                             @endif
                                         </div>
                                         <div class="add-btn">
-                                            <div>Add</div>hod_additional_attachment
+                                            <div>Add</div>
                                             <input type="file" id="myfile" name="hod_additional_attachment[]" oninput="addMultipleFiles(this, 'hod_additional_attachment')" multiple>
                                         </div>
                                     </div>

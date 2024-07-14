@@ -527,7 +527,14 @@ Route::view('review-management-report', 'frontend.review-management.review-manag
 
 
 //! ============================================
-//!                    External Audit
+//!                    milti dashboard
+
+// Route::get('supplier-dashboard', function(){
+//     $htmlContent = file_get_contents(public_path('supplier-dashboard.html'));
+//     return view('frontend.multi-dashboard.supplier-new-dashboard', compact('htmlContent'));
+// });
+Route::view('/supplier-dashboard', 'frontend.rcms.Supplier-Dashboard');
+
 //! ============================================
 
 
@@ -538,7 +545,7 @@ Route::view('OOT_form', 'frontend.OOT.OOT_form');
 Route::view("additional_testing", 'frontend.additional-testing.additional_testing');
 
 
-
+    
 // ================================= Supplier Audit========================================================
 // Route::view('supplier_audit', 'frontend.New_forms.supplier_audit');
 Route::get('supplier_audit_index', [SupplierAuditController::class, 'supplier_audit'])->name('supplier_audit_index');

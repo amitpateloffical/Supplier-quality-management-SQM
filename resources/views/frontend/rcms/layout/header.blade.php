@@ -201,14 +201,15 @@
                                         <a href="#"><i class="fa-solid fa-braille"></i></a>
                                     </div>
                                     <div>
-                                        <a href="/dashboard">DMS Dashboard</a>
+                                        <a href="/dashboard">SQM Dashboard</a>
                                     </div>
-                                   {{--  <div>
-                                         <a href="/TMS">TMS Dashboard</a> 
+                                    {{-- <div>
+                                        <a href="/TMS">TMS Dashboard</a>
                                     </div> --}}
+                                    <div><a href="/rcms/qms-dashboard">My Records</a></div>
                                     <div>
-                                        <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
-                                    </div> 
+                                        <a href="{{ url('supplier-dashboard') }}" target="_blank">Analytics</a>
+                                    </div>  
                                      {{-- <div>
                                     <a href="/analytics">Analytics</a> 
                                     </div>  --}}

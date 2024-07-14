@@ -413,7 +413,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="HOD_comment">HOD Comment</label>
+                                    <label for="HOD_comment">HOD Comments</label>
                                     <textarea type="text" name="HOD_comment" placeholder="Enter HOD Comment" id="HOD_comment"></textarea>
                                 </div>
                             </div>
@@ -431,7 +431,6 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="hod_additional_attachment">Additional Attachment</label>
@@ -547,7 +546,6 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <textarea name="supplier_serivce" id="supplier_serivce" cols="30" ></textarea>
                                 </div>
                             </div>
-                            
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Zone">Zone</label>
@@ -730,7 +728,6 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <input type="text" id="suppplier_agreement" name="suppplier_agreement">
                                 </div>
                             </div>
-
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Regulatory History">Regulatory History</label>

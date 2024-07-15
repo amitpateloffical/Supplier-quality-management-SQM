@@ -145,7 +145,8 @@
                 }
 
                 .table_bg {
-                    background: #E8A93657;
+                    /* background: #E8A93657; */
+                    background: #0e7676cc
                 }
 
                 .heading {
@@ -153,7 +154,8 @@
                     padding: 10px;
                     margin-bottom: 10px;
                     margin-top: 10px;
-                    background: #E8A936;
+                    /* background: #E8A936; */
+                    background: #0e7676cc
                 }
 
                 .heading-new {
@@ -173,10 +175,10 @@
                 <header>
                     <table>
                         <tr>
-                            <div class="logo">
-                                <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt=""
-                                    class="w-100">
-                            </div>
+                            {{-- <div class="logo">
+                                <img src="https://www.connexo.io/assets/img/logo/logo.png" alt=""
+                                    class="w-100 h-100">
+                            </div> --}}
                         </tr>
                     </table>
 

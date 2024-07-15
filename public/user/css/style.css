@@ -2160,9 +2160,10 @@ section#pdf-page .watermark {
 ===============================================*/
 #audit-trial {
     padding: 20px 0px;
-    background: #4274da;
+    /* background: #4274da; */
     min-height: calc(100vh - 150px);
-    background: #E8A936;
+    /* background: #E8A936; */
+    background: #d7e4e4;
 }
 
 #audit-trial .inner-block {
@@ -4195,7 +4196,8 @@ section#pdf-page .watermark {
         CHNAGE CONTROL DATA FIELDS
 ===============================================*/
 .form-field-head {
-    background: #eb7f00d9;
+    /* background: #eb7f00d9; */
+    background: #94a3b8;
     padding: 15px 20px;
 }
 
@@ -4238,13 +4240,15 @@ section#pdf-page .watermark {
 /*! ============================================= */
 #change-control-fields {
     /* padding: 20px 0px; */
-    background: #eb7f00d9;
+    /* background: #eb7f00d9; */
+    background: #94a3b8;
      min-height: calc(100vh - 150px);
 }
 
 #change-control-fields .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #fde0bf, -12px -12px 24px #fae1c4;
+    /* box-shadow: 12px 12px 24px #fde0bf, -12px -12px 24px #fae1c4; */
+    box-shadow: 12px 12px 24px #d7e4e4, -12px -12px 24px #d7e4e4;
     background: #ffffff;
     overflow: hidden;
 }
@@ -4253,7 +4257,7 @@ section#pdf-page .watermark {
     padding: 7px;
     color: black;
     /* background: #4274da; */
-    background-image: linear-gradient(120deg, #ea8900 0%, #ff9c4594 100%);
+    background-image: linear-gradient(120deg, #d7e4e4 0%, #d7e4e4 100%);
 
     margin-bottom: 0;
     border-radius: 5px;
@@ -4403,7 +4407,8 @@ section#pdf-page .watermark {
 }
 
 #change-control-fields .inner-block .group-input table thead th {
-    background: #0039bd85;
+    /* background: #0039bd85; */
+    background: #0e7676cc;
 }
 
 #change-control-fields .inner-block .group-input table input,

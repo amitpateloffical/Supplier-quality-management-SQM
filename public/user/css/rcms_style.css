@@ -455,7 +455,9 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 /*! =================================================================================*/
 #rcms_form-head {
     padding: 10px 0;
-    background: #4274da;
+    /* background: #4274da; */
+    background: #94a3b8;
+    
 }
 
 #rcms_form-head .head {
@@ -470,7 +472,8 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 
 #change-control-fields {
     padding: 20px 0px;
-    background: #4274da;
+    /* background: #4274da; */
+    background: #94a3b8;
     min-height: calc(100vh - 150px);
 }
 

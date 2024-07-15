@@ -4348,7 +4348,8 @@ section#pdf-page .watermark {
 }
 
 #change-control-fields .group-input .file-attachment-field .add-btn div {
-    background: #6f81dd;
+    /* background: #6f81dd; */
+    background: #0e7676cc;
     color: white;
     margin-top: 13px;
     border-radius: 5px;
@@ -4444,7 +4445,8 @@ section#pdf-page .watermark {
 }
 
 #change-control-fields .cctab button.active {
-    background-color: #6ea2d3;
+    /* background-color: #6ea2d3; */
+    background: #0e7676cc;
     color: white;
 }
 
@@ -4484,7 +4486,8 @@ section#pdf-page .watermark {
 }
 
 #change-control-fields .cctabcontent .button-block button {
-    background: #4274da;
+    /* background: #4274da; */
+    background: #0e7676cc;
     color: white;
     border: 0;
     padding: 4px 15px;

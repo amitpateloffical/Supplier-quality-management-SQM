@@ -50,8 +50,8 @@ class SupplierAuditController extends Controller
         $internalAudit->record = ((RecordNumber::first()->value('counter')) + 1);
         $internalAudit->initiator_id = Auth::user()->id;
         $internalAudit->division_id = $request->division_id;
-        //$internalAudit->parent_id = $request->parent_id;
-        //$internalAudit->parent_type = $request->parent_type;
+        $internalAudit->parent_id = $request->parent_id;
+        $internalAudit->parent_type = $request->parent_type;
         $internalAudit->division_code = $request->division_code;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;

@@ -3485,14 +3485,16 @@ section#pdf-page .watermark {
 
 #change-control-view {
     padding: 20px 0px;
-    background: #eb7f00d9;
+    /* background: #eb7f00d9; */
+    background: #94a3b8;
     /* min-height: calc(100vh - 150px); */
 }
 
 #change-control-view .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #e8b983d9, -12px -12px 24px #e8b983d9;
+    /* box-shadow: 12px 12px 24px #e8b983d9, -12px -12px 24px #e8b983d9; */
+    box-shadow: 12px 12px 24px #d7e4e4, -12px -12px 24px #d7e4e4;
     background: #ffffff;
 }
 

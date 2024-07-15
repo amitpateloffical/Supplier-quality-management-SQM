@@ -24,12 +24,16 @@ class ChangeControlController extends Controller
                 $changeControl->stage = "2";
                 $changeControl->status = "Under HOD Review";
                 $changeControl->update();
-                Mail::send('emp', ['document' => $changeControl],
+                try {
+                    Mail::send('emp', ['document' => $changeControl],
                     function ($message) use ($originator) {
                         $message->to($originator->email)
                             ->subject("Document is now on Under HOD Review stage");
 
                     });
+                } catch (\Exception $e) {
+                    // 
+                }
                 toastr()->success('Document Sent Successflly !');
                 return back();
             }
@@ -38,24 +42,32 @@ class ChangeControlController extends Controller
                     $changeControl->stage = "1";
                     $changeControl->status = "Open-state";
                     $changeControl->update();
-                    Mail::send('emp', ['document' => $changeControl],
+                    try {
+                        Mail::send('emp', ['document' => $changeControl],
                         function ($message) use ($originator) {
                             $message->to($originator->email)
                                 ->subject("Document is now Rejected by HOD");
 
                         });
+                    } catch (\Exception $e) {
+                        // 
+                    }
                     toastr()->success('Document Sent Successflly !');
                     return back();
                 }
                 $changeControl->stage = "3";
                 $changeControl->status = "Reviewed";
                 $changeControl->update();
-                Mail::send('emp', ['document' => $changeControl],
+                try {
+                    Mail::send('emp', ['document' => $changeControl],
                     function ($message) use ($originator) {
                         $message->to($originator->email)
                             ->subject("Document is now Reviewed by HOD");
 
                     });
+                } catch (\Exception $e) {
+                    // 
+                }
                 toastr()->success('Document Sent Successflly !');
                 return back();
             }
@@ -63,12 +75,16 @@ class ChangeControlController extends Controller
                 $changeControl->stage = "4";
                 $changeControl->status = "Under CFT Review";
                 $changeControl->update();
-                Mail::send('emp', ['document' => $changeControl],
+                try {
+                    Mail::send('emp', ['document' => $changeControl],
                     function ($message) use ($originator) {
                         $message->to($originator->email)
                             ->subject("Document is now Under CFT Review stage");
 
                     });
+                } catch (\Exception $e) {
+                    // 
+                }
                 toastr()->success('Document Sent Successflly !');
                 return back();
             }
@@ -95,12 +111,16 @@ class ChangeControlController extends Controller
                             $changeControl->stage = "5";
                             $changeControl->status = "Approved";
                             $changeControl->update();
-                            Mail::send('emp', ['document' => $changeControl],
+                            try {
+                                Mail::send('emp', ['document' => $changeControl],
                                 function ($message) use ($originator) {
                                     $message->to($originator->email)
                                         ->subject("Document is now Approved");
 
                                 });
+                            } catch (\Exception $e) {
+                                // 
+                            }
                             toastr()->success('Document Sent Successflly !');
                             return back();
                         } else {
@@ -108,12 +128,17 @@ class ChangeControlController extends Controller
                                 $changeControl->stage = 1;
                                 $changeControl->status = "Open-state";
                                 $changeControl->update();
-                                Mail::send('emp', ['document' => $changeControl],
-                                    function ($message) use ($originator) {
-                                        $message->to($originator->email)
-                                            ->subject("Document is now Approved by" . Auth::user()->name);
+                                try {
+                                    Mail::send('emp', ['document' => $changeControl],
+                                        function ($message) use ($originator) {
+                                            $message->to($originator->email)
+                                                ->subject("Document is now Approved by" . Auth::user()->name);
+    
+                                        });
+                                } catch (\Exception $e) {
+                                    // 
+                                }
 
-                                    });
                                 toastr()->success('Document Sent Successflly !');
                                 return back();
                             }
@@ -138,12 +163,16 @@ class ChangeControlController extends Controller
                 $changeControl->stage = "6";
                 $changeControl->status = "Effective";
                 $changeControl->update();
-                Mail::send('emp', ['document' => $changeControl],
-                    function ($message) use ($originator) {
-                        $message->to($originator->email)
-                            ->subject("Change control Document is now Effective");
-
-                    });
+                try {
+                    Mail::send('emp', ['document' => $changeControl],
+                        function ($message) use ($originator) {
+                            $message->to($originator->email)
+                                ->subject("Change control Document is now Effective");
+    
+                        });
+                } catch (\Exception $e) {
+                    // 
+                }
                 toastr()->success('Document Sent Successflly !');
                 return back();
             }

@@ -1151,7 +1151,7 @@
                                             <label for="Short Description">Short Description<span class="text-danger">
                                                     *</span></label><span id="rchars">255</span>characters remaining
                                             <textarea name="short_description"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="docname"
-                                                type="text" maxlength="255" required {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                type="text" maxlength="255" required {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} class="tiny">{{ $data->short_description }}</textarea>
                                         </div>
                                         @error('short_description')
                                             <div class="text-danger">{{ $message }}</div>

@@ -1280,6 +1280,7 @@ class ObservationController extends Controller
                                         $email = Helpers::getInitiatorEmail($u->user_id);
                                          if ($email !== null) {
                                       
+                                      try {
                                           Mail::send(
                                               'mail.view-mail',
                                                ['data' => $changestage],
@@ -1288,7 +1289,10 @@ class ObservationController extends Controller
                                                     ->subject("Document sent ".Auth::user()->name);
                                             }
                                           );
+                                        } catch (\Exception $e) {
+                                            // 
                                         }
+                                    }
                                  } 
                               }
                 $changestage->update();

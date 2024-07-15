@@ -145,7 +145,7 @@
                 }
 
                 .table_bg {
-                    background: #4274da57;
+                    background: #0e7676cc;
                 }
 
                 .heading {
@@ -153,7 +153,7 @@
                     padding: 10px;
                     margin-bottom: 10px;
                     margin-top: 10px;
-                    background: #4274da;
+                    background: #0e7676cc;
                 }
 
                 .heading-new {
@@ -172,12 +172,12 @@
 
                 <header>
                     <table>
-                        <tr>
+                        {{-- <tr>
                             <div class="logo">
                                 <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt=""
                                     class="w-40">
                             </div>
-                        </tr>
+                        </tr> --}}
                     </table>
 
                  

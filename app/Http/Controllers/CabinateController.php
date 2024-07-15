@@ -312,12 +312,16 @@ class CabinateController extends Controller
     }
 
     public function email(){
-        $data = "data";
+        try {
+            $data = "data";
             Mail::send('demo-mail',['data' => $data],
             function ($message) {
                     $message->to('amit.guru@mydemosoftware.com')
                             ->subject('Subscribe button testing !!');
             });
             return "mail sent";
+        } catch (\Exception $e) {
+            // 
+        }
     }
 }

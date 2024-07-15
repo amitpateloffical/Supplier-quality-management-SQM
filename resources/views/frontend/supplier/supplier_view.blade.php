@@ -659,7 +659,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Of Complaints/Deviations"># Of Complaints/Deviations</label>
                                     <input type="text" name="">
@@ -670,7 +670,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="total demerit points">Total Demerit Points</label>
                                     <input type="text" name="" id="totalDemeritPoints">
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="button-block">

@@ -487,7 +487,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Description">Description</label>
-                                    <textarea name="description" value="{{ $data->description }}" placeholder>{{ $data->description }}</textarea>
+                                    <textarea class="tiny" name="description" value="{{ $data->description }}" placeholder>{{ $data->description }}</textarea>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -502,6 +502,10 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <option value="Legal" @if($data->supplier_type == "Legal") selected @endif>Legal</option>
                                         <option value="Midecinal + Medical Devices" @if($data->supplier_type == "Midecinal + Medical Devices") selected @endif>Midecinal + Medical Devices</option>
                                         <option value="Vendor" @if($data->supplier_type == "Vendor") selected @endif>Vendor</option>
+                                        <option value="API" @if($data->supplier_type == "API") selected @endif>API</option>
+                                        <option value="Raw Material" @if($data->supplier_type == "Raw Material") selected @endif>Raw Material</option>
+                                        <option value="Packaging Material" @if($data->supplier_type == "Packaging Material") selected @endif>Packaging Material</option>
+                                        {{-- <option value="Vendor" @if($data->supplier_type == "Vendor") selected @endif>Vendor</option> --}}
                                         <option value="Other" @if($data->supplier_type == "Other") selected @endif>Other</option>
 
                                     </select>
@@ -690,13 +694,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_feedback">HOD Feedback</label>
-                                    <textarea type="text" name="HOD_feedback"value="{{ $data->HOD_feedback }}" placeholder="Enter HOD Feedback" id="HOD_feedback">{{ $data->HOD_feedback }}</textarea>
+                                    <textarea  class="tiny" type="text" name="HOD_feedback"value="{{ $data->HOD_feedback }}" placeholder="Enter HOD Feedback" id="HOD_feedback">{{ $data->HOD_feedback }}</textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_comment">HOD Comments</label>
-                                    <textarea type="text" name="HOD_comment" value="{{ $data->HOD_comment }}" placeholder="Enter HOD Comment" id="HOD_comment">{{ $data->HOD_comment }}</textarea>
+                                    <textarea class="tiny" type="text" name="HOD_comment" value="{{ $data->HOD_comment }}" placeholder="Enter HOD Comment" id="HOD_comment">{{ $data->HOD_comment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -880,13 +884,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="Other Contacts">Other Contacts</label>
-                                    <textarea id="other_contacts" type="text" name="other_contacts" value="{{ $data->other_contacts }}">{{ $data->other_contacts  }}</textarea>
+                                    <textarea class="tiny" id="other_contacts" type="text" name="other_contacts" value="{{ $data->other_contacts }}">{{ $data->other_contacts  }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Supplier Services">Supplier Services</label>
-                                    <textarea name="supplier_serivce" value="{{ $data->supplier_serivce }}" id="supplier_serivce" cols="30" >{{ $data->supplier_serivce }}</textarea>
+                                    <textarea class="tiny" name="supplier_serivce" value="{{ $data->supplier_serivce }}" id="supplier_serivce" cols="30" >{{ $data->supplier_serivce }}</textarea>
                                 </div>
                             </div>
                             
@@ -1101,32 +1105,32 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Quality Management ">Manufacturing Sites </label>
-                                    <textarea id="manufacturing_sited" type="text" name="manufacturing_sited" value="{{ $data->manufacturing_sited }}">{{ $data->manufacturing_sited  }}</textarea>
+                                    <textarea class="tiny" id="manufacturing_sited" type="text" name="manufacturing_sited" value="{{ $data->manufacturing_sited }}">{{ $data->manufacturing_sited  }}</textarea>
                                 </div>
                             </div>  
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Quality Management ">Quality Management </label>
-                                    <textarea id="quality_management" type="text" name="quality_management" value="{{ $data->quality_management }}">{{ $data->quality_management  }}</textarea>
+                                    <textarea class="tiny" id="quality_management" type="text" name="quality_management" value="{{ $data->quality_management }}">{{ $data->quality_management  }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Business History">Business History</label>
-                                    <textarea id="bussiness_history" type="text" name="bussiness_history" value="{{ $data->bussiness_history }}">{{ $data->bussiness_history  }}</textarea>
+                                    <textarea class="tiny" id="bussiness_history" type="text" name="bussiness_history" value="{{ $data->bussiness_history }}">{{ $data->bussiness_history  }}</textarea>
                                 </div>
                             </div>
                             
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Performance History ">Performance History </label>
-                                    <textarea id="performance_history" type="text" name="performance_history" value="{{ $data->performance_history }}">{{ $data->performance_history  }}</textarea>
+                                    <textarea class="tiny" id="performance_history" type="text" name="performance_history" value="{{ $data->performance_history }}">{{ $data->performance_history  }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Compliance Risk">Compliance Risk</label>
-                                    <textarea id="compliance_risk" type="text" name="compliance_risk" value="{{ $data->compliance_risk }}">{{ $data->compliance_risk  }}</textarea>
+                                    <textarea class="tiny" id="compliance_risk" type="text" name="compliance_risk" value="{{ $data->compliance_risk }}">{{ $data->compliance_risk  }}</textarea>
                                 </div>
                             </div>
 
@@ -1472,13 +1476,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_feedback">QA Reviewer Feedback</label>
-                                    <textarea type="text" name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback" id="QA_reviewer_feedback">{{ $data->QA_reviewer_feedback }}</textarea>
+                                    <textarea  class="tiny" type="text" name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback" id="QA_reviewer_feedback">{{ $data->QA_reviewer_feedback }}</textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_comment">QA Reviewer Comment</label>
-                                    <textarea type="text" name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment" id="QA_reviewer_comment">{{ $data->QA_reviewer_comment }}</textarea>
+                                    <textarea class="tiny" type="text" name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment" id="QA_reviewer_comment">{{ $data->QA_reviewer_comment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -1760,7 +1764,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_head_comment">QA Head Comment</label>
-                                    <textarea type="text" name="QA_head_comment" value="{{ $data->QA_head_comment }}" placeholder="Enter QA Head Comment" id="QA_head_comment">{{ $data->QA_head_comment }}</textarea>
+                                    <textarea  class="tiny" type="text" name="QA_head_comment" value="{{ $data->QA_head_comment }}" placeholder="Enter QA Head Comment" id="QA_head_comment">{{ $data->QA_head_comment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -2269,6 +2273,11 @@ $users = DB::table('users')->select('id', 'name')->get();
                                             <input type="radio" name="revision" id="major"
                                                 value="SA">
                                                Supplier Audit
+                                        </label>
+                                        <label for="major">
+                                            <input type="radio" name="revision" id="major"
+                                                value="SCAR">
+                                               SCAR
                                         </label>
                                     @endif
                                 </div>

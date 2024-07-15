@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use PDF;
+use Illuminate\Support\Facades\File;
 
 use App\Models\{RecordNumber,
 Supplier,
@@ -27,6 +28,7 @@ CC,
 Deviation,
 User,
 OpenStage,
+SCAR,
 Capa,
     RiskManagement
 };
@@ -3030,6 +3032,11 @@ class SupplierController extends Controller
         return back();
     }
 
+    public function singleReportShow($id)
+    {
+        return view('frontend.supplier.supplier-single-report-show', compact('id'));
+    }
+
     public function singleReport(Request $request, $id){
         $data = Supplier::find($id);
         if (!empty($data)) {
@@ -3067,6 +3074,16 @@ class SupplierController extends Controller
                 6,
                 -20
             );
+
+            $directoryPath = public_path("user/pdf");
+            $filePath = $directoryPath . '/sop' . $id . '.pdf';
+
+            if (!File::isDirectory($directoryPath)) {
+                File::makeDirectory($directoryPath, 0755, true, true); // Recursive creation with read/write permissions
+            }  
+
+            $pdf->save($filePath);
+
             return $pdf->stream('SOP' . $id . '.pdf');
         }
     }
@@ -3644,6 +3661,12 @@ class SupplierController extends Controller
     //    $pre = Deviation::all();
     $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
         return view('frontend.New_forms.supplier_audit', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
+    }
+    if ($request->revision == "SCAR") {
+        $supplierA->originator = User::where('id', $supplierA->initiator_id)->value('name');
+    //    $pre = Deviation::all();
+    $old_record = SCAR::select('id', 'division_id', 'record')->get();
+        return view('frontend.scar.scar_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
     }
 
     }

@@ -228,7 +228,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Description">Description</label>
-                                    <textarea name="description" placeholder></textarea>
+                                    <textarea class="tiny" name="description" placeholder></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -408,13 +408,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_feedback">HOD Feedback</label>
-                                    <textarea type="text" name="HOD_feedback" placeholder="Enter HOD Feedback" id="HOD_feedback"></textarea>
+                                    <textarea class="tiny" type="text" name="HOD_feedback" placeholder="Enter HOD Feedback" id="HOD_feedback"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_comment">HOD Comments</label>
-                                    <textarea type="text" name="HOD_comment" placeholder="Enter HOD Comment" id="HOD_comment"></textarea>
+                                    <textarea class="tiny" type="text" name="HOD_comment" placeholder="Enter HOD Comment" id="HOD_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -543,7 +543,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Supplier Services">Supplier Services</label>
-                                    <textarea name="supplier_serivce" id="supplier_serivce" cols="30" ></textarea>
+                                    <textarea class="tiny" name="supplier_serivce" id="supplier_serivce" cols="30" ></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -744,32 +744,32 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Quality Management ">Manufacturing Sites </label>
-                                    <textarea name="text" name="manufacturing_sited" id="manufacturing_sited"></textarea>
+                                    <textarea class="tiny" name="text" name="manufacturing_sited" id="manufacturing_sited"></textarea>
                                 </div>
                             </div>  
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Quality Management ">Quality Management </label>
-                                    <textarea name="text" id="quality_management" name="quality_management"></textarea>
+                                    <textarea class="tiny" name="text" id="quality_management" name="quality_management"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Business History">Business History</label>
-                                    <textarea name="text" id="bussiness_history" name="bussiness_history"></textarea>
+                                    <textarea class="tiny" name="text" id="bussiness_history" name="bussiness_history"></textarea>
                                 </div>
                             </div>
                             
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Performance History ">Performance History </label>
-                                    <textarea name="text" id="performance_history" name="performance_history"></textarea>
+                                    <textarea class="tiny" name="text" id="performance_history" name="performance_history"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Compliance Risk">Compliance Risk</label>
-                                    <textarea name="text" id="compliance_risk" name="compliance_risk"></textarea>
+                                    <textarea class="tiny" name="text" id="compliance_risk" name="compliance_risk"></textarea>
                                 </div>
                             </div>
 
@@ -1166,13 +1166,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_feedback">QA Reviewer Feedback</label>
-                                    <textarea type="text" name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback" id="QA_reviewer_feedback"></textarea>
+                                    <textarea class="tiny" type="text" name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback" id="QA_reviewer_feedback"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_comment">QA Reviewer Comment</label>
-                                    <textarea type="text" name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment" id="QA_reviewer_comment"></textarea>
+                                    <textarea class="tiny" type="text" name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment" id="QA_reviewer_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -1419,7 +1419,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_head_comment">QA Head Comment</label>
-                                    <textarea type="text" name="QA_head_comment" placeholder="Enter QA Head Comment" id="QA_head_comment"></textarea>
+                                    <textarea class="tiny" type="text" name="QA_head_comment" placeholder="Enter QA Head Comment" id="QA_head_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">

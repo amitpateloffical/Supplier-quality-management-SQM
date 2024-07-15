@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use PDF;
+use Illuminate\Support\Facades\File;
 
 use App\Models\{RecordNumber,
 SupplierSite,
@@ -626,12 +627,12 @@ class SupplierSiteController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->supplier_site_id)){
+        if(!empty($request->supplier_id)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'Supplier ID';
             $history->previous = "Null";
-            $history->current = $supplierSite->supplier_site_id;
+            $history->current = $supplierSite->supplier_id;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3026,6 +3027,11 @@ class SupplierSiteController extends Controller
         return back();
     }
 
+    public function singleReportShow($id)
+    {
+        return view('frontend.supplier-site.suppliersite-single-report-show', compact('id'));
+    }
+
     public function singleReport(Request $request, $id){
         $data = SupplierSite::find($id);
         if (!empty($data)) {
@@ -3063,6 +3069,16 @@ class SupplierSiteController extends Controller
                 6,
                 -20
             );
+
+            $directoryPath = public_path("user/pdf");
+            $filePath = $directoryPath . '/sop' . $id . '.pdf';
+
+            if (!File::isDirectory($directoryPath)) {
+                File::makeDirectory($directoryPath, 0755, true, true); // Recursive creation with read/write permissions
+            }  
+
+            $pdf->save($filePath);
+
             return $pdf->stream('SOP' . $id . '.pdf');
         }
     }

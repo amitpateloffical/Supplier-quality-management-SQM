@@ -836,7 +836,7 @@ class DashboardController extends Controller
         } elseif ($type == "Supplier") {
             $data = Supplier::find($id);
             // $single = "deviationSingleReport/". $data->id;
-            $single = "supplier-single-report/". $data->id;
+            $single = "supplier-single-report/show/". $data->id;
             $audit = "supplier-audit-trail-pdf/". $data->id;
             $parent="#";
         } elseif ($type == "Supplier Site") {

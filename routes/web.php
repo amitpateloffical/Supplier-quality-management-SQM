@@ -383,7 +383,7 @@ Route::view('investigation', 'frontend.ehs.investigation');
 Route::view('environmental_task', 'frontend.ehs.environmental_task');
 Route::view('ehs_event', 'frontend.ehs.ehs_event');
 Route::view('effectiveness', 'frontend.ehs.effectiveness');
-Route::view('capa', 'frontend.ehs.capa');
+// Route::view('capa', 'frontend.ehs.capa');/
 Route::view('action_item', 'frontend.ehs.action_item');
 
 

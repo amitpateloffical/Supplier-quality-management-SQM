@@ -92,7 +92,7 @@
                             <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100">
                         </div> -->
                         <div style="width: 120px" class="logo">
-                            <img src="{{ asset('user/images/vidhyagxp.png') }}" alt="..." class="w-100 h-100">
+                            <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-100 h-100">
                         </div>
                     </div>
                     <div class="search-bar">

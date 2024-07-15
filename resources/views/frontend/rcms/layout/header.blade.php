@@ -118,7 +118,7 @@
                                 <img src="{{ asset('user/images/vidhyagxp.png') }}" alt="..." class="w-100 h-100">
                             </div> -->
                             <div class="logo">
-                                <img src="{{ asset('user/images/vidhyagxp.png') }}" alt="..." class="w-100 h-100">
+                                <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-100 h-100">
                             </div>
                             {{-- <div class="logo">
                                 <img src="{{ asset('user/images/logo3.png') }}" alt="..." class="w-20 h-">
@@ -159,10 +159,16 @@
                             <a href="{{ url('rcms/qms-dashboard') }}" data-bs-toggle="tooltip" title="Dekstop">
                                 <i class="fa-solid fa-house-user"></i>
                             </a>
-                            <div onclick="window.open('/rcms_desktop', '_blank', 'width=1200, height=900, top=0, left=0');"
+                                         {{-- routename----->  log route on the page --}}
+                            {{-- <div onclick="window.open('/rcms_desktop', '_blank', 'width=1200, height=900, top=0, left=0');"
                                 data-bs-toggle="tooltip" title="Logs">
                                 <i class="fa-solid fa-gauge-high"></i>
-                            </div>
+                            </div> --}}
+                            
+                            <div onclick="url('/rcms/qms-dashboard', '_blank', 'width=1200, height=900, top=0, left=0');"
+                            data-bs-toggle="tooltip" title="Logs">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
                             {{-- <a href="/rcms_reports" data-bs-toggle="tooltip" title="Analytics">
                                 <svg width="20" height="20" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">

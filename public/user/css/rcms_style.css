@@ -63,7 +63,8 @@ button:hover {
 /*! HEADER */
 /*! =================================================================================*/
 header .header_rcms_top {
-    background: #f39f40;
+    /* background: #f39f40; */
+    background: #0e7676cc;
     padding: 3px;
 }
 
@@ -757,7 +758,8 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 /*! =================================================================================*/
 #rcms-dashboard {
     padding: 20px 0px;
-    background: #eca035;
+    /* background: #eca035; */
+    background: #94a3b8;
     min-height: calc(100vh - 130px);
 }
 
@@ -768,7 +770,8 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 
 #rcms-dashboard .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #fae1c4, -12px -12px 24px #fde0bf;
+    /* box-shadow: 12px 12px 24px #fae1c4, -12px -12px 24px #fde0bf; */
+    box-shadow: 12px 12px 24px #d7e4e4, -12px -12px 24px #d7e4e4;
     background: #ffffff;
     overflow: hidden;
     padding: 20px;
@@ -852,7 +855,8 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 }
 
 #rcms-dashboard .scope-table thead {
-    background: #eba645;
+    /* background: #eba645; */
+    background: #0e7676cc;
     font-size: 0.75rem;
 }
 
@@ -873,7 +877,8 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
     font-size: 1rem;
     text-align: center;
     border-radius: 5px;
-    background: #4274da;
+    /* background: #4274da; */
+    background: #0e7676cc;
     color: white;
     padding: 5px 10px;
     cursor: pointer;

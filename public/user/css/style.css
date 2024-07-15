@@ -201,7 +201,8 @@ button:hover {
 ===============================================*/
 
 header .header-top {
-    background: #f39f40d4;
+    /* background: #f39f40d4; */
+    background: #94a3b8;
     padding: 5px;
 }
 
@@ -523,14 +524,16 @@ header .header-bottom.bottom-pr-links {
 
 #dashboard {
     padding: 20px 0px;
-    background: #f39f40;
+    /* background: #f39f40; */
+    background: #94a3b8;
     min-height: calc(100vh - 150px);
 }
 
 #dashboard .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #fae1c4, -12px -12px 24px #fde0bf;
+    /* box-shadow: 12px 12px 24px #fae1c4, -12px -12px 24px #fde0bf; */
+    box-shadow: 12px 12px 24px #d7e4e4, -12px -12px 24px #d7e4e4;
     background: #ffffff;
 }
 
@@ -5875,7 +5878,8 @@ section#pdf-page .watermark {
 
 #rcms-dashboard .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
+    box-shadow: 12px 12px 24px #d7e4e4, -12px -12px 24px #d7e4e4;
     background: #ffffff;
     overflow: hidden;
     padding: 20px;

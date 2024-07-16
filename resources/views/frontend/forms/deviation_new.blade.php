@@ -1015,7 +1015,7 @@
                                                     </select> </td>
                                                 <td><input type="text" name="IDnumber[]" class="id-number"></td>
                                                 <td><input type="text" name="Remarks[]" class="remarks"></td>
-                                                <td><input type="text" name="Action[]" class="action" readonly></td>
+                                                <td><button class="removeRowBtn">Remove</button></td>
 
                                             </tbody>
 
@@ -1106,7 +1106,7 @@
                                                         name="ReferenceDocumentName[]"></td>
                                                 <td><input type="text" class="Document_Remarks"
                                                         name="Document_Remarks[]"></td>
-                                                <td><input type="text" class="" name="Action[]" readonly></td>
+                                                <td><button class="removeRowBtn">Remove</button></td>
 
 
                                             </tbody>
@@ -1222,8 +1222,7 @@
                                                     </td>
                                                     <td><input type="text" class="productBatchNo" name="batch_no[]">
                                                     </td>
-                                                    <td><input type="text" class="Removebtn" name="Action[]" readonly>
-                                                    </td>
+                                                    <td><button class="removeRowBtn">Remove</button></td>
 
 
                                                 </tbody>
@@ -1279,63 +1278,7 @@
                                         });
                                     });
                                 </script>
-                                <!-- <div class="col-lg-6">
-                                        <div class="group-input" id="external_agencies_req">
-                                            <label for="others">HOD / Designee<span class="text-danger d-none">*</span></label>
-                                          <select name="hod_designee" id="">
-                                            <option value="">-- Select --</option>
-                                            <option value="person1">person 1</option>
-                                            <option value="person2">person 2</option>
-                                          </select>
-
-
-
-                                        </div>
-                          </div> -->
-                                <!-- <div class="col-lg-6">
-                                        <div class="group-input" id="external_agencies_req">
-                                            <label for="others">Head QA / Designee<span class="text-danger d-none">*</span></label>
-                                          <select name="hod_designee" id="">
-                                            <option value="">-- Select --</option>
-                                            <option value="person1">person 1</option>
-                                            <option value="person2">person 2</option>
-                                          </select>
-
-
-
-                                        </div>
-                          </div> -->
-                                <!-- <div class="col-lg-6">
-                                        <div class="group-input" id="external_agencies_req">
-                                            <label for="others">QA<span class="text-danger d-none">*</span></label>
-                                          <select name="hod_designee" id="">
-                                            <option value="">-- Select --</option>
-                                            <option value="person1">person 1</option>
-                                            <option value="person2">person 2</option>
-                                          </select>
-
-
-                                        </div>
-                          </div> -->
-                                <!-- <div class="col-6">
-                                        <div class="group-input">
-                                            <label for="Facility Name">Notify To</label>
-                                            <select multiple name="Facility[]" placeholder="Select Facility Name"
-                                                data-search="false" data-silent-initial-value-set="true" id="Facility">
-                                                <option value="Plant 1"> 1</option>
-                                                <option value="Plant 1"> 2</option>
-                                                <option value="Plant 1"> 3</option>
-
-                                            </select>
-                                        </div>
-                                    </div> -->
-
-                                {{-- <div class="col-6">
-                                    <div class="group-input">
-                                        <label for="Description Deviation">Description of Deviation</label>
-                                        <textarea class="" id="Description_Deviation" name="Description_Deviation[]"></textarea>
-                                    </div>
-                                </div> --}}
+                            
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Description Deviation">Description of Deviation</label>
@@ -1349,12 +1292,6 @@
                                     @enderror
                                 </div>
 
-                                {{-- <div class="col-6">
-                                <div class="group-input">
-                                        <label for="ImmediateAction">Immediate Action (if any)</label>
-                                        <textarea class="" id="Immediate_Action" name="Immediate_Action[]"></textarea>
-                                    </div>
-                                </div> --}}
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Immediate Action">Immediate Action (if any)</label>
@@ -1367,12 +1304,7 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                {{-- <div class="col-6">
-                                <div class="group-input">
-                                        <label for="Preliminary Impact">Preliminary Impact of Deviation</label>
-                                        <textarea class="" id="Preliminary_Impact" name="Preliminary_Impact[]"></textarea>
-                                    </div>
-                                </div> --}}
+
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Preliminary Impact">Preliminary Impact of Deviation </label>

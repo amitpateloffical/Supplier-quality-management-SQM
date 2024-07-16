@@ -177,7 +177,7 @@
                                         <th>Parent ID</th>
                                         <th>Division</th>
                                         <th>Process</th>
-                                        <th class="td_desc">Short Description</th>
+                                        <th style="width: 10px;" class="td_desc">Short Description</th>
                                         <th>Date Opened</th>
                                         <th>Originator</th>
                                         <th> Initiation Date</th>
@@ -479,7 +479,16 @@
                                                 data-bs-target="#record-modal">
                                                 {{ $datas->type }}
                                             </td>
-                                            <td class="viewdetails" data-id="{{ $datas->id }}"
+                                            <style>
+                                                #short-width{
+                                                    display: inline-block;
+                                                    width: 320px !important;
+                                                    white-space: nowrap;
+                                                    overflow: hidden !important;
+                                                    text-overflow: ellipsis;
+                                                }
+                                            </style>
+                                            <td id="short-width" class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 {{ $datas->short_description }}

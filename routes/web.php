@@ -420,7 +420,7 @@ Route::view('qualityFollowUp', 'frontend.new_forms.qualityFollowUp');
 Route::view('product-recall', 'frontend.new_forms.product-recall');
 Route::view('field-inquiry', 'frontend.new_forms.field-inquiry');
 Route::view('medical-device', 'frontend.new_forms.medical-device');
-Route::view('risk-management', 'frontend.new_forms.risk-management');
+// Route::view('risk-management', 'frontend.new_forms.risk-management');
 Route::view('training_course', 'frontend.New_forms.training_course');
 Route::view('lab_test', 'frontend.New_forms.lab_test');
 Route::view('client_inquiry', 'frontend.New_forms.client_inquiry');

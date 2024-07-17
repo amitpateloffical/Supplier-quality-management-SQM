@@ -379,6 +379,8 @@ $users = DB::table('users')->get();
                                                     <th>Root Cause Sub-Category</th>
                                                     <th>Probability</th>
                                                     <th>Remarks</th>
+                                                     <th>Action</th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -388,6 +390,7 @@ $users = DB::table('users')->get();
                                                 <td><input type="text" name="Root_Cause_Sub_Category[]"></td>
                                                 <td><input type="text" name="Probability[]"></td>
                                                 <td><input type="text" name="Remarks[]"></td>
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
                                         </table>
                                     </div>

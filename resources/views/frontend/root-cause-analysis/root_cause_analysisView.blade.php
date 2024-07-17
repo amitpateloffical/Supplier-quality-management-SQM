@@ -1815,4 +1815,5 @@ function add4Input_case(tableId) {
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);});
     </script>
+    
     @endsection

@@ -70,120 +70,110 @@
             }
         }
     </script>
-    <script>
-        $(document).ready(function() {
-            $('#internalaudit-table').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    console.log(users);
-                    var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="audit[]"></td>' +
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + serialNumber +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`);checkDate(`scheduled_start_date' + serialNumber +'_checkdate`,`scheduled_end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+   <script>
+    $(document).ready(function() {
+        $('#internalaudit-table').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var users = @json($users);
+                console.log(users);
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                    '"></td>' +
+                    '<td><input type="text" name="audit[]"></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + serialNumber +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`);checkDate(`scheduled_start_date' + serialNumber +'_checkdate`,`scheduled_end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+                    '<td><input type="time" name="scheduled_start_time[]"></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ serialNumber +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`);checkDate(`scheduled_start_date' + serialNumber +'_checkdate`,`scheduled_end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+                    '<td><input type="time" name="scheduled_end_time[]"></td>' +
+                    '<td><select name="auditor[]">' +
+                    '<option value="">Select a value</option>';
 
-                        '<td><input type="time" name="scheduled_start_time[]"></td>' +
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ serialNumber +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`);checkDate(`scheduled_start_date' + serialNumber +'_checkdate`,`scheduled_end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
-                        '<td><input type="time" name="scheduled_end_time[]"></td>' +
-
-
-                        '<td><select name="auditor[]">' +
-                        '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-                        '<td><select name="auditee[]">' +
-                        '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-                    html += '</select></td>' +
-                        '<td><input type="text" name="remarks[]"></td>' +
-                        '</tr>';
-
-                    return html;
+                for (var i = 0; i < users.length; i++) {
+                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                 }
 
-                var tableBody = $('#internalaudit tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
+                html += '</select></td>' +
+                    '<td><select name="auditee[]">' +
+                    '<option value="">Select a value</option>';
+
+                for (var i = 0; i < users.length; i++) {
+                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                }
+                html += '</select></td>' +
+                    '<td><input type="text" name="remarks[]"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' + // Add Remove button here
+                    '</tr>';
+
+                return html;
+            }
+
+            var tableBody = $('#internalaudit tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
         });
-    </script>
+
+        // Remove row functionality
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        });
+    });
+</script>
+
     @php
     $division = DB::table('divisions')->get();
      @endphp
-    <script>
-        $(document).ready(function() {
-            $('#ObservationAdd').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    
-                    var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
-                        '<td><input type="text" name="observation_id[]"></td>' +
-                        
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
-                        // '<td><select name="auditorG[]">' +
-                         '<option value="">Select a value</option>';
+     <script>
+      $(document).ready(function() {
+        $('#ObservationAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var users = @json($users);
+                var html =
+                    '<tr>' +
+                    '<td>' + serialNumber + '</td>' +
+                    '<td><input type="text" name="observation_id[]"></td>' +
+                    '<td><input type="text" name="observation_description[]"></td>' +
+                    '<td><input type="text" name="area[]"></td>' +
+                    '<td><input type="text" name="auditee_response[]"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+                return html;
+            }
 
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    html += '</select></td>' +
-                        // '<td><select name="auditeeG[]">' +
-                        // '<option value="">Select a value</option>';
-
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-                    // html += '</select></td>' +
-                        '<td><input type="text" name="observation_description[]"></td>' +
-                        // '<td><input type="text" name="severity_level[]"></td>' +
-                        '<td><input type="text" name="area[]"></td>' +
-                        //'<td><input type="text" name="observation_category[]"></td>'
-                        //  '<td><select name="observation_category[]"><option value="">Select A Value</option><option value="Major">Major</option><option value="Minor">Minor</option><option value="Critical">Critical</option><option value="Recommendation">Recommendation</option></select></td>'+
-                        // '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
-                        '<td><input type="text" name="auditee_response[]"></td>' +
-                        // '<td><input type="text" name="auditor_review_on_response[]"></td>' +
-                        // '<td><input type="text" name="qa_comment[]"></td>' +
-                        // '<td><input type="text" name="capa_details[]"></td>' +
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
-                        // '<td><select name="capa_owner[]">' +
-                         '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' + 
-                    // '<td><input type="text" name="action_taken[]"></td>' +
-                        //'<td><input type="date" name="capa_completion_date[]"></td>'
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>'
-                        
-                        // +
-                        // '<td><input type="text" name="status_Observation[]"></td>' +
-                        // '<td><input type="text" name="remark_observation[]"></td>' +
-                        '</tr>';
-
-                    return html;
-                }
-
-                var tableBody = $('#onservation-field-table tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
+            var tableBody = $('#onservation-field-table tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+            updateRowNumbers();
         });
-    </script>
+
+        // Remove row functionality
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+            updateRowNumbers();
+        });
+
+        function updateRowNumbers() {
+            $('#onservation-field-table tbody tr').each(function(index, row) {
+                $(row).find('td:first').text(index + 1);
+            });
+        }
+    });
+
+    function otherController(value, checkValue, blockID) {
+        let block = document.getElementById(blockID)
+        let blockTextarea = block.getElementsByTagName('textarea')[0];
+        let blockLabel = block.querySelector('label span.text-danger');
+        if (value === checkValue) {
+            blockLabel.classList.remove('d-none');
+            blockTextarea.setAttribute('required', 'required');
+        } else {
+            blockLabel.classList.add('d-none');
+            blockTextarea.removeAttribute('required');
+        }
+    }
+</script>
+
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -595,77 +585,77 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="audit-agenda-grid">
-                                            Audit Agenda<button type="button" name="audit-agenda-grid"
-                                                id="internalaudit-table">+</button>
-                                        </label>
-                                        <table class="table table-bordered" id="internalaudit">
-                                            <thead>
-                                                <tr>
-                                                    <th>Row#</th>
-                                                    <th>Area of Audit</th>
-                                                    <th>Scheduled Start Date</th>
-                                                    <th>Scheduled Start Time</th>
-                                                    <th>Scheduled End Date</th>
-                                                    <th>Scheduled End Time</th>
-                                                    <th>Auditor</th>
-                                                    <th>Auditee</th>
-                                                    <th>Remarks</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td><input type="text" name="audit[]"></td>
-                                                 
-
-                                                 <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div class="calenderauditee">
-                                                                <input type="text"  class="test" id="scheduled_start_date1" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   id="scheduled_start_date1_checkdate" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td> 
-                                                <td><input type="time" name="scheduled_start_time[]"></td> 
-                                                <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div  class="calenderauditee">
-                                                                <input type="text"  class="test" id="scheduled_end_date1" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="scheduled_end_date1_checkdate"name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
-                                                                 oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                
-
-                                                <td><input type="time" name="scheduled_end_time[]"></td>
-                                                
-                                                <td> <select id="select-state" placeholder="Select..." name="auditor[]">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
-                                                <td><select id="select-state" placeholder="Select..." name="auditee[]">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
-                                                <td><input type="text" name="remarks[]"></td>
-                                            </tbody>
-                                        </table>
-                                    </div>
+    <div class="group-input">
+        <label for="audit-agenda-grid">
+            Audit Agenda<button type="button" name="audit-agenda-grid" id="internalaudit-table">+</button>
+        </label>
+        <table class="table table-bordered" id="internalaudit">
+            <thead>
+                <tr>
+                    <th>Row#</th>
+                    <th>Area of Audit</th>
+                    <th>Scheduled Start Date</th>
+                    <th>Scheduled Start Time</th>
+                    <th>Scheduled End Date</th>
+                    <th>Scheduled End Time</th>
+                    <th>Auditor</th>
+                    <th>Auditee</th>
+                    <th>Remarks</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input disabled type="text" name="serial_number[]" value="1"></td>
+                    <td><input type="text" name="audit[]"></td>
+                    <td>
+                        <div class="group-input new-date-data-field mb-0">
+                            <div class="input-date ">
+                                <div class="calenderauditee">
+                                    <input type="text" class="test" id="scheduled_start_date1" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="date" id="scheduled_start_date1_checkdate" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                    oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
                                 </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><input type="time" name="scheduled_start_time[]"></td>
+                    <td>
+                        <div class="group-input new-date-data-field mb-0">
+                            <div class="input-date ">
+                                <div class="calenderauditee">
+                                    <input type="text" class="test" id="scheduled_end_date1" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="date" id="scheduled_end_date1_checkdate" name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                    oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><input type="time" name="scheduled_end_time[]"></td>
+                    <td>
+                        <select id="select-state" placeholder="Select..." name="auditor[]">
+                            <option value="">Select a value</option>
+                            @foreach ($users as $data)
+                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select id="select-state" placeholder="Select..." name="auditee[]">
+                            <option value="">Select a value</option>
+                            @foreach ($users as $data)
+                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td><input type="text" name="remarks[]"></td>
+                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
                                 {{-- <div class="col-6">
                                     <div class="group-input">
                                         <label for="Facility Name">Facility Name</label>
@@ -890,44 +880,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                     <div class="group-input">
-                                        <label for="audit-agenda-grid">
-                                            Observation Details
-                                            <button type="button" name="audit-agenda-grid"
-                                                id="ObservationAdd">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="onservation-field-table"
-                                                style="width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Row#</th>
-                                                        <th>Observation Details</th>
-                                                        {{-- <th>Date</th>
-                                                        <th>Auditor</th>
-                                                        <th>Auditee</th> --}}
-                                                        <th>Pre Comments</th>
-                                                        {{-- <th>Severity Level</th> --}}
-                                                         <th>CAPA Details if any</th>
-                                                        {{-- <th>Observation Category</th>
-                                                        <th>CAPA Required</th> --}}
-                                                        <th>Post Comments</th>
-                                                        {{-- <th>Auditor Review on Response</th>
-                                                        <th>QA Comments</th>
-                                                        <th>CAPA Details</th>
-                                                        <th>CAPA Due Date</th>
-                                                        <th>CAPA Owner</th>
-                                                        <th>Action Taken</th>
-                                                        <th>CAPA Completion Date</th>
-                                                        <th>Status</th>
-                                                        <th>Remarks</th> --}}
-                                                    </tr>
-                                                </thead>
+                                <div class="group-input">
+        <label for="audit-agenda-grid">
+            Observation Details
+            <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="onservation-field-table" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Row#</th>
+                        <th>Observation Details</th>
+                        <th>Pre Comments</th>
+                        <th>CAPA Details if any</th>
+                        <th>Post Comments</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
                                                 <tbody>
                                                   
 
@@ -1183,13 +1155,13 @@
                                 </div>
 
                             </div>
-                            <div class="button-block">
+                            <!-- <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit">Submit</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 

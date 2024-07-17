@@ -205,7 +205,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Expected Closure Date">Expected Closure Date</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="expected_closure_date" placeholder="DD-MM-YYYY" />
-                                        <input type="date" name="expected_closure_date" max="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'expected_closure_date')" />
+                                        <input type="date" name="expected_closure_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'expected_closure_date')" />
                                     </div>
                                 </div>
                             </div>

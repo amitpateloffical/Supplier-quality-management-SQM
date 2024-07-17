@@ -754,11 +754,13 @@ class SCARController extends Controller
         $doc = SCAR::find($id);
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-            $data = ScarAuditTrail::where('scar_id', $doc->id)->orderByDesc('id')->get();
+            $data = ScarAuditTrail::where('scar_id', $id)->orderByDesc('id')->get();
+            $audit = ScarAuditTrail::where('scar_id', $id)->orderByDesc('id')->get();
+
     
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.scar.audit-trail-pdf', compact('data', 'doc'))
+            $pdf = PDF::loadview('frontend.scar.audit-trail-pdf', compact('data', 'doc' ,'audit'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -795,11 +797,10 @@ class SCARController extends Controller
             $lastDocument = SCAR::find($id);
             if ($scar->stage == 1) {
                     $scar->stage = "2";
-                    $scar->status = "Pending Qualification";
+                    $scar->status = "Submitted to Supplier";
                     $scar->submitted_by = Auth::user()->name;
                     $scar->submitted_on = Carbon::now()->format('d-M-Y');
                     $scar->submitted_comment = $request->comments;
-
                     $history = new ScarAuditTrail();
                     $history->scar_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -833,7 +834,7 @@ class SCARController extends Controller
                     //   }
                     $scar->update();
 
-                    toastr()->success('Sent to Pending Qualification');
+                    toastr()->success('Sent to Submitted to Supplier');
                     return back();
             }
             if ($scar->stage == 2) {

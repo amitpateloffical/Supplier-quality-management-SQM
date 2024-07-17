@@ -78,7 +78,7 @@
         <div class="container-fluid header-top">
             <div class="container">
                 <div style="letter-spacing: 1px;" class="text-center text-black ">
-                    <small>VidyaGxP</small>
+                    <small></small>
                 </div>
             </div>
         </div>

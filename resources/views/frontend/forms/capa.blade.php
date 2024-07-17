@@ -185,7 +185,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input disabled type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
@@ -583,6 +583,8 @@
                                                     <th>Batch Disposition Decision</th>
                                                     <th>Remark</th>
                                                     <th>Batch Status</th>
+                                                    <th>Action</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -674,6 +676,7 @@
                                                     <th>Equipment/Instruments Name</th>
                                                     <th>Equipment/Instruments ID</th>
                                                     <th>Equipment/Instruments Comments</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             
@@ -685,6 +688,7 @@
                                                 <td><input type="text" name="equipment[]"></td>
                                                 <td><input type="text" name="equipment_instruments[]"></td>
                                                 <td><input type="text" name="equipment_comments[]"></td>
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody> 
                                         </table>
                                     </div>

@@ -65,6 +65,8 @@ class EffectivenessCheckController extends Controller
         // $openState->form_type = "effectiveness-check";
         $openState->is_parent = "No";
         $openState->parent_id = $request->cc_id;
+        $openState->parent_type = $request->cc_id;
+
         $openState->division_id = $request->division_id;
         $openState->intiation_date = $request->intiation_date;
         $openState->initiator_id = Auth::user()->id;

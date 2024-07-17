@@ -183,7 +183,7 @@
                                         <th class="td_desc">Short Description</th>
                                         <th>Date Opened</th>
                                         <th>Originator</th>
-                                        <th> Initiation Date</th>
+                                        <th> Due  Date</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>

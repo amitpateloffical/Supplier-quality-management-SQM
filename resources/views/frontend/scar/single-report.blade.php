@@ -402,34 +402,17 @@
                 <tr>
                     <th class="w-20">Submitted By</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->submit_by }}</div>
+                        <div class="static">{{ $data->submitted_by  }}</div>
                     </td>
                     <th class="w-20">Submitted On</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->submit_on }}</div>
+                        <div class="static">{{ $data->submitted_on }}</div>
                     </td>
                     <th class="w-20">Submitted Comment</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->submit_comment }}</div>
+                        <div class="static">{{ $data->submitted_comment }}</div>
                     </td>
                 </tr>
-
-                <tr>
-                    <th class="w-20">Cancelled By</th>
-                    <td class="w-30">
-                        <div class="static">{{ $data->cancelled_by }}</div>
-                    </td>
-                    <th class="w-20">Cancelled On</th>
-                    <td class="w-30">
-                        <div class="static">{{ $data->cancelled_on }}</div>
-                    </td>
-                    <th class="w-20">Cancelled Comment</th>
-                    <td class="w-30">
-                        <div class="static">{{ $data->cancelled_comment }}</div>
-                    </td>
-                </tr>
-               
-
                 <tr>
                     <th class="w-20">Acknowledge By</th>
                     <td class="w-30">

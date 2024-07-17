@@ -77,7 +77,7 @@
                                 More Information Required
                             </button>
                         @endif
-                        <button> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                        <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">  Exit </button> </a>
                     </div>
 
                 </div>
@@ -237,7 +237,8 @@
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Due Date</label>
-                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                                <div>
+                                                    {{-- <small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small> --}}
                                         </div>
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"

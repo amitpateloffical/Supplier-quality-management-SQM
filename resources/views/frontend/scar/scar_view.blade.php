@@ -434,7 +434,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Expected Closure Date">Expected Closure Date</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="expected_closure_date" placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->expected_closure_date) }}" @if($data->stage >= 6) disabled @endif/>
-                                        <input type="date" name="expected_closure_date" value="{{ $data->expected_closure_date }}" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'expected_closure_date')" @if($data->stage >= 6) disabled @endif/>
+                                        <input type="date" name="expected_closure_date" value="{{ $data->expected_closure_date }}" min="{{ $data->created_at ? $data->created_at->format('Y-m-d') : '' }}" class="hide-input" oninput="handleDateInput(this, 'expected_closure_date')" @if($data->stage >= 6) disabled @endif/>
                                     </div>
                                 </div>
                             </div>
@@ -508,7 +508,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             </div>
 
 
-                            <div class="col-lg-3">
+                            {{-- <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Suppplier Review By">Cancelled By</label>
                                     <div class="static">{{ $data->cancelled_by }}</div>
@@ -525,7 +525,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Suppplier Review Comment">Cancelled Comment</label>
                                     <div class="static">{{ $data->cancelled_comment }}</div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-lg-3">
                                 <div class="group-input">

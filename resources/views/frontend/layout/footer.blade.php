@@ -234,7 +234,11 @@
         });
     })
 </script>
-
+<script>
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    })
+</script>
 <script>
     function addRow() {
         var table = document.getElementById("myTable");
@@ -1181,6 +1185,7 @@
                     '<option value="Release">Release</option>' +
                     '<option value="quarantine">Quarantine</option>' +
                     '</select></td>' +
+                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                     '</tr>';
 
                 return html;
@@ -1198,6 +1203,7 @@
                     '<td><input type="text" name="equipment[]"></td>' +
                     '<td><input type="text" name="equipment_instruments[]"></td>' +
                     '<td><input type="text" name="equipment_comments[]"></td>' +
+                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                     '</tr>';
                 return html;
             }

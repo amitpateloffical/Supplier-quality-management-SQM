@@ -156,7 +156,6 @@
 </style>
 
 <body>
-
     <header>
         <table>
             <tr>
@@ -165,7 +164,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">
+                        <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -173,10 +172,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>External Audit No.</strong>
+                    <strong>Supplier Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/SA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -184,7 +183,6 @@
             </tr>
         </table>
     </header>
-
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
@@ -213,8 +211,8 @@
                     <tr>
                         <th class="w-20">Others</th>
                         <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
-                        <th class="w-20">External Agencies </th>
-                        <td class="w-30">@if($data->external_agencies){{ $data->external_agencies }} @else Not Applicable @endif</td>
+                        <th class="w-20">Supplier Agencies </th>
+                        <td class="w-30">@if($data->Supplier_agencies){{ $data->Supplier_agencies }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Description</th>
@@ -319,12 +317,12 @@
                     <tr>
                         <th class="w-20">Lead Auditor</th>
                         <td class="w-30">@if($data->lead_auditor){{ Helpers::getInitiatorName($data->lead_auditor) }}@else Not Applicable @endif</td>
-                        <th class="w-20">External Auditor Details</th>
+                        <th class="w-20">Supplier Auditor Details</th>
                         <td class="w-30">@if($data->Auditor_Details){{ $data->Auditor_Details }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">External Auditing Agency</th>
-                        <td class="w-30">@if($data->External_Auditing_Agency){{ $data->External_Auditing_Agency }}@else Not Applicable @endif</td>
+                        <th class="w-20">Supplier Auditing Agency</th>
+                        <td class="w-30">@if($data->Supplier_Auditing_Agency){{ $data->Supplier_Auditing_Agency }}@else Not Applicable @endif</td>
                         <th class="w-20">Relevant Guidelines / Industry Standards</th>
                         <td class="w-30">@if($data->Relevant_Guidelines){{ $data->Relevant_Guidelines }}@else Not Applicable @endif</td>
                     </tr>

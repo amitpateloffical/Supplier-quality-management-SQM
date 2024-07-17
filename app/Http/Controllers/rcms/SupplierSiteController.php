@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use PDF;
-use Illuminate\Support\Facades\File;
 
 use App\Models\{RecordNumber,
 SupplierSite,
@@ -35,12 +34,12 @@ class SupplierSiteController extends Controller
 {
     public function index(Request $request){        
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_numbers = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
 
-        return view('frontend.supplier-site.suppliersite_new', compact('formattedDate', 'due_date', 'record_numbers'));
+        return view('frontend.supplier-site.suppliersite_new', compact('formattedDate', 'due_date', 'record_number'));
     }
 
     public function store(Request $request){
@@ -1617,7 +1616,7 @@ class SupplierSiteController extends Controller
 
         /****************** Supplier Details ********************/
         $supplierSite->supplier_name = $request->supplier_name;
-        $supplierSite->supplier_site_id = $request->supplier_site_id;        
+        $supplierSite->supplier_id = $request->supplier_id;        
         $supplierSite->manufacturer_name = $request->manufacturer_name;
         $supplierSite->manufacturer_id = $request->manufacturer_id;
         $supplierSite->vendor_name = $request->vendor_name;
@@ -2063,12 +2062,12 @@ class SupplierSiteController extends Controller
             $history->action_name = 'Update';
             $history->save();
         }
-        if($lastDocument->supplier_site_id != $request->supplier_site_id){
+        if($lastDocument->supplier_id != $request->supplier_id){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Supplier ID';
-            $history->previous = $lastDocument->supplier_site_id;
-            $history->current = $request->supplier_site_id;
+            $history->previous = $lastDocument->supplier_id;
+            $history->current = $request->supplier_id;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3027,16 +3026,11 @@ class SupplierSiteController extends Controller
         return back();
     }
 
-    public function singleReportShow($id)
-    {
-        return view('frontend.supplier-site.suppliersite-single-report-show', compact('id'));
-    }
-
     public function singleReport(Request $request, $id){
         $data = SupplierSite::find($id);
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
-            $gridData = SupplierGrid::where('supplier_site_id', $data->id)->first();
+            $gridData = SupplierSiteGrid::where('supplier_site_id', $data->id)->first();
             
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
@@ -3069,16 +3063,6 @@ class SupplierSiteController extends Controller
                 6,
                 -20
             );
-
-            $directoryPath = public_path("user/pdf");
-            $filePath = $directoryPath . '/sop' . $id . '.pdf';
-
-            if (!File::isDirectory($directoryPath)) {
-                File::makeDirectory($directoryPath, 0755, true, true); // Recursive creation with read/write permissions
-            }  
-
-            $pdf->save($filePath);
-
             return $pdf->stream('SOP' . $id . '.pdf');
         }
     }

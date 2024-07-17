@@ -165,7 +165,6 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('supplier-site-store', [SupplierSiteController::class, 'store'])->name('supplier-site-store');
             Route::get('supplier-site-show/{id}', [SupplierSiteController::class, 'show']);
             Route::post('supplier-site-update/{id}', [SupplierSiteController::class, 'update'])->name('supplier-site-update');
-            Route::get('supplier-site-single-report/show/{id}', [SupplierSiteController::class, 'singleReport']);
             Route::get('supplier-site-single-report/{id}', [SupplierSiteController::class, 'singleReport']);
             Route::get('supplier-site-audit-trail/{id}', [SupplierSiteController::class, 'auditTrail']);
             Route::get('supplier-site-audit-trail-pdf/{id}', [SupplierSiteController::class, 'auditTrailPdf']);
@@ -207,6 +206,7 @@ Route::group(['prefix' => 'rcms'], function () {
 
             //Route::resource('deviation', DeviationController::class);
             Route::get('devshow/{id}', [DeviationController::class, 'devshow'])->name('devshow');
+            Route::get('auditReport/{id}', [DeviationController::class, 'auditReport'])->name('auditReport');
             Route::post('deviation/stage/{id}', [DeviationController::class, 'deviation_send_stage'])->name('deviation_send_stage');
             Route::post('deviation/cancel/{id}', [DeviationController::class, 'deviationCancel'])->name('deviationCancel');
             // Route::post('deviation/cftnotrequired/{id}', [DeviationController::class, 'deviationIsCFTRequired'])->name('deviationIsCFTRequired');
@@ -221,7 +221,6 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('deviationupdate/{id}', [DeviationController::class, 'update'])->name('deviationupdate');
              Route::get('deviation', [DeviationController::class, 'deviation']);
              Route::get('deviationSingleReport/{id}', [DeviationController::class, 'singleReport'])->name('deviationSingleReport');
-             Route::get('auditReport/{id}', [DeviationController::class, 'auditReport'])->name('auditReport');
              Route::get('deviationparentchildReport/{id}', [DeviationController::class, 'parentchildReport'])->name('deviationparentchildReport');
              Route::post('launch-extension-qrm/{id}', [DeviationController::class, 'launchExtensionQrm'])->name('launch-extension-qrm');             
             Route::post('launch-extension-investigation/{id}', [DeviationController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');

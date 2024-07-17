@@ -3486,7 +3486,7 @@ class DeviationController extends Controller
 
                 $extension = Extension::where('parent_id', $deviation->id)->first();
 
-                $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
+                $rca = RootCauseAnalysis::where('record', $deviation->id)->first();
 
                 if ($extension && $extension->status !== 'Closed-Done') {
                     Session::flash('swal', [
@@ -3784,7 +3784,7 @@ class DeviationController extends Controller
 
                 $extension = Extension::where('parent_id', $deviation->id)->first();
 
-                $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
+                $rca = RootCauseAnalysis::where('record',$deviation->id)->first();
 
                 if ($extension && $extension->status !== 'Closed-Done') {
                     Session::flash('swal', [
@@ -5482,54 +5482,30 @@ if ($deviation->stage == 5) {
         }
     }
 
-    public static function auditReport($id)
+   public static function auditReport($id)
     {
-        // $doc = Deviation::find($id);
-        // if (!empty($doc)) {
-        //     $doc->originator_id = User::where('id', $doc->initiator_id)->value('name');
-        //     $data = DeviationAuditTrail::where('deviation_id', $id)->get();
-        //     $pdf = App::make('dompdf.wrapper');
-        //     $time = Carbon::now();
-        //     $pdf = PDF::loadview('frontend.forms.auditReport', compact('data', 'doc'))
-        //         ->setOptions([
-        //             'defaultFont' => 'sans-serif',
-        //             'isHtml5ParserEnabled' => true,
-        //             'isRemoteEnabled' => true,
-        //             'isPhpEnabled' => true,
-        //             'isJavascriptEnabled' => true
-        //         ]);
-        //     $pdf->setPaper('A4');
-        //     $pdf->render();
-        //     $canvas = $pdf->getDomPDF()->getCanvas();
-        //     $height = $canvas->get_height();
-        //     $width = $canvas->get_width();
-        //     $canvas->page_text(460, 803, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
-        //     $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-        //     $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
-        //     return $pdf->stream('Deviation' . $id . '.pdf');
-        // }
-
         $doc = Deviation::find($id);
-        if (!empty ($doc)) {
+        if (!empty($doc)) {
             $doc->originator_id = User::where('id', $doc->initiator_id)->value('name');
             $data = DeviationAuditTrail::where('deviation_id', $id)->get();
-
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.forms.auditReport', compact('data','doc'))
+            $pdf = PDF::loadview('frontend.forms.auditReport', compact('data', 'doc'))
                 ->setOptions([
-                'defaultFont' => 'sans-serif',
-                'isHtml5ParserEnabled' => true,
-                'isRemoteEnabled' => true,
-                'isPhpEnabled' => true,
-            ]);
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                    'isJavascriptEnabled' => true
+                ]);
             $pdf->setPaper('A4');
             $pdf->render();
             $canvas = $pdf->getDomPDF()->getCanvas();
             $height = $canvas->get_height();
             $width = $canvas->get_width();
+            $canvas->page_text(460, 803, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Deviation' . $id . '.pdf');
         }
     }

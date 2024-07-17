@@ -1574,6 +1574,7 @@ class SupplierController extends Controller
         $supplier->description = $request->description;
         $supplier->supplier_type = $request->supplier_type;
         $supplier->supplier_sub_type = $request->supplier_sub_type;
+        // dd($request->supplier_sub_type);
         $supplier->supplier_other_type = $request->supplier_other_type;
         $supplier->supply_from = $request->supply_from;
         $supplier->supply_to = $request->supply_to;
@@ -1648,7 +1649,9 @@ class SupplierController extends Controller
         $supplier->bussiness_history = $request->bussiness_history;
         $supplier->performance_history = $request->performance_history;
         $supplier->compliance_risk = $request->compliance_risk;
-
+        $supplier->supplier_website = $request->supplier_website;
+        // dd($request->supplier_website);
+        
         /****************** Score Card Content ********************/
         $supplier->cost_reduction = $request->cost_reduction;
         $supplier->cost_reduction_weight = $request->cost_reduction_weight;        
@@ -3664,9 +3667,10 @@ class SupplierController extends Controller
     }
     if ($request->revision == "SCAR") {
         $supplierA->originator = User::where('id', $supplierA->initiator_id)->value('name');
+        $supplierData = Supplier::select('id','supplier_name','supplier_products','distribution_sites')->get();
     //    $pre = Deviation::all();
     $old_record = SCAR::select('id', 'division_id', 'record')->get();
-        return view('frontend.scar.scar_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
+        return view('frontend.scar.scar_new', compact('record_number','supplierData', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
     }
 
     }

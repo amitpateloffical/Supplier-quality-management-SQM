@@ -328,9 +328,9 @@ class DashboardController extends Controller
 
             array_push($table, [
                 "id" => $data->id,
-                "parent" => $data->parent_id ? $data->parent_id : "-",
+                "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
-                "division_id" => $data->division_code,
+                "division_id" => $data->division_id,
                 "type" => "Observation",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
@@ -783,6 +783,7 @@ class DashboardController extends Controller
             $data = Capa::find($id);
             $single = "capaSingleReport/" . $data->id;
             $audit = "capaAuditReport/" . $data->id;
+            $parent = "#";
         } elseif ($type == "Internal-Audit") {
             $data = InternalAudit::find($id);
             $single = "internalSingleReport/" . $data->id;
@@ -816,7 +817,6 @@ class DashboardController extends Controller
             $data = Observation::find($id);
             $single = "#";
             $audit = "ObservationAuditTrialShow/" .$data->id;
-            $parent="#";
         } elseif ($type == "Effectiveness-Check") {
             $data = EffectivenessCheck::find($id);
             $single = "effectiveSingleReport/" .$data->id;
@@ -829,6 +829,7 @@ class DashboardController extends Controller
             $data = RootCauseAnalysis::find($id);
             $single = "rootSingleReport/" . $data->id;
             $audit = "rootAuditReport/" . $data->id;
+            $parent="#";
         } elseif ($type == "Deviation") {
             $data = Deviation::find($id);
             $single = "deviationSingleReport/". $data->id;

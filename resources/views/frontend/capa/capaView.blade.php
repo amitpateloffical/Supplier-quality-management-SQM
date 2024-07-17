@@ -530,7 +530,6 @@
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="capa_attachment">
                                                         
-                                                        {{-- @if (is_array($data->capa_attachment)) --}}
                                                         @if ($data->capa_attachment)
                                                             @foreach (json_decode($data->capa_attachment) as $file)
                                                                 <h6 type="button" class="file-container text-dark"
@@ -545,7 +544,6 @@
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
                                                             @endforeach
-                                                        {{-- @endif --}}
                                                         @endif
                                                     </div>
                                                     <div class="add-btn">
@@ -659,6 +657,7 @@
                                                             <th>Batch Disposition Decision</th>
                                                             <th>Remark</th>
                                                             <th>Batch Status</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -738,6 +737,7 @@
                                                                 <option value="quarantine"{{ isset(unserialize($data2->material_batch_status)[$key]) && unserialize($data2->material_batch_status)[$key] == 'quarantine' ? ' selected' : '' }}>Quarantine</option>
                                                             </select>
                                                         </td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
 
                                                         </tr>
                                                     @endforeach

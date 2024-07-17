@@ -763,17 +763,17 @@ class CapaController extends Controller
         $capa->bd_domestic= $request->bd_domestic;
         $capa->Bd_Person= $request->Bd_Person;
         $capa->Production_Person= $request->Production_Person;
-        // if (!empty($request->capa_attachment)) {
-        //     $files = [];
-        //     if ($request->hasfile('capa_attachment')) {
-        //         foreach ($request->file('capa_attachment') as $file) {
-        //             $name = $request->name . 'capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $capa->capa_attachment = json_encode($files);
-        // }
+        if (!empty($request->capa_attachment)) {
+            $files = [];
+            if ($request->hasfile('capa_attachment')) {
+                foreach ($request->file('capa_attachment') as $file) {
+                    $name = $request->name . 'capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->capa_attachment = json_encode($files);
+        }
         if (!empty($request->closure_attachment)) {
             $files = [];
             if ($request->hasfile('closure_attachment')) {
@@ -1342,23 +1342,23 @@ class CapaController extends Controller
                     $history->stage = 'Plan Proposed';
                     $history->save();
 
-                    $list = Helpers::getHodUserList();
-                    foreach ($list as $u) {
-                        if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
+                //     $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $capa->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
                           
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $capa],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Submitted By ".Auth::user()->name);
-                                }
-                              );
-                            }
-                     } 
-                  }
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $capa],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Submitted By ".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      } 
+                //   }
            
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -1383,22 +1383,22 @@ class CapaController extends Controller
                 $history->stage = 'Plan Approved';
                 $history->save();
                 
-                $list = Helpers::getQAUserList();
-                foreach ($list as $u) {
-                    if($u->q_m_s_divisions_id == $capa->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
-                    if ($email !== null) {
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $capa],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Plan Approved By ".Auth::user()->name);
-                            }
-                        );
-                    }
-                  } 
-                }
+                // $list = Helpers::getQAUserList();
+                // foreach ($list as $u) {
+                //     if($u->q_m_s_divisions_id == $capa->division_id){
+                //     $email = Helpers::getInitiatorEmail($u->user_id);
+                //     if ($email !== null) {
+                //         Mail::send(
+                //             'mail.view-mail',
+                //             ['data' => $capa],
+                //             function ($message) use ($email) {
+                //                 $message->to($email)
+                //                     ->subject("Plan Approved By ".Auth::user()->name);
+                //             }
+                //         );
+                //     }
+                //   } 
+                // }
                 
                 $capa->update();
                 toastr()->success('Document Sent');

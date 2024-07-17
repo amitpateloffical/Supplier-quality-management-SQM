@@ -264,7 +264,7 @@
                         <th class="w-20">Description</th>
                         <td class="w-80" colspan="3">
                             @if ($data->description)
-                                {{ $data->description }}
+                                {{ strip_tags($data->description) }}
                             @else
                                 Not Applicable
                             @endif
@@ -441,7 +441,7 @@
                         <th class="w-20">HOD Comment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->HOD_comment)
-                                {{ $data->HOD_comment }}
+                                {{ strip_tags($data->HOD_comment) }}
                             @else
                                 Not Applicable
                             @endif
@@ -533,7 +533,7 @@
                         <th class="w-20">Supplier Services</th>
                         <td class="w-80" colspan="3">
                             @if ($data->supplier_serivce)
-                                {{ $data->supplier_serivce }}
+                                {{ strip_tags($data->supplier_serivce) }}
                             @else
                                 Not Applicable
                             @endif
@@ -665,7 +665,7 @@
                         <th class="w-20">Manufacturing Sites</th>
                         <td class="w-80" colspan="3">
                             @if ($data->manufacturing_sited)
-                                {{ $data->manufacturing_sited }}
+                                {{ strip_tags($data->manufacturing_sited) }}
                             @else
                                 Not Applicable
                             @endif
@@ -676,7 +676,7 @@
                         <th class="w-20">Quality Management</th>
                         <td class="w-80" colspan="3">
                             @if ($data->quality_management)
-                                {{ $data->quality_management }}
+                                {{ strip_tags($data->quality_management) }}
                             @else
                                 Not Applicable
                             @endif
@@ -687,7 +687,7 @@
                         <th class="w-20">Bussiness History</th>
                         <td class="w-80" colspan="3">
                             @if ($data->bussiness_history)
-                                {{ $data->bussiness_history }}
+                                {{ strip_tags($data->bussiness_history) }}
                             @else
                                 Not Applicable
                             @endif
@@ -698,7 +698,7 @@
                         <th class="w-20">Performance History</th>
                         <td class="w-80" colspan="3">
                             @if ($data->performance_history)
-                                {{ $data->performance_history }}
+                                {{ strip_tags($data->performance_history) }}
                             @else
                                 Not Applicable
                             @endif
@@ -709,7 +709,7 @@
                         <th class="w-20">Compliance Risk</th>
                         <td class="w-80" colspan="3">
                             @if ($data->compliance_risk)
-                                {{ $data->compliance_risk }}
+                                {{ strip_tags($data->compliance_risk) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1277,7 +1277,7 @@
                         <th class="w-20">Comment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->QA_head_comment)
-                                {{ $data->QA_head_comment }}
+                                {{ strip_tags($data->QA_head_comment) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1349,15 +1349,15 @@
                 <tr>
                     <th class="w-20">Submitted By</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->submit_by }}</div>
+                        <div class="static">{{ $data->submitted_by }}</div>
                     </td>
                     <th class="w-20">Submitted On</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->submit_on }}</div>
+                        <div class="static">{{ $data->submitted_on }}</div>
                     </td>
                     <th class="w-20">Submitted Comment</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->submit_comment }}</div>
+                        <div class="static">{{ $data->submitted_comment }}</div>
                     </td>
                 </tr>
 

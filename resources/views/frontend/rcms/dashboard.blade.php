@@ -137,20 +137,23 @@
                                 <label for="scope">Process</label>
                                 <select id="scope" name="form">
                                     <option value="">All Records</option>
+                                    <option value="Supplier">Supplier</option>
+                                    <option value="Supplier Site">Supplier Site</option>
+                                    <option value="Supplier-Audit">Supplier Audit</option>
                                     {{-- <option value="Internal-Audit">Internal Audit</option>
                                     <option value="External-Audit">External Audit</option> --}}
                                     <option value="Capa">CAPA</option>
                                     {{-- <option value="Audit-Program">Audit Program</option>
-                                    <option value="Lab Incident">Lab Incident</option>
-                                    <option value="Risk Assesment">Risk Assesment</option> --}}
+                                    <option value="Lab Incident">Lab Incident</option> --}}
+                                    <option value="Risk Assesment">Risk Assesment</option> 
                                     <option value="Root-Cause-Analysis">Root Cause Analysis</option>
                                     <option value="Management Review">Management Review</option>
                                     {{-- <option value="Document">Document</option>
-                                    <option value="Extension">Extension</option>
+                                    <option value="Extension">Extension</option> --}}
                                     <option value="Observation">Observation</option>
                                     <option value="Change Control">Change Control</option>
-                                    <option value="Action Item">Action Item</option> --}}
-                                    <option value="Effectiveness Check">Effectiveness Check</option>
+                                    <!-- <option value="Action Item">Action Item</option>  -->
+                                    <!-- <option value="Effectiveness Check">Effectiveness Check</option> -->
                                     <option value="Deviation">Deviation</option>
                                      {{-- <option value="tms">TMS</option>  --}}
                                 </select>
@@ -177,7 +180,7 @@
                                         <th>Parent ID</th>
                                         <th>Division</th>
                                         <th>Process</th>
-                                        <th style="width: 10px;" class="td_desc">Short Description</th>
+                                        <th class="td_desc">Short Description</th>
                                         <th>Date Opened</th>
                                         <th>Originator</th>
                                         <th> Initiation Date</th>
@@ -479,16 +482,7 @@
                                                 data-bs-target="#record-modal">
                                                 {{ $datas->type }}
                                             </td>
-                                            <style>
-                                                #short-width{
-                                                    display: inline-block;
-                                                    width: 320px !important;
-                                                    white-space: nowrap;
-                                                    overflow: hidden !important;
-                                                    text-overflow: ellipsis;
-                                                }
-                                            </style>
-                                            <td id="short-width" class="viewdetails" data-id="{{ $datas->id }}"
+                                            <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 {{ $datas->short_description }}
@@ -508,7 +502,11 @@
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
-                                                {{ Helpers::getdateFormat($datas->intiation_date, true) }}
+                                                @if ($datas->type == 'Deviation' || $datas->type == 'Change-Control')
+                                                    {{ Helpers::getdateFormat($datas->intiation_date, true) }}
+                                                @else
+                                                    {{ Helpers::getdateFormat($datas->intiation_date) }}
+                                                @endif
 
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"

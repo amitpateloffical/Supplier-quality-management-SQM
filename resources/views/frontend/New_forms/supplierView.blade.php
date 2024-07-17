@@ -388,7 +388,7 @@ function addMultipleFiles(input, block_id) {
                                                 <input disabled type="text" value="{{ $data->initiator_name }} ">
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                       <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Date Due">Date of Initiation</label>
                                                 <input readonly type="text"
@@ -397,7 +397,6 @@ function addMultipleFiles(input, block_id) {
 
                                             </div>
                                         </div>
-                                       
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Assigned to</label>

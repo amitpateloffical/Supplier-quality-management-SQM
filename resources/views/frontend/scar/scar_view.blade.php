@@ -179,9 +179,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Submit
                         </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                            Cancel
-                        </button>
+                        <!--<button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">-->
+                        <!--    Cancel-->
+                        <!--</button>-->
                     @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Acknowledged

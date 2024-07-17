@@ -399,14 +399,21 @@
                                             @enderror
                                         </div>
                                     </div>
+
+                                    @php
+                                        $initiationDate = $data->intiation_date;
+                                        $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
+                                    @endphp
+
+
                                     <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date"> Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                        
-                                            <input type="text" id="due_date" name="due_date" 
-                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
-                                            <!-- <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" -->
+                                        <div class="calenderauditee">
+                                            <input readonly type="text" value="{{ Helpers::getdateFormat($dueDate) }}" id="due_date" />
+                                        </div>
  
                                     </div>  
                                  </div>                                  <!-- <div class="col-lg-6">
@@ -717,6 +724,7 @@
                                                             <th>Root Cause Sub-Category</th>
                                                             <th>Probability</th>
                                                             <th>Remarks</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -729,6 +737,7 @@
                                                                 <td><input type="text" name="Root_Cause_Sub_Category[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($data->Root_Cause_Sub_Category)[$key] ? unserialize($data->Root_Cause_Sub_Category)[$key] : '' }}"></td>
                                                                 <td><input type="text" name="Probability[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($data->Probability)[$key] ? unserialize($data->Probability)[$key] : '' }}"></td>
                                                                 <td><input type="text" name="Remarks[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($data->Remarks)[$key] ?? null }}"></td>
+                                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                             @endif
@@ -772,6 +781,7 @@
                                                                 number, IQ,
                                                                 OQ or
                                                                 PQ)</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -866,6 +876,7 @@
                                                                 <td>
                                                                     <input name="mitigation_proposal[]" type="text" value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}" >
                                                                 </td>
+                                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                             </tr>    
                                                             @endforeach
                                                         @endif
@@ -1571,6 +1582,25 @@
             }
         </style>
 
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+        const removeButtons = document.querySelectorAll('.remove-file');
+
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const fileName = this.getAttribute('data-file-name');
+                const fileContainer = this.parentElement;
+
+                // Hide the file container
+                if (fileContainer) {
+                    fileContainer.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
+
             <script>
                 // ================================ FOUR INPUTS
 function add4Input_case(tableId) {
@@ -1593,6 +1623,9 @@ function add4Input_case(tableId) {
 
     var cell5 = newRow.insertCell(4);
     cell5.innerHTML = "<input type='text'  name='Remarks[]'>";
+
+    var cell6 = newRow.insertCell(5);
+    cell6.innerHTML = '<button type="text" class="removeRowBtn">Remove</button';
     for (var i = 1; i < currentRowCount; i++) {
         var row = table.rows[i];
         row.cells[0].innerHTML = i;
@@ -1769,7 +1802,12 @@ function add4Input_case(tableId) {
                             });
                         });
                     });
-                </script>    
+                </script>   
+                <script>
+                    $(document).on('click', '.removeRowBtn', function() {
+                        $(this).closest('tr').remove();
+                    })
+                </script> 
        
         <script>
         var maxLength = 255;

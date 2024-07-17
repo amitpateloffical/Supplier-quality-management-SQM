@@ -66,6 +66,7 @@ class SupplierAuditController extends Controller
         $internalAudit->record = ((RecordNumber::first()->value('counter')) + 1);
         $internalAudit->initiator_id = Auth::user()->id;
         $internalAudit->parent_type = $request->parent_type;
+        $internalAudit->parent_id = $request->parent_id;
         $internalAudit->division_id = $request->division_id;
         // dd($request->division_id);
         $internalAudit->intiation_date = $request->intiation_date;
@@ -106,7 +107,6 @@ class SupplierAuditController extends Controller
         $internalAudit->Remarks = $request->Remarks;
         $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
-        // $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date = $request->audit_start_date;
         $internalAudit->audit_end_date = $request->audit_end_date;
         $internalAudit->status = 'Opened';
@@ -854,7 +854,7 @@ class SupplierAuditController extends Controller
         $lastDocument = SupplierAudit::find($id);
         $internalAudit = SupplierAudit::find($id);
         $internalAudit->assign_to = $request->assign_to;
-        
+      
         $initiatorGroupShortForm = $request->Initiator_Group;
         $initiatorGroupFullForm = $departments[$initiatorGroupShortForm] ?? 'Unknown Department';
         $internalAudit->Initiator_Group = $initiatorGroupFullForm;

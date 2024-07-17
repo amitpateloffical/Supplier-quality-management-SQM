@@ -165,19 +165,52 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date ">
-                                        <label for="due-date">Due Date<span class="text-danger"></span></label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
-                                        </div>
+
+                                @php
+                                // Calculate the due date (30 days from the initiation date)
+                                $initiationDate = date('Y-m-d'); // Current date as initiation date
+                                $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                            @endphp
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Due Date">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
-                                            <input type="text" name="due_date" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    // Format the due date to DD-MM-YYYY
+                                    // Your input date
+                                    var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+
+                                    // Create a Date object
+                                    var date = new Date(dueDate);
+
+                                    // Array of month names
+                                    var monthNames = [
+                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                    ];
+
+                                    // Extracting day, month, and year from the date
+                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                                    var monthIndex = date.getMonth();
+                                    var year = date.getFullYear();
+
+                                    // Formatting the date in "dd-MMM-yyyy" format
+                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+
+                                    // Set the formatted due date value to the input field
+                                    document.getElementById('due_date').value = dueDateFormatted;
+                                </script>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="initiator-group">Initiator Group <span

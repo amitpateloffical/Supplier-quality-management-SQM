@@ -502,11 +502,12 @@
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
-                                                @if ($datas->type == 'Deviation' || $datas->type == 'Change-Control')
+                                                {{ Helpers::getdateFormat($datas->due_date) }}
+                                                <!-- @if ($datas->type == 'Deviation' || $datas->type == 'Change-Control')
                                                     {{ Helpers::getdateFormat($datas->intiation_date, true) }}
                                                 @else
-                                                    {{ Helpers::getdateFormat($datas->intiation_date) }}
-                                                @endif
+                                                    {{ Helpers::getdateFormat($datas->due_date) }}
+                                                @endif -->
 
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"

@@ -209,7 +209,7 @@
                                 View
                             </button>
                             <button class="button_theme1"><a class="text-white"
-                                    href="{{ url('rcms/supplier-show/' . $document->id) }}"> Back
+                                    href="{{ url('rcms/supplier-site-show/' . $document->id) }}"> Back
                                 </a>
                             </button>
                             <button class="button_theme1" onclick="window.print();">

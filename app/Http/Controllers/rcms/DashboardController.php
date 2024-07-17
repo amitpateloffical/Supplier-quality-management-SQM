@@ -93,6 +93,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         $supplierSite = SupplierSite::orderByDesc('id')->get();
@@ -115,6 +116,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
 
@@ -135,6 +137,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas2 as $data) {
@@ -153,6 +156,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas3 as $data) {
@@ -172,6 +176,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas4 as $data) {
@@ -191,6 +196,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas5 as $data) {
@@ -211,6 +217,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas6 as $data) {
@@ -229,6 +236,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas7 as $data) {
@@ -247,6 +255,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas8 as $data) {
@@ -264,6 +273,7 @@ class DashboardController extends Controller
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
+                "due_date" => $data->due_date,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -283,6 +293,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas10 as $data) {
@@ -302,6 +313,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas11 as $data) {
@@ -321,6 +333,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas12 as $data) {
@@ -340,6 +353,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas13 as $data) {
@@ -359,6 +373,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas15 as $data) {
@@ -378,6 +393,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($supplier as $data) {
@@ -397,6 +413,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
 
@@ -417,6 +434,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
 
@@ -437,6 +455,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         $table  = collect($table)->sortBy('record')->reverse()->toArray();

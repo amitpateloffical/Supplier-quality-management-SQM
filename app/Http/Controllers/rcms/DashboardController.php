@@ -328,9 +328,9 @@ class DashboardController extends Controller
 
             array_push($table, [
                 "id" => $data->id,
-                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "parent" => $data->parent_id ? $data->parent_id : "-",
                 "record" => $data->record,
-                "division_id" => $data->division_id,
+                "division_id" => $data->division_code,
                 "type" => "Observation",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
@@ -816,6 +816,7 @@ class DashboardController extends Controller
             $data = Observation::find($id);
             $single = "#";
             $audit = "ObservationAuditTrialShow/" .$data->id;
+            $parent="#";
         } elseif ($type == "Effectiveness-Check") {
             $data = EffectivenessCheck::find($id);
             $single = "effectiveSingleReport/" .$data->id;

@@ -127,13 +127,13 @@ function addMultipleFiles(input, block_id) {
         cell2.innerHTML = "<input type='text' name='audit[]'>";
 
         var cell3 = newRow.insertCell(2);
-        cell3.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="scheduled_start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div>';
+        cell3.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="scheduled_start_date' + currentRowCount + '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + currentRowCount + '_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount + '`);checkEndDate(`scheduled_start_date' + currentRowCount + '_checkdate`, `scheduled_end_date' + currentRowCount + '_checkdate`)" /></div></div></div>';
 
         var cell4 = newRow.insertCell(3);
         cell4.innerHTML = "<input type='time' name='scheduled_start_time[]'>";
 
         var cell5 = newRow.insertCell(4);
-        cell5.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="scheduled_end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div>';
+        cell5.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="scheduled_end_date' + currentRowCount + '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date' + currentRowCount + '_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount + '`);checkEndDate(`scheduled_start_date' + currentRowCount + '_checkdate`, `scheduled_end_date' + currentRowCount + '_checkdate`)" /></div></div></div>';
 
         var cell6 = newRow.insertCell(5);
         cell6.innerHTML = "<input type='time' name='scheduled_end_time[]'>";
@@ -155,7 +155,7 @@ function addMultipleFiles(input, block_id) {
         cell8.innerHTML = auditeeHtml;
 
         var cell9 = newRow.insertCell(8);
-        cell9.innerHTML = "<input type='text' name='remark[]'>";
+        cell9.innerHTML = "<input type='text' name='remarks[]'>";
 
         var cell10 = newRow.insertCell(9);
         cell10.innerHTML = '<button type="button" class="removeRowBtn">Remove</button>';
@@ -169,11 +169,24 @@ function addMultipleFiles(input, block_id) {
     });
 
     function updateRowNumbers() {
-        $('#audit-agenda-grid tbody tr').each(function(index, row) {
+        $('#internalaudit tbody tr').each(function(index, row) {
             $(row).find('td:first').text(index + 1);
         });
     }
+
+    function checkEndDate(startDateId, endDateId) {
+        var startDate = document.getElementById(startDateId).value;
+        var endDate = document.getElementById(endDateId).value;
+
+        if (startDate && endDate) {
+            if (new Date(endDate) < new Date(startDate)) {
+                alert('End date cannot be earlier than start date.');
+                document.getElementById(endDateId).value = ''; // Clear the end date field
+            }
+        }
+    }
 </script>
+
 
 
     <div class="form-field-head">
@@ -433,36 +446,73 @@ function addMultipleFiles(input, block_id) {
                                             var monthIndex = date.getMonth();
                                             var year = date.getFullYear();
         
-                                            // Formatting the date in "dd-MMM-yyyy" format
+                                            // Formatting the date in "dd-MM-yyyy" format
                                             var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
         
                                             // Set the formatted due date value to the input field
                                             document.getElementById('due_date').value = dueDateFormatted;
                                         </script>
 
-                                            <div class="col-lg-6">
-                                                                                <div class="group-input">
-                                                <label for="Initiator Group"><b>Initiator Group</b><span class="text-danger">*</span></label>
-                                                <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} id="initiator_group">
-                                                    <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
-                                                    <option value="QAB" @if ($data->Initiator_Group == 'QAB') selected @endif>Quality Assurance Biopharma</option>
-                                                    <option value="CQC" @if ($data->Initiator_Group == 'CQC') selected @endif>Central Quality Control</option>
-                                                    <option value="MANU" @if ($data->Initiator_Group == 'MANU') selected @endif>Manufacturing</option>
-                                                    <option value="PSG" @if ($data->Initiator_Group == 'PSG') selected @endif>Plasma Sourcing Group</option>
-                                                    <option value="CS" @if ($data->Initiator_Group == 'CS') selected @endif>Central Stores</option>
-                                                    <option value="ITG" @if ($data->Initiator_Group == 'ITG') selected @endif>Information Technology Group</option>
-                                                    <option value="MM" @if ($data->Initiator_Group == 'MM') selected @endif>Molecular Medicine</option>
-                                                    <option value="CL" @if ($data->Initiator_Group == 'CL') selected @endif>Central Laboratory</option>
-                                                    <option value="TT" @if ($data->Initiator_Group == 'TT') selected @endif>Tech team</option>
-                                                    <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif>Quality Assurance</option>
-                                                    <option value="QM" @if ($data->Initiator_Group == 'QM') selected @endif>Quality Management</option>
-                                                    <option value="IA" @if ($data->Initiator_Group == 'IA') selected @endif>IT Administration</option>
-                                                    <option value="ACC" @if ($data->Initiator_Group == 'ACC') selected @endif>Accounting</option>
-                                                    <option value="LOG" @if ($data->Initiator_Group == 'LOG') selected @endif>Logistics</option>
-                                                    <option value="SM" @if ($data->Initiator_Group == 'SM') selected @endif>Senior Management</option>
-                                                    <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif>Business Administration</option>
-                                                </select>
-                                            </div>
+<div class="col-lg-6">
+<div class="group-input">
+                                        <label for="Initiator Group"><b>Initiator Group</b><span class="text-danger">*</span></label>
+                                        <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}
+                                             id="initiator_group">
+                                             <option value="">--Select Option --</option>
+                                            <option value="Corporate Quality Assurance"
+                                                @if ($data->Initiator_Group== 'Corporate Quality Assurance') selected @endif>Corporate
+                                                Quality Assurance</option>
+                                            <option value="QAB"
+                                                @if ($data->Initiator_Group== 'QAB') selected @endif>Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC"
+                                                @if ($data->Initiator_Group== 'CQC') selected @endif>Central
+                                                Quality Control</option>
+                                            <option value="CQC"
+                                                @if ($data->Initiator_Group== 'MANU') selected @endif>Manufacturing
+                                            </option>
+                                            <option value="PSG"
+                                                @if ($data->Initiator_Group== 'PSG') selected @endif>Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS"
+                                                @if ($data->Initiator_Group== 'CS') selected @endif>Central
+                                                Stores</option>
+                                            <option value="ITG"
+                                                @if ($data->Initiator_Group== 'ITG') selected @endif>Information
+                                                Technology Group</option>
+                                            <option value="MM"
+                                                @if ($data->Initiator_Group== 'MM') selected @endif>Molecular
+                                                Medicine</option>
+                                            <option value="CL"
+                                                @if ($data->Initiator_Group== 'CL') selected @endif>Central
+                                                Laboratory</option>
+                                            <option value="TT"
+                                                @if ($data->Initiator_Group== 'TT') selected @endif>Tech
+                                                team</option>
+                                            <option value="QA"
+                                                @if ($data->Initiator_Group== 'QA') selected @endif>Quality
+                                                Assurance</option>
+                                            <option value="QM"
+                                                @if ($data->Initiator_Group== 'QM') selected @endif>Quality
+                                                Management</option>
+                                            <option value="IA"
+                                                @if ($data->Initiator_Group== 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC"
+                                                @if ($data->Initiator_Group== 'ACC') selected @endif>Accounting
+                                            </option>
+                                            <option value="LOG"
+                                                @if ($data->Initiator_Group== 'LOG') selected @endif>Logistics
+                                            </option>
+                                            <option value="SM"
+                                                @if ($data->Initiator_Group== 'SM') selected @endif>Senior
+                                                Management</option>
+                                            <option value="BA"
+                                                @if ($data->Initiator_Group== 'BA') selected @endif>Business
+                                                Administration</option>
+
+                                        </select>
+                                    </div>
 
                                 </div>
                                 <div class="col-lg-6">
@@ -688,7 +738,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input input-date">
                                                 <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
                                                 <div class="calenderauditee">                                     
-                                                    <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"
+                                                    <input type="text"  id="start_date"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
                                                     <input type="date" id="start_date_checkdate" name="start_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->start_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
@@ -699,7 +749,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input  input-date">
                                                 <label for="Audit Schedule End Date">Audit Schedule End Date</label>
                                                 <div class="calenderauditee">                                     
-                                                    <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
+                                                    <input type="text"  id="end_date"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
                                                     <input type="date" id="end_date_checkdate" name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->end_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
@@ -736,7 +786,7 @@ function addMultipleFiles(input, block_id) {
                                 <div class="group-input new-date-data-field mb-0">
                                     <div class="input-date">
                                         <div class="calenderauditee">
-                                            <input type="text" class="test" id="scheduled_start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->start_date)[$key]) }}" />
+                                            <input type="text" class="test" id="scheduled_start_date{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->start_date)[$key]) }}" />
                                             <input type="date" id="schedule_start_date{{$key}}_checkdate" name="scheduled_start_date[]" value="{{ unserialize($sgrid->start_date)[$key] }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                         </div>
                                     </div>
@@ -747,7 +797,7 @@ function addMultipleFiles(input, block_id) {
                                 <div class="group-input new-date-data-field mb-0">
                                     <div class="input-date">
                                         <div class="calenderauditee">
-                                            <input type="text" class="test" id="scheduled_end_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->end_date)[$key]) }}" />
+                                            <input type="text" class="test" id="scheduled_end_date{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->end_date)[$key]) }}" />
                                             <input type="date" id="schedule_end_date{{$key}}_checkdate" name="scheduled_end_date[]" value="{{ unserialize($sgrid->end_date)[$key] }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                         </div>
                                     </div>
@@ -1109,7 +1159,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input input-date">
                                                 <label for="Audit Start Date">Audit Start Date</label>
                                                     <div class="calenderauditee">                                     
-                                                        <input type="text"  id="audit_start_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
+                                                        <input type="text"  id="audit_start_date"  readonly placeholder="DD-MM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                         <input type="date" id="audit_start_date_checkdate" name="audit_start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_start_date }}"
                                                         class="hide-input"
@@ -1121,7 +1171,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input input-date">
                                                 <label for="Audit End Date">Audit End Date</label>
                                                     <div class="calenderauditee">                                     
-                                                    <input type="text"  id="audit_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
+                                                    <input type="text"  id="audit_end_date"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                     <input type="date" id="audit_end_date_checkdate" name="audit_end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }}"
                                                     class="hide-input"

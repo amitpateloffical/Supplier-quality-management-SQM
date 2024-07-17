@@ -31,45 +31,80 @@
         }
     </script>
     <script>
-        function addAuditAgenda(tableId) {
-            var table = document.getElementById(tableId);
-            var currentRowCount = table.rows.length;
-            var newRow = table.insertRow(currentRowCount);
-            newRow.setAttribute("id", "row" + currentRowCount);
-            var cell1 = newRow.insertCell(0);
-            cell1.innerHTML = currentRowCount;
+    function addAuditAgenda(tableId) {
+        var users = @json($users);
+        var table = document.getElementById(tableId);
+        var currentRowCount = table.rows.length;
+        var newRow = table.insertRow(currentRowCount);
+        newRow.setAttribute("id", "row" + currentRowCount);
 
-            var cell2 = newRow.insertCell(1);
-            cell2.innerHTML = "<input type='text'>";
+        var cell1 = newRow.insertCell(0);
+        cell1.innerHTML = currentRowCount;
 
-            var cell3 = newRow.insertCell(2);
-            cell3.innerHTML = "<input type='date'>";
+        var cell2 = newRow.insertCell(1);
+        cell2.innerHTML = "<input type='text' name='audit[]'>";
 
-            var cell4 = newRow.insertCell(3);
-            cell4.innerHTML = "<input type='time'>";
+        var cell3 = newRow.insertCell(2);
+        cell3.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="scheduled_start_date' + currentRowCount + '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + currentRowCount + '_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount + '`);checkEndDate(`scheduled_start_date' + currentRowCount + '_checkdate`, `scheduled_end_date' + currentRowCount + '_checkdate`)" /></div></div></div>';
 
-            var cell5 = newRow.insertCell(4);
-            cell5.innerHTML = "<input type='date'>";
+        var cell4 = newRow.insertCell(3);
+        cell4.innerHTML = "<input type='time' name='scheduled_start_time[]'>";
 
-            var cell6 = newRow.insertCell(5);
-            cell6.innerHTML = "<input type='time'>";
+        var cell5 = newRow.insertCell(4);
+        cell5.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="scheduled_end_date' + currentRowCount + '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date' + currentRowCount + '_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount + '`);checkEndDate(`scheduled_start_date' + currentRowCount + '_checkdate`, `scheduled_end_date' + currentRowCount + '_checkdate`)" /></div></div></div>';
 
-            var cell7 = newRow.insertCell(6);
-            cell7.innerHTML =
-                // '<select name="auditor"><option value="">-- Select --</option><option value="1">Amit Guru</option></select>'
+        var cell6 = newRow.insertCell(5);
+        cell6.innerHTML = "<input type='time' name='scheduled_end_time[]'>";
 
-            var cell8 = newRow.insertCell(7);
-            cell8.innerHTML =
-                // '<select name="auditee"><option value="">-- Select --</option><option value="1">Amit Guru</option></select>'
+        var cell7 = newRow.insertCell(6);
+        var auditorHtml = '<select name="auditor[]"><option value="">-- Select --</option>';
+        for (var i = 0; i < users.length; i++) {
+            auditorHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+        }
+        auditorHtml += '</select>';
+        cell7.innerHTML = auditorHtml;
 
-            var cell9 = newRow.insertCell(8);
-            cell9.innerHTML = "<input type='text'>";
-            for (var i = 1; i < currentRowCount; i++) {
-                var row = table.rows[i];
-                row.cells[0].innerHTML = i;
+        var cell8 = newRow.insertCell(7);
+        var auditeeHtml = '<select name="auditee[]"><option value="">-- Select --</option>';
+        for (var i = 0; i < users.length; i++) {
+            auditeeHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+        }
+        auditeeHtml += '</select>';
+        cell8.innerHTML = auditeeHtml;
+
+        var cell9 = newRow.insertCell(8);
+        cell9.innerHTML = "<input type='text' name='remarks[]'>";
+
+        var cell10 = newRow.insertCell(9);
+        cell10.innerHTML = '<button type="button" class="removeRowBtn">Remove</button>';
+
+        updateRowNumbers();
+    }
+
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+        updateRowNumbers();
+    });
+
+    function updateRowNumbers() {
+        $('#internalaudit tbody tr').each(function(index, row) {
+            $(row).find('td:first').text(index + 1);
+        });
+    }
+
+    function checkEndDate(startDateId, endDateId) {
+        var startDate = document.getElementById(startDateId).value;
+        var endDate = document.getElementById(endDateId).value;
+
+        if (startDate && endDate) {
+            if (new Date(endDate) < new Date(startDate)) {
+                alert('End date cannot be earlier than start date.');
+                document.getElementById(endDateId).value = ''; // Clear the end date field
             }
         }
-    </script>
+    }
+</script>
+
    <script>
     $(document).ready(function() {
         $('#internalaudit-table').click(function(e) {
@@ -321,57 +356,82 @@
                                     document.getElementById('due_date').value = dueDateFormatted;
                                 </script>
 
-
-                                <div class="col-lg-6">
+<div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
                                         <select name="Initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('Initiator_Group') == 'CQC') selected @endif>Central
-                                                Quality Control</option>
-                                            <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>Central
-                                                Laboratory</option>
+                                            <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
+                                            <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
+                                            <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
+                                            <option value="MANU" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
+                                            <option value="PSG" @if(old('Initiator_Group') =="PSG") selected @endif>Plasma Sourcing Group</option>
+                                            <option value="CS"  @if(old('Initiator_Group') == "CS") selected @endif>Central Stores</option>
+                                            <option value="ITG" @if(old('Initiator_Group') =="ITG") selected @endif>Information Technology Group</option>
+                                            <option value="MM"  @if(old('Initiator_Group') == "MM") selected @endif>Molecular Medicine</option>
+                                            <option value="CL"  @if(old('Initiator_Group') == "CL") selected @endif>Central Laboratory</option>
 
-                                            <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
-                                                team</option>
-                                            <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
-                                                Business Administration</option>
+                                            <option value="TT"  @if(old('Initiator_Group') == "TT") selected @endif>Tech team</option>
+                                            <option value="QA"  @if(old('Initiator_Group') == "QA") selected @endif> Quality Assurance</option>
+                                            <option value="QM"  @if(old('Initiator_Group') == "QM") selected @endif>Quality Management</option>
+                                            <option value="IA"  @if(old('Initiator_Group') == "IA") selected @endif>IT Administration</option>
+                                            <option value="ACC"  @if(old('Initiator_Group') == "ACC") selected @endif>Accounting</option>
+                                            <option value="LOG"  @if(old('Initiator_Group') == "LOG") selected @endif>Logistics</option>
+                                            <option value="SM"  @if(old('Initiator_Group') == "SM") selected @endif>Senior Management</option>
+                                            <option value="BA"  @if(old('Initiator_Group') == "BA") selected @endif>Business Administration</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" readonly>
+                                    <!-- <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group"><b>Initiator Group</b></label>
+                                            <select name="Initiator_Group" id="initiator_group">
+                                                <option value="">-- Select --</option>
+                                                <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
+                                                    Corporate Quality Assurance</option>
+                                                <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>Quality
+                                                    Assurance Biopharma</option>
+                                                <option value="CQC" @if (old('Initiator_Group') == 'CQC') selected @endif>Central
+                                                    Quality Control</option>
+                                                <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
+                                                    Manufacturing</option>
+                                                <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
+                                                    Sourcing Group</option>
+                                                <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>Central
+                                                    Stores</option>
+                                                <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
+                                                    Information Technology Group</option>
+                                                <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
+                                                    Molecular Medicine</option>
+                                                <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>Central
+                                                    Laboratory</option>
+
+                                                <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
+                                                    team</option>
+                                                <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
+                                                    Quality Assurance</option>
+                                                <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
+                                                    Quality Management</option>
+                                                <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
+                                                    Administration</option>
+                                                <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
+                                                    Accounting</option>
+                                                <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
+                                                    Logistics</option>
+                                                <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
+                                                    Senior Management</option>
+                                                <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
+                                                    Business Administration</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group Code">Initiator Group Code</label>
+                                            <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                                value="" readonly>
+                                        </div>
                                     </div>
-                                </div>
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span

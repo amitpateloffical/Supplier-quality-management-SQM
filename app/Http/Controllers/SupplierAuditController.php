@@ -35,25 +35,26 @@ class SupplierAuditController extends Controller
 
     public function create(Request $request)
     {
-        $departments = [
-            'CQA' => 'Corporate Quality Assurance',
-            'QAB' => 'Quality Assurance Biopharma',
-            'CQC' => 'Central Quality Control',
-            'MFG' => 'Manufacturing',
-            'PSG' => 'Plasma Sourcing Group',
-            'CS' => 'Central Stores',
-            'ITG' => 'Information Technology Group',
-            'MM' => 'Molecular Medicine',
-            'CL' => 'Central Laboratory',
-            'TT' => 'Tech team',
-            'QA' => 'Quality Assurance',
-            'QM' => 'Quality Management',
-            'ITA' => 'IT Administration',
-            'ACC' => 'Accounting',
-            'LOG' => 'Logistics',
-            'SM' => 'Senior Management',
-            'BA' => 'Business Administration'
-        ];
+        // $departments = [
+        //     'CQA' => 'Corporate Quality Assurance',
+        //     'QAB' => 'Quality Assurance Biopharma',
+        //     'CQC' => 'Central Quality Control',
+        //     'MFG' => 'Manufacturing',
+        //     'PSG' => 'Plasma Sourcing Group',
+        //     'CS' => 'Central Stores',
+        //     'ITG' => 'Information Technology Group',
+        //     'MM' => 'Molecular Medicine',
+        //     'CL' => 'Central Laboratory',
+        //     'TT' => 'Tech team',
+        //     'QA' => 'Quality Assurance',
+        //     'QM' => 'Quality Management',
+        //     'ITA' => 'IT Administration',
+        //     'ACC' => 'Accounting',
+        //     'LOG' => 'Logistics',
+        //     'SM' => 'Senior Management',
+        //     'BA' => 'Business Administration'
+        // ];
+        
 
         if (!$request->short_description) {
             toastr()->error("Short description is required");
@@ -71,10 +72,10 @@ class SupplierAuditController extends Controller
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date = $request->due_date;
-        $initiatorGroupShortForm = $request->Initiator_Group;
-        $initiatorGroupFullForm = $departments[$initiatorGroupShortForm] ?? 'Unknown Department';
-        $internalAudit->Initiator_Group = $initiatorGroupFullForm;
-        $internalAudit->initiator_group_code= $request->initiator_group_code;
+        $internalAudit->Initiator_Group = $request->Initiator_Group;
+        // $initiatorGroupFullForm = $departments[$initiatorGroupShortForm] ?? 'Unknown Department';
+        // $internalAudit->Initiator_Group = $initiatorGroupFullForm;
+        $internalAudit->initiator_group_code = $request->initiator_group_code;
         $internalAudit->short_description = $request->short_description;
         $internalAudit->audit_type = $request->audit_type;
         $internalAudit->if_other = $request->if_other;
@@ -1988,8 +1989,11 @@ public static function singleReport($id)
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
+        $supplierDivision = SupplierAudit::find($id);
+        // dd($supplierDivision->division_id);
+        $divisionId = $supplierDivision->division_code;
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+        return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type','divisionId'));
         
     }
     

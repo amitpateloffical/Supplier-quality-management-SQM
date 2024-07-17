@@ -179,7 +179,7 @@ $users = DB::table('users')->get();
                                     <label for="Due Date"> Due Date </label>
                                     <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly value="{{ $dueDate }}" />
+                                        <input type="text" name="due_date" readonly value="{{ Helpers::getdateFormat($dueDate) }}" />
                                         <!-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" /> -->
                                     </div>
                                 </div>
@@ -864,9 +864,9 @@ $users = DB::table('users')->get();
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <!-- <button type="submit" class="saveButton">Save</button> -->
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="submit">Submit</button>
+                            <!-- <button type="submit">Submit</button> -->
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                         </div>
                     </div>

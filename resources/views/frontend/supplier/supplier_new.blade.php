@@ -223,7 +223,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Suppliers Products">Suppliers Products</label>
-                                    <input name="supplier_products" id="supplier_products" type="text">
+                                    <input name="supplier_products" id="supplier_products" type="text" maxlength="100">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -739,7 +739,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Distribution Sites">Distribution Sites</label>
-                                    <input type="text" id="distribution_sites" name="distribution_sites">
+                                    <input type="text" id="distribution_sites" name="distribution_sites" maxlength="50">
                                 </div>
                             </div>
                             <div class="col-12">

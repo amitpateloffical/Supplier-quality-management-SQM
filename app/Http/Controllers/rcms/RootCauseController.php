@@ -254,6 +254,9 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
         $history->save();
 
         $history = new RootAuditTrial();
@@ -266,6 +269,9 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
         $history->save();
 
         $history = new RootAuditTrial();
@@ -278,6 +284,9 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
         $history->save();
 
         $history = new RootAuditTrial();
@@ -290,6 +299,9 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
         $history->save();
 
         $history = new RootAuditTrial();
@@ -302,6 +314,9 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
         $history->save();
  
 
@@ -315,6 +330,9 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
         $history->save();
 
         $history = new RootAuditTrial();
@@ -327,6 +345,9 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
         $history->save();
 
         $history = new RootAuditTrial();
@@ -339,6 +360,9 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
         $history->save();
 
         $history = new RootAuditTrial();
@@ -351,6 +375,9 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
         $history->save();
 
         $history = new RootAuditTrial();
@@ -363,6 +390,9 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
         $history->save();
 
         $history = new RootAuditTrial();
@@ -375,6 +405,9 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
         $history->save();
 
         $history = new RootAuditTrial();
@@ -387,6 +420,9 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
         $history->save();
 
         if (!empty($root->due_date)) {
@@ -400,6 +436,9 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
         $history->save();
 
         }
@@ -610,6 +649,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->initiator_Group != $root->initiator_Group || !empty($request->initiator_Group_comment)) {
@@ -624,6 +666,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->short_description != $root->short_description || !empty($request->short_description_comment)) {
@@ -638,6 +683,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->assign_to != $root->assign_to || !empty($request->assign_to_comment)) {
@@ -652,6 +700,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->Sample_Types != $root->Sample_Types || !empty($request->Sample_Types_comment)) {
@@ -666,6 +717,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->investigators != $root->investigators || !empty($request->investigators_comment)) {
@@ -680,6 +734,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->cft_attchament_new != $root->cft_attchament_new || !empty($request->cft_attchament_new)) {
@@ -694,6 +751,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->comments != $root->comments || !empty($request->comments_comment)) {
@@ -708,6 +768,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->lab_inv_concl != $root->lab_inv_concl || !empty($request->lab_inv_concl_comment)) {
@@ -722,6 +785,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->lab_inv_attach != $root->lab_inv_attach || !empty($request->lab_inv_attach_comment)) {
@@ -736,6 +802,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->qc_head_comments != $root->qc_head_comments || !empty($request->qc_head_comments_comment)) {
@@ -750,6 +819,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->inv_attach != $root->inv_attach || !empty($request->inv_attachcomment)) {
@@ -764,6 +836,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->due_date != $root->due_date || !empty($request->due_date_comment)) {
@@ -778,6 +853,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->due_date != $root->due_date || !empty($request->due_date_comment)) {
@@ -792,6 +870,9 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         toastr()->success("Record is update Successfully");
@@ -1051,6 +1132,7 @@ use Illuminate\Support\Facades\Hash;
         $audit = RootAuditTrial::where('root_id', $id)->orderByDESC('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = RootCauseAnalysis::where('id', $id)->first();
+        // dd($document);
         $document->originator = User::where('id', $document->initiator_id)->value('name');
 
         return view("frontend.root-cause-analysis.root-audit-trail", compact('audit', 'document', 'today'));

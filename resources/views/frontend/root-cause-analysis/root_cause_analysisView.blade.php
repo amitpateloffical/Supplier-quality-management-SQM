@@ -1422,11 +1422,11 @@
                                         </div>
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton"
-                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                    <!-- <button type="submit" class="saveButton"
+                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button> -->
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="submit"
-                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                    <!-- <button type="submit"
+                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button> -->
                                     <button type="button"> <a class="text-white"
                                             href="{{ url('rcms/qms-dashboard') }}">
                                             Exit </a> </button>

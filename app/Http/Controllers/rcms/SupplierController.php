@@ -138,6 +138,7 @@ class SupplierController extends Controller
         $supplier->bussiness_history = $request->bussiness_history;
         $supplier->performance_history = $request->performance_history;
         $supplier->compliance_risk = $request->compliance_risk;
+        $supplier->suppplier_web_site = $request->suppplier_web_site;
 
         /****************** Score Card Content ********************/
         $supplier->cost_reduction = $request->cost_reduction;
@@ -1649,7 +1650,8 @@ class SupplierController extends Controller
         $supplier->bussiness_history = $request->bussiness_history;
         $supplier->performance_history = $request->performance_history;
         $supplier->compliance_risk = $request->compliance_risk;
-        $supplier->supplier_website = $request->supplier_website;
+        $supplier->supplier_website = $request->supplier_website;        
+        $supplier->suppplier_web_site = $request->suppplier_web_site;
         // dd($request->supplier_website);
         
         /****************** Score Card Content ********************/

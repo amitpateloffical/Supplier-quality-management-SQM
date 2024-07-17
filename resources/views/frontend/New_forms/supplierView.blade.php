@@ -236,9 +236,9 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button> --}}
+                            </button> 
                         @elseif($data->stage == 3 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
                             </button> <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">

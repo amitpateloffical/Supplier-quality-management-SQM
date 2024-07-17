@@ -46,7 +46,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="SCAR Record Number"><b>Record Number</b></label>
-                                    <input type="text" disabled value="{{ Helpers::getDivisionName(session()->get('division')) }}/SCAR/{{ date('Y') }}/{{ str_pad($record_numbers, 4, '0', STR_PAD_LEFT) }}">
+                                    <input type="text" disabled value="{{ Helpers::getDivisionName(session()->get('division')) }}/SCAR/{{ date('Y') }}/{{ str_pad($record_number, 4, '0', STR_PAD_LEFT) }}">
 
                                 </div>
                             </div>
@@ -132,7 +132,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Follow Up Date">Follow Up Date</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="followup_date" placeholder="DD-MM-YYYY" />
-                                        <input type="date" name="followup_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'followup_date')" />
+                                        <input type="date" name="followup_date" max="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'followup_date')" />
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +205,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Expected Closure Date">Expected Closure Date</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="expected_closure_date" placeholder="DD-MM-YYYY" />
-                                        <input type="date" name="expected_closure_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'expected_closure_date')" />
+                                        <input type="date" name="expected_closure_date" max="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'expected_closure_date')" />
                                     </div>
                                 </div>
                             </div>

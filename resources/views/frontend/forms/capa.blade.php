@@ -173,6 +173,11 @@
                                         </div>
                                     </div>
                                 </div> -->
+                                 @php
+                                    $initiationDate = date('Y-m-d');
+                                    $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
+                                @endphp
+                            
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due"> Due Date</label>
@@ -185,6 +190,32 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <script>
+                                    // Format the due date to DD-MM-YYYY
+                                    // Your input date
+                                    var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+
+                                    // Create a Date object
+                                    var date = new Date(dueDate);
+
+                                    // Array of month names
+                                    var monthNames = [
+                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                    ];
+
+                                    // Extracting day, month, and year from the date
+                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                                    var monthIndex = date.getMonth();
+                                    var year = date.getFullYear();
+
+                                    // Formatting the date in "dd-MMM-yyyy" format
+                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+
+                                    // Set the formatted due date value to the input field
+                                    document.getElementById('due_date').value = dueDateFormatted;
+                                </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiator Group</label>

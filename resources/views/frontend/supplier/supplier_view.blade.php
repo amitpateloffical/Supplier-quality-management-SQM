@@ -331,13 +331,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator"><b>Record Number</b></label>
-                                    <input type="text" value="{{ Helpers::getDivisionName($data->division_id) }}/SUPPLIER/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}" readonly>
+                                    <input type="text" value="{{ Helpers::getDivisionName($data->division_id) }}/SUPPLIER/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}" disabled>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator"><b>Division</b></label>
-                                    <input type="text" readonly id="division_id" value="{{ Helpers::getDivisionName($data->division_id) }}">
+                                    <input type="text" disabled id="division_id" value="{{ Helpers::getDivisionName($data->division_id) }}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -426,17 +426,18 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     var textlen = maxLength - $(this).val().length;
                                     $('#rchars').text(textlen);});
                             </script>
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier.">Supplier</label>
-                                    <select name="supplier_person" id="supplier_person"> 
-                                        <option value="">Select Supplier</option>
-                                        @if(!empty($users))
-                                            @foreach($users as $user)
-                                                <option value="{{$user->id }}" @if($data->supplier_person == $user->id) selected @endif>{{ $user->name }}</option>
-                                            @endforeach
-                                        @endif 
-                                    </select>
+                                    <input type="text" id="supplier_person" name="supplier_person" placeholder="Supplier" value="{{ $data->supplier_person }}">
+                                    <!--<select name="supplier_person" id="supplier_person"> -->
+                                    <!--    <option value="">Select Supplier</option>-->
+                                    <!--    @if(!empty($users))-->
+                                    <!--        @foreach($users as $user)-->
+                                    <!--            <option value="{{$user->id }}" @if($data->supplier_person == $user->id) selected @endif>{{ $user->name }}</option>-->
+                                    <!--        @endforeach-->
+                                    <!--    @endif -->
+                                    <!--</select>-->
                                 </div>
                             </div>
 
@@ -537,34 +538,34 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Sub Type.">Sub Type</label>
                                     <select name="supplier_sub_type">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Other" @if($data->supplier_type == "Other") selected @endif>Other</option>
-                                        <option value="Vendor" @if($data->supplier_type == "Vendor") selected @endif>Vendor</option>
-                                        <option value="Finished Goods" @if($data->supplier_type == "Finished Goods") selected @endif>Finished Goods</option>
-                                        <option value="Legal" @if($data->supplier_type == "Legal") selected @endif>Legal</option>
-                                        <option value="Other Fruits" @if($data->supplier_type == "Other Fruits") selected @endif>Other Fruits</option>
-                                        <option value="Exotic Fruits" @if($data->supplier_type == "Exotic Fruits") selected @endif>Exotic Fruits</option>
-                                        <option value="Other Vegetables" @if($data->supplier_type == "Other Vegetables") selected @endif>Other Vegetables</option>
-                                        <option value="Beans & Peas" @if($data->supplier_type == "Beans & Peas") selected @endif>Beans & Peas</option>
-                                        <option value="Red & Orange Vegetables" @if($data->supplier_type == "Red & Orange Vegetables") selected @endif>Red & Orange Vegetables</option>
-                                        <option value="Starchy Vegetables" @if($data->supplier_type == "Starchy Vegetables") selected @endif>Starchy Vegetables</option>
-                                        <option value="Dark Green Vegetables" @if($data->supplier_type == "Dark Green Vegetables") selected @endif>VendorDark Green Vegetables</option>
-                                        <option value="CRO" @if($data->supplier_type == "CRO") selected @endif>CRO</option>
-                                        <option value="Raw Material" @if($data->supplier_type == "Raw Material") selected @endif>Raw Material</option>
-                                        <option value="Interfaction Diesease" @if($data->supplier_type == "Interfaction Diesease") selected @endif>Interfaction Diesease</option>
-                                        <option value="Pedriatrics" @if($data->supplier_type == "Pedriatrics") selected @endif>Pedriatrics</option>
-                                        <option value="Sleep Medicine" @if($data->supplier_type == "Sleep Medicine") selected @endif>Sleep Medicine</option>
-                                        <option value="Nephrology" @if($data->supplier_type == "Nephrology") selected @endif>Nephrology</option>
-                                        <option value="Geriatrics" @if($data->supplier_type == "Geriatrics") selected @endif>Geriatrics</option>
-                                        <option value="Critical Care" @if($data->supplier_type == "Critical Care") selected @endif>Critical Care</option>
-                                        <option value="Cardiology" @if($data->supplier_type == "Cardiology") selected @endif>Cardiology</option>
-                                        <option value="Vitamins" @if($data->supplier_type == "Vitamins") selected @endif>Vitamins</option>
-                                        <option value="Meat & Poultry" @if($data->supplier_type == "Meat & Poultry") selected @endif>Meat & Poultry</option>
-                                        <option value="Fruits & Vegetables" @if($data->supplier_type == "Fruits & Vegetables") selected @endif>Fruits & Vegetables</option>
-                                        <option value="Pastry" @if($data->supplier_type == "Pastry") selected @endif>Pastry</option>
-                                        <option value="Frozen Fruits" @if($data->supplier_type == "Frozen Fruits") selected @endif>Frozen Fruits</option>
-                                        <option value="Dairy" @if($data->supplier_type == "Dairy") selected @endif>Dairy</option>
-                                        <option value="Beverages" @if($data->supplier_type == "Beverages") selected @endif >Beverages</option>
-                                        <option value="Flavour" @if($data->supplier_type == "Flavour") selected @endif>Flavour</option>
+                                        <option value="Other" @if($data->supplier_sub_type == "Other") selected @endif>Other</option>
+                                        <option value="Vendor" @if($data->supplier_sub_type == "Vendor") selected @endif>Vendor</option>
+                                        <option value="Finished Goods" @if($data->supplier_sub_type == "Finished Goods") selected @endif>Finished Goods</option>
+                                        <option value="Legal" @if($data->supplier_sub_type == "Legal") selected @endif>Legal</option>
+                                        <option value="Other Fruits" @if($data->supplier_sub_type == "Other Fruits") selected @endif>Other Fruits</option>
+                                        <option value="Exotic Fruits" @if($data->supplier_sub_type == "Exotic Fruits") selected @endif>Exotic Fruits</option>
+                                        <option value="Other Vegetables" @if($data->supplier_sub_type == "Other Vegetables") selected @endif>Other Vegetables</option>
+                                        <option value="Beans & Peas" @if($data->supplier_sub_type == "Beans & Peas") selected @endif>Beans & Peas</option>
+                                        <option value="Red & Orange Vegetables" @if($data->supplier_sub_type == "Red & Orange Vegetables") selected @endif>Red & Orange Vegetables</option>
+                                        <option value="Starchy Vegetables" @if($data->supplier_sub_type == "Starchy Vegetables") selected @endif>Starchy Vegetables</option>
+                                        <option value="Dark Green Vegetables" @if($data->supplier_sub_type == "Dark Green Vegetables") selected @endif>VendorDark Green Vegetables</option>
+                                        <option value="CRO" @if($data->supplier_sub_type == "CRO") selected @endif>CRO</option>
+                                        <option value="Raw Material" @if($data->supplier_sub_type == "Raw Material") selected @endif>Raw Material</option>
+                                        <option value="Interfaction Diesease" @if($data->supplier_sub_type == "Interfaction Diesease") selected @endif>Interfaction Diesease</option>
+                                        <option value="Pedriatrics" @if($data->supplier_sub_type == "Pedriatrics") selected @endif>Pedriatrics</option>
+                                        <option value="Sleep Medicine" @if($data->supplier_sub_type == "Sleep Medicine") selected @endif>Sleep Medicine</option>
+                                        <option value="Nephrology" @if($data->supplier_sub_type == "Nephrology") selected @endif>Nephrology</option>
+                                        <option value="Geriatrics" @if($data->supplier_sub_type == "Geriatrics") selected @endif>Geriatrics</option>
+                                        <option value="Critical Care" @if($data->supplier_sub_type == "Critical Care") selected @endif>Critical Care</option>
+                                        <option value="Cardiology" @if($data->supplier_sub_type == "Cardiology") selected @endif>Cardiology</option>
+                                        <option value="Vitamins" @if($data->supplier_sub_type == "Vitamins") selected @endif>Vitamins</option>
+                                        <option value="Meat & Poultry" @if($data->supplier_sub_type == "Meat & Poultry") selected @endif>Meat & Poultry</option>
+                                        <option value="Fruits & Vegetables" @if($data->supplier_sub_type == "Fruits & Vegetables") selected @endif>Fruits & Vegetables</option>
+                                        <option value="Pastry" @if($data->supplier_sub_type == "Pastry") selected @endif>Pastry</option>
+                                        <option value="Frozen Fruits" @if($data->supplier_sub_type == "Frozen Fruits") selected @endif>Frozen Fruits</option>
+                                        <option value="Dairy" @if($data->supplier_sub_type == "Dairy") selected @endif>Dairy</option>
+                                        <option value="Beverages" @if($data->supplier_sub_type == "Beverages") selected @endif >Beverages</option>
+                                        <option value="Flavour" @if($data->supplier_sub_type == "Flavour") selected @endif>Flavour</option>
                                     </select>
                                 </div>
                             </div>
@@ -884,7 +885,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="Other Contacts">Other Contacts</label>
-                                    <textarea class="tiny" id="other_contacts" type="text" name="other_contacts" value="{{ $data->other_contacts }}">{{ $data->other_contacts  }}</textarea>
+                                    <input id="other_contacts" type="text" name="other_contacts" value="{{ $data->other_contacts }}">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -1031,15 +1032,15 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier Web Site">Supplier Web Site</label>
-                                    <input type="text" name="suppplier_web_site" value="{{ $data->suppplier_web_site }}" id="suppplier_web_site" placeholder="Enter Website ">
+                                    <input type="text" name="suppplier_web_site" value="{{ $data->suppplier_web_site }}" placeholder="Enter Website ">
                                 </div>
                             </div>
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="ISO Certification date">ISO Certification Date</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="iso_certified_date" readonly placeholder="DD-MMM-YYYY" value="{{ $data->iso_certified_date }}" />
-                                        <input type="date" name="iso_certified_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->iso_certified_date }}" class="hide-input" oninput="handleDateInput(this, 'iso_certified_date')" />
+                                        <input type="text" id="iso_certified_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->iso_certified_date) }}" />
+                                        <input type="date" name="iso_certified_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->iso_certified_date }}" class="hide-input" oninput="handleDateInput(this, 'iso_certified_date')" />
                                     </div>
                                 </div>
                             </div>
@@ -1566,7 +1567,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <div class="calenderauditee"> 
                                         <input type="text" id="next_audit_date"  placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->next_audit_date) }}" />
                                         <input type="date" name="next_audit_date" value="{{ $data->next_audit_date }}"
-                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'next_audit_date')" />
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'next_audit_date')" />
                                     </div>
                                 </div>
                             </div>
@@ -2274,7 +2275,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                 value="SA">
                                                Supplier Audit
                                         </label>
-                                        <label for="major">
+                                         <label for="major">
                                             <input type="radio" name="revision" id="major"
                                                 value="SCAR">
                                                SCAR
@@ -2297,6 +2298,24 @@ $users = DB::table('users')->select('id', 'name')->get();
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const removeButtons = document.querySelectorAll('.remove-file');
+
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const fileName = this.getAttribute('data-file-name');
+                    const fileContainer = this.closest('.file-container');
+
+                    // Hide the file container
+                    if (fileContainer) {
+                        fileContainer.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+    
     <script>
         VirtualSelect.init({
             ele: '#supplier-product, #ppap-elements, #supplier-services, #other-products, #manufacture-sites'

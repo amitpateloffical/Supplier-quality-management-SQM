@@ -29,12 +29,12 @@ class SCARController extends Controller
 {
     public function index(){
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_numbers = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $supplierData = Supplier::select('id','supplier_name','supplier_products','distribution_sites')->get();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.scar.scar_new',compact('record_numbers', 'due_date','supplierData'));
+        return view('frontend.scar.scar_new',compact('record_number', 'due_date','supplierData'));
     }
 
     public function store(Request $request){

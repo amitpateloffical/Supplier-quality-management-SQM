@@ -1022,6 +1022,19 @@ $users = DB::table('users')
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Completed_By">  Report Issued By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed_On">Report Issued On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="Completed_By">Completed By</label>
                                         <div class="static">{{ $data->Completed_By }}</div>
                                     </div>
@@ -1058,9 +1071,9 @@ $users = DB::table('users')
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>Save</button>
+                                {{-- <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>Save</button> --}}
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>Submit</button>
+                                {{-- <button type="submit" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>Submit</button> --}}
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
                                 </button>
                             </div>

@@ -46,6 +46,7 @@ class ObservationController extends Controller
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
         $data->parent_id = $request->parent_id;
+        // dd($request->parent_id);
         $data->parent_type = $request->parent_type;
         $data->division_code = $request->division_code;
         $data->intiation_date = $request->intiation_date;
@@ -1261,8 +1262,7 @@ class ObservationController extends Controller
             if ($changestage->stage == 1) {
                 $changestage->stage = "2";
                 $changestage->status = "Pending CAPA Plan";
-                $changestage->Completed_By = Auth::user()->name;
-                $changestage->completed_on = Carbon::now()->format('d-M-Y');
+                
                                 $history = new AuditTrialObservation();
                                 $history->Observation_id = $id;
                                 $history->activity_type = 'Activity Log';
@@ -1302,6 +1302,8 @@ class ObservationController extends Controller
             if ($changestage->stage == 2) {
                 $changestage->stage = "3";
                 $changestage->status = "Pending Approval";
+                $changestage->Completed_By = Auth::user()->name;
+                $changestage->completed_on = Carbon::now()->format('d-M-Y');
                 $list = Helpers::getQAUserList();
                 foreach ($list as $u) {
                     if($u->q_m_s_divisions_id == $changestage->division_id){

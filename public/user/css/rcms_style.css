@@ -718,7 +718,8 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 /*! FORM FIELDS HEADBAR */
 /*! =================================================================================*/
 .form-field-head {
-    background: #4274da;
+    /* background: #4274da; */
+    background: #94a3b8;
     padding: 15px 20px;
 }
 
@@ -1134,7 +1135,8 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 /*! =================================================================================*/
 #change-control-view {
     padding: 20px 0px;
-    background: #4274da;
+    /* background: #4274da; */
+    background: #94a3b8;
     /* min-height: calc(100vh - 150px); */
 }
 

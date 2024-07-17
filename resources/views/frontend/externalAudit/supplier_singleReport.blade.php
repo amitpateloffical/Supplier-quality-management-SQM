@@ -595,28 +595,28 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">More Information Required By</th>
+                        <th class="w-20">Audit Mgr.more Info Reqd By</th>
                         <td class="w-30">{{ $data->audit_mgr_more_info_reqd_by }}</td>
-                        <th class="w-20">More Information Required On</th>
+                        <th class="w-20"> Audit Mgr.more Info Reqd On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit Observation Submitted By</th>
                         <td class="w-30">{{ $data->audit_observation_submitted_by }}</td>
-                        <th class="w-20">Supervisor Reviewed On(QA)</th>
+                        <th class="w-20">Audit Observation Submitted On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_observation_submitted_on) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit Lead More Info Reqd By
                         </th>
                         <td class="w-30">{{ $data->audit_lead_more_info_reqd_by }}</td>
-                        <th class="w-20">More Information Req. On</th>
+                        <th class="w-20">Audit Lead More Info Reqd On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_lead_more_info_reqd_on) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit Response Completed By</th>
                         <td class="w-30">{{ $data->audit_response_completed_by }}</td>
-                        <th class="w-20">QA Review Completed On</th>
+                        <th class="w-20">Audit Response Completed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_response_completed_on) }}</td>
                     </tr>
                     <tr>

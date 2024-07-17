@@ -160,7 +160,7 @@ class DashboardController extends Controller
 
             array_push($table, [
                 "id" => $data->id,
-                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "parent" => $data->parent_id ? $data->parent_id : "-",
                 "record" => $data->record,
                 "type" => "Effectiveness-Check",
                 "parent_id" => $data->parent_id,
@@ -779,6 +779,7 @@ class DashboardController extends Controller
             $data = CC::find($id);
             $single = "change_control_single_pdf/" . $data->id;
             $audit = "audit/" . $data->id;
+            $parent = "#";
         } elseif ($type == "Capa") {
             $data = Capa::find($id);
             $single = "capaSingleReport/" . $data->id;
@@ -833,7 +834,7 @@ class DashboardController extends Controller
         } elseif ($type == "Deviation") {
             $data = Deviation::find($id);
             $single = "deviationSingleReport/". $data->id;
-            $audit = "auditReport/" . $data->id;
+            $audit = "devAuditreport/" . $data->id;
             $parent="#";
         } elseif ($type == "Supplier") {
             $data = Supplier::find($id);

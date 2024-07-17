@@ -628,31 +628,27 @@
 
 
                                 @php
-                                    // Calculate the due date (30 days from the initiation date)
-                                    $initiationDate = date('Y-m-d'); // Current date as initiation date
-                                    $dueDate = date('d/m/Y', strtotime($initiationDate . '+30 days')); // Due date in DD/MM/YYYY format
+                                    $initiationDate = date('d-M-Y');
+                                    $dueDate = date('d-M-Y', strtotime($initiationDate . '+30 days'));
                                 @endphp
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                        <input readonly type="text" value="{{ date('d/m/Y') }}" name="intiation_date" id="intiation_date"
-                                            style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date_hidden">
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 new-date-data-field">
+                                <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date">Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                 reason in "Due Date Extension Justification" data field.</small></div>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date_display" readonly placeholder="DD/MM/YYYY" />
-                                            <input type="date" id="due_date" name="due_date" readonly
-                                                class="hide-input"
-                                                onchange="handleDateInput(this, 'due_date_display')" />
-                                        </div>
+                                                <div class="calenderauditee">
+                                                    <input type="text" name="due_date" readonly value="{{$dueDate}}" />
+                                                    <!-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" /> -->
+                                                </div>
                                     </div>
                                 </div>
                                 
@@ -707,7 +703,7 @@
                                 </script>
                                 
 
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Department</b><span
                                                 class="text-danger">*</span></label>

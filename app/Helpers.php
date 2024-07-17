@@ -39,6 +39,20 @@ class Helpers
     
         }
 
+        public static function getdateFormatNew($date)
+        {
+            if(empty($date)) {
+                return ''; // or any default value you prefer
+            }
+            // else{
+            else{
+                $date = Carbon::parse($date);
+                $formatted_date = $date->format("d-M-Y");
+                return $formatted_date;
+            }
+    
+        }
+
 static function getFullDepartmentName($code)
 {
     $full_department_name = '';

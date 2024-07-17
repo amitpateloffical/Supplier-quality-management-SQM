@@ -978,14 +978,7 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                        value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div>
-                                    </div>
-                                </div> --}}
+                                    
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Division Code"><b>Site/Location Code</b></label>
@@ -993,29 +986,24 @@
                                                 value="{{ $divisionName }}">
                                             <input type="hidden" name="division_id"
                                                 value="{{ session()->get('division') }}">
-                                            {{-- <div class="static">QMS-North America</div> --}}
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator"><b>Initiator</b></label>
-                                            {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
                                             <input disabled type="text" value="{{ $data->initiator_name }}">
 
                                         </div>
                                     </div>
                                     @php
-                                        // Calculate the due date (30 days from the initiation date)
-                                        $initiationDate = date('Y-m-d'); // Current date as initiation date
-                                        $dueDate = date('d/m/Y', strtotime($initiationDate . '+30 days')); // Due date in DD/MM/YYYY format
+                                        $initiationDate = $data->intiation_date;
+                                        $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
                                     @endphp
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                            <input readonly type="text" value="{{ date('d/m/Y') }}" name="initiation_date" id="initiation_date"
-                                                style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                            <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden">
+                                            <input disabled type="text" value="{{ $data->intiation_date }}" >
                                         </div>
                                     </div>
 
@@ -1024,14 +1012,9 @@
                                             <label for="Due Date">Due Date</label>
                                             <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                     reason in "Due Date Extension Justification" data field.</small></div>
-                                            <div class="calenderauditee">
-                                                <input readonly type="text"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                    name="due_date" />
-                                                <input type="date" readonly name="due_date"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'due_date')" />
-                                            </div>
+                                                <div class="calenderauditee">
+                                                    <input readonly type="text" value="{{ $data->due_date }}"  />
+                                                </div>
                                         </div>
                                     </div>
 
@@ -1048,27 +1031,6 @@
                                     </script>
 
 
-                                    {{-- <div class="col-lg-6">
-                                    <div class="group-input ">
-                                        <label for="Date Due"><b>Date of Initiation</b></label>
-                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Date Due">Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
-                                        </div>
-                                        <input readonly type="text"
-                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                            name="due_date"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : ''}}>
-                                        {{-- <input type="text" value="{{ $data->due_date }}" name="due_date">
-                                        {{-- <div class="static"> {{ $due_date }}</div>
-
-                                    </div>
-                                </div> --}}
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
@@ -1179,14 +1141,10 @@
                                         <div class="group-input input-date">
                                             <label for="Deviation date">Deviation Observed On<span
                                                 class="text-danger">*</span></label>
-                                            <div class="calenderauditee">
-                                                <input type="text" id="Deviation_date" readonly
-                                                value="{{ $data->Deviation_date ? \Carbon\Carbon::parse($data->Deviation_date)->format('d/m/Y') : '' }}"
-                                                    placeholder="DD/MM/YYYY" />
-                                                {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
-                                                <input type="date" name="Deviation_date"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ old('Deviation_date') ? old('Deviation_date') : $data->Deviation_date }}"
-                                                    max="{{ $data->Deviation_date ? \Carbon\Carbon::parse($data->Deviation_date)->format('Y-m-d') : '' }}" class="hide-input"
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="Deviation_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
+                                                    <input type="date" name="Deviation_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->Deviation_date }}"
+                                                    class="hide-input"
                                                     oninput="handleDateInput(this, 'Deviation_date')" />
                                             </div>
                                         </div>
@@ -1251,15 +1209,12 @@
                                         <div class="group-input input-date">
                                             <label for="Audit Schedule End Date">Deviation Reported on<span
                                                 class="text-danger">*</span></label>
-                                            <div class="calenderauditee">
-                                                <input type="text" id="Deviation_reported_date" readonly
-                                                value="{{ $data->Deviation_reported_date ? \Carbon\Carbon::parse($data->Deviation_reported_date)->format('d/m/Y') : '' }}"
-                                                    placeholder="DD/MM/YYYY" />
-                                                <input type="date" name="Deviation_reported_date"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data->Deviation_reported_date }}"
-                                                    max="{{ $data->Deviation_reported_date ? \Carbon\Carbon::parse($data->Deviation_reported_date)->format('Y-m-d') : '' }}" class="hide-input"
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="Deviation_reported_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->Deviation_reported_date) }}" />
+                                                    <input type="date" name="Deviation_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->Deviation_reported_date }}"
+                                                    class="hide-input"
                                                     oninput="handleDateInput(this, 'Deviation_reported_date')" />
-                                            </div>
+                                                </div>
                                         </div>
                                     </div>
                                     <script>

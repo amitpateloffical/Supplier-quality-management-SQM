@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('docdetails', function (Blueprint $table) {
             $table->id();
             $table->string('cc_id')->nullable();
-            $table->string('sno')->nullable();
+            $table->longText('sno')->nullable();
             $table->longText('current_doc_no')->nullable();
             $table->longText('current_version_no')->nullable();
             $table->longText('new_doc_no')->nullable();

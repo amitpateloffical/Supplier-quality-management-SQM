@@ -376,7 +376,7 @@ class SupplierController extends Controller
         $history->supplier_id = $supplier->id;
         $history->activity_type = 'Initiation Date';
         $history->previous = "Null";
-        $history->current = $supplier->intiation_date;
+        $history->current = Helpers::getdateFormat($supplier->intiation_date);
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -392,7 +392,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Assign To';
             $history->previous = "Null";
-            $history->current = $supplier->assign_to;
+            $history->current = Helpers::getInitiatorName($supplier->assign_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -409,7 +409,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Supplier Person';
             $history->previous = "Null";
-            $history->current = $supplier->supplier_person;
+            $history->current = Helpers::getInitiatorName($supplier->supplier_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -426,7 +426,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Supplier Contact Person';
             $history->previous = "Null";
-            $history->current = $supplier->supplier_contact_person;
+            $history->current = Helpers::getInitiatorName($supplier->supplier_contact_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -437,12 +437,6 @@ class SupplierController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-
-
-
-
-
-
 
         if(!empty($request->supplier_products)){
             $history = new SupplierAuditTrail;
@@ -593,7 +587,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'HOD Feedback';
             $history->previous = "Null";
-            $history->current = $supplier->HOD_feedback;
+            $history->current = strip_tags($supplier->HOD_feedback);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -609,7 +603,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'HOD Comment';
             $history->previous = "Null";
-            $history->current = $supplier->HOD_comment;
+            $history->current = strip_tags($supplier->HOD_comment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -737,7 +731,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Supplier Services';
             $history->previous = "Null";
-            $history->current = $supplier->supplier_serivce;
+            $history->current = strip_tags($supplier->supplier_serivce);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -913,7 +907,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Manufacturing Site';
             $history->previous = "Null";
-            $history->current = $supplier->manufacturing_sited;
+            $history->current = strip_tags($supplier->manufacturing_sited);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -929,7 +923,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Quality  Management';
             $history->previous = "Null";
-            $history->current = $supplier->quality_management;
+            $history->current = strip_tags($supplier->quality_management);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -945,7 +939,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Business History';
             $history->previous = "Null";
-            $history->current = $supplier->bussiness_history;
+            $history->current = strip_tags($supplier->bussiness_history);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -961,7 +955,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Performance History';
             $history->previous = "Null";
-            $history->current = $supplier->performance_history;
+            $history->current = strip_tags($supplier->performance_history);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -977,7 +971,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Compliance Risk';
             $history->previous = "Null";
-            $history->current = $supplier->compliance_risk;
+            $history->current = strip_tags($supplier->compliance_risk);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1052,22 +1046,7 @@ class SupplierController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->lead_time_days)){
-            $history = new SupplierAuditTrail;
-            $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Lead Time Days';
-            $history->previous = "Null";
-            $history->current = $supplier->lead_time_days;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $supplier->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+        
         if(!empty($request->lead_time_days_weight)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -1313,7 +1292,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'QA Reviewer Feedback';
             $history->previous = "Null";
-            $history->current = $supplier->QA_reviewer_feedback;
+            $history->current = strip_tags($supplier->QA_reviewer_feedback);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1329,7 +1308,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'QA Reviewer Comment';
             $history->previous = "Null";
-            $history->current = $supplier->QA_reviewer_comment;
+            $history->current = strip_tags($supplier->QA_reviewer_comment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1537,7 +1516,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'QA Head Comment';
             $history->previous = "Null";
-            $history->current = $supplier->QA_head_comment;
+            $history->current = strip_tags($supplier->QA_head_comment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1635,6 +1614,7 @@ class SupplierController extends Controller
         $supplier->other_contacts = $request->other_contacts;
         $supplier->supplier_serivce = $request->supplier_serivce;
         $supplier->zone = $request->zone;
+        // dd($request->zone);
         $supplier->country = $request->country;
         $supplier->state = $request->state;
         $supplier->city = $request->city;
@@ -1854,8 +1834,8 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Supplier Contact Person';
-            $history->previous = $lastDocument->supplier_contact_person;
-            $history->current = $request->supplier_contact_person;
+            $history->previous = Helpers::getInitiatorName($lastDocument->supplier_contact_person);
+            $history->current = Helpers::getInitiatorName($request->supplier_contact_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2030,8 +2010,8 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'HOD Feedback';
-            $history->previous = $lastDocument->HOD_feedback;
-            $history->current = $request->HOD_feedback;
+            $history->previous = strip_tags($lastDocument->HOD_feedback);
+            $history->current = strip_tags($request->HOD_feedback);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2046,8 +2026,8 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'HOD Comment';
-            $history->previous = $lastDocument->HOD_comment;
-            $history->current = $request->HOD_comment;
+            $history->previous = strip_tags($lastDocument->HOD_comment);
+            $history->current = strip_tags($request->HOD_comment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2190,8 +2170,8 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Supplier Services';
-            $history->previous = $lastDocument->supplier_serivce;
-            $history->current = $request->supplier_serivce;
+            $history->previous = strip_tags($lastDocument->supplier_serivce);
+            $history->current = strip_tags($request->supplier_serivce);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2398,8 +2378,8 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Manufacturing Sites';
-            $history->previous = $lastDocument->manufacturing_sited;
-            $history->current = $request->manufacturing_sited;
+            $history->previous = strip_tags($lastDocument->manufacturing_sited);
+            $history->current = strip_tags($request->manufacturing_sited);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2414,8 +2394,8 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Quality Management';
-            $history->previous = $lastDocument->quality_management;
-            $history->current = $request->quality_management;
+            $history->previous = strip_tags($lastDocument->quality_management);
+            $history->current = strip_tags($request->quality_management);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2430,8 +2410,8 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Business History';
-            $history->previous = $lastDocument->bussiness_history;
-            $history->current = $request->bussiness_history;
+            $history->previous = strip_tags($lastDocument->bussiness_history);
+            $history->current = strip_tags($request->bussiness_history);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2446,8 +2426,8 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Performance History';
-            $history->previous = $lastDocument->performance_history;
-            $history->current = $request->performance_history;
+            $history->previous = strip_tags($lastDocument->performance_history);
+            $history->current = strip_tags($request->performance_history);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2462,8 +2442,8 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Compliance Risk';
-            $history->previous = $lastDocument->compliance_risk;
-            $history->current = $request->compliance_risk;
+            $history->previous = strip_tags($lastDocument->compliance_risk);
+            $history->current = strip_tags($request->compliance_risk);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2798,8 +2778,8 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'QA Reviewer Feedback';
-            $history->previous = $lastDocument->QA_reviewer_feedback;
-            $history->current = $request->QA_reviewer_feedback;
+            $history->previous = strip_tags($lastDocument->QA_reviewer_feedback);
+            $history->current = strip_tags($request->QA_reviewer_feedback);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2814,8 +2794,8 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'QA Reviewer Comment';
-            $history->previous = $lastDocument->QA_reviewer_comment;
-            $history->current = $request->QA_reviewer_comment;
+            $history->previous = strip_tags($lastDocument->QA_reviewer_comment);
+            $history->current = strip_tags($request->QA_reviewer_comment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3022,8 +3002,8 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'QA Head Comment';
-            $history->previous = $lastDocument->QA_head_comment;
-            $history->current = $request->QA_head_comment;
+            $history->previous = strip_tags($lastDocument->QA_head_comment);
+            $history->current = strip_tags($request->QA_head_comment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

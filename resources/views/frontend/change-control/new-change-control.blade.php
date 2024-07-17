@@ -119,7 +119,7 @@
                                     <div class="group-input ">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -156,11 +156,11 @@
                                         <label for="Microbiology-Person">CFT Reviewer Person</label>
                                         <select multiple name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
                                             data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
-                                            {{-- <option value="0">-- Select --</option>  --}}
+                                            <option value="">-- Select --</option>
                                             @foreach ($cft as $data)
-                                            @if(Helpers::checkUserRolesMicrobiology_Person($data))
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endif    
+                                                @if(Helpers::checkUserRolesMicrobiology_Person($data))
+                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                @endif    
                                             @endforeach
                                         </select>
                                     </div>
@@ -168,8 +168,8 @@
 
                                 @php
                                 // Calculate the due date (30 days from the initiation date)
-                                $initiationDate = date('Y-m-d'); // Current date as initiation date
-                                $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                                $initiationDate = date('d-M-Y'); // Current date as initiation date
+                                $dueDate = date('d-M-Y', strtotime($initiationDate . '+30 days')); // Due date
                             @endphp
 
                                 <div class="col-lg-6 new-date-data-field">
@@ -178,9 +178,9 @@
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                 reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                            <input type="text" name="due_date" readonly value="{{ $dueDate }}" />
+                                            <!-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" /> -->
                                         </div>
                                     </div>
                                 </div>

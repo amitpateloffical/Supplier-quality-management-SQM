@@ -958,7 +958,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">Score Card Score</th>
                         <td class="w-30">
                             @if ($data->scorecard_record)
@@ -996,7 +996,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
+                    </tr> -->
 
                 </table>
             </div>
@@ -1347,15 +1347,15 @@
             </div>
             <table>
                 <tr>
-                    <th class="w-20">Submitted By</th>
+                    <th class="w-20">Supplier Details Submitted By</th>
                     <td class="w-30">
                         <div class="static">{{ $data->submitted_by }}</div>
                     </td>
-                    <th class="w-20">Submitted On</th>
+                    <th class="w-20">Supplier Details Submitted On</th>
                     <td class="w-30">
                         <div class="static">{{ $data->submitted_on }}</div>
                     </td>
-                    <th class="w-20">Submitted Comment</th>
+                    <th class="w-20">Supplier Details Submitted Comment</th>
                     <td class="w-30">
                         <div class="static">{{ $data->submitted_comment }}</div>
                     </td>
@@ -1377,75 +1377,75 @@
                 </tr>
 
                 <tr>
-                    <th class="w-20">Pending Qualification By</th>
+                    <th class="w-20">Qualification Complete By</th>
                     <td class="w-30">
                         <div class="static">{{ $data->pending_qualification_by }}</div>
                     </td>
-                    <th class="w-20">Pending Qualification On</th>
+                    <th class="w-20">Qualification Complete On</th>
                     <td class="w-30">
                         <div class="static">{{ $data->pending_qualification_on }}</div>
                     </td>
-                    <th class="w-20">Pending Qualification Comment</th>
+                    <th class="w-20">Qualification Complete Comment</th>
                     <td class="w-30">
                         <div class="static">{{ $data->pending_qualification_comment }}</div>
                     </td>
                 </tr>
 
                 <tr>
-                    <th class="w-20">Pending Supplier By</th>
+                    <th class="w-20">Audit Failed By</th>
                     <td class="w-30">
                         <div class="static">{{ $data->pending_supplier_audit_by }}</div>
                     </td>
-                    <th class="w-20">Pending Supplier On</th>
+                    <th class="w-20">Audit Failed On</th>
                     <td class="w-30">
                         <div class="static">{{ $data->pending_supplier_audit_on }}</div>
                     </td>
-                    <th class="w-20">Pending Supplier Comment</th>
+                    <th class="w-20">Audit Failed Comment</th>
                     <td class="w-30">
                         <div class="static">{{ $data->pending_supplier_audit_comment }}</div>
                     </td>
                 </tr>
 
                 <tr>
-                    <th class="w-20">Pending Rejction By</th>
+                    <th class="w-20">Supplier Obsolete By</th>
                     <td class="w-30">
                         <div class="static">{{ $data->pending_rejection_by }}</div>
                     </td>
-                    <th class="w-20">Pending Rejction On</th>
+                    <th class="w-20">Supplier Obsolete On</th>
                     <td class="w-30">
                         <div class="static">{{ $data->pending_rejection_on }}</div>
                     </td>
-                    <th class="w-20">Pending Rejction Comment</th>
+                    <th class="w-20">Supplier Obsolete Comment</th>
                     <td class="w-30">
                         <div class="static">{{ $data->pending_rejection_comment }}</div>
                     </td>
                 </tr>
 
                 <tr>
-                    <th class="w-20">Supplier Approved By</th>
+                    <th class="w-20">Audit Passed By</th>
                     <td class="w-30">
                         <div class="static">{{ $data->supplier_approved_by }}</div>
                     </td>
-                    <th class="w-20">Supplier Approved On</th>
+                    <th class="w-20">Audit Passed On</th>
                     <td class="w-30">
                         <div class="static">{{ $data->supplier_approved_on }}</div>
                     </td>
-                    <th class="w-20">Supplier Approved Comment</th>
+                    <th class="w-20">Audit Passed Comment</th>
                     <td class="w-30">
                         <div class="static">{{ $data->supplier_approved_comment }}</div>
                     </td>
                 </tr>
 
                 <tr>
-                    <th class="w-20">Supplier Approved to Obselete By</th>
+                    <th class="w-20">Supplier Obsolete By</th>
                     <td class="w-30">
                         <div class="static">{{ $data->supplier_approved_to_obselete_by }}</div>
                     </td>
-                    <th class="w-20">Supplier Approved to Obselete On</th>
+                    <th class="w-20">Supplier Obsolete On</th>
                     <td class="w-30">
                         <div class="static">{{ $data->supplier_approved_to_obselete_on }}</div>
                     </td>
-                    <th class="w-20">Supplier Approved to Obselete Comment</th>
+                    <th class="w-20">Supplier Obsolete Comment</th>
                     <td class="w-30">
                         <div class="static">{{ $data->supplier_approved_to_obselete_comment }}</div>
                     </td>

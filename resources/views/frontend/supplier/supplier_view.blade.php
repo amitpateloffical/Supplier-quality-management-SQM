@@ -158,7 +158,7 @@ $users = DB::table('users')->select('id', 'name')->get();
         </script>
     @endif
 
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             let certificationDataIndex = {{ $certificationData && is_array($certificationData) ? count($certificationData) : 1 }};
             $('#certificationData').click(function(e) {
@@ -186,6 +186,75 @@ $users = DB::table('users')->select('id', 'name')->get();
                 tableBody.append(newRow);
             });
         });
+    </script> -->
+
+    <script>
+        $(document).ready(function() {
+    let certificationDataIndex = {{ $certificationData && is_array($certificationData) ? count($certificationData) : 1 }};
+    
+    // Function to generate new table row
+    function generateTableRow(serialNumber) {
+        var html =
+            '<tr>' +
+            '<td style="width: 60px;"><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+            '<td><input type="text" name="certificationData[' + certificationDataIndex + '][type]"></td>' +
+            '<td><input type="text" name="certificationData[' + certificationDataIndex + '][issuingAgency]"></td>' +
+            '<td><input type="date" name="certificationData[' + certificationDataIndex + '][issueDate]" class="issueDate" max="' + getTodayDate() + '"></td>' +
+            '<td><input type="date" name="certificationData[' + certificationDataIndex + '][expiryDate]" class="expiryDate" disabled></td>' +
+            '<td><input type="text" name="certificationData[' + certificationDataIndex + '][supportingDoc]"></td>' +
+            '<td><input type="text" name="certificationData[' + certificationDataIndex + '][remarks]"></td>' +
+            '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+            '</tr>';
+        certificationDataIndex++;
+        return html;
+    }
+
+    // Function to get today's date in YYYY-MM-DD format
+    function getTodayDate() {
+        var today = new Date();
+        return today.toISOString().split('T')[0];
+    }
+
+    // Function to add date validation
+    function addDateValidation() {
+        $('.issueDate').off('change').on('change', function() {
+            var issueDate = $(this).val();
+            var expiryDateInput = $(this).closest('tr').find('.expiryDate');
+            expiryDateInput.attr('min', issueDate);
+            expiryDateInput.removeAttr('disabled');
+        });
+
+        $('.expiryDate').off('change').on('change', function() {
+            var issueDate = $(this).closest('tr').find('.issueDate').val();
+            var expiryDate = $(this).val();
+
+            if (expiryDate <= issueDate) {
+                alert('Expiry date must be greater than issue date.');
+                $(this).val('');
+            }
+        });
+
+        $('.removeRowBtn').off('click').on('click', function() {
+            $(this).closest('tr').remove();
+        });
+    }
+
+    // Add new row on button click
+    $('#certificationData').click(function(e) {
+        var tableBody = $('#certificationDataTable tbody');
+        var rowCount = tableBody.children('tr').length;
+        var newRow = generateTableRow(rowCount + 1);
+        tableBody.append(newRow);
+
+        // Add validation for the new row
+        addDateValidation();
+    });
+
+    // Add validation to existing rows
+    addDateValidation();
+});
+
+
     </script>
     <script>
         $(document).on('click', '.removeRowBtn', function() {
@@ -417,8 +486,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255</span>
                                     characters remaining
-                                    <textarea id="docname" type="text" name="short_description" value="{{ $data->short_description }}" maxlength="255" required>{{ $data->short_description  }}</textarea>
-                                </div> 
+                                    <input id="docname" type="text" name="short_description" maxlength="255" required value="{{ $data->short_description }}">
+                                </div>
                             </div>
                             <script>
                                 var maxLength = 255;
@@ -769,7 +838,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                 <div id="CCForm3" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Issues">
                                         Certifications & Accreditation<button type="button" name="ann" id="certificationData">+</button>
@@ -839,7 +908,74 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         </tbody>
                                     </table>
                                 </div>
+                            </div> -->
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Issues">
+                                        Certifications & Accreditation
+                                        <button type="button" name="ann" id="certificationData">+</button>
+                                    </label>
+                                    <table class="table table-bordered" id="certificationDataTable">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 60px;">Row #</th>
+                                                <th>Type</th>
+                                                <th>Issuing Agency</th>
+                                                <th>Issue Date</th>
+                                                <th>Expiry Date</th>
+                                                <th>Supporting Document</th>
+                                                <th>Remarks</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if ($certificationData && is_array($certificationData))
+                                                @foreach ($certificationData as $gridData)
+                                                    <tr>
+                                                        <td style="width: 60px;">
+                                                            <input disabled type="text" name="certificationData[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}">
+                                                        </td>
+                                                        <td>
+                                                            <input class="type" type="text" name="certificationData[{{ $loop->index }}][type]" value="{{ isset($gridData['type']) ? $gridData['type'] : '' }}">
+                                                        </td>
+                                                        <td>
+                                                            <input class="issuingAgency" type="text" name="certificationData[{{ $loop->index }}][issuingAgency]" value="{{ isset($gridData['issuingAgency']) ? $gridData['issuingAgency'] : '' }}">
+                                                        </td>
+                                                        <td>
+                                                            <input class="issueDate" type="date" name="certificationData[{{ $loop->index }}][issueDate]" value="{{ isset($gridData['issueDate']) ? $gridData['issueDate'] : '' }}" max="{{ date('Y-m-d') }}">
+                                                        </td>
+                                                        <td>
+                                                            <input class="expiryDate" type="date" name="certificationData[{{ $loop->index }}][expiryDate]" value="{{ isset($gridData['expiryDate']) ? $gridData['expiryDate'] : '' }}" min="{{ isset($gridData['issueDate']) ? $gridData['issueDate'] : '' }}" {{ isset($gridData['issueDate']) ? '' : 'disabled' }}>
+                                                        </td>
+                                                        <td>
+                                                            <input class="supportingDoc" type="text" name="certificationData[{{ $loop->index }}][supportingDoc]" value="{{ isset($gridData['supportingDoc']) ? $gridData['supportingDoc'] : '' }}">
+                                                        </td>
+                                                        <td>
+                                                            <input class="remarks" type="text" name="certificationData[{{ $loop->index }}][remarks]" value="{{ isset($gridData['remarks']) ? $gridData['remarks'] : '' }}">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="removeRowBtn">Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td style="width: 60px;"><input type="text" name="certificationData[0][serial]" value="1" readonly></td>
+                                                    <td><input type="text" name="certificationData[0][type]"></td>
+                                                    <td><input type="text" name="certificationData[0][issuingAgency]"></td>
+                                                    <td><input type="date" name="certificationData[0][issueDate]" class="issueDate" max="{{ date('Y-m-d') }}"></td>
+                                                    <td><input type="date" name="certificationData[0][expiryDate]" class="expiryDate" disabled></td>
+                                                    <td><input type="text" name="certificationData[0][supportingDoc]"></td>
+                                                    <td><input type="text" name="certificationData[0][remarks]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier.">Supplier</label>
@@ -900,13 +1036,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Zone">Zone</label>
                                     <select name="zone">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option>Asia</option>
-                                        <option>Europe</option>
-                                        <option>Africa</option>
-                                        <option>Central America</option>
-                                        <option>South America</option>
-                                        <option>Oceania</option>
-                                        <option>North America</option>
+                                        <option value="Asia" @if($data->zone == "Asia") selected @endif>Asia</option>
+                                        <option value="Europe" @if($data->zone == "Europe") selected @endif>Europe</option>
+                                        <option value="Africa" @if($data->zone == "Africa") selected @endif>Africa</option>
+                                        <option value="Central America" @if($data->zone == "Central America") selected @endif>Central America</option>
+                                        <option value="South America" @if($data->zone == "South America") selected @endif>South America</option>
+                                        <option value="Oceania" @if($data->zone == "Oceania") selected @endif>Oceania</option>
+                                        <option value="North America" @if($data->zone == "North America") selected @endif>North America</option>
                                     </select>
                                 </div>
                             </div>
@@ -1836,19 +1972,19 @@ $users = DB::table('users')->select('id', 'name')->get();
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Submitted By">Submitted By</label>
+                                    <label for="Submitted By"> Supplier Details Submitted By</label>
                                     <div class="static">{{ $data->submitted_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Submitted On">Submitted On</label>
+                                    <label for="Submitted On"> Supplier Details Submitted On</label>
                                     <div class="static">{{ $data->submitted_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Submitted Comment">Submitted Comment</label>
+                                    <label for="Submitted Comment"> Supplier Details Submitted Comment</label>
                                     <div class="static">{{ $data->submitted_comment }}</div>
                                 </div>
                             </div>
@@ -1876,57 +2012,57 @@ $users = DB::table('users')->select('id', 'name')->get();
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Pending Qualification Review By</label>
+                                    <label for="Suppplier Review By">Qualification Complete By</label>
                                     <div class="static">{{ $data->pending_qualification_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Pending Qualification Review On</label>
+                                    <label for="Suppplier Review On">Qualification Complete On</label>
                                     <div class="static">{{ $data->pending_qualification_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Pending Qualification Review Comment</label>
+                                    <label for="Suppplier Review Comment">Qualification Complete Comment</label>
                                     <div class="static">{{ $data->pending_qualification_comment }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Pending Supplier Audit By</label>
+                                    <label for="Suppplier Review By">Audit Failed By</label>
                                     <div class="static">{{ $data->pending_supplier_audit_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Pending Supplier Audit On</label>
+                                    <label for="Suppplier Review On">Audit Failed On</label>
                                     <div class="static">{{ $data->pending_supplier_audit_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Pending Supplier Audit Comment</label>
+                                    <label for="Suppplier Review Comment">Audit Failed Comment</label>
                                     <div class="static">{{ $data->pending_supplier_audit_comment }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Pending Rejction By</label>
+                                    <label for="Suppplier Review By">Supplier Obsolete By</label>
                                     <div class="static">{{ $data->pending_rejection_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Pending Rejction On</label>
+                                    <label for="Suppplier Review On">Supplier Obsolete On</label>
                                     <div class="static">{{ $data->pending_rejection_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Pending Rejction Comment</label>
+                                    <label for="Suppplier Review Comment">Supplier Obsolete Comment</label>
                                     <div class="static">{{ $data->pending_rejection_comment }}</div>
                                 </div>
                             </div>
@@ -1934,38 +2070,38 @@ $users = DB::table('users')->select('id', 'name')->get();
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Supplier Approved By</label>
+                                    <label for="Suppplier Review By">Audit Passed By</label>
                                     <div class="static">{{ $data->supplier_approved_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Supplier Approved On</label>
+                                    <label for="Suppplier Review On">Audit Passed On</label>
                                     <div class="static">{{ $data->supplier_approved_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Supplier Approved Comment</label>
+                                    <label for="Suppplier Review Comment">Audit Passed Comment</label>
                                     <div class="static">{{ $data->supplier_approved_comment }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Supplier Approved to Obselete By</label>
+                                    <label for="Suppplier Review By">Supplier Obsolete By</label>
                                     <div class="static">{{ $data->supplier_approved_to_obselete_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Supplier Approved to Obselete On</label>
+                                    <label for="Suppplier Review On">Supplier Obsolete On</label>
                                     <div class="static">{{ $data->supplier_approved_to_obselete_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Supplier Approved to Obselete Comment</label>
+                                    <label for="Suppplier Review Comment">Supplier Obsolete Comment</label>
                                     <div class="static">{{ $data->supplier_approved_to_obselete_comment }}</div>
                                 </div>
                             </div>

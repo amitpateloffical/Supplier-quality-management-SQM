@@ -1387,6 +1387,7 @@
                                                         <th>Implementation Date</th>
                                                         <th>New Document No.</th>
                                                         <th>New Version No.</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1433,6 +1434,7 @@
                                                              <td><input type="text" name="new_version_no[]"
                                                                 value="{{ unserialize($closure->new_version_no)[$key] ? unserialize($closure->new_version_no)[$key] : 'Not Applicable' }}">
                                                              </td>
+                                                             <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                         </tr>
                                                     @endforeach
                                                 @endif
@@ -1444,7 +1446,7 @@
                                             <label for="qa-closure-comments">QA Closure Comments</label>
                                             <textarea name="qa_closure_comments">{{ $closure->qa_closure_comments }}</textarea>
                                         </div>
-                                        <div class="group-input">
+                                        <!-- <div class="group-input">
                                             <label for="attach-list">List Of Attachments</label>
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="tran_attach">
@@ -1468,6 +1470,38 @@
                                                     <div>Add</div>
                                                     <input type="file" id="myfile" name="attach_list[]"
                                                         oninput="addMultipleFiles(this, 'attach_list')" multiple>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="others">Initial attachment</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="attach_list">
+                                                        @if ($closure->attach_list)
+                                                            @foreach (json_decode($closure->attach_list) as $file)
+                                                                <h6 type="button" class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i
+                                                                            class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="attach_list[]"
+                                                            oninput="addMultipleFiles(this, 'attach_list')" multiple>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1571,12 +1605,12 @@
                                                         @php
                                                             $submit = DB::table('c_c_stage_histories')
                                                                 ->where('type', 'Change-Control')
-                                                                ->where('doc_id', $data->id)
+                                                                ->where('doc_id', $data->id) 
                                                                 ->where('stage_id', 2)
                                                                 ->get();
                                                         @endphp
                                                         @foreach ($submit as $temp)
-                                                            <div class="static">{{ $temp->created_at }}</div>
+                                                            <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
                                                         @endforeach
                                                     </div>
                                                 </div>
@@ -1608,7 +1642,7 @@
                                                                 ->get();
                                                         @endphp
                                                         @foreach ($submit as $temp)
-                                                            <div class="static">{{ $temp->created_at }}</div>
+                                                            <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
                                                         @endforeach
                                                     </div>
                                                 </div>
@@ -1639,7 +1673,7 @@
                                                             ->get();
                                                     @endphp
                                                     @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
+                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
                                                     @endforeach
                                                 </div>
                                             </div> --}}
@@ -1670,7 +1704,7 @@
                                                             ->get();
                                                     @endphp
                                                     @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
+                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -1701,7 +1735,7 @@
                                                             ->get();
                                                     @endphp
                                                     @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
+                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -1732,7 +1766,7 @@
                                                             ->get();
                                                     @endphp
                                                     @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
+                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
                                                     @endforeach
                                                 </div>
                                             </div> --}}
@@ -1764,7 +1798,7 @@
                                                             ->get();
                                                     @endphp
                                                     @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
+                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -1796,7 +1830,7 @@
                                                             ->get();
                                                     @endphp
                                                     @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
+                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -1828,7 +1862,7 @@
                                                             ->get();
                                                     @endphp
                                                     @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
+                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
                                                     @endforeach
                                                 </div>
                                             </div> --}}
@@ -1858,7 +1892,7 @@
                                                             ->get();
                                                     @endphp
                                                     @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
+                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
                                                     @endforeach
                                                 </div>
                                             </div>

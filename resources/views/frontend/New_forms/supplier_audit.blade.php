@@ -31,159 +31,184 @@
         }
     </script>
     <script>
-        function addAuditAgenda(tableId) {
-            var table = document.getElementById(tableId);
-            var currentRowCount = table.rows.length;
-            var newRow = table.insertRow(currentRowCount);
-            newRow.setAttribute("id", "row" + currentRowCount);
-            var cell1 = newRow.insertCell(0);
-            cell1.innerHTML = currentRowCount;
+    function addAuditAgenda(tableId) {
+        var users = @json($users);
+        var table = document.getElementById(tableId);
+        var currentRowCount = table.rows.length;
+        var newRow = table.insertRow(currentRowCount);
+        newRow.setAttribute("id", "row" + currentRowCount);
 
-            var cell2 = newRow.insertCell(1);
-            cell2.innerHTML = "<input type='text'>";
+        var cell1 = newRow.insertCell(0);
+        cell1.innerHTML = currentRowCount;
 
-            var cell3 = newRow.insertCell(2);
-            cell3.innerHTML = "<input type='date'>";
+        var cell2 = newRow.insertCell(1);
+        cell2.innerHTML = "<input type='text' name='audit[]'>";
 
-            var cell4 = newRow.insertCell(3);
-            cell4.innerHTML = "<input type='time'>";
+        var cell3 = newRow.insertCell(2);
+        cell3.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="scheduled_start_date' + currentRowCount + '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + currentRowCount + '_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount + '`);checkEndDate(`scheduled_start_date' + currentRowCount + '_checkdate`, `scheduled_end_date' + currentRowCount + '_checkdate`)" /></div></div></div>';
 
-            var cell5 = newRow.insertCell(4);
-            cell5.innerHTML = "<input type='date'>";
+        var cell4 = newRow.insertCell(3);
+        cell4.innerHTML = "<input type='time' name='scheduled_start_time[]'>";
 
-            var cell6 = newRow.insertCell(5);
-            cell6.innerHTML = "<input type='time'>";
+        var cell5 = newRow.insertCell(4);
+        cell5.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="scheduled_end_date' + currentRowCount + '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date' + currentRowCount + '_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount + '`);checkEndDate(`scheduled_start_date' + currentRowCount + '_checkdate`, `scheduled_end_date' + currentRowCount + '_checkdate`)" /></div></div></div>';
 
-            var cell7 = newRow.insertCell(6);
-            cell7.innerHTML =
-                // '<select name="auditor"><option value="">-- Select --</option><option value="1">Amit Guru</option></select>'
+        var cell6 = newRow.insertCell(5);
+        cell6.innerHTML = "<input type='time' name='scheduled_end_time[]'>";
 
-            var cell8 = newRow.insertCell(7);
-            cell8.innerHTML =
-                // '<select name="auditee"><option value="">-- Select --</option><option value="1">Amit Guru</option></select>'
+        var cell7 = newRow.insertCell(6);
+        var auditorHtml = '<select name="auditor[]"><option value="">-- Select --</option>';
+        for (var i = 0; i < users.length; i++) {
+            auditorHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+        }
+        auditorHtml += '</select>';
+        cell7.innerHTML = auditorHtml;
 
-            var cell9 = newRow.insertCell(8);
-            cell9.innerHTML = "<input type='text'>";
-            for (var i = 1; i < currentRowCount; i++) {
-                var row = table.rows[i];
-                row.cells[0].innerHTML = i;
+        var cell8 = newRow.insertCell(7);
+        var auditeeHtml = '<select name="auditee[]"><option value="">-- Select --</option>';
+        for (var i = 0; i < users.length; i++) {
+            auditeeHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+        }
+        auditeeHtml += '</select>';
+        cell8.innerHTML = auditeeHtml;
+
+        var cell9 = newRow.insertCell(8);
+        cell9.innerHTML = "<input type='text' name='remarks[]'>";
+
+        var cell10 = newRow.insertCell(9);
+        cell10.innerHTML = '<button type="button" class="removeRowBtn">Remove</button>';
+
+        updateRowNumbers();
+    }
+
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+        updateRowNumbers();
+    });
+
+    function updateRowNumbers() {
+        $('#internalaudit tbody tr').each(function(index, row) {
+            $(row).find('td:first').text(index + 1);
+        });
+    }
+
+    function checkEndDate(startDateId, endDateId) {
+        var startDate = document.getElementById(startDateId).value;
+        var endDate = document.getElementById(endDateId).value;
+
+        if (startDate && endDate) {
+            if (new Date(endDate) < new Date(startDate)) {
+                alert('End date cannot be earlier than start date.');
+                document.getElementById(endDateId).value = ''; // Clear the end date field
             }
         }
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#internalaudit-table').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    console.log(users);
-                    var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="audit[]"></td>' +
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + serialNumber +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`);checkDate(`scheduled_start_date' + serialNumber +'_checkdate`,`scheduled_end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+    }
+</script>
 
-                        '<td><input type="time" name="scheduled_start_time[]"></td>' +
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ serialNumber +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`);checkDate(`scheduled_start_date' + serialNumber +'_checkdate`,`scheduled_end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
-                        '<td><input type="time" name="scheduled_end_time[]"></td>' +
+   <script>
+    $(document).ready(function() {
+        $('#internalaudit-table').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var users = @json($users);
+                console.log(users);
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                    '"></td>' +
+                    '<td><input type="text" name="audit[]"></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + serialNumber +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`);checkDate(`scheduled_start_date' + serialNumber +'_checkdate`,`scheduled_end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+                    '<td><input type="time" name="scheduled_start_time[]"></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ serialNumber +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`);checkDate(`scheduled_start_date' + serialNumber +'_checkdate`,`scheduled_end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+                    '<td><input type="time" name="scheduled_end_time[]"></td>' +
+                    '<td><select name="auditor[]">' +
+                    '<option value="">Select a value</option>';
 
-
-                        '<td><select name="auditor[]">' +
-                        '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-                        '<td><select name="auditee[]">' +
-                        '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-                    html += '</select></td>' +
-                        '<td><input type="text" name="remarks[]"></td>' +
-                        '</tr>';
-
-                    return html;
+                for (var i = 0; i < users.length; i++) {
+                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                 }
 
-                var tableBody = $('#internalaudit tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
+                html += '</select></td>' +
+                    '<td><select name="auditee[]">' +
+                    '<option value="">Select a value</option>';
+
+                for (var i = 0; i < users.length; i++) {
+                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                }
+                html += '</select></td>' +
+                    '<td><input type="text" name="remarks[]"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' + // Add Remove button here
+                    '</tr>';
+
+                return html;
+            }
+
+            var tableBody = $('#internalaudit tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
         });
-    </script>
+
+        // Remove row functionality
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        });
+    });
+</script>
+
     @php
     $division = DB::table('divisions')->get();
      @endphp
-    <script>
-        $(document).ready(function() {
-            $('#ObservationAdd').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    
-                    var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
-                        '<td><input type="text" name="observation_id[]"></td>' +
-                        
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
-                        // '<td><select name="auditorG[]">' +
-                         '<option value="">Select a value</option>';
+     <script>
+      $(document).ready(function() {
+        $('#ObservationAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var users = @json($users);
+                var html =
+                    '<tr>' +
+                    '<td>' + serialNumber + '</td>' +
+                    '<td><input type="text" name="observation_id[]"></td>' +
+                    '<td><input type="text" name="observation_description[]"></td>' +
+                    '<td><input type="text" name="area[]"></td>' +
+                    '<td><input type="text" name="auditee_response[]"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+                return html;
+            }
 
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    html += '</select></td>' +
-                        // '<td><select name="auditeeG[]">' +
-                        // '<option value="">Select a value</option>';
-
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-                    // html += '</select></td>' +
-                        '<td><input type="text" name="observation_description[]"></td>' +
-                        // '<td><input type="text" name="severity_level[]"></td>' +
-                        '<td><input type="text" name="area[]"></td>' +
-                        //'<td><input type="text" name="observation_category[]"></td>'
-                        //  '<td><select name="observation_category[]"><option value="">Select A Value</option><option value="Major">Major</option><option value="Minor">Minor</option><option value="Critical">Critical</option><option value="Recommendation">Recommendation</option></select></td>'+
-                        // '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
-                        '<td><input type="text" name="auditee_response[]"></td>' +
-                        // '<td><input type="text" name="auditor_review_on_response[]"></td>' +
-                        // '<td><input type="text" name="qa_comment[]"></td>' +
-                        // '<td><input type="text" name="capa_details[]"></td>' +
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
-                        // '<td><select name="capa_owner[]">' +
-                         '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' + 
-                    // '<td><input type="text" name="action_taken[]"></td>' +
-                        //'<td><input type="date" name="capa_completion_date[]"></td>'
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>'
-                        
-                        // +
-                        // '<td><input type="text" name="status_Observation[]"></td>' +
-                        // '<td><input type="text" name="remark_observation[]"></td>' +
-                        '</tr>';
-
-                    return html;
-                }
-
-                var tableBody = $('#onservation-field-table tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
+            var tableBody = $('#onservation-field-table tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+            updateRowNumbers();
         });
-    </script>
+
+        // Remove row functionality
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+            updateRowNumbers();
+        });
+
+        function updateRowNumbers() {
+            $('#onservation-field-table tbody tr').each(function(index, row) {
+                $(row).find('td:first').text(index + 1);
+            });
+        }
+    });
+
+    function otherController(value, checkValue, blockID) {
+        let block = document.getElementById(blockID)
+        let blockTextarea = block.getElementsByTagName('textarea')[0];
+        let blockLabel = block.querySelector('label span.text-danger');
+        if (value === checkValue) {
+            blockLabel.classList.remove('d-none');
+            blockTextarea.setAttribute('required', 'required');
+        } else {
+            blockLabel.classList.add('d-none');
+            blockTextarea.removeAttribute('required');
+        }
+    }
+</script>
+
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -331,57 +356,82 @@
                                     document.getElementById('due_date').value = dueDateFormatted;
                                 </script>
 
-
-                                <div class="col-lg-6">
+<div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
                                         <select name="Initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('Initiator_Group') == 'CQC') selected @endif>Central
-                                                Quality Control</option>
-                                            <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>Central
-                                                Laboratory</option>
+                                            <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
+                                            <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
+                                            <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
+                                            <option value="MANU" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
+                                            <option value="PSG" @if(old('Initiator_Group') =="PSG") selected @endif>Plasma Sourcing Group</option>
+                                            <option value="CS"  @if(old('Initiator_Group') == "CS") selected @endif>Central Stores</option>
+                                            <option value="ITG" @if(old('Initiator_Group') =="ITG") selected @endif>Information Technology Group</option>
+                                            <option value="MM"  @if(old('Initiator_Group') == "MM") selected @endif>Molecular Medicine</option>
+                                            <option value="CL"  @if(old('Initiator_Group') == "CL") selected @endif>Central Laboratory</option>
 
-                                            <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
-                                                team</option>
-                                            <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
-                                                Business Administration</option>
+                                            <option value="TT"  @if(old('Initiator_Group') == "TT") selected @endif>Tech team</option>
+                                            <option value="QA"  @if(old('Initiator_Group') == "QA") selected @endif> Quality Assurance</option>
+                                            <option value="QM"  @if(old('Initiator_Group') == "QM") selected @endif>Quality Management</option>
+                                            <option value="IA"  @if(old('Initiator_Group') == "IA") selected @endif>IT Administration</option>
+                                            <option value="ACC"  @if(old('Initiator_Group') == "ACC") selected @endif>Accounting</option>
+                                            <option value="LOG"  @if(old('Initiator_Group') == "LOG") selected @endif>Logistics</option>
+                                            <option value="SM"  @if(old('Initiator_Group') == "SM") selected @endif>Senior Management</option>
+                                            <option value="BA"  @if(old('Initiator_Group') == "BA") selected @endif>Business Administration</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" readonly>
+                                    <!-- <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group"><b>Initiator Group</b></label>
+                                            <select name="Initiator_Group" id="initiator_group">
+                                                <option value="">-- Select --</option>
+                                                <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
+                                                    Corporate Quality Assurance</option>
+                                                <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>Quality
+                                                    Assurance Biopharma</option>
+                                                <option value="CQC" @if (old('Initiator_Group') == 'CQC') selected @endif>Central
+                                                    Quality Control</option>
+                                                <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
+                                                    Manufacturing</option>
+                                                <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
+                                                    Sourcing Group</option>
+                                                <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>Central
+                                                    Stores</option>
+                                                <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
+                                                    Information Technology Group</option>
+                                                <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
+                                                    Molecular Medicine</option>
+                                                <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>Central
+                                                    Laboratory</option>
+
+                                                <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
+                                                    team</option>
+                                                <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
+                                                    Quality Assurance</option>
+                                                <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
+                                                    Quality Management</option>
+                                                <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
+                                                    Administration</option>
+                                                <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
+                                                    Accounting</option>
+                                                <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
+                                                    Logistics</option>
+                                                <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
+                                                    Senior Management</option>
+                                                <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
+                                                    Business Administration</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group Code">Initiator Group Code</label>
+                                            <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                                value="" readonly>
+                                        </div>
                                     </div>
-                                </div>
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -595,77 +645,77 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="audit-agenda-grid">
-                                            Audit Agenda<button type="button" name="audit-agenda-grid"
-                                                id="internalaudit-table">+</button>
-                                        </label>
-                                        <table class="table table-bordered" id="internalaudit">
-                                            <thead>
-                                                <tr>
-                                                    <th>Row#</th>
-                                                    <th>Area of Audit</th>
-                                                    <th>Scheduled Start Date</th>
-                                                    <th>Scheduled Start Time</th>
-                                                    <th>Scheduled End Date</th>
-                                                    <th>Scheduled End Time</th>
-                                                    <th>Auditor</th>
-                                                    <th>Auditee</th>
-                                                    <th>Remarks</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td><input type="text" name="audit[]"></td>
-                                                 
-
-                                                 <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div class="calenderauditee">
-                                                                <input type="text"  class="test" id="scheduled_start_date1" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   id="scheduled_start_date1_checkdate" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td> 
-                                                <td><input type="time" name="scheduled_start_time[]"></td> 
-                                                <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div  class="calenderauditee">
-                                                                <input type="text"  class="test" id="scheduled_end_date1" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="scheduled_end_date1_checkdate"name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
-                                                                 oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                
-
-                                                <td><input type="time" name="scheduled_end_time[]"></td>
-                                                
-                                                <td> <select id="select-state" placeholder="Select..." name="auditor[]">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
-                                                <td><select id="select-state" placeholder="Select..." name="auditee[]">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
-                                                <td><input type="text" name="remarks[]"></td>
-                                            </tbody>
-                                        </table>
-                                    </div>
+    <div class="group-input">
+        <label for="audit-agenda-grid">
+            Audit Agenda<button type="button" name="audit-agenda-grid" id="internalaudit-table">+</button>
+        </label>
+        <table class="table table-bordered" id="internalaudit">
+            <thead>
+                <tr>
+                    <th>Row#</th>
+                    <th>Area of Audit</th>
+                    <th>Scheduled Start Date</th>
+                    <th>Scheduled Start Time</th>
+                    <th>Scheduled End Date</th>
+                    <th>Scheduled End Time</th>
+                    <th>Auditor</th>
+                    <th>Auditee</th>
+                    <th>Remarks</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input disabled type="text" name="serial_number[]" value="1"></td>
+                    <td><input type="text" name="audit[]"></td>
+                    <td>
+                        <div class="group-input new-date-data-field mb-0">
+                            <div class="input-date ">
+                                <div class="calenderauditee">
+                                    <input type="text" class="test" id="scheduled_start_date1" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="date" id="scheduled_start_date1_checkdate" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                    oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
                                 </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><input type="time" name="scheduled_start_time[]"></td>
+                    <td>
+                        <div class="group-input new-date-data-field mb-0">
+                            <div class="input-date ">
+                                <div class="calenderauditee">
+                                    <input type="text" class="test" id="scheduled_end_date1" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="date" id="scheduled_end_date1_checkdate" name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                    oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><input type="time" name="scheduled_end_time[]"></td>
+                    <td>
+                        <select id="select-state" placeholder="Select..." name="auditor[]">
+                            <option value="">Select a value</option>
+                            @foreach ($users as $data)
+                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select id="select-state" placeholder="Select..." name="auditee[]">
+                            <option value="">Select a value</option>
+                            @foreach ($users as $data)
+                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td><input type="text" name="remarks[]"></td>
+                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
                                 {{-- <div class="col-6">
                                     <div class="group-input">
                                         <label for="Facility Name">Facility Name</label>
@@ -890,44 +940,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                     <div class="group-input">
-                                        <label for="audit-agenda-grid">
-                                            Observation Details
-                                            <button type="button" name="audit-agenda-grid"
-                                                id="ObservationAdd">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="onservation-field-table"
-                                                style="width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Row#</th>
-                                                        <th>Observation Details</th>
-                                                        {{-- <th>Date</th>
-                                                        <th>Auditor</th>
-                                                        <th>Auditee</th> --}}
-                                                        <th>Pre Comments</th>
-                                                        {{-- <th>Severity Level</th> --}}
-                                                         <th>CAPA Details if any</th>
-                                                        {{-- <th>Observation Category</th>
-                                                        <th>CAPA Required</th> --}}
-                                                        <th>Post Comments</th>
-                                                        {{-- <th>Auditor Review on Response</th>
-                                                        <th>QA Comments</th>
-                                                        <th>CAPA Details</th>
-                                                        <th>CAPA Due Date</th>
-                                                        <th>CAPA Owner</th>
-                                                        <th>Action Taken</th>
-                                                        <th>CAPA Completion Date</th>
-                                                        <th>Status</th>
-                                                        <th>Remarks</th> --}}
-                                                    </tr>
-                                                </thead>
+                                <div class="group-input">
+        <label for="audit-agenda-grid">
+            Observation Details
+            <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="onservation-field-table" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Row#</th>
+                        <th>Observation Details</th>
+                        <th>Pre Comments</th>
+                        <th>CAPA Details if any</th>
+                        <th>Post Comments</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
                                                 <tbody>
                                                   
 
@@ -1183,13 +1215,13 @@
                                 </div>
 
                             </div>
-                            <div class="button-block">
+                            <!-- <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit">Submit</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 

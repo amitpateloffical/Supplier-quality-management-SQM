@@ -174,10 +174,7 @@
                 <header>
                     <table>
                         <tr>
-                            <!-- <div class="logo">
-                                <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt=""
-                                    class="w-40">
-                            </div> -->
+
                         </tr>
                     </table>
 
@@ -194,9 +191,7 @@
                                     Review
                                 </button> --}}
                             @endif
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
-                                View
-                            </button>
+
                             <button class="button_theme1"><a class="text-white"
                                     href="{{ url('/showSupplierAudit' , $document->id) }}"> Back
                                 </a>
@@ -291,8 +286,9 @@
                                 <div><strong> Peformed By
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
+
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at : 'Not Applicable' }}
+                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at->format('d-M-Y') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>

@@ -122,19 +122,16 @@ $users = DB::table('users')->select('id', 'name')->get();
                             </div>
 
                             @php
-                                $initiationDate = date('Y-m-d');
-                                $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
+                                $initiationDate = date('d-M-Y');
+                                $dueDate = date('d-M-Y', strtotime($initiationDate . '+30 days'));
                             @endphp
 
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="due-date">Date Due</label>
                                     <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                    <div class="calenderauditee">
-                                    <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" />
-                                    </div>
+                                    <div class="calenderauditee">                                    
+                                        <input type="text" name="due_date" readonly value="{{$dueDate}}" />
                                     </div>
                                 </div>
                             </div>
@@ -566,7 +563,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="Country">Country</label>
                                     <select name="country" class="form-select country" aria-label="Default select example" onchange="loadStates()">
-                                        <option selected>Select Country</option>
+                                        <option value="">Select Country</option>
                                     </select>
                                 </div>
                             </div>
@@ -574,7 +571,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="City">State</label>
                                     <select name="state" class="form-select state" aria-label="Default select example" onchange="loadCities()">
-                                        <option selected>Select State/District</option>
+                                        <option value="">Select State/District</option>
                                     </select>
                                 </div>
                             </div>
@@ -582,7 +579,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="State/District">City</label>
                                     <select name="city" class="form-select city" aria-label="Default select example">
-                                        <option selected>Select City</option>
+                                        <option value="">Select City</option>
                                     </select>
                                 </div>
                             </div>
@@ -1468,19 +1465,19 @@ $users = DB::table('users')->select('id', 'name')->get();
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Submitted By">Submitted By</label>
+                                    <label for="Submitted By">Supplier Detail Submitted By</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Submitted On">Submitted On</label>
+                                    <label for="Submitted On">Supplier Detail Submitted On</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Submitted Comment">Submitted Comment</label>
+                                    <label for="Submitted Comment">Supplier Detail Submitted Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -1488,19 +1485,19 @@ $users = DB::table('users')->select('id', 'name')->get();
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Suppplier Review By</label>
+                                    <label for="Suppplier Review By">Qualification Complete By</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Suppplier Review On</label>
+                                    <label for="Suppplier Review On">Qualification Complete On</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Suppplier Review Comment</label>
+                                    <label for="Suppplier Review Comment">Qualification Complete Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>

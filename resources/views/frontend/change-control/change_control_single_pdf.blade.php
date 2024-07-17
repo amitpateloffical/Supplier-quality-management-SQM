@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -196,7 +196,7 @@
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
                         <th class="w-20">Date Initiation</th>
-                        <td class="w-30">23-12-2302</td>
+                        <td class="w-30">{{ $data->intiation_date }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -301,7 +301,7 @@
                     <tr>
                         <th class="w-20">Current Practice</th>
                         <td>
-                            <div><strong>On {{ Helpers:: getDateFormat($docdetail->created_at) }} added by {{ $data->originator }}</strong></div>
+                            
                             <div>
                                 @if($docdetail->current_practice){{ $docdetail->current_practice }}@else Not Applicable @endif
                             </div>
@@ -310,7 +310,7 @@
                     <tr>
                         <th class="w-20">Proposed Change</th>
                         <td>
-                            <div><strong>On {{ Helpers:: getDateFormat($docdetail->created_at) }} added by {{ $data->originator }}</strong></div>
+                            
                             <div>
                                 @if($docdetail->proposed_change){{ $docdetail->proposed_change }}@else Not Applicable @endif
                             </div>
@@ -319,7 +319,7 @@
                     <tr>
                         <th class="w-20">Reason For Change</th>
                         <td>
-                            <div><strong>On {{ Helpers:: getDateFormat($docdetail->created_at) }} added by {{ $data->originator }}</strong></div>
+                            
                             <div>
                                 @if($docdetail->reason_change){{ $docdetail->reason_change }}@else Not Applicable @endif
                             </div>
@@ -328,7 +328,7 @@
                     <tr>
                         <th class="w-20">Supervisor Comments</th>
                         <td>
-                            <div><strong>On {{ Helpers:: getDateFormat($docdetail->created_at) }} added by {{ $data->originator }}</strong></div>
+                            
                             <div>
                                 @if($docdetail->supervisor_comment){{ $docdetail->supervisor_comment }}@else Not Applicable @endif
                             </div>
@@ -337,7 +337,7 @@
                     <tr>
                         <th class="w-20">Any Other Comments</th>
                         <td>
-                            <div><strong>On {{ Helpers:: getDateFormat($docdetail->created_at) }} added by {{ $data->originator }}</strong></div>
+                            
                             <div>
                                 @if($docdetail->other_comment){{ $docdetail->other_comment }}@else Not Applicable @endif
                             </div>
@@ -358,7 +358,6 @@
                         <tr>
                             <th class="w-20">QA Review Comments</th>
                             <td>
-                                <div><strong>On {{ Helpers:: getDateFormat($review->created_at) }} added by {{ $data->originator }}</strong></div>
                                 <div>
                                     {{ $review->qa_comments }}
                                 </div>
@@ -412,7 +411,6 @@
                         <tr>
                             <th class="w-20">QA Evaluation Comments</th>
                             <td>
-                                <div><strong>On {{ Helpers:: getDateFormat($evaluation->created_at) }} added by {{ $data->originator }}</strong>
                                 </div>
                                 <div>
                                     {{ $evaluation->qa_eval_comments }}
@@ -422,7 +420,6 @@
                         <tr>
                             <th class="w-20">QA Evaluation Attachments </th>
                             <td>
-                                <div><strong>On {{ Helpers:: getDateFormat($evaluation->qa_evaluation_attachments) }} added by {{ $data->qa_evaluation_attachments}}</strong>
                                 </div>
                                 <div>
                                     {{ $evaluation->qa_evaluation_attachments }}
@@ -438,7 +435,6 @@
                         <tr>
                             <th class="w-20">Training Comments</th>
                             <td>
-                                <div><strong>On {{ Helpers:: getDateFormat($evaluation->created_at) }} added by {{ $data->originator }}</strong>
                                 </div>
                                 <div>
                                     {{ $evaluation->train_comments }}
@@ -531,7 +527,7 @@
                         <tr>
                             <th class="w-20">QA Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
+                                
                                 </div>
                                 <div>
                                     {{ $comments->qa_comments }}
@@ -541,7 +537,7 @@
                         <tr>
                             <th class="w-20">QA Head Designee Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
+                                
                                 </div>
                                 <div>
                                     {{ $comments->designee_comments }}
@@ -551,7 +547,7 @@
                         <tr>
                             <th class="w-20">Warehouse Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
+                                
                                 </div>
                                 <div>
                                     {{ $comments->Warehouse_comments }}
@@ -561,7 +557,7 @@
                         <tr>
                             <th class="w-20">Engineering Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
+                                
                                 </div>
                                 <div>
                                     {{ $comments->Engineering_comments }}
@@ -571,7 +567,7 @@
                         <tr>
                             <th class="w-20">Instrumentation Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
+                                
                                 </div>
                                 <div>
                                     {{ $comments->Instrumentation_comments }}
@@ -581,7 +577,7 @@
                         <tr>
                             <th class="w-20">Validation Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
+                                
                                 </div>
                                 <div>
                                     {{ $comments->Validation_comments }}
@@ -591,7 +587,7 @@
                         <tr>
                             <th class="w-20">Others Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
+                                
                                 </div>
                                 <div>
                                     {{ $comments->Others_comments }}
@@ -601,7 +597,7 @@
                         <tr>
                             <th class="w-20">Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
+                                
                                 </div>
                                 <div>
                                     {{ $comments->Group_comments }}
@@ -668,7 +664,6 @@
                     <tr>
                         <th class="w-20">Risk Evaluation</th>
                         <td class="w-80" colspan="3">
-                            <div><strong>On {{ Helpers:: getDateFormat($assessment->created_at) }} added by {{ $data->originator }}</strong></div>
                             <div>
                                 {{ $assessment->risk_evaluation }}
                             </div>
@@ -677,7 +672,6 @@
                     <tr>
                         <th class="w-20">Mitigation Action</th>
                         <td class="w-80" colspan="3">
-                            <div><strong>On {{ Helpers:: getDateFormat($assessment->created_at) }} added by {{ $data->originator }}</strong></div>
                             <div>
                                 {{ $assessment->migration_action }}
                             </div>
@@ -693,7 +687,6 @@
                     <tr>
                         <th class="w-20">QA Approval Comments</th>
                         <td class="w-80">
-                            <div><strong>On {{ Helpers:: getDateFormat($approcomments->created_at) }} added by {{ $data->originator }}</strong>
                             </div>
                             <div>
                                 {{ $approcomments->risk_identification }}
@@ -703,7 +696,6 @@
                     <tr>
                         <th class="w-20">Training Feedback</th>
                         <td class="w-80">
-                            <div><strong>On {{ Helpers:: getDateFormat($approcomments->created_at) }} added by {{ $data->originator }}</strong>
                             </div>
                             <div>
                                 {{ $approcomments->feedback }}

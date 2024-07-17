@@ -227,6 +227,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('launch-extension-deviation');
             Route::post('launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('launch-extension-capa');
             Route::post('deviation/pending_initiator_update/{id}', [DeviationController::class, 'pending_initiator_update'])->name('pending_initiator_update');
+            Route::get('devAuditreport/{id}', [DeviationController::class, 'devAuditreport'])->name('devAuditreport');
 
 
              

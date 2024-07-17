@@ -119,71 +119,53 @@
     @php
     $division = DB::table('divisions')->get();
      @endphp
-    <script>
-        $(document).ready(function() {
-            $('#ObservationAdd').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    
-                    var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
-                        '<td><input type="text" name="observation_id[]"></td>' +
-                        
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
-                        // '<td><select name="auditorG[]">' +
-                         '<option value="">Select a value</option>';
-
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    html += '</select></td>' +
-                        // '<td><select name="auditeeG[]">' +
-                        // '<option value="">Select a value</option>';
-
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-                    // html += '</select></td>' +
-                        '<td><input type="text" name="observation_description[]"></td>' +
-                        // '<td><input type="text" name="severity_level[]"></td>' +
-                        '<td><input type="text" name="area[]"></td>' +
-                        //'<td><input type="text" name="observation_category[]"></td>'
-                        //  '<td><select name="observation_category[]"><option value="">Select A Value</option><option value="Major">Major</option><option value="Minor">Minor</option><option value="Critical">Critical</option><option value="Recommendation">Recommendation</option></select></td>'+
-                        // '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
-                        '<td><input type="text" name="auditee_response[]"></td>' +
-                        // '<td><input type="text" name="auditor_review_on_response[]"></td>' +
-                        // '<td><input type="text" name="qa_comment[]"></td>' +
-                        // '<td><input type="text" name="capa_details[]"></td>' +
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
-                        // '<td><select name="capa_owner[]">' +
-                         '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' + 
-                    // '<td><input type="text" name="action_taken[]"></td>' +
-                        //'<td><input type="date" name="capa_completion_date[]"></td>'
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>'
-                        
-                        // +
-                        // '<td><input type="text" name="status_Observation[]"></td>' +
-                        // '<td><input type="text" name="remark_observation[]"></td>' +
-                        '</tr>';
-
-                    return html;
-                }
-
-                var tableBody = $('#onservation-field-table tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
+     <script>
+      $(document).ready(function() {
+        $('#ObservationAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var users = @json($users);
+                var html =
+                    '<tr>' +
+                    '<td>' + serialNumber + '</td>' +
+                    '<td><input type="text" name="observation_id[]"></td>' +
+                    '<td><input type="text" name="observation_description[]"></td>' +
+                    '<td><input type="text" name="area[]"></td>' +
+                    '<td><input type="text" name="auditee_response[]"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+                return html;
+            }
+            var tableBody = $('#onservation-field-table tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+            updateRowNumbers();
         });
-    </script>
+                // Remove row functionality
+                $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+            updateRowNumbers();
+        });
+        function updateRowNumbers() {
+            $('#onservation-field-table tbody tr').each(function(index, row) {
+                $(row).find('td:first').text(index + 1);
+            });
+        }
+    });
+    function otherController(value, checkValue, blockID) {
+        let block = document.getElementById(blockID)
+        let blockTextarea = block.getElementsByTagName('textarea')[0];
+        let blockLabel = block.querySelector('label span.text-danger');
+        if (value === checkValue) {
+            blockLabel.classList.remove('d-none');
+            blockTextarea.setAttribute('required', 'required');
+        } else {
+            blockLabel.classList.add('d-none');
+            blockTextarea.removeAttribute('required');
+        }
+    }
+</script>
+
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -890,44 +872,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                     <div class="group-input">
-                                        <label for="audit-agenda-grid">
-                                            Observation Details
-                                            <button type="button" name="audit-agenda-grid"
-                                                id="ObservationAdd">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="onservation-field-table"
-                                                style="width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Row#</th>
-                                                        <th>Observation Details</th>
-                                                        {{-- <th>Date</th>
-                                                        <th>Auditor</th>
-                                                        <th>Auditee</th> --}}
-                                                        <th>Pre Comments</th>
-                                                        {{-- <th>Severity Level</th> --}}
-                                                         <th>CAPA Details if any</th>
-                                                        {{-- <th>Observation Category</th>
-                                                        <th>CAPA Required</th> --}}
-                                                        <th>Post Comments</th>
-                                                        {{-- <th>Auditor Review on Response</th>
-                                                        <th>QA Comments</th>
-                                                        <th>CAPA Details</th>
-                                                        <th>CAPA Due Date</th>
-                                                        <th>CAPA Owner</th>
-                                                        <th>Action Taken</th>
-                                                        <th>CAPA Completion Date</th>
-                                                        <th>Status</th>
-                                                        <th>Remarks</th> --}}
-                                                    </tr>
-                                                </thead>
+                                <div class="group-input">
+        <label for="audit-agenda-grid">
+            Observation Details
+            <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="onservation-field-table" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Row#</th>
+                        <th>Observation Details</th>
+                        <th>Pre Comments</th>
+                        <th>CAPA Details if any</th>
+                        <th>Post Comments</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
                                                 <tbody>
                                                   
 

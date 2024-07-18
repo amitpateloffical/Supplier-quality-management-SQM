@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('observation_grids', function (Blueprint $table) {
             $table->id();
             $table->integer('observation_id');
-            $table->string('action');
+            $table->longText('action');
             $table->string('responsible');
             $table->string('deadline');
             $table->string('item_status');

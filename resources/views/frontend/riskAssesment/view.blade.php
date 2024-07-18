@@ -403,6 +403,7 @@
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
                                                 <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                      id="initiator_group">
+                                                     <option value="">-- Select --</option>
                                                     <option value="CQA"
                                                         @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
@@ -2306,7 +2307,7 @@
                             <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form action="{{ route('riskAssesmentStateUpdate', $data->id) }}" method="POST">
+                        <form action="{{ route('riskAssesmentStateChangeshow', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -2325,7 +2326,7 @@
                                 </div>
                                 <div class="group-input">
                                     <label for="comment">Comment</label>
-                                    <input type="comment" name="comment">
+                                    <input type="comment" name="comments">
                                 </div>
                             </div>
 

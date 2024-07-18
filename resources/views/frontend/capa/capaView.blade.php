@@ -85,7 +85,7 @@
                                 Propose Plan
                             </button>
                         @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#capa_more_info">
                                 More Info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -98,7 +98,7 @@
                                 Child
                             </button> --}}  
                         @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                               <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
+                               <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#capa_more_info">
                               QA More Info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -119,7 +119,7 @@
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> -->
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#capa_more_info">
                                 Reject
                             </button>
                         @elseif($data->stage == 5)
@@ -214,7 +214,7 @@
                     <form action="{{ route('capaUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div id="step-form">
-
+                         
                             <!-- General information content -->
                             <div id="CCForm1" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
@@ -598,7 +598,7 @@
                                     <div class="button-block">
                                         <button type="submit" id="ChangesaveButton" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+                                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -815,6 +815,8 @@
                                                             <td><input type="text" name="equipment_comments[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data3->equipment_comments)[$key] ? unserialize($data3->equipment_comments)[$key] : '' }}">
                                                             </td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+
                                                         </tr>
                                                     @endforeach
                                                         @endif
@@ -845,8 +847,8 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1333,8 +1335,8 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1463,8 +1465,8 @@
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
-                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1579,9 +1581,9 @@
                                     </div>
                                     
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
-                                        <button type="submit"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                        {{-- <button type="submit" class="saveButton"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button> --}}
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        {{-- <button type="submit"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button> --}}
                                         <button type="button"> <a class="text-white"href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
                                 </div>
@@ -1653,10 +1655,14 @@
                                             <input type="radio" name="child_type" value="Action_Item">
                                             Action Item
                                         </label>
-                                        <!-- <label for="major">
+                                         <label for="major">
                                             <input type="radio" name="child_type" value="extension">
                                             Extension
-                                        </label> -->
+                                        </label> 
+                                        <label for="major">
+                                            <input type="radio" name="child_type" value="RCA">
+                                          RCA
+                                        </label> 
                                     @endif
                                     
                                     @if ($data->stage == 6)
@@ -1824,11 +1830,11 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
@@ -1850,7 +1856,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="modal1">
+            <div class="modal fade" id="capa_more_info">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
 
@@ -1869,16 +1875,16 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
-                                    <input type="comment" name="comment">
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
+                                    <input type="comment" name="comments" required>
                                 </div>
                             </div>
 

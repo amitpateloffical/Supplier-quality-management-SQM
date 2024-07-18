@@ -190,7 +190,7 @@ Route::get('risk-management', [RiskManagementController::class, 'risk']);
 Route::get('RiskManagement/{id}', [RiskManagementController::class, 'show'])->name('showRiskManagement');
 Route::post('risk_store', [RiskManagementController::class, 'store'])->name('risk_store');
 Route::post('riskAssesmentUpdate/{id}', [RiskManagementController::class, 'riskUpdate'])->name('riskUpdate');
-Route::post('riskAssesmentStateChange{id}', [RiskManagementController::class, 'riskAssesmentStateChange'])->name('riskAssesmentStateUpdate');
+Route::post('riskAssesmentStateChangeshow/{id}', [RiskManagementController::class, 'riskAssesmentStateChange'])->name('riskAssesmentStateChangeshow');
 Route::post('reject_Risk/{id}', [RiskManagementController::class, 'RejectStateChange'])->name('reject_Risk');
 
 Route::get('riskAuditTrial/{id}', [RiskManagementController::class, 'riskAuditTrial']);

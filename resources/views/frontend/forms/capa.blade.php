@@ -183,9 +183,9 @@
                                         <label for="Date Due"> Due Date</label>
                                          <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly
+                                            <input type="text" name="due_date" id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input disabled type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input disabled type="date" name="due_date_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>

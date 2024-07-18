@@ -12,7 +12,13 @@ class SupplierAudit extends Model
     protected $casts = [
         // 'due_date' => 'datetime:Y-m-d', // Ensuring date stored in Y-m-d format
         // 'due_date' => 'datetime:Y-m-d',
-        'created_at'=>'date' ];
+        'audit_end_date' => 'date',
+        'audit_start_date' => 'date',
+        'end_date' => 'date',
+        'start_date' => 'date',
+        'created_at'=>'date'
+        
+     ];
 
     public function division(){
         return $this->belongsTo(QMSDivision::class,'division_id');

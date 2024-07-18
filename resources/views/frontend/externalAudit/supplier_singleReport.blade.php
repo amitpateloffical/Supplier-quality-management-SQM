@@ -206,6 +206,7 @@
                     <tr>
                     <th class="w-20">Site/Location Code</th>
                     <td class="w-30">{{ $data->division ? $data->division->name : 'Na' }}</td>
+                    
                     <th class="w-20"> Severity Level</th>
                         <td class="w-30">@if($data->severity_level){{ $data->severity_level }} @else Not Applicable @endif</td>
                     </tr>
@@ -277,9 +278,9 @@
                     <table>
                         <tr>
                             <th class="w-30">Audit Schedule Start Date</th>
-                            <td class="w-20">@if($data->start_date){{ $data->start_date }}@else Not Applicable @endif</td>
+                            <td class="w-20">@if($data->start_date){{ $data->start_date->format('d-M-Y') }}@else Not Applicable @endif</td>
                             <th class="w-30">Audit Schedule End Date</th>
-                            <td class="w-20">@if($data->end_date){{ $data->end_date }}@else Not Applicable @endif</td>
+                            <td class="w-20">@if($data->end_date){{ $data->end_date->format('d-M-Y') }}@else Not Applicable @endif</td>
 
                         </tr>
                         <tr>
@@ -438,13 +439,13 @@
                             <th class="w-20">Audit Start Date</th>
                             <td class="w-30">
                                 <div>
-                                    @if($data->audit_start_date){{ $data->audit_start_date }}@else Not Applicable @endif
+                                    @if($data->audit_start_date){{ $data->audit_start_date->format('d-M-Y') }}@else Not Applicable @endif
                                 </div>
                             </td>
                             <th class="w-20">Audit End Date</th>
                             <td class="w-30">
                                 <div>
-                                    @if($data->audit_end_date){{ $data->audit_end_date }}@else Not Applicable @endif
+                                    @if($data->audit_end_date){{ $data->audit_end_date->format('d-M-Y') }}@else Not Applicable @endif
                                 </div>
                             </td>
                         </tr>
@@ -493,12 +494,12 @@
                 </div>
                 <table>
 
-                        <tr>
+                        <!-- <tr>
                         <th class="w-20">Reference Record</th>
                         <td class="w-30">@if($data->refrence_record){{ $data->refrence_record }}@else Not Applicable @endif</td>
                         <th class="w-20">Due Date Extension Justification</th>
                         <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                     <th class="w-20">Remarks</th>
                         <td class="w-80" colspan="3">@if($data->Remarks){{ $data->Remarks }}@else Not Applicable @endif</td>
@@ -588,31 +589,31 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Audit preparation completed by</th>
+                        <th class="w-20">Completed Audit Preparation by</th>
                         <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
-                        <th class="w-20">Audit preparation completed On</th>
+                        <th class="w-20">Completed Audit Preparation On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Audit Mgr.more Info Reqd By</th>
+                        <th class="w-20">Issue  Report By</th>
                         <td class="w-30">{{ $data->audit_mgr_more_info_reqd_by }}</td>
-                        <th class="w-20"> Audit Mgr.more Info Reqd On</th>
+                        <th class="w-20"> Issue  Report On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Audit Observation Submitted By</th>
+                        <th class="w-20">CAPA Plan Proposed By</th>
                         <td class="w-30">{{ $data->audit_observation_submitted_by }}</td>
-                        <th class="w-20">Audit Observation Submitted On</th>
+                        <th class="w-20">CAPA Plan Proposed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_observation_submitted_on) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Audit Lead More Info Reqd By
+                        <th class="w-20">All CAPA Closed By
                         </th>
                         <td class="w-30">{{ $data->audit_lead_more_info_reqd_by }}</td>
-                        <th class="w-20">Audit Lead More Info Reqd On</th>
+                        <th class="w-20">All CAPA Closed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_lead_more_info_reqd_on) }}</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">Audit Response Completed By</th>
                         <td class="w-30">{{ $data->audit_response_completed_by }}</td>
                         <th class="w-20">Audit Response Completed On</th>
@@ -623,7 +624,7 @@
                         <td class="w-30">{{ $data->response_feedback_verified_by }}</td>
                         <th class="w-20">Response Feedback Verified On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->response_feedback_verified_on) }}</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th class="w-20">Rejected By</th>
                         <td class="w-30">{{ $data->rejected_by }}</td>

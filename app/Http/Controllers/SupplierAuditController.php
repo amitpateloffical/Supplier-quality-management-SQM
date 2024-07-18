@@ -35,25 +35,7 @@ class SupplierAuditController extends Controller
 
     public function create(Request $request)
     {
-        $departments = [
-            'CQA' => 'Corporate Quality Assurance',
-            'QAB' => 'Quality Assurance Biopharma',
-            'CQC' => 'Central Quality Control',
-            'MFG' => 'Manufacturing',
-            'PSG' => 'Plasma Sourcing Group',
-            'CS' => 'Central Stores',
-            'ITG' => 'Information Technology Group',
-            'MM' => 'Molecular Medicine',
-            'CL' => 'Central Laboratory',
-            'TT' => 'Tech team',
-            'QA' => 'Quality Assurance',
-            'QM' => 'Quality Management',
-            'ITA' => 'IT Administration',
-            'ACC' => 'Accounting',
-            'LOG' => 'Logistics',
-            'SM' => 'Senior Management',
-            'BA' => 'Business Administration'
-        ];
+        
 
         if (!$request->short_description) {
             toastr()->error("Short description is required");
@@ -72,10 +54,9 @@ class SupplierAuditController extends Controller
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date = $request->due_date;
-        $initiatorGroupShortForm = $request->Initiator_Group;
-        $initiatorGroupFullForm = $departments[$initiatorGroupShortForm] ?? 'Unknown Department';
-        $internalAudit->Initiator_Group = $initiatorGroupFullForm;
+        $internalAudit->Initiator_Group = $request->Initiator_Group;
         $internalAudit->initiator_group_code= $request->initiator_group_code;
+        
         $internalAudit->short_description = $request->short_description;
         $internalAudit->audit_type = $request->audit_type;
         $internalAudit->if_other = $request->if_other;
@@ -87,8 +68,12 @@ class SupplierAuditController extends Controller
         $internalAudit->due_date_extension = $request->due_date_extension;
         $internalAudit->initial_comments = $request->initial_comments;
         $internalAudit->severity_level = $request->severity_level;
-        $internalAudit->start_date = $request->start_date;
-        $internalAudit->end_date = $request->end_date;
+        if (!empty($request->start_date)) {
+            $internalAudit->start_date = $request->start_date;
+        }
+        if (!empty($request->end_date)) {
+            $internalAudit->end_date = $request->end_date;
+        }
         $internalAudit->audit_agenda = $request->audit_agenda;
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
@@ -107,8 +92,13 @@ class SupplierAuditController extends Controller
         $internalAudit->Remarks = $request->Remarks;
         $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
-        $internalAudit->audit_start_date = $request->audit_start_date;
-        $internalAudit->audit_end_date = $request->audit_end_date;
+        if (!empty($request->audit_start_date)) {
+            $internalAudit->audit_start_date = $request->audit_start_date;
+        }
+    
+        if (!empty($request->audit_end_date)) {
+            $internalAudit->audit_end_date = $request->audit_end_date;
+        }
         $internalAudit->status = 'Opened';
         $internalAudit->stage = 1;
         $internalAudit->external_agencies = $request->external_agencies;
@@ -628,7 +618,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->supplier_id = $internalAudit->id;
             $history->activity_type = 'Audit Schedule Start Date';
             $history->previous = "Null";
-            $history->current = $internalAudit->start_date;
+            $history->current = $internalAudit->start_date->format('d-M-Y');
             $history->comment = "Na";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -645,7 +635,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->supplier_id = $internalAudit->id;
             $history->activity_type = 'Audit Schedule End Date';
             $history->previous = "Null";
-            $history->current = $internalAudit->end_date;
+            $history->current = $internalAudit->end_date->format('d-M-Y');
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -691,13 +681,17 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->action_name = "Create";
             $history->save();
         }
-
+        
+        $previousleadauditor = User::find($lastDocument->lead_auditor);
+        $currentleadauditor = User::find($internalAudit['lead_auditor']);
         if (!empty($internalAudit->lead_auditor)) {
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $internalAudit->id;
             $history->activity_type = 'Lead Auditor';
-            $history->previous = "Null";
-            $history->current = $internalAudit->lead_auditor;
+            $history->previous = $previousleadauditor ? $previousleadauditor->name : 'Null';
+            $history->current = $currentleadauditor ? $currentleadauditor->name : 'Unknown';
+            // $history->previous = "Null";
+            // $history->current = $internalAudit->lead_auditor;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -708,13 +702,16 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->action_name = "Create";
             $history->save();
         }
-
+        $previousauditteam = User::find($lastDocument->Audit_team);
+        $currentauditeam = User::find($internalAudit['Audit_team']);
         if (!empty($internalAudit->Audit_team)) {
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $internalAudit->id;
             $history->activity_type = 'Audit Team';
-            $history->previous = "Null";
-            $history->current = $internalAudit->Audit_team;
+            $history->previous = $previousauditteam ? $previousauditteam->name : 'Null';
+            $history->current = $currentauditeam ? $currentauditeam->name : 'Unknown';
+            // $history->previous = "Null";
+            // $history->current = $internalAudit->Audit_team;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -725,13 +722,17 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->action_name = "Create";
             $history->save();
         }
+        $previousauditee = User::find($lastDocument->Auditee);
+        $currentauditee = User::find($internalAudit['Auditee']);
 
         if (!empty($internalAudit->Auditee)) {
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $internalAudit->id;
             $history->activity_type = 'Auditee';
-            $history->previous = "Null";
-            $history->current = $internalAudit->Auditee;
+            $history->previous = $previousauditee ? $previousauditee->name : 'Null';
+            $history->current = $currentauditee ? $currentauditee->name : 'Unknown';
+            // $history->previous = "Null";
+            // $history->current = $internalAudit->Auditee;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -986,7 +987,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->supplier_id = $internalAudit->id;
             $history->activity_type = 'Audit Start Date';
             $history->previous = "Null";
-            $history->current = $internalAudit->audit_start_date;
+            $history->current = $internalAudit->audit_start_date->format('d-M-Y');
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1003,7 +1004,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->supplier_id = $internalAudit->id;
             $history->activity_type = 'Audit End Date';
             $history->previous = "Null";
-            $history->current = $internalAudit->audit_end_date;
+            $history->current = $internalAudit->audit_end_date->format('d-M-Y');
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1036,37 +1037,17 @@ if (!empty($internalAudit->due_date_extension)) {
 
     public function update(Request $request, $id)
     {
-        $departments = [
-            'CQA' => 'Corporate Quality Assurance',
-            'QAB' => 'Quality Assurance Biopharma',
-            'CQC' => 'Central Quality Control',
-            'MFG' => 'Manufacturing',
-            'PSG' => 'Plasma Sourcing Group',
-            'CS' => 'Central Stores',
-            'ITG' => 'Information Technology Group',
-            'MM' => 'Molecular Medicine',
-            'CL' => 'Central Laboratory',
-            'TT' => 'Tech team',
-            'QA' => 'Quality Assurance',
-            'QM' => 'Quality Management',
-            'ITA' => 'IT Administration',
-            'ACC' => 'Accounting',
-            'LOG' => 'Logistics',
-            'SM' => 'Senior Management',
-            'BA' => 'Business Administration'
-        ];
+        
 
         $lastDocument = SupplierAudit::find($id);
         $internalAudit = SupplierAudit::find($id);
         $internalAudit->assign_to = $request->assign_to;
       
-        $initiatorGroupShortForm = $request->Initiator_Group;
-        $initiatorGroupFullForm = $departments[$initiatorGroupShortForm] ?? 'Unknown Department';
-        $internalAudit->Initiator_Group = $initiatorGroupFullForm;
         $internalAudit->initiator_group_code= $request->initiator_group_code;
         $internalAudit->short_description = $request->short_description;
         $internalAudit->audit_type = $request->audit_type;
         $internalAudit->if_other = $request->if_other;
+        $internalAudit->Initiator_Group = $request->Initiator_Group;
 
         $internalAudit->initiated_through = $request->initiated_through;
         $internalAudit->initiated_if_other = $request->initiated_if_other;
@@ -1077,9 +1058,12 @@ if (!empty($internalAudit->due_date_extension)) {
         $internalAudit->due_date_extension = $request->due_date_extension;
 
         $internalAudit->initial_comments = $request->initial_comments;
-        $internalAudit->start_date = $request->start_date;
-        
-        $internalAudit->end_date = $request->end_date;
+        if (!empty($request->start_date)) {
+            $internalAudit->start_date = $request->start_date;
+        }
+        if (!empty($request->end_date)) {
+            $internalAudit->end_date = $request->end_date;
+        }
         $internalAudit->audit_agenda = $request->audit_agenda;
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
@@ -1113,9 +1097,14 @@ if (!empty($internalAudit->due_date_extension)) {
         }
  
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
-        
-        $internalAudit->audit_start_date = $request->audit_start_date;
-        $internalAudit->audit_end_date = $request->audit_end_date;
+        if (!empty($request->audit_start_date)) {
+            $internalAudit->audit_start_date = $request->audit_start_date;
+        }
+    
+        if (!empty($request->audit_end_date)) {
+            $internalAudit->audit_end_date = $request->audit_end_date;
+        }
+
         $internalAudit->severity_level = $request->severity_level;
 
         if (!empty($request->inv_attachment)) {
@@ -1402,40 +1391,44 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->start_date != $internalAudit->start_date || !empty($request->start_date_comment)) {
+        $lastStartDate = !is_null($lastDocument->start_date) ? Carbon::parse($lastDocument->start_date) : null;
+$internalStartDate = !is_null($internalAudit->start_date) ? Carbon::parse($internalAudit->start_date) : null;
 
-            $history = new ExternalAuditTrailSupplier();
-            $history->supplier_id = $id;
-            $history->activity_type = 'Audit Schedule Start Date';
-            $history->previous = $lastDocument->start_date;
-            $history->current = $internalAudit->start_date;
-            $history->comment = $request->date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";            
-            $history->save();
-        }
-        if ($lastDocument->end_date != $internalAudit->end_date || !empty($request->end_date_comment)) {
+if ((!is_null($lastStartDate) && !is_null($internalStartDate) && $lastStartDate->format('d-M-Y') != $internalStartDate->format('d-M-Y')) || !empty($request->start_date_comment)) {
+    $history = new ExternalAuditTrailSupplier();
+    $history->supplier_id = $id;
+    $history->activity_type = 'Audit Schedule Start Date';
+    $history->previous = !is_null($lastStartDate) ? $lastStartDate->format('d-M-Y') : 'N/A';
+    $history->current = !is_null($internalStartDate) ? $internalStartDate->format('d-M-Y') : 'N/A';
+    $history->comment = $request->start_date_comment ?? ''; // Ensure to use the correct comment field
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocument->status;
+    $history->action_name = "Update";
+    $history->save();
+}
+        $lastEndDate = !is_null($lastDocument->end_date) ? Carbon::parse($lastDocument->end_date) : null;
+$internalEndDate = !is_null($internalAudit->end_date) ? Carbon::parse($internalAudit->end_date) : null;
 
-            $history = new ExternalAuditTrailSupplier();
-            $history->supplier_id = $id;
-            $history->activity_type = 'Audit Schedule End Date';
-            $history->previous = $lastDocument->end_date;
-            $history->current = $internalAudit->end_date;
-            $history->comment = $request->date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
-            $history->save();
-        }
+if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->format('d-M-Y') != $internalEndDate->format('d-M-Y')) || !empty($request->end_date_comment)) {
+    $history = new ExternalAuditTrailSupplier();
+    $history->supplier_id = $id;
+    $history->activity_type = 'Audit Schedule End Date';
+    $history->previous = !is_null($lastEndDate) ? $lastEndDate->format('d-M-Y') : 'N/A';
+    $history->current = !is_null($internalEndDate) ? $internalEndDate->format('d-M-Y') : 'N/A';
+    $history->comment = $request->end_date_comment ?? ''; // Ensure to use the correct comment field
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocument->status;
+    $history->action_name = "Update";
+    $history->save();
+}
         if ($lastDocument->audit_agenda != $internalAudit->audit_agenda || !empty($request->audit_agenda_comment)) {
 
             $history = new ExternalAuditTrailSupplier();
@@ -1470,13 +1463,15 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->action_name = "Update";
             $history->save();
         }
+        $previousleadauditor = User::find($lastDocument->lead_auditor);
+        $currentleadauditor = User::find($internalAudit['lead_auditor']);
         if ($lastDocument->lead_auditor != $internalAudit->lead_auditor || !empty($request->lead_auditor_comment)) {
 
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $id;
             $history->activity_type = 'Lead Auditor';
-            $history->previous = $lastDocument->lead_auditor;
-            $history->current = $internalAudit->lead_auditor;
+            $history->previous = $previousleadauditor ? $previousleadauditor->name : 'Unknown';
+            $history->current = $currentleadauditor ? $currentleadauditor->name : 'Unknown';
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1487,13 +1482,15 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->action_name = "Update";
             $history->save();
         }
+        $previousauditteam = User::find($lastDocument->Audit_team);
+        $currentauditteam = User::find($internalAudit['Audit_team']);
         if ($lastDocument->Audit_team != $internalAudit->Audit_team || !empty($request->Audit_team_comment)) {
 
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $id;
             $history->activity_type = 'Audit Team';
-            $history->previous = $lastDocument->Audit_team;
-            $history->current = $internalAudit->Audit_team;
+            $history->previous = $previousauditteam ? $previousauditteam->name : 'Unknown';
+            $history->current = $currentauditteam ? $currentauditteam->name : 'Unknown';
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1504,13 +1501,15 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->action_name = "Update";
             $history->save();
         }
+        $previousauditee = User::find($lastDocument->Auditee);
+        $currentauditee = User::find($internalAudit['Auditee']);
         if ($lastDocument->Auditee != $internalAudit->Auditee || !empty($request->Auditee_comment)) {
 
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $id;
             $history->activity_type = 'Auditee';
-            $history->previous = $lastDocument->Auditee;
-            $history->current = $internalAudit->Auditee;
+            $history->previous = $previousauditee ? $previousauditee->name : 'Unknown';
+            $history->current = $currentauditee ? $currentauditee->name : 'Unknown';
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1589,6 +1588,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->action_name = "Update";
             $history->save();
         }
+        
         if ($lastDocument->Reference_Recores1 != $internalAudit->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
 
             $history = new ExternalAuditTrailSupplier();
@@ -1759,14 +1759,16 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->audit_start_date != $internalAudit->audit_start_date || !empty($request->audit_start_date_comment)) {
-
+        $lastAuditStartDate = !is_null($lastDocument->audit_start_date) ? Carbon::parse($lastDocument->audit_start_date) : null;
+        $requestAuditStartDate = !is_null($request->audit_start_date) ? Carbon::parse($request->audit_start_date) : null;
+        
+        if ((!is_null($lastAuditStartDate) && !is_null($requestAuditStartDate) && $lastAuditStartDate->format('d-M-Y') != $requestAuditStartDate->format('d-M-Y')) || !empty($request->audit_start_date_comment)) {
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $id;
             $history->activity_type = 'Audit Start Date';
-            $history->previous = $lastDocument->audit_start_date;
-            $history->current = $internalAudit->audit_start_date;
-            $history->comment = $request->date_comment;
+            $history->previous = !is_null($lastAuditStartDate) ? $lastAuditStartDate->format('d-M-Y') : 'N/A';
+            $history->current = !is_null($requestAuditStartDate) ? $requestAuditStartDate->format('d-M-Y') : 'N/A';
+            $history->comment = $request->audit_start_date_comment ?? ''; // Ensure to use the correct comment field
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1776,23 +1778,28 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->audit_end_date != $internalAudit->audit_end_date || !empty($request->audit_end_date_comment)) {
+        
 
-            $history = new ExternalAuditTrailSupplier();
-            $history->supplier_id = $id;
-            $history->activity_type = 'Audit End Date';
-            $history->previous = $lastDocument->audit_end_date;
-            $history->current = $internalAudit->audit_end_date;
-            $history->comment = $request->date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
-            $history->save();
-        }
+$lastAuditEndDate = !is_null($lastDocument->audit_end_date) ? Carbon::parse($lastDocument->audit_end_date) : null;
+$requestAuditEndDate = !is_null($request->audit_end_date) ? Carbon::parse($request->audit_end_date) : null;
+
+if ((!is_null($lastAuditEndDate) && !is_null($requestAuditEndDate) && $lastAuditEndDate->format('d-M-Y') != $requestAuditEndDate->format('d-M-Y')) || !empty($request->audit_end_date_comment)) {
+    $history = new ExternalAuditTrailSupplier();
+    $history->supplier_id = $id;
+    $history->activity_type = 'Audit End Date';
+    $history->previous = !is_null($lastAuditEndDate) ? $lastAuditEndDate->format('d-M-Y') : 'N/A';
+    $history->current = !is_null($requestAuditEndDate) ? $requestAuditEndDate->format('d-M-Y') : 'N/A';
+    $history->comment = $request->audit_end_date_comment ?? ''; // Ensure to use the correct comment field
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocument->status;
+    $history->action_name = "Update";
+    $history->save();
+}
+
 
         // update Audit Trail Supplier 
 
@@ -1829,7 +1836,7 @@ if ($lastDocument->initiated_through != $internalAudit->initiated_through) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
     $history->action_name = "Update";
     $history->save();
 }
@@ -2244,7 +2251,10 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
                         $history->stage = "Rejected";
-                        $history->action = "";
+                        $history->change_from = $lastDocument->status;
+                        $history->change_to = 'Opened';
+                        $history->action = 'Reject';
+                        // $history->action = "";
                         $history->save();
                   $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2253,6 +2263,24 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
+                $changeControl->rejected_by = Auth::user()->name;
+                $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
+                $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->current = $changeControl->rejected_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = "Rejected";
+                        $history->change_from = $lastDocument->status;
+                        $history->change_to = 'Opened';
+                        $history->action = 'Reject';
+                        $history->save();
+
+                
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2275,17 +2303,21 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->status = "Closed-Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-                        $history = new ExternalAuditTrailSupplier();
-                        // $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Activity Log';
-                        $history->current = $changeControl->cancelled_by;
-                        $history->comment = $request->comment;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastDocument->status;
-                        $history->stage = "Cancelled";
-                        $history->save();
+
+                $history = new ExternalAuditTrailSupplier();
+                $history->supplier_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changeControl->rejected_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Rejected";
+                $history->change_from = $lastDocument->status;
+                $history->change_to = 'Closed Cancelled';
+                $history->action = 'Cancel';
+                $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2304,6 +2336,9 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
+                $history->change_from = $lastDocument->status;
+                $history->change_to = 'Closed Cancelled';
+                $history->action = 'Cancel';
                 $history->stage = "Cancelled";
                 $history->save();
                 $changeControl->update();
@@ -2324,7 +2359,11 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
+                $history->change_from = $lastDocument->status;
+                $history->change_to = 'Closed Cancelled';
+                $history->action = 'Cancel';
                 $history->stage = "Cancelled";
+                
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');

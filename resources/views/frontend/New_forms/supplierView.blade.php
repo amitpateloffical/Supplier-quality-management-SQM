@@ -92,61 +92,74 @@ function addMultipleFiles(input, block_id) {
         }
     </script>
 
-    <script>
-        function addAuditAgenda(tableId) {
-            var users = @json($users);
-            var table = document.getElementById(tableId);
-            var currentRowCount = table.rows.length;
-            var newRow = table.insertRow(currentRowCount);
-            newRow.setAttribute("id", "row" + currentRowCount);
-            var cell1 = newRow.insertCell(0);
-            cell1.innerHTML = currentRowCount;
+<script>
+    function addAuditAgenda(tableId) {
+        var users = @json($users);
+        var table = document.getElementById(tableId);
+        var currentRowCount = table.rows.length;
+        var newRow = table.insertRow(currentRowCount);
+        newRow.setAttribute("id", "row" + currentRowCount);
+        var cell1 = newRow.insertCell(0);
+        cell1.innerHTML = currentRowCount;
 
-            var cell2 = newRow.insertCell(1);
-            cell2.innerHTML = "<input type='text' name='audit[]'>";
+        var cell2 = newRow.insertCell(1);
+        cell2.innerHTML = "<input type='text' name='audit[]'>";
 
-            var cell3 = newRow.insertCell(2);
-            cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+        var cell3 = newRow.insertCell(2);
+        cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
-            var cell4 = newRow.insertCell(3);
-            cell4.innerHTML = "<input type='time' name='scheduled_start_time[]' >";
+        var cell4 = newRow.insertCell(3);
+        cell4.innerHTML = "<input type='time' name='scheduled_start_time[]' >";
 
-            var cell5 = newRow.insertCell(4);
-            cell5.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+        var cell5 = newRow.insertCell(4);
+        cell5.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
-            var cell6 = newRow.insertCell(5);
-            cell6.innerHTML = "<input type='time' name='scheduled_end_time[]' >";
+        var cell6 = newRow.insertCell(5);
+        cell6.innerHTML = "<input type='time' name='scheduled_end_time[]' >";
 
-            var cell7 = newRow.insertCell(6);
-            var userHtml = '<select name="auditor[]"><option value="">-- Select --</option>';
-                    for (var i = 0; i < users.length; i++) {
-                        userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-                    userHtml +='</select>';
-            
-                    cell7.innerHTML = userHtml;
-
-            // var cell8 = newRow.insertCell(7);
-            var cell8 = newRow.insertCell(7);
-            
-            var userHtml = '<select name="auditee[]"><option value="">-- Select --</option>';
+        var cell7 = newRow.insertCell(6);
+        var userHtml = '<select name="auditor[]"><option value="">-- Select --</option>';
                 for (var i = 0; i < users.length; i++) {
                     userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                 }
                 userHtml +='</select>';
         
-                cell8.innerHTML = userHtml;
+                cell7.innerHTML = userHtml;
 
-            var cell9 = newRow.insertCell(8);
-            cell9.innerHTML = "<input type='text'name='remark[]'>";
-            var cell10 = newRow.insertCell(9);
-            cell10.innerHTML = '<td><button type="text" class="removeRowBtn">Remove</button></td>'
-            for (var i = 1; i < currentRowCount; i++) {
-                var row = table.rows[i];
-                row.cells[0].innerHTML = i;
+        var cell8 = newRow.insertCell(7);
+        
+        var userHtml = '<select name="auditee[]"><option value="">-- Select --</option>';
+            for (var i = 0; i < users.length; i++) {
+                userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
             }
+            userHtml +='</select>';
+    
+            cell8.innerHTML = userHtml;
+
+        var cell9 = newRow.insertCell(8);
+        cell9.innerHTML = "<input type='text'name='remark[]'>";
+        var cell10 = newRow.insertCell(9);
+        cell10.innerHTML = '<button type="button" class="removeRowBtn" onclick="removeRow(this)">Remove</button>';
+
+        // Update row numbering
+        for (var i = 1; i < currentRowCount; i++) {
+            var row = table.rows[i];
+            row.cells[0].innerHTML = i;
         }
-    </script>
+    }
+
+    function removeRow(button) {
+        var row = button.closest('tr');
+        row.parentNode.removeChild(row);
+        
+        // Update row numbering
+        var table = document.getElementById('audit-agenda-grid');
+        for (var i = 1; i < table.rows.length; i++) {
+            var row = table.rows[i];
+            row.cells[0].innerHTML = i;
+        }
+    }
+</script>
 <script>
     $(document).on('click', '.removeRowBtn', function() {
         $(this).closest('tr').remove();
@@ -199,9 +212,9 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button> --}}
+                            </button>
                         @elseif($data->stage == 3 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
                             </button> <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">
@@ -332,7 +345,7 @@ function addMultipleFiles(input, block_id) {
                                                 <input type="hidden" name="record_number">
                                                 {{-- <div class="static">QMS-EMEA/IA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}</div> --}}
                                                 <input disabled type="text"
-                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/SA/{{ date('y') }}/{{ $data->record }}">
+                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/SA/{{ date('Y') }}/{{ $data->record }}">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -409,43 +422,46 @@ function addMultipleFiles(input, block_id) {
                                             var monthIndex = date.getMonth();
                                             var year = date.getFullYear();
         
-                                            // Formatting the date in "dd-MMM-yyyy" format
+                                            // Formatting the date in "DD-MM-YYYY" format
                                             var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
         
                                             // Set the formatted due date value to the input field
                                             document.getElementById('due_date').value = dueDateFormatted;
                                         </script>
 
-                                            <div class="col-lg-6">
-                                                                                <div class="group-input">
-                                                <label for="Initiator Group"><b>Initiator Group</b><span class="text-danger">*</span></label>
-                                                <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} id="initiator_group">
-                                                    <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
-                                                    <option value="QAB" @if ($data->Initiator_Group == 'QAB') selected @endif>Quality Assurance Biopharma</option>
-                                                    <option value="CQC" @if ($data->Initiator_Group == 'CQC') selected @endif>Central Quality Control</option>
-                                                    <option value="MANU" @if ($data->Initiator_Group == 'MANU') selected @endif>Manufacturing</option>
-                                                    <option value="PSG" @if ($data->Initiator_Group == 'PSG') selected @endif>Plasma Sourcing Group</option>
-                                                    <option value="CS" @if ($data->Initiator_Group == 'CS') selected @endif>Central Stores</option>
-                                                    <option value="ITG" @if ($data->Initiator_Group == 'ITG') selected @endif>Information Technology Group</option>
-                                                    <option value="MM" @if ($data->Initiator_Group == 'MM') selected @endif>Molecular Medicine</option>
-                                                    <option value="CL" @if ($data->Initiator_Group == 'CL') selected @endif>Central Laboratory</option>
-                                                    <option value="TT" @if ($data->Initiator_Group == 'TT') selected @endif>Tech team</option>
-                                                    <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif>Quality Assurance</option>
-                                                    <option value="QM" @if ($data->Initiator_Group == 'QM') selected @endif>Quality Management</option>
-                                                    <option value="IA" @if ($data->Initiator_Group == 'IA') selected @endif>IT Administration</option>
-                                                    <option value="ACC" @if ($data->Initiator_Group == 'ACC') selected @endif>Accounting</option>
-                                                    <option value="LOG" @if ($data->Initiator_Group == 'LOG') selected @endif>Logistics</option>
-                                                    <option value="SM" @if ($data->Initiator_Group == 'SM') selected @endif>Senior Management</option>
-                                                    <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif>Business Administration</option>
-                                                </select>
-                                            </div>
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="Initiator Group"><b>Initiator Group</b></label>
+        <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} id="initiator_group">
+            <option value="">Select Department</option>
+            <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+            <option value="QAB" @if ($data->Initiator_Group == 'QAB') selected @endif>Quality Assurance Biopharma</option>
+            <option value="CQC" @if ($data->Initiator_Group == 'CQC') selected @endif>Central Quality Control</option>
+            <option value="MANU" @if ($data->Initiator_Group == 'MANU') selected @endif>Manufacturing</option>
+            <option value="PSG" @if ($data->Initiator_Group == 'PSG') selected @endif>Plasma Sourcing Group</option>
+            <option value="CS" @if ($data->Initiator_Group == 'CS') selected @endif>Central Stores</option>
+            <option value="ITG" @if ($data->Initiator_Group == 'ITG') selected @endif>Information Technology Group</option>
+            <option value="MM" @if ($data->Initiator_Group == 'MM') selected @endif>Molecular Medicine</option>
+            <option value="CL" @if ($data->Initiator_Group == 'CL') selected @endif>Central Laboratory</option>
+            <option value="TT" @if ($data->Initiator_Group == 'TT') selected @endif>Tech team</option>
+            <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif>Quality Assurance</option>
+            <option value="QM" @if ($data->Initiator_Group == 'QM') selected @endif>Quality Management</option>
+            <option value="IA" @if ($data->Initiator_Group == 'IA') selected @endif>IT Administration</option>
+            <option value="ACC" @if ($data->Initiator_Group == 'ACC') selected @endif>Accounting</option>
+            <option value="LOG" @if ($data->Initiator_Group == 'LOG') selected @endif>Logistics</option>
+            <option value="SM" @if ($data->Initiator_Group == 'SM') selected @endif>Senior Management</option>
+            <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif>Business Administration</option>
+        </select>
+    </div>
+</div>
 
-                                </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
                                         <input type="text" id="initiator_group_code"  name="initiator_group_code" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value="{{$data->initiator_group_code}}" readonly>
                                     </div>
+
                                 </div>
                                         {{-- <div class="col-12">
                                             <div class="group-input">
@@ -534,37 +550,23 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div> --}}
                                         <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Initiator Group">Type of Audit</label>
-                                                <select name="audit_type"
-                                                    onchange="otherController(this.value, 'others', 'if_other')"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option>Enter Your Selection Here</option>
+    <div class="group-input">
+        <label for="audit_type">Type of Audit</label>
+        <select name="audit_type" id="audit_type"
+                onchange="otherController(this.value, 'others', 'if_other')"
+                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+            <option value="">Enter Your Selection Here</option>
+            <option value="R&D" {{ old('audit_type', $data->audit_type) == 'R&D' ? 'selected' : '' }}>R&D</option>
+            <option value="GLP" {{ old('audit_type', $data->audit_type) == 'GLP' ? 'selected' : '' }}>GLP</option>
+            <option value="GCP" {{ old('audit_type', $data->audit_type) == 'GCP' ? 'selected' : '' }}>GCP</option>
+            <option value="GDP" {{ old('audit_type', $data->audit_type) == 'GDP' ? 'selected' : '' }}>GDP</option>
+            <option value="GEP" {{ old('audit_type', $data->audit_type) == 'GEP' ? 'selected' : '' }}>GEP</option>
+            <option value="ISO 17025" {{ old('audit_type', $data->audit_type) == 'ISO 17025' ? 'selected' : '' }}>ISO 17025</option>
+            <option value="others" {{ old('audit_type', $data->audit_type) == 'others' ? 'selected' : '' }}>Others</option>
+        </select>
+    </div>
+</div>
 
-                                                    <option value="R&D"
-                                                        @if ($data->audit_type == 'R&D') selected @endif>R&D
-                                                    </option>
-                                                    <option value="GLP"
-                                                        @if ($data->audit_type == 'GLP') selected @endif>GLP
-                                                    </option>
-                                                    <option value="GCP"
-                                                        @if ($data->audit_type == 'GCP') selected @endif>GCP
-                                                    </option>
-                                                    <option value="GDP"
-                                                        @if ($data->audit_type == 'GDP') selected @endif>GDP
-                                                    </option>
-                                                    <option value="GEP"
-                                                        @if ($data->audit_type == 'GEP') selected @endif>GEP
-                                                    </option>
-                                                    <option value="ISO 17025"
-                                                        @if ($data->audit_type == 'ISO 17025') selected @endif>ISO 17025
-                                                    </option>
-                                                    <option value="others"
-                                                        @if ($data->audit_type == 'others') selected @endif>Others
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
                                         <div class="col-lg-6">
                                             <div class="group-input" id="if_other">
                                                 <label for="If Other">If Other<span
@@ -572,40 +574,32 @@ function addMultipleFiles(input, block_id) {
                                                 <textarea name="if_other" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_other }}</textarea>
                                             </div>
                                         </div>
+                                        
                                         <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="external_agencies">External Agencies</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="external_agencies">
-                                                    <option value="">-- Select --</option>
-                                                    <option @if ($data->external_agencies == 'jordan_fda') selected @endif
-                                                         value="jordan_fda">Jordan FDA</option>
-                                                    <option @if ($data->external_agencies == 'us_fda') selected @endif 
-                                                         value="us_fda">USFDA</option>
-                                                    <option @if ($data->external_agencies == 'mhra') selected @endif
-                                                         value="mhra">MHRA</option>
-                                                    <option @if ($data->external_agencies == 'anvisa') selected @endif
-                                                         value="anvisa">ANVISA</option>
-                                                    <option @if ($data->external_agencies == 'iso') selected @endif
-                                                         value="iso">ISO</option>
-                                                    <option @if ($data->external_agencies == 'who') selected @endif
-                                                         value="who">WHO</option>
-                                                    <option @if ($data->external_agencies == 'local_fda') selected @endif
-                                                         value="local_fda">Local FDA</option>
-                                                    <option @if ($data->external_agencies == 'tga') selected @endif
-                                                         value="tga">TGA</option>
-                                                    <option value="others"
-                                                     @if ($data->external_agencies == 'others') selected @endif>Others
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="others">Others<span
-                                                    class="text-danger d-none">*</span></label>
-                                                <textarea name="others" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->others}}</textarea>
-                                            </div>
-                                        </div>
+    <div class="group-input">
+        <label for="external_agencies">Supplier Agencies</label>
+        <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="external_agencies" id="external_agencies">
+            <option value="">-- Select --</option>
+            <option @if ($data->external_agencies == 'jordan_fda') selected @endif value="jordan_fda">Jordan FDA</option>
+            <option @if ($data->external_agencies == 'us_fda') selected @endif value="us_fda">USFDA</option>
+            <option @if ($data->external_agencies == 'mhra') selected @endif value="mhra">MHRA</option>
+            <option @if ($data->external_agencies == 'anvisa') selected @endif value="anvisa">ANVISA</option>
+            <option @if ($data->external_agencies == 'iso') selected @endif value="iso">ISO</option>
+            <option @if ($data->external_agencies == 'who') selected @endif value="who">WHO</option>
+            <option @if ($data->external_agencies == 'local_fda') selected @endif value="local_fda">Local FDA</option>
+            <option @if ($data->external_agencies == 'tga') selected @endif value="tga">TGA</option>
+            <option value="others" @if ($data->external_agencies == 'others') selected @endif>Others</option>
+        </select>
+    </div>
+</div>
+      
+<div class="col-lg-6" id="others_group">
+    <div class="group-input">
+        <label for="others">Others<span class="text-danger d-none">*</span></label>
+        <textarea name="others" id="others" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->others }}</textarea>
+    </div>
+</div>
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Initial Comments">Description</label>
@@ -664,7 +658,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input input-date">
                                                 <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
                                                 <div class="calenderauditee">                                     
-                                                    <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"
+                                                    <input type="text"  id="start_date"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
                                                     <input type="date" id="start_date_checkdate" name="start_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->start_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
@@ -675,7 +669,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input  input-date">
                                                 <label for="Audit Schedule End Date">Audit Schedule End Date</label>
                                                 <div class="calenderauditee">                                     
-                                                    <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
+                                                    <input type="text"  id="end_date"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
                                                     <input type="date" id="end_date_checkdate" name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->end_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
@@ -683,99 +677,79 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="audit-agenda-grid">
-                                                    Audit Agenda<button type="button" name="audit-agenda-grid"
-                                                        onclick="addAuditAgenda('audit-agenda-grid')"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
-                                                </label>
-                                                <table class="table table-bordered" id="audit-agenda-grid">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Row #</th>
-                                                            <th>Area of Audit</th>
-                                                            <th>Scheduled Start Date</th>
-                                                            <th>Scheduled Start Time</th>
-                                                            <th>Scheduled End Date</th>
-                                                            <th>Scheduled End Time</th>
-                                                            <th>Auditor</th>
-                                                            <th>Auditee</th>
-                                                            <th>Remarks</th>
-                                                            <th>Action</th>
-
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @if ($sgrid->start_date)
-                                                        @foreach (unserialize($sgrid->start_date) as $key => $temps)
-                                                        <tr>
-                                                            <td><input disabled type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                    value="{{ $key + 1 }}"></td>
-
-                                                            <td><input type="text" name="audit[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                    value="{{ unserialize($sgrid->area_of_audit)[$key] ? unserialize($sgrid->area_of_audit)[$key] : '' }}">
-                                                            </td>
- 
-                                                            <td><div class="group-input new-date-data-field mb-0">
-                                                                <div class="input-date ">
-                                                              <div class="calenderauditee">
-                                                                <input type="text" class="test" id="scheduled_start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->start_date)[$key]) }}" />
-                                                                <input type="date"  id="schedule_start_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($sgrid->start_date)[$key] }}" class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" /></div></div></div></td>
-                                                           
-                                                                <td><input type="time" name="scheduled_start_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} 
-                                                                    value="{{ unserialize($sgrid->start_time)[$key] ? unserialize($sgrid->start_time)[$key] : '' }}">
-                                                            </td>
-                                                             
-                                                            <td><div class="group-input new-date-data-field mb-0">
-                                                                <div class="input-date ">
-                                                                    <div class="calenderauditee">
-                                                                <input type="text" class="test" id="scheduled_end_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->end_date)[$key]) }}" />
-                                                                <input type="date" id="schedule_end_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($sgrid->end_date)[$key]}}" class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_end_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" /></div></div></div></td> 
-                                                            
-                                                           
-                                                            
-                                                            <td><input type="time" name="scheduled_end_time[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                    value="{{ unserialize($sgrid->end_time)[$key] ? unserialize($sgrid->end_time)[$key] : '' }}">
-                                                            </td>
-                                                            <td> <select id="select-state" placeholder="Select..."
-                                                                name="auditor[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                <option value="">-Select-</option>
-                                                                @foreach ($users as $value)
-                                                                    <option
-                                                                        {{ unserialize($sgrid->auditor)[$key] ? (unserialize($sgrid->auditor)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                        value="{{ $value->id }}">
-                                                                        {{ $value->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select></td>
-                                                            <td> <select id="select-state" placeholder="Select..."
-                                                                name="auditee[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                <option value="">-Select-</option>
-                                                                @foreach ($users as $value)
-                                                                    <option
-                                                                        {{ unserialize($sgrid->auditee)[$key] ? (unserialize($sgrid->auditee)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                        value="{{ $value->id }}">
-                                                                        {{ $value->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select></td>
-
-                                                            <td><input type="text" name="remark[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                value="{{ unserialize($sgrid->remark)[$key] ? unserialize($sgrid->remark)[$key] : '' }}">
-                                                        </td>
-                                                        <td><input type="text" class="RemoveRowbtn" name="Action[]" >
-                                                        </td>
-
-                                                        </tr>
-                                                    @endforeach
-                                                        @endif
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
+    <div class="group-input">
+        <label for="audit-agenda-grid">
+            Audit Agenda
+            <button type="button" name="audit-agenda-grid" onclick="addAuditAgenda('audit-agenda-grid')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
+        </label>
+        <table class="table table-bordered" id="audit-agenda-grid">
+            <thead>
+                <tr>
+                    <th>Row #</th>
+                    <th>Area of Audit</th>
+                    <th>Scheduled Start Date</th>
+                    <th>Scheduled Start Time</th>
+                    <th>Scheduled End Date</th>
+                    <th>Scheduled End Time</th>
+                    <th>Auditor</th>
+                    <th>Auditee</th>
+                    <th>Remarks</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($sgrid->start_date)
+                    @foreach (unserialize($sgrid->start_date) as $key => $temps)
+                        <tr>
+                            <td><input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
+                            <td><input type="text" name="audit[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($sgrid->area_of_audit)[$key] ?? '' }}"></td>
+                            <td>
+                                <div class="group-input new-date-data-field mb-0">
+                                    <div class="input-date ">
+                                        <div class="calenderauditee">
+                                            <input type="text" class="test" id="scheduled_start_date{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->start_date)[$key]) }}" />
+                                            <input type="date" id="schedule_start_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($sgrid->start_date)[$key] }}" class="hide-input" oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" />
                                         </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><input type="time" name="scheduled_start_time[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($sgrid->start_time)[$key] ?? '' }}"></td>
+                            <td>
+                                <div class="group-input new-date-data-field mb-0">
+                                    <div class="input-date ">
+                                        <div class="calenderauditee">
+                                            <input type="text" class="test" id="scheduled_end_date{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->end_date)[$key]) }}" />
+                                            <input type="date" id="schedule_end_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($sgrid->end_date)[$key] }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><input type="time" name="scheduled_end_time[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($sgrid->end_time)[$key] ?? '' }}"></td>
+                            <td>
+                                <select id="select-state" placeholder="Select..." name="auditor[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                    <option value="">-Select-</option>
+                                    @foreach ($users as $value)
+                                        <option {{ unserialize($sgrid->auditor)[$key] == $value->id ? 'selected' : '' }} value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <select id="select-state" placeholder="Select..." name="auditee[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                    <option value="">-Select-</option>
+                                    @foreach ($users as $value)
+                                        <option {{ unserialize($sgrid->auditee)[$key] == $value->id ? 'selected' : '' }} value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td><input type="text" name="remark[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($sgrid->remark)[$key] ?? '' }}"></td>
+                            <td><button type="button" class="removeRowBtn" onclick="removeRow(this)">Remove</button></td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
+</div>
                                        
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -991,13 +965,13 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="External Auditor Details">External Auditor Details</label>
+                                                <label for="External Auditor Details">Suppliers Auditor Details</label>
                                                 <textarea name="Auditor_Details" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Auditor_Details }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="External Auditing Agency">External Auditing Agency</label>
+                                                <label for="External Auditing Agency">Supplier Auditing Agency</label>
                                                 <textarea name="External_Auditing_Agency" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->External_Auditing_Agency }}</textarea>
                                             </div>
                                         </div>
@@ -1105,7 +1079,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input input-date">
                                                 <label for="Audit Start Date">Audit Start Date</label>
                                                     <div class="calenderauditee">                                     
-                                                        <input type="text"  id="audit_start_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
+                                                        <input type="text"  id="audit_start_date"  readonly placeholder="DD-MM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                         <input type="date" id="audit_start_date_checkdate" name="audit_start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_start_date }}"
                                                         class="hide-input"
@@ -1117,7 +1091,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input input-date">
                                                 <label for="Audit End Date">Audit End Date</label>
                                                     <div class="calenderauditee">                                     
-                                                    <input type="text"  id="audit_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
+                                                    <input type="text"  id="audit_end_date"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                     <input type="date" id="audit_end_date_checkdate" name="audit_end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }}"
                                                     class="hide-input"
@@ -1324,14 +1298,43 @@ function addMultipleFiles(input, block_id) {
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Audit Schedule By</label>
+                                                <label for="Audit Schedule On">Schedule Audit By</label>
                                                 <div class="static">{{ $data->audit_schedule_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Audit Schedule On</label>
+                                                <label for="Audit Schedule On">Schedule Audit On</label>
                                                 <div class="static">{{ $data->audit_schedule_on }}</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Audit Preparation Completed On">Completed Audit Preparation
+                                                    By</label>
+                                                <div class="static">{{ $data->audit_preparation_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Audit Preparation Completed On">Completed Audit Preparation
+                                                    On</label>
+                                                <div class="static">{{ $data->audit_preparation_completed_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Response Feedback Verified By"> Rejected By
+                                                    </label> 
+                                                <div class="static">{{ $data->rejected_by}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Response Feedback Verified On"> Rejected On
+                                                    </label>
+                                                <div class="static">{{ $data->rejected_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -1348,61 +1351,45 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation Completed
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_preparation_completed_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation Completed
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_preparation_completed_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd By">Audit Mgr.more Info Reqd
+                                                <label for="Audit Mgr.more Info Reqd By">Issue  Report
                                                     By</label>
                                                 <div class="static">{{ $data->audit_mgr_more_info_reqd_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd On">Audit Mgr.more Info Reqd
+                                                <label for="Audit Mgr.more Info Reqd On">Issue  Report
                                                     On</label>
                                                 <div class="static">{{ $data->audit_mgr_more_info_reqd_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Observation Submitted By">Audit Observation Submitted
+                                                <label for="Audit Observation Submitted By">CAPA Plan Proposed
                                                     By</label>
                                                 <div class="static">{{ $data->audit_observation_submitted_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Observation Submitted On">Audit Observation Submitted
+                                                <label for="Audit Observation Submitted On">CAPA Plan Proposed
                                                     On</label>
                                                 <div class="static">{{ $data->audit_observation_submitted_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Lead More Info Reqd By">Audit Lead More Info Reqd
-                                                    By</label>
+                                                <label for="Audit Lead More Info Reqd By">All CAPA Closed By</label>
                                                 <div class="static">{{ $data->audit_lead_more_info_reqd_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Lead More Info Reqd On">Audit Lead More Info Reqd
-                                                    On</label>
+                                                <label for="Audit Lead More Info Reqd On">All CAPA Closed On</label>
                                                 <div class="static">{{ $data->audit_lead_more_info_reqd_on }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <!-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Audit Response Completed By">Audit Response Completed
                                                     By</label>
@@ -1429,31 +1416,18 @@ function addMultipleFiles(input, block_id) {
                                                     On</label>
                                                 <div class="static">{{ $data->response_feedback_verified_on }}</div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified By"> Rejected By
-                                                    </label> 
-                                                <div class="static">{{ $data->rejected_by}}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified On"> Rejected On
-                                                    </label>
-                                                <div class="static">{{ $data->rejected_on }}</div>
-                                            </div>
-                                        </div>
+                                        </div> -->
+
 
                                     </div>
                                     <div class="button-block">
-                                        @if ($data->stage != 0)
+                                        <!-- @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        @endif
+                                        @endif -->
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="submit"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                        <!-- <button type="submit"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button> -->
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
                                     </div>
@@ -1808,4 +1782,38 @@ function addMultipleFiles(input, block_id) {
         var textlen = maxLength - $(this).val().length;
         $('#rchars').text(textlen);});
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const externalAgencies = document.getElementById('external_agencies');
+        const othersGroup = document.getElementById('others_group');
+        const othersField = document.getElementById('others');
+        const othersLabel = othersField.previousElementSibling;
+
+        function toggleOthersField() {
+            if (externalAgencies.value === 'others') {
+                othersGroup.style.display = 'block';
+                othersField.required = true;
+                othersLabel.querySelector('span').classList.remove('d-none');
+            } else {
+                othersGroup.style.display = 'none';
+                othersField.required = false;
+                othersLabel.querySelector('span').classList.add('d-none');
+            }
+        }
+
+        // Initial check
+        toggleOthersField();
+
+        // Add event listener
+        externalAgencies.addEventListener('change', toggleOthersField);
+    });
+</script>
+
+<!-- Ensure this CSS is present to initially hide the Others field and its group -->
+<style>
+    #others_group {
+        display: none;
+    }
+</style>
         @endsection

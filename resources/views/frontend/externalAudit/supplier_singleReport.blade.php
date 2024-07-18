@@ -202,10 +202,11 @@
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
+                    
                     <tr>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
-                        <th class="w-20"> Severity Level</th>
+                    <th class="w-20">Site/Location Code</th>
+                    <td class="w-30">{{ $data->division ? $data->division->name : 'Na' }}</td>
+                    <th class="w-20"> Severity Level</th>
                         <td class="w-30">@if($data->severity_level){{ $data->severity_level }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>

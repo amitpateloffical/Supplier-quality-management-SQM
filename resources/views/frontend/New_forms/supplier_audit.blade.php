@@ -462,7 +462,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="external_agencies">External Agencies</label>
+                                        <label for="supplier_agencies">Supplier Agencies</label>
                                         <select name="external_agencies" 
                                         onchange="otherController(this.value, 'others', 'external_agencies_req')">
                                             <option value="">-- Select --</option>
@@ -761,13 +761,13 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="External Auditor Details">External Auditor Details</label>
+                                        <label for="Supplier Auditor Details">Supplier Auditor Details</label>
                                         <textarea name="Auditor_Details"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="External Auditing Agency">External Auditing Agency</label>
+                                        <label for="Supplier Auditing Agency">Supplier Auditing Agency</label>
                                         <textarea name="External_Auditing_Agency"></textarea>
                                     </div>
                                 </div>

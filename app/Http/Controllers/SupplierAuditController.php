@@ -2041,6 +2041,8 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->status = "Audit Preparation";
                 $changeControl->audit_schedule_by = Auth::user()->name;
                 $changeControl->audit_schedule_on = Carbon::now()->format('d-M-Y');
+                $changeControl->comment = $request->comment;
+
                         $history = new ExternalAuditTrailSupplier();
                         $history->supplier_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -2088,6 +2090,8 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->status = "Pending Audit";
                 $changeControl->audit_preparation_completed_by = Auth::user()->name;
                 $changeControl->audit_preparation_completed_on = Carbon::now()->format('d-M-Y');
+                $changeControl->audit_preparation_comment = $request->comment;
+
                         $history = new ExternalAuditTrailSupplier();
                         $history->supplier_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -2129,6 +2133,8 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->status = "Pending Response";
                 $changeControl->audit_mgr_more_info_reqd_by = Auth::user()->name;
                 $changeControl->audit_mgr_more_info_reqd_on = Carbon::now()->format('d-M-Y');
+                $changeControl->pending_response_comment = $request->comment;
+
                         $history = new ExternalAuditTrailSupplier();
                         $history->supplier_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -2169,6 +2175,8 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->status = "CAPA Execution in Progress";
                 $changeControl->audit_observation_submitted_by = Auth::user()->name;
                 $changeControl->audit_observation_submitted_on = Carbon::now()->format('d-M-Y');
+                $changeControl->capa_execution_in_progress_comment = $request->comment;
+
                         $history = new ExternalAuditTrailSupplier();
                         $history->supplier_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -2197,6 +2205,8 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->audit_response_completed_on = Carbon::now()->format('d-M-Y');
                 $changeControl->response_feedback_verified_by = Auth::user()->name;
                 $changeControl->response_feedback_verified_on = Carbon::now()->format('d-M-Y');
+                $changeControl->comment_closed_done_by_comment = $request->comment;
+
                 $history = new ExternalAuditTrailSupplier();
                         $history->supplier_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -2241,6 +2251,8 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->status = "Opened";
                 $changeControl->rejected_by = Auth::user()->name;
                 $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
+                $changeControl->comment_rejected_comment = $request->comment;
+
                         $history = new ExternalAuditTrailSupplier();
                         $history->supplier_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -2265,6 +2277,8 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->status = "Opened";
                 $changeControl->rejected_by = Auth::user()->name;
                 $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
+                $changeControl->comment_rejected_comment = $request->comment;
+
                 $history = new ExternalAuditTrailSupplier();
                         $history->supplier_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -2303,6 +2317,8 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->status = "Closed-Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->comment_cancelled_comment = $request->comment;
+
 
                 $history = new ExternalAuditTrailSupplier();
                 $history->supplier_id = $id;
@@ -2327,6 +2343,7 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->status = "Closed-Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->comment_cancelled_comment = $request->comment;
                 $history = new ExternalAuditTrailSupplier();
                 $history->Supplier_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -2350,6 +2367,7 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->status = "Closed-Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->comment_cancelled_comment = $request->comment;
                 $history = new ExternalAuditTrailSupplier();
                 $history->supplier_id = $id;
                 $history->activity_type = 'Activity Log';

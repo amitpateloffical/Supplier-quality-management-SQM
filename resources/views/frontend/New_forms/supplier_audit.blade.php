@@ -1023,18 +1023,24 @@
                     <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Schedule On">Schedule Audit By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Schedule On">Schedule Audit On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>

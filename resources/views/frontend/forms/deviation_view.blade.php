@@ -637,9 +637,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-not-reqired">
                                 CFT Review Not Required
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
-                            </button> --}}
+                            </button>
                         @elseif(
                             $data->stage == 4 &&
                                 (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -10992,13 +10992,13 @@
             <div class="inner-block-content">
                 <div class="row">
                     <div class="sub-head">Submission</div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="submit by">Submit By :-</label>
                             <div class="static">{{ $data->submit_by }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="submit on">Submit On :-</label>
                             <div class="static">{{ $data->submit_on }}</div>
@@ -11012,19 +11012,19 @@
                     </div>
 
                     <div class="sub-head">HOD Review Completed</div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="HOD Review Complete By">HOD Review Complete By :-</label>
                             <div class="static">{{ $data->HOD_Review_Complete_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="HOD Review Complete On">HOD Review Complete On :-</label>
                             <div class="static">{{ $data->HOD_Review_Complete_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="group-input" style=" ">
                             <label for="HOD Review Comments">HOD Review Comments :-</label>
                             <div class="">{{ $data->HOD_Review_Comments }}</div>
@@ -11033,19 +11033,19 @@
 
 
                     <div class="sub-head">QA Initial Review Completed</div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="QA Initial Review Complete By">QA Initial Review Complete By :-</label>
                             <div class="static">{{ $data->QA_Initial_Review_Complete_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="QA Initial Review Complete On">QA Initial Review Complete On :-</label>
                             <div class="static">{{ $data->QA_Initial_Review_Complete_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px;">
                             <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
                             <div class="">{{ $data->QA_Initial_Review_Comments }}</div>
@@ -11053,19 +11053,19 @@
                     </div>
                     <div class="sub-head">CFT Review Complete</div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="CFT Review Complete By">CFT Review Complete By :-</label>
                             <div class="static">{{ $data->CFT_Review_Complete_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="CFT Review Complete On">CFT Review Complete On :-</label>
                             <div class="static">{{ $data->CFT_Review_Complete_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="CFT Review Comments">CFT Review Comments :-</label>
                             <div class="">{{ $data->CFT_Review_Comments }}</div>
@@ -11073,38 +11073,38 @@
                     </div>
                     {{-- <div class="sub-head">Initiator Update</div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
                             <div class="static"></div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="CFT Review Complete On">Initiator Update Complete On :-</label>
                             <div class="static"></div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="CFT Review Comments">Initiator Update Comments :-</label>
                             <div class="static"></div>
                         </div>
                     </div> --}}
                     <div class="sub-head"> QA Final Review Completed</div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
                             <div class="static">{{ $data->QA_Final_Review_Complete_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="QA Final Review Complete On"> QA Final Review Complete On :-</label>
                             <div class="static">{{ $data->QA_Final_Review_Complete_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
                             <div class="">{{ $data->QA_Final_Review_Comments }}</div>
@@ -11112,19 +11112,19 @@
                     </div>
                     <div class="sub-head">QAH Primary Approved Completed</div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved By">Approved By :-</label>
                             <div class="static">{{ $data->Approved_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved On">Approved On :-</label>
                             <div class="static">{{ $data->Approved_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="Approved Comments">Approved Comments :-</label>
                             <div class="">{{ $data->Approved_Comments }}</div>
@@ -11134,19 +11134,19 @@
 
                     <div class="sub-head">Initiator Update Completed</div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved By">Initiator Update By :-</label>
                             <div class="static">{{ $data->Initiator_Update_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved On">Initiator Update On :-</label>
                             <div class="static">{{ $data->Initiator_Update_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="Approved Comments">Initiator Update Comments :-</label>
                             <div class="">{{ $data->Initiator_Update_Comments }}</div>
@@ -11155,19 +11155,19 @@
 
                     <div class="sub-head">HOD Final Review Completed</div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved By">HOD Final Review By :-</label>
                             <div class="static">{{ $data->HOD_Final_Review_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved On">HOD Final Review On :-</label>
                             <div class="static">{{ $data->HOD_Final_Review_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="Approved Comments">HOD Final Review Comments :-</label>
                             <div class="">{{ $data->HOD_Final_Review_Comments }}</div>
@@ -11176,19 +11176,19 @@
 
                     <div class="sub-head">QA Final Review Completed</div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved By">QA Final Review By :-</label>
                             <div class="static">{{ $data->QA_Final_Review_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved On">QA Final Review On :-</label>
                             <div class="static">{{ $data->QA_Final_Review_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="Approved Comments">QA Final Review Comments :-</label>
                             <div class="">{{ $data->QA_Final_Review_Comments }}</div>
@@ -11198,19 +11198,19 @@
 
                     <div class="sub-head">QA Final Approval Completed</div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved By">QA Final Approval By :-</label>
                             <div class="static">{{ $data->QA_Final_Approval_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved On">QA Final Approval On :-</label>
                             <div class="static">{{ $data->QA_Final_Approval_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="Approved Comments">QA Final Approval Comments :-</label>
                             <div class="">{{ $data->QA_Final_Approval_Comments }}</div>
@@ -13114,15 +13114,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" name="username" required class="form-control">
                         </div>
-                        <div class="group-input">
+                        <div class="group-input mt-3">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" name="password" required class="form-control">
                         </div>
-                        <div class="group-input">
+                        <div class="group-input mt-3">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" name="comment" required class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">

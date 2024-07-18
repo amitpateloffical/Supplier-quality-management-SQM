@@ -235,7 +235,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="Type..">Type</label>
                                     <select name="supplier_type">
-                                        <option>Enter Your Selection Here</option>
+                                        <option value="">Enter Your Selection Here</option>
                                         <option value="CRO">CRO</option>
                                         <option value="F&B">F&B</option>
                                         <option value="Finished Goods">Finished Goods</option>
@@ -272,7 +272,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="Sub Type.">Sub Type</label>
                                     <select name="supplier_sub_type">
-                                        <option>Enter Your Selection Here</option>
+                                        <option value="">Enter Your Selection Here</option>
                                         <option value="Other">Other</option>
                                         <option value="Vendor">Vendor</option>
                                         <option value="Finished Goods">Finished Goods</option>
@@ -552,7 +552,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="Zone">Zone</label>
                                     <select name="zone">
-                                        <option>Enter Your Selection Here</option>
+                                        <option value="">Enter Your Selection Here</option>
                                         <option>Asia</option>
                                         <option>Europe</option>
                                         <option>Africa</option>
@@ -870,7 +870,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="Lead Time Days">Lead Time Days</label>
                                     <select name="lead_time_days" name="lead_time_days">
-                                        <option>Enter Your Selection Here</option>
+                                        <option value="">Enter Your Selection Here</option>
                                         <option value="> 11 Days"> > 11 Days</option>
                                         <option value="6 - 10">6 - 10</option>
                                         <option value="3 -5">3 -5</option>

@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('observation_grids', function (Blueprint $table) {
-            $table->id();
-            $table->integer('observation_id');
-            $table->longText('action');
-            $table->string('responsible');
-            $table->string('deadline');
-            $table->string('item_status');
-            $table->timestamps();
+        Schema::table('c_c_s', function (Blueprint $table) {
+            $table->text('cancelled_on')->nullable();
+            $table->text('cancelled_by')->nullable();
+            $table->text('cancelled_comment')->nullable();
         });
     }
 
@@ -31,6 +27,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('observation_grids');
+        Schema::table('c_c_s', function (Blueprint $table) {
+            //
+        });
     }
 };

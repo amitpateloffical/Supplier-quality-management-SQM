@@ -388,7 +388,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'Assign To';
             $history->previous = "Null";
-            $history->current = $supplierSite->assign_to;
+            $history->current = Helpers::getInitiatorName($supplierSite->assign_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -405,7 +405,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'Supplier Person';
             $history->previous = "Null";
-            $history->current = $supplierSite->supplier_person;
+            $history->current = Helpers::getInitiatorName($supplierSite->supplier_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -422,7 +422,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'Supplier Contact Person';
             $history->previous = "Null";
-            $history->current = $supplierSite->supplier_contact_person;
+            $history->current = Helpers::getInitiatorName($supplierSite->supplier_contact_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

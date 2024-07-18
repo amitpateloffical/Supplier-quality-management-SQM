@@ -131,29 +131,6 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 5)
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Group/ CFT Review
-                                Required
-
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Group/ CFT Review Not
-                                Required
-
-                            </button>
-                        @elseif($data->stage == 4)
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Approve
-
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Info Required
-
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Group Feedback
-                            </button>
                         @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Review Complete
@@ -192,25 +169,12 @@
                             @endif
 
 
-                            {{-- @if ($data->stage >= 3)
-                                <div class="active">Pending Group Review Discussion</div>
-                            @else
-                                <div class="">Pending Group Review Discussion</div>
-                            @endif
-
-                            @if ($data->stage >= 4)
-                                <div class="active">Pending Group Review</div>
-                            @else
-                                <div class="">Pending Group Review</div>
-                            @endif --}}
-
-
                             @if ($data->stage >= 3)
                                 <div class="active">Pending QA Review</div>
                             @else
                                 <div class="">Pending QA Review</div>
                             @endif
-                            @if ($data->stage >= 6)
+                            @if ($data->stage >= 4)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
@@ -251,7 +215,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                     </div>
                                 </div>
                                    
@@ -588,15 +552,15 @@
                                             <select name="department" placeholder="Select Department(s)"
                                              name="department"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} placeholder="Select Department(s)"
                                                 data-search="false" data-silent-initial-value-set="true" id="department">
-                                                <option @if ($data->department== '1') selected @endif  value="1">Work Instruction</option>
-                                                <option @if ($data->department== '2') selected @endif value="2">Quality Assurance</option>
-                                                <option @if ($data->department== '3') selected @endif value="3">Specifications</option>
-                                                <option @if ($data->department== '4') selected @endif value="4">Production</option>
+                                                <option @if ($data->department== 'Work Instruction') selected @endif  value="Work Instruction">Work Instruction</option>
+                                                <option @if ($data->department== 'Quality Assurance') selected @endif value="Quality Assurance">Quality Assurance</option>
+                                                <option @if ($data->department== 'Specifications') selected @endif value="Specifications">Specifications</option>
+                                                <option @if ($data->department== 'Production') selected @endif value="Production">Production</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <div class="sub-head">Investigatiom details</div>
+                                        <div class="sub-head">Investigation details</div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
@@ -678,10 +642,10 @@
                                             <select name="root_cause_methodology[]"  placeholder="-- Select --"
                                                 data-search="false" data-silent-initial-value-set="true"
                                                 id="root-cause-methodology">
-                                                <option @if ($data->root_cause_methodology== '1') selected @endif value="1">Why-Why Chart</option>
-                                                <option @if ($data->root_cause_methodology== '2') selected @endif value="2">Failure Mode and Efect Analysis</option>
-                                                <option @if ($data->root_cause_methodology== '3') selected @endif value="3">Fishbone or Ishikawa Diagram</option>
-                                                <option @if ($data->root_cause_methodology== '4') selected @endif value="4">Is/Is Not Analysis</option>
+                                                <option @if ($data->root_cause_methodology== 'Why-Why Chart') selected @endif value="Why-Why Chart">Why-Why Chart</option>
+                                                <option @if ($data->root_cause_methodology== 'Failure Mode and Efect Analysis') selected @endif value="Failure Mode and Efect Analysis">Failure Mode and Efect Analysis</option>
+                                                <option @if ($data->root_cause_methodology== 'Fishbone or Ishikawa Diagram') selected @endif value="Fishbone or Ishikawa Diagram">Fishbone or Ishikawa Diagram</option>
+                                                <option @if ($data->root_cause_methodology== 'Is/Is Not Analysis') selected @endif value="Is/Is Not Analysis">Is/Is Not Analysis</option>
                                             </select>
                                         </div>
                                     </div> --}}
@@ -1372,54 +1336,102 @@
                         <div id="CCForm7" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="Acknowledge_By">Acknowledge By</label>
-                                            <div class="static">{{ $data->acknowledge_by }}</div>
+                                            <div class="static"> @if($data->acknowledge_by) {{  $data->acknowledge_by }} @else Not Applicable @endif</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="Acknowledge_On">Acknowledge On</label>
-                                            <div class="static">{{ $data->acknowledge_on }}</div>
+                                            <div class="static"> @if($data->acknowledge_on) {{  $data->acknowledge_on }} @else Not Applicable @endif </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Acknowledge_On">Acknowledge Comment</label>
+                                            <div class="static"> @if($data->acknowledge_comment) {{  $data->acknowledge_comment }} @else Not Applicable @endif </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="Submit_By">Submited By</label>
-                                            <div class="static">{{ $data->submitted_by }}</div>
+                                            <div class="static"> @if($data->submitted_by) {{  $data->submitted_by }} @else Not Applicable @endif</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="Submit_On">Submited On</label>
-                                            <div class="static">{{ $data->submitted_on }}</div>
+                                            <div class="static"> @if($data->submitted_on) {{  $data->submitted_on }} @else Not Applicable @endif</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Submit_On">Submited Comment</label>
+                                            <div class="static"> @if($data->submitted_comment) {{  $data->submitted_comment }} @else Not Applicable @endif</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="QA_Review_Complete_By">QA Review Completed By</label>
-                                            <div class="static">{{ $data->qA_review_complete_by }}</div>
+                                            <div class="static"> @if($data->qA_review_complete_by) {{  $data->qA_review_complete_by }} @else Not Applicable @endif</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_On">QA Review Completed On</label>
+                                            <div class="static"> @if($data->qA_review_complete_on) {{  $data->qA_review_complete_on }} @else Not Applicable @endif</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="QA_Review_Complete_On">QA Review Completed On</label>
-                                            <div class="static">{{ $data->qA_review_complete_on }}</div>
+                                            <label for="QA_Review_Complete_On">QA Review Completed Comment</label>
+                                            <div class="static"> @if($data->qA_review_complete_comment) {{  $data->qA_review_complete_comment }} @else Not Applicable @endif</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_By">More Info Required By</label>
+                                            <div class="static"> @if($data->moreinfo_by) {{  $data->moreinfo_by }} @else Not Applicable @endif</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_On">More Info Required On</label>
+                                            <div class="static"> @if($data->moreinfo_on) {{  $data->moreinfo_on }} @else Not Applicable @endif</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Cancelled By">Cancelled By</label>
-                                                <div class="static">{{ $data->cancelled_by }}</div>
-                                            </div>
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_On">More Info Required Comment</label>
+                                            <div class="static"> @if($data->moreinfo_comment) {{  $data->moreinfo_comment }} @else Not Applicable @endif</div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Cancelled On">Cancelled On</label>
-                                                <div class="static">{{ $data->cancelled_on }}</div>
-                                            </div>
+                                    </div>
+
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Cancelled By">Cancelled By</label>
+                                            <div class="static"> @if($data->cancelled_by) {{  $data->cancelled_by }} @else Not Applicable @endif</div>
                                         </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Cancelled On">Cancelled On</label>
+                                            <div class="static"> @if($data->cancelled_on) {{  $data->cancelled_on }} @else Not Applicable @endif</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Cancelled On">Cancelled Comment</label>
+                                            <div class="static"> @if($data->cancelled_comment) {{  $data->cancelled_comment }} @else Not Applicable @endif</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="button-block">
                                     <!-- <button type="submit" class="saveButton"

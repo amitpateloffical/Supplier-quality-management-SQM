@@ -131,107 +131,21 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 6  && (in_array(6, $userRoleIds) || in_array(18, $userRoleIds)))
-                            @if ($evaluation->training_required == 'yes')
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                    Training Completed
-                                </button>
-                            @endif
-                        @elseif($data->stage == 7  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Implemented
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button>
-                        @elseif($data->stage == 8)
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Final Review Complete
-                            </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
-
-
                     </div>
 
                 </div>
                 <div class="status">
                     <div class="head">Current Status</div>
-                    {{-- @if ($data->stage == 0)
-                        <div class="progress-bars">
-                            <div class="bg-danger">Closed-Cancelled</div>
-                        </div>
-                    @else
-                        <div class="progress-bars">
-                            @if ($data->stage >= 1)
-                                <div class="active">Opened</div>
-                            @else
-                                <div class="">Opened</div>
-                            @endif
-                            {{--  @if ($data->stage >= 2)
-                            <div class="active">Superviser Review</div>
-                        @else
-                            <div class="">Superviser Review</div>
-                        @endif  --}}
-                    {{-- @if ($data->stage >= 2)
-                                <div class="active">Under Superviser Review </div>
-                            @else
-                                <div class="">Under Superviser Review </div>
-                            @endif
-                            @if ($info->Quality_Approver == 'yes')
-                            @if ($data->stage >= 3)
-                                <div class="active">QA Review</div>
-                            @else
-                                <div class="">QA Review</div>
-                            @endif
-                            @endif
-                            @if ($info->Microbiology == 'yes')
-                            @if ($data->stage >= 4)
-                                <div class="active">Pending CFT Review</div>
-                            @else
-                                <div class="">Pending CFT Review</div>
-                            @endif
-
-
-                            @if ($data->stage >= 5)
-                                <div class="active">CFT Review Completed</div>
-                            @else
-                                <div class="">CFT Review Completed</div>
-                            @endif
-                            @endif
-                            @if ($evaluation->training_required == 'yes')
-                                @if ($data->stage >= 6)
-                                    <div class="active">Pending Training Completion</div>
-                                @else
-                                    <div class="">Pending Training Completion</div>
-                                @endif
-                            @endif
-
-                            @if ($data->stage >= 7)
-                                <div class="active">Pending Change Implementation</div>
-                            @else
-                                <div class="">Pending Change Implementation</div>
-                            @endif
-                            @if ($info->Quality_Approver == 'yes')
-                            @if ($data->stage >= 8)
-                                <div class="active">QA Final Review</div>
-                            @else
-                                <div class="">QA Final Review</div>
-                            @endif
-                            @endif
-
-                            @if ($data->stage >= 9)
-                                <div class="active">Closed - Done</div>
-                            @else
-                                <div class="">Closed - Done</div>
-                            @endif
-
-
-                        </div>
-                    @endif --}}
-
-                    {{-- ------------------------------By Pankaj-------------------------------- --}}
                     @if ($data->stage == 0)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
@@ -243,60 +157,38 @@
                             @else
                                 <div class="">Opened</div>
                             @endif
-                            {{--  @if ($data->stage >= 2)
-                        <div class="active">Superviser Review</div>
-                    @else
-                        <div class="">Superviser Review</div>
-                    @endif  --}}
+
                             @if ($data->stage >= 2)
-                                <div class="active">Under HOD Review </div>
+                                <div class="active">HOD Review </div>
                             @else
-                                <div class="">Under HOD Review </div>
+                                <div class="">HOD Review </div>
                             @endif
-                            {{-- @if ($info->Quality_Approver == 'yes') --}}
+                            
                             @if ($data->stage >= 3)
                                 <div class="active">Pending CFT/SME/QA Review</div>
                             @else
                                 <div class="">Pending CFT/SME/QA Review</div>
                             @endif
-                            {{-- @endif
-                            @if ($info->Microbiology == 'yes') --}}
+
                             @if ($data->stage >= 4)
                                 <div class="active"> CFT/SME/QA Review</div>
                             @else
                                 <div class=""> CFT/SME/QA Review</div>
                             @endif
 
-
-                            {{-- @if ($data->stage >= 5)
-                            <div class="active">CFT Review Completed</div>
-                        @else
-                            <div class="">CFT Review Completed</div>
-                        {{-- @endif --}}
-                            {{-- @endif --}}
-                            {{-- @if ($evaluation->training_required == 'yes')
-                            @if ($data->stage >= 6)
-                                <div class="active">Pending Training Completion</div>
-                            @else
-                                <div class="">Pending Training Completion</div>
-                            @endif
-                        @endif --}}
-
-                            @if ($data->stage >= 7)
+                            @if ($data->stage >= 5)
                                 <div class="active">Pending Change Implementation</div>
                             @else
                                 <div class="">Pending Change Implementation</div>
                             @endif
-                            @if ($data->stage >= 8)
+
+                            @if ($data->stage >= 6)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
                             @endif
-
-
                         </div>
                     @endif
-                    {{-- ---------------------------------------------------------------------------------------- --}}
                 </div>
             </div>
 
@@ -1418,9 +1310,9 @@
                                                             <td><div class="group-input new-date-data-field ">
                                                                     <div class="  input-date  ">
                                                                         <div class="calenderauditee">
-                                                                            {{-- <input type="text"  id="implementation_date{{$key}}" readonly placeholder="DD-MMM-YYYY"  value="{{  Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"/> --}}
+                                                                            {{-- <input type="text"  id="implementation_date{{$key}}" readonly placeholder="DD-MM-YYYY"  value="{{  Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"/> --}}
                                                                             {{-- <input type="date" class="hide-input" name="implementation_date[]"  value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"  oninput="handleDateInput(this, `implementation_date{{$key}}`)" /> --}}
-                                                                            <input type="text"   id="implementation_date{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) }}" />
+                                                                            <input type="text"   id="implementation_date{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) }}" />
                                                                             <input type="date" id="implementation_date{{$key}}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($closure->implementation_date)[$key]}}"  name="implementation_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) }}"class="hide-input" 
                                                                               oninput="handleDateInput(this, `implementation_date{{$key}}`)"  /></div></div></div></td>
                                                                         </div>
@@ -1527,7 +1419,7 @@
                                                     <label for="effective-check-date">Effectiveness Check Creation Date</label>
                                                    <div class="calenderauditee">                                     
                                                           <input type="text"  id="effective_check_date"  readonly value="{{ Helpers::getdateFormat($data->effective_check_date)}}"
-                                                           name="effective_check_date"  placeholder="DD-MMM-YYYY" />
+                                                           name="effective_check_date"  placeholder="DD-MM-YYYY" />
                                                           <input type="date" name="effective_check_date" value="{{ $data->effective_check_date }}"  class="hide-input"
                                                            oninput="handleDateInput(this, 'effective_check_date')"/>
                                              </div>
@@ -1583,323 +1475,105 @@
                                             Electronic Signatures
                                         </div>
                                         <div class="row">
-                                            @if ($data->stage >= 2)
-                                                <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="submitted">Submitted By</label>
-                                                        @php
-                                                            $submit = DB::table('c_c_stage_histories')
-                                                                ->where('type', 'Change-Control')
-                                                                ->where('doc_id', $data->id)
-                                                                ->where('stage_id', 2)
-                                                                ->get();
-                                                        @endphp
-                                                        @foreach ($submit as $temp)
-                                                            <div class="static">{{ $temp->user_name }}</div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="submitted">Submitted On</label>
-                                                        @php
-                                                            $submit = DB::table('c_c_stage_histories')
-                                                                ->where('type', 'Change-Control')
-                                                                ->where('doc_id', $data->id) 
-                                                                ->where('stage_id', 2)
-                                                                ->get();
-                                                        @endphp
-                                                        @foreach ($submit as $temp)
-                                                            <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            @if ($data->stage == 0)
-                                                <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="submitted">Cancelled By</label>
-                                                        @php
-                                                            $submit = DB::table('c_c_stage_histories')
-                                                                ->where('type', 'Change-Control')
-                                                                ->where('doc_id', $cc_lid)
-                                                                ->where('stage_id', 0)
-                                                                ->get();
-                                                        @endphp
-                                                        @foreach ($submit as $temp)
-                                                            <div class="static">{{ $temp->user_name }}</div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="submitted">Cancelled On</label>
-                                                        @php
-                                                            $submit = DB::table('c_c_stage_histories')
-                                                                ->where('type', 'Change-Control')
-                                                                ->where('doc_id', $cc_lid)
-                                                                ->where('stage_id', 0)
-                                                                ->get();
-                                                        @endphp
-                                                        @foreach ($submit as $temp)
-                                                            <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            {{-- <div class="col-lg-6">
+                                            <div class="col-lg-3">
                                                 <div class="group-input">
-                                                    <label for="submitted">More Information Required By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('status', 'More-info Required')
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
+                                                    <label for="Acknowledge_By">Submitted By</label>
+                                                    <div class="static"> @if($data->submitted_by) {{  $data->submitted_by }} @else Not Applicable @endif</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Acknowledge_On">Submitted On</label>
+                                                    <div class="static"> @if($data->submitted_on) {{  $data->submitted_on }} @else Not Applicable @endif </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">More Information Required On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('status', 'More-info Required')
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div> --}}
-
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">HOD Review Complete By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 3)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">HOD Review Complete On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 3)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">Send to CFT/SME/QA Review By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 4)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">Send to CFT/SME/QA Review On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 4)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-
-                                            {{-- <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">CFT Reviewed By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 5)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">CFT Reviewed On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 5)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div> --}}
-
-
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">CFT/SME/QA Review Not required By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 6)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">CFT/SME/QA Review Not required On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 6)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
-                                                    @endforeach
+                                                    <label for="Acknowledge_On">Submitted Comment</label>
+                                                    <div class="static"> @if($data->submitted_comment) {{  $data->submitted_comment }} @else Not Applicable @endif </div>
                                                 </div>
                                             </div>
 
 
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-3">
                                                 <div class="group-input">
-                                                    <label for="submitted">Review Completed By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 7)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
+                                                    <label for="Submit_By">HOD Review Completed By</label>
+                                                    <div class="static"> @if($data->hod_review_completed_by) {{  $data->hod_review_completed_by }} @else Not Applicable @endif</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Submit_On">HOD Review Completed On</label>
+                                                    <div class="static"> @if($data->hod_review_completed_on) {{  $data->hod_review_completed_on }} @else Not Applicable @endif</div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">Review Completed On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 7)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
-                                                    @endforeach
+                                                    <label for="Submit_On">HOD Review Completed Comment</label>
+                                                    <div class="static"> @if($data->hod_review_completed_comment) {{  $data->hod_review_completed_comment }} @else Not Applicable @endif</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_By">Pending CFT Review Completed By</label>
+                                                    <div class="static"> @if($data->cft_review_by) {{  $data->cft_review_by }} @else Not Applicable @endif</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_On">Pending CFT Review Completed On</label>
+                                                    <div class="static"> @if($data->cft_review_on) {{  $data->cft_review_on }} @else Not Applicable @endif</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_On">Pending CFT Review Completed Comment</label>
+                                                    <div class="static"> @if($data->cft_review_comment) {{  $data->cft_review_comment }} @else Not Applicable @endif</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_By">Review Completed By</label>
+                                                    <div class="static"> @if($data->QA_review_completed_by) {{  $data->QA_review_completed_by }} @else Not Applicable @endif</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_On">Review Completed On</label>
+                                                    <div class="static"> @if($data->QA_review_completed_on) {{  $data->QA_review_completed_on }} @else Not Applicable @endif</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_On">Review Completed Comment</label>
+                                                    <div class="static"> @if($data->QA_review_completed_comment) {{  $data->QA_review_completed_comment }} @else Not Applicable @endif</div>
                                                 </div>
                                             </div>
 
 
-                                            {{-- <div class="col-lg-6">
+                                            <div class="col-lg-3">
                                                 <div class="group-input">
-                                                    <label for="submitted">Change Implemented By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 8)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
+                                                    <label for="Cancelled By">Implemented By</label>
+                                                    <div class="static"> @if($data->implemented_by) {{  $data->implemented_by }} @else Not Applicable @endif</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Cancelled On">Implemented On</label>
+                                                    <div class="static"> @if($data->implemented_on) {{  $data->implemented_on }} @else Not Applicable @endif</div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">Change Implemented On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 8)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div> --}}
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">Implemented By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 9)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
+                                                    <label for="Cancelled On">Implemented Comment</label>
+                                                    <div class="static"> @if($data->implemented_comment) {{  $data->implemented_comment }} @else Not Applicable @endif</div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">Implemented On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 9)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ Helpers::getdateFormat($temp->created_at) }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-
                                         </div>
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
+                                            <!-- <button type="submit" class="saveButton">Save</button> -->
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="submit">Submit</button>

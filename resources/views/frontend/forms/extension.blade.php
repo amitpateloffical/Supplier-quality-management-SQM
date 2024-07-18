@@ -322,71 +322,58 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">Electronic Signatures</div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Submitted By">Submitted By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Submitted On">Submitted On</label>
-                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Submitted On">Submitted Comment</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Approved By</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Cancelled On">Approved On</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled On">Approved Comment</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
-                                        <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Cancelled On">Cancelled On</label>
-                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Ext Approved By">Ext Approved By</label>
-                                        <div class="static"></div>
+                                        <label for="Cancelled On">Cancelled Comment</label>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Ext Approved On">Ext Approved On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="More Information Required By">More Information Required By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="More Information Required On">More Information Required On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Rejected By">Rejected By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Rejected On">Rejected On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <!-- <button type="submit" class="saveButton">Save</button> -->
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit">Submit</button>
+                                <!-- <button type="submit">Submit</button> -->
                             </div>
                         </div>
                     </div>

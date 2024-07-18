@@ -904,8 +904,10 @@ use Illuminate\Support\Facades\Hash;
             if ($root->stage == 1) {
                 $root->stage = "2";
                 $root->status = "Investigation in Progress";
-                $root->acknowledge_by= Auth::user()->name;
-                $root->acknowledge_on= Carbon::now()->format('d-M-Y');
+                $root->acknowledge_by = Auth::user()->name;
+                $root->acknowledge_on = Carbon::now()->format('d-M-Y');
+                $root->acknowledge_comment = $request->comment;
+                
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -916,6 +918,9 @@ use Illuminate\Support\Facades\Hash;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
+                $history->change_from = $lastDocument->status;
+                $history->change_to = "Investigation in Progress";
+                $history->action = 'Acknowledge';
                 $history->stage='Acknowledge';
 
                 $history->save();
@@ -945,9 +950,11 @@ use Illuminate\Support\Facades\Hash;
             }
             if ($root->stage == 2) {
                 $root->stage = "3";
-                $root->status = 'Pending Group Review Discussion';
+                $root->status = 'Pending QA Review';
                 $root->submitted_by = Auth::user()->name;
                 $root->submitted_on = Carbon::now()->format('d-M-Y');
+                $root->submitted_comment = $request->comment;
+
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -958,34 +965,24 @@ use Illuminate\Support\Facades\Hash;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Submited';
+                $history->change_from = $lastDocument->status;
+                $history->change_to = "Pending QA Review";
+                $history->action = 'Submit';
+                $history->stage = 'Submited';
 
                 $history->save();
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            // if ($root->stage == 3) {
-            //     $root->stage = "4";
-            //     $root->status = "Pending Group Review";
-            //     $root->report_result_by = Auth::user()->name;
-            //     $root->report_result_on = Carbon::now()->format('d-M-Y');
-            //     $root->update();
-            //     toastr()->success('Document Sent');
-            //     return back();
-            // }
-            if ($root->stage == 4) {
-                $root->stage = "5";
-                $root->status = 'Pending QA Review';
-                $root->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
+            
             if ($root->stage == 3) {
-                $root->stage = "6";
+                $root->stage = "4";
                 $root->status = "Closed - Done";
                 $root->qA_review_complete_by = Auth::user()->name;
                 $root->qA_review_complete_on = Carbon::now()->format('d-M-Y');
+                $root->qA_review_complete_comment = $request->comment;
+                
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -997,30 +994,11 @@ use Illuminate\Support\Facades\Hash;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='QA Review Complete';
+                $history->change_from = $lastDocument->status;
+                $history->change_to = "Closed - Done";
+                $history->action = 'QA Review Complete';
                 $history->save();
 
-                $root->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
-
-            if ($root->stage == 5) {
-                $root->stage = "6";
-                $root->status = "Closed - Done";
-                $root->evaluation_complete_by = Auth::user()->name;
-                $root->evaluation_complete_on = Carbon::now()->format('d-M-Y');
-                $history = new RootAuditTrial();
-                $history->root_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->evaluation_complete_by;
-                $history->current = $root->evaluation_complete_by;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                // $history->origin_state = $lastDocument->status;
-                $history->stage='Completed';
-                $history->save();
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1042,6 +1020,7 @@ use Illuminate\Support\Facades\Hash;
             $root->status = "Closed-Cancelled";
             $root->cancelled_by = Auth::user()->name;
             $root->cancelled_on = Carbon::now()->format('d-M-Y');
+
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Activity Log';
@@ -1051,29 +1030,33 @@ use Illuminate\Support\Facades\Hash;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-             $history->origin_state = $lastDocument->status;
+            $history->origin_state = $lastDocument->status;
             $history->stage='Cancelled ';
+            $history->change_from = $lastDocument->status;
+            $history->change_to = "Closed - Cancelled";
+            $history->action = 'Cancel';
             $history->save();
-            $list = Helpers::getQAUserList();
-            foreach ($list as $u) {
-                if($u->q_m_s_divisions_id == $root->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
-                     if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                 ['data' => $root],
-                              function ($message) use ($email) {
-                                  $message->to($email)
-                                      ->subject("Document sent ".Auth::user()->name);
-                              }
-                            );
-                        } catch (\Exception $e) {
-                            // 
-                        }
-                    }
-             } 
-          }
+
+            //     $list = Helpers::getQAUserList();
+            //     foreach ($list as $u) {
+            //         if($u->q_m_s_divisions_id == $root->division_id){
+            //             $email = Helpers::getInitiatorEmail($u->user_id);
+            //             if ($email !== null) {
+            //                 try {
+            //                     Mail::send(
+            //                         'mail.view-mail',
+            //                         ['data' => $root],
+            //                     function ($message) use ($email) {
+            //                         $message->to($email)
+            //                             ->subject("Document sent ".Auth::user()->name);
+            //                     }
+            //                     );
+            //                 } catch (\Exception $e) {
+            //                     // 
+            //                 }
+            //             }
+            //     } 
+            // }
             $root->update();
             $history = new RootCauseAnalysisHistory();
             $history->type = "Root Cause Analysis";
@@ -1094,29 +1077,33 @@ use Illuminate\Support\Facades\Hash;
     public function root_reject(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $capa = RootCauseAnalysis::find($id);
+            $root = RootCauseAnalysis::find($id);
+            $lastDocument =  RootCauseAnalysis::find($id);
 
-            if ($capa->stage == 3) {
-                $capa->stage = "2";
-                $capa->status = "Investigation in Progress";
-                $capa->update();
+            if ($root->stage == 3) {
+                $root->stage = "2";
+                $root->status = "Investigation in Progress";
+                $root->moreinfo_by = Auth::user()->name;
+                $root->moreinfo_on = Carbon::now()->format('d-M-Y');
+                $root->moreinfo_comment = $request->comment;
+                
+                $history = new RootAuditTrial();
+                $history->root_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->moreinfo_by;
+                $history->current = $root->moreinfo_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'Pending QA Review';
+                $history->change_from = $lastDocument->status;
+                $history->change_to = "Investigation in Progress";
+                $history->action = 'More Info Required';
+                $history->save();
 
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($capa->stage == 5) {
-                $capa->stage = "2";
-                $capa->status = "Investigation in Progress";
-                $capa->update();
-
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($capa->stage == 4) {
-                $capa->stage = "2";
-                $capa->status = "Investigation in Progress";
-                $capa->update();
-
+                $root->update();
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -1181,7 +1168,7 @@ use Illuminate\Support\Facades\Hash;
         $doc = RootCauseAnalysis::find($id);
         if (!empty($doc)) {
             $doc->originator_id = User::where('id', $doc->initiator_id)->value('name');
-            $data = RootAuditTrial::where('root_id', $id)->get();
+            $data = RootAuditTrial::where('root_id', $id)->orderByDESC('id')->get();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.root-cause-analysis.auditReport', compact('data', 'doc'))

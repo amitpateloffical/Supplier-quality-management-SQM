@@ -1324,7 +1324,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Last Audit Date';
             $history->previous = "Null";
-            $history->current = $supplier->last_audit_date;
+            $history->current = Helpers::getdateFormat($supplier->last_audit_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1340,7 +1340,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Next Audit Date';
             $history->previous = "Null";
-            $history->current = $supplier->next_audit_date;
+            $history->current = Helpers::getdateFormat($supplier->next_audit_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2795,7 +2795,7 @@ class SupplierController extends Controller
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Last Audit Date';
             $history->previous = $lastDocument->last_audit_date;
-            $history->current = $request->last_audit_date;
+            $history->current = Helpers::getdateFormat($request->last_audit_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2811,7 +2811,7 @@ class SupplierController extends Controller
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Next Audit Date';
             $history->previous = $lastDocument->next_audit_date;
-            $history->current = $request->next_audit_date;
+            $history->current = Helpers::getdateFormat($request->next_audit_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

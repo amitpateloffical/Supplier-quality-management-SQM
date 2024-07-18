@@ -200,7 +200,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">@if($data->Inititator_Group){{ $data->Inititator_Group }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->Initiator_Group){{ Helpers::getFullDepartmentName($data->Initiator_Group) }} @else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
                         <td class="w-30" colspan="3"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                     </tr>
@@ -231,8 +231,8 @@
                     <tr>
                         <th class="w-20">Repeat Nature</th>
                         <td class="w-30">@if($data->repeat_nature){{ $data-> repeat_nature}} @else Not Applicable @endif</td>
-                        <th class="w-20">Division Code</th>
-                        <td class="w-30" colspan="3"> @if($data->div_code){{ $data->div_code }} @else Not Applicable @endif</td>
+                        <!-- <th class="w-20">Division Code</th>
+                        <td class="w-30" colspan="3"> @if($data->div_code){{ $data->div_code }} @else Not Applicable @endif</td> -->
                     </tr>
                     
                     <tr>
@@ -365,13 +365,8 @@
                         </tr>
                         <tr>
                             <th class="w-20">Related Records</th>
-                            <td class="w-80">{{ $review->related_records }}</td>
+                            <td class="w-80"> {{ $data->related_records }}</td>
                         </tr>
-                        <tr>
-                            <th class="w-20">QA Attachments</th>
-                            <td class="w-80">{{ $review->qa_attachments}}</td>
-                        </tr>
-
 
                     </table>
                     <div class="border-table">
@@ -417,16 +412,6 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <th class="w-20">QA Evaluation Attachments </th>
-                            <td>
-                                </div>
-                                <div>
-                                    {{ $evaluation->qa_evaluation_attachments }}
-                                </div>
-                            </td>
-                        </tr>
-
 
                         <tr>
                             <th class="w-20">Training Required</th>
@@ -442,6 +427,33 @@
                             </td>
                         </tr>
                     </table>
+
+                    <div class="border-table">
+                        <div class="block-head">
+                            QA Evaluation Attachments
+                        </div>
+                        <table>
+
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Attachment</th>
+                            </tr>
+                            @if($data->qa_eval_attach)
+                                @foreach(json_decode($data->qa_eval_attach) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                                    @endforeach
+                                    @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+
+                        </table>
+                    </div>
                 </div>
             </div>
             {{-- <div class="block">
@@ -520,17 +532,13 @@
                     <table>
                     <tr>
                         <th class="w-20">Comments</th>
-                        <td class="w-30">{{ $info->cft_comments }}</td>
-                        <th class="w-20">Attachment </th>
-                        <td class="w-30">{{ $info->cft_attachment }}</td>
+                        <td class="w-30">{{ $data->cft_comments }}</td>
                     </tr>
                         <tr>
                             <th class="w-20">QA Comments</th>
                             <td class="w-80">
-                                
-                                </div>
                                 <div>
-                                    {{ $comments->qa_comments }}
+                                    {{ $comments->qa_commentss }}
                                 </div>
                             </td>
                         </tr>
@@ -687,9 +695,8 @@
                     <tr>
                         <th class="w-20">QA Approval Comments</th>
                         <td class="w-80">
-                            </div>
                             <div>
-                                {{ $approcomments->risk_identification }}
+                                {{ $data->risk_identification }}
                             </div>
                         </td>
                     </tr>
@@ -748,12 +755,8 @@
                     </tr> -->
                     <tr>
                         <th class="w-20">QA Closure Comments</th>
-                        <td class="w-30"> {{ $assessment->qa_closure_comments }}</td>
-                        <th class="w-20">List Of Attachments</th>
-                        <td class="w-30"> {{ $assessment->list_of_attachment }}</td>
+                        <td class="w-30"> {{ $data->qa_closure_comments }}</td>
                     </tr>
-                    
-
                 </table>
                 <!-- <div class="border-table">
                     <div class="block-head">
@@ -792,257 +795,58 @@
                 <table>
                     <tr>
                         <th class="w-20">Submitted By</th>
-                        <td class="w-30">
-                        @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 2)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach</td>
+                        <td class="w-30"> @if($data->submitted_by) {{  $data->submitted_by }} @else Not Applicable @endif</td>
 
                         <th class="w-20">Submitted On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 2)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
+                        <td class="w-30"> @if($data->submitted_on) {{  $data->submitted_on }} @else Not Applicable @endif</td>
+
+                        <th class="w-20">Submitted Comment</th>
+                        <td class="w-30">@if($data->submitted_comment) {{  $data->submitted_comment }} @else Not Applicable @endif</td>
                     </tr>
                     
                     <tr>
-                        <th class="w-20">Cancelled By</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 0)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach
-                        </td>
-                        <th class="w-20">Cancelled On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 0)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
+                        <th class="w-20">HOD Review Completed By</th>
+                        <td class="w-30"> @if($data->hod_review_completed_by) {{  $data->hod_review_completed_by }} @else Not Applicable @endif</td>
+
+                        <th class="w-20">HOD Review Completed On</th>
+                        <td class="w-30"> @if($data->hod_review_completed_on) {{  $data->hod_review_completed_on }} @else Not Applicable @endif</td>
+
+                        <th class="w-20">HOD Review Completed Comment</th>
+                        <td class="w-30">@if($data->hod_review_completed_comment) {{  $data->hod_review_completed_comment }} @else Not Applicable @endif</td>
                     </tr>
-                    {{-- <tr>
-                        <th class="w-20">More Information Required By</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('status', 'More-info Required')
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach
-                        </td>
-                        <th class="w-20">More Information Required On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('status', 'More-info Required')
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
-                    </tr> --}}
+
                     <tr>
-                        <th class="w-20">HOD Review Complete By</th>
-                        <td class="w-30"> @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 3)
-                                ->get();
-                            @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach </td>
-                        <th class="w-20">HOD Review Complete On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 3)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
+                        <th class="w-20">Pending CFT Review Completed By</th>
+                        <td class="w-30"> @if($data->cft_review_by) {{  $data->cft_review_by }} @else Not Applicable @endif</td>
+
+                        <th class="w-20">Pending CFT Review Completed On</th>
+                        <td class="w-30"> @if($data->cft_review_on) {{  $data->cft_review_on }} @else Not Applicable @endif</td>
+
+                        <th class="w-20">Pending CFT Review Completed Comment</th>
+                        <td class="w-30">@if($data->cft_review_comment) {{  $data->cft_review_comment }} @else Not Applicable @endif</td>
                     </tr>
-                    {{-- <tr>
-                        <th class="w-20">More Information Req. By</th>
-                        <td class="w-30">Piyush Sahu</td>
-                        <th class="w-20">More Information Req. On</th>
-                        <td class="w-30">12-12-2203</td>
-                    </tr> --}}
-                    <tr>
-                        <th class="w-20">Send to CFT/SME/QA Review By</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id',$data->id)
-                                ->where('stage_id', 4)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach
-                        </td>
-                        <th class="w-20">Send to CFT/SME/QA Review On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 4)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
-                    </tr>
-                    <!-- <tr>
-                        <th class="w-20">More Info Req. By</th>
-                        <td class="w-30">Piyush Sahu</td>
-                        <th class="w-20">More Info Req. On</th>
-                        <td class="w-30">12-12-2203</td>
-                    </tr> -->
-                    <tr>
-                        <th class="w-20">CFT/SME/QA Review Not required By</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 6)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach
-                        </td>
-                        <th class="w-20">CFT/SME/QA Review Not required On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 6)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
-                    </tr>
+
                     <tr>
                         <th class="w-20">Review Completed By</th>
-                        <td class="w-30">
-                            @php
-                                $submit = DB::table('c_c_stage_histories')
-                                      ->where('type', 'Change-Control')
-                                      ->where('doc_id', $data->id)
-                                      ->where('stage_id', 7)
-                                      ->get();
-                            @endphp
-                            @foreach ($submit as $temp)
-                                <div class="static">{{ $temp->user_name }}</div>
-                            @endforeach 
-                        </td>
+                        <td class="w-30"> @if($data->QA_review_completed_by) {{  $data->QA_review_completed_by }} @else Not Applicable @endif</td>
+
                         <th class="w-20">Review Completed On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 7)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
+                        <td class="w-30"> @if($data->QA_review_completed_on) {{  $data->QA_review_completed_on }} @else Not Applicable @endif</td>
+
+                        <th class="w-20">Review Completed Comment</th>
+                        <td class="w-30">@if($data->QA_review_completed_comment) {{  $data->QA_review_completed_comment }} @else Not Applicable @endif</td>
                     </tr>
+
                     <tr>
                         <th class="w-20">Implemented By</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 9)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach
-                        </td>
+                        <td class="w-30"> @if($data->implemented_by) {{  $data->implemented_by }} @else Not Applicable @endif</td>
+
                         <th class="w-20">Implemented On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 9)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
-                    </tr>
-                    {{-- <tr>
-                        <th class="w-20">Change Implemented By</th>
-                        <td class="w-30">Piyush Sahu</td>
-                        <th class="w-20">Change Implemented On</th>
-                        <td class="w-30">12-12-2203</td>
-                    </tr> --}}
-                    <!-- <tr>
-                        <th class="w-20">QA More Information Required By</th>
-                        <td class="w-30">Piyush Sahu</td>
-                        <th class="w-20">QA More Information Required On</th>
-                        <td class="w-30">12-12-2203</td>
-                    </tr> -->
-                    {{-- <tr>
-                        <th class="w-20">QA Final Review Completed By</th>
-                        <td class="w-30">Piyush Sahu</td>
-                        <th class="w-20">QA Final Review Completed On</th>
-                        <td class="w-30">12-12-2203</td>
-                    </tr> --}}
+                        <td class="w-30"> @if($data->implemented_on) {{  $data->implemented_on }} @else Not Applicable @endif</td>
+
+                        <th class="w-20">Implemented Comment</th>
+                        <td class="w-30">@if($data->implemented_comment) {{  $data->implemented_comment }} @else Not Applicable @endif</td>
+                    </tr>                    
                 </table>
             </div> 
         </div>

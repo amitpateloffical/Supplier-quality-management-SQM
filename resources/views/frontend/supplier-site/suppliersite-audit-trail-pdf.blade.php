@@ -163,7 +163,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Change Control No.</strong>
+                    <strong>Supplier Site No.</strong>
                 </td>
                 <td class="w-40">
                    {{ Helpers::getDivisionName($doc->division_id) }}/SS/{{ Helpers::year($doc->created_at)}}/ {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}

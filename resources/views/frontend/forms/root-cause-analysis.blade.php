@@ -36,7 +36,7 @@ $users = DB::table('users')->get();
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
 
-            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
         </div>
 
         <form action="{{ route('root_store')}}" method="POST" enctype="multipart/form-data">
@@ -293,7 +293,7 @@ $users = DB::table('users')->get();
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="sub-head">Investigatiom details</div>
+                                <div class="sub-head">Investigation details</div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">

@@ -144,7 +144,7 @@ class DashboardController extends Controller
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
             array_push($table, [
                 "id" => $data->id,
-                "parent" => $data->cc_id ? $data->cc_id : "-",
+                "parent" => $data->parent_id ? $data->parent_id : "-",
                 "record" => $data->record,
                 "type" => "Extension",
                 "parent_id" => $data->parent_id,
@@ -156,7 +156,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
-                "due_date" => $data->due_date,
+                "due_date" => $data->due_date ? $data->due_date : "-",
             ]);
         }
         foreach ($datas3 as $data) {
@@ -341,7 +341,7 @@ class DashboardController extends Controller
 
             array_push($table, [
                 "id" => $data->id,
-                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "parent" => $data->parent_id ? $data->parent_id : "-",
                 "record" => $data->record,
                 "division_id" => $data->division_id,
                 "type" => "Observation",
@@ -812,6 +812,7 @@ class DashboardController extends Controller
             $data = RiskManagement::find($id);
             $single = "riskSingleReport/" . $data->id;
             $audit = "riskAuditReport/" . $data->id;
+            $parent = "#";
         } elseif ($type == "Lab-Incident") {
             $data = LabIncident::find($id);
             $single = "LabIncidentSingleReport/" . $data->id;
@@ -832,11 +833,12 @@ class DashboardController extends Controller
             $data = Extension::find($id);
             $single = "extensionSingleReport/" .$data->id;
             $audit = "extensionAuditReport/" .$data->id;
-
+            $parent = "";
         } elseif ($type == "Observation") {
             $data = Observation::find($id);
-            $single = "#";
-            $audit = "ObservationAuditTrialShow/" .$data->id;
+            $single = "ObservationSingleReport/" .$data->id;            
+            $audit = "showaudittrialobservation/" .$data->id;
+            $parent = "#". $data->id;
         } elseif ($type == "Effectiveness-Check") {
             $data = EffectivenessCheck::find($id);
             $single = "effectiveSingleReport/" .$data->id;
@@ -853,7 +855,7 @@ class DashboardController extends Controller
         } elseif ($type == "Deviation") {
             $data = Deviation::find($id);
             $single = "deviationSingleReport/". $data->id;
-            $audit = "devAuditreport/" . $data->id;
+            $audit = "auditReport/" . $data->id;
             $parent="#";
         } elseif ($type == "Supplier") {
             $data = Supplier::find($id);

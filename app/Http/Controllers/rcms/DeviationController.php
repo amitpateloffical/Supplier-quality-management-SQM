@@ -13,7 +13,7 @@ use App\Models\RootAuditTrail;
 use App\Models\ActionItem;
 use App\Models\Deviation;
 use App\Models\Extension;
-use App\Models\DeviationAuditTrail;
+use App\Models\{DeviationAuditTrail,ScarAuditTrail,SCAR};
 use App\Models\DeviationGrid;
 use App\Models\DeviationHistory;
 use App\Models\DeviationCft;
@@ -960,7 +960,7 @@ class DeviationController extends Controller
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Deviation Observed';
             $history->previous = "Null";
-            $history->current = $deviation->Deviation_date;
+            $history->current = Helper::getdateFormat($deviation->Deviation_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -992,7 +992,7 @@ class DeviationController extends Controller
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Deviation Reported on';
             $history->previous = "Null";
-            $history->current = $deviation->Deviation_reported_date;
+            $history->current = Helper::getdateFormat($deviation->Deviation_reported_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2342,7 +2342,7 @@ class DeviationController extends Controller
             $history->deviation_id = $id;
             $history->activity_type = 'Deviation Observed';
             $history->previous = $lastDeviation->Deviation_date;
-            $history->current = $deviation->Deviation_date;
+            $history->current = Helper::getdateFormat($deviation->Deviation_date);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2378,7 +2378,7 @@ class DeviationController extends Controller
             $history->deviation_id = $id;
             $history->activity_type = 'Deviation Reported on';
             $history->previous = $lastDeviation->Deviation_reported_date;
-            $history->current = $deviation->Deviation_reported_date;
+            $history->current = Helper::getdateFormat($deviation->Deviation_reported_date);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5108,7 +5108,7 @@ if ($deviation->stage == 5) {
 
         $cft = [];
         $parent_id = $id;
-        $parent_type = "Audit_Program";
+        $parent_type = "Deviation";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -5135,7 +5135,7 @@ if ($deviation->stage == 5) {
             $Extensionchild = Deviation::find($id);
             $Extensionchild->Extensionchild = $record_number;
             $Extensionchild->save();
-            return view('frontend.forms.extension', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at'));
+            return view('frontend.forms.extension', compact('parent_id','parent_record', 'parent_name','parent_type', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at'));
         }
         $old_record = Deviation::select('id', 'division_id', 'record')->get();
         // dd($request->child_type)
@@ -5185,22 +5185,12 @@ if ($deviation->stage == 5) {
 
     public function DeviationAuditTrial($id)
     {
-        // $audit = DeviationAuditTrail::where('deviation_id', $id)->orderByDESC('id')->get()->unique('activity_type');
         $audit = DeviationAuditTrail::where('deviation_id', $id)
         ->orderByDesc('id')
         ->paginate(5);
-
-        // dd($audit);
         $today = Carbon::now()->format('d-m-y');
         $document = Deviation::where('id', $id)->first();
-        // dd( $document);
-
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
-        // dd($document->initiator);
-
-
-        // return $audit;
-
         return view('frontend.forms.deviation_audit', compact('audit', 'document', 'today'));
     }
     public function rootAuditTrial($id)
@@ -5259,34 +5249,6 @@ if ($deviation->stage == 5) {
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
-            return $pdf->stream('Deviation' . $id . '.pdf');
-        }
-    }
-
-
-    public function devAuditreport($id)
-    {
-        $doc = Deviation::find($id);
-        if (!empty ($doc)) {
-            $doc->originator_id = User::where('id', $doc->initiator_id)->value('name');
-            $data = DeviationAuditTrail::where('deviation_id', $id)->get();
-            $pdf = App::make('dompdf.wrapper');
-            $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.forms.auditReport', compact('data', 'doc'))
-                ->setOptions([
-                    'defaultFont' => 'sans-serif',
-                    'isHtml5ParserEnabled' => true,
-                    'isRemoteEnabled' => true,
-                    'isPhpEnabled' => true,
-                    'isJavascriptEnabled' => true
-                ]);
-            $pdf->setPaper('A4');
-            $pdf->render();
-            // $canvas = $pdf->getDomPDF()->getCanvas();
-            // $height = $canvas->get_height();
-            // $width = $canvas->get_width();
-            // $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            // $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Deviation' . $id . '.pdf');
         }
     }
@@ -5377,8 +5339,9 @@ if ($deviation->stage == 5) {
     {
         $doc = Deviation::find($id);
         if (!empty($doc)) {
-            $doc->originator_id = User::where('id', $doc->initiator_id)->value('name');
-            $data = DeviationAuditTrail::where('deviation_id', $id)->get();
+            $doc->originator = User::where('id', $doc->initiator_id)->value('name');
+            $data = DeviationAuditTrail::where('deviation_id', $doc->id)->orderByDesc('id')->get();
+    
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.forms.auditReport', compact('data', 'doc'))
@@ -5387,17 +5350,27 @@ if ($deviation->stage == 5) {
                     'isHtml5ParserEnabled' => true,
                     'isRemoteEnabled' => true,
                     'isPhpEnabled' => true,
-                    'isJavascriptEnabled' => true
                 ]);
             $pdf->setPaper('A4');
             $pdf->render();
             $canvas = $pdf->getDomPDF()->getCanvas();
             $height = $canvas->get_height();
             $width = $canvas->get_width();
-            $canvas->page_text(460, 803, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
+    
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
-            return $pdf->stream('Deviation' . $id . '.pdf');
+    
+            $canvas->page_text(
+                $width / 3,
+                $height / 2,
+                $doc->status,
+                null,
+                60,
+                [0, 0, 0],
+                2,
+                6,
+                -20
+            );
+            return $pdf->stream('SOP' . $id . '.pdf');
         }
     }
 

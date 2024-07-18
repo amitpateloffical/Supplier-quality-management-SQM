@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -302,46 +302,29 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Submitted By
-                        </th>
-                        <td class="w-30">{{ $data->submitted_by }}</td>
-                        <th class="w-20">
-                        Submitted On</th>
-                        <td class="w-30">{{ $data->submitted_on }}</td>
+                        <th class="w-20">Submitted By</th>
+                        <td class="w-30">@if($data->submitted_by) {{ $data->submitted_by}} @else Not Applicable @endif</td>
+                        <th class="w-20">Submitted On</th>
+                        <td class="w-30">@if($data->submitted_on) {{ $data->submitted_on}} @else Not Applicable @endif</td>
+                        <th class="w-20">Submitted Comment</th>
+                        <td class="w-30">@if($data->submitted_comment) {{ $data->submitted_comment}} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Cancelled By
-                        </th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">
-                        Cancelled On</th>
-                        <td class="w-30">{{ $data->cancelled_on }}</td>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">@if($data->cancelled_by) {{ $data->cancelled_by}} @else Not Applicable @endif</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">@if($data->cancelled_on) {{ $data->cancelled_on}} @else Not Applicable @endif</td>
+                        <th class="w-20">Cancelled Comment</th>
+                        <td class="w-30">@if($data->cancelled_comment) {{ $data->cancelled_comment}} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Ext Approved By
-                        </th>
-                        <td class="w-30">{{ $data->ext_approved_by }}</td>
-                        <th class="w-20">
-                        Ext Approved On</th>
-                        <td class="w-30">{{ $data->ext_approved_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">More Information Required By
-                        </th>
-                        <td class="w-30">{{ $data->more_information_required_by }}</td>
-                        <th class="w-20">
-                        More Information Required On</th>
-                        <td class="w-30">{{ $data->more_information_required_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Rejected By
-                        </th>
-                        <td class="w-30">{{ $data->rejected_by }}</td>
-                        <th class="w-20">
-                        Rejected On</th>
-                        <td class="w-30">{{ $data->rejected_on }}</td>
-                    </tr>
-                   
+                        <th class="w-20">Approved By</th>
+                        <td class="w-30">@if($data->pendingApproval_by) {{ $data->pendingApproval_by}} @else Not Applicable @endif</td>
+                        <th class="w-20">Approved On</th>
+                        <td class="w-30">@if($data->pendingApproval_on) {{ $data->pendingApproval_on}} @else Not Applicable @endif</td>
+                        <th class="w-20">Approved Comment</th>
+                        <td class="w-30">@if($data->pendingApproval_comment) {{ $data->pendingApproval_comment}} @else Not Applicable @endif</td>
+                    </tr>                   
                 </table>
             </div>
         </div>

@@ -139,23 +139,17 @@
                                     <option value="">All Records</option>
                                     <option value="Supplier">Supplier</option>
                                     <option value="Supplier Site">Supplier Site</option>
+                                    <option value="SCAR">SCAR</option>
                                     <option value="Supplier-Audit">Supplier Audit</option>
-                                    {{-- <option value="Internal-Audit">Internal Audit</option>
-                                    <option value="External-Audit">External Audit</option> --}}
+                                    <option value="Change-Control">Change Control</option>
+                                    <option value="Deviation">Deviation</option>
                                     <option value="Capa">CAPA</option>
-                                    {{-- <option value="Audit-Program">Audit Program</option>
-                                    <option value="Lab Incident">Lab Incident</option> --}}
                                     <option value="Risk Assesment">Risk Assesment</option> 
                                     <option value="Root-Cause-Analysis">Root Cause Analysis</option>
-                                    <option value="Management Review">Management Review</option>
-                                    {{-- <option value="Document">Document</option>
-                                    <option value="Extension">Extension</option> --}}
+                                    <!-- <option value="Management Review">Management Review</option> -->
+                                    <option value="Document">Document</option>
+                                    <option value="Extension">Extension</option>
                                     <option value="Observation">Observation</option>
-                                    <option value="Change Control">Change Control</option>
-                                    <!-- <option value="Action Item">Action Item</option>  -->
-                                    <!-- <option value="Effectiveness Check">Effectiveness Check</option> -->
-                                    <option value="Deviation">Deviation</option>
-                                     {{-- <option value="tms">TMS</option>  --}}
                                 </select>
                             </div>
                             <div class="group-input">
@@ -165,9 +159,6 @@
                                     <option value="Closed">Closed Records</option>
                                     <option value="Opened">Opened Records</option>
                                     <option value="Cancelled">Cancelled Records</option>
-                                    {{-- <option value="4">Overdue Records</option>
-                                    <option value="Assigned">Assigned To Me</option>
-                                    <option value="Records">Records Created Today</option> --}}
                                 </select>
                             </div>
                             <div class="item-btn" onclick="window.print()">Print</div>

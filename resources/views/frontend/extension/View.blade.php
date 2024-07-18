@@ -173,37 +173,15 @@
                                             </div>
                                         </div>
 
-                                        {{-- <div class="col-lg-6 new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="Date Due">Current Parent Due Date</label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="due_date" readonly 
-                                                        placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->due_date) }}" />
-                                                    <input type="date" name="due_date" value="{{ $data->due_date }}"  class="hide-input"
-                                                        oninput="handleDateInput(this, 'due_date')" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} />
-                                                </div>
-                                            </div>
-                                        </div> --}}
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Date Due">Current Parent Due Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" disabled/>
-                                                    <input type="date" name="due_date" value="{{ $data->due_date }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" disabled />
+                                                    <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"/>
+                                                    <input type="date" name="due_date" value="{{ $data->due_date }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {{-- <div class="col-lg-6 new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="Date Due">Revised Due Date</label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="revised_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->revised_date) }}" />
-                                                    <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" value="{{ $data->revised_date }}" class="hide-input" oninput="handleDateInput(this, 'revised_date')" {{ empty($data->revised_date) ? 'disabled' : '' }} />
-                                                </div>
-                                            </div>
-                                        </div> --}}
-                                        {{-- @if($data->revised_date <  date('Y-m-d')) --}}
                                     
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
@@ -422,73 +400,68 @@
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="sub-head">Electronic Signatures</div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Submitted By">Submitted By</label>
-                                                <div class="static">{{ $data->submitted_by}}</div>
+                                                <div class="static">@if($data->submitted_by) {{ $data->submitted_by}} @else Not Applicable @endif</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Submitted On">Submitted On</label>
-                                                <div class="static">{{ $data->submitted_on}}</div>
+                                                <div class="static">@if($data->submitted_on) {{ $data->submitted_on}} @else Not Applicable @endif</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Submitted On">Submitted Comment</label>
+                                                <div class="static">@if($data->submitted_comment) {{ $data->submitted_comment}} @else Not Applicable @endif</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Cancelled By">Approved By</label>
+                                                <div class="static"> @if($data->pendingApproval_by) {{ $data->pendingApproval_by}} @else Not Applicable @endif </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Cancelled On">Approved On</label>
+                                                <div class="static"> @if($data->pendingApproval_on) {{ $data->pendingApproval_on}} @else Not Applicable @endif </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Cancelled On">Approved Comment</label>
+                                                <div class="static">@if($data->pendingApproval_comment) {{ $data->pendingApproval_comment}} @else Not Applicable @endif </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancelled By</label>
-                                                <div class="static">{{ $data->cancelled_by}}</div>
+                                                <div class="static"> @if($data->cancelled_by) {{ $data->cancelled_by}} @else Not Applicable @endif </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Cancelled On">Cancelled On</label>
-                                                <div class="static">{{ $data->cancelled_on}}</div>
+                                                <div class="static"> @if($data->cancelled_on) {{ $data->cancelled_on}} @else Not Applicable @endif </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Ext Approved By">Ext Approved By</label>
-                                                <div class="static">{{ $data->ext_approved_by}}</div>
+                                                <label for="Cancelled On">Cancelled Comment</label>
+                                                <div class="static"> @if($data->cancelled_comment) {{ $data->cancelled_comment}} @else Not Applicable @endif </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Ext Approved On">Ext Approved On</label>
-                                                <div class="static">{{ $data->ext_approved_on}}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="More Information Required By">More Information Required
-                                                    By</label>
-                                                <div class="static">{{ $data->more_information_required_by}}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="More Information Required On">More Information Required
-                                                    On</label>
-                                                <div class="static">{{ $data->more_information_required_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Rejected By">Rejected By</label>
-                                                <div class="static">{{ $data->rejected_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Rejected On">Rejected On</label>
-                                                <div class="static">{{ $data->rejected_on }}</div>
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton">Save</button>
+                                        <!-- <button type="submit" class="saveButton">Save</button> -->
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="submit">Submit</button>
+                                        <!-- <button type="submit">Submit</button> -->
                                     </div>
                                 </div>
                             </div>

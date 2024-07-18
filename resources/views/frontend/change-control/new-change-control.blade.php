@@ -96,13 +96,12 @@
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}/{{ $record_number }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
-                                        <input disabled type="text" name="division_code"
+                                        <input disabled type="text" name="division_id"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                     </div>
@@ -110,8 +109,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
-                                        {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                        <input disabled type="text" name="division_code"
+                                        <input disabled type="text" name="initiator_id"
                                             value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
@@ -157,11 +155,11 @@
                                         <select multiple name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
                                             data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
                                             <option value="">-- Select --</option>
-                                            @foreach ($cft as $data)
-                                                @if(Helpers::checkUserRolesMicrobiology_Person($data))
-                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                                @endif    
-                                            @endforeach
+                                                @if(!empty($cft))
+                                                    @foreach ($cft as $data)
+                                                        <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                    @endforeach
+                                                @endif
                                         </select>
                                     </div>
                                 </div>
@@ -643,10 +641,12 @@
                                         <label for="Microbiology-Person">CFT Reviewer Person</label>
                                         <select multiple name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
                                             data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
-                                            <option value="0">-- Select --</option> 
-                                            @foreach ($cft as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endforeach
+                                            <option value="">-- Select --</option> 
+                                                @if(!empty($cft))
+                                                    @foreach ($cft as $data)
+                                                        <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                    @endforeach
+                                                @endif
                                         </select>
                                     </div>
                                 </div>
@@ -1128,169 +1128,94 @@
                                 Electronic Signatures
                             </div>
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Submit By</label>
-                                        {{--  <div class="static">Piyush Sahu</div>  --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Submit On</label>
-                                        {{--  <div class="static">12-12-2032</div>  --}}
-                                    </div>
-                                </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Cancelled By</label>
-                                         <div class="static">Piyush Sahu</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Cancelled On</label>
-                                     <div class="static">12-12-2032</div>  
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">More Information Required By</label>
-                                          <div class="static">Piyush Sahu</div>  
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">More Information Required On</label>
-                                          <div class="static">12-12-2032</div> 
-                                    </div>
-                                </div> --}}
-                                 <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">HOD Review Complete By</label>
-                                        {{-- <div class="static">Piyush Sahu</div> --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">HOD Review Complete On</label>
-                                        {{-- <div class="static">12-12-2032</div> --}}
-                                    </div>
-                                </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">More Information Req. By</label>
-                                        <div class="static">Piyush Sahu</div> 
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">More Information Req. On</label>
-                                         <div class="static">12-12-2032</div> 
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">QA Review Completed By</label>
-                                         <div class="static">Piyush Sahu</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">QA Review Completed On</label>
-                                        <div class="static">12-12-2032</div> 
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">More Info Req. By</label>
-                                         <div class="static">Piyush Sahu</div> 
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">More Info Req. On</label>
-                                         <div class="static">12-12-2032</div> 
-                                    </div>
-                                </div> --}}
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Send to CFT/SME/QA Review By</label>
-                                        {{-- <div class="static">Piyush Sahu</div> --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Send to CFT/SME/QA Review On</label>
-                                        {{-- <div class="static">12-12-2032</div> --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">CFT/SME/QA Review Not required By</label>
-                                        {{-- <div class="static">Piyush Sahu</div> --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">CFT/SME/QA Review Not required On</label>
-                                        {{-- <div class="static">12-12-2032</div> --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Review Completed By</label>
-                                        {{-- <div class="static">Piyush Sahu</div> --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Review Completed On</label>
-                                        {{-- <div class="static">12-12-2032</div> --}}
-                                    </div>
-                                </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Change Implemented By</label>
-                                        <div class="static">Piyush Sahu</div> 
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Change Implemented On</label>
-                                        <div class="static">12-12-2032</div> 
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">QA More Information Required By</label>
-                                         <div class="static">Piyush Sahu</div> 
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">QA More Information Required On</label>
-                                        <div class="static">12-12-2032</div> 
-                                    </div>
-                                </div> --}}
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Implemented By</label>
-                                        {{-- <div class="static">Piyush Sahu</div> --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted">Implemented On</label>
-                                        {{-- <div class="static">12-12-2032</div> --}}
-                                    </div>
-                                </div>  
-                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Acknowledge_By">Submitted By</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Acknowledge_On">Submitted On</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Acknowledge_On">Submitted Comment</label>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Submit_By">HOD Review Completed By</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Submit_On">HOD Review Completed On</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Submit_On">HOD Review Completed Comment</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_By">Pending CFT Review Completed By</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_On">Pending CFT Review Completed On</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_On">Pending CFT Review Completed Comment</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_By">Review Completed By</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_On">Review Completed On</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_On">Review Completed Comment</label>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Cancelled By">Implemented By</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Cancelled On">Implemented On</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Cancelled On">Implemented Comment</label>
+                                                </div>
+                                            </div>
+                                        </div>
                             <div class="button-block">
-                                <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                <!-- <button type="submit" value="save" name="submit" class="saveButton">Save</button> -->
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
-                                <button type="submit">Submit</button>
+                                <!-- <button type="submit">Submit</button> -->
                             </div>
                         </div>
                     </div>

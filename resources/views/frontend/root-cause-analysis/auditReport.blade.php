@@ -165,8 +165,8 @@
                 <td class="w-30">
                     <strong>Root Cause Analysis No.</strong>
                 </td>
-                <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                <td class="w-40"> 
+                    {{ Helpers::getDivisionName($doc->division_id) }}/RCA/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -180,7 +180,7 @@
         <div class="head">Root Cause Analysis Audit Trial Report</div>
 
         <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+            {{ Helpers::getDivisionName($doc->division_id) }}/RCA/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
         </div>
 
         {{-- <div class="first-table">

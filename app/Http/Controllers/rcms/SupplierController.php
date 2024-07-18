@@ -2518,22 +2518,6 @@ class SupplierController extends Controller
             $history->action_name = 'Update';
             $history->save();
         }
-        if($lastDocument->lead_time_days != $request->lead_time_days){
-            $history = new SupplierAuditTrail;
-            $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Lead Time Days';
-            $history->previous = $lastDocument->lead_time_days;
-            $history->current = $request->lead_time_days;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
         if($lastDocument->lead_time_days_weight != $request->lead_time_days_weight){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
@@ -3650,9 +3634,11 @@ class SupplierController extends Controller
     if ($request->revision == "SCAR") {
         $supplierA->originator = User::where('id', $supplierA->initiator_id)->value('name');
         $supplierData = Supplier::select('id','supplier_name','supplier_products','distribution_sites')->get();
-    //    $pre = Deviation::all();
-    $old_record = SCAR::select('id', 'division_id', 'record')->get();
-        return view('frontend.scar.scar_new', compact('record_number','supplierData', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
+        $supplierName = Supplier::select('id','supplier_name')->get();
+        $supplierProduct = Supplier::where('supplier_products' , '!=' , "null")->get();
+        $distributionSites = Supplier::where('distribution_sites', '!=', "null")->get();
+        $old_record = SCAR::select('id', 'division_id', 'record')->get();
+        return view('frontend.scar.scar_new', compact('record_number','supplierName','supplierProduct','distributionSites', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
     }
 
     }

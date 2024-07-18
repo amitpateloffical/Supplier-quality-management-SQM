@@ -3211,183 +3211,49 @@ class DeviationController extends Controller
             }
             if ($deviation->stage == 4) {
 
-                // CFT review state update form_progress
-                if ($deviation->form_progress !== 'cft')
-                {
-                    Session::flash('swal', [
-                        'type' => 'warning',
-                        'title' => 'Mandatory Fields!',
-                        'message' => 'CFT Tab is yet to be filled'
-                    ]);
+                $deviation->stage = "5";
+                $deviation->status = "QA Secondary Review";
+                $deviation->CFT_Review_Complete_By = Auth::user()->name;
+                $deviation->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                $deviation->CFT_Review_Comments = $request->comment;
 
-                    return redirect()->back();
-                } else {
-                    Session::flash('swal', [
-                        'type' => 'success',
-                        'title' => 'Success',
-                        'message' => 'Sent for QA Secondary Review state'
-                    ]);
-                }
-
-
-                $IsCFTRequired = DeviationCftsResponse::withoutTrashed()->where(['is_required' => 1, 'deviation_id' => $id])->latest()->first();
-                $cftUsers = DB::table('deviationcfts')->where(['deviation_id' => $id])->first();
-                // dd($cftUsers);
-                // Define the column names
-                $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
-                // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
-
-                // Initialize an array to store the values
-                $valuesArray = [];
-
-                // Iterate over the columns and retrieve the values
-                foreach ($columns as $index => $column) {
-                    $value = $cftUsers->$column;
-                    if($index == 0 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Production_by = Auth::user()->name;
-                        $updateCFT->production_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 1 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Warehouse_by = Auth::user()->name;
-                        $updateCFT->Warehouse_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 4 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Engineering_by = Auth::user()->name;
-                        $updateCFT->Engineering_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 2 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Quality_Control_by = Auth::user()->name;
-                        $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 3 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->QualityAssurance_by = Auth::user()->name;
-                        $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 5 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Analytical_Development_by = Auth::user()->name;
-                        $updateCFT->Analytical_Development_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 6 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Kilo_Lab_attachment_by = Auth::user()->name;
-                        $updateCFT->Kilo_Lab_attachment_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 7 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Technology_transfer_by = Auth::user()->name;
-                        $updateCFT->Technology_transfer_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 8 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Environment_Health_Safety_by = Auth::user()->name;
-                        $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 9 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Human_Resource_by = Auth::user()->name;
-                        $updateCFT->Human_Resource_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 10 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Information_Technology_by = Auth::user()->name;
-                        $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 11 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Project_management_by = Auth::user()->name;
-                        $updateCFT->Project_management_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 12 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Other1_by = Auth::user()->name;
-                        $updateCFT->Other1_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 13 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Other2_by = Auth::user()->name;
-                        $updateCFT->Other2_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 14 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Other3_by = Auth::user()->name;
-                        $updateCFT->Other3_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 15 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Other4_by = Auth::user()->name;
-                        $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 16 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Other5_by = Auth::user()->name;
-                        $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
-                    }
-                    $updateCFT->update();
-
-                    // Check if the value is not null and not equal to 0
-                    if ($value != null && $value != 0) {
-                        $valuesArray[] = $value;
-                    }
-                }
-                // dd($valuesArray, count(array_unique($valuesArray)), ($cftDetails+1));
-                if ($IsCFTRequired) {
-                    if (count(array_unique($valuesArray)) == ($cftDetails + 1)) {
-                        $stage = new DeviationCftsResponse();
-                        $stage->deviation_id = $id;
-                        $stage->cft_user_id = Auth::user()->id;
-                        $stage->status = "Completed";
-                        // $stage->cft_stage = ;
-                        $stage->comment = $request->comment;
-                        $stage->save();
-                    } else {
-                        $stage = new DeviationCftsResponse();
-                        $stage->deviation_id = $id;
-                        $stage->cft_user_id = Auth::user()->id;
-                        $stage->status = "In-progress";
-                        // $stage->cft_stage = ;
-                        $stage->comment = $request->comment;
-                        $stage->save();
-                    }
-                }
-
-                $checkCFTCount = DeviationCftsResponse::withoutTrashed()->where(['status' => 'Completed', 'deviation_id' => $id])->count();
-                // dd(count(array_unique($valuesArray)), $checkCFTCount);
-
-
-                if (!$IsCFTRequired || $checkCFTCount) {
-
-                    $deviation->stage = "5";
-                    $deviation->status = "QA Secondary Review";
-                    $deviation->CFT_Review_Complete_By = Auth::user()->name;
-                    $deviation->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                    $deviation->CFT_Review_Comments = $request->comment;
-
-                    $history = new DeviationAuditTrail();
-                    $history->deviation_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action='CFT Review Complete';
-                    $history->current = $deviation->CFT_Review_Complete_By;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA Secondary Review";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Complete';
-                    $history->save();
-                    $list = Helpers::getQAUserList();
-                    foreach ($list as $u) {
-                        if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $deviation],
-                                        function ($message) use ($email) {
-                                            $message->to($email)
-                                                ->subject("Activity Performed By " . Auth::user()->name);
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    //log error
-                                }
-                            }
-                        }
-                    }
-                    $deviation->update();
-                }
+                $history = new DeviationAuditTrail();
+                $history->deviation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->action = 'CFT Review Complete';
+                $history->current = $deviation->CFT_Review_Complete_By;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "QA Secondary Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Complete';
+                $history->save();
+                
+                // $list = Helpers::getQAUserList();
+                //     foreach ($list as $u) {
+                //         if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //             if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $deviation],
+                //                         function ($message) use ($email) {
+                //                             $message->to($email)
+                //                                 ->subject("Activity Performed By " . Auth::user()->name);
+                //                         }
+                //                     );
+                //                 } catch (\Exception $e) {
+                //                     //log error
+                //                 }
+                //             }
+                //         }
+                //     }
+                $deviation->update();
                 toastr()->success('Document Sent');
                 return back();
             }

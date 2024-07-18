@@ -142,8 +142,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Supplier Site">Supplier Site</label>
                                     <select name="supplier_site">
                                         <option value="">Select Supplier Site</option>
-                                        @if(!empty($supplierData))
-                                            @foreach($supplierData as $supplier)
+                                        @if(!empty($distributionSites))
+                                            @foreach($distributionSites as $supplier)
                                                 <option value="{{ $supplier->distribution_sites }}">{{ $supplier->distribution_sites }}</option>
                                             @endforeach
                                         @endif
@@ -156,8 +156,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Supplier Product">Supplier Product</label>
                                     <select name="supplier_product">
                                         <option value="">Select Supplier Product</option>
-                                        @if(!empty($supplierData))
-                                            @foreach($supplierData as $supplier)
+                                        @if(!empty($supplierProduct))
+                                            @foreach($supplierProduct as $supplier)
                                                 <option value="{{ $supplier->supplier_products }}">{{ $supplier->supplier_products }}</option>
                                             @endforeach
                                         @endif

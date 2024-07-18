@@ -31,10 +31,13 @@ class SCARController extends Controller
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
-        $supplierData = Supplier::select('id','supplier_name','supplier_products','distribution_sites')->get();
+        $supplierName = Supplier::select('id','supplier_name')->get();
+        $supplierProduct = Supplier::where('supplier_products' , '!=' , "null")->get();
+        $distributionSites = Supplier::where('distribution_sites', '!=', "null")->get();
+        
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.scar.scar_new',compact('record_number', 'due_date','supplierData'));
+        return view('frontend.scar.scar_new',compact('record_number', 'due_date','supplierName','supplierProduct','distributionSites'));
     }
 
     public function store(Request $request){
@@ -399,8 +402,10 @@ class SCARController extends Controller
 
     public function show($id){
         $data = SCAR::find($id);
-        $scarData = Supplier::select('id','supplier_name','supplier_products','distribution_sites')->get();
-        return view('frontend.scar.scar_view', compact('data','scarData'));
+        $supplierName = Supplier::select('id','supplier_name')->get();
+        $supplierProduct = Supplier::where('supplier_products' , '!=' , "null")->get();
+        $distributionSites = Supplier::where('distribution_sites', '!=', "null")->get();
+        return view('frontend.scar.scar_view', compact('data','supplierName','supplierProduct','distributionSites'));
     }
 
     public function update(Request $request, $id){

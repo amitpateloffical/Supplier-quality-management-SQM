@@ -32,7 +32,7 @@
     <div class="form-field-head">
 
         <div class="division-bar">
-            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName(session()->get('division')) }}/Observation
+            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName($divisionId) }} /Observation
         </div>
     </div>
 
@@ -71,16 +71,15 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                            value="{{ Helpers::getDivisionName($divisionId) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
-                                        <input readonly type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        <input readonly type="text" name="division_id"
+                                            value="{{ Helpers::getDivisionName($divisionId) }}">
+                                        <input type="hidden" name="division_id" value="{{ $divisionId }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -93,7 +92,7 @@
                                     <div class="group-input">
                                         <label for="date_opened">Date of Initiation</label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
 

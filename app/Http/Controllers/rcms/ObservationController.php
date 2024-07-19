@@ -767,10 +767,10 @@ class ObservationController extends Controller
         $lastDocument = Observation::find($id);
         $data = Observation::find($id);
         $data->initiator_id = Auth::user()->id;
-        $data->parent_id = $request->parent_id;
-        $data->parent_type = $request->parent_type;
+        // $data->parent_id = $request->parent_id;
+        // $data->parent_type = $request->parent_type;
         $data->division_code = $request->division_code;
-        $data->intiation_date = $request->intiation_date;
+        // $data->intiation_date = $request->intiation_date;
         $data->due_date = $request->due_date;
         $data->short_description = $request->short_description;
         $data->assign_to = $request->assign_to;
@@ -2137,7 +2137,7 @@ $history->action_name = 'Not Applicable';
             -20
         );
 
-        return $pdf->stream('Monitoring-Visit-AuditTrial'.$id.'.pdf');
+        return $pdf->stream('Observation-AuditTrial'.$id.'.pdf');
 
         
     }

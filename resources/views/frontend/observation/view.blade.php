@@ -302,9 +302,9 @@
                                             <div class="group-input">
                                                 <label for="date_opened">Date of Initiation<span
                                                         class="text-danger"></span></label>
-                                                <input disabled type="text" value="{{ date('d-M-Y') }}"
+                                                <input disabled type="text"
+                                                    value="{{ Helpers::getdateFormat($data->intiation_date) }}"
                                                     name="intiation_date">
-                                                <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                             </div>
                                         </div>
 
@@ -322,17 +322,17 @@
                                             </div>
                                         </div>
                                         <!-- <div class="col-lg-6">
-                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                <label for="date_due">Date Due</label>
-                                                                                                                                                                                                                <div class="calenderauditee">
-                                                                                                                                                                                                                    <input type="text" name="due_date" id="due_date" readonly
-                                                                                                                                                                                                                        placeholder="DD-MMM-YYYY" />
-                                                                                                                                                                                                                    <!-- <input type="date"  class="hide-input"
-                                                                                                                                                                                                                        oninput="handleDateInput(this, 'due_date')" />
-                                                                                                                                                                                                                <input disabled type="text"  value="{{ Helpers::getdateFormat($data->due_date) }}">
-                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        </div>  -->
+                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                            <label for="date_due">Date Due</label>
+                                                                                                                                                                                                                                            <div class="calenderauditee">
+                                                                                                                                                                                                                                                <input type="text" name="due_date" id="due_date" readonly
+                                                                                                                                                                                                                                                    placeholder="DD-MMM-YYYY" />
+                                                                                                                                                                                                                                                <!-- <input type="date"  class="hide-input"
+                                                                                                                                                                                                                                                    oninput="handleDateInput(this, 'due_date')" />
+                                                                                                                                                                                                                                            <input disabled type="text"  value="{{ Helpers::getdateFormat($data->due_date) }}">
+                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                    </div>  -->
                                         {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="date_due">Due Date<span class="text-danger"></span></label>
@@ -814,16 +814,16 @@
                                                                 </td>
 
                                                                 <!-- <td>
-                                                                                                                                                                                                                                <div class="group-input new-date-data-field mb-0">
-                                                                                                                                                                                                                                    <div class="input-date ">
-                                                                                                                                                                                                                                        <div class="calenderauditee">
-                                                                                                                                                                                                                                            {{-- <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /> --}}
-                                                                                                                                                                                                                                            <input type="date" name="deadline[]" class="hide-input"
-                                                                                                                                                                                                                                            oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
-                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                            </td>  -->
+                                                                                                                                                                                                                                                            <div class="group-input new-date-data-field mb-0">
+                                                                                                                                                                                                                                                                <div class="input-date ">
+                                                                                                                                                                                                                                                                    <div class="calenderauditee">
+                                                                                                                                                                                                                                                                        {{-- <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /> --}}
+                                                                                                                                                                                                                                                                        <input type="date" name="deadline[]" class="hide-input"
+                                                                                                                                                                                                                                                                        oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
+                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                        </td>  -->
                                                                 {{-- <td><input type="text" name="deadline[]"{{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : "" }}"></td> --}}
                                                                 {{-- <td><input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>  --}}
                                                                 <td><input type="text" name="item_status[]"
@@ -1419,9 +1419,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1466,9 +1466,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1512,9 +1512,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>

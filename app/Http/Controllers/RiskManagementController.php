@@ -2239,8 +2239,6 @@ class RiskManagementController extends Controller
                 $history->stage='Risk Analysis Completed';
                 $history->save();
                 $changeControl->update();
-
-                
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -2257,9 +2255,6 @@ class RiskManagementController extends Controller
             $changeControl = RiskManagement::find($id);
             $lastDocument =  RiskManagement::find($id);
             $data =  RiskManagement::find($id);
-
-
-
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
@@ -2282,10 +2277,21 @@ class RiskManagementController extends Controller
                 return back();
             }
             if ($changeControl->stage == 2) {
-                $changeControl->stage = "1";
-                $changeControl->status = "Opened";
+                $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
+                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changeControl->cancelled_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Cancelled';
+                $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2323,11 +2329,134 @@ class RiskManagementController extends Controller
             return back();
         }
     }
+     
+    public function MoreInfoCAPA(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changeControl = RiskManagement::find($id);
+            $lastDocument =  RiskManagement::find($id);
+            $data =  RiskManagement::find($id);
+            if ($changeControl->stage == 2) {
+                $changeControl->stage = "1";
+                $changeControl->status = "Opened";
+                $changeControl->analysis_more_info_by = Auth::user()->name;
+                $changeControl->analysis_more_info_on = Carbon::now()->format('d-M-Y');
+                $changeControl->analysis_more_info_comment = $request->comments;
 
 
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changeControl->cancelled_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Opened';
+                $history->save();
+                
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 3) {
+                $changeControl->stage = "2";
+                $changeControl->status = "Risk Analysis & Work Group Assignment";
+                $changeControl->request_more_info_by = Auth::user()->name;
+                $changeControl->request_more_info_on = Carbon::now()->format('d-M-Y');
+                $changeControl->request_more_info_comment = $request->comments;
+
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changeControl->cancelled_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Risk Analysis & Work Group Assignment';
+                $history->save();
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 4) {
+                $changeControl->stage = "3";
+                $changeControl->status = "Risk Processing & Action Plan";
+                $changeControl->reject_action_by = Auth::user()->name;
+                $changeControl->reject_action_on = Carbon::now()->format('d-M-Y');
+                $changeControl->reject_action_comment = $request->comments;
+
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changeControl->cancelled_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Risk Processing & Action Plan';
+                $history->save();
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 5) {
+                $changeControl->stage = "4";
+                $changeControl->status = "Pending HOD Approval";
+                $changeControl->action_request_action_by = Auth::user()->name;
+                $changeControl->action_request_action_on = Carbon::now()->format('d-M-Y');
+                $changeControl->action_request_action_comment = $request->comments;
+
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changeControl->cancelled_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Pending HOD Approval';
+                $history->save();
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 6) {
+                $changeControl->stage = "5";
+                $changeControl->status = "Actions Items in Progress";
+                $changeControl->more_action_needed_by = Auth::user()->name;
+                $changeControl->more_action_needed_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_action_needed_comment = $request->comments;
+
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changeControl->cancelled_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Actions Items in Progress';
+                $history->save();
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
     public function riskAuditTrial($id)
     {
-        $audit = RiskAuditTrail::where('risk_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+        $audit = RiskAuditTrail::where('risk_id', $id)->orderByDESC('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = RiskManagement::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
@@ -2385,10 +2514,11 @@ class RiskManagementController extends Controller
         $doc = RiskManagement::find($id);
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
+            $audit = RiskAuditTrail::where('risk_id', $id)->orderbyDesc('id')->get();
             $data = RiskAuditTrail::where('risk_id', $id)->get();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.riskAssesment.auditReport', compact('data', 'doc'))
+            $pdf = PDF::loadview('frontend.riskAssesment.auditReport', compact('data', 'doc','audit'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

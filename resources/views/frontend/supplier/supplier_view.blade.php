@@ -368,9 +368,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                         @endif
 
                         @if ($data->stage >= 6)
-                            <div class="active bg-danger">Obselete</div>
+                            <div class="active bg-danger"> Obsolete</div>
                         @else
-                            <div class="">Obselete</div>
+                            <div class="">Obsolete</div>
                         @endif
                     </div>
                 @endif

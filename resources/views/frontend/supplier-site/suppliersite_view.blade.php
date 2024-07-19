@@ -242,6 +242,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Audit Failed
                         </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            Child
+                        </button>
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-supplier-approve">
                             Conditionally Approved
                         </button>
@@ -306,9 +309,11 @@ $users = DB::table('users')->select('id', 'name')->get();
                         @endif
 
                         @if ($data->stage >= 6)
-                            <div class="active bg-danger">Obselete</div>
+                            <div class="active bg-danger">
+                                Obsolete</div>
                         @else
-                            <div class="">Obselete</div>
+                            <div class="">
+                                Obsolete</div>
                         @endif
                     </div>
                 @endif
@@ -327,9 +332,16 @@ $users = DB::table('users')->select('id', 'name')->get();
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">QA Head Reviewer</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button>
             </div>
-
+            
+                   <script>
+                            $(document).ready(function() {
+                                <?php if ($data->stage == 6): ?>
+                                    $("#target :input").prop("disabled", true);
+                                <?php endif; ?>
+                            });
+                        </script>
             <!--  Contract Tab content -->
-            <form action="{{ route('supplier-site-update', $data->id) }} }}" method="POST" enctype="multipart/form-data">
+            <form id="target" action="{{ route('supplier-site-update', $data->id) }} }}" method="POST" enctype="multipart/form-data">
             @csrf
 
                 <div id="CCForm1" class="inner-block cctabcontent">
@@ -389,7 +401,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <div class="calenderauditee">
                                     <div class="calenderauditee">
                                         <input readonly type="text" value="{{ Helpers::getdateFormat($data->due_date) }}" name="due_date" />
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                        <input type="date" disabled name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                     </div>
                                     </div>
                                 </div>
@@ -511,7 +523,6 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <option value="Midecinal + Medical Devices" @if($data->supplier_type == "Midecinal + Medical Devices") selected @endif>Midecinal + Medical Devices</option>
                                         <option value="Vendor" @if($data->supplier_type == "Vendor") selected @endif>Vendor</option>
                                         <option value="Other" @if($data->supplier_type == "Other") selected @endif>Other</option>
-
                                     </select>
                                 </div>
                             </div>
@@ -752,7 +763,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                             @endif
                                         </div>
                                         <div class="add-btn">
-                                            <div>Add</div>hod_additional_attachment
+                                            <div>Add</div>
                                             <input type="file" id="myfile" name="hod_additional_attachment[]" oninput="addMultipleFiles(this, 'hod_additional_attachment')" multiple>
                                         </div>
                                     </div>
@@ -781,7 +792,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <table class="table table-bordered" id="certificationDataTable">
                                         <thead>
                                             <tr>
-                                                <th>Row #</th>
+                                                <th style="width: 6%;">Row #</th>
                                                 <th>Type</th>
                                                 <th>Issuing Agancy</th>
                                                 <th>Issue Date</th>
@@ -1043,7 +1054,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input input-date">
                                     <label for="ISO Certification date">ISO Certification Date</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="iso_certified_date" readonly placeholder="DD-MMM-YYYY" value="{{ $data->iso_certified_date }}" />
+                                        <input type="text" id="iso_certified_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->iso_certified_date) }}" />
                                         <input type="date" name="iso_certified_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->iso_certified_date }}" class="hide-input" oninput="handleDateInput(this, 'iso_certified_date')" />
                                     </div>
                                 </div>
@@ -1881,19 +1892,19 @@ $users = DB::table('users')->select('id', 'name')->get();
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Pending Qualification Review By</label>
+                                    <label for="Suppplier Review By"> Qualification Complete By</label>
                                     <div class="static">{{ $data->pending_qualification_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Pending Qualification Review On</label>
+                                    <label for="Suppplier Review On">Qualification Complete By</label>
                                     <div class="static">{{ $data->pending_qualification_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Pending Qualification Review Comment</label>
+                                    <label for="Suppplier Review Comment">Qualification Complete  Comment</label>
                                     <div class="static">{{ $data->pending_qualification_comment }}</div>
                                 </div>
                             </div>
@@ -2221,21 +2232,27 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="group-input">
-                                    {{-- @if ($data->stage == 2) --}}
+                                    @if ($data->stage == 2)
+                                        
                                         <label for="major">
                                             <input type="radio" name="revision" id="major"
-                                                value="changecontrol">
-                                                Change Control
+                                                value="RA">
+                                              Supplier Risk Assessment
                                         </label>
-                                        {{-- <br> --}}
                                         <label for="major">
                                             <input type="radio" name="revision" id="major"
-                                                value="Action-Item">
-                                                Action Item
+                                                value="SA">
+                                               Supplier Audit
                                         </label>
-                                    {{-- @endif --}}
-                                    
-                                    {{-- @if ($data->stage == 5) --}}
+                                    @endif
+                                    @if ($data->stage == 3)
+                                    <label for="major">
+                                        <input type="radio" name="revision" id="major"
+                                            value="SA">
+                                           Supplier Audit
+                                    </label>
+                                    @endif
+                                    @if ($data->stage == 5)
                                         <label for="major">
                                             <input type="radio" name="revision" id="major"
                                                 value="capa-child">
@@ -2251,9 +2268,35 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="major">
                                             <input type="radio" name="revision" id="major"
                                                 value="RCA">
-                                              Root Cause Analysis
+                                                Root Cause Analysis
                                         </label>
-                                    {{-- @endif --}}
+                                        <label for="major">
+                                            <input type="radio" name="revision" id="major"
+                                                value="changecontrol">
+                                                Change Control
+                                        </label>
+                                        {{-- <br> --}}
+                                        <label for="major">
+                                            <input type="radio" name="revision" id="major"
+                                                value="Action-Item">
+                                                Action Item
+                                        </label>
+                                        <label for="major">
+                                            <input type="radio" name="revision" id="major"
+                                                value="RA">
+                                              Supplier Risk Assessment
+                                        </label>
+                                        <label for="major">
+                                            <input type="radio" name="revision" id="major"
+                                                value="SA">
+                                               Supplier Audit
+                                        </label>
+                                         <label for="major">
+                                            <input type="radio" name="revision" id="major"
+                                                value="SCAR">
+                                               SCAR
+                                        </label>
+                                    @endif
                                 </div>
             
                             </div>

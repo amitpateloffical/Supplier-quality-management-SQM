@@ -26,6 +26,9 @@ AuditReviewersDetails,
 CC,
 Deviation,
 User,
+SCAR,
+Supplier,
+RiskManagement,
 OpenStage,
 Capa
 };
@@ -3584,27 +3587,52 @@ class SupplierSiteController extends Controller
         $hod = User::get();
         $pre = CC::all();
         if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        
         if ($request->revision == "Action-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
         }
+        // dd($request->revision,$request->revision == "changecontrol");
         if ($request->revision == "changecontrol") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.change-control.new-change-control', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','hod','cft','pre'));
         }
+
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
         }
         if ($request->revision == "deviation") {
-            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            $pre = Deviation::all();
-            return view('frontend.forms.deviation_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre'));
-        }
-        if ($request->revision == "RCA") {
-            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-        //    $pre = Deviation::all();
-            return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre'));
-        }
+         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+        $pre = Deviation::all();
+         return view('frontend.forms.deviation_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre'));
+     }
+     if ($request->revision == "RCA") {
+        $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+    //    $pre = Deviation::all();
+        return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre'));
+    }
+    if ($request->revision == "RA") {
+        $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+    //    $pre = Deviation::all();
+    $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
+        return view('frontend.forms.risk-management', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
+    }
+    if ($request->revision == "SA") {
+        $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+    //    $pre = Deviation::all();
+    $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
+        return view('frontend.New_forms.supplier_audit', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
+    }
+    if ($request->revision == "SCAR") {
+        $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+        $supplierData = Supplier::select('id','supplier_name','supplier_products','distribution_sites')->get();
+        $supplierName = Supplier::select('id','supplier_name')->get();
+        $supplierProduct = Supplier::where('supplier_products' , '!=' , "null")->get();
+        $distributionSites = Supplier::where('distribution_sites', '!=', "null")->get();
+        $old_record = SCAR::select('id', 'division_id', 'record')->get();
+        return view('frontend.scar.scar_new', compact('record_number','supplierName','supplierProduct','distributionSites', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
+    }
     }
 }

@@ -1876,15 +1876,15 @@
                                 </div>
                                 <div class="group-input">
                                     <label for="username">Username <span class="text-danger">*</span></label>
-                                    <input type="text" name="username" required>
+                                    <input class="input-new" type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
                                     <label for="password">Password <span class="text-danger">*</span></label>
-                                    <input type="password" name="password" required>
+                                    <input class="input-new" type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
                                     <label for="comment">Comment <span class="text-danger">*</span></label>
-                                    <input type="comment" name="comments" required>
+                                    <input class="input-new" type="comment" name="comments" required>
                                 </div>
                             </div>
 
@@ -1909,6 +1909,11 @@
 
                 #step-form>div:nth-child(1) {
                     display: block;
+                }
+                .input-new{
+                    width: 100%;
+                    margin-bottom: 10px;
+                    border-radius: 5px;
                 }
             </style>
 

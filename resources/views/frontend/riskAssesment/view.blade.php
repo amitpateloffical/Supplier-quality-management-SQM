@@ -192,7 +192,7 @@
                                 Cancel
                             </button>
                         @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more_info-modal">
                                 More Information Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -205,7 +205,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Action Plan Complete
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more_info-modal">
                                 Request More Info
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
@@ -216,7 +216,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Action Plan Approved
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more_info-modal">
                                 Reject Action Plan
                             </button>
                         @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -226,14 +226,14 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more_info-modal">
                                 Request More Info
                             </button>
                         @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Residual Risk Evaluation Completed
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more_info-modal">
                                 More Actions Needed
                             </button>
                         @endif
@@ -2390,6 +2390,53 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="more_info-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <form action="{{ url('more_info_model', $data->id) }}" method="POST">
+                            @csrf
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input class="input-new" type="text" name="username" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input class="input-new" type="password" name="password" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
+                                    <input class="input-new" type="comment" name="comment" required>
+                                </div>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <!-- <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade" id="child-modal">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -2432,6 +2479,11 @@
 
                 #step-form>div:nth-child(1) {
                     display: block;
+                }
+                .input-new{
+                    width: 100%;
+                    margin-bottom: 10px;
+                    border-radius: 5px;
                 }
             </style>
             <script>

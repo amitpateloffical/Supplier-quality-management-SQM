@@ -192,6 +192,8 @@ Route::post('risk_store', [RiskManagementController::class, 'store'])->name('ris
 Route::post('riskAssesmentUpdate/{id}', [RiskManagementController::class, 'riskUpdate'])->name('riskUpdate');
 Route::post('riskAssesmentStateChangeshow/{id}', [RiskManagementController::class, 'riskAssesmentStateChange'])->name('riskAssesmentStateChangeshow');
 Route::post('reject_Risk/{id}', [RiskManagementController::class, 'RejectStateChange'])->name('reject_Risk');
+Route::post('more_info_model/{id}', [RiskManagementController::class, 'MoreInfoCAPA'])->name('more_info_model');
+
 
 Route::get('riskAuditTrial/{id}', [RiskManagementController::class, 'riskAuditTrial']);
 Route::get('auditDetailsrisk/{id}', [RiskManagementController::class, 'auditDetailsrisk'])->name('showriskAuditDetails');

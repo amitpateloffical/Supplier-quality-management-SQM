@@ -98,6 +98,7 @@ class CCController extends Controller
         $openState->short_description = $request->short_description;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
+        // dd($request->due_date);
         $openState->doc_change = $request->natureChange;
         $openState->If_Others = $request->others;
         $openState->Division_Code = $request->div_code;
@@ -105,7 +106,7 @@ class CCController extends Controller
         $openState->initiated_through = $request->initiated_through;
         $openState->initiated_through_req = $request->initiated_through_req;
         $openState->repeat = $request->repeat;
-        $openState->repeat_nature = $request->repeat_nature;
+        // $openState->repeat_nature = $request->repeat_nature;
         $openState->current_practice = $request->current_practice;
         $openState->proposed_change = $request->proposed_change;
         $openState->reason_change = $request->reason_change;

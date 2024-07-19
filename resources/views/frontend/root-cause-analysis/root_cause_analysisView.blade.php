@@ -1335,7 +1335,7 @@
  
                         <div id="CCForm7" class="inner-block cctabcontent">
                             <div class="inner-block-content">
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="Acknowledge_By">Acknowledge By</label>
@@ -1430,6 +1430,105 @@
                                         <div class="group-input">
                                             <label for="Cancelled On">Cancelled Comment</label>
                                             <div class="static"> @if($data->cancelled_comment) {{  $data->cancelled_comment }} @else Not Applicable @endif</div>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Acknowledge_By">Acknowledge By</label>
+                                            <div class="static">  {{  $data->acknowledge_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Acknowledge_On">Acknowledge On</label>
+                                            <div class="static">  {{  $data->acknowledge_on }} </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Acknowledge_On">Acknowledge Comment</label>
+                                            <div class="static"> {{  $data->acknowledge_comment }}  </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Submit_By">Submited By</label>
+                                            <div class="static"> {{  $data->submitted_by }} </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Submit_On">Submited On</label>
+                                            <div class="static">  {{  $data->submitted_on }} </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Submit_On">Submited Comment</label>
+                                            <div class="static">  {{  $data->submitted_comment }} </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_By">QA Review Completed By</label>
+                                            <div class="static">  {{  $data->qA_review_complete_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_On">QA Review Completed On</label>
+                                            <div class="static">  {{  $data->qA_review_complete_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_On">QA Review Completed Comment</label>
+                                            <div class="static">  {{  $data->qA_review_complete_comment }}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_By">More Info Required By</label>
+                                            <div class="static">  {{  $data->moreinfo_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_On">More Info Required On</label>
+                                            <div class="static">  {{  $data->moreinfo_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_On">More Info Required Comment</label>
+                                            <div class="static">  {{  $data->moreinfo_comment }}</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Cancelled By">Cancelled By</label>
+                                            <div class="static">  {{  $data->cancelled_by }} </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Cancelled On">Cancelled On</label>
+                                            <div class="static">  {{  $data->cancelled_on }} </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Cancelled On">Cancelled Comment</label>
+                                            <div class="static">  {{  $data->cancelled_comment }} </div>
                                         </div>
                                     </div>
                                 </div>

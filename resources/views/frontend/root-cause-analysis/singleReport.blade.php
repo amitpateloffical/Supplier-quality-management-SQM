@@ -296,10 +296,10 @@
                             <th class="w-20">Investigation Summary</th>
                             <td class="w-80">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th class="w-20">Attachments</th>
                             <td class="w-80">@if($data->attachments)<a href="{{ asset('upload/document/',$data->attachments) }}">{{ $data->attachments }}@else Not Applicable @endif</td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <th class="w-20">Comments</th>
                             <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>

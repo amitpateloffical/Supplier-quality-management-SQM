@@ -90,9 +90,9 @@
                     @else
                         <div class="progress-bars">
                             @if ($data->stage >= 1)
-                                <div class="active">Open State</div>
+                                <div class="active">Opened</div>
                             @else
-                                <div class="">Open State</div>
+                                <div class="">Opened</div>
                             @endif
 
                             @if ($data->stage >= 2)
@@ -187,16 +187,8 @@
                                             <div class="group-input input-date">
                                                 <label for="Date Due">Revised Due Date</label>
                                                 <div class="calenderauditee">
-                                                    @if ($data->revised_date < $today_date)
-                                                    <input type="text" id="revised_date" readonly
-                                                        placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->revised_date) }}" />
-                                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" value="{{ $data->revised_date }}" class="hide-input" oninput="handleDateInput(this, 'revised_date')" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} />
-                                                    @else
-                                                    <input type="text" id="revised_date" readonly
-                                                        placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->revised_date) }}" disabled/>
-                                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" value="{{ $data->revised_date }}" class="hide-input" oninput="handleDateInput(this, 'revised_date')" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} disabled/>
-                                                    
-                                                    @endif
+                                                    <input type="text" name="revised_date" readonly placeholder="DD-MMM-YYYY" id="revised_date" value="{{ Helpers::getdateFormat($data->revised_date) }}" disabled/>
+                                                    <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" value="{{ $data->revised_date }}" class="hide-input" oninput="handleDateInput(this, 'revised_date')" />
                                                 </div>
                                             </div>
                                         </div>
@@ -403,57 +395,57 @@
                                         <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Submitted By">Submitted By</label>
-                                                <div class="static">@if($data->submitted_by) {{ $data->submitted_by}} @else Not Applicable @endif</div>
+                                                <div class="static">{{ $data->submitted_by}}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Submitted On">Submitted On</label>
-                                                <div class="static">@if($data->submitted_on) {{ $data->submitted_on}} @else Not Applicable @endif</div>
+                                                <div class="static"> {{ $data->submitted_on}} </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Submitted On">Submitted Comment</label>
-                                                <div class="static">@if($data->submitted_comment) {{ $data->submitted_comment}} @else Not Applicable @endif</div>
+                                                <div class="static"> {{ $data->submitted_comment}} </div>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Approved By</label>
-                                                <div class="static"> @if($data->pendingApproval_by) {{ $data->pendingApproval_by}} @else Not Applicable @endif </div>
+                                                <div class="static">{{ $data->pendingApproval_by}}  </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Cancelled On">Approved On</label>
-                                                <div class="static"> @if($data->pendingApproval_on) {{ $data->pendingApproval_on}} @else Not Applicable @endif </div>
+                                                <div class="static"> {{ $data->pendingApproval_on}}  </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancelled On">Approved Comment</label>
-                                                <div class="static">@if($data->pendingApproval_comment) {{ $data->pendingApproval_comment}} @else Not Applicable @endif </div>
+                                                <div class="static">{{ $data->pendingApproval_comment}}  </div>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancelled By</label>
-                                                <div class="static"> @if($data->cancelled_by) {{ $data->cancelled_by}} @else Not Applicable @endif </div>
+                                                <div class="static">  {{ $data->cancelled_by}}  </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Cancelled On">Cancelled On</label>
-                                                <div class="static"> @if($data->cancelled_on) {{ $data->cancelled_on}} @else Not Applicable @endif </div>
+                                                <div class="static"> {{ $data->cancelled_on}}  </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancelled On">Cancelled Comment</label>
-                                                <div class="static"> @if($data->cancelled_comment) {{ $data->cancelled_comment}} @else Not Applicable @endif </div>
+                                                <div class="static">{{ $data->cancelled_comment}}  </div>
                                             </div>
                                         </div>
 
@@ -694,11 +686,11 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
@@ -740,11 +732,11 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
@@ -787,11 +779,11 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">

@@ -293,7 +293,7 @@ use Illuminate\Support\Facades\Hash;
         $history->root_id = $root->id;
         $history->activity_type = 'Assign Id';
         $history->previous = "Null";
-        $history->current = $root->assign_to;
+        $history->current = Helpers::getInitiatorName($root->assign_to);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -337,21 +337,6 @@ use Illuminate\Support\Facades\Hash;
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Attachments';
-        $history->previous = "Null";
-        $history->current = empty($root->cft_attchament_new) ? null : $root->cft_attchament_new;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $root->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiation";
-        $history->action_name = 'Create';
-        $history->save();
-
-        $history = new RootAuditTrial();
-        $history->root_id = $root->id;
         $history->activity_type = 'Comments';
         $history->previous = "Null";
         $history->current = $root->comments;
@@ -382,21 +367,6 @@ use Illuminate\Support\Facades\Hash;
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'lab Inv Attach';
-        $history->previous = "Null";
-        $history->current = $root->lab_inv_attach;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $root->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiation";
-        $history->action_name = 'Create';
-        $history->save();
-
-        $history = new RootAuditTrial();
-        $history->root_id = $root->id;
         $history->activity_type = 'Qc Head Comments';
         $history->previous = "Null";
         $history->current = $root->qc_head_comments;
@@ -410,20 +380,7 @@ use Illuminate\Support\Facades\Hash;
         $history->action_name = 'Create';
         $history->save();
 
-        $history = new RootAuditTrial();
-        $history->root_id = $root->id;
-        $history->activity_type = 'Inv Attach';
-        $history->previous = "Null";
-        $history->current = $root->inv_attach;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $root->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiation";
-        $history->action_name = 'Create';
-        $history->save();
+        
 
         if (!empty($root->due_date)) {
         $history = new RootAuditTrial();
@@ -693,9 +650,9 @@ use Illuminate\Support\Facades\Hash;
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Assign Id';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $root->assign_to;
-            $history->comment = $request->assign_to_comment;
+            $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);
+            $history->current = Helpers::getInitiatorName($root->assign_to);
+            $history->comment = Helpers::getInitiatorName($request->assign_to_comment);
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -739,23 +696,6 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastDocument->cft_attchament_new != $root->cft_attchament_new || !empty($request->cft_attchament_new)) {
-
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Attachments';
-            $history->previous = $lastDocument->attachments;
-            $history->current = $root->attachments;
-            $history->comment = $request->attachments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
         if ($lastDocument->comments != $root->comments || !empty($request->comments_comment)) {
 
             $history = new RootAuditTrial();
@@ -781,23 +721,6 @@ use Illuminate\Support\Facades\Hash;
             $history->previous = $lastDocument->lab_inv_concl;
             $history->current = $root->lab_inv_concl;
             $history->comment = $request->lab_inv_concl_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->lab_inv_attach != $root->lab_inv_attach || !empty($request->lab_inv_attach_comment)) {
-
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'lab Inv Attach';
-            $history->previous = $lastDocument->lab_inv_attach;
-            $history->current = $root->lab_inv_attach;
-            $history->comment = $request->lab_inv_attach_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

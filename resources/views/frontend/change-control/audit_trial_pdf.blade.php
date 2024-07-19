@@ -155,7 +155,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -209,37 +209,69 @@
         <div class="second-table">
             <table>
                 <tr class="table_bg">
-                    <th>Field History</th>
-                    <th>Date Performed</th>
-                    <th>Person Responsible</th>
-                    <th>Change Type</th>
+                    <th>Flow Changed From</th>
+                    <th>Flow Changed To</th>
+                    <th>Data Field</th>
+                    <th>Action Type</th>
+                    <th>Performer</th>
                 </tr>
                 @foreach ($data as $datas)
                     <tr>
-                        <td>
-                            <div>{{ $datas->activity_type }}</div>
-                            <div>
-                                <div><strong>Changed From :</strong></div>
-                                @if(!empty($datas->previous))
-                                <div>{{ $datas->previous }}</div>
-                                @else
-                                <div>Null</div>
-                                @endif
-                            </div>
-                            <div>
-                                <div><strong>Changed To :</strong></div>
-                                <div>{{ $datas->current }}</div>
-                            </div>
-                        </td>
-                        <td>{{ Helpers::getDateFormat($datas->created_at) }}</td>
-                        <td>{{ $datas->user_name }}</td>
-                        <td>
-                            @if ($datas->previous != "NULL")
-                                Modify
-                            @else
-                                New
-                            @endif
-                        </td>
+
+                            <td>
+                                <div><strong>Changed From :</strong>{{ $data->change_from }}</div>
+                            </td>
+
+                            <td>
+                                <div><strong>Changed To :</strong>{{ $data->change_to }}</div>
+                            </td>
+                            <td>
+                                <div>
+                                    <strong> Data Field Name :</strong><a
+                                        href="#">{{ $data->activity_type ? $data->activity_type : 'Not Applicable' }}</a>
+                                </div>
+                                <div style="margin-top: 5px;">
+                                    @if ($data->activity_type == 'Activity Log')
+                                        <strong>Change From
+                                            :</strong>{{ $data->change_from ? $data->change_from : 'Not Applicable' }}
+                                    @else
+                                        <strong>Change From
+                                            :</strong>{{ $data->previous ? $data->previous : 'Not Applicable' }}
+                                    @endif
+                                </div>
+                                <br>
+                                <div>
+                                    @if ($data->activity_type == 'Activity Log')
+                                        <strong>Change To
+                                            :</strong>{{ $data->change_to ? $data->change_to : 'Not Applicable' }}
+                                    @else
+                                        <strong>Change To
+                                            :</strong>{{ $data->current ? $data->current : 'Not Applicable' }}
+                                    @endif
+                                </div>
+                                <div style="margin-top: 5px;">
+                                    <strong>Change Type
+                                        :</strong>{{ $data->action_name ? $data->action_name : 'Not Applicable' }}
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <strong> Action Name
+                                        :</strong>{{ $data->action ? $data->action : 'Not Applicable' }}
+
+                                </div>
+                            </td>
+                            <td>
+                                <div><strong> Peformed By
+                                        :</strong>{{ $data->user_name ? $data->user_name : 'Not Applicable' }}
+                                </div>
+                                <div style="margin-top: 5px;"> <strong>Performed On
+                                        :</strong>{{ $data->created_at ? Helpers::getdateFormat($data->created_at) : 'Not Applicable' }}
+                                </div>
+                                <div style="margin-top: 5px;"><strong> Comments
+                                        :</strong>{{ $data->comment ? $data->comment : 'Not Applicable' }}</div>
+
+                            </td>
                     </tr>
                 @endforeach
             </table>

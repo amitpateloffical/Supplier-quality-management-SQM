@@ -1813,7 +1813,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny"
+                                            <textarea class={{$data->stage == 1 || $data->stage == 11? 'tiny QAInitialRemark' : 'tiny-disable' }}
                                                 name="Description_Deviation[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-1">{{ $data->Description_Deviation }}</textarea>
                                         </div>
                                         @error('Description_Deviation')
@@ -1840,7 +1840,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny" name="Immediate_Action[]" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                            <textarea class={{$data->stage == 1 || $data->stage == 11? 'tiny QAInitialRemark' : 'tiny-disable' }} name="Immediate_Action[]" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                 id="summernote-2">{{ $data->Immediate_Action }}</textarea>
                                         </div>
                                         @error('Immediate_Action')
@@ -1861,7 +1861,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea  class="tiny" name="Preliminary_Impact[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                            <textarea  class={{$data->stage == 1 || $data->stage == 11? 'tiny QAInitialRemark' : 'tiny-disable' }} name="Preliminary_Impact[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                 id="summernote-3">{{ $data->Preliminary_Impact }}</textarea>
                                         </div>
                                         @error('Preliminary_Impact')
@@ -1968,7 +1968,7 @@
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea {{$data->stage == 2 ? '' : 'disabled' }} class="tiny" name="HOD_Remarks" id="summernote-4" required>{{ $data->HOD_Remarks }}</textarea>
+                                                <textarea {{$data->stage == 2 ? '' : 'disabled' }} class={{$data->stage == 2 || $data->stage == 11 ? 'tiny' : 'tiny-disable' }} name="HOD_Remarks" id="summernote-4" required>{{ $data->HOD_Remarks }}</textarea>
                                             </div>
                                         @error('HOD_Remarks')
                                             <div class="text-danger">{{ $message }}</div>
@@ -2662,7 +2662,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea @if ($data->stage == 3) required @endif class="tiny"
+                                            <textarea @if ($data->stage == 3) required @endif class={{$data->stage == 3 || $data->stage == 11? 'tiny QAInitialRemark' : 'tiny-disable' }}
                                                 name="QAInitialRemark"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-6">{{ $data->QAInitialRemark }}</textarea>
                                         </div>
                                         @error('QAInitialRemark')
@@ -6613,7 +6613,7 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                <div class="col-md-6 mb-3 other1_reviews ">
+                                <div class="col-md-6 mb-3 other1_reviews">
                                     <div class="group-input">
                                         <label for="Review Completed By1"> Other's 1 Review Completed By</label>
                                         <input disabled type="text" value="{{ $data1->Other1_by }}"
@@ -8826,7 +8826,7 @@
                     <label for="QA Feedbacks">HOD Final Remarks <span style="display: {{ $data->stage == 8 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                             not require completion</small></div>
-                    <textarea class="tiny" {{ $data->stage == 8 ? 'required' : 'disabled' }} name="hod_final_remarks" id="summernote-14">{{ $data->hod_final_remarks }}</textarea>
+                    <textarea class={{$data->stage == 8 || $data->stage == 11? 'tiny' : 'tiny-disable' }} {{ $data->stage == 8 ? 'required' : 'disabled' }} name="hod_final_remarks" id="summernote-14">{{ $data->hod_final_remarks }}</textarea>
                 </div>
             </div>
             @if ($data->hod_final_attachments)
@@ -8903,7 +8903,7 @@
                     <label for="QA Feedbacks">QA Final Remarks <span style="display: {{ $data->stage == 9 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                             not require completion</small></div>
-                    <textarea class="tiny" {{ $data->stage == 9 ? 'required' : 'disabled' }} name="qa_final_remarks" id="summernote-14">{{ $data->qa_final_remarks }}</textarea>
+                    <textarea class={{$data->stage == 9 || $data->stage == 11? 'tiny' : 'tiny-disable' }} {{ $data->stage == 9 ? 'required' : 'disabled' }} name="qa_final_remarks" id="summernote-14">{{ $data->qa_final_remarks }}</textarea>
                 </div>
             </div>
             @if ($data->qa_final_attachments)
@@ -9833,7 +9833,7 @@
                         <label for="Justification for categorization">Justification for categorization</label>
                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                 not require completion</small></div>
-                        <textarea class="tiny"
+                        <textarea class={{$data->stage == 5 || $data->stage == 11? 'tiny' : 'tiny-disable' }}
                             name="Justification_for_categorization"{{ $data->stage == 0 || $data->stage == 11 || $data->stage != 5 ? 'disabled' : '' }}
                             id="summernote-5">{{ $data->Justification_for_categorization }}</textarea>
                     </div>
@@ -9894,7 +9894,7 @@
                                 <label for="QA Feedbacks">QA Feedbacks <span class="text-danger">*</span></label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                         require completion</small></div>
-                                <textarea class="tiny" name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                <textarea class={{$data->stage == 5 || $data->stage == 11? 'tiny' : 'tiny-disable' }} name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                     id="summernote-14" required>{{ $data->QA_Feedbacks }}</textarea>
                             </div>
                         @else
@@ -9902,7 +9902,7 @@
                                 <label for="QA Feedbacks">QA Feedbacks</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                         require completion</small></div>
-                                <textarea readonly class="tiny"
+                                <textarea readonly class={{$data->stage == 5 || $data->stage == 11? 'tiny' : 'tiny-disable' }}
                                     name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-14">{{ $data->QA_Feedbacks }}</textarea>
                             </div>
                         @endif
@@ -9995,7 +9995,7 @@
                             <label for="QA Feedbacks">Initiator Final Remarks <span style="display: {{ $data->stage == 7 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                     not require completion</small></div>
-                            <textarea class="tiny" {{ $data->stage == 7 ? 'required' : 'disabled' }} name="initiator_final_remarks" id="summernote-14">{{ $data->initiator_final_remarks }}</textarea>
+                            <textarea class={{$data->stage == 7 || $data->stage == 11? 'tiny' : 'tiny-disable' }} {{ $data->stage == 7 ? 'required' : 'disabled' }} name="initiator_final_remarks" id="summernote-14">{{ $data->initiator_final_remarks }}</textarea>
                         </div>
                         @error('initiator_final_remarks')
                                             <div class="text-danger">{{ $message }}</div>
@@ -10094,7 +10094,7 @@
                             </label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea class="tiny"
+                            <textarea class={{$data->stage == 10 || $data->stage == 11? 'tiny' : 'tiny-disable' }}
                                 name="Investigation_Of_Review"{{ $data->stage == 0 ? 'disabled' : '' }}
                                 id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
                         </div>
@@ -10112,7 +10112,7 @@
                                 </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea @if ($data->stage != 10) readonly @endif required class="tiny"
+                            <textarea @if ($data->stage != 10) readonly @endif required class={{$data->stage == 10 || $data->stage == 11? 'tiny' : 'tiny-disable' }}
                                 name="Closure_Comments"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-15">{{ $data->Closure_Comments }}</textarea>
                         </div>
                         @error('Closure_Comments')
@@ -10129,7 +10129,7 @@
                                 </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea @if ($data->stage != 10) readonly @endif required class="tiny"
+                            <textarea @if ($data->stage != 10) readonly @endif required class={{$data->stage == 10 || $data->stage == 11? 'tiny' : 'tiny-disable' }}
                                 name="Disposition_Batch"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-16">{{ $data->Disposition_Batch }}</textarea>
                         </div>
                         @error('Disposition_Batch')
@@ -10992,13 +10992,13 @@
             <div class="inner-block-content">
                 <div class="row">
                     <div class="sub-head">Submission</div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="submit by">Submit By :-</label>
                             <div class="static">{{ $data->submit_by }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="submit on">Submit On :-</label>
                             <div class="static">{{ $data->submit_on }}</div>
@@ -11012,19 +11012,19 @@
                     </div>
 
                     <div class="sub-head">HOD Review Completed</div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="HOD Review Complete By">HOD Review Complete By :-</label>
                             <div class="static">{{ $data->HOD_Review_Complete_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="HOD Review Complete On">HOD Review Complete On :-</label>
                             <div class="static">{{ $data->HOD_Review_Complete_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input" style=" ">
                             <label for="HOD Review Comments">HOD Review Comments :-</label>
                             <div class="">{{ $data->HOD_Review_Comments }}</div>
@@ -11033,19 +11033,19 @@
 
 
                     <div class="sub-head">QA Initial Review Completed</div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="QA Initial Review Complete By">QA Initial Review Complete By :-</label>
                             <div class="static">{{ $data->QA_Initial_Review_Complete_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="QA Initial Review Complete On">QA Initial Review Complete On :-</label>
                             <div class="static">{{ $data->QA_Initial_Review_Complete_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px;">
                             <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
                             <div class="">{{ $data->QA_Initial_Review_Comments }}</div>
@@ -11053,19 +11053,19 @@
                     </div>
                     <div class="sub-head">CFT Review Complete</div>
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="CFT Review Complete By">CFT Review Complete By :-</label>
                             <div class="static">{{ $data->CFT_Review_Complete_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="CFT Review Complete On">CFT Review Complete On :-</label>
                             <div class="static">{{ $data->CFT_Review_Complete_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="CFT Review Comments">CFT Review Comments :-</label>
                             <div class="">{{ $data->CFT_Review_Comments }}</div>
@@ -11073,38 +11073,38 @@
                     </div>
                     {{-- <div class="sub-head">Initiator Update</div>
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
                             <div class="static"></div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="CFT Review Complete On">Initiator Update Complete On :-</label>
                             <div class="static"></div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input">
                             <label for="CFT Review Comments">Initiator Update Comments :-</label>
                             <div class="static"></div>
                         </div>
                     </div> --}}
                     <div class="sub-head"> QA Final Review Completed</div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
                             <div class="static">{{ $data->QA_Final_Review_Complete_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="QA Final Review Complete On"> QA Final Review Complete On :-</label>
                             <div class="static">{{ $data->QA_Final_Review_Complete_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
                             <div class="">{{ $data->QA_Final_Review_Comments }}</div>
@@ -11112,19 +11112,19 @@
                     </div>
                     <div class="sub-head">QAH Primary Approved Completed</div>
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Approved By">Approved By :-</label>
                             <div class="static">{{ $data->Approved_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Approved On">Approved On :-</label>
                             <div class="static">{{ $data->Approved_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="Approved Comments">Approved Comments :-</label>
                             <div class="">{{ $data->Approved_Comments }}</div>
@@ -11134,19 +11134,19 @@
 
                     <div class="sub-head">Initiator Update Completed</div>
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Approved By">Initiator Update By :-</label>
                             <div class="static">{{ $data->Initiator_Update_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Approved On">Initiator Update On :-</label>
                             <div class="static">{{ $data->Initiator_Update_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="Approved Comments">Initiator Update Comments :-</label>
                             <div class="">{{ $data->Initiator_Update_Comments }}</div>
@@ -11155,19 +11155,19 @@
 
                     <div class="sub-head">HOD Final Review Completed</div>
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Approved By">HOD Final Review By :-</label>
                             <div class="static">{{ $data->HOD_Final_Review_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Approved On">HOD Final Review On :-</label>
                             <div class="static">{{ $data->HOD_Final_Review_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="Approved Comments">HOD Final Review Comments :-</label>
                             <div class="">{{ $data->HOD_Final_Review_Comments }}</div>
@@ -11176,19 +11176,19 @@
 
                     <div class="sub-head">QA Final Review Completed</div>
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Approved By">QA Final Review By :-</label>
                             <div class="static">{{ $data->QA_Final_Review_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Approved On">QA Final Review On :-</label>
                             <div class="static">{{ $data->QA_Final_Review_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="Approved Comments">QA Final Review Comments :-</label>
                             <div class="">{{ $data->QA_Final_Review_Comments }}</div>
@@ -11198,19 +11198,19 @@
 
                     <div class="sub-head">QA Final Approval Completed</div>
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Approved By">QA Final Approval By :-</label>
                             <div class="static">{{ $data->QA_Final_Approval_By }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Approved On">QA Final Approval On :-</label>
                             <div class="static">{{ $data->QA_Final_Approval_On }}</div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
                             <label for="Approved Comments">QA Final Approval Comments :-</label>
                             <div class="">{{ $data->QA_Final_Approval_Comments }}</div>
@@ -13114,15 +13114,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required class="form-control">
+                            <input type="text" name="username" required>
                         </div>
-                        <div class="group-input mt-3">
+                        <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required class="form-control">
+                            <input type="password" name="password" required>
                         </div>
-                        <div class="group-input mt-3">
+                        <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required class="form-control">
+                            <input type="comment" name="comment" required>
                         </div>
                     </div>
                     <div class="modal-footer">

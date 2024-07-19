@@ -27,6 +27,7 @@ use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\CustomerController;
 use App\Http\Controllers\rcms\ExtensionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
+use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\rcms\RcmsDashboardController;
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
@@ -565,6 +566,17 @@ Route::post('child_external_Supplier/{id}', [SupplierAuditController::class, 'ch
 Route::get('auditReport/{id}', [SupplierAuditController::class, 'auditReport'])->name('SupplierAuditTrialReport');
 Route::get('singleReport/{id}', [SupplierAuditController::class, 'singleReport'])->name('SupplierSingleReport');
 
+//==================
 
+Route::get('extension-new', [ExtensionNewController::class, 'index']);
+Route::post('extension_new', [ExtensionNewController::class, 'store'])->name('extension_new.store');
+Route::get('extension_newshow/{id}', [ExtensionNewController::class, 'show']);
+
+Route::put('extension_new/{id}', [ExtensionNewController::class, 'update'])->name('extension_new.update');
+Route::post('extension_send_stage/{id}', [ExtensionNewController::class, 'sendstage'])->name('extension_send_stage');
+Route::post('moreinfoState_extension/{id}', [ExtensionNewController::class, 'moreinfoStateChange'])->name('moreinfoState_extension');
+Route::post('RejectState_extension/{id}', [ExtensionNewController::class, 'reject'])->name('RejectState_extension');
+Route::post('send-cqa/{id}', [ExtensionNewController::class, 'sendCQA'])->name('send-cqa');
+Route::post('send-approved/{id}', [ExtensionNewController::class, 'sendApproved'])->name('send-approved');
 
 

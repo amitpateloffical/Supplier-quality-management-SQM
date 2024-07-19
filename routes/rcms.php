@@ -13,6 +13,7 @@ use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\CapaController;
 use App\Http\Controllers\rcms\FormDivisionController;
+use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\rcms\ManagementReviewController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
@@ -231,7 +232,9 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('deviation/pending_initiator_update/{id}', [DeviationController::class, 'pending_initiator_update'])->name('pending_initiator_update');
             Route::get('devAuditreport/{id}', [DeviationController::class, 'devAuditreport'])->name('devAuditreport');
 
-
+            //===============================extension new --------------
+            Route::get('singleReportNew/{id}', [ExtensionNewController::class, 'singleReport'])->name('singleReportNew');
+            Route::get('audit_trailNew/{id}', [ExtensionNewController::class, 'extensionNewAuditTrail']);
              
 
         }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Connexo - Software</title>
+    <title>Vidyagxp - Software</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="" class="w-100">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -176,7 +176,7 @@
                     <strong>Extension No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/Extension/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -218,7 +218,7 @@
                         <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Justification of Extention</th>
+                        <th class="w-20">Justification of Extension</th>
                         <td class="w-80">@if($data->justification){{ $data->justification }}@else Not Applicable @endif</td>
                         <th class="w-20">Initiated Through</th>
                         <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
@@ -230,7 +230,7 @@
                         <td class="w-30">@if($data->approver1){{ Helpers::getInitiatorName($data->approver1) }} @else Not Applicable @endif</td>                  
                     </tr>
                     <div class="block-head">
-                        Extention Attachments
+                        Extension Attachments
                     </div>
                       <div class="border-table">
                         <table>
@@ -302,29 +302,46 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Submitted By</th>
-                        <td class="w-30">@if($data->submitted_by) {{ $data->submitted_by}} @else Not Applicable @endif</td>
-                        <th class="w-20">Submitted On</th>
-                        <td class="w-30">@if($data->submitted_on) {{ $data->submitted_on}} @else Not Applicable @endif</td>
-                        <th class="w-20">Submitted Comment</th>
-                        <td class="w-30">@if($data->submitted_comment) {{ $data->submitted_comment}} @else Not Applicable @endif</td>
+                        <th class="w-20">Submitted By
+                        </th>
+                        <td class="w-30">{{ $data->submitted_by }}</td>
+                        <th class="w-20">
+                        Submitted On</th>
+                        <td class="w-30">{{ $data->submitted_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Cancelled By</th>
-                        <td class="w-30">@if($data->cancelled_by) {{ $data->cancelled_by}} @else Not Applicable @endif</td>
-                        <th class="w-20">Cancelled On</th>
-                        <td class="w-30">@if($data->cancelled_on) {{ $data->cancelled_on}} @else Not Applicable @endif</td>
-                        <th class="w-20">Cancelled Comment</th>
-                        <td class="w-30">@if($data->cancelled_comment) {{ $data->cancelled_comment}} @else Not Applicable @endif</td>
+                        <th class="w-20">Cancelled By
+                        </th>
+                        <td class="w-30">{{ $data->cancelled_by }}</td>
+                        <th class="w-20">
+                        Cancelled On</th>
+                        <td class="w-30">{{ $data->cancelled_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Approved By</th>
-                        <td class="w-30">@if($data->pendingApproval_by) {{ $data->pendingApproval_by}} @else Not Applicable @endif</td>
-                        <th class="w-20">Approved On</th>
-                        <td class="w-30">@if($data->pendingApproval_on) {{ $data->pendingApproval_on}} @else Not Applicable @endif</td>
-                        <th class="w-20">Approved Comment</th>
-                        <td class="w-30">@if($data->pendingApproval_comment) {{ $data->pendingApproval_comment}} @else Not Applicable @endif</td>
-                    </tr>                   
+                        <th class="w-20">Ext Approved By
+                        </th>
+                        <td class="w-30">{{ $data->ext_approved_by }}</td>
+                        <th class="w-20">
+                        Ext Approved On</th>
+                        <td class="w-30">{{ $data->ext_approved_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Information Required By
+                        </th>
+                        <td class="w-30">{{ $data->more_information_required_by }}</td>
+                        <th class="w-20">
+                        More Information Required On</th>
+                        <td class="w-30">{{ $data->more_information_required_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Rejected By
+                        </th>
+                        <td class="w-30">{{ $data->rejected_by }}</td>
+                        <th class="w-20">
+                        Rejected On</th>
+                        <td class="w-30">{{ $data->rejected_on }}</td>
+                    </tr>
+                   
                 </table>
             </div>
         </div>

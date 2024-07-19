@@ -90,9 +90,9 @@
                     @else
                         <div class="progress-bars">
                             @if ($data->stage >= 1)
-                                <div class="active">Opened</div>
+                                <div class="active">Open State</div>
                             @else
-                                <div class="">Opened</div>
+                                <div class="">Open State</div>
                             @endif
 
                             @if ($data->stage >= 2)
@@ -177,18 +177,21 @@
                                             <div class="group-input input-date">
                                                 <label for="Date Due">Current Parent Due Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"/>
-                                                    <input type="date" name="due_date" value="{{ $data->due_date }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                                    <input type="text" id="due_date" readonly 
+                                                        placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->due_date) }}" />
+                                                    <input type="date" name="due_date" value="{{ $data->due_date }}"  class="hide-input"
+                                                        oninput="handleDateInput(this, 'due_date')" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} />
                                                 </div>
                                             </div>
                                         </div>
-                                    
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Date Due">Revised Due Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" name="revised_date" readonly placeholder="DD-MMM-YYYY" id="revised_date" value="{{ Helpers::getdateFormat($data->revised_date) }}" disabled/>
-                                                    <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" value="{{ $data->revised_date }}" class="hide-input" oninput="handleDateInput(this, 'revised_date')" />
+                                                    <input type="text" id="revised_date" readonly
+                                                        placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->revised_date) }}" />
+                                                    <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" value="{{ $data->revised_date }}"  class="hide-input"
+                                                        oninput="handleDateInput(this, 'revised_date')" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} />
                                                 </div>
                                             </div>
                                         </div>
@@ -213,7 +216,7 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Justification of Extention">Justification of Extention</label>
+                                                <label for="Justification of Extention">Justification of Extension</label>
                                                 <textarea name="justification"  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->justification }}</textarea>
                                             </div>
                                         </div>
@@ -244,18 +247,18 @@
                                                 <select name="initiated_through" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} {{$data->initiated_through}}
                                                     onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                                     <option  selected value="">-- select --</option>
-                                                    <option @if ($data->initiated_through == 'Internal') selected @endif value="Internal ">Internal Audit</option>
-                                                    <option @if ($data->initiated_through == 'External') selected @endif value="External">External Audit</option>
-                                                    <option @if ($data->initiated_through == 'CAPA') selected @endif value="CAPA<">CAPA</option>
-                                                    <option  @if ($data->initiated_through == 'Audit') selected @endif value="Audit ">Audit Program</option>
-                                                    <option @if ($data->initiated_through == 'Lab') selected @endif value="Lab ">Lab Incident</option>
-                                                    <option @if ($data->initiated_through == 'Risk') selected @endif value="Risk">Risk Assessment</option>
-                                                    <option @if ($data->initiated_through == 'Root Cause') selected @endif value="Root Cause">Root Cause Analysis</option>
-                                                    <option @if ($data->initiated_through == 'Change') selected @endif value="Change">Change Control</option>
-                                                    <option @if ($data->initiated_through == 'Management') selected @endif value="Management">Management Review</option>
+                                                    <option @if ($data->initiated_through == 'Internal Audit') selected @endif value="Internal ">Internal Audit</option>
+                                                    <option @if ($data->initiated_through == 'External Audit') selected @endif value="External">External Audit</option>
+                                                    <option @if ($data->initiated_through == 'CAPA') selected @endif value="CAPA">CAPA</option>
+                                                    <option  @if ($data->initiated_through == 'Audit Program') selected @endif value="Audit ">Audit Program</option>
+                                                    <option @if ($data->initiated_through == 'Lab Incident') selected @endif value="Lab ">Lab Incident</option>
+                                                    <option @if ($data->initiated_through == 'Risk Assessment') selected @endif value="Risk">Risk Assessment</option>
+                                                    <option @if ($data->initiated_through == 'Root Cause Analysis') selected @endif value="Root Cause">Root Cause Analysis</option>
+                                                    <option @if ($data->initiated_through == 'Change Control') selected @endif value="Change">Change Control</option>
+                                                    <option @if ($data->initiated_through == 'Management Review') selected @endif value="Management">Management Review</option>
                                                     <option @if ($data->initiated_through == 'New Document') selected @endif value="New Document">New Document</option>
-                                                    <option @if ($data->initiated_through == 'Action') selected @endif value="Action ">Action Item</option>
-                                                    <option @if ($data->initiated_through == 'Effectivness') selected @endif value="Effectivness">Effectivness Check</option>
+                                                    <option @if ($data->initiated_through == 'Action Item') selected @endif value="Action ">Action Item</option>
+                                                    <option @if ($data->initiated_through == 'Effectiveness Check') selected @endif value="Effectiveness">Effectivness Check</option>
                                                 </select>
                                             </div>
                                     </div>
@@ -295,7 +298,7 @@
                                 </div> --}}
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="File Attachments">Extention Attachments</label>
+                                                <label for="File Attachments">Extension Attachments</label>
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="extention_attachment" >
                                                             @if ($data->extention_attachment)
@@ -392,68 +395,73 @@
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="sub-head">Electronic Signatures</div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Submitted By">Submitted By</label>
                                                 <div class="static">{{ $data->submitted_by}}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Submitted On">Submitted On</label>
-                                                <div class="static"> {{ $data->submitted_on}} </div>
+                                                <div class="static">{{ $data->submitted_on}}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Submitted On">Submitted Comment</label>
-                                                <div class="static"> {{ $data->submitted_comment}} </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-3">
-                                            <div class="group-input">
-                                                <label for="Cancelled By">Approved By</label>
-                                                <div class="static">{{ $data->pendingApproval_by}}  </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="group-input">
-                                                <label for="Cancelled On">Approved On</label>
-                                                <div class="static"> {{ $data->pendingApproval_on}}  </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Cancelled On">Approved Comment</label>
-                                                <div class="static">{{ $data->pendingApproval_comment}}  </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancelled By</label>
-                                                <div class="static">  {{ $data->cancelled_by}}  </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="group-input">
-                                                <label for="Cancelled On">Cancelled On</label>
-                                                <div class="static"> {{ $data->cancelled_on}}  </div>
+                                                <div class="static">{{ $data->cancelled_by}}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Cancelled On">Cancelled Comment</label>
-                                                <div class="static">{{ $data->cancelled_comment}}  </div>
+                                                <label for="Cancelled On">Cancelled On</label>
+                                                <div class="static">{{ $data->cancelled_on}}</div>
                                             </div>
                                         </div>
-
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Ext Approved By">Ext Approved By</label>
+                                                <div class="static">{{ $data->ext_approved_by}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Ext Approved On">Ext Approved On</label>
+                                                <div class="static">{{ $data->ext_approved_on}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="More Information Required By">More Information Required
+                                                    By</label>
+                                                <div class="static">{{ $data->more_information_required_by}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="More Information Required On">More Information Required
+                                                    On</label>
+                                                <div class="static">{{ $data->more_information_required_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Rejected By">Rejected By</label>
+                                                <div class="static">{{ $data->rejected_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Rejected On">Rejected On</label>
+                                                <div class="static">{{ $data->rejected_on }}</div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="button-block">
-                                        <!-- <button type="submit" class="saveButton">Save</button> -->
+                                        <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <!-- <button type="submit">Submit</button> -->
+                                        <button type="submit">Submit</button>
                                     </div>
                                 </div>
                             </div>
@@ -686,11 +694,11 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <label for="username">Username</label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <label for="password">Password</label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
@@ -732,11 +740,11 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <label for="username">Username</label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <label for="password">Password</label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
@@ -779,11 +787,11 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <label for="username">Username</label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <label for="password">Password</label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">

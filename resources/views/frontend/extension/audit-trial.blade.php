@@ -205,7 +205,7 @@
                                 View
                             </button>
                             <button class="button_theme1"><a class="text-white"
-                                    href="{{ url('rcms/supplier-show/' . $document->id) }}"> Back
+                                    href="{{ url('rcms/extension/' . $document->id) }}"> Back
                                 </a>
                             </button>
                             <button class="button_theme1" onclick="window.print();">
@@ -325,7 +325,7 @@
                             </div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : Not Applicable</div>
 
                         </div>
                     </div>

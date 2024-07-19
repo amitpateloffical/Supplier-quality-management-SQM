@@ -1813,7 +1813,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class={{$data->stage == 1 || $data->stage == 11? 'tiny QAInitialRemark' : 'tiny-disable' }}
+                                            <textarea class="tiny"
                                                 name="Description_Deviation[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-1">{{ $data->Description_Deviation }}</textarea>
                                         </div>
                                         @error('Description_Deviation')
@@ -1840,7 +1840,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class={{$data->stage == 1 || $data->stage == 11? 'tiny QAInitialRemark' : 'tiny-disable' }} name="Immediate_Action[]" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                            <textarea class="tiny" name="Immediate_Action[]" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                 id="summernote-2">{{ $data->Immediate_Action }}</textarea>
                                         </div>
                                         @error('Immediate_Action')
@@ -1861,7 +1861,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea  class={{$data->stage == 1 || $data->stage == 11? 'tiny QAInitialRemark' : 'tiny-disable' }} name="Preliminary_Impact[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                            <textarea  class="tiny" name="Preliminary_Impact[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                 id="summernote-3">{{ $data->Preliminary_Impact }}</textarea>
                                         </div>
                                         @error('Preliminary_Impact')
@@ -1968,7 +1968,7 @@
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea {{$data->stage == 2 ? '' : 'disabled' }} class={{$data->stage == 2 || $data->stage == 11 ? 'tiny' : 'tiny-disable' }} name="HOD_Remarks" id="summernote-4" required>{{ $data->HOD_Remarks }}</textarea>
+                                                <textarea {{$data->stage == 2 ? '' : 'disabled' }} class="tiny" name="HOD_Remarks" id="summernote-4" required>{{ $data->HOD_Remarks }}</textarea>
                                             </div>
                                         @error('HOD_Remarks')
                                             <div class="text-danger">{{ $message }}</div>
@@ -2662,7 +2662,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea @if ($data->stage == 3) required @endif class={{$data->stage == 3 || $data->stage == 11? 'tiny QAInitialRemark' : 'tiny-disable' }}
+                                            <textarea @if ($data->stage == 3) required @endif class="tiny"
                                                 name="QAInitialRemark"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-6">{{ $data->QAInitialRemark }}</textarea>
                                         </div>
                                         @error('QAInitialRemark')
@@ -8826,7 +8826,7 @@
                     <label for="QA Feedbacks">HOD Final Remarks <span style="display: {{ $data->stage == 8 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                             not require completion</small></div>
-                    <textarea class={{$data->stage == 8 || $data->stage == 11? 'tiny' : 'tiny-disable' }} {{ $data->stage == 8 ? 'required' : 'disabled' }} name="hod_final_remarks" id="summernote-14">{{ $data->hod_final_remarks }}</textarea>
+                    <textarea class="tiny" {{ $data->stage == 8 ? 'required' : 'disabled' }} name="hod_final_remarks" id="summernote-14">{{ $data->hod_final_remarks }}</textarea>
                 </div>
             </div>
             @if ($data->hod_final_attachments)
@@ -8903,7 +8903,7 @@
                     <label for="QA Feedbacks">QA Final Remarks <span style="display: {{ $data->stage == 9 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                             not require completion</small></div>
-                    <textarea class={{$data->stage == 9 || $data->stage == 11? 'tiny' : 'tiny-disable' }} {{ $data->stage == 9 ? 'required' : 'disabled' }} name="qa_final_remarks" id="summernote-14">{{ $data->qa_final_remarks }}</textarea>
+                    <textarea class="tiny" {{ $data->stage == 9 ? 'required' : 'disabled' }} name="qa_final_remarks" id="summernote-14">{{ $data->qa_final_remarks }}</textarea>
                 </div>
             </div>
             @if ($data->qa_final_attachments)
@@ -9833,7 +9833,7 @@
                         <label for="Justification for categorization">Justification for categorization</label>
                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                 not require completion</small></div>
-                        <textarea class={{$data->stage == 5 || $data->stage == 11? 'tiny' : 'tiny-disable' }}
+                        <textarea class="tiny"
                             name="Justification_for_categorization"{{ $data->stage == 0 || $data->stage == 11 || $data->stage != 5 ? 'disabled' : '' }}
                             id="summernote-5">{{ $data->Justification_for_categorization }}</textarea>
                     </div>
@@ -9894,7 +9894,7 @@
                                 <label for="QA Feedbacks">QA Feedbacks <span class="text-danger">*</span></label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                         require completion</small></div>
-                                <textarea class={{$data->stage == 5 || $data->stage == 11? 'tiny' : 'tiny-disable' }} name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                <textarea class="tiny" name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                     id="summernote-14" required>{{ $data->QA_Feedbacks }}</textarea>
                             </div>
                         @else
@@ -9902,7 +9902,7 @@
                                 <label for="QA Feedbacks">QA Feedbacks</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                         require completion</small></div>
-                                <textarea readonly class={{$data->stage == 5 || $data->stage == 11? 'tiny' : 'tiny-disable' }}
+                                <textarea readonly class="tiny"
                                     name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-14">{{ $data->QA_Feedbacks }}</textarea>
                             </div>
                         @endif
@@ -9995,7 +9995,7 @@
                             <label for="QA Feedbacks">Initiator Final Remarks <span style="display: {{ $data->stage == 7 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                     not require completion</small></div>
-                            <textarea class={{$data->stage == 7 || $data->stage == 11? 'tiny' : 'tiny-disable' }} {{ $data->stage == 7 ? 'required' : 'disabled' }} name="initiator_final_remarks" id="summernote-14">{{ $data->initiator_final_remarks }}</textarea>
+                            <textarea class="tiny" {{ $data->stage == 7 ? 'required' : 'disabled' }} name="initiator_final_remarks" id="summernote-14">{{ $data->initiator_final_remarks }}</textarea>
                         </div>
                         @error('initiator_final_remarks')
                                             <div class="text-danger">{{ $message }}</div>
@@ -10094,7 +10094,7 @@
                             </label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea class={{$data->stage == 10 || $data->stage == 11? 'tiny' : 'tiny-disable' }}
+                            <textarea class="tiny"
                                 name="Investigation_Of_Review"{{ $data->stage == 0 ? 'disabled' : '' }}
                                 id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
                         </div>
@@ -10112,7 +10112,7 @@
                                 </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea @if ($data->stage != 10) readonly @endif required class={{$data->stage == 10 || $data->stage == 11? 'tiny' : 'tiny-disable' }}
+                            <textarea @if ($data->stage != 10) readonly @endif required class="tiny"
                                 name="Closure_Comments"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-15">{{ $data->Closure_Comments }}</textarea>
                         </div>
                         @error('Closure_Comments')
@@ -10129,7 +10129,7 @@
                                 </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea @if ($data->stage != 10) readonly @endif required class={{$data->stage == 10 || $data->stage == 11? 'tiny' : 'tiny-disable' }}
+                            <textarea @if ($data->stage != 10) readonly @endif required class="tiny"
                                 name="Disposition_Batch"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-16">{{ $data->Disposition_Batch }}</textarea>
                         </div>
                         @error('Disposition_Batch')

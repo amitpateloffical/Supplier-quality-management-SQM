@@ -960,7 +960,7 @@ class DeviationController extends Controller
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Deviation Observed';
             $history->previous = "Null";
-            $history->current = Helper::getdateFormat($deviation->Deviation_date);
+            $history->current = Helpers::getdateFormat($deviation->Deviation_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -992,7 +992,7 @@ class DeviationController extends Controller
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Deviation Reported on';
             $history->previous = "Null";
-            $history->current = Helper::getdateFormat($deviation->Deviation_reported_date);
+            $history->current = Helpers::getdateFormat($deviation->Deviation_reported_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2342,7 +2342,7 @@ class DeviationController extends Controller
             $history->deviation_id = $id;
             $history->activity_type = 'Deviation Observed';
             $history->previous = $lastDeviation->Deviation_date;
-            $history->current = Helper::getdateFormat($deviation->Deviation_date);
+            $history->current = Helpers::getdateFormat($deviation->Deviation_date);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2378,7 +2378,7 @@ class DeviationController extends Controller
             $history->deviation_id = $id;
             $history->activity_type = 'Deviation Reported on';
             $history->previous = $lastDeviation->Deviation_reported_date;
-            $history->current = Helper::getdateFormat($deviation->Deviation_reported_date);
+            $history->current = Helpers::getdateFormat($deviation->Deviation_reported_date);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3344,29 +3344,29 @@ class DeviationController extends Controller
                 //     ]);
                 // }
 
-                $extension = Extension::where('parent_id', $deviation->id)->first();
+                // $extension = Extension::where('parent_id', $deviation->id)->first();
 
-                $rca = RootCauseAnalysis::where('record', $deviation->id)->first();
+                // $rca = RootCauseAnalysis::where('record', $deviation->id)->first();
 
-                if ($extension && $extension->status !== 'Closed-Done') {
-                    Session::flash('swal', [
-                        'title' => 'Extension record pending!',
-                        'message' => 'There is an Extension record which is yet to be closed/done!',
-                        'type' => 'warning',
-                    ]);
+                // if ($extension && $extension->status !== 'Closed-Done') {
+                //     Session::flash('swal', [
+                //         'title' => 'Extension record pending!',
+                //         'message' => 'There is an Extension record which is yet to be closed/done!',
+                //         'type' => 'warning',
+                //     ]);
 
-                    return redirect()->back();
-                }
+                //     return redirect()->back();
+                // }
 
-                if ($rca && $rca->status !== 'Closed-Done') {
-                    Session::flash('swal', [
-                        'title' => 'RCA record pending!',
-                        'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
-                        'type' => 'warning',
-                    ]);
+                // if ($rca && $rca->status !== 'Closed-Done') {
+                //     Session::flash('swal', [
+                //         'title' => 'RCA record pending!',
+                //         'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
+                //         'type' => 'warning',
+                //     ]);
 
-                    return redirect()->back();
-                }
+                //     return redirect()->back();
+                // }
 
                 // return "PAUSE";
 
@@ -3642,29 +3642,29 @@ class DeviationController extends Controller
                     ]);
                 }
 
-                $extension = Extension::where('parent_id', $deviation->id)->first();
+                // $extension = Extension::where('parent_id', $deviation->id)->first();
 
-                $rca = RootCauseAnalysis::where('record',$deviation->id)->first();
+                // $rca = RootCauseAnalysis::where('record',$deviation->id)->first();
 
-                if ($extension && $extension->status !== 'Closed-Done') {
-                    Session::flash('swal', [
-                        'title' => 'Extension record pending!',
-                        'message' => 'There is an Extension record which is yet to be closed/done!',
-                        'type' => 'warning',
-                    ]);
+                // if ($extension && $extension->status !== 'Closed-Done') {
+                //     Session::flash('swal', [
+                //         'title' => 'Extension record pending!',
+                //         'message' => 'There is an Extension record which is yet to be closed/done!',
+                //         'type' => 'warning',
+                //     ]);
 
-                    return redirect()->back();
-                }
+                //     return redirect()->back();
+                // }
 
-                if ($rca && $rca->status !== 'Closed-Done') {
-                    Session::flash('swal', [
-                        'title' => 'RCA record pending!',
-                        'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
-                        'type' => 'warning',
-                    ]);
+                // if ($rca && $rca->status !== 'Closed-Done') {
+                //     Session::flash('swal', [
+                //         'title' => 'RCA record pending!',
+                //         'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
+                //         'type' => 'warning',
+                //     ]);
 
-                    return redirect()->back();
-                }
+                //     return redirect()->back();
+                // }
 
                 // return "PAUSE";
 

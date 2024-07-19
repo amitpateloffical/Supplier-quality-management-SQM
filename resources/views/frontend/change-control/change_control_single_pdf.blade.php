@@ -200,7 +200,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">@if($data->Initiator_Group){{ Helpers::getFullDepartmentName($data->Initiator_Group) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->initiator_group_code){{ Helpers::getFullDepartmentName($data->initiator_group_code) }} @else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
                         <td class="w-30" colspan="3"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                     </tr>
@@ -279,7 +279,7 @@
                 <div class="block-head">
                     Change Details
                 </div>
-                <div class="border-table">
+                <!-- <div class="border-table">
                     <table>
                         <tr class="table_bg">
                             <th class="w-25">Current Document No.</th>
@@ -296,7 +296,7 @@
                         </tr>
                         @endforeach
                     </table>
-                </div>
+                </div> -->
                 <table>
                     <tr>
                         <th class="w-20">Current Practice</th>
@@ -615,6 +615,33 @@
 
 
                     </table>
+                    <div class="border-table">
+                        <div class="block-head">
+                           Attachments
+                        </div>
+                        <table>
+
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Attachment</th>
+                            </tr>
+                            @if($comments->cft_attchament)
+                                @foreach(json_decode($comments->cft_attchament) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                                    @endforeach
+                                    @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+
+                        </table>
+                    </div>
+
                     <div class="border-table">
                         <div class="block-head">
                            Attachments

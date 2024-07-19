@@ -128,7 +128,7 @@ class ExtensionController extends Controller
         $history->extension_id = $openState->id;
         $history->activity_type = 'Approver';
         $history->previous = "Not Applicable";
-        $history->current = $openState->approver1;
+        $history->current = Helpers::getInitiatorName($openState->approver1);
         $history->comment = "Not Appplicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -198,6 +198,39 @@ class ExtensionController extends Controller
         $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
+
+        if(!empty($request->due_date)){
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Current Parent Due Date';
+            $history->previous = "Not Applicable";
+            $history->current = $openState->due_date;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->revised_date)){
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Revised Due Date';
+            $history->previous = "Not Applicable";
+            $history->current = $openState->revised_date;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
         $history = new ExtensionAuditTrail();
         $history->extension_id = $openState->id;
@@ -276,6 +309,7 @@ class ExtensionController extends Controller
         $openState->approver1 = $request->approver1;
         
         $openState->revised_date = $request->revised_date;
+        // dd($request->revised_date);
         $openState->initiated_if_other = $request->initiated_if_other;
         
         $openState->due_date = $request->due_date;
@@ -316,8 +350,8 @@ class ExtensionController extends Controller
             $history = new ExtensionAuditTrail();
             $history->extension_id = $id;
             $history->activity_type = 'Approver';
-            $history->previous = $lastDocument->approver1;
-            $history->current = $openState->approver1;
+            $history->previous = Helpers::getInitiatorName($lastDocument->approver1);
+            $history->current = Helpers::getInitiatorName($openState->approver1);
             $history->comment = $request->approver1_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -353,6 +387,41 @@ class ExtensionController extends Controller
             $history->previous = $lastDocument->short_description;
             $history->current = $openState->short_description;
             $history->comment = $request->short_description_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+
+        if ($lastDocument->due_date != $openState->due_date ) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $id;
+            $history->activity_type = 'Current Parent Due Date';
+            $history->previous = $lastDocument->due_date;
+            $history->current = $openState->due_date;
+            $history->comment = $request->due_date;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        if ($lastDocument->revised_date != $openState->revised_date) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $id;
+            $history->activity_type = 'Revised Due Date';
+            $history->previous = $lastDocument->revised_date;
+            $history->current = $openState->revised_date;
+            $history->comment = $request->revised_date;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -468,22 +537,23 @@ class ExtensionController extends Controller
     {
         $openState = Extension::find($id);
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $changeControl = Extension::find($id);
+            $extension = Extension::find($id);
             $lastDocument = Extension::find($id);
             $task = QaApproval::where('cc_id', $id)->first();
             
-            if ($changeControl->stage == 1) {
-                $changeControl->stage = "2";
-                $changeControl->status = "Pending Approval";
-                $changeControl->submitted_by = Auth::user()->name;
-                $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
-                $changeControl->submitted_comment = $request->comments;
+            if ($extension->stage == 1) {
+                $extension->stage = "2";
+                $extension->status = "Pending Approval";
+                $extension->submitted_by = Auth::user()->name;
+                $extension->submitted_on = Carbon::now()->format('d-M-Y');
+                $extension->submitted_comment = $request->comment;
+                $extension->update();
 
                 $history = new ExtensionAuditTrail();
                 $history->extension_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current =  $changeControl->ext_approved_by;
+                $history->current =  $extension->ext_approved_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -493,15 +563,14 @@ class ExtensionController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->action = 'Submit';
                 $history->save();
-                $changeControl->update();
                 
                 $history = new CCStageHistory();
                 $history->type = "Extension";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
+                $history->stage_id = $extension->stage;
+                $history->status = $extension->status;
                 $history->save();
                 // $list = Helpers::getInitiatorUserList();
                 // foreach ($list as $u) {
@@ -523,18 +592,20 @@ class ExtensionController extends Controller
                 return back();
             }
 
-            if ($changeControl->stage == 2) {
-                $changeControl->stage = "3";
-                $changeControl->status = "Closed-Done";
-                $changeControl->pendingApproval_by = Auth::user()->name;
-                $changeControl->pendingApproval_on = Carbon::now()->format('d-M-Y');
-                $changeControl->pendingApproval_comment = $request->comments;
+            if ($extension->stage == 2) {
+                dd($extension->stage);
+                $extension->stage = "3";
+                $extension->status = "Closed-Done";
+                $extension->pendingApproval_by = Auth::user()->name;
+                $extension->pendingApproval_on = Carbon::now()->format('d-M-Y');
+                $extension->pendingApproval_comment = $request->comment;
+                $extension->update();
 
                 $history = new ExtensionAuditTrail();
                 $history->extension_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current =  $changeControl->ext_approved_by;
+                $history->current =  $extension->ext_approved_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -542,15 +613,14 @@ class ExtensionController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = "Ext Approved";
                 $history->save();
-                $changeControl->update();
 
                 $history = new CCStageHistory();
                 $history->type = "Extension";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
+                $history->stage_id = $extension->stage;
+                $history->status = $extension->status;
                 $history->save();
                 // $list = Helpers::getInitiatorUserList();
                 // foreach ($list as $u) {
@@ -581,22 +651,22 @@ class ExtensionController extends Controller
     public function stagecancel(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $changeControl = Extension::find($id);
+            $extension = Extension::find($id);
             $lastDocument = Extension::find($id);
             $openState = Extension::find($id);
 
-            if ($changeControl->stage == 1) {
-                $changeControl->stage = "0";
-                $changeControl->status = "Closed-Cancelled";
-                $changeControl->cancelled_by = Auth::user()->name;
-                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-                $changeControl->cancelled_comment = $request->comments;
+            if ($extension->stage == 1) {
+                $extension->stage = "0";
+                $extension->status = "Closed-Cancelled";
+                $extension->cancelled_by = Auth::user()->name;
+                $extension->cancelled_on = Carbon::now()->format('d-M-Y');
+                $extension->cancelled_comment = $request->comment;
 
                 $history = new ExtensionAuditTrail();
                 $history->extension_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current =  $changeControl->cancelled_by;
+                $history->current =  $extension->cancelled_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -604,15 +674,15 @@ class ExtensionController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Cancelled';
                 $history->save();
-                $changeControl->update();
+                $extension->update();
 
                 $history = new CCStageHistory();
                 $history->type = "Extension";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
+                $history->stage_id = $extension->stage;
+                $history->status = $extension->status;
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
@@ -627,20 +697,20 @@ class ExtensionController extends Controller
     public function stagereject(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $changeControl = Extension::find($id);
+            $extension = Extension::find($id);
             $lastDocument = Extension::find($id);
             $openState = Extension::find($id);
-            if ($changeControl->stage == 2) {
+            if ($extension->stage == 2) {
 
-                $changeControl->stage = "4";
-                $changeControl->status = "closed-reject";
-                $changeControl->rejected_by = Auth::user()->name;
-                $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
+                $extension->stage = "4";
+                $extension->status = "closed-reject";
+                $extension->rejected_by = Auth::user()->name;
+                $extension->rejected_on = Carbon::now()->format('d-M-Y');
                 $history = new ExtensionAuditTrail();
                 $history->extension_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current =  $changeControl->rejected_by;
+                $history->current =  $extension->rejected_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -648,7 +718,7 @@ class ExtensionController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Rejected';
                 $history->save();
-                $changeControl->update();
+                $extension->update();
                 // $list = Helpers::getInitiatorUserList();
                 // foreach ($list as $u) {
                 //     if($u->q_m_s_divisions_id == $openState->division_id){
@@ -670,17 +740,17 @@ class ExtensionController extends Controller
             } else {
                 return back();
             }
-            // $changeControl = CC::find($id);
-            // $changeControl->stage = "4";
-            // $changeControl->status = "Closed-Rejected";
-            // $changeControl->update();
+            // $extension = CC::find($id);
+            // $extension->stage = "4";
+            // $extension->status = "Closed-Rejected";
+            // $extension->update();
             // $history = new CCStageHistory();
             // $history->type = "Extension";
             // $history->doc_id = $id;
             // $history->user_id = Auth::user()->id;
             // $history->user_name = Auth::user()->name;
-            // $history->stage_id = $changeControl->stage;
-            // $history->status = $changeControl->status;
+            // $history->stage_id = $extension->stage;
+            // $history->status = $extension->status;
             // $history->save();
 
         } else {

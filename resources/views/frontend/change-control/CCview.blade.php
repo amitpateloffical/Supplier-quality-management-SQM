@@ -277,7 +277,7 @@
                                                 <div class="group-input">
                                                     <label for="Microbiology">CFT Reviewer</label>
                                                     <select name="Microbiology">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option value="yes" selected>Yes</option>
                                                         <option value="no">No</option>
                                                     </select>
@@ -289,7 +289,7 @@
                                                     <select multiple name="Microbiology_Person[]"
                                                         placeholder="Select CFT Reviewers" data-search="false"
                                                         data-silent-initial-value-set="true" id="cft_reviewer">
-                                                         <option value="0">-- Select --</option>
+                                                         <option value="">-- Select --</option>
                                                         @foreach ($cft as $data1)
                                                         @if(Helpers::checkUserRolesMicrobiology_Person($data1))
                                                             @if(in_array($data1->id, $cft_aff))
@@ -403,7 +403,7 @@
                                                     <label for="severity-level">Severity Level</label>
                                                     <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
                                                     <select name="severity_level1">
-                                                    <option value="0">-- Select --</option>
+                                                    <option value="">-- Select --</option>
                                                     <option @if ($data->severity_level1 == 'minor') selected @endif
                                                      value="minor">Minor</option>
                                                     <option  @if ($data->severity_level1 == 'major') selected @endif 
@@ -473,7 +473,7 @@
                                                 <div class="group-input">
                                                     <label for="nature-change">Nature Of Change</label>
                                                     <select name="naturechange">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $data->doc_change == 'Temporary' ? 'selected' : '' }}
                                                             value="Temporary">Temporary
                                                         </option>
@@ -493,7 +493,7 @@
                                                 <div class="group-input">
                                                     <label for="div_code">Division Code</label>
                                                     <select name="div_code">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $data->Division_Code == 'Instrumental Lab' ? 'selected' : '' }}
                                                             value="Instrumental Lab">Instrumental Lab</option>
                                                         <option {{ $data->Division_Code == 'Microbiology Lab' ? 'selected' : '' }}
@@ -585,16 +585,16 @@
                                                                                 value="{{ $key ? $key + 1 : '1' }}"></td>
                                                                         <td><input type="text"
                                                                                 name="current_doc_number[]"
-                                                                                value="{{ unserialize($docdetail->current_doc_no)[$key] ? unserialize($docdetail->current_doc_no)[$key] : 'Not Applicable' }}">
+                                                                                value="{{ unserialize($docdetail->current_doc_no)[$key] ? unserialize($docdetail->current_doc_no)[$key] : '' }}">
                                                                         </td>
                                                                         <td><input type="text" name="current_version[]"
-                                                                                value="{{ unserialize($docdetail->current_version_no)[$key] ? unserialize($docdetail->current_version_no)[$key] : 'Not Applicale' }}">
+                                                                                value="{{ unserialize($docdetail->current_version_no)[$key] ? unserialize($docdetail->current_version_no)[$key] : '' }}">
                                                                         </td>
                                                                         <td><input type="text" name="new_doc_number[]"
-                                                                                value="{{ unserialize($docdetail->new_doc_no)[$key] ? unserialize($docdetail->new_doc_no)[$key] : 'Not Applicable' }}">
+                                                                                value="{{ unserialize($docdetail->new_doc_no)[$key] ? unserialize($docdetail->new_doc_no)[$key] : '' }}">
                                                                         </td>
                                                                         <td><input type="text" name="new_version[]"
-                                                                                value="{{ unserialize($docdetail->new_version_no)[$key] ? unserialize($docdetail->new_version_no)[$key] : 'Not Applicable' }}">
+                                                                                value="{{ unserialize($docdetail->new_version_no)[$key] ? unserialize($docdetail->new_version_no)[$key] : '' }}">
                                                                         </td>
 
                                                                     </tr>
@@ -662,7 +662,7 @@
                                                 <div class="group-input">
                                                     <label for="type_change">Type of Change</label>
                                                     <select name="type_chnage">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $review->type_chnage == 'major' ? 'selected' : '' }}
                                                             value="major">Major</option>
                                                         <option {{ $review->type_chnage == 'minor' ? 'selected' : '' }}
@@ -781,7 +781,7 @@
                                         <div class="group-input">
                                             <label for="nature-change">Training Required</label>
                                             <select name="training_required">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 <option {{ $evaluation->training_required == 'no' ? 'selected' : '' }}
                                                     value="no">No</option>
                                                 <option {{ $evaluation->training_required == 'yes' ? 'selected' : '' }}
@@ -812,7 +812,7 @@
                                                 <div class="group-input">
                                                     <label for="Microbiology">CFT Reviewer</label>
                                                     <select name="Microbiology">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option value="yes" selected>Yes</option>
                                                         <option value="no">No</option>
                                                     </select>
@@ -824,7 +824,7 @@
                                                     <select multiple name="Microbiology_Person[]"
                                                         placeholder="Select CFT Reviewers" data-search="false"
                                                         data-silent-initial-value-set="true" id="cft_reviewer">
-                                                         <option value="0">-- Select --</option>
+                                                         <option value="">-- Select --</option>
                                                         @foreach ($cft as $data1)
                                                             @if(in_array($data1->id, $cft_aff))
                                                                 <option value="{{ $data1->id }}" selected>{{ $data1->name }}</option>
@@ -847,7 +847,7 @@
                                                 <div class="group-input">
                                                     <label for="group_review">Is Concerned Group Review Required?</label>
                                                     <select name="goup_review">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $info->goup_review == 'yes' ? 'selected' : '' }}
                                                             value="yes">Yes</option>
                                                         <option {{ $info->goup_review == 'no' ? 'selected' : '' }}
@@ -859,7 +859,7 @@
                                                 <div class="group-input">
                                                     <label for="Production">Production</label>
                                                     <select name="Production">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $info->Production == 'yes' ? 'selected' : '' }}
                                                             value="yes">Yes</option>
                                                         <option {{ $info->Production == 'no' ? 'selected' : '' }}
@@ -871,7 +871,7 @@
                                                 <div class="group-input">
                                                     <label for="Production-Person">Production Person</label>
                                                     <select name="Production_Person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $datas)
                                                             <option
                                                                 {{ $info->Production_Person == $datas->id ? 'selected' : '' }}
@@ -885,7 +885,7 @@
                                                 <div class="group-input">
                                                     <label for="Quality-Approver">Quality Approver</label>
                                                     <select name="Quality_Approver">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $info->Quality_Approver == 'yes' ? 'selected' : '' }}
                                                             value="yes">Yes</option>
                                                         <option {{ $info->Quality_Approver == 'no' ? 'selected' : '' }}
@@ -897,7 +897,7 @@
                                                 <div class="group-input">
                                                     <label for="Quality-Approver-Person">Quality Approver Person</label>
                                                     <select name="Quality_Approver_Person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $datas)
                                                             <option {{ $info->Quality_Approver_Person == $datas->id ? 'selected' : '' }}
                                                                 value="{{ $datas->id }}">{{ $datas->name }}</option>
@@ -911,7 +911,7 @@
                                                 <div class="group-input">
                                                     <label for="bd_domestic">Others</label>
                                                     <select name="bd_domestic">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $info->bd_domestic == 'yes' ? 'selected' : '' }}
                                                             value="yes">Yes</option>
                                                         <option {{ $info->bd_domestic == 'no' ? 'selected' : '' }}
@@ -923,7 +923,7 @@
                                                 <div class="group-input">
                                                     <label for="bd_domestic-Person">Others Person</label>
                                                     <select name="Bd_Person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
 
                                                         @foreach ($users as $datas)
                                                             <option {{ $info->Bd_Person == $datas->id ? 'selected' : '' }}
@@ -1132,7 +1132,7 @@
                                                     <label for="severity">Severity</label>
                                                     <select name="severity" id="analysisR"
                                                         onchange='calculateRiskAnalysis(this)'>
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $assessment->severity == '1' ? 'selected' : '' }}
                                                             value="1">Negligible</option>
                                                         <option {{ $assessment->severity == '2' ? 'selected' : '' }}
@@ -1151,7 +1151,7 @@
                                                     <label for="Occurance">Occurance</label>
                                                     <select name="Occurance" id="analysisP"
                                                         onchange='calculateRiskAnalysis(this)'>
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option
                                                             {{ $assessment->Occurance == '5' ? 'selected' : '' }}
                                                             value="5">Extremely Unlikely</option>
@@ -1171,7 +1171,7 @@
                                                     <label for="Detection">Detection</label>
                                                     <select name="Detection" id="analysisN"
                                                         onchange='calculateRiskAnalysis(this)'>
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $assessment->Detection == '5' ? 'selected' : '' }}
                                                             value="5">Impossible</option>
                                                         <option {{ $assessment->Detection == '4' ? 'selected' : '' }}
@@ -1290,41 +1290,32 @@
                                                                     value="{{ $key ? $key + 1 : '1' }}"></td>
                                                             <td><input type="text"
                                                                     name="affected_documents[]"
-                                                                    value="{{ unserialize($closure->affected_document)[$key] ? unserialize($closure->affected_document)[$key] : 'Not Applicable' }}">
+                                                                    value="{{ unserialize($closure->affected_document)[$key] ? unserialize($closure->affected_document)[$key] : '' }}">
                                                             </td>
                                                             <td><input type="text" name="document_name[]"
-                                                                    value="{{ unserialize($closure->doc_name)[$key] ? unserialize($closure->doc_name)[$key] : 'Not Applicale' }}">
+                                                                    value="{{ unserialize($closure->doc_name)[$key] ? unserialize($closure->doc_name)[$key] : '' }}">
                                                             </td>
                                                             <td>                                                                
                                                                 <input type="number" name="document_no[]"
-                                                                    value="{{ unserialize($closure->doc_no)[$key] ? unserialize($closure->doc_no)[$key] : 'Not Applicable' }}">
+                                                                    value="{{ unserialize($closure->doc_no)[$key] ? unserialize($closure->doc_no)[$key] : '' }}">
                                                             </td>
                                                              <td>
                                                                 @if (!empty($closure->version_no))
-                                                                <input type="text" name="version_no[]" value="{{ unserialize($closure->version_no)[$key] ? unserialize($closure->version_no)[$key] : 'Not Applicable' }}">
+                                                                <input type="text" name="version_no[]" value="{{ unserialize($closure->version_no)[$key] ? unserialize($closure->version_no)[$key] : '' }}">
                                                                 @else
-                                                                <input type="text" name="version_no[]" value="Not Applicable">
+                                                                <input type="text" name="version_no[]" value="">
                                                                 @endif
                                                             </td> 
                                                             
-                                                            <td><div class="group-input new-date-data-field ">
-                                                                    <div class="  input-date  ">
-                                                                        <div class="calenderauditee">
-                                                                            {{-- <input type="text"  id="implementation_date{{$key}}" readonly placeholder="DD-MM-YYYY"  value="{{  Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"/> --}}
-                                                                            {{-- <input type="date" class="hide-input" name="implementation_date[]"  value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"  oninput="handleDateInput(this, `implementation_date{{$key}}`)" /> --}}
-                                                                            <input type="text"   id="implementation_date{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) }}" />
-                                                                            <input type="date" id="implementation_date{{$key}}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($closure->implementation_date)[$key]}}"  name="implementation_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) }}"class="hide-input" 
-                                                                              oninput="handleDateInput(this, `implementation_date{{$key}}`)"  /></div></div></div></td>
-                                                                        </div>
-                                                                    </div>
-                                                                </div> 
+                                                            <td>
+                                                                <input type="date" name="implementation_date[]" value="{{ unserialize($closure->implementation_date)[$key] ? unserialize($closure->implementation_date)[$key] : '' }}" >                                                               
                                                             </td>
                                                             
                                                             <td><input type="text" name="new_document_no[]"
-                                                                value="{{ unserialize($closure->new_doc_no)[$key] ? unserialize($closure->new_doc_no)[$key] : 'Not Applicable' }}">
+                                                                value="{{ unserialize($closure->new_doc_no)[$key] ? unserialize($closure->new_doc_no)[$key] : '' }}">
                                                              </td>
                                                              <td><input type="text" name="new_version_no[]"
-                                                                value="{{ unserialize($closure->new_version_no)[$key] ? unserialize($closure->new_version_no)[$key] : 'Not Applicable' }}">
+                                                                value="{{ unserialize($closure->new_version_no)[$key] ? unserialize($closure->new_version_no)[$key] : '' }}">
                                                              </td>
                                                              <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -1405,7 +1396,7 @@
                                                 <div class="group-input">
                                                     <label for="effective-check">Effectivess Check Required?</label>
                                                     <select name="effective_check">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $closure->effective_check == 'yes' ? 'selected' : '' }}
                                                             value="yes">Yes</option>
                                                         <option {{ $closure->effective_check == 'no' ? 'selected' : '' }}
@@ -1429,7 +1420,7 @@
                                                 <div class="group-input">
                                                     <label for="Effectiveness_checker">Effectiveness Checker</label>
                                                     <select name="Effectiveness_checker">
-                                                        <option value="0">Enter Your Selection Here</option>
+                                                        <option value="">Enter Your Selection Here</option>
                                                         @foreach ($users as $datas)
                                                             <option {{ $info->Effectiveness_checker == $datas->id ? 'selected' : '' }}
                                                                  value="{{ $datas->id }}">{{ $datas->name }}
@@ -1478,19 +1469,19 @@
                                             <div class="col-lg-3">
                                                 <div class="group-input">
                                                     <label for="Acknowledge_By">Submitted By</label>
-                                                    <div class="static"> @if($data->submitted_by) {{  $data->submitted_by }} @else Not Applicable @endif</div>
+                                                    <div class="static">{{  $data->submitted_by }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="group-input">
                                                     <label for="Acknowledge_On">Submitted On</label>
-                                                    <div class="static"> @if($data->submitted_on) {{  $data->submitted_on }} @else Not Applicable @endif </div>
+                                                    <div class="static"> {{  $data->submitted_on }} </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Acknowledge_On">Submitted Comment</label>
-                                                    <div class="static"> @if($data->submitted_comment) {{  $data->submitted_comment }} @else Not Applicable @endif </div>
+                                                    <div class="static"> {{  $data->submitted_comment }}</div>
                                                 </div>
                                             </div>
 
@@ -1498,57 +1489,57 @@
                                             <div class="col-lg-3">
                                                 <div class="group-input">
                                                     <label for="Submit_By">HOD Review Completed By</label>
-                                                    <div class="static"> @if($data->hod_review_completed_by) {{  $data->hod_review_completed_by }} @else Not Applicable @endif</div>
+                                                    <div class="static"> {{  $data->hod_review_completed_by }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="group-input">
                                                     <label for="Submit_On">HOD Review Completed On</label>
-                                                    <div class="static"> @if($data->hod_review_completed_on) {{  $data->hod_review_completed_on }} @else Not Applicable @endif</div>
+                                                    <div class="static">{{  $data->hod_review_completed_on }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Submit_On">HOD Review Completed Comment</label>
-                                                    <div class="static"> @if($data->hod_review_completed_comment) {{  $data->hod_review_completed_comment }} @else Not Applicable @endif</div>
+                                                    <div class="static">{{  $data->hod_review_completed_comment }}</div>
                                                 </div>
                                             </div>
 
                                             <div class="col-lg-3">
                                                 <div class="group-input">
                                                     <label for="QA_Review_Complete_By">Pending CFT Review Completed By</label>
-                                                    <div class="static"> @if($data->cft_review_by) {{  $data->cft_review_by }} @else Not Applicable @endif</div>
+                                                    <div class="static"> {{  $data->cft_review_by }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="group-input">
                                                     <label for="QA_Review_Complete_On">Pending CFT Review Completed On</label>
-                                                    <div class="static"> @if($data->cft_review_on) {{  $data->cft_review_on }} @else Not Applicable @endif</div>
+                                                    <div class="static">{{  $data->cft_review_on }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="QA_Review_Complete_On">Pending CFT Review Completed Comment</label>
-                                                    <div class="static"> @if($data->cft_review_comment) {{  $data->cft_review_comment }} @else Not Applicable @endif</div>
+                                                    <div class="static">{{  $data->cft_review_comment }}</div>
                                                 </div>
                                             </div>
 
                                             <div class="col-lg-3">
                                                 <div class="group-input">
                                                     <label for="QA_Review_Complete_By">Review Completed By</label>
-                                                    <div class="static"> @if($data->QA_review_completed_by) {{  $data->QA_review_completed_by }} @else Not Applicable @endif</div>
+                                                    <div class="static">{{  $data->QA_review_completed_by }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="group-input">
                                                     <label for="QA_Review_Complete_On">Review Completed On</label>
-                                                    <div class="static"> @if($data->QA_review_completed_on) {{  $data->QA_review_completed_on }} @else Not Applicable @endif</div>
+                                                    <div class="static"> {{  $data->QA_review_completed_on }} </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="QA_Review_Complete_On">Review Completed Comment</label>
-                                                    <div class="static"> @if($data->QA_review_completed_comment) {{  $data->QA_review_completed_comment }} @else Not Applicable @endif</div>
+                                                    <div class="static"> {{  $data->QA_review_completed_comment }} </div>
                                                 </div>
                                             </div>
 
@@ -1556,19 +1547,19 @@
                                             <div class="col-lg-3">
                                                 <div class="group-input">
                                                     <label for="Cancelled By">Implemented By</label>
-                                                    <div class="static"> @if($data->implemented_by) {{  $data->implemented_by }} @else Not Applicable @endif</div>
+                                                    <div class="static"> {{  $data->implemented_by }} </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="group-input">
                                                     <label for="Cancelled On">Implemented On</label>
-                                                    <div class="static"> @if($data->implemented_on) {{  $data->implemented_on }} @else Not Applicable @endif</div>
+                                                    <div class="static">  {{  $data->implemented_on }} </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Cancelled On">Implemented Comment</label>
-                                                    <div class="static"> @if($data->implemented_comment) {{  $data->implemented_comment }} @else Not Applicable @endif</div>
+                                                    <div class="static"> {{  $data->implemented_comment }}</div>
                                                 </div>
                                             </div>
                                         </div>

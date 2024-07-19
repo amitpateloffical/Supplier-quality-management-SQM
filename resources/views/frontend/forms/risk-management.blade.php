@@ -176,7 +176,7 @@
                     @csrf
                     <div id="step-form">
 
-                        @if(!empty($parent_id))                            
+                        @if (!empty($parent_id))
                             <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                             <input type="hidden" name="parent_type" value="{{ $parent_type }}">
                         @endif
@@ -199,7 +199,8 @@
                                             <label for="Division Code"><b>Site/Location Code</b></label>
                                             <input readonly type="text" name="division_code"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                            <input type="hidden" name="division_id"
+                                                value="{{ session()->get('division') }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -213,7 +214,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Date Due"><b>Date of Initiation</b></label>
-                                            <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                            <input disabled type="text" value="{{ date('d-M-Y') }}"
+                                                name="intiation_date">
                                             <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
 
                                             {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
@@ -236,45 +238,49 @@
                                         </div>
                                     </div>
                                     @php
-                                    $initiationDate = date('Y-m-d');
-                                    $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
-                                @endphp
-    
-                                <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="due-date">Date Due</label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                        <div class="calenderauditee">
-                                        <div class="calenderauditee">
-                                            <input type="text" name="due_date" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="due_date_n" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" />
-                                        </div>
+                                        $initiationDate = date('Y-m-d');
+                                        $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
+                                    @endphp
+
+                                    <div class="col-md-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="due-date">Date Due</label>
+                                            <div><small class="text-primary">Please mention expected date of
+                                                    completion</small></div>
+                                            <div class="calenderauditee">
+                                                <div class="calenderauditee">
+                                                    <input type="text" name="due_date" id="due_date" readonly
+                                                        placeholder="DD-MM-YYYY" />
+                                                    <input type="date" name="due_date_n"
+                                                        min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-    
-                                <script>
+
+                                    <script>
                                         // Format the due date to DD-MM-YYYY
                                         // Your input date
                                         var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
-    
+
                                         // Create a Date object
                                         var date = new Date(dueDate);
-    
+
                                         // Array of month names
                                         var monthNames = [
                                             "Jan", "Feb", "Mar", "Apr", "May", "Jun",
                                             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
                                         ];
-    
+
                                         // Extracting day, month, and year from the date
                                         var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
                                         var monthIndex = date.getMonth();
                                         var year = date.getFullYear();
-    
-                                        // Formatting the date in "dd-MMM-yyyy" format
+
+                                        // Formatting the date in "DD-MM-YYYY" format
                                         var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
-    
+
                                         // Set the formatted due date value to the input field
                                         document.getElementById('due_date').value = dueDateFormatted;
                                     </script>
@@ -283,24 +289,41 @@
                                             <label for="Initiator Group"><b>Initiator Group</b></label>
                                             <select name="Initiator_Group" id="initiator_group">
                                                 <option value="">-- Select --</option>
-                                                <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
-                                                <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
-                                                <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
-                                                <option value="MANU" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
-                                                <option value="PSG" @if(old('Initiator_Group') =="PSG") selected @endif>Plasma Sourcing Group</option>
-                                                <option value="CS"  @if(old('Initiator_Group') == "CS") selected @endif>Central Stores</option>
-                                                <option value="ITG" @if(old('Initiator_Group') =="ITG") selected @endif>Information Technology Group</option>
-                                                <option value="MM"  @if(old('Initiator_Group') == "MM") selected @endif>Molecular Medicine</option>
-                                                <option value="CL"  @if(old('Initiator_Group') == "CL") selected @endif>Central Laboratory</option>
+                                                <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
+                                                    Corporate Quality Assurance</option>
+                                                <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>
+                                                    Quality Assurance Biopharma</option>
+                                                <option value="CQC" @if (old('Initiator_Group') == 'CQA') selected @endif>
+                                                    Central Quality Control</option>
+                                                <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
+                                                    Manufacturing</option>
+                                                <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>
+                                                    Plasma Sourcing Group</option>
+                                                <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>
+                                                    Central Stores</option>
+                                                <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
+                                                    Information Technology Group</option>
+                                                <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
+                                                    Molecular Medicine</option>
+                                                <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>
+                                                    Central Laboratory</option>
 
-                                                <option value="TT"  @if(old('Initiator_Group') == "TT") selected @endif>Tech team</option>
-                                                <option value="QA"  @if(old('Initiator_Group') == "QA") selected @endif> Quality Assurance</option>
-                                                <option value="QM"  @if(old('Initiator_Group') == "QM") selected @endif>Quality Management</option>
-                                                <option value="IA"  @if(old('Initiator_Group') == "IA") selected @endif>IT Administration</option>
-                                                <option value="ACC"  @if(old('Initiator_Group') == "ACC") selected @endif>Accounting</option>
-                                                <option value="LOG"  @if(old('Initiator_Group') == "LOG") selected @endif>Logistics</option>
-                                                <option value="SM"  @if(old('Initiator_Group') == "SM") selected @endif>Senior Management</option>
-                                                <option value="BA"  @if(old('Initiator_Group') == "BA") selected @endif>Business Administration</option>
+                                                <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>
+                                                    Tech team</option>
+                                                <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
+                                                    Quality Assurance</option>
+                                                <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
+                                                    Quality Management</option>
+                                                <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>
+                                                    IT Administration</option>
+                                                <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
+                                                    Accounting</option>
+                                                <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
+                                                    Logistics</option>
+                                                <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
+                                                    Senior Management</option>
+                                                <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
+                                                    Business Administration</option>
                                             </select>
                                         </div>
                                     </div>
@@ -324,13 +347,16 @@
                                             <label for="Short Description">Short Description<span
                                                     class="text-danger">*</span></label><span id="rchars">255</span>
                                             characters remaining
-                                            <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                            <input id="docname" type="text" name="short_description"
+                                                maxlength="255" required>
                                         </div>
-                                    </div>  
+                                    </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="severity-level">Severity Level</label>
-                                            <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
+                                            <span class="text-primary">Severity levels in a QMS record gauge issue
+                                                seriousness, guiding priority for corrective actions. Ranging from low to
+                                                high, they ensure quality standards and mitigate critical risks.</span>
                                             <select name="severity2_level">
                                                 <option value="0">-- Select --</option>
                                                 <option value="minor">Minor</option>
@@ -342,8 +368,9 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Department(s)">Department(s)</label>
-                                            <select name="departments[]" placeholder="Select Departments" data-search="false"
-                                                data-silent-initial-value-set="true" id="departments" multiple>
+                                            <select name="departments[]" placeholder="Select Departments"
+                                                data-search="false" data-silent-initial-value-set="true" id="departments"
+                                                multiple>
                                                 <option value="">Select Department</option>
                                                 <option value="1">QA</option>
                                                 <option value="2">QC</option>
@@ -449,21 +476,21 @@
 
                                             </select>
                                         </div>
-                                    </div>--}}
+                                    </div> --}}
                                     <div class="col-6">
                                         <div class="group-input">
                                             <label for="Description">Risk/Opportunity Description</label>
                                             <textarea name="description" id="description"></textarea>
                                         </div>
-                                    </div> 
-                                    
+                                    </div>
+
                                     {{-- <div class="col-6">
                                         <div class="group-input">
                                             <label for="Description"> Opportunity Description</label>
                                             <textarea name=" Opportunity_description" id="Opportunitydescription"></textarea>
                                         </div>
                                     </div> --}}
-                                   
+
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Risk/Opportunity Comments</label>
@@ -475,7 +502,8 @@
                                 <div class="button-block">
                                     <button type="submit" id="ChangeSaveButton" class="saveButton">Save</button>
                                     <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
 
@@ -489,7 +517,8 @@
                                         <div class="group-input">
                                             <label for="Department(s)">Department(s)</label>
                                             <select multiple name="departments2[]" placeholder="Select Departments"
-                                                data-search="false" data-silent-initial-value-set="true" id="departments">
+                                                data-search="false" data-silent-initial-value-set="true"
+                                                id="departments">
                                                 <option value="">Select Department</option>
                                                 <option value="1">QA</option>
                                                 <option value="2">QC</option>
@@ -670,27 +699,34 @@
                                             <label for="Regulatory Climate">Regulatory Climate</label>
                                             <select name="regulatory_climate" id="regulatory_climate">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">0. No significant regulatory issues affecting operation
+                                                <option value="1">0. No significant regulatory issues affecting
+                                                    operation
                                                 </option>
-                                                <option value="2">1. Some regulatory or enforcement changes potentially
+                                                <option value="2">1. Some regulatory or enforcement changes
+                                                    potentially
                                                     affecting
                                                     operation are
                                                     anticipated </option>
                                                 <option value="3">2. A few regulatory or enforcement changes affect
                                                     operations</option>
-                                                <option value="4">3. Regulatory and enforcement changes affect operation
+                                                <option value="4">3. Regulatory and enforcement changes affect
+                                                    operation
                                                 </option>
-                                                <option value="5">4. Significant programatic regulatory and enforcement
+                                                <option value="5">4. Significant programatic regulatory and
+                                                    enforcement
                                                     changes affect
                                                     operation
                                                 </option>
-                                                <option value="2">1. Some regulatory or enforcement changes potentially
+                                                <option value="2">1. Some regulatory or enforcement changes
+                                                    potentially
                                                     affecting operation are anticipated </option>
                                                 <option value="3">2. A few regulatory or enforcement changes affect
                                                     operations</option>
-                                                <option value="4">3. Regulatory and enforcement changes affect operation
+                                                <option value="4">3. Regulatory and enforcement changes affect
+                                                    operation
                                                 </option>
-                                                <option value="5">4. Significant programatic regulatory and enforcement
+                                                <option value="5">4. Significant programatic regulatory and
+                                                    enforcement
                                                     changes affect operation</option>
                                             </select>
                                         </div>
@@ -727,7 +763,8 @@
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
                         </div>
@@ -744,8 +781,9 @@
                                             <label for="Date Due">Scheduled Start Date</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="schedule_start_date" readonly
-                                                    placeholder="DD-MMM-YYYY" />
-                                                <input type="date" id="schedule_start_date_checkdate" name="schedule_start_date1" class="hide-input"
+                                                    placeholder="DD-MM-YYYY" />
+                                                <input type="date" id="schedule_start_date_checkdate"
+                                                    name="schedule_start_date1" class="hide-input"
                                                     oninput="handleDateInput(this, 'schedule_start_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                             </div>
                                         </div>
@@ -755,8 +793,9 @@
                                             <label for="Date Due">Scheduled End Date</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="schedule_end_date" readonly
-                                                    placeholder="DD-MMM-YYYY" />
-                                                <input type="date" id="schedule_end_date_checkdate" name="schedule_end_date1" class="hide-input"
+                                                    placeholder="DD-MM-YYYY" />
+                                                <input type="date" id="schedule_end_date_checkdate"
+                                                    name="schedule_end_date1" class="hide-input"
                                                     oninput="handleDateInput(this, 'schedule_end_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                             </div>
                                         </div>
@@ -862,23 +901,32 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled ="text" name="serial_number[]" value="1"></td>
+                                                    <td><input disabled ="text" name="serial_number[]" value="1">
+                                                    </td>
                                                     <td><input type="text" name="action[]"></td>
                                                     {{-- <td><input type="text" name="responsible[]"></td> --}}
-                                                    <td> <select id="select-state" placeholder="Select..." name="responsible[]">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
+                                                    <td> <select id="select-state" placeholder="Select..."
+                                                            name="responsible[]">
+                                                            <option value="">Select a value</option>
+                                                            @foreach ($users as $data)
+                                                                <option value="{{ $data->id }}">{{ $data->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select></td>
                                                     {{-- <td><input type="date" name="deadline[]"></td> --}}
-                                                    <td><div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date "><div
-                                                        class="calenderauditee">
-                                                        <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="deadline[]" class="hide-input" 
-                                                        oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>
+                                                    <td>
+                                                        <div class="group-input new-date-data-field mb-0">
+                                                            <div class="input-date ">
+                                                                <div class="calenderauditee">
+                                                                    <input type="text" id="deadline' + serialNumber +'"
+                                                                        readonly placeholder="DD-MM-YYYY" />
+                                                                    <input type="date" name="deadline[]"
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                     <td><input type="text" name="item_static[]"></td>
                                                 </tbody>
                                             </table>
@@ -893,7 +941,8 @@
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Report Attachments">Work Group Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="reference"></div>
                                                 <div class="add-btn">
@@ -909,7 +958,8 @@
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
                         </div>
@@ -964,7 +1014,8 @@
                                                             <th>Residual Detectability- H(1)/M(2)/L(3)</th>
                                                             <th>Residual RPN</th>
                                                             <th>Risk Acceptance (Y/N)</th>
-                                                            <th>Mitigation proposal (Mention either CAPA reference number, IQ,
+                                                            <th>Mitigation proposal (Mention either CAPA reference number,
+                                                                IQ,
                                                                 OQ or
                                                                 PQ)</th>
                                                         </tr>
@@ -1238,7 +1289,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Occurrence">Occurrence</label>
-                                            <select name="occurrence" id="analysisP" onchange='calculateRiskAnalysis(this)'>
+                                            <select name="occurrence" id="analysisP"
+                                                onchange='calculateRiskAnalysis(this)'>
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="5">Extremely Unlikely</option>
                                                 <option value="4">Rare</option>
@@ -1251,7 +1303,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Detection">Detection</label>
-                                            <select name="detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
+                                            <select name="detection" id="analysisN"
+                                                onchange='calculateRiskAnalysis(this)'>
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="5">Impossible</option>
                                                 <option value="4">Rare</option>
@@ -1265,7 +1318,8 @@
                                         <div class="group-input">
                                             <label for="RPN">RPN</label>
                                             <div><small class="text-primary">Auto - Calculated</small></div>
-                                            <input type="text" name="rpn" id="analysisRPN" value="" readonly>
+                                            <input type="text" name="rpn" id="analysisRPN" value=""
+                                                readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -1273,7 +1327,8 @@
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
                         </div>
@@ -1292,7 +1347,7 @@
                                         <div class="group-input">
                                             <label for="Residual Risk Impact">Residual Risk Impact</label>
                                             <select name="residual_risk_impact" id="analysisR2"
-                                            onchange='calculateRiskAnalysis2(this)'>
+                                                onchange='calculateRiskAnalysis2(this)'>
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="1">High</option>
                                                 <option value="2">Low</option>
@@ -1304,7 +1359,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Residual Risk Probability">Residual Risk Probability</label>
-                                            <select name="residual_risk_probability" id="analysisP2" onchange='calculateRiskAnalysis2(this)'>
+                                            <select name="residual_risk_probability" id="analysisP2"
+                                                onchange='calculateRiskAnalysis2(this)'>
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="1">High</option>
                                                 <option value="2">Medium</option>
@@ -1315,7 +1371,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Detection">Residual Detection</label>
-                                            <select name="detection2" id="analysisN2" onchange='calculateRiskAnalysis2(this)'>
+                                            <select name="detection2" id="analysisN2"
+                                                onchange='calculateRiskAnalysis2(this)'>
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="5">Impossible</option>
                                                 <option value="4">Rare</option>
@@ -1329,7 +1386,8 @@
                                         <div class="group-input">
                                             <label for="RPN">Residual RPN</label>
                                             <div><small class="text-primary">Auto - Calculated</small></div>
-                                            <input type="text" name="rpn2" id="analysisRPN2" value="" readonly>
+                                            <input type="text" name="rpn2" id="analysisRPN2" value=""
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -1343,7 +1401,8 @@
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
                         </div>
@@ -1375,25 +1434,35 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]" value="1"></td>
+                                                    <td><input disabled type="text" name="serial_number[]"
+                                                            value="1"></td>
                                                     <td><input type="text" name="mitigation_steps[]"></td>
                                                     {{-- <td><input type="date" name="deadline2[]"></td>  --}}
-                                                    <td><div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date "><div
-                                                        class="calenderauditee">
-                                                        <input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="deadline2[]" class="hide-input" 
-                                                        oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>
+                                                    <td>
+                                                        <div class="group-input new-date-data-field mb-0">
+                                                            <div class="input-date ">
+                                                                <div class="calenderauditee">
+                                                                    <input type="text"
+                                                                        id="deadline2' + serialNumber +'" readonly
+                                                                        placeholder="DD-MM-YYYY" />
+                                                                    <input type="date" name="deadline2[]"
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                     {{-- <td><input type="text" name="item_static[]"></td> --}}
-                                                    
 
-                                                    <td> <select id="select-state" placeholder="Select..." name="responsible_person[]">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
+
+                                                    <td> <select id="select-state" placeholder="Select..."
+                                                            name="responsible_person[]">
+                                                            <option value="">Select a value</option>
+                                                            @foreach ($users as $data)
+                                                                <option value="{{ $data->id }}">{{ $data->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select></td>
                                                     <td><input type="text" name="status[]"></td>
                                                     <td><input type="text" name="remark[]"></td>
                                                 </tbody>
@@ -1421,7 +1490,8 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Department(s)">Mitigation Required</label>
-                                            <select name="mitigation_required"   onchange="otherController(this.value, 'yes', 'initiated_through_req')" >
+                                            <select name="mitigation_required"
+                                                onchange="otherController(this.value, 'yes', 'initiated_through_req')">
                                                 <option value="">Select Mitigation </option>
                                                 <option value="yes">Yes</option>
                                                 <option value="no">No</option>
@@ -1431,8 +1501,9 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input" id="initiated_through_req">
-                                            <label for="mitigation-plan">Mitigation Plan<span class="text-danger d-none">*</span></label>
-                                            <textarea  name="mitigation_plan"></textarea>
+                                            <label for="mitigation-plan">Mitigation Plan<span
+                                                    class="text-danger d-none">*</span></label>
+                                            <textarea name="mitigation_plan"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 new-date-data-field">
@@ -1440,7 +1511,7 @@
                                             <label for="Date Due">Scheduled End Date</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="mitigation_due_date" readonly
-                                                    placeholder="DD-MMM-YYYY" />
+                                                    placeholder="DD-MM-YYYY" />
                                                 <input type="date" name="mitigation_due_date" class="hide-input"
                                                     oninput="handleDateInput(this, 'mitigation_due_date')" />
                                             </div>
@@ -1530,11 +1601,11 @@
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Reference Recores">Reference Record</label>
-                                            <select multiple id="reference_record" name="refrence_record[]" >
+                                            <select multiple id="reference_record" name="refrence_record[]">
                                                 <option value="">--Select---</option>
                                                 @foreach ($old_record as $new)
                                                     <option value="{{ $new->id }}">
-                                                        {{ Helpers::getDivisionName($new->division_id) }}/RA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
+                                                        {{ Helpers::getDivisionName($new->division_id) }}/RA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -1546,7 +1617,8 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="due_date_extension">Due Date Extension Justification</label>
-                                            <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
+                                            <div><small class="text-primary">Please Mention justification if due date is
+                                                    crossed</small></div>
                                             <textarea name="due_date_extension"></textarea>
                                         </div>
                                     </div>
@@ -1555,7 +1627,8 @@
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
                         </div>
@@ -1617,7 +1690,8 @@
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="submit">Submit</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
                         </div>
@@ -1754,17 +1828,18 @@
             });
         </script>
 
-    <script>
-        $(document).ready(function() {
-            $('#action_plan').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    console.log(users);
-                    var html =
-                    '<tr>' +
-                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
-                        '<td><input type="text" name="action[]"></td>' +
-                        '<td><select name="responsible[]">' +
+        <script>
+            $(document).ready(function() {
+                $('#action_plan').click(function(e) {
+                    function generateTableRow(serialNumber) {
+                        var users = @json($users);
+                        console.log(users);
+                        var html =
+                            '<tr>' +
+                            '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="action[]"></td>' +
+                            '<td><select name="responsible[]">' +
                             '<option value="">Select a value</option>';
 
                         for (var i = 0; i < users.length; i++) {
@@ -1772,36 +1847,42 @@
                         }
 
                         html += '</select></td>' +
-                        // '<td><input type="date" name="deadline[]"></td>'
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>'
-                        +
-                        '<td><input type="text" name="item_static[]"></td>' +
-                        '</tr>';
+                            // '<td><input type="date" name="deadline[]"></td>'
+                            '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' +
+                            serialNumber +
+                            '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' +
+                    serialNumber + '`)" /></div></div></div></td>' +
+                            '<td><input type="text" name="item_static[]"></td>' +
+                            '</tr>';
 
 
 
-                    return html;
-                }
+                        return html;
+                    }
 
-                var tableBody = $('#action_plan_details tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
-            $('#action_plan2').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    console.log(users);
-                    var html =
-                    '<tr>' +
-                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
-                        '<td><input type="text" name="mitigation_steps[]"></td>' +
-                        // '<td><input type="date" name="deadline2[]"></td>' 
-                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>'
-                        
-                        
-                        +
-                        '<td><select name="responsible_person[]">' +
+                    var tableBody = $('#action_plan_details tbody');
+                    var rowCount = tableBody.children('tr').length;
+                    var newRow = generateTableRow(rowCount + 1);
+                    tableBody.append(newRow);
+                });
+                $('#action_plan2').click(function(e) {
+                    function generateTableRow(serialNumber) {
+                        var users = @json($users);
+                        console.log(users);
+                        var html =
+                            '<tr>' +
+                            '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="mitigation_steps[]"></td>' +
+                            // '<td><input type="date" name="deadline2[]"></td>' 
+                            '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' +
+                            serialNumber +
+                            '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' +
+                    serialNumber + '`)" /></div></div></div></td>'
+
+
+                            +
+                            '<td><select name="responsible_person[]">' +
                             '<option value="">Select a value</option>';
 
                         for (var i = 0; i < users.length; i++) {
@@ -1809,24 +1890,25 @@
                         }
 
                         html += '</select></td>' +
-                        '<td><input type="text" name="status[]"></td>' +
-                        '<td><input type="text" name="remark[]"></td>' +
-                        '</tr>';
+                            '<td><input type="text" name="status[]"></td>' +
+                            '<td><input type="text" name="remark[]"></td>' +
+                            '</tr>';
 
-                    return html;
-                }
+                        return html;
+                    }
 
-                var tableBody = $('#action_plan_details2 tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
+                    var tableBody = $('#action_plan_details2 tbody');
+                    var rowCount = tableBody.children('tr').length;
+                    var newRow = generateTableRow(rowCount + 1);
+                    tableBody.append(newRow);
+                });
             });
-        });
-    </script>
-    <script>
-        var maxLength = 255;
-        $('#docname').keyup(function() {
-            var textlen = maxLength - $(this).val().length;
-            $('#rchars').text(textlen);});
-    </script>
+        </script>
+        <script>
+            var maxLength = 255;
+            $('#docname').keyup(function() {
+                var textlen = maxLength - $(this).val().length;
+                $('#rchars').text(textlen);
+            });
+        </script>
     @endsection

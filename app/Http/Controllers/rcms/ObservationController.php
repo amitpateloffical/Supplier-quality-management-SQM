@@ -951,45 +951,45 @@ class ObservationController extends Controller
         //     $history->save();
         // }
 
-        if ($lastDocument->intiation_date != $data->intiation_date || !empty($request->intiation_date_comment)) {
-            $lastDocumentAuditTrail = AuditTrialObservation::where('Observation_id', $data->id)
-                     ->where('activity_type', 'Intiation Date')
-                     ->exists();
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Intiation Date';
-            $history->previous = $lastDocument->intiation_date;
-            $history->current = $data->intiation_date;
-            $history->comment = $request->intiation_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
-            $history->save();
-        }
+        // if ($lastDocument->intiation_date != $data->intiation_date || !empty($request->intiation_date_comment)) {
+        //     $lastDocumentAuditTrail = AuditTrialObservation::where('Observation_id', $data->id)
+        //              ->where('activity_type', 'Intiation Date')
+        //              ->exists();
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Intiation Date';
+        //     $history->previous = $lastDocument->intiation_date;
+        //     $history->current = $data->intiation_date;
+        //     $history->comment = $request->intiation_date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = 'Not Applicable';
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = "Update";
+        //     $history->save();
+        // }
 
-        if ($lastDocument->due_date != $data->due_date || ! empty($request->due_date_comment)) {
-                $lastDocumentAuditTrail = AuditTrialObservation::where('Observation_id', $data->id)
-                    ->where('activity_type', 'Due Date')
-                    ->exists();
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Due Date';
-            $history->previous = $lastDocument->due_date;
-            $history->current = $data->due_date;
-            $history->comment = $request->due_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-            $history->save();
-        }
+        // if ($lastDocument->due_date != $data->due_date || ! empty($request->due_date_comment)) {
+        //         $lastDocumentAuditTrail = AuditTrialObservation::where('Observation_id', $data->id)
+        //             ->where('activity_type', 'Due Date')
+        //             ->exists();
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Due Date';
+        //     $history->previous = $lastDocument->due_date;
+        //     $history->current = $data->due_date;
+        //     $history->comment = $request->due_date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = 'Not Applicable';
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
 
         if ($lastDocument->short_description != $data->short_description || ! empty($request->short_description_comment)) {
             $lastDocumentAuditTrail = AuditTrialObservation::where('Observation_id', $data->id)

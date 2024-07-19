@@ -1076,7 +1076,7 @@
                                                 <label for="Scheduled Start Date">Scheduled Start Date</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="schedule_start_date" readonly value="{{ Helpers::getdateFormat($data->schedule_start_date1) }}" 
-                                                        placeholder="DD-MMM-YYYY" />
+                                                        placeholder="DD-MM-YYYY" />
                                                     <input type="date" id="schedule_start_date_checkdate" name="schedule_start_date1" value="{{ $data->schedule_start_date1 }}" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="hide-input" 
                                                         oninput="handleDateInput(this, 'schedule_start_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                 </div>
@@ -1088,7 +1088,7 @@
                                                 <label for="Scheduled End Date">Scheduled End Date</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="schedule_end_date" readonly value="{{ Helpers::getdateFormat($data->schedule_end_date1) }}" 
-                                                        placeholder="DD-MMM-YYYY" />
+                                                        placeholder="DD-MM-YYYY" />
                                                     <input type="date" id="schedule_end_date_checkdate" name="schedule_end_date1" value="{{ $data->schedule_end_date1 }}" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="hide-input"
                                                         oninput="handleDateInput(this, 'schedule_end_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                 </div>
@@ -1260,7 +1260,7 @@
                                                                 <td><div class="group-input new-date-data-field mb-0">
                                                                     <div class="input-date "><div
                                                                     class="calenderauditee">
-                                                                    <input type="text" id="deadline{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) }}" />
+                                                                    <input type="text" id="deadline{{$key}}' + serialNumber +'" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) }}" />
                                                                     <input type="date" name="deadline[]" class="hide-input" value="{{ unserialize($action_plan->deadline)[$key] }}"
                                                                     oninput="handleDateInput(this, `deadline{{$key}}' + serialNumber +'`)" /></div></div></div></td>
                                                                 
@@ -1969,7 +1969,7 @@
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date "><div
                                                                 class="calenderauditee">
-                                                                <input type="text" id="deadline2{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) }}" />
+                                                                <input type="text" id="deadline2{{$key}}' + serialNumber +'" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) }}" />
                                                                 <input type="date" name="deadline2[]" class="hide-input" value="{{ unserialize($mitigation_plan_details->deadline2)[$key] }}"
                                                                 oninput="handleDateInput(this, `deadline2{{$key}}' + serialNumber +'`)" /></div></div></div></td>
                                                             {{-- <td><input type="text" name="responsible_person[]"
@@ -2024,7 +2024,7 @@
                                                     data-silent-initial-value-set="true" id="" >
                                                     <option value="">Select Mitigation </option>
                                                     <option value="yes"  {{ $data->mitigation_required == 'yes' ? 'selected' : '' }}>Yes</option>
-                                                    <option value="no"  {{ $data->mitigation_status == 'no' ? 'selected' : '' }}>No</option>
+                                                    <option value="no"  {{ $data->mitigation_required == 'no' ? 'selected' : '' }}>No</option>
 
                                                 </select>
                                             </div>
@@ -2040,7 +2040,7 @@
                                                 <label for="mitigation-due-date">Scheduled End Date</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="mitigation_due_date" readonly value="{{ Helpers::getdateFormat($data->mitigation_due_date)}}"
-                                                        name="mitigation_due_date" placeholder="DD-MMM-YYYY" />
+                                                        name="mitigation_due_date" placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="mitigation_due_date" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $data->mitigation_due_date }}" class="hide-input"  
                                                         oninput="handleDateInput(this, 'mitigation_due_date')" />
                                                 </div>
@@ -2505,7 +2505,7 @@
 
                                 html += '</select></td>' +
                                 // '<td><input type="date" name="deadline[]"></td>' +
-                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>'
+                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>'
                                  +
                                 '<td><input type="text" name="item_static[]"></td>' +
                                 '</tr>';
@@ -2529,7 +2529,7 @@
                                 '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                                 '<td><input type="text" name="mitigation_steps[]"></td>' +
                                 // '<td><input type="date" name="deadline2[]"></td>' +
-                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>'
+                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>'
                                   +
                                 '<td><select name="responsible_person[]">' +
                                     '<option value="">Select a value</option>';

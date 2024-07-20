@@ -71,6 +71,7 @@ class ExtensionNewController extends Controller
         $extensionNew->record_number = DB::table('record_numbers')->value('counter') + 1;
 //   dd($extensionNew->record_number);
         $extensionNew->site_location_code = $request->site_location_code;
+        // dd($request->site_location_code);
         $extensionNew->initiator = Auth::user()->id;
 
         // dd($request->initiator);
@@ -301,8 +302,10 @@ class ExtensionNewController extends Controller
 
     public function show(Request $request,$id){
         $extensionNew = extension_new::find($id);
-        $count = extension_new::where('parent_type' , 'LabIncident')->get()->count();
+        $count = extension_new::where('parent_type' , 'Deviation')->get()->count();
+        $capaCount = extension_new::where('parent_type' , 'CAPA')->get()->count();
 
+         
         $reviewers = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
@@ -317,7 +320,7 @@ class ExtensionNewController extends Controller
                 ->where('user_roles.q_m_s_roles_id', 1)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
-        return view('frontend.extension.extension_view', compact('extensionNew','reviewers','approvers','count'));
+        return view('frontend.extension.extension_view', compact('extensionNew','reviewers','capaCount','approvers','count'));
 
     }
 

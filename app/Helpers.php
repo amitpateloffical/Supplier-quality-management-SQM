@@ -227,6 +227,11 @@ static function getFullDepartmentName($code)
             return false;
         }         
     }
+    public static function showStage($parentType, $model, $count)
+    {
+        $existingRecordsCount = $model::where('parent_type', $parentType)->count();
+        return $existingRecordsCount > $count;
+    }
 
     public static function checkRoles_check_approvers($document)
     {

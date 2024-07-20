@@ -1041,116 +1041,121 @@
                                                 <div class="static"></div>
                                             </div>
                                         </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled By">Cancelled By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled On">Cancelled On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
+                                
+                                        <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Preparation Completed On"> Completed Audit Preparation
                                             By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Preparation Completed On">Completed Audit Preparation 
                                             On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Mgr.more Info Reqd By">Reject By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Mgr.more Info Reqd On"> Reject On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd By">Cancelled By</label>
+                                        <label for="Cancelled By">Cancelled By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd On">Cancelled On</label>
+                                        <label for="Cancelled On">Cancelled On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                
+                                
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Observation Submitted By">Issue  Report By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Observation Submitted On">Issue Report On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Audit Observation Submitted By">Issue  Report Reject By</label>
+                                        <label for="Audit Observation Submitted By">Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Observation Submitted On">Issue Report Reject On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Observation Submitted By">Cancelled By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Observation Submitted On">Cancelled On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
+                                
+                                
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Lead More Info Reqd By">CAPA Plan Proposed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Lead More Info Reqd On">CAPA Plan Proposed On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Lead More Info Reqd By">No CAPA Required By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Lead More Info Reqd On">No CAPA Required On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
                                 <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Audit Response Completed By">All CAPA Closed By</label>

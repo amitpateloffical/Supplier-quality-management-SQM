@@ -610,7 +610,7 @@ function addMultipleFiles(input, block_id) {
                                     
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="File Attachments">File Attachment</label>
+                                                <label for="File Attachments">Initial Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled  class="file-attachment-list" id="inv_attachment">
@@ -1117,7 +1117,7 @@ function addMultipleFiles(input, block_id) {
                         <th>Pre Comments</th>
                         <th>CAPA Details if any</th>
                         <th>Post Comments</th>
-                        <th>Remove</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="observationDetail">
@@ -1311,7 +1311,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Audit Schedule On">Comment</label>
-                                                <div class="static">{{ $data->comment }}{{$data->comment_rejected_comment}}</div>
+                                                <div class="static">{{ $data->comment }}</div>
                                             </div>
                                         </div>
                                         
@@ -1370,7 +1370,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Cancel Comment</label>
+                                                <label for="Audit Schedule On"> Comment</label>
                                                 <div class="static">{{$data->comment_cancelled_comment}}</div>
                                             </div>
                                         </div>

@@ -595,7 +595,7 @@ function addMultipleFiles(input, block_id) {
       
 <div class="col-lg-6" id="others_group">
     <div class="group-input">
-        <label for="others">Others<span class="text-danger d-none">*</span></label>
+        <label for="others">Supplier Agencies Others<span class="text-danger d-none">*</span></label>
         <textarea name="others" id="others" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->others }}</textarea>
     </div>
 </div>
@@ -610,7 +610,7 @@ function addMultipleFiles(input, block_id) {
                                     
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="File Attachments">File Attachment</label>
+                                                <label for="File Attachments">Initial Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled  class="file-attachment-list" id="inv_attachment">
@@ -932,37 +932,39 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div> --}}
                                         <div class="col-6">
-                                            <div class="group-input">
-                                                <label for="Audit Team">Audit Team</label>
-                                                <select multiple name="Audit_team[]" placeholder="Select Audit Team"
-                                                    data-search="false" data-silent-initial-value-set="true"
-                                                    id="Audit"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}"
-                                                            {{ in_array($user->id, explode(',', $data->Audit_team)) ? 'selected' : '' }}>
-                                                            {{ $user->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="group-input">
-                                                <label for="Auditee">Auditee</label>
-                                                <select multiple name="Auditee[]" placeholder="Select Auditee"
-                                                    data-search="false" data-silent-initial-value-set="true"
-                                                    id="Auditee"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}"
-                                                            {{ in_array($user->id, explode(',', $data->Auditee)) ? 'selected' : '' }}>
-                                                            {{ $user->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+    <div class="group-input">
+        <label for="Audit Team">Audit Team</label>
+        <select multiple name="Audit_team[]" placeholder="Select Audit Team"
+            data-search="false" data-silent-initial-value-set="true"
+            id="Audit"
+            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+            @foreach ($users as $user)
+                <option value="{{ $user->id }}"
+                    {{ in_array($user->id, explode(',', $data->Audit_team)) ? 'selected' : '' }}>
+                    {{ $user->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+<div class="col-6">
+    <div class="group-input">
+        <label for="Auditee">Auditee</label>
+        <select multiple name="Auditee[]" placeholder="Select Auditee"
+            data-search="false" data-silent-initial-value-set="true"
+            id="Auditee"
+            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+            @foreach ($users as $user)
+                <option value="{{ $user->id }}"
+                    {{ in_array($user->id, explode(',', $data->Auditee)) ? 'selected' : '' }}>
+                    {{ $user->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="External Auditor Details">Suppliers Auditor Details</label>
@@ -1117,7 +1119,7 @@ function addMultipleFiles(input, block_id) {
                         <th>Pre Comments</th>
                         <th>CAPA Details if any</th>
                         <th>Post Comments</th>
-                        <th>Remove</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="observationDetail">
@@ -1311,7 +1313,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Audit Schedule On">Comment</label>
-                                                <div class="static">{{ $data->comment }}{{$data->comment_rejected_comment}}</div>
+                                                <div class="static">{{ $data->comment }}</div>
                                             </div>
                                         </div>
                                         
@@ -1370,8 +1372,26 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Cancel Comment</label>
+                                                <label for="Audit Schedule On"> Comment</label>
                                                 <div class="static">{{$data->comment_cancelled_comment}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="No CAPA Required By">No CAPA Required By</label>
+                                                <div class="static">{{ $data->No_Capa_Required_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="No Capa Required On">No CAPA Required On</label>
+                                                <div class="static">{{ $data->No_CAPA_Required_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On"> Comment</label>
+                                                <div class="static">{{$data->comment_closed_done_by_comment}}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">

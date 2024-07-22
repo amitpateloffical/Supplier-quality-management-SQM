@@ -235,15 +235,21 @@
                         <td class="w-30"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Audit type</th>
+                        <th class="w-20">Type of Audit</th>
                         <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
                     </tr>
+                    <tr>
+                    <th class="w-20">Due Date Extension Justification</th>
+                    <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
+                    <th class="w-20">Audit Comments</th>
+                        <td class="w-30">@if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif</td>    
+                </tr>
         
 
                 </table>
                 <div class="border-table">
                     <div class="block-head">
-                        Initial Attachment
+                        File Attachment
                     </div>
                     <table>
 
@@ -303,10 +309,7 @@
                                     @else
                                       Not Applicable
                                     @endif</td>
-
-
                         </tr>
-
                     </table>
                 </div>
             </div>
@@ -331,8 +334,8 @@
                     <tr>
                         <th class="w-20">QA Comments</th>
                         <td class="w-30">@if($data->QA_Comments){{$data->QA_Comments}}@else Not Applicable @endif</td>
-                        <th class="w-20">Guideline Attachment</th>
-                        <td class="w-30">@if($data->file_attachment_guideline){{ $data->file_attachment_guideline }}@else Not Applicable @endif</td>
+                        <!-- <th class="w-20">Guideline Attachment</th>
+                        <td class="w-30">@if($data->file_attachment_guideline){{ $data->file_attachment_guideline }}@else Not Applicable @endif</td> -->
                     </tr>
                     <tr>
                         <th class="w-20">Audit Category</th>
@@ -370,8 +373,7 @@
                     <tr>
                         <th class="w-20">Comments</th>
                         <td class="w-30">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
-                        <th class="w-20">Audit Comments</th>
-                        <td class="w-30">@if($data->Audit_Comments1){{ $data->Audit_Comments1 }}@else Not Applicable @endif</td>
+
                     </tr>
                 </table>
             </div>
@@ -398,7 +400,6 @@
                         <td class="w-20">Not Applicable</td>
                     </tr>
                     @endif
-
                 </table>
             </div>
             <div class="border-table">
@@ -433,7 +434,6 @@
                        Audit Execution
                     </div>
                     <table>
-
                         <tr>
                        
                             <th class="w-20">Audit Start Date</th>
@@ -449,16 +449,18 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <th class="w-20">Audit Comments
-                            </th>
-                            <td class="w-80">
-                                <div>
-                                    @if($data->Audit_Comments1){{ $data->Audit_Comments1 }}@else Not Applicable @endif
-                                </div>
-                            </td>
-                        </tr>
-                        <div class="border-table">
+                       
+                      
+            </div>
+        </table>
+    </div>  
+<tr>
+    <td>
+           
+    </td>
+</tr>
+
+    <div class="border-table">
                     <div class="block-head">
                         Audit Attachments
                     </div>
@@ -466,10 +468,10 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File </th>
                         </tr>
-                            @if($data->myfile)
-                            @foreach(json_decode($data->myfile) as $key => $file)
+                        @if($data->Audit_file)
+                            @foreach(json_decode($data->Audit_file) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
                                     <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
@@ -484,9 +486,6 @@
 
                     </table>
                 </div>
-            </div>
-        </table>
-    </div>  
                 
             <div class="block">
                 <div class="block-head">
@@ -494,24 +493,13 @@
                 </div>
                 <table>
 
-                        <!-- <tr>
-                        <th class="w-20">Reference Record</th>
-                        <td class="w-30">@if($data->refrence_record){{ $data->refrence_record }}@else Not Applicable @endif</td>
-                        <th class="w-20">Due Date Extension Justification</th>
-                        <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
-                    </tr> -->
+                        
                     <tr>
                     <th class="w-20">Remarks</th>
                         <td class="w-80" colspan="3">@if($data->Remarks){{ $data->Remarks }}@else Not Applicable @endif</td>
                       </tr>
                       <tr>
-                            <th class="w-20">Audit Comments
-                            </th>
-                            <td class="w-80">
-                                <div>
-                                    @if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif
-                                </div>
-                            </td>
+
                         </tr>
 
 
@@ -527,8 +515,8 @@
                             <th class="w-20">S.N.</th>
                             <th class="w-60">File </th>
                         </tr>
-                            @if($data->Audit_file)
-                            @foreach(json_decode($data->Audit_file) as $key => $file)
+                        @if($data->myfile)
+                            @foreach(json_decode($data->myfile) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
                                     <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
@@ -569,8 +557,128 @@
 
                     </table>
                 </div>
-                
 
+                <div class="border-table">
+                <div class="block-head">
+                Audit Agenda 
+                </div>
+                <table>
+
+                    <tr class="table_bg">
+                        <th class="w-20">Row #</th>
+                        <th class="w-60">Area of Audit</th>
+                        <th class = "w-60">Scheduled Start Date</th>
+                        <th class = "w-60">Scheduled Start Time</th>
+                        <th class = "w-60">Scheduled End Date</th>
+                        </tr>
+        @php
+            $serialNumber = 1;
+        @endphp
+        @if ($sgrid->start_date)
+        @foreach (unserialize($sgrid->start_date) as $key => $temps)
+
+                        <tr>
+                <td>{{ $serialNumber++ }}</td>
+                <td>{{ unserialize($sgrid->area_of_audit)[$key] ?? '' }}</td>
+                <td>{{ unserialize($sgrid->start_date)[$key] }}</td>
+                <td>{{ unserialize($sgrid->start_time)[$key] ?? '' }}</td>
+                <td>{{ unserialize($sgrid->end_date)[$key] }}</td>
+               </tr>
+                        
+            @endforeach
+            @endif
+
+
+
+                </table>
+            </div>
+            <div class="border-table">
+    <div class="block-head">
+        Audit Agenda II
+    </div>
+    <table>
+        <tr class="table_bg">
+            <th class="w-20">Row #</th>
+            <th class="w-60">Scheduled End Time</th>
+            <th class="w-60">Auditor</th>
+            <th class="w-60">Auditee</th>
+            <th class="w-60">Remarks</th>
+        </tr>
+        @php
+        use Carbon\Carbon;
+        $users = DB::table('users')
+            ->select('id', 'name')
+            ->get();
+        $serialNumber = 1; // Initialize serial number
+        @endphp
+
+        @if ($sgrid->start_date)
+            @foreach (unserialize($sgrid->start_date) as $key => $startDate)
+                @php
+                $scheduledEndTime = unserialize($sgrid->scheduled_end_time)[$key] ?? '';
+                $formattedStartDate = Carbon::parse($startDate)->format('d-M-Y');
+                $formattedEndTime = $scheduledEndTime ? Carbon::parse($scheduledEndTime)->format('d-M-Y') : '';
+                @endphp
+                <tr>
+                    <td>{{ $serialNumber++ }}</td>
+                    <td>{{ $formattedEndTime }}</td>
+                    <td>
+                        @foreach ($users as $value)
+                            @if (unserialize($sgrid->auditor)[$key] == $value->id)
+                                {{ $value->name }}
+                            @endif
+                        @endforeach
+                    </td>
+                    <td>
+                        @foreach ($users as $value)
+                            @if (unserialize($sgrid->auditee)[$key] == $value->id)
+                                {{ $value->name }}
+                            @endif
+                        @endforeach
+                    </td>
+                    <td>{{ unserialize($sgrid->remark)[$key] }}</td>
+                </tr>
+            @endforeach
+        @endif
+    </table>
+</div>
+
+<div class="border-table">
+    <div class="block-head">
+    Observation Details
+    </div>
+    <table>
+        <tr class="table_bg">
+            <th class="w-20">Row #</th>
+            <th class="w-60">Observation Details</th>
+            <th class="w-60">Pre Comments</th>
+            <th class="w-60">CAPA Details if any</th>
+            <th class="w-60">Post Comments</th>
+        </tr>
+        @php
+        
+        $users = DB::table('users')
+            ->select('id', 'name')
+            ->get();
+        $serialNumber = 1; // Initialize serial number
+        @endphp
+
+        @if ($grid_data1->observation_id)
+        @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)<tr>
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $tempData}}</td>
+                        <td>{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}</td>
+                        <td>{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}</td>
+                        <td>{{unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key]: "" }}</td>
+                        
+                    </tr>
+                    @endforeach
+                    @endif
+    </table>
+</div>
+
+                
+    
             <div class="block">
                 <div class="block-head">
                     Activity Log
@@ -581,30 +689,52 @@
                         <td class="w-30">{{ $data->audit_schedule_by }}</td>
                         <th class="w-20">Audit Schedule On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Cancelled By</th>
-                        <td class="w-30">{{ $data->cancelled_by}}</td>
-                        <th class="w-20">Cancelled On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->comment }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">Completed Audit Preparation by</th>
                         <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
                         <th class="w-20">Completed Audit Preparation On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{  $data->audit_preparation_comment }}</td>
+
                     </tr>
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_by}}</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->comment_cancelled_comment }}</td>
+
+                    </tr>
+                    <tr>
+                        <th class="w-20">Rejected By</th>
+                        <td class="w-30">{{ $data->rejected_by }}</td>
+                        <th class="w-20">Rejected On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->rejected_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->comment_rejected_comment }}</td>
+                    </tr>
+                    
                     <tr>
                         <th class="w-20">Issue  Report By</th>
                         <td class="w-30">{{ $data->audit_mgr_more_info_reqd_by }}</td>
                         <th class="w-20"> Issue  Report On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->pending_response_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">CAPA Plan Proposed By</th>
                         <td class="w-30">{{ $data->audit_observation_submitted_by }}</td>
                         <th class="w-20">CAPA Plan Proposed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_observation_submitted_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->capa_execution_in_progress_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">All CAPA Closed By
@@ -612,27 +742,21 @@
                         <td class="w-30">{{ $data->audit_lead_more_info_reqd_by }}</td>
                         <th class="w-20">All CAPA Closed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_lead_more_info_reqd_on) }}</td>
-                    </tr>
-                    <!-- <tr>
-                        <th class="w-20">Audit Response Completed By</th>
-                        <td class="w-30">{{ $data->audit_response_completed_by }}</td>
-                        <th class="w-20">Audit Response Completed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_response_completed_on) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Response Feedback Verified By</th>
-                        <td class="w-30">{{ $data->response_feedback_verified_by }}</td>
-                        <th class="w-20">Response Feedback Verified On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->response_feedback_verified_on) }}</td>
-                    </tr> -->
-                    <tr>
-                        <th class="w-20">Rejected By</th>
-                        <td class="w-30">{{ $data->rejected_by }}</td>
-                        <th class="w-20">Rejected On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->rejected_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->comment_closed_done_by_comment }}</td>
                     </tr>
 
-
+                    <tr>
+                        <th class="w-20">No CAPA Required By
+                        </th>
+                        <td class="w-30">{{ $data->No_Capa_Required_by }}</td>
+                        <th class="w-20">No CAPA Required On</th>
+                        <td class="w-30">{{ $data->No_CAPA_Required_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{$data->comment_closed_done_by_comment}}</td>
+                    </tr>
+                                        
+                    
                 </table>
             </div>
         </div>

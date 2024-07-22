@@ -115,10 +115,17 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
                                 Approved
                              </button>
-                                @if($count == 2)
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                        Send for CQA
-                                    </button>
+                                @if($extensionNew->parent_type == 'Deviation' || $extensionNew->parent_type == 'CAPA')
+                                    @if($count == 3)
+                                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                            Send for CQA
+                                        </button>
+                                    @endif
+                                    @if($capaCount == 3)
+                                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                            Send for CQA
+                                        </button>
+                                    @endif
                                 @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Reject
@@ -183,7 +190,7 @@
                             @endif
                             @if ($extensionNew->stage >= 6)
                             <div class="bg-danger" style="display: none">Closed - Reject</div>
-                            <div style="display: none" class=""> In CQA Approval</div>
+                            <div  class="active"> In CQA Approval</div>
 
                                 <div class="bg-danger">Closed - Done</div>
                             @endif

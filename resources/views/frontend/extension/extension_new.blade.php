@@ -110,17 +110,15 @@
                             <div class="group-input">
                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                 <input disabled type="text" name="record_number"
-                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/Ext/{{ date('y') }}/{{ $record_number }}">
+                                value="{{ Helpers::getDivisionName($parentDivisionId) }}/Ext/{{ date('y') }}/{{ $record_number }}">
                                 {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Division Code"><b>Site/Location Code</b></label>
-                                <input disabled type="text" name="site_location_code"
-                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                <input type="hidden" name="site_location_code" value="{{ session()->get('division') }}">
-                                {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                <input readonly type="text" value="{{ Helpers::getDivisionName($parentDivisionId) }}"> 
+                                <input type="hidden" name="site_location_code" value="{{ $parentDivisionId }}">
                             </div>
                         </div>
                         

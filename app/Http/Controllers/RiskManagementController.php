@@ -3157,21 +3157,23 @@ class RiskManagementController extends Controller
                 $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
                 // $changeControl->submitted_comment = $request->comments;
 
-                // $history = new RiskAuditTrail();
-                // $history->risk_id = $id;
-                // $history->activity_type = 'Activity Log';
-                // $history->previous = "";
-                // $history->action = 'Submit Supplier Details';
-                // $history->current = "Not Applicable";
-                // $history->comment = $request->comments;
-                // $history->user_id = Auth::user()->id;
-                // $history->user_name = Auth::user()->name;
-                // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                // $history->origin_state = $lastDocument->status;
-                // $history->change_to =   "Risk Analysis & Work Group Assignment";
-                // $history->change_from = $lastDocument->status;
-                // $history->stage = 'Plan Proposed';
-                // $history->save();
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'Submit';
+                $history->previous = $lastDocument->submitted_by;
+                $history->current = $changeControl->submitted_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'Submit';
+                $history->change_to =   "Risk Analysis & Work Group Assignment";
+                $history->change_from = 'Opened';
+                $history->action_name = 'Not Applicable';
+
+                $history->save();
             //      $list = Helpers::getHodUserList();
             //      return $list;
             //     foreach ($list as $u) {
@@ -3203,38 +3205,43 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Risk Processing & Action Plan';
                 $changeControl->evaluated_by = Auth::user()->name;
                 $changeControl->evaluated_on = Carbon::now()->format('d-M-Y');
+                // $changeControl->evaluated_comment = $request->comment;
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                // $history->previous = $lastDocument->evaluated_by;
+                $history->action = 'Evaluation Complete';
+                $history->previous = $lastDocument->evaluated_by;
                 $history->current = $changeControl->evaluated_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Evaluated';
+                $history->stage='Evaluation Complete';
+                $history->change_to = 'Risk Processing & Action Plan';
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Not Applicable';
                 $history->save();
-                $list = Helpers::getWorkGroupUserList();
-                foreach ($list as $u) {
-                    if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                         if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $changeControl],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Send By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                // 
-                            }
-                        }
-                 } 
-              }
+            //     $list = Helpers::getWorkGroupUserList();
+            //     foreach ($list as $u) {
+            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+            //             $email = Helpers::getInitiatorEmail($u->user_id);
+            //              if ($email !== null) {
+            //                 try {
+            //                     Mail::send(
+            //                         'mail.view-mail',
+            //                          ['data' => $changeControl],
+            //                       function ($message) use ($email) {
+            //                           $message->to($email)
+            //                               ->subject("Document is Send By".Auth::user()->name);
+            //                       }
+            //                     );
+            //                 } catch (\Exception $e) {
+            //                     // 
+            //                 }
+            //             }
+            //      } 
+            //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3244,23 +3251,24 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Pending HOD Approval';
                 $changeControl->plan_approved_by = Auth::user()->name;
                 $changeControl->plan_approved_on = Carbon::now()->format('d-M-Y');
-                // $changeControl->submitted_comment = $request->comments;
+                // $changeControl->plan_approved_comment = $request->comment;
 
-                // $history = new RiskAuditTrail();
-                // $history->risk_id = $id;
-                // $history->activity_type = 'Activity Log';
-                // $history->previous = "";
-                // $history->action = 'Submit Supplier Details';
-                // $history->current = "Not Applicable";
-                // $history->comment = $request->comments;
-                // $history->user_id = Auth::user()->id;
-                // $history->user_name = Auth::user()->name;
-                // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                // $history->origin_state = $lastDocument->status;
-                // $history->change_to =   "Risk Analysis & Work Group Assignment";
-                // $history->change_from = $lastDocument->status;
-                // $history->stage = 'Plan Proposed';
-                // $history->save();
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'Action Plan Complete';
+                $history->previous = $lastDocument->plan_approved_by;
+                $history->current = $changeControl->plan_approved_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'Action Plan Complete';
+                $history->change_to = "Pending HOD Approval";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Not Applicable';
+                $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
                 //         if($u->q_m_s_divisions_id == $supplier->division_id){
@@ -3288,40 +3296,44 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Actions Items in Progress';
                 $changeControl->action_plan_approved_by = Auth::user()->name;
                 $changeControl->action_plan_approved_on = Carbon::now()->format('d-M-Y');
-                $changeControl->action_plan_approved_comment = $request->comments;
+                $changeControl->action_plan_approved_comment = $request->comment;
 
-            //     $history = new RiskAuditTrail();
-            //     $history->risk_id = $id;
-            //     $history->activity_type = 'Activity Log';
-            //     $history->previous = $lastDocument->plan_approved_by;
-            //     $history->current = $changeControl->plan_approved_by;
-            //     $history->comment = $request->comment;
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $lastDocument->status;       
-            //    $history->stage='Plan Approved';
-            //     $history->save();
-                $list = Helpers::getQAHeadUserList();
-                foreach ($list as $u) {
-                    if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                         if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $changeControl],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Send By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                // 
-                            }
-                        }
-                 } 
-              }
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'Action Plan Approved';
+                $history->previous = $lastDocument->action_plan_approved_by;
+                $history->current = $changeControl->action_plan_approved_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;       
+                $history->stage = 'Action Plan Approved';
+                $history->change_to = "Actions Items in Progress";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Not Applicable';
+                $history->save();
+            //     $list = Helpers::getQAHeadUserList();
+            //     foreach ($list as $u) {
+            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+            //             $email = Helpers::getInitiatorEmail($u->user_id);
+            //              if ($email !== null) {
+            //                 try {
+            //                     Mail::send(
+            //                         'mail.view-mail',
+            //                          ['data' => $changeControl],
+            //                       function ($message) use ($email) {
+            //                           $message->to($email)
+            //                               ->subject("Document is Send By".Auth::user()->name);
+            //                       }
+            //                     );
+            //                 } catch (\Exception $e) {
+            //                     // 
+            //                 }
+            //             }
+            //      } 
+            //   }
                 $changeControl->update();
 
                 toastr()->success('Document Sent');
@@ -3332,7 +3344,24 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Residual Risk Evaluation';
                 $changeControl->all_action_completed_by = Auth::user()->name;
                 $changeControl->all_action_completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->all_action_completed_comment = $request->comments;
+                $changeControl->all_action_completed_comment = $request->comment;
+
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'All Actions Completed';
+                $history->previous = $lastDocument->all_action_completed_by;
+                $history->current = $changeControl->all_action_completed_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;       
+                $history->stage = 'All Actions Completed';
+                $history->change_to = "Residual Risk Evaluation";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Not Applicable';
+                $history->save();
             //     $list = Helpers::getHodUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -3364,18 +3393,23 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Closed - Done';
                 $changeControl->residual_risk_completed_by = Auth::user()->name;
                 $changeControl->residual_risk_completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->residual_risk_completed_comment = $request->comments;
+                $changeControl->residual_risk_completed_comment = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->risk_analysis_completed_by;
+                $history->action = 'Residual Risk Evaluation Completed';
+                $history->previous = $lastDocument->residual_risk_completed_by;
+                $history->current = $changeControl->residual_risk_completed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Risk Analysis Completed';
+                $history->stage='Residual Risk Evaluation Completed';
+                $history->change_to = "Closed - Done";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -3399,16 +3433,23 @@ class RiskManagementController extends Controller
                 $changeControl->status = "Closed - Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->cancelled_comment = $request->comment;
+
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
+                $history->action = 'Cancel';
+                $history->previous = $lastDocument->cancelled_by;
                 $history->current = $changeControl->cancelled_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Cancelled';
+                $history->stage='Cancel';
+                $history->change_to = 'Closed - Cancelled';
+                $history->change_from = 'Opened';
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 
                 $changeControl->update();
@@ -3420,49 +3461,29 @@ class RiskManagementController extends Controller
                 $changeControl->status = "Closed - Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->cancelled_comment = $request->comment;
+
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
+                $history->action = 'Cancel';
+                $history->previous = $lastDocument->cancelled_by;
                 $history->current = $changeControl->cancelled_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Cancelled';
+                $history->stage='Cancel';
+                $history->change_to = 'Closed - Cancelled';
+                $history->change_from = 'Risk Analysis & Work Group Assignment';
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 4) {
-                $changeControl->stage = "3";
-                $changeControl->status = "Risk Processing & Action Plan";
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 3) {
-                $changeControl->stage = "2";
-                $changeControl->status = "Opened";
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 5) {
-                $changeControl->stage = "4";
-                $changeControl->status = "Opened";
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 6) {
-                $changeControl->stage = "5";
-                $changeControl->status = "Actions Items in Progress";
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
+            
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -3480,19 +3501,24 @@ class RiskManagementController extends Controller
                 $changeControl->status = "Opened";
                 $changeControl->analysis_more_info_by = Auth::user()->name;
                 $changeControl->analysis_more_info_on = Carbon::now()->format('d-M-Y');
-                $changeControl->analysis_more_info_comment = $request->comments;
+                $changeControl->analysis_more_info_comment = $request->comment;
 
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->cancelled_by;
+                $history->action = 'More Information Required';
+                $history->previous = $lastDocument->analysis_more_info_by;
+                $history->current = $changeControl->analysis_more_info_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Opened';
+                $history->stage='More Information Required';
+                $history->change_to = 'Opened';
+                $history->change_from = 'Risk Analysis & Work Group Assignment';
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 
                 $changeControl->update();
@@ -3509,13 +3535,18 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->cancelled_by;
+                $history->action = 'More Information Required';
+                $history->previous = $lastDocument->request_more_info_by;
+                $history->current = $changeControl->request_more_info_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Risk Analysis & Work Group Assignment';
+                $history->stage='More Information Required';
+                $history->change_to = 'Risk Analysis & Work Group Assignment';
+                $history->change_from = 'Risk Processing & Action Plan';
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -3531,13 +3562,18 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->cancelled_by;
+                $history->action = 'Reject Action Plan';
+                $history->previous = $lastDocument->reject_action_by;
+                $history->current = $changeControl->reject_action_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Risk Processing & Action Plan';
+                $history->stage='Reject Action Plan';
+                $history->change_to = 'Risk Processing & Action Plan';
+                $history->change_from = 'Pending HOD Approval';
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -3553,13 +3589,18 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->cancelled_by;
+                $history->action = 'Request More Info';
+                $history->previous = $lastDocument->action_request_action_by;
+                $history->current = $changeControl->action_request_action_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Pending HOD Approval';
+                $history->stage='Request More Info';
+                $history->change_to = 'Pending HOD Approval';
+                $history->change_from = 'Actions Items in Progress';
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -3575,13 +3616,18 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->cancelled_by;
+                $history->action = 'More Actions Needed';
+                $history->previous = $lastDocument->more_action_needed_by;
+                $history->current = $changeControl->more_action_needed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Actions Items in Progress';
+                $history->stage='More Actions Needed';
+                $history->change_to = 'Actions Items in Progress';
+                $history->change_from = 'Residual Risk Evaluation';
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');

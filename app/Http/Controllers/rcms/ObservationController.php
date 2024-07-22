@@ -49,7 +49,7 @@ class ObservationController extends Controller
         $data->parent_id = $request->parent_id;
         // dd($request->parent_id);
         $data->parent_type = $request->parent_type;
-        $data->division_code = $request->division_code;
+        $data->division_id = $request->division_id;
         $data->intiation_date = $request->intiation_date;
         $data->due_date = $request->due_date;
         $data->short_description = $request->short_description;
@@ -766,12 +766,12 @@ class ObservationController extends Controller
     {
         $lastDocument = Observation::find($id);
         $data = Observation::find($id);
-        $data->initiator_id = Auth::user()->id;
+        // $data->initiator_id = Auth::user()->id;
         // $data->parent_id = $request->parent_id;
         // $data->parent_type = $request->parent_type;
-        $data->division_code = $request->division_code;
+        // $data->division_code = $request->division_code;
         // $data->intiation_date = $request->intiation_date;
-        $data->due_date = $request->due_date;
+        // $data->due_date = $request->due_date;
         $data->short_description = $request->short_description;
         $data->assign_to = $request->assign_to;
         // $data->grading = $request->grading;
@@ -880,56 +880,56 @@ class ObservationController extends Controller
         }
         $data1->update();
 
-        if ($lastDocument->parent_id != $data->parent_id || !empty($request->parent_id_comment)) {
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Parent Id';
-            $history->previous = $lastDocument->parent_id;
-            $history->current = $data->parent_id;
-            $history->comment = $request->parent_id_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
-            $history->save();
-        }
+        // if ($lastDocument->parent_id != $data->parent_id || !empty($request->parent_id_comment)) {
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Parent Id';
+        //     $history->previous = $lastDocument->parent_id;
+        //     $history->current = $data->parent_id;
+        //     $history->comment = $request->parent_id_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = 'Not Applicable';
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = "Update";
+        //     $history->save();
+        // }
 
-        if ($lastDocument->parent_type != $data->parent_type || !empty($request->parent_type_comment)) {
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Parent Type';
-            $history->previous = $lastDocument->parent_type;
-            $history->current = $data->parent_type;
-            $history->comment = $request->parent_type_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
-            $history->save();
-        }
+        // if ($lastDocument->parent_type != $data->parent_type || !empty($request->parent_type_comment)) {
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Parent Type';
+        //     $history->previous = $lastDocument->parent_type;
+        //     $history->current = $data->parent_type;
+        //     $history->comment = $request->parent_type_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = 'Not Applicable';
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = "Update";
+        //     $history->save();
+        // }
 
-        if ($lastDocument->division_code != $data->division_code || !empty($request->division_code_comment)) {
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Division Code';
-            $history->previous = $lastDocument->division_code;
-            $history->current = $data->division_code;
-            $history->comment = $request->division_code_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
-            $history->save();
-        }
+        // if ($lastDocument->division_code != $data->division_code || !empty($request->division_code_comment)) {
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Division Code';
+        //     $history->previous = $lastDocument->division_code;
+        //     $history->current = $data->division_code;
+        //     $history->comment = $request->division_code_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = 'Not Applicable';
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = "Update";
+        //     $history->save();
+        // }
 
         // if ($lastDocument->short_description != $data->short_description || ! empty($request->short_description_comment)) {
         //         $lastDocumentAuditTrail = AuditTrialObservation::where('Observation_id', $data->id)

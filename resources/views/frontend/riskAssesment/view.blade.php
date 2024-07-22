@@ -175,9 +175,11 @@
 
                     <div class="d-flex" style="gap:20px;">
                         @php
-                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id])->get();
-                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray(); 
-                    @endphp
+                            $userRoles = DB::table('user_roles')
+                                ->where(['user_id' => Auth::user()->id])
+                                ->get();
+                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                        @endphp
                         {{-- <a href="{{route('riskSingleReport', $data->id)}}"><button class="button_theme1"
                             class="new-doc-btn">Print</button></a> --}}
 
@@ -211,7 +213,6 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-
                         @elseif($data->stage == 4 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Action Plan Approved
@@ -316,7 +317,8 @@
 
                     <!-- Tab links -->
                     <div class="cctab">
-                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Risk/Opportunity Assesment</button>
+                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Risk/Opportunity
+                            Assesment</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button>
@@ -391,9 +393,11 @@
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention
+                                                        revision reason in "Due Date Extension Justification" data
+                                                        field.</small></div>
                                                 <input readonly type="text"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"  
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                     name="due_date">
 
                                             </div>
@@ -401,59 +405,60 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
-                                                <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                     id="initiator_group">
-                                                     <option value="">-- Select --</option>
+                                                <select name="Initiator_Group"
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    id="initiator_group">
+                                                    <option value="">-- Select --</option>
                                                     <option value="CQA"
-                                                        @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
+                                                        @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
                                                     <option value="QAB"
-                                                        @if ($data->Initiator_Group== 'QAB') selected @endif>Quality
+                                                        @if ($data->Initiator_Group == 'QAB') selected @endif>Quality
                                                         Assurance Biopharma</option>
                                                     <option value="CQC"
-                                                        @if ($data->Initiator_Group== 'CQC') selected @endif>Central
+                                                        @if ($data->Initiator_Group == 'CQC') selected @endif>Central
                                                         Quality Control</option>
                                                     <option value="MANU"
-                                                        @if ($data->Initiator_Group== 'MANU') selected @endif>Manufacturing
+                                                        @if ($data->Initiator_Group == 'MANU') selected @endif>Manufacturing
                                                     </option>
                                                     <option value="PSG"
-                                                        @if ($data->Initiator_Group== 'PSG') selected @endif>Plasma
+                                                        @if ($data->Initiator_Group == 'PSG') selected @endif>Plasma
                                                         Sourcing Group</option>
                                                     <option value="CS"
-                                                        @if ($data->Initiator_Group== 'CS') selected @endif>Central
+                                                        @if ($data->Initiator_Group == 'CS') selected @endif>Central
                                                         Stores</option>
                                                     <option value="ITG"
-                                                        @if ($data->Initiator_Group== 'ITG') selected @endif>Information
+                                                        @if ($data->Initiator_Group == 'ITG') selected @endif>Information
                                                         Technology Group</option>
                                                     <option value="MM"
-                                                        @if ($data->Initiator_Group== 'MM') selected @endif>Molecular
+                                                        @if ($data->Initiator_Group == 'MM') selected @endif>Molecular
                                                         Medicine</option>
                                                     <option value="CL"
-                                                        @if ($data->Initiator_Group== 'CL') selected @endif>Central
+                                                        @if ($data->Initiator_Group == 'CL') selected @endif>Central
                                                         Laboratory</option>
                                                     <option value="TT"
-                                                        @if ($data->Initiator_Group== 'TT') selected @endif>Tech
+                                                        @if ($data->Initiator_Group == 'TT') selected @endif>Tech
                                                         team</option>
                                                     <option value="QA"
-                                                        @if ($data->Initiator_Group== 'QA') selected @endif>Quality
+                                                        @if ($data->Initiator_Group == 'QA') selected @endif>Quality
                                                         Assurance</option>
                                                     <option value="QM"
-                                                        @if ($data->Initiator_Group== 'QM') selected @endif>Quality
+                                                        @if ($data->Initiator_Group == 'QM') selected @endif>Quality
                                                         Management</option>
                                                     <option value="IA"
-                                                        @if ($data->Initiator_Group== 'IA') selected @endif>IT
+                                                        @if ($data->Initiator_Group == 'IA') selected @endif>IT
                                                         Administration</option>
                                                     <option value="ACC"
-                                                        @if ($data->Initiator_Group== 'ACC') selected @endif>Accounting
+                                                        @if ($data->Initiator_Group == 'ACC') selected @endif>Accounting
                                                     </option>
                                                     <option value="LOG"
-                                                        @if ($data->Initiator_Group== 'LOG') selected @endif>Logistics
+                                                        @if ($data->Initiator_Group == 'LOG') selected @endif>Logistics
                                                     </option>
                                                     <option value="SM"
-                                                        @if ($data->Initiator_Group== 'SM') selected @endif>Senior
+                                                        @if ($data->Initiator_Group == 'SM') selected @endif>Senior
                                                         Management</option>
                                                     <option value="BA"
-                                                        @if ($data->Initiator_Group== 'BA') selected @endif>Business
+                                                        @if ($data->Initiator_Group == 'BA') selected @endif>Business
                                                         Administration</option>
 
                                                 </select>
@@ -462,8 +467,8 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
-                                                <input type="text" name="initiator_group_code" 
-                                                    value="{{ $data->Initiator_Group}}" id="initiator_group_code"
+                                                <input type="text" name="initiator_group_code"
+                                                    value="{{ $data->Initiator_Group }}" id="initiator_group_code"
                                                     readonly>
                                             </div>
                                         </div>
@@ -478,25 +483,31 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
-                                                        class="text-danger">*</span></label><span id="rchars">255</span>
+                                                        class="text-danger">*</span></label><span
+                                                    id="rchars">255</span>
                                                 characters remaining
-                                                
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+
+                                                <textarea name="short_description" id="docname" type="text" maxlength="255" required
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
-                                                  {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
-                                     </div>
+                                            {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
+                                        </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
-                                                <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
-                                                <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="severity2_level">
-                                                    <option  value="0">-- Select --</option>
+                                                <span class="text-primary">Severity levels in a QMS record gauge issue
+                                                    seriousness, guiding priority for corrective actions. Ranging from low
+                                                    to high, they ensure quality standards and mitigate critical
+                                                    risks.</span>
+                                                <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    name="severity2_level">
+                                                    <option value="0">-- Select --</option>
                                                     <option @if ($data->severity2_level == 'minor') selected @endif
-                                                     value="minor">Minor</option>
-                                                    <option  @if ($data->severity2_level == 'major') selected @endif 
-                                                    value="major">Major</option>
+                                                        value="minor">Minor</option>
+                                                    <option @if ($data->severity2_level == 'major') selected @endif
+                                                        value="major">Major</option>
                                                     <option @if ($data->severity2_level == 'critical') selected @endif
-                                                    value="critical">Critical</option>
+                                                        value="critical">Critical</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -670,7 +681,7 @@
                                                 <textarea name="description" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="description">{{ $data->description }}</textarea>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Comments">Risk/Opportunity Comments</label>
@@ -827,26 +838,19 @@
                                                 <select name="duration" id="duration"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->duration == '1' ? 'selected' : '' }}
-                                                        value="1">
+                                                    <option {{ $data->duration == '1' ? 'selected' : '' }} value="1">
                                                         2 hours</option>
-                                                    <option {{ $data->duration == '2' ? 'selected' : '' }}
-                                                        value="2">
+                                                    <option {{ $data->duration == '2' ? 'selected' : '' }} value="2">
                                                         4 hours</option>
-                                                    <option {{ $data->duration == '3' ? 'selected' : '' }}
-                                                        value="3">
+                                                    <option {{ $data->duration == '3' ? 'selected' : '' }} value="3">
                                                         8 hours</option>
-                                                    <option {{ $data->duration == '4' ? 'selected' : '' }}
-                                                        value="4">
+                                                    <option {{ $data->duration == '4' ? 'selected' : '' }} value="4">
                                                         16 hours</option>
-                                                    <option {{ $data->duration == '5' ? 'selected' : '' }}
-                                                        value="5">
+                                                    <option {{ $data->duration == '5' ? 'selected' : '' }} value="5">
                                                         24 hours</option>
-                                                    <option {{ $data->duration == '6' ? 'selected' : '' }}
-                                                        value="6">
+                                                    <option {{ $data->duration == '6' ? 'selected' : '' }} value="6">
                                                         36 hours</option>
-                                                    <option {{ $data->duration == '7' ? 'selected' : '' }}
-                                                        value="7">
+                                                    <option {{ $data->duration == '7' ? 'selected' : '' }} value="7">
                                                         72 hours</option>
                                                 </select>
                                             </div>
@@ -1027,11 +1031,16 @@
                                                         value="1">0-50</option>
                                                     <option {{ $data->Number_of_employees == '2' ? 'selected' : '' }}
                                                         value="2">50-100</option>
-                                                        <option {{ $data->Number_of_employees == '3' ? 'selected' : '' }} value="3">100-200</option>
-                                                        <option {{ $data->Number_of_employees == '4' ? 'selected' : '' }} value="4">200-300</option>
-                                                        <option {{ $data->Number_of_employees == '5' ? 'selected' : '' }} value="5">300-500</option>
-                                                        <option {{ $data->Number_of_employees == '6' ? 'selected' : '' }} value="6">500-1000</option>
-                                                        <option {{ $data->Number_of_employees == '7' ? 'selected' : '' }} value="7">1000+</option>
+                                                    <option {{ $data->Number_of_employees == '3' ? 'selected' : '' }}
+                                                        value="3">100-200</option>
+                                                    <option {{ $data->Number_of_employees == '4' ? 'selected' : '' }}
+                                                        value="4">200-300</option>
+                                                    <option {{ $data->Number_of_employees == '5' ? 'selected' : '' }}
+                                                        value="5">300-500</option>
+                                                    <option {{ $data->Number_of_employees == '6' ? 'selected' : '' }}
+                                                        value="6">500-1000</option>
+                                                    <option {{ $data->Number_of_employees == '7' ? 'selected' : '' }}
+                                                        value="7">1000+</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1075,9 +1084,14 @@
                                             <div class="group-input input-date">
                                                 <label for="Scheduled Start Date">Scheduled Start Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="schedule_start_date" readonly value="{{ Helpers::getdateFormat($data->schedule_start_date1) }}" 
+                                                    <input type="text" id="schedule_start_date" readonly
+                                                        value="{{ Helpers::getdateFormat($data->schedule_start_date1) }}"
                                                         placeholder="DD-MM-YYYY" />
-                                                    <input type="date" id="schedule_start_date_checkdate" name="schedule_start_date1" value="{{ $data->schedule_start_date1 }}" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="hide-input" 
+                                                    <input type="date" id="schedule_start_date_checkdate"
+                                                        name="schedule_start_date1"
+                                                        value="{{ $data->schedule_start_date1 }}"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        class="hide-input"
                                                         oninput="handleDateInput(this, 'schedule_start_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                 </div>
                                                 {{-- <input type="date" name="schedule_start_date1" value="{{$data->schedule_start_date1}}"> --}}
@@ -1087,9 +1101,14 @@
                                             <div class="group-input input-date">
                                                 <label for="Scheduled End Date">Scheduled End Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="schedule_end_date" readonly value="{{ Helpers::getdateFormat($data->schedule_end_date1) }}" 
+                                                    <input type="text" id="schedule_end_date" readonly
+                                                        value="{{ Helpers::getdateFormat($data->schedule_end_date1) }}"
                                                         placeholder="DD-MM-YYYY" />
-                                                    <input type="date" id="schedule_end_date_checkdate" name="schedule_end_date1" value="{{ $data->schedule_end_date1 }}" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="hide-input"
+                                                    <input type="date" id="schedule_end_date_checkdate"
+                                                        name="schedule_end_date1"
+                                                        value="{{ $data->schedule_end_date1 }}"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        class="hide-input"
                                                         oninput="handleDateInput(this, 'schedule_end_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                 </div>
                                                 {{-- <input type="date" name="schedule_end_date1" value="{{$data->schedule_end_date}}"> --}}
@@ -1231,6 +1250,7 @@
                                                             <th>Responsible</th>
                                                             <th>Deadline</th>
                                                             <th>Item static</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1244,28 +1264,41 @@
                                                                         value="{{ unserialize($action_plan->responsible)[$key] ? unserialize($action_plan->responsible)[$key] : '' }}">
                                                                 </td> --}}
                                                                 <td> <select id="select-state" placeholder="Select..."
-                                                                    name="responsible[]">
-                                                                    <option value="">-Select-</option>
-                                                                    @foreach ($users as $value)
-                                                                        <option
-                                                                            {{ unserialize($action_plan->responsible)[$key] ? (unserialize($action_plan->responsible)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                            value="{{ $value->id }}">
-                                                                            {{ $value->name }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select></td>
+                                                                        name="responsible[]">
+                                                                        <option value="">Select a value</option>
+                                                                        @foreach ($users as $value)
+                                                                            <option
+                                                                                {{ unserialize($action_plan->responsible)[$key] ? (unserialize($action_plan->responsible)[$key] == $value->id ? 'selected' : ' ') : '' }}
+                                                                                value="{{ $value->id }}">
+                                                                                {{ $value->name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select></td>
                                                                 {{-- <td><input type="text" name="deadline[]"
                                                                         value="{{ unserialize($action_plan->deadline)[$key] ? unserialize($action_plan->deadline)[$key] : '' }}">
                                                                 </td> --}}
-                                                                <td><div class="group-input new-date-data-field mb-0">
-                                                                    <div class="input-date "><div
-                                                                    class="calenderauditee">
-                                                                    <input type="text" id="deadline{{$key}}' + serialNumber +'" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) }}" />
-                                                                    <input type="date" name="deadline[]" class="hide-input" value="{{ unserialize($action_plan->deadline)[$key] }}"
-                                                                    oninput="handleDateInput(this, `deadline{{$key}}' + serialNumber +'`)" /></div></div></div></td>
-                                                                
+                                                                <td>
+                                                                    <div class="group-input new-date-data-field mb-0">
+                                                                        <div class="input-date ">
+                                                                            <div class="calenderauditee">
+                                                                                <input type="text"
+                                                                                    id="deadline{{ $key }}' + serialNumber +'"
+                                                                                    readonly placeholder="DD-MM-YYYY"
+                                                                                    value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) }}" />
+                                                                                <input type="date" name="deadline[]"
+                                                                                    class="hide-input"
+                                                                                    value="{{ unserialize($action_plan->deadline)[$key] }}"
+                                                                                    oninput="handleDateInput(this, `deadline{{ $key }}' + serialNumber +'`)" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+
                                                                 <td><input type="text" name="item_static[]"
                                                                         value="{{ unserialize($action_plan->item_static)[$key] ? unserialize($action_plan->item_static)[$key] : '' }}">
+                                                                </td>
+                                                                <td><button type="text"
+                                                                        class="removeBtnMI">Remove</button>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -1290,25 +1323,34 @@
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="File Attachments">Work Group Attachments</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                    <div class="file-attachment-field">
-                                                        <div class="file-attachment-list" id="reference">
-                                                            @if ($data->reference)
-                                                            @foreach(json_decode($data->reference) as $file)
-                                                            <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                       @endforeach
-                                                            @endif
-                                                        </div>
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} type="file" id="myfile" name="reference[]"
-                                                                oninput="addMultipleFiles(this, 'reference')" multiple>
-                                                        </div>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div class="file-attachment-list" id="reference">
+                                                        @if ($data->reference)
+                                                            @foreach (json_decode($data->reference) as $file)
+                                                                <h6 type="button" class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
                                                     </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            type="file" id="myfile" name="reference[]"
+                                                            oninput="addMultipleFiles(this, 'reference')" multiple>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1333,7 +1375,8 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="root-cause-methodology">Root Cause Methodology</label>
-                                                <select name="root_cause_methodology[]" multiple {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                <select name="root_cause_methodology[]" multiple
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                     placeholder="-- Select --" data-search="false"
                                                     data-silent-initial-value-set="true" id="root-cause-methodology">
                                                     <option value="0">-- Select --</option>
@@ -1393,89 +1436,165 @@
                                                         <tbody>
                                                             @if (!empty($riskEffectAnalysis->risk_factor))
                                                                 @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
-                                                                <tr>
-                                                                    <td>{{ $key + 1 }}</td>
-                                                                    <td><input name="risk_factor[]" type="text" value="{{ $riskFactor }}" ></td>
-                                                                    <td><input name="risk_element[]" type="text" value="{{ unserialize($riskEffectAnalysis->risk_element)[$key] ?? null }}" >
-                                                                    </td>
-                                                                    <td> <input name="problem_cause[]" type="text" value="{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}" >
-                                                                    </td>
-                                                                    <td><input name="existing_risk_control[]" type="text" value="{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}" >
-                                                                    </td>
-                                                                    <td><select onchange="calculateInitialResult(this)" class="fieldR" name="initial_severity[]">
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="1" {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
-                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
-                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateInitialResult(this)" class="fieldP" name="initial_detectability[]">
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="1" {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
-                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
-                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateInitialResult(this)" class="fieldN" name="initial_probability[]">
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="1" {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
-                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
-                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input name="initial_rpn[]" type="text"  class='initial-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" >
-                                                                    </td>
-                                                                    <td>
-                                                                        <input name="risk_acceptance[]" type="text" value="{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}" >
-                                                                    </td>
-                                                                    <td>
-                                                                        <input name="risk_control_measure[]" type="text" value="{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}" >
-                                                                         
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateResidualResult(this)" class="residual-fieldR" name="residual_severity[]">
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="1" {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
-                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
-                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
-                                                                        </select>
-                                                                        
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateResidualResult(this)" class="residual-fieldP" name="residual_probability[]">
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="1" {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
-                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
-                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
-                                                                        </select>
-                                                                         
-                                                                    </td>
-    
-                                                                    <td>
-                                                                        <select onchange="calculateResidualResult(this)" class="residual-fieldN" name="residual_detectability[]">
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="1" {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
-                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
-                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                         <input name="residual_rpn[]" type="text" class='residual-rpn' value="{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}" >
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]">
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="Y" {{ (unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null)== 'Y' ? 'selected' :''}}>Y</option>
-                                                                            <option value="N"  {{ (unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null)== 'N' ? 'selected' :''}}>N</option>
-                                                                         </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input name="mitigation_proposal[]" type="text" value="{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}" >
-                                                                    </td>
-                                                                </tr>    
+                                                                    <tr>
+                                                                        <td>{{ $key + 1 }}</td>
+                                                                        <td><input name="risk_factor[]" type="text"
+                                                                                value="{{ $riskFactor }}"></td>
+                                                                        <td><input name="risk_element[]" type="text"
+                                                                                value="{{ unserialize($riskEffectAnalysis->risk_element)[$key] ?? null }}">
+                                                                        </td>
+                                                                        <td> <input name="problem_cause[]" type="text"
+                                                                                value="{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}">
+                                                                        </td>
+                                                                        <td><input name="existing_risk_control[]"
+                                                                                type="text"
+                                                                                value="{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}">
+                                                                        </td>
+                                                                        <td><select onchange="calculateInitialResult(this)"
+                                                                                class="fieldR" name="initial_severity[]">
+                                                                                <option value="">-- Select --
+                                                                                </option>
+                                                                                <option value="1"
+                                                                                    {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                                    1</option>
+                                                                                <option value="2"
+                                                                                    {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                                    2</option>
+                                                                                <option value="3"
+                                                                                    {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                                    3</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <select onchange="calculateInitialResult(this)"
+                                                                                class="fieldP"
+                                                                                name="initial_detectability[]">
+                                                                                <option value="">-- Select --
+                                                                                </option>
+                                                                                <option value="1"
+                                                                                    {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                                    1</option>
+                                                                                <option value="2"
+                                                                                    {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                                    2</option>
+                                                                                <option value="3"
+                                                                                    {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                                    3</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <select onchange="calculateInitialResult(this)"
+                                                                                class="fieldN"
+                                                                                name="initial_probability[]">
+                                                                                <option value="">-- Select --
+                                                                                </option>
+                                                                                <option value="1"
+                                                                                    {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                                    1</option>
+                                                                                <option value="2"
+                                                                                    {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                                    2</option>
+                                                                                <option value="3"
+                                                                                    {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                                    3</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input name="initial_rpn[]" type="text"
+                                                                                class='initial-rpn'
+                                                                                value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input name="risk_acceptance[]" type="text"
+                                                                                value="{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input name="risk_control_measure[]"
+                                                                                type="text"
+                                                                                value="{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}">
+
+                                                                        </td>
+                                                                        <td>
+                                                                            <select
+                                                                                onchange="calculateResidualResult(this)"
+                                                                                class="residual-fieldR"
+                                                                                name="residual_severity[]">
+                                                                                <option value="">-- Select --
+                                                                                </option>
+                                                                                <option value="1"
+                                                                                    {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                                    1</option>
+                                                                                <option value="2"
+                                                                                    {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                                    2</option>
+                                                                                <option value="3"
+                                                                                    {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                                    3</option>
+                                                                            </select>
+
+                                                                        </td>
+                                                                        <td>
+                                                                            <select
+                                                                                onchange="calculateResidualResult(this)"
+                                                                                class="residual-fieldP"
+                                                                                name="residual_probability[]">
+                                                                                <option value="">-- Select --
+                                                                                </option>
+                                                                                <option value="1"
+                                                                                    {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                                    1</option>
+                                                                                <option value="2"
+                                                                                    {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                                    2</option>
+                                                                                <option value="3"
+                                                                                    {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                                    3</option>
+                                                                            </select>
+
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <select
+                                                                                onchange="calculateResidualResult(this)"
+                                                                                class="residual-fieldN"
+                                                                                name="residual_detectability[]">
+                                                                                <option value="">-- Select --
+                                                                                </option>
+                                                                                <option value="1"
+                                                                                    {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                                    1</option>
+                                                                                <option value="2"
+                                                                                    {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                                    2</option>
+                                                                                <option value="3"
+                                                                                    {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                                    3</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input name="residual_rpn[]" type="text"
+                                                                                class='residual-rpn'
+                                                                                value="{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}">
+                                                                        </td>
+                                                                        <td>
+                                                                            <select onchange="calculateInitialResult(this)"
+                                                                                class="fieldR" name="risk_acceptance2[]">
+                                                                                <option value="">-- Select --
+                                                                                </option>
+                                                                                <option value="Y"
+                                                                                    {{ (unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null) == 'Y' ? 'selected' : '' }}>
+                                                                                    Y</option>
+                                                                                <option value="N"
+                                                                                    {{ (unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null) == 'N' ? 'selected' : '' }}>
+                                                                                    N</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input name="mitigation_proposal[]"
+                                                                                type="text"
+                                                                                value="{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}">
+                                                                        </td>
+                                                                    </tr>
                                                                 @endforeach
                                                             @endif
                                                         </tbody>
@@ -1777,7 +1896,8 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Severity Rate">Severity Rate</label>
-                                                <select name="severity_rate" id="analysisR" onchange='calculateRiskAnalysis(this)'
+                                                <select name="severity_rate" id="analysisR"
+                                                    onchange='calculateRiskAnalysis(this)'
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->severity_rate == 'Negligible' ? 'selected' : '' }}
@@ -1794,7 +1914,8 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Occurrence">Occurrence</label>
-                                                <select name="occurrence" id="analysisP" onchange='calculateRiskAnalysis(this)'
+                                                <select name="occurrence" id="analysisP"
+                                                    onchange='calculateRiskAnalysis(this)'
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option
@@ -1814,7 +1935,8 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Detection">Detection</label>
-                                                <select name="detection" id="analysisN" onchange='calculateRiskAnalysis(this)'
+                                                <select name="detection" id="analysisN"
+                                                    onchange='calculateRiskAnalysis(this)'
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->detection == '5' ? 'selected' : '' }}
@@ -1834,8 +1956,9 @@
                                             <div class="group-input">
                                                 <label for="RPN">RPN</label>
                                                 <div><small class="text-primary">Auto - Calculated</small></div>
-                                                    
-                                                    <input readonly type="text" name="rpn" id="analysisRPN" value="{{$data->rpn}}">
+
+                                                <input readonly type="text" name="rpn" id="analysisRPN"
+                                                    value="{{ $data->rpn }}">
 
                                             </div>
                                         </div>
@@ -1866,37 +1989,63 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Residual Risk Impact">Residual Risk Impact</label>
-                                                <select name="residual_risk_impact" id="analysisR2" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                onchange='calculateRiskAnalysis2(this)'>
+                                                <select name="residual_risk_impact" id="analysisR2"
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    onchange='calculateRiskAnalysis2(this)'>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option value="1" {{ $data->residual_risk_impact == '1' ? 'selected' : '' }}>High</option>
-                                                    <option value="2" {{ $data->residual_risk_impact == '2' ? 'selected' : '' }}>Low</option>
-                                                    <option value="3" {{ $data->residual_risk_impact == '3' ? 'selected' : '' }}>Medium</option>
-                                                    <option value="4" {{ $data->residual_risk_impact == '4' ? 'selected' : '' }}>None</option>
+                                                    <option value="1"
+                                                        {{ $data->residual_risk_impact == '1' ? 'selected' : '' }}>High
+                                                    </option>
+                                                    <option value="2"
+                                                        {{ $data->residual_risk_impact == '2' ? 'selected' : '' }}>Low
+                                                    </option>
+                                                    <option value="3"
+                                                        {{ $data->residual_risk_impact == '3' ? 'selected' : '' }}>Medium
+                                                    </option>
+                                                    <option value="4"
+                                                        {{ $data->residual_risk_impact == '4' ? 'selected' : '' }}>None
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Residual Risk Probability">Residual Risk Probability</label>
-                                                <select name="residual_risk_probability" id="analysisP2" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} onchange='calculateRiskAnalysis2(this)'>
+                                                <select name="residual_risk_probability" id="analysisP2"
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    onchange='calculateRiskAnalysis2(this)'>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option value="1" {{ $data->residual_risk_probability == '1' ? 'selected' : '' }}>High</option>
-                                                    <option value="2" {{ $data->residual_risk_probability == '2' ? 'selected' : '' }}>Medium</option>
-                                                    <option value="3" {{ $data->residual_risk_probability == '3' ? 'selected' : '' }}>Low</option>
+                                                    <option value="1"
+                                                        {{ $data->residual_risk_probability == '1' ? 'selected' : '' }}>
+                                                        High</option>
+                                                    <option value="2"
+                                                        {{ $data->residual_risk_probability == '2' ? 'selected' : '' }}>
+                                                        Medium</option>
+                                                    <option value="3"
+                                                        {{ $data->residual_risk_probability == '3' ? 'selected' : '' }}>
+                                                        Low</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Detection">Residual Detection</label>
-                                                <select name="detection2" id="analysisN2" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} onchange='calculateRiskAnalysis2(this)'>
+                                                <select name="detection2" id="analysisN2"
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    onchange='calculateRiskAnalysis2(this)'>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option value="5" {{ $data->detection2 == '5' ? 'selected' : '' }}>Impossible</option>
-                                                    <option value="4" {{ $data->detection2 == '4' ? 'selected' : '' }}>Rare</option>
-                                                    <option value="3" {{ $data->detection2 == '3' ? 'selected' : '' }}>Unlikely</option>
-                                                    <option value="2" {{ $data->detection2 == '2' ? 'selected' : '' }}>Likely</option>
-                                                    <option value="1" {{ $data->detection2 == '1' ? 'selected' : '' }}>Very Likely</option>
+                                                    <option value="5"
+                                                        {{ $data->detection2 == '5' ? 'selected' : '' }}>Impossible
+                                                    </option>
+                                                    <option value="4"
+                                                        {{ $data->detection2 == '4' ? 'selected' : '' }}>Rare</option>
+                                                    <option value="3"
+                                                        {{ $data->detection2 == '3' ? 'selected' : '' }}>Unlikely</option>
+                                                    <option value="2"
+                                                        {{ $data->detection2 == '2' ? 'selected' : '' }}>Likely</option>
+                                                    <option value="1"
+                                                        {{ $data->detection2 == '1' ? 'selected' : '' }}>Very Likely
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1904,7 +2053,8 @@
                                             <div class="group-input">
                                                 <label for="RPN">Residual RPN</label>
                                                 <div><small class="text-primary">Auto - Calculated</small></div>
-                                                <input readonly type="text" name="rpn2" id="analysisRPN2" value="{{$data->rpn2}}">
+                                                <input readonly type="text" name="rpn2" id="analysisRPN2"
+                                                    value="{{ $data->rpn2 }}">
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1954,46 +2104,59 @@
                                                             </th>
                                                             <th>Status</th>
                                                             <th>Remarks</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach (unserialize($mitigation_plan_details->mitigation_steps) as $key => $temps)
-                                                        <tr>
-                                                            <td><input disabled type="text" name="serial_number[]"
-                                                                    value="{{ $key + 1 }}"></td>
-                                                            <td><input type="text" name="mitigation_steps[]"
-                                                                    value="{{ $temps ? $temps : ' ' }}"></td>
-                                                            {{-- <td><input type="date" name="deadline2[]"
+                                                            <tr>
+                                                                <td><input disabled type="text" name="serial_number[]"
+                                                                        value="{{ $key + 1 }}"></td>
+                                                                <td><input type="text" name="mitigation_steps[]"
+                                                                        value="{{ $temps ? $temps : ' ' }}"></td>
+                                                                {{-- <td><input type="date" name="deadline2[]"
                                                                     value="{{ unserialize($mitigation_plan_details->deadline2)[$key] ? unserialize($mitigation_plan_details->deadline2)[$key] : '' }}">
                                                             </td> --}}
-                                                            <td><div class="group-input new-date-data-field mb-0">
-                                                                <div class="input-date "><div
-                                                                class="calenderauditee">
-                                                                <input type="text" id="deadline2{{$key}}' + serialNumber +'" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) }}" />
-                                                                <input type="date" name="deadline2[]" class="hide-input" value="{{ unserialize($mitigation_plan_details->deadline2)[$key] }}"
-                                                                oninput="handleDateInput(this, `deadline2{{$key}}' + serialNumber +'`)" /></div></div></div></td>
-                                                            {{-- <td><input type="text" name="responsible_person[]"
+                                                                <td>
+                                                                    <div class="group-input new-date-data-field mb-0">
+                                                                        <div class="input-date ">
+                                                                            <div class="calenderauditee">
+                                                                                <input type="text"
+                                                                                    id="deadline2{{ $key }}' + serialNumber +'"
+                                                                                    readonly placeholder="DD-MM-YYYY"
+                                                                                    value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) }}" />
+                                                                                <input type="date" name="deadline2[]"
+                                                                                    class="hide-input"
+                                                                                    value="{{ unserialize($mitigation_plan_details->deadline2)[$key] }}"
+                                                                                    oninput="handleDateInput(this, `deadline2{{ $key }}' + serialNumber +'`)" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                {{-- <td><input type="text" name="responsible_person[]"
                                                                     value="{{ unserialize($mitigation_plan_details->responsible_person)[$key] ? unserialize($mitigation_plan_details->responsible_person)[$key] : '' }}">
                                                             </td> --}}
-                                                            <td> <select id="select-state" placeholder="Select..."
-                                                                name="responsible_person[]">
-                                                                <option value="">-Select-</option>
-                                                                @foreach ($users as $value)
-                                                                    <option
-                                                                        {{ unserialize($mitigation_plan_details->responsible_person)[$key] ? (unserialize($mitigation_plan_details->responsible_person)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                        value="{{ $value->id }}">
-                                                                        {{ $value->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select></td>
-                                                            <td><input type="text" name="status[]"
-                                                                    value="{{ unserialize($mitigation_plan_details->status)[$key] ? unserialize($mitigation_plan_details->status)[$key] : '' }}">
-                                                            </td>
-                                                            <td><input type="text" name="remark[]"
-                                                                    value="{{ unserialize($mitigation_plan_details->remark)[$key] ? unserialize($mitigation_plan_details->remark)[$key] : '' }}">
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
+                                                                <td> <select id="select-state" placeholder="Select..."
+                                                                        name="responsible_person[]">
+                                                                        <option value="">Select a value</option>
+                                                                        @foreach ($users as $value)
+                                                                            <option
+                                                                                {{ unserialize($mitigation_plan_details->responsible_person)[$key] ? (unserialize($mitigation_plan_details->responsible_person)[$key] == $value->id ? 'selected' : ' ') : '' }}
+                                                                                value="{{ $value->id }}">
+                                                                                {{ $value->name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select></td>
+                                                                <td><input type="text" name="status[]"
+                                                                        value="{{ unserialize($mitigation_plan_details->status)[$key] ? unserialize($mitigation_plan_details->status)[$key] : '' }}">
+                                                                </td>
+                                                                <td><input type="text" name="remark[]"
+                                                                        value="{{ unserialize($mitigation_plan_details->remark)[$key] ? unserialize($mitigation_plan_details->remark)[$key] : '' }}">
+                                                                </td>
+                                                                <td><button type="text"
+                                                                        class="removeBtnMI1">Remove</button></td>
+                                                            </tr>
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -2020,11 +2183,17 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Department(s)">Mitigation Required</label>
-                                                <select name="mitigation_required" placeholder="Select Departments" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} data-search="false"
-                                                    data-silent-initial-value-set="true" id="" >
+                                                <select name="mitigation_required" placeholder="Select Departments"
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    data-search="false" data-silent-initial-value-set="true"
+                                                    id="">
                                                     <option value="">Select Mitigation </option>
-                                                    <option value="yes"  {{ $data->mitigation_required == 'yes' ? 'selected' : '' }}>Yes</option>
-                                                    <option value="no"  {{ $data->mitigation_required == 'no' ? 'selected' : '' }}>No</option>
+                                                    <option value="yes"
+                                                        {{ $data->mitigation_required == 'yes' ? 'selected' : '' }}>Yes
+                                                    </option>
+                                                    <option value="no"
+                                                        {{ $data->mitigation_required == 'no' ? 'selected' : '' }}>No
+                                                    </option>
 
                                                 </select>
                                             </div>
@@ -2039,9 +2208,12 @@
                                             <div class="group-input input-date">
                                                 <label for="mitigation-due-date">Scheduled End Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="mitigation_due_date" readonly value="{{ Helpers::getdateFormat($data->mitigation_due_date)}}"
+                                                    <input type="text" id="mitigation_due_date" readonly
+                                                        value="{{ Helpers::getdateFormat($data->mitigation_due_date) }}"
                                                         name="mitigation_due_date" placeholder="DD-MM-YYYY" />
-                                                    <input type="date" name="mitigation_due_date" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $data->mitigation_due_date }}" class="hide-input"  
+                                                    <input type="date" name="mitigation_due_date"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        value="{{ $data->mitigation_due_date }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'mitigation_due_date')" />
                                                 </div>
                                                 {{-- <input type="date" name="mitigation_due_date"
@@ -2051,7 +2223,8 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="mitigation-status">Status of Mitigation</label>
-                                                <select name="mitigation_status" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                <select name="mitigation_status"
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
                                                     <option value="green"
                                                         {{ $data->mitigation_status == 'green' ? 'selected' : '' }}>Green
@@ -2078,7 +2251,8 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="impact">Impact</label>
-                                                <select name="impact" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                <select name="impact"
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
                                                     <option value="high"
                                                         {{ $data->impact == 'high' ? 'selected' : '' }}>High</option>
@@ -2094,7 +2268,8 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="criticality">Criticality</label>
-                                                <select name="criticality" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                <select name="criticality"
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
                                                     <option value="high"
                                                         {{ $data->criticality == 'high' ? 'selected' : '' }}>High</option>
@@ -2161,10 +2336,13 @@
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Recores">Reference Record</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} multiple id="reference_record" name="refrence_record[]" id="">
+                                                <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    multiple id="reference_record" name="refrence_record[]"
+                                                    id="">
                                                     <option value="">--Select---</option>
                                                     @foreach ($old_record as $new)
-                                                        <option value="{{ $new->id }}" {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
+                                                        <option value="{{ $new->id }}"
+                                                            {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
                                                             {{ Helpers::getDivisionName($new->division_id) }}/RA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                         </option>
                                                     @endforeach
@@ -2177,14 +2355,16 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
-                                                <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="due_date_extension">{{$data->due_date_extension}}</textarea>
+                                                <div><small class="text-primary">Please Mention justification if due date
+                                                        is crossed</small></div>
+                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="due_date_extension">{{ $data->due_date_extension }}</textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="backButton"
+                                            onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"> Exit </a> </button>
                                     </div>
@@ -2194,13 +2374,13 @@
                             <div id="CCForm7" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Submitted By..">Submitted By</label>
                                                 <div class="static">{{ $data->submitted_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Submitted On">Submitted On</label>
                                                 <div class="static">{{ $data->submitted_on }}</div>
@@ -2208,74 +2388,137 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Evaluated By">Evaluated By</label>
+                                                <label for="Submitted Comment">Submitted Comment</label>
+                                                <div class="static">{{ $data->submitted_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Evaluation Complete By">Evaluation Complete By</label>
                                                 <div class="static">{{ $data->evaluated_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
-                                                <label for="Evaluated On">Evaluated On</label>
+                                                <label for="Evaluation Complete On">Evaluation Complete On</label>
                                                 <div class="static">{{ $data->evaluated_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Plan Approved By">Plan Approved By</label>
+                                                <label for="Evaluation Complete Comment">Evaluation Complete
+                                                    Comment</label>
+                                                <div class="static">{{ $data->evaluated_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Action Plan Completed By">Action Plan Completed By</label>
                                                 <div class="static">{{ $data->plan_approved_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
-                                                <label for="Plan Approved On">Plan Approved On</label>
+                                                <label for="Action Plan Completed On">Action Plan Completed On</label>
                                                 <div class="static">{{ $data->plan_approved_on }}</div>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-lg-6">
+                                        <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Action Plan Complete">Action Plan Completed By</label>
+                                                <label for="Action Plan Completed Comment">Action Plan Completed
+                                                    Comment</label>
+                                                <div class="static">{{ $data->plan_approved_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Action Plan Approved By">Action Plan Approved By</label>
                                                 <div class="static">{{ $data->action_plan_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Action Plan Approved On">Action Plan Approved On</label>
+                                                <div class="static">{{ $data->action_plan_completed_comment }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Action Plan Complete">Action Plan Completed On</label>
+                                                <label for="Action Plan Approved Comment">Action Plan Approved
+                                                    Comment</label>
                                                 <div class="static">{{ $data->action_plan_completed_on }}</div>
                                             </div>
-                                        </div> -->
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="All Actions Completed By">All Actions Completed By</label>
+                                                <div class="static">{{ $data->all_action_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="All Actions Completed On">All Actions Completed On</label>
+                                                <div class="static">{{ $data->all_action_completed_on }}</div>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="All Actions Completed Comment">All Actions Completed
+                                                    Comment</label>
+                                                <div class="static">{{ $data->all_action_completed_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Residual Risk Evaluation Completed By">Residual Risk
+                                                    Evaluation Completed By</label>
+                                                <div class="static">{{ $data->residual_risk_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Residual Risk Evaluation Completed On">Residual Risk
+                                                    Evaluation Completed On</label>
+                                                <div class="static">{{ $data->residual_risk_completed_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Residual Risk Evaluation Completed Comment">Residual Risk
+                                                    Evaluation Completed Comment</label>
+                                                <div class="static">{{ $data->residual_risk_completed_comment }}</div>
+                                            </div>
+                                        </div>
+
+                                        {{-- <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Risk Analysis Completed By">Risk Analysis Completed By</label>
                                                 <div class="static">{{ $data->risk_analysis_completed_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Risk Analysis Completed On">Risk Analysis Completed On</label>
                                                 <div class="static">{{ $data->risk_analysis_completed_on }}</div>
                                             </div>
-                                        </div>
-                                        <!-- <div class="col-lg-6">
+                                        </div> --}}
+
+                                        <div class="col-lg-3">
                                             <div class="group-input">
-                                                <label for="All Actions Completed">All Actions Completed By</label>
-                                                <div class="static">{{ $data->all_actions_completed_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="All Actions Completed">All Actions Completed On</label>
-                                                <div class="static">{{ $data->all_actions_completed_on }}</div>
-                                            </div>
-                                        </div> -->
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Cancel">Cancelled By</label>
+                                                <label for="Cancelled By">Cancelled By</label>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
-                                        </div> 
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Cancelled On">Cancelled On</label>
+                                                <div class="static">{{ $data->cancelled_on }}</div>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Cancel">Cancelled On</label>
-                                                <div class="static">{{ $data->cancelled_on }}</div>
+                                                <label for="Cancelled Comment">Cancelled Comment</label>
+                                                <div class="static">{{ $data->cancelled_comment }}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -2332,11 +2575,11 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button type="button" data-bs-dismiss="modal">Close</button>
-                            </div> -->
+                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                <button type="button" data-bs-dismiss="modal">Close</button>
+                                            </div> -->
                             <div class="modal-footer">
-                              <button type="submit">Submit</button>
+                                <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -2379,11 +2622,11 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button>Close</button>
-                            </div> -->
+                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                <button>Close</button>
+                                            </div> -->
                             <div class="modal-footer">
-                              <button type="submit">Submit</button>
+                                <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -2426,11 +2669,11 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button>Close</button>
-                            </div> -->
+                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                <button>Close</button>
+                                            </div> -->
                             <div class="modal-footer">
-                              <button type="submit">Submit</button>
+                                <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -2480,7 +2723,8 @@
                 #step-form>div:nth-child(1) {
                     display: block;
                 }
-                .input-new{
+
+                .input-new {
                     width: 100%;
                     margin-bottom: 10px;
                     border-radius: 5px;
@@ -2493,21 +2737,25 @@
                             var users = @json($users);
                             console.log(users);
                             var html =
-                            '<tr>' +
-                                '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                                '<tr>' +
+                                '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                                '"></td>' +
                                 '<td><input type="text" name="action[]"></td>' +
                                 '<td><select name="responsible[]">' +
-                                    '<option value="">Select a value</option>';
+                                '<option value="">Select a value</option>';
 
-                                for (var i = 0; i < users.length; i++) {
-                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                                }
+                            for (var i = 0; i < users.length; i++) {
+                                html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                            }
 
-                                html += '</select></td>' +
+                            html += '</select></td>' +
                                 // '<td><input type="date" name="deadline[]"></td>' +
-                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>'
-                                 +
+                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' +
+                                serialNumber +
+                                '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' +
+                    serialNumber + '`)" /></div></div></div></td>' +
                                 '<td><input type="text" name="item_static[]"></td>' +
+                                '<td><button type="text" class="removeBtnMI">Remove</button></td>' +
                                 '</tr>';
 
 
@@ -2525,22 +2773,26 @@
                             var users = @json($users);
                             console.log(users);
                             var html =
-                            '<tr>' +
-                                '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                                '<tr>' +
+                                '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                                '"></td>' +
                                 '<td><input type="text" name="mitigation_steps[]"></td>' +
                                 // '<td><input type="date" name="deadline2[]"></td>' +
-                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>'
-                                  +
+                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' +
+                                serialNumber +
+                                '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' +
+                    serialNumber + '`)" /></div></div></div></td>' +
                                 '<td><select name="responsible_person[]">' +
-                                    '<option value="">Select a value</option>';
+                                '<option value="">Select a value</option>';
 
-                                for (var i = 0; i < users.length; i++) {
-                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                                }
+                            for (var i = 0; i < users.length; i++) {
+                                html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                            }
 
-                                html += '</select></td>' +
+                            html += '</select></td>' +
                                 '<td><input type="text" name="status[]"></td>' +
                                 '<td><input type="text" name="remark[]"></td>' +
+                                '<td><button type="text" class="removeBtnMI1">Remove</button></td>' +
                                 '</tr>';
 
                             return html;
@@ -2552,6 +2804,12 @@
                         tableBody.append(newRow);
                     });
                 });
+                $(document).on('click', '.removeBtnMI', function() {
+                    $(this).closest('tr').remove();
+                })
+                $(document).on('click', '.removeBtnMI1', function() {
+                    $(this).closest('tr').remove();
+                })
             </script>
 
             <script>
@@ -2642,7 +2900,7 @@
                     }
                 }
             </script>
-             <script>
+            <script>
                 document.getElementById('initiator_group').addEventListener('change', function() {
                     var selectedValue = this.value;
                     document.getElementById('initiator_group_code').value = selectedValue;
@@ -2657,30 +2915,29 @@
             <script>
                 $(document).ready(function() {
                     var loc = new locationInfo();
-                    var countryDropdown = $("#country"); 
-                    var desiredValue = '{{$data->country}}'; 
-                     setTimeout(function() {
-                        countryDropdown.find('option[value="{{$data->country}}"]').prop('selected', true);
-                         var countryId = jQuery("option:selected", this).attr('countryid');
-                            if(countryId != ''){
-                                loc.getStates(countryId);
-                            }
-                            else{
-                                jQuery(".states option:gt(0)").remove();
-                            }
-                        var stateDropdown = $("#state");     
-                        stateDropdown.find('option[value="{{$data->state}}"]').prop('selected', true);
-                        var stateId = jQuery("option:selected", this).attr('stateid');
-                        if(stateId != ''){
-                            loc.getCities(stateId);
+                    var countryDropdown = $("#country");
+                    var desiredValue = '{{ $data->country }}';
+                    setTimeout(function() {
+                        countryDropdown.find('option[value="{{ $data->country }}"]').prop('selected', true);
+                        var countryId = jQuery("option:selected", this).attr('countryid');
+                        if (countryId != '') {
+                            loc.getStates(countryId);
+                        } else {
+                            jQuery(".states option:gt(0)").remove();
                         }
-                        else{
+                        var stateDropdown = $("#state");
+                        stateDropdown.find('option[value="{{ $data->state }}"]').prop('selected', true);
+                        var stateId = jQuery("option:selected", this).attr('stateid');
+                        if (stateId != '') {
+                            loc.getCities(stateId);
+                        } else {
                             jQuery(".cities option:gt(0)").remove();
                         }
-                        var cityDropdown = $("#city");     
-                        cityDropdown.find('option[value="{{$data->city}}"]').prop('selected', true);
+                        var cityDropdown = $("#city");
+                        cityDropdown.find('option[value="{{ $data->city }}"]').prop('selected', true);
                     }, 1000);
                 });
+
                 function calculateRiskAnalysis(selectElement) {
                     // Get the row containing the changed select element
                     let row = selectElement.closest('tr');
@@ -2701,17 +2958,18 @@
                 var maxLength = 255;
                 $('#docname').keyup(function() {
                     var textlen = maxLength - $(this).val().length;
-                    $('#rchars').text(textlen);});
+                    $('#rchars').text(textlen);
+                });
             </script>
-               <script>
-                document.addEventListener('DOMContentLoaded', function () {
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
                     const removeButtons = document.querySelectorAll('.remove-file');
-    
+
                     removeButtons.forEach(button => {
-                        button.addEventListener('click', function () {
+                        button.addEventListener('click', function() {
                             const fileName = this.getAttribute('data-file-name');
                             const fileContainer = this.closest('.file-container');
-    
+
                             // Hide the file container
                             if (fileContainer) {
                                 fileContainer.style.display = 'none';

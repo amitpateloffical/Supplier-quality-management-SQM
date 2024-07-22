@@ -418,7 +418,6 @@
                                             <input type="text" name="date_Response_due2" id="date_Response_due"
                                                 readonly placeholder="DD-MM-YYYY" />
                                             <input type="date" name="date_Response_due_2"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 id="date_Response_due_checkdate" class="hide-input"
                                                 oninput="handleDateInput(this, 'date_Response_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
                                         </div>
@@ -529,8 +528,7 @@
                                                             <div class="calenderauditee">
                                                                 <input type="text" id="deadline' + serialNumber +'"
                                                                     readonly placeholder="DD-MM-YYYY" />
-                                                                <input type="date"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"name="deadline[]"
+                                                                <input type="date" name="deadline[]"
                                                                     class="hide-input"
                                                                     oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
                                                             </div>
@@ -660,9 +658,8 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="actual_start_date" readonly
                                                 placeholder="DD-MM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                id="actual_start_date_checkdate" name="actual_start_date"
-                                                class="hide-input"
+                                            <input type="date" id="actual_start_date_checkdate"
+                                                name="actual_start_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                         </div>
                                     </div>
@@ -672,9 +669,8 @@
                                         <label for="actual_end_date">Actual End Date</lable>
                                             <div class="calenderauditee">
                                                 <input type="text" id="actual_end_date" placeholder="DD-MM-YYYY" />
-                                                <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                    id="actual_end_date_checkdate" name="actual_end_date"
-                                                    class="hide-input"
+                                                <input type="date" id="actual_end_date_checkdate"
+                                                    name="actual_end_date" class="hide-input"
                                                     oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                             </div>
 

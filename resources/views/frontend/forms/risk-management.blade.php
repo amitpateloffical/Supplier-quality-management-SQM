@@ -898,6 +898,7 @@
                                                         <th>Responsible Person</th>
                                                         <th>Deadline</th>
                                                         <th>Item static</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -928,6 +929,8 @@
                                                         </div>
                                                     </td>
                                                     <td><input type="text" name="item_static[]"></td>
+                                                    <td><button type="text" class="removeBtnMI">Remove</button>
+                                                    </td>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1431,6 +1434,7 @@
                                                         </th>
                                                         <th>Status</th>
                                                         <th>Remarks</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1465,6 +1469,8 @@
                                                         </select></td>
                                                     <td><input type="text" name="status[]"></td>
                                                     <td><input type="text" name="remark[]"></td>
+                                                    <td><button type="text" class="removeBtnMI1">Remove</button>
+                                                    </td>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1636,14 +1642,65 @@
                         <!-- Signatures content -->
                         <div id="CCForm7" class="inner-block cctabcontent">
                             <div class="inner-block-content">
-                                <div class="row">
-                                    <div class="col-lg-6">
+                                {{-- <div class="row">
+                                    <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="Submitted By..">Submitted By..</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Submitted On">Submitted On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Evaluated By">Evaluated By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Evaluated On">Evaluated On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Plan Approved By">Plan Approved By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Plan Approved On">Plan Approved On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Risk Analysis Completed By">Risk Analysis Completed By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Risk Analysis Completed On">Risk Analysis Completed On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                </div> --}}
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Submitted By..">Submitted By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="Submitted On">Submitted On</label>
                                             <div class="static"></div>
@@ -1651,41 +1708,126 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Evaluated By">Evaluated By</label>
+                                            <label for="Submitted Comment">Submitted Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Evaluation Complete By">Evaluation Complete By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Evaluation Complete On">Evaluation Complete On</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Evaluated On">Evaluated On</label>
+                                            <label for="Evaluation Complete Comment">Evaluation Complete Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Action Plan Completed By">Action Plan Completed By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Action Plan Completed On">Action Plan Completed On</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Plan Approved By">Plan Approved By</label>
+                                            <label for="Action Plan Completed Comment">Action Plan Completed
+                                                Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Action Plan Approved By">Action Plan Approved By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Action Plan Approved On">Action Plan Approved On</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Plan Approved On">Plan Approved On</label>
+                                            <label for="Action Plan Approved Comment">Action Plan Approved Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="All Actions Completed By">All Actions Completed By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="All Actions Completed On">All Actions Completed On</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Risk Analysis Completed By">Risk Analysis Completed By</label>
+                                            <label for="All Actions Completed Comment">All Actions Completed
+                                                Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Residual Risk Evaluation Completed By">Residual Risk Evaluation
+                                                Completed By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Residual Risk Evaluation Completed On">Residual Risk Evaluation
+                                                Completed On</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Risk Analysis Completed On">Risk Analysis Completed On</label>
+                                            <label for="Residual Risk Evaluation Completed Comment">Residual Risk
+                                                Evaluation Completed Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Cancelled By">Cancelled By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Cancelled On">Cancelled On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Cancelled Comment">Cancelled Comment</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1853,6 +1995,7 @@
                             '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' +
                     serialNumber + '`)" /></div></div></div></td>' +
                             '<td><input type="text" name="item_static[]"></td>' +
+                            '<td><button type="text" class="removeBtnMI">Remove</button></td>' +
                             '</tr>';
 
 
@@ -1892,6 +2035,7 @@
                         html += '</select></td>' +
                             '<td><input type="text" name="status[]"></td>' +
                             '<td><input type="text" name="remark[]"></td>' +
+                            '<td><button type="text" class="removeBtnMI1">Remove</button></td>' +
                             '</tr>';
 
                         return html;
@@ -1903,6 +2047,13 @@
                     tableBody.append(newRow);
                 });
             });
+
+            $(document).on('click', '.removeBtnMI', function() {
+                $(this).closest('tr').remove();
+            })
+            $(document).on('click', '.removeBtnMI1', function() {
+                $(this).closest('tr').remove();
+            })
         </script>
         <script>
             var maxLength = 255;

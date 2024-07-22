@@ -202,7 +202,7 @@
                             Observation Audit Trail
                         </div>
                         <div> <strong>Record ID.</strong>
-                            {{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
+                            {{ Helpers::getDivisionName($document->division_id) }}/OBS/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
 
                             {{-- {{ str_pad($document->id, 4, '0', STR_PAD_LEFT) }} --}}
                         </div>

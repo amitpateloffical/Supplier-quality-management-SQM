@@ -231,7 +231,8 @@
                         <td class="w-30">
                             @if ($data->division_code)
                                 {{-- {{ Helpers::getDivisionName($data->division_code) }} --}}
-                                {{ Helpers::getDivisionName(session()->get('division')) }}
+                                {{-- {{ Helpers::getDivisionName(session()->get('division')) }} --}}
+                                {{ Helpers::getDivisionName($data->division_id) }}
                             @else
                                 Not Applicable
                             @endif

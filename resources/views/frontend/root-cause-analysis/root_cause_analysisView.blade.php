@@ -1736,7 +1736,7 @@ function add4Input_case(tableId) {
     cell5.innerHTML = "<input type='text'  name='Remarks[]'>";
 
     var cell6 = newRow.insertCell(5);
-    cell6.innerHTML = '<button type="text" class="removeRowBtn">Remove</button';
+    cell6.innerHTML = '<button type="text" class="removeRowBtn">Remove</button>';
     for (var i = 1; i < currentRowCount; i++) {
         var row = table.rows[i];
         row.cells[0].innerHTML = i;

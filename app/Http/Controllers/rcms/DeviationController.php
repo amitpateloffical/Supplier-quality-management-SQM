@@ -2951,28 +2951,29 @@ class DeviationController extends Controller
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
+//===========================uncomment karna hai =============
+                // $list = Helpers::getHodUserList();
+                // foreach ($list as $u) {
+                //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //         $email = Helpers::getInitiatorEmail($u->user_id);
+                //         if ($email !== null) {
 
-                $list = Helpers::getHodUserList();
-                foreach ($list as $u) {
-                    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if ($email !== null) {
-
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                //log error
-                            }
-                        }
-                    }
-                }
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $deviation],
+                //                     function ($message) use ($email) {
+                //                         $message->to($email)
+                //                             ->subject("Activity Performed By " . Auth::user()->name);
+                //                     }
+                //                 );
+                //             } catch (\Exception $e) {
+                //                 //log error
+                //             }
+                //         }
+                //     }
+                // }
+//=============================uncomment karna hai ==============                
 
                 // $list = Helpers::getHeadoperationsUserList();
                 // foreach ($list as $u) {

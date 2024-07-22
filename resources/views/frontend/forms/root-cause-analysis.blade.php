@@ -93,7 +93,7 @@ $users = DB::table('users')->get();
                                             Corporate Quality Assurance</option>
                                         <option value="QAB" @if (old('initiator_Group')=='QAB' ) selected @endif>Quality
                                             Assurance Biopharma</option>
-                                        <option value="CQC" @if (old('initiator_Group')=='CQA' ) selected @endif>Central
+                                        <option value="CQC" @if (old('initiator_Group')=='CQC' ) selected @endif>Central
                                             Quality Control</option>
                                         <option value="MANU" @if (old('initiator_Group')=='MANU' ) selected @endif>
                                             Manufacturing</option>

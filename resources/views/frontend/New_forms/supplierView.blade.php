@@ -1486,13 +1486,13 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="No CAPA Required By">No CAPA Required By</label>
-                                                <div class="static">{{ $data->No_Capa_Required_by }}</div>
+                                                <div class="static">{{ $data->audit_response_completed_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="No Capa Required On">No CAPA Required On</label>
-                                                <div class="static">{{ $data->No_CAPA_Required_on }}</div>
+                                                <div class="static">{{ $data->audit_response_completed_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">

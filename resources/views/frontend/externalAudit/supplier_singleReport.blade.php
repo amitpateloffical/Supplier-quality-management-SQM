@@ -132,7 +132,7 @@
                         <th class="w-20">Others</th>
                         <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
                         <th class="w-20">Supplier Agencies</th>
-                        <td class="w-30">@if($data->Supplier_agencies){{ $data->Supplier_agencies }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->external_agencies){{ $data->external_agencies }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Description</th>
@@ -230,7 +230,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Supplier Auditing Agency</th>
-                        <td class="w-30">@if($data->Supplier_Auditing_Agency){{ $data->Supplier_Auditing_Agency }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->External_Auditing_Agency){{ $data->External_Auditing_Agency }}@else Not Applicable @endif</td>
                         <th class="w-20">Relevant Guidelines / Industry Standards</th>
                         <td class="w-30">@if($data->Relevant_Guidelines){{ $data->Relevant_Guidelines }}@else Not Applicable @endif</td>
                     </tr>
@@ -569,9 +569,9 @@
                     </tr>
                     <tr>
                         <th class="w-20">No CAPA Required By</th>
-                        <td class="w-30">{{ $data->No_Capa_Required_by }}</td>
+                        <td class="w-30">{{ $data->audit_response_completed_by }}</td>
                         <th class="w-20">No CAPA Required On</th>
-                        <td class="w-30">{{ $data->No_CAPA_Required_on }}</td>
+                        <td class="w-30">{{ $data->audit_response_completed_on }}</td>
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->comment_closed_done_by_comment }}</td>
                     </tr>

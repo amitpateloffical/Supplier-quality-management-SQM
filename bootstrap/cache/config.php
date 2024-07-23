@@ -217,7 +217,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -300,7 +300,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'trackwise',
+        'database' => 'sqm',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -310,7 +310,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'trackwise',
+        'database' => 'sqm',
         'username' => 'root',
         'password' => '',
         'unix_socket' => '',
@@ -330,7 +330,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'trackwise',
+        'database' => 'sqm',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -345,7 +345,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'trackwise',
+        'database' => 'sqm',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -389,10 +389,10 @@
     'convert_entities' => true,
     'defines' => 
     array (
-      'font_dir' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\fonts',
-      'font_cache' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\fonts',
-      'temp_dir' => 'C:\\Users\\ASUS\\AppData\\Local\\Temp',
-      'chroot' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms',
+      'font_dir' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\fonts',
+      'font_cache' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\fonts',
+      'temp_dir' => 'C:\\Users\\sheet\\AppData\\Local\\Temp',
+      'chroot' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',
@@ -408,10 +408,10 @@
     'public_path' => NULL,
     'options' => 
     array (
-      'font_dir' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\fonts',
-      'font_cache' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\fonts',
-      'temp_dir' => 'C:\\Users\\ASUS\\AppData\\Local\\Temp',
-      'chroot' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms',
+      'font_dir' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\fonts',
+      'font_cache' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\fonts',
+      'temp_dir' => 'C:\\Users\\sheet\\AppData\\Local\\Temp',
+      'chroot' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM',
       'allowed_protocols' => 
       array (
         'file://' => 
@@ -554,7 +554,7 @@
     ),
     'temporary_files' => 
     array (
-      'local_path' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\framework/cache/laravel-excel',
+      'local_path' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\framework/cache/laravel-excel',
       'remote_disk' => NULL,
       'remote_prefix' => NULL,
       'force_resync_remote' => NULL,
@@ -568,7 +568,7 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\app',
+        'root' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\app',
         'throw' => false,
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
@@ -588,7 +588,7 @@
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\app/public',
+        'root' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
         'throw' => false,
@@ -608,7 +608,7 @@
     ),
     'links' => 
     array (
-      'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\public\\storage' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\app/public',
+      'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\public\\storage' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -647,13 +647,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -705,7 +705,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -771,7 +771,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\resources\\views/vendor/mail',
+        0 => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -882,7 +882,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -948,9 +948,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\resources\\views',
     ),
-    'compiled' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM\\storage\\framework\\views',
   ),
   'flasher' => 
   array (
@@ -1107,7 +1107,7 @@
     array (
     ),
     'enable_runnable_solutions' => NULL,
-    'remote_sites_path' => 'C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\Agio-Pharma-qms',
+    'remote_sites_path' => 'C:\\xampp\\htdocs\\Supplier-quality-management-SQM',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
     'settings_file_path' => '',

@@ -3115,6 +3115,7 @@ class SupplierController extends Controller
                     $supplier->submitted_by = Auth::user()->name;
                     $supplier->submitted_on = Carbon::now()->format('d-M-Y');
                     $supplier->submitted_comment = $request->comments;
+                    
 
                     $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;

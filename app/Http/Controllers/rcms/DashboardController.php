@@ -843,6 +843,7 @@ class DashboardController extends Controller
             $data = EffectivenessCheck::find($id);
             $single = "effectiveSingleReport/" .$data->id;
             $audit = "effectiveAuditReport/" .$data->id;
+            $parent = "#". $data->id;
         } elseif ($type == "Management-Review") {
             $data = ManagementReview::find($id);
             $single = "managementReview/" . $data->id;

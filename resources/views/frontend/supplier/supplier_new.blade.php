@@ -13,6 +13,94 @@ $users = DB::table('users')->select('id', 'name')->get();
         display: none;
     }
 </style>
+{{-- voice Command --}}
+    
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: none;
+        color: black;
+        display: none;
+        /* Hide the button initially */
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px;
+    }
+
+    .relative-container input:focus+.mic-btn {
+        display: inline-block;
+        /* Show the button when input is focused */
+    }
+
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none;
+    }
+</style>
+
+<script>
+    < link rel = "stylesheet"
+    href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+
+        document.querySelectorAll('.mic-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    micBtn.style.display = 'inline-block';
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    setTimeout(() => {
+                        micBtn.style.display = 'none';
+                    }, 200); // Delay to prevent button from hiding immediately when clicked
+                }
+            });
+        });
+    });
+</script>
+
 
 <script>
         $(document).ready(function() {
@@ -166,9 +254,15 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255</span>
                                     characters remaining
-                                    <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                    <div style="position:relative;">
+                                    <input id="docname" type="text" name="short_description" maxlength="255" required class="mic-input">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
+
                             <script>
                                 var maxLength = 255;
                                 $('#docname').keyup(function() {
@@ -178,7 +272,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier.">Supplier</label>
-                                    <input type="text" id="supplier_person" name="supplier_person" placeholder="Supplier">
+                                    <div style="position:relative;">
+                                    <input type="text" id="supplier_person" name="supplier_person" class="mic-input" placeholder="Supplier">
                                     <!--<select name="supplier_person" id="supplier_person"> -->
                                     <!--    <option value="">Select Supplier</option>-->
                                     <!--    @if(!empty($users))-->
@@ -187,6 +282,10 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <!--        @endforeach-->
                                     <!--    @endif -->
                                     <!--</select>-->
+                                    <button class="mic-btn" type="button">
+                                            <i class="fas fa-microphone"></i>
+                                        </button>
+                                </div>
                                 </div>
                             </div>
 
@@ -220,8 +319,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Suppliers Products">Suppliers Products</label>
-                                    <input name="supplier_products" id="supplier_products" type="text" maxlength="100">
+                                    <div style="position:relative;">
+                                    <input name="supplier_products" id="supplier_products" type="text" class="mic-input"  maxlength="100">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
                                 </div>
+                            </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
@@ -305,33 +409,58 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Other Type">Other Type</label>
-                                    <input type="text" name="supplier_other_type" placeholder="Enter Other Type">
+                                    <div style="position:relative;">
+                                    <input type="text" name="supplier_other_type" class="mic-input"  placeholder="Enter Other Type">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
                                 </div>
+                            </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supply from">Supply from</label>
-                                    <input type="text" name="supply_from" placeholder="Enter Supply From">
+                                    <div style="position:relative;">
+                                    <input type="text" name="supply_from" class="mic-input"  placeholder="Enter Supply From">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supply to">Supply to</label>
-                                    <input type="text" name="supply_to" placeholder="Enter Supply To">
+                                    <div style="position:relative;">
+                                    <input type="text" name="supply_to" class="mic-input"  placeholder="Enter Supply To">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Supplier Web Site">Supplier Web Site</label>
-                                    <input type="text" name="supplier_website" placeholder="Enter Supply Website">
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Supplier Web Site">Supplier Web Site</label>
+                                <div style="position:relative;">
+                                <input type="text" name="supplier_website" class="mic-input"  placeholder="Enter Supply Website">
+                                <button class="mic-btn" type="button">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Web Search">Web Search</label>
+                                <div style="position:relative;">
+                                <input type="search" name="supplier_web_search" class="mic-input"  placeholder="Enter Supply Web Search">
+                                <button class="mic-btn" type="button">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Web Search">Web Search</label>
-                                    <input type="search" name="supplier_web_search" placeholder="Enter Supply Web Search">
-                                </div>
-                            </div>
+                        </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments">File Attachment</label>
@@ -365,13 +494,23 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Related URLs">Related URLs</label>
-                                    <input type="url" name="related_url" placeholder="Enter Related URLs">
+                                    <div style="position:relative;">
+                                    <input type="text" name="related_url" class="mic-input"  placeholder="Enter Related URLs">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Related Quality Events">Related Quality Events</label>
-                                    <input type="text" name="related_quality_events" placeholder="Enter Related Quality Events">
+                                    <div style="position:relative;">
+                                    <input type="text" name="related_quality_events" class="mic-input"  placeholder="Enter Related Quality Events">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -493,49 +632,89 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier.">Supplier</label>
-                                    <input type="text" name="supplier_name" id="supplier_name" placeholder="Enter Supplier Name">
+                                    <div style="position:relative;">
+                                    <input type="text" name="supplier_name" class="mic-input"  id="supplier_name" placeholder="Enter Supplier Name">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier.">Supplier ID</label>
-                                <input type="text" name="supplier_id" placeholder="Enter Supplier ID">
+                                    <div style="position:relative;">
+                                <input type="text" name="supplier_id" class="mic-input"  placeholder="Enter Supplier ID">
+                                <button class="mic-btn" type="button">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="">Manufacturer</label>
-                                    <input type="text" name="manufacturer_name" placeholder="Enter Manufacturer ID">
+                                    <div style="position:relative;">
+                                    <input type="text" name="manufacturer_name" class="mic-input"  placeholder="Enter Manufacturer ID">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="manufacturer">Manufacturer ID</label>
-                                <input type="text" name="manufacturer_id" placeholder="Enter Manufacturer ID">
+                                    <div style="position:relative;">
+                                <input type="text" name="manufacturer_id" class="mic-input"  placeholder="Enter Manufacturer ID">
+                                <button class="mic-btn" type="button">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="">Vendor</label>
-                                    <input type="text" name="vendor_name" placeholder="Enter Vendor Name">
+                                    <div style="position:relative;">
+                                    <input type="text" name="vendor_name" class="mic-input"  placeholder="Enter Vendor Name">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="manufacturer">Vendor ID</label>
-                                    <input type="text" name="vendor_id" placeholder="Enter Vendor ID">
+                                    <div style="position:relative;">
+                                    <input type="text"  name="vendor_id" class="mic-input"  placeholder="Enter Vendor ID">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Contact Person">Contact Person</label>
-                                    <input type="text" name="contact_person" id="contact_person" placeholder="Enter Contact Person">
+                                    <div style="position:relative;">
+                                    <input type="text" name="contact_person" class="mic-input"  id="contact_person" placeholder="Enter Contact Person">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="Other Contacts">Other Contacts</label>
-                                    <input name="other_contacts" id="other_contacts" type="text">
+                                    <div style="position:relative;">
+                                    <input id="other_contacts" type="text" name="other_contacts" class="mic-input" >
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -671,18 +850,28 @@ $users = DB::table('users')->select('id', 'name')->get();
                             </script>
 
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Address">Address</label>
-                                    <textarea type="text" name="address" id="address"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Supplier Web Site">Supplier Web Site</label>
-                                    <input type="text" name="suppplier_web_site" id="suppplier_web_site" placeholder="Enter Website ">
-                                </div>
-                            </div>
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="Address">Address</label>
+        <div style="position:relative;">
+        <textarea type="text"  name="address" class="mic-input" id="address"></textarea>
+        <button class="mic-btn" type="button">
+            <i class="fas fa-microphone"></i>
+        </button>
+        </div>
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="Supplier Web Site">Supplier Web Site</label>
+        <div style="position:relative;">
+        <input type="text" name="suppplier_web_site" class="mic-input"  placeholder="Enter Website ">
+        <button class="mic-btn" type="button">
+            <i class="fas fa-microphone"></i>
+        </button>
+        </div>
+    </div>
+</div>
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="ISO Certification date">ISO Certification Date</label>
@@ -711,32 +900,58 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Contracts">Contracts</label>
-                                    <input type="text" name="suppplier_contacts" id="suppplier_contacts">
+                                    <div style="position:relative;">
+                                    <input type="text" name="suppplier_contacts" class="mic-input"  id="suppplier_contacts">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Related Non Conformances">Related Non Conformances</label>
-                                    <input type="text" name="related_non_conformance" id="related_non_conformance">
+                                    <div style="position:relative;">
+                                    <input type="text" name="related_non_conformance" class="mic-input"  id="related_non_conformance">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier Contracts/Agreements">Supplier Contracts/Agreements</label>
-                                    <input type="text" id="suppplier_agreement" name="suppplier_agreement">
+                                    <div style="position:relative;">
+                                    <input type="text" id="suppplier_agreement" name="suppplier_agreement" class="mic-input" >
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Regulatory History">Regulatory History</label>
-                                    <input type="text" id="regulatory_history" name="regulatory_history">
+                                    <div style="position:relative;">
+                                    <input type="text" id="regulatory_history" name="regulatory_history" class="mic-input" >
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
                         
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Distribution Sites">Distribution Sites</label>
-                                    <input type="text" id="distribution_sites" name="distribution_sites" maxlength="50">
+                                    <div style="position:relative;">
+                                    <input type="text" id="distribution_sites" name="distribution_sites" class="mic-input"  maxlength="50">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -1612,4 +1827,6 @@ $users = DB::table('users')->select('id', 'name')->get();
             }
         }
     </script>
+
+
 @endsection

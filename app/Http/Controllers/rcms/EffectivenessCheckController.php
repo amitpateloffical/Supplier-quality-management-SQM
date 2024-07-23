@@ -7,6 +7,7 @@ use App\Models\CC;
 use App\Models\CCStageHistory;
 use App\Models\EffectivenessCheck;
 use App\Models\RecordNumber;
+use App\Models\Capa;
 use App\Models\User;
 use App\Models\RoleGroup;
 use Carbon\Carbon;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
 
 class EffectivenessCheckController extends Controller
 {
@@ -82,6 +84,9 @@ class EffectivenessCheckController extends Controller
         $openState->Quality_Reviewer = $request->Quality_Reviewer;
         $openState->Effectiveness_Results = $request->Effectiveness_Results;
         $openState->Addendum_Comments = $request->Addendum_Comments;
+        $openState->change_from;
+        $openState->change_to;
+        $openState->action_name;
        // $openState->Cancellation_Category = $request->Cancellation_Category;
         //$openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
 
@@ -171,7 +176,11 @@ class EffectivenessCheckController extends Controller
             $historyAssigned->user_name = Auth::user()->name;
             $historyAssigned->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $historyAssigned->origin_state = $openState->status;
-            $historyAssigned->update();
+            $historyAssigned->change_from = "Initiation";
+            $historyAssigned->change_to = "Opened";
+            $historyAssigned->action_name = "Create";
+            $historyAssigned->save();
+            
         }
          if (!empty($openState->short_description)) {
             $historyShort = EffectivenessCheck::find($openState->id);
@@ -184,7 +193,10 @@ class EffectivenessCheckController extends Controller
             $historyShort->user_name = Auth::user()->name;
             $historyShort->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $historyShort->origin_state = $openState->status;
-            $historyShort->update();
+            $historyShort->change_from = "Initiation";
+            $historyShort->change_to = "Opened";
+            $historyShort->action_name = "Create";
+            $historyShort->save();
             }
             
         if (!empty($openState->Effectiveness_check_Plan)) {
@@ -198,7 +210,10 @@ class EffectivenessCheckController extends Controller
             $historyEffectiveness->user_name = Auth::user()->name;
             $historyEffectiveness->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $historyEffectiveness->origin_state = $openState->status;
-            $historyEffectiveness->update();
+            $historyEffectiveness->change_from = "Initiation";
+            $historyEffectiveness->change_to = "Opened";
+            $historyEffectiveness->action_name = "Create";
+            $historyEffectiveness->save();
             }
 
             if (!empty($openState->Effectiveness_Summary)) {
@@ -212,7 +227,10 @@ class EffectivenessCheckController extends Controller
                 $$historyEffectiveness->user_name = Auth::user()->name;
                 $$historyEffectiveness->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $$historyEffectiveness->origin_state = $openState->status;
-                $$historyEffectiveness->update();
+                $historyEffectiveness->change_from = "Initiation";
+                $historyEffectiveness->change_to = "Opened";
+                $historyEffectiveness->action_name = "Create";
+                $historyEffectiveness->save();
                 }
             
              if (!empty($openState->effect_summary)) {
@@ -226,7 +244,10 @@ class EffectivenessCheckController extends Controller
                 $historyEffect->user_name = Auth::user()->name;
                 $historyEffect->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $historyEffect->origin_state = $openState->status;
-                $historyEffect->update();
+                $historyEffect->change_from = "Initiation";
+                $historyEffect->change_to = "Opened";
+                $historyEffect->action_name = "Create";
+                $historyEffect->save();
                 }
 
             if (!empty($openState->Quality_Reviewer)) {
@@ -240,7 +261,10 @@ class EffectivenessCheckController extends Controller
                 $historyQuality->user_name = Auth::user()->name;
                 $historyQuality->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $historyQuality->origin_state = $openState->status;
-                $historyQuality->update();
+                $historyQuality->change_from = "Initiation";
+                $historyQuality->change_to = "Opened";
+                $historyQuality->action_name = "Create";
+                $historyQuality->save();
                 }
 
             if (!empty($openState->Effectiveness_Results)) {
@@ -254,7 +278,10 @@ class EffectivenessCheckController extends Controller
                 $historyEffectiveness->user_name = Auth::user()->name;
                 $historyEffectiveness->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $historyEffectiveness->origin_state = $openState->status;
-                $historyEffectiveness->update();
+                $historyEffectiveness->change_from = "Initiation";
+                $historyEffectiveness->change_to = "Opened";
+                $historyEffectiveness->action_name = "Create";
+                $historyEffectiveness->save();
                 }
 
             if (!empty($openState->Addendum_Comments)) {
@@ -268,7 +295,10 @@ class EffectivenessCheckController extends Controller
                 $historyAddendum->user_name = Auth::user()->name;
                 $historyAddendum->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $historyAddendum->origin_state = $openState->status;
-                $historyAddendum->update();
+                $historyAddendum->change_from = "Initiation";
+                $historyAddendum->change_to = "Opened";
+                $historyAddendum->action_name = "Create";
+                $historyAddendum->save();
                 }
 
          if (!empty($openState->Effectiveness_check_Attachment)) {
@@ -282,7 +312,10 @@ class EffectivenessCheckController extends Controller
                 $historyEffectiveness->user_name = Auth::user()->name;
                 $historyEffectiveness->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $historyEffectiveness->origin_state = $openState->status;
-                $historyEffectiveness->update();
+                $historyEffectiveness->change_from = "Initiation";
+                $historyEffectiveness->change_to = "Opened";
+                $historyEffectiveness->action_name = "Create";
+                $historyEffectiveness->save();
                 }
          if (!empty($openState->Addendum_Attachment)) {
                 $historyAddendum = EffectivenessCheck::find($openState->id);
@@ -295,7 +328,10 @@ class EffectivenessCheckController extends Controller
                 $historyAddendum->user_name = Auth::user()->name;
                 $historyAddendum->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $historyAddendum->origin_state = $openState->status;
-                $historyAddendum->update();
+                $historyAddendum->change_from = "Initiation";
+                $historyAddendum->change_to = "Opened";
+                $historyAddendum->action_name = "Create";
+                $historyAddendum->save();
                 }
 
           if (!empty($openState->Attachment)) {
@@ -309,7 +345,10 @@ class EffectivenessCheckController extends Controller
                 $historyAttachment->user_name = Auth::user()->name;
                 $historyAttachment->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $historyAttachment->origin_state = $openState->status;
-                $historyAttachment->update();
+                $historyAttachment->change_from = "Initiation";
+                $historyAttachment->change_to = "Opened";
+                $historyAttachment->action_name = "Create";
+                $historyAttachment->save();
                 }
          if (!empty($openState->Attachments)) {
                 $historyAttachments = EffectivenessCheck::find($openState->id);
@@ -322,7 +361,10 @@ class EffectivenessCheckController extends Controller
                 $historyAttachments->user_name = Auth::user()->name;
                 $historyAttachments->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $historyAttachments->origin_state = $openState->status;
-                $historyAttachments->update();
+                $historyAttachments->change_from = "Initiation";
+                $historyAttachments->change_to = "Opened";
+                $historyAttachments->action_name = "Create";
+                $historyAttachments->save();
                 }
 
          if (!empty($openState->refer_record)) {
@@ -336,7 +378,10 @@ class EffectivenessCheckController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $openState->status;
-                $history->update();
+                $history->change_from = "Initiation";
+                $history->change_to = "Opened";
+                $history->action_name = "Create";
+                $history->save();
                 }
 
 
@@ -449,7 +494,10 @@ class EffectivenessCheckController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
+            $history->change_to = 'Not Applicable';
+            $history->change_from = $lastopenState->status;
             $history->update();
+            $history->save();
         }
         if ($lastopenState->short_description != $openState->short_description || !empty($request->short_description_comment)) {
             $history = EffectivenessCheck::find($id);
@@ -462,7 +510,10 @@ class EffectivenessCheckController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
+            $history->change_to = 'Not Applicable';
+            $history->change_from = $lastopenState->status;
             $history->update();
+            $history->save();
         }
         if ($lastopenState->Effectiveness_check_Plan != $openState->Effectiveness_check_Plan || !empty($request->Effectiveness_check_Plan_comment)) {
             $history = EffectivenessCheck::find($id);
@@ -652,7 +703,11 @@ class EffectivenessCheckController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastopenState->status;
                             $history->step = 'Submit';
+                            $history->change_to = 'Pending  Plan';
+                            $history->change_from = 'Opened';
+                            $history->action_name = 'Not Applicable';
                             $history->save();
+                            
                             
                     $list = Helpers:: getSupervisorUserList();
                     foreach ($list as $u) {
@@ -924,7 +979,7 @@ class EffectivenessCheckController extends Controller
     }
     public function effectiveAuditTrialShow($id)
     {
-        $audit = EffectivenessCheck::where('parent_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+        $audit = EffectivenessCheck::where('parent_id', $id)->orderByDESC('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = EffectivenessCheck::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');

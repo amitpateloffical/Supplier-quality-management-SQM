@@ -194,9 +194,6 @@
         </table>
     </footer>
 
-    
-
-
         <div class="second-table">
             <table>
                 <thead>

@@ -365,14 +365,27 @@
                                         <textarea name="short_description"></textarea>
                                     </div>
                                 </div> --}}
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
-                                </div>  
+                                </div>   -->
+
+                                <div class="col-12">
+    <div class="group-input">
+        <label for="Short Description">Short Description<span class="text-danger">*</span></label>
+        <span id="rchars">255</span> characters remaining
+        <div style="position: relative;">
+            <input id="docname" type="text" name="short_description" maxlength="255" required>
+            <button id="start-record-btn" type="button" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
@@ -403,12 +416,27 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input" id="initiated_through_req">
                                         <label for="If Other">Others<span class="text-danger d-none">*</span></label>
                                         <textarea name="initiated_if_other"></textarea>
                                     </div>
-                                </div>
+                                </div> -->
+
+      
+                                <div class="col-lg-6">
+    <div class="group-input" id="initiated_through_req">
+        <label for="initiated_if_other">Others<span class="text-danger d-none">*</span></label>
+        <div style="position: relative;">
+            <textarea id="initiated_if_other" class="mic-input" name="initiated_if_other"></textarea>
+            <button class="mic-btn" type="button" style=" display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="repeat">Repeat</label>
@@ -444,7 +472,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input" id="type_of_audit_req">
                                         <label for="If Other">If Others<span class="text-danger d-none">*</span></label>
                                         <textarea name="if_other"></textarea>
@@ -452,12 +480,27 @@
                                             <p class="text-danger">this field is required</p>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> -->
+                                <div class="col-lg-6">
+    <div class="group-input" id="type_of_audit_req">
+        <label for="If Other">If Others<span class="text-danger d-none">*</span></label>
+        <div class="relative-container">
+            <textarea name="if_other" class="mic-input"></textarea>
+            <button class="mic-btn" type="button" style=" display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+        @error('if_other')
+            <p class="text-danger">this field is required</p>
+        @enderror
+    </div>
+</div>
+
                             
 <div class="col-lg-6">
     <div class="group-input">
         <label for="supplier_agencies">Supplier Agencies</label>
-        <select name="external_agencies" id="supplier_agencies" onchange="toggleOthersField(this.value, 'external_agencies_req', 'others')">
+        <select name="external_agencies" id="supplier_agencies" onchange="toggleOthersField(this.value)">
             <option value="">-- Select --</option>
             <option value="jordan_fda">Jordan FDA</option>
             <option value="us_fda">USFDA</option>
@@ -472,14 +515,18 @@
     </div>
 </div>
 <div class="col-lg-6">
-    <div class="group-input" id="external_agencies_req">
+    <div class="group-input d-none relative-container" id="external_agencies_req">
         <label for="others">Supplier Agencies Others<span class="text-danger d-none">*</span></label>
-        <textarea name="others" id="others"></textarea>
+        <textarea name="others" id="others" class="mic-input"></textarea>
+        <button class="mic-btn" type="button" style="display: none;">
+            <i class="fas fa-microphone"></i>
+        </button>
         @error('if_other')
             <p class="text-danger">this field is required</p>
         @enderror
     </div>
 </div>
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="others">Others<span class="text-danger d-none">*</span></label>
@@ -487,11 +534,17 @@
                                     </div>
                                 </div> --}}
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Initial Comments">Description</label>
-                                        <textarea name="initial_comments"></textarea>
-                                    </div>
-                                </div>
+    <div class="group-input">
+        <label for="initial_comments">Description</label>
+        <div class="relative-container">
+            <textarea name="initial_comments" id="initial_comments" class="mic-input"></textarea>
+            <button class="mic-btn" type="button" style=" display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                                
                                 <div class="col-12">
                                     <div class="group-input">
@@ -670,17 +723,29 @@
                                     </div>
                                 </div> --}}
                                 <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Product/Material Name">Product/Material Name</label>
-                                        <input type="text" name="material_name">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Comments(If Any)">Comments(If Any)</label>
-                                        <textarea name="if_comments"></textarea>
-                                    </div>
-                                </div>
+    <div class="group-input">
+        <label for="material_name">Product/Material Name</label>
+        <div class="relative-container">
+            <input type="text" name="material_name" id="material_name" class="mic-input">
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="if_comments">Comments(If Any)</label>
+        <div class="relative-container">
+            <textarea name="if_comments" id="if_comments" class="mic-input"></textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -752,30 +817,53 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Supplier Auditor Details">Supplier Auditor Details</label>
-                                        <textarea name="Auditor_Details"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Supplier Auditing Agency">Supplier Auditing Agency</label>
-                                        <textarea name="External_Auditing_Agency"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Relevant Guidelines / Industry Standards">Relevant Guidelines /
-                                            Industry Standards</label>
-                                        <textarea name="Relevant_Guidelines"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="QA Comments">QA Comments</label>
-                                        <textarea name="QA_Comments"></textarea>
-                                    </div>
-                                </div>
+    <div class="group-input">
+        <label for="Auditor_Details">Supplier Auditor Details</label>
+        <div class="relative-container">
+            <textarea name="Auditor_Details" id="Auditor_Details" class="mic-input"></textarea>
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="External_Auditing_Agency">Supplier Auditing Agency</label>
+        <div class="relative-container">
+            <textarea name="External_Auditing_Agency" id="External_Auditing_Agency" class="mic-input"></textarea>
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="Relevant_Guidelines">Relevant Guidelines / Industry Standards</label>
+        <div class="relative-container">
+            <textarea name="Relevant_Guidelines" id="Relevant_Guidelines" class="mic-input"></textarea>
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="QA_Comments">QA Comments</label>
+        <div class="relative-container">
+            <textarea name="QA_Comments" id="QA_Comments" class="mic-input"></textarea>
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Guideline Attachment">Guideline Attachment</label>
@@ -806,25 +894,39 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Supplier/Vendor/Manufacturer Details">Supplier/Vendor/Manufacturer
-                                            Details</label>
-                                        <input type="text" name="Supplier_Details">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Supplier/Vendor/Manufacturer Site">Supplier/Vendor/Manufacturer
-                                            Site</label>
-                                        <input type="text" name="Supplier_Site">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Comments">Comments</label>
-                                        <textarea name="Comments"></textarea>
-                                    </div>
-                                </div>
+    <div class="group-input">
+        <label for="Supplier_Details">Supplier/Vendor/Manufacturer Details</label>
+        <div class="relative-container">
+            <input type="text" name="Supplier_Details" id="Supplier_Details" class="mic-input">
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="col-12">
+    <div class="group-input">
+        <label for="Supplier_Site">Supplier/Vendor/Manufacturer Site</label>
+        <div class="relative-container">
+            <input type="text" name="Supplier_Site" id="Supplier_Site" class="mic-input">
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="col-12">
+    <div class="group-input">
+        <label for="Comments">Comments</label>
+        <div class="relative-container">
+            <textarea name="Comments" id="Comments" class="mic-input"></textarea>
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -909,11 +1011,17 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Audit Comments">Audit Comments</label>
-                                        <textarea name="Audit_Comments1"></textarea>
-                                    </div>
-                                </div>
+    <div class="group-input">
+        <label for="Audit_Comments1">Audit Comments</label>
+        <div class="relative-container">
+            <textarea name="Audit_Comments1" id="Audit_Comments1" class="mic-input"></textarea>
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -933,11 +1041,17 @@
                                     Audit Response
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Remarks">Remarks</label>
-                                        <textarea name="Remarks"></textarea>
-                                    </div>
-                                </div>
+    <div class="group-input">
+        <label for="Remarks">Remarks</label>
+        <div class="relative-container">
+            <textarea name="Remarks" id="Remarks" class="mic-input"></textarea>
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record</label>
@@ -995,20 +1109,32 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Audit Comments">Audit Comments</label>
-                                        <textarea name="Audit_Comments2"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="due_date_extension">Due Date Extension Justification</label>
-                                        <div><small class="text-primary">Please Mention justification if due date is
-                                                crossed</small></div>
-                                        <textarea name="due_date_extension"></textarea>
-                                    </div>
-                                </div>
-                            </div>
+    <div class="group-input">
+        <label for="Audit_Comments2">Audit Comments</label>
+        <div class="relative-container">
+            <textarea name="Audit_Comments2" id="Audit_Comments2" class="mic-input"></textarea>
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+                                        </div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="due_date_extension">Due Date Extension Justification</label>
+        <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
+        <div class="relative-container">
+            <textarea name="due_date_extension" id="due_date_extension" class="mic-input"></textarea>
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1407,7 +1533,263 @@
     });
 </script>
 
-<!-- Ensure this CSS is present to initially hide the Others field and its group -->
+<!-- for Voice Access -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        const docnameInput = document.getElementById('docname');
+        const startRecordBtn = document.getElementById('start-record-btn');
+
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        startRecordBtn.addEventListener('click', function() {
+            recognition.start();
+        });
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            docnameInput.value += transcript;
+        };
+
+        recognition.onerror = function(event) {
+            console.error(event.error);
+        };
+    });
+</script>
+<script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    </script>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+
+    // Show/hide the container based on user selection
+    function toggleOthersField(selectedValue) {
+        const container = document.getElementById('external_agencies_req');
+        if (selectedValue === 'others') {
+            container.classList.remove('d-none');
+        } else {
+            container.classList.add('d-none');
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+
+        // Show/hide mic button on focus/blur of input fields
+        const micInputs = document.querySelectorAll('.mic-input');
+        micInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    micBtn.style.display = 'block';
+                }
+            });
+            input.addEventListener('blur', function(event) {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    // Use a timeout to prevent immediate hiding when the button is clicked
+                    setTimeout(() => {
+                        if (!document.activeElement.classList.contains('mic-btn')) {
+                            micBtn.style.display = 'none';
+                        }
+                    }, 200);
+                }
+            });
+        });
+    });
+
+    // Show/hide the container based on user selection
+    function toggleOthersField(selectedValue) {
+        const container = document.getElementById('external_agencies_req');
+        if (selectedValue === 'others') {
+            container.classList.remove('d-none');
+        } else {
+            container.classList.add('d-none');
+        }
+    }
+</script>
+
+
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
+    }
+</style>
+
+
+
+    <style>
+    #start-record-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    #start-record-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    #start-record-btn:focus,
+    #start-record-btn:hover,
+    #start-record-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+</style>
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
+    }
+</style>
+
+
 <style>
     #external_agencies_req {
         display: none;

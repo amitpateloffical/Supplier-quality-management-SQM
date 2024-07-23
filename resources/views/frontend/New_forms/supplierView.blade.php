@@ -471,7 +471,7 @@ function addMultipleFiles(input, block_id) {
                                                 <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
                                         </div> --}}
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
@@ -481,7 +481,20 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
         
-                                        </div>
+                                        </div> -->
+
+                                        <div class="col-12">
+    <div class="group-input">
+        <label for="Short Description">Short Description<span class="text-danger">*</span></label>
+        <span id="rchars">255</span> characters remaining
+        <div style="position: relative;">
+            <input id="docname" type="text" value = "{{ $data->short_description }}" name="short_description" maxlength="255" required>
+            <button id="start-record-btn" type="button" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
@@ -524,12 +537,17 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="group-input" id="initiated_through_req">
-                                                <label for="If Other">Others<span
-                                                        class="text-danger d-none">*</span></label>
-                                                <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other">{{$data->initiated_if_other}}</textarea>
-                                            </div>
-                                        </div>
+    <div class="group-input" id="initiated_through_req">
+        <label for="initiated_if_other">Others<span class="text-danger d-none">*</span></label>
+        <div class="relative-container">
+            <textarea name="initiated_if_other" id="initiated_if_other" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->initiated_if_other}}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                                         {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="repeat">Repeat</label>
@@ -567,13 +585,18 @@ function addMultipleFiles(input, block_id) {
     </div>
 </div>
 
-                                        <div class="col-lg-6">
-                                            <div class="group-input" id="if_other">
-                                                <label for="If Other">If Other<span
-                                                        class="text-danger d-none">*</span></label>
-                                                <textarea name="if_other" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_other }}</textarea>
-                                            </div>
-                                        </div>
+<div class="col-lg-6">
+    <div class="group-input" id="if_other">
+        <label for="if_other">If Other<span class="text-danger d-none">*</span></label>
+        <div class="relative-container">
+            <textarea name="if_other" id="if_other_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_other }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                                         
                                         <div class="col-lg-6">
     <div class="group-input">
@@ -600,43 +623,51 @@ function addMultipleFiles(input, block_id) {
     </div>
 </div>
 
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Initial Comments">Description</label>
-                                                <textarea name="initial_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_comments }}</textarea>
-                                            </div>
-                                        </div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="initial_comments">Description</label>
+        <div class="relative-container">
+            <textarea name="initial_comments" id="initial_comments" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_comments }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+
                                         
                                     
-                                        <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="File Attachments">Initial Attachment</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled  class="file-attachment-list" id="inv_attachment">
-                                                        @if ($data->inv_attachment)
-                                                            @foreach(json_decode($data->inv_attachment) as $file)
-                                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
-                                                        @endif
-
-                                                    </div>
-                                                    <div  class="add-btn">
-                                                        <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="inv_attachment[]"
-                                                         oninput="addMultipleFiles(this, 'inv_attachment')"
-                                                            multiple>
-                                                    </div>
-                                                </div>
-                                                {{-- <input type="file" id="myfile" name="file_attachment"
-                                                    value="{{ $data->file_attachment }}" --}}
-                                                    {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
-                                            </div>
-                                        </div>
+<div class="col-lg-12">
+    <div class="group-input">
+        <label for="File Attachments">Initial Attachment</label>
+        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+        <div class="file-attachment-field">
+            <div disabled class="file-attachment-list" id="inv_attachment">
+                @if ($data->inv_attachment)
+                    @foreach(json_decode($data->inv_attachment) as $file)
+                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                            <b>{{ $file }}</b>
+                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                            </a>
+                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                            </a>
+                        </h6>
+                    @endforeach
+                @endif
+            </div>
+            <div class="file-input-wrapper">
+                <div class="add-btn">
+                    <div>Add</div>
+                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="inv_attachment[]" oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
@@ -751,20 +782,30 @@ function addMultipleFiles(input, block_id) {
     </div>
 </div>
                                        
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Product/Material Name">Product/Material Name</label>
-                                                <input type="text" name="material_name"
-                                                    value="{{ $data->material_name }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Comments(If Any)">Comments(If Any)</label>
-                                                <textarea name="if_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_comments }}</textarea>
-                                            </div>
-                                        </div>
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="material_name">Product/Material Name</label>
+        <div class="relative-container">
+            <input type="text" name="material_name" id="material_name" class="mic-input" value="{{ $data->material_name }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="if_comments">Comments(If Any)</label>
+        <div class="relative-container">
+            <textarea name="if_comments" id="if_comments" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_comments }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
@@ -965,30 +1006,54 @@ function addMultipleFiles(input, block_id) {
     </div>
 </div>
 
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="External Auditor Details">Suppliers Auditor Details</label>
-                                                <textarea name="Auditor_Details" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Auditor_Details }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="External Auditing Agency">Supplier Auditing Agency</label>
-                                                <textarea name="External_Auditing_Agency" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->External_Auditing_Agency }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Relevant Guidelines / Industry Standards">Relevant Guidelines / Industry Standards</label>
-                                                <textarea name="Relevant_Guidelines" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Relevant_Guidelines}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="QA Comments">QA Comments</label>
-                                                <textarea name="QA_Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->QA_Comments}}</textarea>
-                                            </div>
-                                        </div>
+<div class="col-12">
+    <div class="group-input">
+        <label for="Auditor_Details">Suppliers Auditor Details</label>
+        <div class="relative-container">
+            <textarea name="Auditor_Details" id="Auditor_Details" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Auditor_Details }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="External_Auditing_Agency">Supplier Auditing Agency</label>
+        <div class="relative-container">
+            <textarea name="External_Auditing_Agency" id="External_Auditing_Agency" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->External_Auditing_Agency }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="Relevant_Guidelines">Relevant Guidelines / Industry Standards</label>
+        <div class="relative-container">
+            <textarea name="Relevant_Guidelines" id="Relevant_Guidelines" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Relevant_Guidelines }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="QA_Comments">QA Comments</label>
+        <div class="relative-container">
+            <textarea name="QA_Comments" id="QA_Comments" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->QA_Comments }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Guideline Attachment">Guideline Attachment</label>
@@ -1035,23 +1100,41 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Supplier/Vendor/Manufacturer Details">Supplier/Vendor/Manufacturer Details</label>
-                                                <textarea type="text" name="Supplier_Details" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Details}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Supplier/Vendor/Manufacturer Site">Supplier/Vendor/Manufacturer Site</label>
-                                                <textarea type="text" name="Supplier_Site" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Site}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Comments">Comments</label>
-                                                <textarea name="Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Comments }}</textarea>
-                                            </div>
-                                        </div>
+    <div class="group-input">
+        <label for="Supplier_Details">Supplier/Vendor/Manufacturer Details</label>
+        <div class="relative-container">
+            <textarea name="Supplier_Details" id="Supplier_Details" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Details }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="Supplier_Site">Supplier/Vendor/Manufacturer Site</label>
+        <div class="relative-container">
+            <textarea type="text" name="Supplier_Site" id="Supplier_Site" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Site }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="Comments">Comments</label>
+        <div class="relative-container">
+            <textarea name="Comments" id="Comments" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Comments }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
@@ -1168,11 +1251,17 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Audit Comments">Audit Comments</label>
-                                                <textarea name="Audit_Comments1" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments1 }}</textarea>
-                                            </div>
-                                        </div>
+    <div class="group-input">
+        <label for="Audit_Comments1">Audit Comments</label>
+        <div class="relative-container">
+            <textarea name="Audit_Comments1" id="Audit_Comments1" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments1 }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
@@ -1195,11 +1284,17 @@ function addMultipleFiles(input, block_id) {
                                             Audit Response
                                         </div>
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Remarks">Remarks</label>
-                                                <textarea name="Remarks" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
-                                            </div>
-                                        </div>
+    <div class="group-input">
+        <label for="Remarks">Remarks</label>
+        <div class="relative-container">
+            <textarea name="Remarks" id="Remarks" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
 
                                         <div class="col-lg-12">
                                             <div class="group-input">
@@ -1268,18 +1363,30 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Audit Comments">Audit Comments</label>
-                                                <textarea name="Audit_Comments2" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments2 }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="due_date_extension">Due Date Extension Justification</label>
-                                                <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                            <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->due_date_extension}}</textarea>
-                                            </div>
-                                        </div>
+    <div class="group-input">
+        <label for="Audit_Comments2">Audit Comments</label>
+        <div class="relative-container">
+            <textarea name="Audit_Comments2" id="Audit_Comments2" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments2 }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="due_date_extension">Due Date Extension Justification</label>
+        <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
+        <div class="relative-container">
+            <textarea name="due_date_extension" id="due_date_extension" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->due_date_extension}}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
@@ -1873,10 +1980,299 @@ function addMultipleFiles(input, block_id) {
     });
 </script>
 
+<!-- for Voice Access -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        const docnameInput = document.getElementById('docname');
+        const startRecordBtn = document.getElementById('start-record-btn');
+
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        startRecordBtn.addEventListener('click', function() {
+            recognition.start();
+        });
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            docnameInput.value += transcript;
+        };
+
+        recognition.onerror = function(event) {
+            console.error(event.error);
+        };
+    });
+</script>
+<script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+
+    // Show/hide the container based on user selection
+    function toggleOthersField(selectedValue) {
+        const container = document.getElementById('external_agencies_req');
+        if (selectedValue === 'others') {
+            container.classList.remove('d-none');
+        } else {
+            container.classList.add('d-none');
+        }
+    }
+</script>
+
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
+    }
+</style>
+
+    <style>
+    #start-record-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    #start-record-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    #start-record-btn:focus,
+    #start-record-btn:hover,
+    #start-record-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+</style>
+
+
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            const button = event.target.closest('.mic-btn');
+            if (button) {
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+                return;
+            }
+        });
+
+        // Show/hide mic button on focus/blur of input fields
+        const micInputs = document.querySelectorAll('.mic-input');
+        micInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    micBtn.style.display = 'block';
+                }
+            });
+            input.addEventListener('blur', function(event) {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    // Use a timeout to prevent immediate hiding when the button is clicked
+                    setTimeout(() => {
+                        if (!event.relatedTarget || !event.relatedTarget.classList.contains('mic-btn')) {
+                            micBtn.style.display = 'none';
+                        }
+                    }, 200);
+                }
+            });
+        });
+    });
+
+    // Show/hide the container based on user selection
+    function toggleOthersField(selectedValue) {
+        const container = document.getElementById('external_agencies_req');
+        if (selectedValue === 'others') {
+            container.classList.remove('d-none');
+        } else {
+            container.classList.add('d-none');
+        }
+    }
+</script>
+
+
 <!-- Ensure this CSS is present to initially hide the Others field and its group -->
 <style>
     #others_group {
         display: none;
     }
 </style>
+
         @endsection

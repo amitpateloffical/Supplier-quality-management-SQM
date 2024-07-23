@@ -10,6 +10,7 @@ use App\Models\ExternalAuditTrailSupplier;
 use App\Models\ExternalAuditGridSupplier;
 use Auth;
 use App\Models\User;
+use Dompdf\Dompdf;
 use App\Models\RoleGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -1101,6 +1102,7 @@ if (!empty($internalAudit->Auditee)) {
         $grid_data1 = ExternalAuditGridSupplier::where('audit_id', $id)->where('type', "Observation_field_Auditee")->first();
         // foreach($sgrid as $s)
         // return $sgrid;
+        // dd($data);
         return view('frontend.New_forms.supplierView', compact('data', 'old_record','sgrid','grid_data1'));
     }
 
@@ -1249,7 +1251,7 @@ if (!empty($internalAudit->Auditee)) {
         }
 
         $internalAudit->update();
-        // dd($internalAudit);
+        // dd($internalAudit->Auditee);
 
         $data3 = ExternalAuditGridSupplier::where('audit_id', $internalAudit->id)->where('type', 'external_audit')->first();
         // dd($data3);
@@ -1273,6 +1275,7 @@ if (!empty($internalAudit->Auditee)) {
     }
     
     $data3->update();
+    // dd($data3);
 }else{
             // ===================
         }
@@ -1833,41 +1836,60 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
         
             $history->save();
         }
+
+        if ($lastDocument->Auditee != $internalAudit->Auditee) {
+            $previousAuditTeamIds = explode(',', $lastDocument->Auditee);
+            $currentAuditTeamIds = explode(',', $internalAudit->Auditee);
+        // dd($previousAuditTeamIds,$currentAuditTeamIds);
+            $previousAuditTeamNames = User::whereIn('id', $previousAuditTeamIds)->pluck('name')->toArray();
+            $currentAuditTeamNames = User::whereIn('id', $currentAuditTeamIds)->pluck('name')->toArray();
+            // dd($currentAuditTeamNames);
+        
+            $previousAuditTeam = implode(', ', $previousAuditTeamNames);
+            $currentAuditTeam = implode(', ', $currentAuditTeamNames);
+        
+            $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
+                ->where('activity_type', 'Auditee')
+                ->exists();
+        
+            $history = new ExternalAuditTrailSupplier();
+            $history->supplier_id = $id;
+            $history->activity_type = 'Auditee';
+            $history->previous = $previousAuditTeam;
+            $history->current = $currentAuditTeam;
+            $history->comment = $request->date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $existingHistory ? "Update" : "New";
+        
+            $history->save();
+        }
         
 
-        // Get the selected Auditee IDs from the request
-$selectedAuditeeIds = $request->input('Auditee', []);
-$previousAuditeeIds = explode(',', $lastDocument->Auditee);
-$currentAuditeeIds = $selectedAuditeeIds;
 
-// Fetching names of the users
-$previousAuditeeNames = User::whereIn('id', $previousAuditeeIds)->pluck('name')->toArray();
-$currentAuditeeNames = User::whereIn('id', $currentAuditeeIds)->pluck('name')->toArray();
+        // $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
+        //     ->where('activity_type', 'Auditee')
+        //     ->exists();
 
-$previousAuditee = implode(', ', $previousAuditeeNames);
-$currentAuditee = implode(', ', $currentAuditeeNames);
+        // $history = new ExternalAuditTrailSupplier();
+        // $history->supplier_id = $id;
+        // $history->activity_type = 'Auditee';
+        // $history->previous =  $lastDocument->Auditee;
+        // $history->current = $internalAudit->Auditee;
+        // $history->comment = $request->Auditee_comment;
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $lastDocument->status;
+        // $history->change_to = "Not Applicable";
+        // $history->change_from = $lastDocument->status;
+        // $history->action_name = $existingHistory ? "Update" : "New";
 
-// Check if there is any existing history for Auditee
-$existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
-    ->where('activity_type', 'Auditee')
-    ->exists();
-
-// Create a new history record for the Auditee field change
-$history = new ExternalAuditTrailSupplier();
-$history->supplier_id = $id;
-$history->activity_type = 'Auditee';
-$history->previous = $previousAuditee;
-$history->current = $currentAuditee;
-$history->comment = $request->Auditee_comment;
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastDocument->status;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastDocument->status;
-$history->action_name = $existingHistory ? "Update" : "New";
-
-$history->save();
+        // $history->save();
 
         if ($lastDocument->Auditor_Details != $internalAudit->Auditor_Details || !empty($request->Auditor_Details_comment)) {
 
@@ -2937,6 +2959,7 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $today = Carbon::now()->format('d-m-y');
     $document = SupplierAudit::where('id', $id)->first();
     $document->initiator = User::where('id', $document->initiator_id)->value('name');
+    
     return view('frontend.externalAudit.supplierAudit_audit-trail', compact('audit', 'document', 'today'));
 }
 
@@ -2978,6 +3001,7 @@ public static function singleReport($id)
         $time = Carbon::now();
         $sgrid = ExternalAuditGridSupplier::where('audit_id', $id)->where('type', "external_audit")->firstOrCreate();
         $grid_data1 = ExternalAuditGridSupplier::where('audit_id', $id)->where('type', "Observation_field_Auditee")->first();
+        // dd($data,$sgrid,$grid_data1);
         $pdf = PDF::loadview('frontend.externalAudit.supplier_singleReport', compact('data','sgrid','grid_data1'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',

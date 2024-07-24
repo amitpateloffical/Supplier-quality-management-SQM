@@ -2503,186 +2503,146 @@
                     </div>
                 </div>
             
-                <!-- Signature content -->
                 <div id="CCForm8" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Submitted By"> Supplier Details Submitted By</label>
-                                    <div class="static">{{ $data->submitted_by }}</div>
-                                </div>
+                <div class="inner-block-content">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Submitted By">Need for Sourcing of Starting Material By</label>
+                                <div class="static">{{$data->submitted_by}}</div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Submitted On"> Supplier Details Submitted On</label>
-                                    <div class="static">{{ $data->submitted_on }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Submitted On">Need for Sourcing of Starting Material On</label>
+                                <div class="static">{{$data->submitted_on}}</div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Submitted Comment"> Supplier Details Submitted Comment</label>
-                                    <div class="static">{{ $data->submitted_comment }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Submitted Comment">Need for Sourcing of Starting Material Comment</label>
+                                <div class="static">{{$data->submitted_comment}}</div>
                             </div>
+                        </div>
 
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review By">Cancelled By</label>
-                                    <div class="static">{{ $data->cancelled_by }}</div>
-                                </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review By">Request Justified   By</label>
+                                <div class="static">{{$data->request_justified_by}}</div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">Cancelled On</label>
-                                    <div class="static">{{ $data->cancelled_on }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review On">Request Justified On</label>
+                                <div class="static">{{$data->request_justified_on}}</div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppplier Review Comment">Cancelled Comment</label>
-                                    <div class="static">{{ $data->cancelled_comment }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Suppplier Review Comment">Request Justified Comment</label>
+                                <div class="static">{{$data->request_justified_comment}}</div>
                             </div>
+                        </div>
 
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Score Card By">CQA Review Completed By</label>
+                                <div class="static">{{$data->cqa_review_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Review Completed On">CQA Review Completed On</label>
+                                <div class="static">{{$data->cqa_review_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Review Completed Comment">CQA Review Completed Comment</label>
+                                <div class="static">{{$data->cqa_review_comment}}</div>
+                            </div>
+                        </div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review By">Qualification Complete By</label>
-                                    <div class="static">{{ $data->pending_qualification_by }}</div>
-                                </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Purchase Sample Request By">Purchase Sample Request Initiated By</label>
+                                <div class="static">{{$data->purchase_sample_initiated_by}}</div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">Qualification Complete On</label>
-                                    <div class="static">{{ $data->pending_qualification_on }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Purchase Sample Request Initiated On">Purchase Sample Request Initiated On</label>
+                                <div class="static">{{$data->purchase_sample_initiated_on}}</div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppplier Review Comment">Qualification Complete Comment</label>
-                                    <div class="static">{{ $data->pending_qualification_comment }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Purchase Sample Request Initiated Comment">Purchase Sample Request Initiated Comment</label>
+                                <div class="static">{{$data->purchase_sample_initiated_comment}}</div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review By">Audit Failed By</label>
-                                    <div class="static">{{ $data->pending_supplier_audit_by }}</div>
-                                </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Purchase Sample Analysis Satisfactory By">Purchase Sample Analysis Satisfactory By</label>
+                                <div class="static">{{$data->purchase_sample_satisfactory_by}}</div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">Audit Failed On</label>
-                                    <div class="static">{{ $data->pending_supplier_audit_on }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Purchase Sample Analysis Satisfactory On">Purchase Sample Analysis Satisfactory On</label>
+                                <div class="static">{{$data->purchase_sample_satisfactory_on}}</div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppplier Review Comment">Audit Failed Comment</label>
-                                    <div class="static">{{ $data->pending_supplier_audit_comment }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Purchase Sample Analysis Satisfactory Comment">Purchase Sample Analysis Satisfactory Comment</label>
+                                <div class="static">{{$data->purchase_sample_satisfactory_comment}}</div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review By">Supplier Obsolete By</label>
-                                    <div class="static">{{ $data->pending_rejection_by }}</div>
-                                </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="F&D Review Completed By">F&D Review Completed By</label>
+                                <div class="static">{{$data->FD_review_by}}</div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">Supplier Obsolete On</label>
-                                    <div class="static">{{ $data->pending_rejection_on }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="F&D Review Completed On">F&D Review Completed On</label>
+                                <div class="static">{{$data->FD_review_on}}</div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppplier Review Comment">Supplier Obsolete Comment</label>
-                                    <div class="static">{{ $data->pending_rejection_comment }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="F&D Review Completed Comment">F&D Review Completed Comment</label>
+                                <div class="static">{{$data->FD_review_comment}}</div>
                             </div>
+                        </div>
 
-
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review By">Audit Passed By</label>
-                                    <div class="static">{{ $data->supplier_approved_by }}</div>
-                                </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">CQA Final Review Completed By</label>
+                                <div class="static">{{$data->cqa_final_review_by}}</div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">Audit Passed On</label>
-                                    <div class="static">{{ $data->supplier_approved_on }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">CQA Final Review Completed On</label>
+                                <div class="static">{{$data->cqa_final_res22view_on}}</div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppplier Review Comment">Audit Passed Comment</label>
-                                    <div class="static">{{ $data->supplier_approved_comment }}</div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review By">Supplier Obsolete By</label>
-                                    <div class="static">{{ $data->supplier_approved_to_obselete_by }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">Supplier Obsolete On</label>
-                                    <div class="static">{{ $data->supplier_approved_to_obselete_on }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppplier Review Comment">Supplier Obsolete Comment</label>
-                                    <div class="static">{{ $data->supplier_approved_to_obselete_comment }}</div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review By">ReAudit By</label>
-                                    <div class="static">{{ $data->reAudit_by }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">ReAudit On</label>
-                                    <div class="static">{{ $data->reAudit_on }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppplier Review Comment">ReAudit Comment</label>
-                                    <div class="static">{{ $data->reAudit_comment }}</div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review By">Rejected By</label>
-                                    <div class="static">{{ $data->rejectedDueToQuality_by }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">Rejected On</label>
-                                    <div class="static">{{ $data->rejectedDueToQuality_on }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppplier Review Comment">Rejected Comment</label>
-                                    <div class="static">{{ $data->rejectedDueToQuality_comment }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">CQA Final Review Completed Comment</label>
+                                <div class="static">{{$data->cqa_final_review_comment}}</div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
             </form>
 
             <!-- Forword Stage Modal -->

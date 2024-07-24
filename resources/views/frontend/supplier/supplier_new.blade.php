@@ -2,7 +2,8 @@
 @section('container')
 
 @php 
-$users = DB::table('users')->select('id', 'name')->get();
+    $users = DB::table('users')->select('id', 'name')->get();
+    $requestNUmber = "RV/RP/" . str_pad($record_numbers, 4, '0', STR_PAD_LEFT) . "/" . date('Y');
 @endphp
 <style>
     textarea.note-codable {
@@ -78,13 +79,15 @@ $users = DB::table('users')->select('id', 'name')->get();
                 <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="col-lg-6">
+
+                            <div class="col-md-6">
                                 <div class="group-input">
-                                    <label for="Initiator"><b>Record Number</b></label>
-                                    <input type="text" value="{{ Helpers::getDivisionName(session()->get('division')) }}/SUPPLIER/{{ date('Y') }}/{{ str_pad($record_numbers, 4, '0', STR_PAD_LEFT) }}" disabled>
-                                    <input type="hidden" name="record" id="record">
+                                    <label for="Short Description">Request Number</label>
+                                    <input id="request_number" type="text" name="request_number" value="{{ $requestNUmber }}" disabled>
                                 </div>
                             </div>
+
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator"><b>Division</b></label>
@@ -106,7 +109,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="search">Assigned To <span class="text-danger"></span>
                                     </label>
@@ -119,7 +122,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         @endif                                    
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
 
                             @php
                                 $initiationDate = date('d-M-Y');
@@ -175,218 +178,750 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     var textlen = maxLength - $(this).val().length;
                                     $('#rchars').text(textlen);});
                             </script>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Supplier.">Supplier</label>
-                                    <input type="text" id="supplier_person" name="supplier_person" placeholder="Supplier">
-                                    <!--<select name="supplier_person" id="supplier_person"> -->
-                                    <!--    <option value="">Select Supplier</option>-->
-                                    <!--    @if(!empty($users))-->
-                                    <!--        @foreach($users as $user)-->
-                                    <!--            <option value="{{$user->id }}">{{ $user->name }}</option>-->
-                                    <!--        @endforeach-->
-                                    <!--    @endif -->
-                                    <!--</select>-->
-                                </div>
-                            </div>
 
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for=" Attachments">Logo</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="logo_attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="logo_attachment[]"
-                                                oninput="addMultipleFiles(this, 'logo_attachment')" multiple>
+                                <div class="sub-head">
+                                    Purchase Department
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group">Initiation Department</label>
+                                        <select name="initiation_group" id="initiation_group">
+                                            <option value="">-- Select --</option>
+                                            <option value="CQA"> Corpo  Assurance Biopharma</option>
+                                            <option value="CQC"> Central Quality Control</option>
+                                            <option value="MANU"> Manufacturing</option>
+                                            <option value="PSG"> Plasma Sourcing Group</option>
+                                            <option value="CS"> Central Stores</option>
+                                            <option value="ITG"> Information Technology Group</option>
+                                            <option value="MM"> Molecular Medicine</option>
+                                            <option value="CL"> Central Laboratory</option>
+                                            <option value="TT"> Tech Team</option>
+                                            <option value="QA"> Quality Assurance</option>
+                                            <option value="QM">Quality Management</option>
+                                            <option value="IA">Administration</option>
+                                            <option value="ACC"> Accounting</option>
+                                            <option value="LOG">Logistics</option>
+                                            <option value="SM"> Senior Management</option>
+                                            <option value="BA">Business Administration</option>
+                                        </select>
+                                        @error('initiation_group')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiator Department Code</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                            value="" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Name of Manufacturer</label>
+                                        <input type="text" name="manufacturerName" id="manufacturerName" placeholder="Name of Manufacturer">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Name of Starting Material</label>
+                                        <input type="text" name="starting_material" id="starting_material">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Material Code</label>
+                                        <input type="text" name="material_code" id="material_code">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Pharmacopoeial Claim</label>
+                                        <input type="text" name="pharmacopoeial_claim" id="harmacopoeial_claim">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">CEP Grade Material</label>
+                                        <select id="cep_grade" name="cep_grade">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for=" Attachments">CEP Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="cep_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="cep_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'cep_attachment')" multiple>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Contact Person">Contact Person</label>
-                                    <select name="supplier_contact_person" id="supplier_contact_person">
-                                        <option value="">Select Supplier</option>
-                                        @if(!empty($users))
-                                            @foreach($users as $user)
-                                                <option value="{{$user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-                                        @endif                                    
-                                    </select>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Request For</label>
+                                        <select id="request_for" name="request_for">
+                                            <option value="">---- Select ----</option>
+                                            <option value="API">API</option>
+                                            <option value="Excipient">Excipient</option>
+                                            <option value="New Manufacturer">New Manufacturer</option>
+                                            <option value="Existing Manufacturer">Existing Manufacturer</option>
+                                            <option value="Additional Site of Existing Manufacturer">Additional Site of Existing Manufacturer</option>
+                                            <option value="Brand New API">Brand New API</option>
+                                            <option value="Existing API">Existing API</option>
+                                            <option value="Brand New Excipient">Brand New Excipient</option>
+                                            <option value="Existing Excipient">Existing Excipient</option>
+                                            <option value="R&D development">R&D development</option>
+                                            <option value="Site Transfer">Site Transfer</option>
+                                            <option value="Alternate manufacturer">Alternate manufacturer</option>
+                                            <option value="Excipient">Excipient</option>
+                                            <option value="Excipient">Excipient</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppliers Products">Suppliers Products</label>
-                                    <input name="supplier_products" id="supplier_products" type="text" maxlength="100">
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Attach Three Batch COAs</label>
+                                        <select id="attach_batch" name="attach_batch">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Description">Description</label>
-                                    <textarea class="tiny" name="description" placeholder></textarea>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Justification for Request</label>
+                                        <textarea type="text" name="request_justification" id="request_justification" class=""></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Type..">Type</label>
-                                    <select name="supplier_type">
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="CRO">CRO</option>
-                                        <option value="F&B">F&B</option>
-                                        <option value="Finished Goods">Finished Goods</option>
-                                        <option value="Grower">Grower</option>
-                                        <option value="Legal">Legal</option>
-                                        <option value="Midecinal + Medical Devices">Midecinal + Medical Devices</option>
-                                        <option value="Vendor">Vendor</option>
-                                        <option value="Other">Other</option>
-                                    </select>
+
+                                <div class="sub-head">
+                                    CQA Department
                                 </div>
-                            </div>
-                            <script>
-                                $(document).ready(function() {
-                                    $('#suplier_other').hide();
-                            
-                                    $('[name="supplier_type"]').change(function() {
-                                        if ($(this).val() === 'Other') {
-                                            $('#suplier_other').show();
-                                            $('#suplier_other ').show();
-                                        } else {
-                                            $('#suplier_other').hide();
-                                            $('#suplier_other ').hide();
-                                        }
-                                    });
-                                });
-                            </script>
-                             <div id="suplier_other" class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="">Other <span  class="text-danger">*</span></label>
-                                    <input  type="text">
+                                
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Availability of Manufacturer COAs</label>
+                                        <select id="manufacturer_availability" name="manufacturer_availability">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Sub Type.">Sub Type</label>
-                                    <select name="supplier_sub_type">
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="Other">Other</option>
-                                        <option value="Vendor">Vendor</option>
-                                        <option value="Finished Goods">Finished Goods</option>
-                                        <option value="Legal">Legal</option>
-                                        <option value="Other Fruits">Other Fruits</option>
-                                        <option value="Exotic Fruits">Exotic Fruits</option>
-                                        <option value="Other Vegetables">Other Vegetables</option>
-                                        <option value="Beans & Peas">Beans & Peas</option>
-                                        <option value="Red & Orange Vegetables">Red & Orange Vegetables</option>
-                                        <option value="Starchy Vegetables">Starchy Vegetables</option>
-                                        <option value="Dark Green Vegetables">VendorDark Green Vegetables</option>
-                                        <option value="CRO">CRO</option>
-                                        <option value="Raw Material">Raw Material</option>
-                                        <option value="Interfaction Diesease">Interfaction Diesease</option>
-                                        <option value="Pedriatrics">Pedriatrics</option>
-                                        <option value="Sleep Medicine">Sleep Medicine</option>
-                                        <option value="Nephrology">Nephrology</option>
-                                        <option value="Geriatrics">Geriatrics</option>
-                                        <option value="Critical Care">Critical Care</option>
-                                        <option value="Cardiology">Cardiology</option>
-                                        <option value="Vitamins">Vitamins</option>
-                                        <option value="Meat & Poultry">Meat & Poultry</option>
-                                        <option value="Fruits & Vegetables">Fruits & Vegetables</option>
-                                        <option value="Pastry">Pastry</option>
-                                        <option value="Frozen Fruits">Frozen Fruits</option>
-                                        <option value="Dairy">Dairy</option>
-                                        <option value="Beverages">Beverages</option>
-                                        <option value="Flavour">Flavour</option>
-                                    </select>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Request Accepted</label>
+                                        <select id="request_accepted" name="request_accepted">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Other Type">Other Type</label>
-                                    <input type="text" name="supplier_other_type" placeholder="Enter Other Type">
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Remark</label>
+                                        <textarea type="text" name="cqa_remark" id="cqa_remark" class=""></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Supply from">Supply from</label>
-                                    <input type="text" name="supply_from" placeholder="Enter Supply From">
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Accepted By</label>
+                                        <select type="hidden" name="accepted_by" id="accepted_by">
+                                            <option value="">---- Select ----</option>
+                                            @if(!empty($users))
+                                                @foreach($users as $user)
+                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Supply to">Supply to</label>
-                                    <input type="text" name="supply_to" placeholder="Enter Supply To">
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <!-- <label for="Initiator Group Code">Accepted On</label> -->
+                                        <input type="hidden" name="accepted_on" id="accepted_on">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Supplier Web Site">Supplier Web Site</label>
-                                    <input type="text" name="supplier_website" placeholder="Enter Supply Website">
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Pre Purchase Sample Required?</label>
+                                        <div><small class="text-primary">If Yes inform purchase department to initiate pre-purchase sample intimation sheet</small></div>
+                                        <div><small class="text-primary">If No then provide Justification proceed to section 16</small></div>
+                                        <select id="pre_purchase_sample" name="pre_purchase_sample">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Web Search">Web Search</label>
-                                    <input type="search" name="supplier_web_search" placeholder="Enter Supply Web Search">
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Justification</label>
+                                        <textarea type="text" name="justification" id="justification" class=""></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Audit Attachments">File Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="supplier_attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="supplier_attachment[]"
-                                                oninput="addMultipleFiles(this, 'supplier_attachment')" multiple>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">CQA Coordinator</label>
+                                        <select type="hidden" name="cqa_coordinator" id="cqa_coordinator">
+                                            <option value="">---- Select ----</option>
+                                            @if(!empty($users))
+                                                @foreach($users as $user)
+                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Pre Purchase Sample Analysis Completed?</label>
+                                        <select id="pre_purchase_sample_analysis" name="pre_purchase_sample_analysis">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Availability of COAS After Analysis</label>
+                                        <select id="availability_od_coa" name="availability_od_coa">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Analyzed on Location</label>
+                                        <input type="text" name="analyzed_location" id="analyzed_location">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Review Comment of CQA</label>
+                                        <textarea type="text" name="cqa_comment" id="cqa_comment" class=""></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">If Analysis found satisfactory of Pre-purchase samples send intimation</label>
+                                        <div><small class="text-primary">To: Formulation and Development / MS&T Department.</small></div>
+                                        <div><small class="text-primary">From: Corporate Quality Assurance</small></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Material Name</label>
+                                        <input type="text" name="materialName" id="materialName">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Name of the Manufacturer</label>
+                                        <input type="text" name="manufacturerNameNew" id="manufacturerNameNew">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Analyzed on Location</label>
+                                        <input type="text" name="analyzedLocation" id="analyzedLocation">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Review Comment of Corporate CQA</label>
+                                        <textarea type="text" name="cqa_corporate_comment" id="cqa_corporate_comment" class=""></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">COA's Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="coa_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="coa_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'coa_attachment')" multiple>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="gi_additional_attachment">Additional Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="gi_additional_attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="gi_additional_attachment[]"
-                                                oninput="addMultipleFiles(this, 'gi_additional_attachment')" multiple>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">CQA Designee</label>
+                                        <select type="hidden" name="cqa_designee" id="cqa_designee">
+                                            <option value="">---- Select ----</option>
+                                            @if(!empty($users))
+                                                @foreach($users as $user)
+                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="sub-head">
+                                    Formulation & Development Department/CQA/MS&T
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Samples Ordered for Suitability Trail at R&D/MS & T</label>
+                                        <div><small class="text-primary">If no provide Justification.</small></div>
+                                        <select id="sample_ordered" name="sample_ordered">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Justification</label>
+                                        <textarea type="text" name="sample_order_justification" id="sample_order_justification" class=""></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Acknowledge By</label>
+                                        <select type="hidden" name="acknowledge_by" id="acknowledge_by">
+                                            <option value="">---- Select ----</option>
+                                            @if(!empty($users))
+                                                @foreach($users as $user)
+                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Feedback on Trail Status Completed</label>
+                                        <select id="trail_status_feedback" name="trail_status_feedback">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- To be filled by CQA Department -->
+
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Sample Stand Approved?</label>
+                                        <select id="sample_stand_approved" name="sample_stand_approved">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                            <option value="N/A">N/A</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- Checklist -->
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <div class="why-why-chart">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 5%;">Sr. No.</th>
+                                                        <th style="width: 30%;">Document Received</th>
+                                                        <th style="width: 20%;">Selection</th>
+                                                        <th>Remark</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="flex text-center">1.1</td>
+                                                        <td>TSE/BSE</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <div class="group-input">
+                                                                    <select id="tse_bse" name="tse_bse">
+                                                                        <option value="">---- Select ----</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="tse_bse_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.2</td>
+                                                        <td>Residual Solvent</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select id="residual_solvent" name="residual_solvent">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="residual_solvent_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.3</td>
+                                                        <td>GMO</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select id="gmo" name="gmo">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="gmo_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.4</td>
+                                                        <td>Melamine</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select id="melamine" name="melamine">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="melamine_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.5</td>
+                                                        <td>Gluten</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select id="gluten" name="gluten">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="gluten_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.6</td>
+                                                        <td>Nitrosamine</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select id="nitrosamine" name="nitrosamine">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="nitrosamine_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.7</td>
+                                                        <td>WHO</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select id="who" name="who">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="who_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.8</td>
+                                                        <td>GMP</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select id="gmp" name="gmp">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="gmp_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.9</td>
+                                                        <td>ISO Cerificates</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select id="iso_certificate" name="iso_certificate">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="iso_certificate_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.10</td>
+                                                        <td>Manufacturing License</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select id="manufacturing_license" name="manufacturing_license">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="manufacturing_license_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.11</td>
+                                                        <td>CEP</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select id="cep" name="cep">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="cep_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.12</td>
+                                                        <td>MSDS</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select id="msds" name="msds">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="msds_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.13</td>
+                                                        <td>Elemental Impurities</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select id="elemental_impurities" name="elemental_impurities">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="elemental_impurities_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.14</td>
+                                                        <td>Assessment/Declaration of Azido Impurities as Applicable</td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select id="declaration" name="declaration">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="declaration_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Related URLs">Related URLs</label>
-                                    <input type="url" name="related_url" placeholder="Enter Related URLs">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Related Quality Events">Related Quality Events</label>
-                                    <input type="text" name="related_quality_events" placeholder="Enter Related Quality Events">
-                                </div>
-                            </div>
 
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Of Complaints/Deviations"># Of Complaints/Deviations</label>
-                                    <input type="text" name="">
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Availability of Supply Chain?</label>
+                                        <select id="supply_chain_availability" name="supply_chain_availability">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                            <option value="N/A">N/A</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="total demerit points">Total Demerit Points</label>
-                                    <input type="text" name="" id="totalDemeritPoints">
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Availability of Quality Agreement?</label>
+                                        <select id="quality_agreement_availability" name="quality_agreement_availability">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                            <option value="N/A">N/A</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div> --}}
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Risk Assessment Done?</label>
+                                        <select id="risk_assessment_done" name="risk_assessment_done">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                            <option value="N/A">N/A</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Risk Rating</label>
+                                        <select id="risk_rating" name="risk_rating">
+                                            <option value="">---- Select ----</option>
+                                            <option value="High">High</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Low">Low</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Manufacturer Audit planned</label>
+                                        <select id="manufacturer_audit_planned" name="manufacturer_audit_planned">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="Not Required">Not Required</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Maufacturer Audit Conducted On</label>
+                                        <input type="text" id="manufacturer_audit_conducted" name="manufacturer_audit_conducted">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Manufacturer Can be? </label>
+                                        <select id="manufacturer_can_be" name="manufacturer_can_be">
+                                            <option value="">---- Select ----</option>
+                                            <option value="Approved">Approved</option>
+                                            <option value="Not Approved">Not Approved</option>
+                                        </select>
+                                    </div>
+                                </div>
                         </div>
 
                         <div class="button-block">
@@ -406,13 +941,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_feedback">HOD Feedback</label>
-                                    <textarea class="tiny" type="text" name="HOD_feedback" placeholder="Enter HOD Feedback" id="HOD_feedback"></textarea>
+                                    <textarea class="" type="text" name="HOD_feedback" placeholder="Enter HOD Feedback" id="HOD_feedback"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_comment">HOD Comments</label>
-                                    <textarea class="tiny" type="text" name="HOD_comment" placeholder="Enter HOD Comment" id="HOD_comment"></textarea>
+                                    <textarea class="" type="text" name="HOD_comment" placeholder="Enter HOD Comment" id="HOD_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -541,7 +1076,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Supplier Services">Supplier Services</label>
-                                    <textarea class="tiny" name="supplier_serivce" id="supplier_serivce" cols="30" ></textarea>
+                                    <textarea class="" name="supplier_serivce" id="supplier_serivce" cols="30" ></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -742,32 +1277,32 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Quality Management ">Manufacturing Sites </label>
-                                    <textarea class="tiny" name="text" name="manufacturing_sited" id="manufacturing_sited"></textarea>
+                                    <textarea class="" name="text" name="manufacturing_sited" id="manufacturing_sited"></textarea>
                                 </div>
                             </div>  
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Quality Management ">Quality Management </label>
-                                    <textarea class="tiny" name="text" id="quality_management" name="quality_management"></textarea>
+                                    <textarea class="" name="text" id="quality_management" name="quality_management"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Business History">Business History</label>
-                                    <textarea class="tiny" name="text" id="bussiness_history" name="bussiness_history"></textarea>
+                                    <textarea class="" name="text" id="bussiness_history" name="bussiness_history"></textarea>
                                 </div>
                             </div>
                             
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Performance History ">Performance History </label>
-                                    <textarea class="tiny" name="text" id="performance_history" name="performance_history"></textarea>
+                                    <textarea class="" name="text" id="performance_history" name="performance_history"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Compliance Risk">Compliance Risk</label>
-                                    <textarea class="tiny" name="text" id="compliance_risk" name="compliance_risk"></textarea>
+                                    <textarea class="" name="text" id="compliance_risk" name="compliance_risk"></textarea>
                                 </div>
                             </div>
 
@@ -1164,13 +1699,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_feedback">QA Reviewer Feedback</label>
-                                    <textarea class="tiny" type="text" name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback" id="QA_reviewer_feedback"></textarea>
+                                    <textarea class="" type="text" name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback" id="QA_reviewer_feedback"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_comment">QA Reviewer Comment</label>
-                                    <textarea class="tiny" type="text" name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment" id="QA_reviewer_comment"></textarea>
+                                    <textarea class="" type="text" name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment" id="QA_reviewer_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -1417,7 +1952,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_head_comment">QA Head Comment</label>
-                                    <textarea class="tiny" type="text" name="QA_head_comment" placeholder="Enter QA Head Comment" id="QA_head_comment"></textarea>
+                                    <textarea class="" type="text" name="QA_head_comment" placeholder="Enter QA Head Comment" id="QA_head_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -1611,5 +2146,12 @@ $users = DB::table('users')->select('id', 'name')->get();
                 currentStep--;
             }
         }
+    </script>
+    <script>
+        // JavaScript
+        document.getElementById('initiation_group').addEventListener('change', function() {
+            var selectedValue = this.value;
+            document.getElementById('initiator_group_code').value = selectedValue;
+        });
     </script>
 @endsection

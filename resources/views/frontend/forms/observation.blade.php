@@ -29,6 +29,94 @@
         }
     </script>
 
+    {{-- voice Command --}}
+
+    <style>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+            color: black;
+            display: none;
+            /* Hide the button initially */
+        }
+
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .relative-container input:focus+.mic-btn {
+            display: inline-block;
+            /* Show the button when input is focused */
+        }
+
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none;
+        }
+    </style>
+
+    <script>
+        < link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
+
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
+                }
+            });
+
+            document.querySelectorAll('.mic-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        micBtn.style.display = 'inline-block';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        setTimeout(() => {
+                            micBtn.style.display = 'none';
+                        }, 200); // Delay to prevent button from hiding immediately when clicked
+                    }
+                });
+            });
+        });
+    </script>
+
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -181,8 +269,14 @@
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
-                                        <input id="docname" type="text" name="short_description" maxlength="255"
-                                            required>
+                                        <div style="position: relative;">
+                                            <input class="mic-input" id="docname" type="text" name="short_description"
+                                                maxlength="255" required>
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-12">
@@ -360,13 +454,23 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="non_compliance">Non Compliance</label>
-                                        <textarea name="non_compliance"></textarea>
+                                        <div style="position: relative;">
+                                            <textarea class="mic-input" name="non_compliance"></textarea>
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="recommend_action">Recommended Action</label>
-                                        <textarea name="recommend_action"></textarea>
+                                        <div style="position: relative;">
+                                            <textarea class="mic-input" name="recommend_action"></textarea>
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 {{-- <div class="col-12">
@@ -545,7 +649,12 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="comments">Comments</label>
-                                        <textarea name="comments"></textarea>
+                                        <div style="position: relative;">
+                                            <textarea class="mic-input" name="comments"></textarea>
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -579,7 +688,12 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="impact_analysis">Impact Analysis</label>
-                                        <textarea name="impact_analysis"></textarea>
+                                        <div style="position: relative;">
+                                            <textarea class="mic-input" name="impact_analysis"></textarea>
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -680,7 +794,12 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>
-                                        <textarea name="action_taken"></textarea>
+                                        <div style="position: relative;">
+                                            <textarea class="mic-input" name="action_taken"></textarea>
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -739,7 +858,12 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="response_summary">Response Summary</label>
-                                        <textarea name="response_summary"></textarea>
+                                        <div style="position: relative;">
+                                            <textarea class="mic-input" name="response_summary"></textarea>
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

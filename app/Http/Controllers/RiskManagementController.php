@@ -3155,7 +3155,7 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Risk Analysis & Work Group Assignment';
                 $changeControl->submitted_by = Auth::user()->name;
                 $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
-                // $changeControl->submitted_comment = $request->comments;
+                $changeControl->submitted_comment = $request->comments;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3163,7 +3163,7 @@ class RiskManagementController extends Controller
                 $history->action = 'Submit';
                 $history->previous = $lastDocument->submitted_by;
                 $history->current = $changeControl->submitted_by;
-                $history->comment = $request->comment;
+                $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3205,14 +3205,15 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Risk Processing & Action Plan';
                 $changeControl->evaluated_by = Auth::user()->name;
                 $changeControl->evaluated_on = Carbon::now()->format('d-M-Y');
-                // $changeControl->evaluated_comment = $request->comment;
+                $changeControl->evaluated_comment = $request->comments;
+
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->action = 'Evaluation Complete';
                 $history->previous = $lastDocument->evaluated_by;
                 $history->current = $changeControl->evaluated_by;
-                $history->comment = $request->comment;
+                $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3251,7 +3252,7 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Pending HOD Approval';
                 $changeControl->plan_approved_by = Auth::user()->name;
                 $changeControl->plan_approved_on = Carbon::now()->format('d-M-Y');
-                // $changeControl->plan_approved_comment = $request->comment;
+                $changeControl->plan_approved_comment = $request->comments;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3259,7 +3260,7 @@ class RiskManagementController extends Controller
                 $history->action = 'Action Plan Complete';
                 $history->previous = $lastDocument->plan_approved_by;
                 $history->current = $changeControl->plan_approved_by;
-                $history->comment = $request->comment;
+                $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3296,7 +3297,7 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Actions Items in Progress';
                 $changeControl->action_plan_approved_by = Auth::user()->name;
                 $changeControl->action_plan_approved_on = Carbon::now()->format('d-M-Y');
-                $changeControl->action_plan_approved_comment = $request->comment;
+                $changeControl->action_plan_approved_comment = $request->comments;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3304,7 +3305,7 @@ class RiskManagementController extends Controller
                 $history->action = 'Action Plan Approved';
                 $history->previous = $lastDocument->action_plan_approved_by;
                 $history->current = $changeControl->action_plan_approved_by;
-                $history->comment = $request->comment;
+                $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3344,7 +3345,7 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Residual Risk Evaluation';
                 $changeControl->all_action_completed_by = Auth::user()->name;
                 $changeControl->all_action_completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->all_action_completed_comment = $request->comment;
+                $changeControl->all_action_completed_comment = $request->comments;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3352,7 +3353,7 @@ class RiskManagementController extends Controller
                 $history->action = 'All Actions Completed';
                 $history->previous = $lastDocument->all_action_completed_by;
                 $history->current = $changeControl->all_action_completed_by;
-                $history->comment = $request->comment;
+                $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3393,7 +3394,7 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Closed - Done';
                 $changeControl->residual_risk_completed_by = Auth::user()->name;
                 $changeControl->residual_risk_completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->residual_risk_completed_comment = $request->comment;
+                $changeControl->residual_risk_completed_comment = $request->comments;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3401,7 +3402,7 @@ class RiskManagementController extends Controller
                 $history->action = 'Residual Risk Evaluation Completed';
                 $history->previous = $lastDocument->residual_risk_completed_by;
                 $history->current = $changeControl->residual_risk_completed_by;
-                $history->comment = $request->comment;
+                $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

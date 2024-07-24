@@ -19,6 +19,96 @@
             {{ Helpers::getDivisionName(session()->get('division')) }} / Action Item
         </div>
     </div>
+
+    {{-- voice Command --}}
+
+    <style>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+            color: black;
+            display: none;
+            /* Hide the button initially */
+        }
+
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .relative-container input:focus+.mic-btn {
+            display: inline-block;
+            /* Show the button when input is focused */
+        }
+
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none;
+        }
+    </style>
+
+    <script>
+        < link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
+
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
+                }
+            });
+
+            document.querySelectorAll('.mic-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        micBtn.style.display = 'inline-block';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        setTimeout(() => {
+                            micBtn.style.display = 'none';
+                        }, 200); // Delay to prevent button from hiding immediately when clicked
+                    }
+                });
+            });
+        });
+    </script>
+
+
     @php
         $users = DB::table('users')->get();
     @endphp
@@ -55,14 +145,14 @@
                             </div> <!-- RECORD NUMBER -->
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <div class="group-input"> 
+                                    <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $parent_record }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
-                                <div class="col-lg-6">  
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
                                         <input disabled type="text" name="division_code"
@@ -71,7 +161,7 @@
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
-                                <div class="col-lg-6">  
+                                <div class="col-lg-6">
                                     @if (!empty($cc->id))
                                         <input type="hidden" name="ccId" value="{{ $cc->id }}">
                                     @endif
@@ -117,24 +207,28 @@
                                     </div>
                                 </div>
                                 @php
-                                $initiationDate = date('Y-m-d');
-                                $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
-                            @endphp
+                                    $initiationDate = date('Y-m-d');
+                                    $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
+                                @endphp
 
-                            <div class="col-md-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="due-date">Date Due</label>
-                                    <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                    <div class="calenderauditee">
-                                    <div class="calenderauditee">
-                                        <input type="text" name="due_date" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                        <input type="date" name="due_date_n" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" />
-                                    </div>
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Date Due</label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <div class="calenderauditee">
+                                                <input type="text" name="due_date" id="due_date" readonly
+                                                    placeholder="DD-MM-YYYY" />
+                                                <input type="date" name="due_date_n"
+                                                    min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                                    oninput="handleDateInput(this, 'due_date')" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <script>
+                                <script>
                                     // Format the due date to DD-MM-YYYY
                                     // Your input date
                                     var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
@@ -153,7 +247,7 @@
                                     var monthIndex = date.getMonth();
                                     var year = date.getFullYear();
 
-                                    // Formatting the date in "dd-MMM-yyyy" format
+                                    // Formatting the date in "DD-MM-YYYY" format
                                     var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
 
                                     // Set the formatted due date value to the input field
@@ -164,30 +258,39 @@
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
-                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                        <div style="position: relative;">
+                                            <input class="mic-input" id="docname" type="text" name="short_description"
+                                                maxlength="255" required>
+
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>  
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Related Records">Action Item Related Records</label>
                                         <select multiple id="related_records" name="related_records[]"
                                             placeholder="Select Reference Records">
                                             <option value="">--select record--</option>
-                                            <!-- @if (!empty($old_record)) -->
+                                            <!-- @if (!empty($old_record))
+    -->
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
-                                            <!-- @endif -->
+                                            <!--
+    @endif -->
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD Persons</label>
-                                        <select multiple  name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
-                                            data-silent-initial-value-set="true" id="hod" >
+                                        <select multiple name="hod_preson[]" placeholder="Select HOD Persons"
+                                            data-search="false" data-silent-initial-value-set="true" id="hod">
                                             @foreach ($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
@@ -198,7 +301,13 @@
                                     <div class="group-input">
                                         <label for="Short Description"> Description<span
                                                 class="text-danger"></span></label>
-                                        <textarea name="description"></textarea>
+                                        <div style="position: relative;">
+                                            <textarea class="mic-input" name="description"></textarea>
+
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -316,37 +425,49 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>
-                                        <textarea name="action_taken"></textarea>
+                                        <div style="position: relative;">
+                                            <textarea class="mic-input" name="action_taken"></textarea>
+
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="start_date">Actual Start Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="start_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="start_date_checkdate" name="start_date" class="hide-input"
+                                            <input type="text" id="start_date" readonly placeholder="DD-MM-YYYY" />
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                id="start_date_checkdate" name="start_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="col-lg-6  new-date-data-field">
+                                <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="end_date">Actual End Date</lable>
-                                        <div class="calenderauditee">
-                                        <input type="text" id="end_date"                             
-                                                placeholder="DD-MMM-YYYY" />
-                                             <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date_checkdate" name="end_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
-                                        </div>
-                                   
-                                        
+                                            <div class="calenderauditee">
+                                                <input type="text" id="end_date" placeholder="DD-MM-YYYY" />
+                                                <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                    id="end_date_checkdate" name="end_date" class="hide-input"
+                                                    oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                            </div>
+
+
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments">Comments</label>
-                                        <textarea name="comments"></textarea>
+                                        <div style="position: relative;">
+                                            <textarea class="mic-input" name="comments"></textarea>
+
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 {{-- <div class="col-12">
@@ -381,7 +502,13 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="qa_comments">QA Review Comments</label>
-                                        <textarea name="qa_comments"></textarea>
+                                        <div style="position: relative;">
+                                            <textarea class="mic-input" name="qa_comments"></textarea>
+
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 {{--
@@ -406,7 +533,13 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="due-dateextension">Due Date Extension Justification</label>
-                                        <textarea name="due_date_extension"></textarea>
+                                        <div style="position: relative;">
+                                            <textarea class="mic-input" name="due_date_extension"></textarea>
+
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -426,13 +559,13 @@
                                 Electronic Signatures
                             </div>
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submitted by">Submitted By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submitted on">Submitted On</label>
                                         <div class="Date"></div>
@@ -440,11 +573,17 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="submitted Comment">Submitted Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
                                         <label for="cancelled by">Cancelled By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="cancelled on">Cancelled On</label>
                                         <div class="Date"></div>
@@ -452,29 +591,48 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="More information required By">More information required By</label>
-                                        <div class="static"></div> 
+                                        <label for="cancelled Comment">Cancelled Comment</label>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="More information required By">More information required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="More information required On">More information required On</label>
-                                         <div class="Date"></div>
+                                        <div class="Date"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="More information required Comment">More information required
+                                            Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
                                         <label for="completed by">Completed By</label>
-                                        <div class="static"></div> 
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="completed on">Completed On</label>
-                                         <div class="Date"></div>
+                                        <div class="Date"></div>
                                     </div>
                                 </div>
-                              
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="completed Comment">Completed Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="button-block">
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -577,6 +735,7 @@
         var maxLength = 255;
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
-            $('#rchars').text(textlen);});
+            $('#rchars').text(textlen);
+        });
     </script>
 @endsection

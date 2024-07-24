@@ -80,12 +80,13 @@
 <script src="{{ asset('user/js/validate.js') }}"></script>
 <script src="{{ asset('user/js/countryState.js') }}"></script>
 {{-- @toastr_js @toastr_render @jquery --}}
-<script src="https://cdn.tiny.cloud/1/5vbh0y1nq5y6uokc071mjvy9n4fnss5ctasrjft7x7ajm9fl/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/5vbh0y1nq5y6uokc071mjvy9n4fnss5ctasrjft7x7ajm9fl/tinymce/7/tinymce.min.js"
+    referrerpolicy="origin"></script>
 
 
 <script>
     $(document).ready(function() {
-        
+
         const api_key = "{{ config('app.OPEN_AI_KEY') }}";
 
         const languages = [
@@ -176,55 +177,129 @@
             toolbar: 'undo redo | aidialog aishortcuts | charmap | blocks fontsizeinput | bold italic | align numlist bullist | link | table pageembed | lineheight  outdent indent | strikethrough forecolor backcolor formatpainter removeformat | emoticons checklist | code fullscreen preview | save print | pagebreak anchor codesample footnotes mergetags | addtemplate inserttemplate | addcomment showcomments | ltr rtl casechange | spellcheckdialog a11ycheck',
             ai_request: (request, respondWith) => {
                 const openAiOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${api_key}`
-                },
-                body: JSON.stringify({
-                    model: 'gpt-3.5-turbo',
-                    temperature: 0.7,
-                    max_tokens: 800,
-                    messages: [{ role: 'user', content: request.prompt }],
-                })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${api_key}`
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-3.5-turbo',
+                        temperature: 0.7,
+                        max_tokens: 800,
+                        messages: [{
+                            role: 'user',
+                            content: request.prompt
+                        }],
+                    })
                 };
-                respondWith.string((signal) => window.fetch('https://api.openai.com/v1/chat/completions', { signal, ...openAiOptions })
-                .then(async (response) => {
-                    if (response) {
-                    const data = await response.json();
-                    if (data.error) {
-                        throw new Error(`${data.error.type}: ${data.error.message}`);
-                    } else if (response.ok) {
-                        // Extract the response content from the data returned by the API
-                        return data?.choices[0]?.message?.content?.trim();
-                    }
-                    } else {
-                        throw new Error('Failed to communicate with the AI');
-                    }
-                })
+                respondWith.string((signal) => window.fetch(
+                        'https://api.openai.com/v1/chat/completions', {
+                            signal,
+                            ...openAiOptions
+                        })
+                    .then(async (response) => {
+                        if (response) {
+                            const data = await response.json();
+                            if (data.error) {
+                                throw new Error(
+                                    `${data.error.type}: ${data.error.message}`);
+                            } else if (response.ok) {
+                                // Extract the response content from the data returned by the API
+                                return data?.choices[0]?.message?.content?.trim();
+                            }
+                        } else {
+                            throw new Error('Failed to communicate with the AI');
+                        }
+                    })
                 );
             },
-            ai_shortcuts: [
-                { title: 'Translate', subprompts: languageObjects },
-                { title: 'Summarize content', prompt: 'Provide the key points and concepts in this content in a succinct summary.', selection: true },
-                { title: 'Improve writing', prompt: 'Rewrite this content with no spelling mistakes, proper grammar, and with more descriptive language, using best writing practices without losing the original meaning.', selection: true },
-                { title: 'Simplify language', prompt: 'Rewrite this content with simplified language and reduce the complexity of the writing, so that the content is easier to understand.', selection: true },
-                { title: 'Expand upon', prompt: 'Expand upon this content with descriptive language and more detailed explanations, to make the writing easier to understand and increase the length of the content.', selection: true },
-                { title: 'Trim content', prompt: 'Remove any repetitive, redundant, or non-essential writing in this content without changing the meaning or losing any key information.', selection: true },
-                { title: 'Change tone', subprompts: [
-                    { title: 'Professional', prompt: 'Rewrite this content using polished, formal, and respectful language to convey professional expertise and competence.', selection: true },
-                    { title: 'Casual', prompt: 'Rewrite this content with casual, informal language to convey a casual conversation with a real person.', selection: true },
-                    { title: 'Direct', prompt: 'Rewrite this content with direct language using only the essential information.', selection: true },
-                    { title: 'Confident', prompt: 'Rewrite this content using compelling, optimistic language to convey confidence in the writing.', selection: true },
-                    { title: 'Friendly', prompt: 'Rewrite this content using friendly, comforting language, to convey understanding and empathy.', selection: true },
-                ] },
-                { title: 'Change style', subprompts: [
-                    { title: 'Business', prompt: 'Rewrite this content as a business professional with formal language.', selection: true },
-                    { title: 'Legal', prompt: 'Rewrite this content as a legal professional using valid legal terminology.', selection: true },
-                    { title: 'Journalism', prompt: 'Rewrite this content as a journalist using engaging language to convey the importance of the information.', selection: true },
-                    { title: 'Medical', prompt: 'Rewrite this content as a medical professional using valid medical terminology.', selection: true },
-                    { title: 'Poetic', prompt: 'Rewrite this content as a poem using poetic techniques without losing the original meaning.', selection: true },
-                ] }
+            ai_shortcuts: [{
+                    title: 'Translate',
+                    subprompts: languageObjects
+                },
+                {
+                    title: 'Summarize content',
+                    prompt: 'Provide the key points and concepts in this content in a succinct summary.',
+                    selection: true
+                },
+                {
+                    title: 'Improve writing',
+                    prompt: 'Rewrite this content with no spelling mistakes, proper grammar, and with more descriptive language, using best writing practices without losing the original meaning.',
+                    selection: true
+                },
+                {
+                    title: 'Simplify language',
+                    prompt: 'Rewrite this content with simplified language and reduce the complexity of the writing, so that the content is easier to understand.',
+                    selection: true
+                },
+                {
+                    title: 'Expand upon',
+                    prompt: 'Expand upon this content with descriptive language and more detailed explanations, to make the writing easier to understand and increase the length of the content.',
+                    selection: true
+                },
+                {
+                    title: 'Trim content',
+                    prompt: 'Remove any repetitive, redundant, or non-essential writing in this content without changing the meaning or losing any key information.',
+                    selection: true
+                },
+                {
+                    title: 'Change tone',
+                    subprompts: [{
+                            title: 'Professional',
+                            prompt: 'Rewrite this content using polished, formal, and respectful language to convey professional expertise and competence.',
+                            selection: true
+                        },
+                        {
+                            title: 'Casual',
+                            prompt: 'Rewrite this content with casual, informal language to convey a casual conversation with a real person.',
+                            selection: true
+                        },
+                        {
+                            title: 'Direct',
+                            prompt: 'Rewrite this content with direct language using only the essential information.',
+                            selection: true
+                        },
+                        {
+                            title: 'Confident',
+                            prompt: 'Rewrite this content using compelling, optimistic language to convey confidence in the writing.',
+                            selection: true
+                        },
+                        {
+                            title: 'Friendly',
+                            prompt: 'Rewrite this content using friendly, comforting language, to convey understanding and empathy.',
+                            selection: true
+                        },
+                    ]
+                },
+                {
+                    title: 'Change style',
+                    subprompts: [{
+                            title: 'Business',
+                            prompt: 'Rewrite this content as a business professional with formal language.',
+                            selection: true
+                        },
+                        {
+                            title: 'Legal',
+                            prompt: 'Rewrite this content as a legal professional using valid legal terminology.',
+                            selection: true
+                        },
+                        {
+                            title: 'Journalism',
+                            prompt: 'Rewrite this content as a journalist using engaging language to convey the importance of the information.',
+                            selection: true
+                        },
+                        {
+                            title: 'Medical',
+                            prompt: 'Rewrite this content as a medical professional using valid medical terminology.',
+                            selection: true
+                        },
+                        {
+                            title: 'Poetic',
+                            prompt: 'Rewrite this content as a poem using poetic techniques without losing the original meaning.',
+                            selection: true
+                        },
+                    ]
+                }
             ],
             paste_data_images: true,
             images_upload_url: false,
@@ -390,7 +465,7 @@
         $('#annbtadd').click(function(e) {
 
             var html =
-              '<div class="resrow"><input type="text" name="ann[]" class="myclassname"></div>';
+                '<div class="resrow"><input type="text" name="ann[]" class="myclassname"></div>';
 
             $('#anndiv').append(html);
 
@@ -399,11 +474,11 @@
         $('#distributionbtnadd').click(function(e) {
 
             var html =
-              '<div class="resrow"><input type="text" name="distribution[]" class="myclassname"></div>';
+                '<div class="resrow"><input type="text" name="distribution[]" class="myclassname"></div>';
 
             $('#distributiondiv').append(html);
 
-});
+        });
 
         $('#materialsbtadd').click(function(e) {
 
@@ -641,72 +716,73 @@
 
 
         $("#query").on("change", function() {
-            
+
             var value = $(this).val().toLowerCase();
-            if(value!==''){
+            if (value !== '') {
                 $("#searchTable tr").filter(function() {
                     $(this).toggle(true)
                     var selectedText = $("#scope option:selected").val();
                     // alert(selectedText);
-                    if(selectedText!==''){
-                        $(this).toggle(($(this).text().toLowerCase().indexOf(selectedText) && $(this).text().toLowerCase().indexOf(value)) > -1)
-                    }else{
+                    if (selectedText !== '') {
+                        $(this).toggle(($(this).text().toLowerCase().indexOf(selectedText) && $(
+                            this).text().toLowerCase().indexOf(value)) > -1)
+                    } else {
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     }
-                });  
-            
-            }else{
+                });
+
+            } else {
                 var selectedText = $("#scope option:selected").val();
-                                
-                if(selectedText!==''){
+
+                if (selectedText !== '') {
                     $("#searchTable tr").filter(function() {
                         $(this).toggle(true)
                         $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
                     });
-                }
-                else{
+                } else {
                     $("#searchTable tr").filter(function() {
                         $(this).toggle(true)
                     });
                 }
-                
+
             }
         });
 
         $("#scope").on("change", function() {
-           
+
             var value = $(this).val().toLowerCase();
-            if(value!==''){
-                
+            if (value !== '') {
+
                 $("#searchTable tr").filter(function() {
                     $(this).toggle(true)
                     var selectedText = $("#query option:selected").val();
-                    if(selectedText!==''){
-                        $(this).toggle(($(this).text().toLowerCase().indexOf(selectedText) && $(this).text().toLowerCase().indexOf(value)) > -1)
-                    }else{
+                    if (selectedText !== '') {
+                        $(this).toggle(($(this).text().toLowerCase().indexOf(selectedText) && $(
+                            this).text().toLowerCase().indexOf(value)) > -1)
+                    } else {
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    } 
+                    }
                 });
 
-                
-            }else{
-                
+
+            } else {
+
                 $("#searchTable tr").filter(function() {
                     $(this).toggle(true)
                 });
                 var selectedText = $("#query option:selected").val();
-                 
-                if(selectedText!==''){
+
+                if (selectedText !== '') {
                     $("#searchTable tr").filter(function() {
                         $(this).toggle(true)
                         $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
                     });
                 }
-                    
-                
-            }    
+
+
+            }
         });
-        
+
         $('#annexurebtnadd').click(function(e) {
             function generateTableRow(serialNumber) {
                 var html =
@@ -728,11 +804,13 @@
             function generateTableRow(serialNumber) {
                 var html =
                     '<tr>' +
-                    '<td><input disabled  type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                    '<td><input disabled  type="text" name="serial_number[]" value="' + serialNumber +
+                    '"></td>' +
                     '<td><input type="text" name="current_doc_number[]"></td>' +
                     '<td><input type="text" name="current_version[]"></td>' +
                     '<td><input type="text" name="new_doc_number[]"></td>' +
                     '<td><input type="text" name="new_version[]"></td>' +
+                    '<td><button type="text" class="removeBtnDD">Remove</button></td>' +
                     '</tr>';
 
                 return html;
@@ -742,21 +820,29 @@
             var newRow = generateTableRow(rowCount + 1);
             tableBody.append(newRow);
         });
+        $(document).on('click', '.removeBtnDD', function() {
+            $(this).closest('tr').remove();
+        })
 
         $('#addAffectedDocumentsbtn').click(function(e) {
             function generateTableRow(serialNumber) {
                 var html =
                     '<tr>' +
-                    '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                    '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                    '"></td>' +
                     '<td><input type="text" name="affected_documents[]"></td>' +
                     '<td><input type="text" name="document_name[]"></td>' +
                     '<td><input type="number" name="document_no[]"></td>' +
-                     '<td><input type="text" name="version_no[]"></td>' +
+                    '<td><input type="text" name="version_no[]"></td>' +
                     // '<td><input type="date" name="implementation_date[]"></td>' 
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="implementation_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="implementation_date[]" class="hide-input" oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" /></div></div></div></td>'+
-                   
-                   '<td><input type="text" name="new_document_no[]"></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="implementation_date' +
+                    serialNumber +
+                    '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="implementation_date[]" class="hide-input" oninput="handleDateInput(this, `implementation_date' +
+                    serialNumber + '`)" /></div></div></div></td>' +
+
+                    '<td><input type="text" name="new_document_no[]"></td>' +
                     '<td><input type="text" name="new_version_no[]"></td>' +
+                    '<td><button type="text" class="removeaddAffectedDocumentsbtn">Remove</button></td>' +
                     '</tr>';
 
                 return html;
@@ -766,6 +852,9 @@
             var newRow = generateTableRow(rowCount + 1);
             tableBody.append(newRow);
         });
+        $(document).on('click', '.removeaddAffectedDocumentsbtn', function() {
+            $(this).closest('tr').remove();
+        })
 
         $('#addProductDetail').click(function(e) {
             @php
@@ -1073,9 +1162,12 @@
                     '<tr>' +
                     '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                     '<td><input type="text" name="action[]"></td>' +
-                     '<td><input type="text" name="responsible[]"></td>' +
+                    '<td><input type="text" name="responsible[]"></td>' +
                     // '<td><input type="text" name="deadline[]"></td>' +
-'<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' +
+                    serialNumber +
+                    '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' +
+                    serialNumber + '`)" /></div></div></div></td>' +
 
                     '<td><input type="text" name="item_status[]"></td>'
                 '</tr>';
@@ -1094,7 +1186,10 @@
                     '<tr>' +
                     '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                     // '<td><input type="date" name="date[]"></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline'+ serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' +
+                    serialNumber +
+                    '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' +
+                    serialNumber + '`)" /></div></div></div></td>' +
                     '<td><input type="text" name="topic[]"></td>' +
                     '<td><input type="text" name="responsible[]"></td>' +
                     '<td><input type="time" name="start_time[]"></td>' +
@@ -1114,7 +1209,8 @@
 
             function generateTableRow(serialNumber) {
                 var html = '<tr>' +
-                    '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                    '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                    '"></td>' +
                     '<td><select name="product_name[]" id="product_name">' +
                     '<option value="">-- Select value --</option>' +
                     '<option value="PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/">PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/</option>' +
@@ -1131,8 +1227,14 @@
                     '<option value="BJJH0004A">BJJH0004A</option>' +
                     '<option value="DCAU0036">DCAU0036</option>' +
                     '</select></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="product_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="product_mfg_date[]" class="hide-input" oninput="handleDateInput(this, `product_mfg_date' + serialNumber +'`)" /></div></div></div></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="product_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="product_expiry_date[]" class="hide-input" oninput="handleDateInput(this, `product_expiry_date' + serialNumber +'`)" /></div></div></div></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="product_mfg_date' +
+                    serialNumber +
+                    '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="product_mfg_date[]" class="hide-input" oninput="handleDateInput(this, `product_mfg_date' +
+                    serialNumber + '`)" /></div></div></div></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="product_expiry_date' +
+                    serialNumber +
+                    '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="product_expiry_date[]" class="hide-input" oninput="handleDateInput(this, `product_expiry_date' +
+                    serialNumber + '`)" /></div></div></div></td>' +
                     '<td><input type="text" name="product_batch_desposition[]"></td>' +
                     '<td><input type="text" name="product_remark[]"></td>' +
                     '<td><select name="product_batch_status[]" id="batch_status">' +
@@ -1153,7 +1255,8 @@
         $('#material ').click(function(e) {
             function generateTableRow(serialNumber) {
                 var html = '<tr>' +
-                    '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                    '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                    '"></td>' +
                     // '<td><select name="material_name[]" id="material_name">' +
                     // '<option value="">-- Select value --</option>' +
                     // '<option value="PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/">PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/</option>' +
@@ -1174,8 +1277,22 @@
                     '<td><input type="text" name="material_batch_no[]"></td>' +
                     // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_mfg_date[]" class="hide-input" oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`)" /></div></div></div></td>' +
                     // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_expiry_date[]" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`)" /></div></div></div></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="material_mfg_date[]" id="material_mfg_date' + serialNumber +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`);checkDate(`material_mfg_date' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="material_expiry_date[]" id="material_expiry_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`);checkDate(`material_mfg_date' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_mfg_date' +
+                    serialNumber +
+                    '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="material_mfg_date[]" id="material_mfg_date' +
+                    serialNumber +
+                    '_checkdate"  class="hide-input" oninput="handleDateInput(this, `material_mfg_date' +
+                    serialNumber + '`);checkDate(`material_mfg_date' + serialNumber +
+                    '_checkdate`,`material_expiry_date' + serialNumber +
+                    '_checkdate`)" /></div></div></div></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_expiry_date' +
+                    serialNumber +
+                    '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="material_expiry_date[]" id="material_expiry_date' +
+                    serialNumber +
+                    '_checkdate" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' +
+                    serialNumber + '`);checkDate(`material_mfg_date' + serialNumber +
+                    '_checkdate`,`material_expiry_date' + serialNumber +
+                    '_checkdate`)" /></div></div></div></td>' +
 
                     '<td><input type="text" name="material_batch_desposition[]"></td>' +
                     '<td><input type="text" name="material_remark[]"></td>' +
@@ -1199,7 +1316,8 @@
             function generateTableRow(serialNumber) {
                 var html =
                     '<tr>' +
-                    '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                    '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                    '"></td>' +
                     '<td><input type="text" name="equipment[]"></td>' +
                     '<td><input type="text" name="equipment_instruments[]"></td>' +
                     '<td><input type="text" name="equipment_comments[]"></td>' +
@@ -1246,13 +1364,13 @@
                     '<td><input type="text" name="mitigation_steps[]"></td>' +
                     '<td><input type="text" name="deadline2[]"></td>' +
                     '<td><select name="responsible_person[]">' +
-                        '<option value="">Select a value</option>';
+                    '<option value="">Select a value</option>';
 
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
+                for (var i = 0; i < users.length; i++) {
+                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                }
 
-                    html += '</select></td>' +
+                html += '</select></td>' +
                     '<td><input type="text" name="status[]"></td>' +
                     '<td><input type="text" name="remark[]"></td>' +
                     '</tr>';
@@ -1301,24 +1419,24 @@
 
     // Function to count characters in the textarea
     function countCharacters() {
-      var text = textArea.value;
-      // Display the character count
-      charCountDisplay.textContent = 'Character count: ' + text.length;
+        var text = textArea.value;
+        // Display the character count
+        charCountDisplay.textContent = 'Character count: ' + text.length;
     }
 
     // Add an event listener to the textarea to trigger character count on input
     textArea.addEventListener('input', function() {
-      countCharacters();
-      // Limit the text to 2500 characters
-      if (textArea.value.length > 2500) {
-        textArea.value = textArea.value.slice(0, 2500);
-        countCharacters(); // Update character count after truncation
-      }
+        countCharacters();
+        // Limit the text to 2500 characters
+        if (textArea.value.length > 2500) {
+            textArea.value = textArea.value.slice(0, 2500);
+            countCharacters(); // Update character count after truncation
+        }
     });
 
     // Call the countCharacters function initially to display character count for any existing text
     countCharacters();
-  </script>
+</script>
 
 
 

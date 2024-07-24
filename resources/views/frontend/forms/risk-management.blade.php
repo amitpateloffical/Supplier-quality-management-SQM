@@ -145,6 +145,93 @@
                 display: none;
             }
         </style>
+        {{-- voice Command --}}
+    
+    <style>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+            color: black;
+            display: none;
+            /* Hide the button initially */
+        }
+
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .relative-container input:focus+.mic-btn {
+            display: inline-block;
+            /* Show the button when input is focused */
+        }
+
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none;
+        }
+    </style>
+
+    <script>
+        < link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
+
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
+                }
+            });
+
+            document.querySelectorAll('.mic-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        micBtn.style.display = 'inline-block';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        setTimeout(() => {
+                            micBtn.style.display = 'none';
+                        }, 200); // Delay to prevent button from hiding immediately when clicked
+                    }
+                });
+            });
+        });
+    </script>
 
         <div class="form-field-head">
 
@@ -347,8 +434,13 @@
                                             <label for="Short Description">Short Description<span
                                                     class="text-danger">*</span></label><span id="rchars">255</span>
                                             characters remaining
-                                            <input id="docname" type="text" name="short_description"
-                                                maxlength="255" required>
+                                            <div style="position: relative;">
+                                                <input class="mic-input" id="docname" type="text"
+                                                    name="short_description" maxlength="255" required>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -480,7 +572,12 @@
                                     <div class="col-6">
                                         <div class="group-input">
                                             <label for="Description">Risk/Opportunity Description</label>
-                                            <textarea name="description" id="description"></textarea>
+                                            <div style="position: relative;">
+                                                <textarea class="mic-input" name="description" id="description"></textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -494,7 +591,12 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Risk/Opportunity Comments</label>
-                                            <textarea name="comments" id="comments"></textarea>
+                                            <div style="position: relative;">
+                                                <textarea class="mic-input" name="comments" id="comments"></textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -803,13 +905,26 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Estimated Man-Hours">Estimated Man-Hours</label>
-                                            <input type="text" name="estimated_man_hours" id="estimated_man_hours">
+                                            <div style="position: relative;">
+                                                <input class="mic-input" type="text" name="estimated_man_hours"
+                                                    id="estimated_man_hours">
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Estimated Cost">Estimated Cost</label>
-                                            <input type="text" name="estimated_cost" id="estimated_cost">
+                                            <div style="position: relative;">
+                                                <input class="mic-input" type="text" name="estimated_cost"
+                                                    id="estimated_cost">
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-6">
@@ -876,7 +991,12 @@
                                     <div class="col-6">
                                         <div class="group-input">
                                             <label for="Justification / Rationale">Justification / Rationale</label>
-                                            <textarea name="justification" id="justification"></textarea>
+                                            <div style="position: relative;">
+                                                <textarea class="mic-input" name="justification" id="justification"></textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -893,8 +1013,8 @@
                                             <table class="table table-bordered" id="action_plan_details">
                                                 <thead>
                                                     <tr>
-                                                        <th>Row #</th>
-                                                        <th>Action</th>
+                                                        <th style="width: 4%">Row#</th>
+                                                        <th>Remarks</th>
                                                         <th>Responsible Person</th>
                                                         <th>Deadline</th>
                                                         <th>Item static</th>
@@ -1000,7 +1120,7 @@
                                                     id="risk-assessment-risk-management">
                                                     <thead>
                                                         <tr>
-                                                            <th>Row #</th>
+                                                            <th style="width: 4%">Row#</th>
                                                             <th>Risk Factor</th>
                                                             <th>Risk element </th>
                                                             <th>Probable cause of risk element</th>
@@ -1021,6 +1141,7 @@
                                                                 IQ,
                                                                 OQ or
                                                                 PQ)</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1102,7 +1223,12 @@
                                                         <tr style="background: #f4bb22">
                                                             <th style="width:150px;">Problem Statement :</th>
                                                             <td>
-                                                                <textarea name="why_problem_statement"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="why_problem_statement"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         <tr class="why-row">
@@ -1163,7 +1289,12 @@
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
                                                             <td>
-                                                                <textarea name="why_root_cause"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="why_root_cause"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1196,61 +1327,136 @@
                                                         <tr>
                                                             <th style="background: #0039bd85">What</th>
                                                             <td>
-                                                                <textarea name="what_will_be"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="what_will_be"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="what_will_not_be"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="what_will_not_be"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="what_rationable"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="what_rationable"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Where</th>
                                                             <td>
-                                                                <textarea name="where_will_be"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="where_will_be"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="where_will_not_be"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="where_will_not_be"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="where_rationable"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="where_rationable"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">When</th>
                                                             <td>
-                                                                <textarea name="when_will_be"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="when_will_be"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="when_will_not_be"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="when_will_not_be"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="when_rationable"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="when_rationable"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Coverage</th>
                                                             <td>
-                                                                <textarea name="coverage_will_be"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="coverage_will_be"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="coverage_will_not_be"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="coverage_will_not_be"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="coverage_rationable"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="coverage_rationable"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Who</th>
                                                             <td>
-                                                                <textarea name="who_will_be"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="who_will_be"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="who_will_not_be"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="who_will_not_be"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="who_rationable"></textarea>
+                                                                <div style="position: relative;">
+                                                                    <textarea class="mic-input" name="who_rationable"></textarea>
+                                                                    <button class="mic-btn" type="button">
+                                                                        <i class="fas fa-microphone"></i>
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1262,13 +1468,23 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="root_cause_description">Root Cause Description</label>
-                                            <textarea name="root_cause_description"></textarea>
+                                            <div style="position: relative;">
+                                                <textarea class="mic-input" name="root_cause_description"></textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="investigation_summary">Investigation Summary</label>
-                                            <textarea name="investigation_summary"></textarea>
+                                            <div style="position: relative;">
+                                                <textarea class="mic-input" name="investigation_summary"></textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1343,7 +1559,13 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Residual Risk">Residual Risk</label>
-                                            <input type="text" name="residual_risk" id="residual_risk">
+                                            <div style="position: relative;">
+                                                <input class="mic-input" type="text" name="residual_risk"
+                                                    id="residual_risk">
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -1396,7 +1618,13 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <textarea name="comments2" id="comments2"></textarea>
+                                            <div style="position: relative;">
+                                                <textarea class="mic-input" name="comments2" id="comments2"></textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -1422,7 +1650,7 @@
                                             <table class="table table-bordered" id="action_plan_details2">
                                                 <thead>
                                                     <tr>
-                                                        <th>Row #</th>
+                                                        <th style="width: 4%">Row#</th>
                                                         <th>Mitigation Steps</th>
                                                         <th>
                                                             Deadline
@@ -1509,7 +1737,12 @@
                                         <div class="group-input" id="initiated_through_req">
                                             <label for="mitigation-plan">Mitigation Plan<span
                                                     class="text-danger d-none">*</span></label>
-                                            <textarea name="mitigation_plan"></textarea>
+                                            <div style="position: relative;">
+                                                <textarea class="mic-input" name="mitigation_plan"></textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 new-date-data-field">
@@ -1537,7 +1770,12 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="mitigation-status-comments">Mitigation Status Comments</label>
-                                            <textarea name="mitigation_status_comments"></textarea>
+                                            <div style="position: relative;">
+                                                <textarea class="mic-input" name="mitigation_status_comments"></textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -1569,13 +1807,23 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="impact-analysis">Impact Analysis</label>
-                                            <textarea name="impact_analysis"></textarea>
+                                            <div style="position: relative;">
+                                                <textarea class="mic-input" name="impact_analysis"></textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="risk-analysis">Risk Analysis</label>
-                                            <textarea name="risk_analysis"></textarea>
+                                            <div style="position: relative;">
+                                                <textarea class="mic-input" name="risk_analysis"></textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-6">
@@ -1625,7 +1873,12 @@
                                             <label for="due_date_extension">Due Date Extension Justification</label>
                                             <div><small class="text-primary">Please Mention justification if due date is
                                                     crossed</small></div>
-                                            <textarea name="due_date_extension"></textarea>
+                                            <div style="position: relative;">
+                                                <textarea class="mic-input" name="due_date_extension"></textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

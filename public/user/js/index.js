@@ -17,9 +17,9 @@ function addMultipleFiles(input, block_id) {
         viewLink.textContent = "<View>";
 
         let fileClone = files[i].slice();
-        viewLink.addEventListener('click',function(e){
+        viewLink.addEventListener('click', function (e) {
             e.preventDefault();
-            window.open(viewLink.href,'_blank');
+            window.open(viewLink.href, '_blank');
         });
         div.appendChild(viewLink);
         block.appendChild(div);
@@ -406,6 +406,10 @@ function addRiskAssessment(tableId) {
 
     var cell17 = newRow.insertCell(16);
     cell17.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
+
+    var cell18 = newRow.insertCell(17);
+    cell18.innerHTML = '<button  class="removeBtnaddRiskAssessment">Remove</button>';
+
     for (var i = 1; i < currentRowCount; i++) {
 
         var row = table.rows[i];
@@ -508,7 +512,7 @@ function addDistributionRetrieval(tableId) {
     cell6.innerHTML = "<input type='number'>";
 
     let cell7 = newRow.insertCell(6);
-    cell7.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="issuance_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="issuance_date[]" id="issuance_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, issuance_date' + currentRowCount +');checkDate(issuance_date' + currentRowCount +'_checkdate,date_closed' + currentRowCount +'_checkdate)" /></div></div></div></td>';
+    cell7.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="issuance_date' + currentRowCount + '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="issuance_date[]" id="issuance_date' + currentRowCount + '_checkdate"  class="hide-input" oninput="handleDateInput(this, issuance_date' + currentRowCount + ');checkDate(issuance_date' + currentRowCount + '_checkdate,date_closed' + currentRowCount + '_checkdate)" /></div></div></div></td>';
 
     let cell8 = newRow.insertCell(7)
     // cell8.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
@@ -523,7 +527,7 @@ function addDistributionRetrieval(tableId) {
     cell11.innerHTML = "<input type='string'>";
 
     let cell12 = newRow.insertCell(11);
-    cell12.innerHTML ='<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="retrieval_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="retrieval_date[]" id="retrieval_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, retrieval_date' + currentRowCount +');checkDate(retrieval_date' + currentRowCount +'_checkdate,date_closed' + currentRowCount +'_checkdate)" /></div></div></div></td>';
+    cell12.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="retrieval_date' + currentRowCount + '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="retrieval_date[]" id="retrieval_date' + currentRowCount + '_checkdate"  class="hide-input" oninput="handleDateInput(this, retrieval_date' + currentRowCount + ');checkDate(retrieval_date' + currentRowCount + '_checkdate,date_closed' + currentRowCount + '_checkdate)" /></div></div></div></td>';
 
     let cell13 = newRow.insertCell(12)
     cell13.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
@@ -556,22 +560,22 @@ function addManagementReviewParticipants(tableId) {
     cell1.innerHTML = currentRowCount;
 
     let cell2 = newRow.insertCell(1)
-   // cell2.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
+    // cell2.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
     cell2.innerHTML = "<input type='text' name='invited_Person[]'>";
     let cell3 = newRow.insertCell(2)
-   // cel3.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
+    // cel3.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
     cell3.innerHTML = "<input type='text' name='designee[]'>";
     let cell4 = newRow.insertCell(3)
-   // cell4.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
+    // cell4.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
     cell4.innerHTML = "<input type='text' name='department[]'>";
     let cell5 = newRow.insertCell(4)
-   // cell5.innerHTML = "<select><option value='0'>-- Select --</option><option value='Yes'>Yes</option><option value='No'>No</option></select>"
+    // cell5.innerHTML = "<select><option value='0'>-- Select --</option><option value='Yes'>Yes</option><option value='No'>No</option></select>"
     cell5.innerHTML = "<input type='text' name='meeting_Attended[]'>";
     let cell6 = newRow.insertCell(5)
-  //  cell6.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
+    //  cell6.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
     cell6.innerHTML = "<input type='text' name='designee_Name[]'>";
     let cell7 = newRow.insertCell(6)
-   // cell7.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
+    // cell7.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
     cell7.innerHTML = "<input type='text' name='designee_Department[]'>";
     let cell8 = newRow.insertCell(7);
     cell8.innerHTML = "<input type='text' name='remarks[]'>";
@@ -957,30 +961,30 @@ function openDivision(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 
- 
+
 function handleDateInput(element, textInputID) {
     let textInput = document.getElementById(textInputID)
     const date = new Date(element.value);
-    const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",];
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",];
     const month = months[date.getMonth()];
     const day = date.getDate();
     const year = date.getFullYear();
     textInput.setAttribute('value', `${day}-${month}-${year}`)
-  }
- 
-  function isStartDateLessThanEndDate(startDate, endDate) {
+}
+
+function isStartDateLessThanEndDate(startDate, endDate) {
     // Convert date strings to Date objects
     const startDateObj = new Date(startDate);
-    const endDateObj = new Date(endDate); 
+    const endDateObj = new Date(endDate);
     // Compare the dates
     return startDateObj <= endDateObj;
-  }
-  
-  function checkDate(textInputID,textInputID2){
-    const startDate = $('#'+textInputID).val();  // Replace with your start date
-    const endDate = $('#'+textInputID2).val();    // Replace with your end date 
+}
+
+function checkDate(textInputID, textInputID2) {
+    const startDate = $('#' + textInputID).val();  // Replace with your start date
+    const endDate = $('#' + textInputID2).val();    // Replace with your end date 
     if ((startDate.trim() !== '') && (endDate.trim() !== '')) {
-        let endDataStr = textInputID2.replace(/_checkdate/g, ""); 
+        let endDataStr = textInputID2.replace(/_checkdate/g, "");
         if (isStartDateLessThanEndDate(startDate, endDate)) {
             console.log("Start date is less than end date.");
             //let textInput = document.getElementById(endDataStr)
@@ -990,11 +994,11 @@ function handleDateInput(element, textInputID) {
             // const day = date.getDate();
             // const year = date.getFullYear();
             // textInput.setAttribute('value', `${day}-${month}-${year}`)
-        } else { 
-        alert("Start date is not less than end date.");
-        let textInput = document.getElementById(endDataStr)
-        textInput.setAttribute('value', ``)
-        console.log("Start date is not less than end date.");
-      }
-    }
-  }
+        } else {
+            alert("Start date is not less than end date.");
+            let textInput = document.getElementById(endDataStr)
+            textInput.setAttribute('value', ``)
+            console.log("Start date is not less than end date.");
+        }
+    }
+}

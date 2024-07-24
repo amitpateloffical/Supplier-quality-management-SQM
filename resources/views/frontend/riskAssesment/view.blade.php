@@ -153,6 +153,96 @@
             display: none;
         }
     </style>
+    {{-- voice Command --}}
+
+    <style>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+            color: black;
+            display: none;
+            /* Hide the button initially */
+        }
+
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .relative-container input:focus+.mic-btn {
+            display: inline-block;
+            /* Show the button when input is focused */
+        }
+
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none;
+        }
+    </style>
+
+    <script>
+        < link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
+
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
+                }
+            });
+
+            document.querySelectorAll('.mic-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        micBtn.style.display = 'inline-block';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        setTimeout(() => {
+                            micBtn.style.display = 'none';
+                        }, 200); // Delay to prevent button from hiding immediately when clicked
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
     @php
         $users = DB::table('users')->get();
     @endphp
@@ -487,11 +577,20 @@
                                                     id="rchars">255</span>
                                                 characters remaining
 
-                                                <textarea name="short_description" id="docname" type="text" maxlength="255" required
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                <div style="position: relative;">
+                                                    <input id="docname" type="text" name="short_description"
+                                                        class="mic-input" maxlength="255" required
+                                                        value="{{ $data->short_description }}"
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                             {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
                                         </div>
+
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
@@ -678,14 +777,27 @@
                                         <div class="col-6">
                                             <div class="group-input">
                                                 <label for="Description">Risk/Opportunity Description</label>
-                                                <textarea name="description" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="description">{{ $data->description }}</textarea>
+                                                <div style="position: relative;">
+                                                    <textarea name="description" class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        id="description">{{ $data->description }}</textarea>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
+
                                             </div>
                                         </div>
 
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Comments">Risk/Opportunity Comments</label>
-                                                <textarea name="comments" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="comments">{{ $data->comments }}</textarea>
+                                                <div style="position: relative;">
+                                                    <textarea name="comments" class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        id="comments">{{ $data->comments }}</textarea>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -1117,17 +1229,30 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Estimated Man-Hours">Estimated Man-Hours</label>
-                                                <input type="text" name="estimated_man_hours" id="estimated_man_hours"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    value="{{ $data->estimated_man_hours }}">
+                                                <div style="position: relative;">
+                                                    <input type="text" class="mic-input" name="estimated_man_hours"
+                                                        id="estimated_man_hours"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        value="{{ $data->estimated_man_hours }}">
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Estimated Cost">Estimated Cost</label>
-                                                <input type="text" name="estimated_cost" id="estimated_cost"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    value="{{ $data->estimated_cost }}">
+
+                                                <div style="position: relative;">
+                                                    <input type="text" class="mic-input" name="estimated_cost"
+                                                        id="estimated_cost"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        value="{{ $data->estimated_cost }}">
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6">
@@ -1228,7 +1353,13 @@
                                         <div class="col-6">
                                             <div class="group-input">
                                                 <label for="Justification / Rationale">Justification / Rationale</label>
-                                                <textarea name="justification" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="justification">{{ $data->justification }} </textarea>
+                                                <div style="position: relative;">
+                                                    <textarea name="justification" class='mic-input' {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        id="justification">{{ $data->justification }} </textarea>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1245,8 +1376,8 @@
                                                 <table class="table table-bordered" id="action_plan_details">
                                                     <thead>
                                                         <tr>
-                                                            <th>Row #</th>
-                                                            <th>Action</th>
+                                                            <th style="width: 4%">Row#</th>
+                                                            <th>Remarks</th>
                                                             <th>Responsible</th>
                                                             <th>Deadline</th>
                                                             <th>Item static</th>
@@ -1259,7 +1390,7 @@
                                                                 <td><input disabled type="text" name="serial_number[]"
                                                                         value="{{ $key + 1 }}"></td>
                                                                 <td><input type="text" name="action[]"
-                                                                        value="{{ $temps ? $temps : ' ' }}"></td>
+                                                                        value="{{ $temps ? $temps : 'N/A ' }}"></td>
                                                                 {{-- <td><input type="text" name="responsible[]"
                                                                         value="{{ unserialize($action_plan->responsible)[$key] ? unserialize($action_plan->responsible)[$key] : '' }}">
                                                                 </td> --}}
@@ -1268,7 +1399,7 @@
                                                                         <option value="">Select a value</option>
                                                                         @foreach ($users as $value)
                                                                             <option
-                                                                                {{ unserialize($action_plan->responsible)[$key] ? (unserialize($action_plan->responsible)[$key] == $value->id ? 'selected' : ' ') : '' }}
+                                                                                {{ unserialize($action_plan->responsible)[$key] ? (unserialize($action_plan->responsible)[$key] == $value->id ? 'selected' : ' ') : ' ' }}
                                                                                 value="{{ $value->id }}">
                                                                                 {{ $value->name }}
                                                                             </option>
@@ -1284,10 +1415,10 @@
                                                                                 <input type="text"
                                                                                     id="deadline{{ $key }}' + serialNumber +'"
                                                                                     readonly placeholder="DD-MM-YYYY"
-                                                                                    value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) }}" />
+                                                                                    value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) ? Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) : 'N/A' }}" />
                                                                                 <input type="date" name="deadline[]"
                                                                                     class="hide-input"
-                                                                                    value="{{ unserialize($action_plan->deadline)[$key] }}"
+                                                                                    value="{{ unserialize($action_plan->deadline)[$key] ? unserialize($action_plan->deadline)[$key] : '' }}"
                                                                                     oninput="handleDateInput(this, `deadline{{ $key }}' + serialNumber +'`)" />
                                                                             </div>
                                                                         </div>
@@ -1295,10 +1426,10 @@
                                                                 </td>
 
                                                                 <td><input type="text" name="item_static[]"
-                                                                        value="{{ unserialize($action_plan->item_static)[$key] ? unserialize($action_plan->item_static)[$key] : '' }}">
+                                                                        value="{{ unserialize($action_plan->item_static)[$key] ? unserialize($action_plan->item_static)[$key] : 'N/A' }}">
                                                                 </td>
-                                                                <td><button type="text"
-                                                                        class="removeBtnMI">Remove</button>
+                                                                <td><button
+                                                                        type="text"class="removeBtnMI">Remove</button>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -1409,7 +1540,7 @@
                                                         id="risk-assessment-risk-management">
                                                         <thead>
                                                             <tr>
-                                                                <th>Row #</th>
+                                                                <th style="width: 4%">Row#</th>
                                                                 <th>Risk Factor</th>
                                                                 <th>Risk element </th>
                                                                 <th>Probable cause of risk element</th>
@@ -1431,6 +1562,7 @@
                                                                     number, IQ,
                                                                     OQ or
                                                                     PQ)</th>
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -1594,6 +1726,9 @@
                                                                                 type="text"
                                                                                 value="{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}">
                                                                         </td>
+                                                                        <td><button type="text"
+                                                                                class="removeBtnaddRiskAssessment">Remove</button>
+                                                                        </td>
                                                                     </tr>
                                                                 @endforeach
                                                             @endif
@@ -1637,7 +1772,7 @@
                                                                                 value="{{ unserialize($fishbone->materials)[$key] ? unserialize($fishbone->materials)[$key] : '' }}"
                                                                                 name="materials[]"></div>
                                                                         <div><input type="text"
-                                                                                value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}}"
+                                                                                value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}"
                                                                                 name="methods[]"></div>
                                                                     @endforeach
                                                                 @endif
@@ -1655,7 +1790,7 @@
                                                                                 value="{{ unserialize($fishbone->manpower)[$key] ? unserialize($fishbone->manpower)[$key] : '' }}"
                                                                                 name="manpower[]"></div>
                                                                         <div><input type="text"
-                                                                                value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}}"
+                                                                                value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}"
                                                                                 name="machine[]"></div>
                                                                     @endforeach
                                                                 @endif
@@ -1697,8 +1832,12 @@
                                                             <tr style="background: #f4bb22">
                                                                 <th style="width:150px;">Problem Statement :</th>
                                                                 <td>
-
-                                                                    <textarea name="why_problem_statement">{{ $whyChart->why_problem_statement }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="why_problem_statement">{{ $whyChart->why_problem_statement }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                             <tr class="why-row">
@@ -1780,7 +1919,12 @@
                                                             <tr style="background: #0080006b;">
                                                                 <th style="width:150px;">Root Cause :</th>
                                                                 <td>
-                                                                    <textarea name="why_root_cause">{{ $whyChart->why_root_cause }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="why_root_cause">{{ $whyChart->why_root_cause }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -1813,61 +1957,136 @@
                                                             <tr>
                                                                 <th style="background: #0039bd85">What</th>
                                                                 <td>
-                                                                    <textarea name="what_will_be">{{ $what_who_where->what_will_be }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="what_will_be">{{ $what_who_where->what_will_be }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="what_will_not_be">{{ $what_who_where->what_will_not_be }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="what_will_not_be">{{ $what_who_where->what_will_not_be }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="what_rationable"> {{ $what_who_where->what_rationable }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="what_rationable">{{ $what_who_where->what_rationable }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <th style="background: #0039bd85">Where</th>
                                                                 <td>
-                                                                    <textarea name="where_will_be"> {{ $what_who_where->where_will_be }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="where_will_be">{{ $what_who_where->where_will_be }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="where_will_not_be"> {{ $what_who_where->where_will_be }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="where_will_not_be">{{ $what_who_where->where_will_not_be }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="where_rationable"> {{ $what_who_where->where_will_be }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="where_rationable">{{ $what_who_where->where_rationable }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <th style="background: #0039bd85">When</th>
                                                                 <td>
-                                                                    <textarea name="when_will_be"> {{ $what_who_where->when_will_be }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="when_will_be">{{ $what_who_where->when_will_be }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="when_will_not_be">{{ $what_who_where->when_will_not_be }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="when_will_not_be">{{ $what_who_where->when_will_not_be }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="when_rationable"> {{ $what_who_where->when_rationable }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="when_rationable">{{ $what_who_where->when_rationable }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <th style="background: #0039bd85">Coverage</th>
                                                                 <td>
-                                                                    <textarea name="coverage_will_be"> {{ $what_who_where->coverage_will_be }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="coverage_will_be">{{ $what_who_where->coverage_will_be }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="coverage_will_not_be"> {{ $what_who_where->coverage_will_not_be }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="coverage_will_not_be">{{ $what_who_where->coverage_will_not_be }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="coverage_rationable"> {{ $what_who_where->coverage_rationable }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="coverage_rationable">{{ $what_who_where->coverage_rationable }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <th style="background: #0039bd85">Who</th>
                                                                 <td>
-                                                                    <textarea name="who_will_be"> {{ $what_who_where->who_will_be }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="who_will_be">{{ $what_who_where->who_will_be }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="who_will_not_be"> {{ $what_who_where->who_will_not_be }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="who_will_not_be">{{ $what_who_where->who_will_not_be }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="who_rationable"> {{ $what_who_where->who_rationable }}</textarea>
+                                                                    <div style="position: relative;">
+                                                                        <textarea class="mic-input" name="who_rationable">{{ $what_who_where->who_rationable }}</textarea>
+                                                                        <button class="mic-btn" type="button">
+                                                                            <i class="fas fa-microphone"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -1879,13 +2098,25 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="root_cause_description">Root Cause Description</label>
-                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="root_cause_description">{{ $data->root_cause_description }}</textarea>
+                                                <div style="position: relative;">
+                                                    <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        name="root_cause_description">{{ $data->root_cause_description }}</textarea>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="investigation_summary">Investigation Summary</label>
-                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="investigation_summary">{{ $data->investigation_summary }}</textarea>
+                                                <div style="position: relative;">
+                                                    <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        name="investigation_summary">{{ $data->investigation_summary }}</textarea>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1966,7 +2197,8 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="backButton"
+                                            onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
@@ -1981,9 +2213,15 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Residual Risk">Residual Risk</label>
-                                                <input type="text" name="residual_risk" id="residual_risk"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    value="{{ $data->residual_risk }}">
+                                                <div style="position: relative;">
+                                                    <input type="text" class="mic-input" name="residual_risk"
+                                                        id="residual_risk"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        value="{{ $data->residual_risk }}">
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -2060,7 +2298,14 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Comments">Comments</label>
-                                                <textarea name="comments2" id="comments2" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $data->comments2 }}</textarea>
+                                                <div style="position: relative;">
+                                                    <textarea class="mic-input" name="comments2" id="comments2"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $data->comments2 }}</textarea>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -2068,7 +2313,8 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="backButton"
+                                            onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
@@ -2092,7 +2338,7 @@
                                                 <table class="table table-bordered" id="action_plan_details2">
                                                     <thead>
                                                         <tr>
-                                                            <th>Row #</th>
+                                                            <th style="width: 4%">Row#</th>
                                                             <th>Mitigation Steps</th>
                                                             <th>
                                                                 Deadline
@@ -2110,10 +2356,11 @@
                                                     <tbody>
                                                         @foreach (unserialize($mitigation_plan_details->mitigation_steps) as $key => $temps)
                                                             <tr>
-                                                                <td><input disabled type="text" name="serial_number[]"
+                                                                <td><input disabled type="text"
+                                                                        name="serial_number[]"
                                                                         value="{{ $key + 1 }}"></td>
                                                                 <td><input type="text" name="mitigation_steps[]"
-                                                                        value="{{ $temps ? $temps : ' ' }}"></td>
+                                                                        value="{{ $temps ? $temps : 'N/A' }}"></td>
                                                                 {{-- <td><input type="date" name="deadline2[]"
                                                                     value="{{ unserialize($mitigation_plan_details->deadline2)[$key] ? unserialize($mitigation_plan_details->deadline2)[$key] : '' }}">
                                                             </td> --}}
@@ -2124,7 +2371,7 @@
                                                                                 <input type="text"
                                                                                     id="deadline2{{ $key }}' + serialNumber +'"
                                                                                     readonly placeholder="DD-MM-YYYY"
-                                                                                    value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) }}" />
+                                                                                    value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) ? Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) : 'N/A' }}" />
                                                                                 <input type="date" name="deadline2[]"
                                                                                     class="hide-input"
                                                                                     value="{{ unserialize($mitigation_plan_details->deadline2)[$key] }}"
@@ -2148,10 +2395,10 @@
                                                                         @endforeach
                                                                     </select></td>
                                                                 <td><input type="text" name="status[]"
-                                                                        value="{{ unserialize($mitigation_plan_details->status)[$key] ? unserialize($mitigation_plan_details->status)[$key] : '' }}">
+                                                                        value="{{ unserialize($mitigation_plan_details->status)[$key] ? unserialize($mitigation_plan_details->status)[$key] : 'N/A' }}">
                                                                 </td>
                                                                 <td><input type="text" name="remark[]"
-                                                                        value="{{ unserialize($mitigation_plan_details->remark)[$key] ? unserialize($mitigation_plan_details->remark)[$key] : '' }}">
+                                                                        value="{{ unserialize($mitigation_plan_details->remark)[$key] ? unserialize($mitigation_plan_details->remark)[$key] : 'N/A' }}">
                                                                 </td>
                                                                 <td><button type="text"
                                                                         class="removeBtnMI1">Remove</button></td>
@@ -2201,7 +2448,12 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="mitigation-plan">Mitigation Plan</label>
-                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="mitigation_plan">{{ $data->mitigation_plan }}</textarea>
+                                                <div style="position: relative;">
+                                                    <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="mitigation_plan">{{ $data->mitigation_plan }}</textarea>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 new-date-data-field">
@@ -2242,7 +2494,13 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="mitigation-status-comments">Mitigation Status Comments</label>
-                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="mitigation_status_comments">{{ $data->mitigation_status_comments }}</textarea>
+                                                <div style="position: relative;">
+                                                    <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        name="mitigation_status_comments">{{ $data->mitigation_status_comments }}</textarea>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -2284,13 +2542,23 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="impact-analysis">Impact Analysis</label>
-                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="impact_analysis">{{ $data->impact_analysis }}</textarea>
+                                                <div style="position: relative;">
+                                                    <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="impact_analysis">{{ $data->impact_analysis }}</textarea>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="risk-analysis">Risk Analysis</label>
-                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="risk_analysis">{{ $data->risk_analysis }}</textarea>
+                                                <div style="position: relative;">
+                                                    <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="risk_analysis">{{ $data->risk_analysis }}</textarea>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6">
@@ -2357,7 +2625,13 @@
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
                                                 <div><small class="text-primary">Please Mention justification if due date
                                                         is crossed</small></div>
-                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="due_date_extension">{{ $data->due_date_extension }}</textarea>
+                                                <div style="position: relative;">
+                                                    <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        name="due_date_extension">{{ $data->due_date_extension }}</textarea>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -2433,20 +2707,20 @@
                                         <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Action Plan Approved By">Action Plan Approved By</label>
-                                                <div class="static">{{ $data->action_plan_completed_by }}</div>
+                                                <div class="static">{{ $data->action_plan_approved_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Action Plan Approved On">Action Plan Approved On</label>
-                                                <div class="static">{{ $data->action_plan_completed_comment }}</div>
+                                                <div class="static">{{ $data->action_plan_approved_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Action Plan Approved Comment">Action Plan Approved
                                                     Comment</label>
-                                                <div class="static">{{ $data->action_plan_completed_on }}</div>
+                                                <div class="static">{{ $data->action_plan_approved_comment }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -2575,9 +2849,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                <button type="button" data-bs-dismiss="modal">Close</button>
-                                            </div> -->
+                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                            <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2622,9 +2896,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                <button>Close</button>
-                                            </div> -->
+                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2669,9 +2943,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                <button>Close</button>
-                                            </div> -->
+                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>

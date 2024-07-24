@@ -1311,28 +1311,58 @@ Not Applicable
                     <td class="w-30">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
                 </tr>
                 <tr>
+                    <th class="w-20">Submitted Comment</th>
+                    <td class="w-80">{{ $data->submitted_comment }}</td>
+                </tr>
+                <tr>
                     <th class="w-20">Evaluated By</th>
                     <td class="w-30">{{ $data->evaluated_by }}</td>
                     <th class="w-20">Evaluated On</th>
                     <td class="w-30">{{ Helpers::getdateFormat($data->evaluated_on) }}</td>
                 </tr>
                 <tr>
-                    <th class="w-20">Plan Approved By</th>
+                    <th class="w-20">Evaluation Complete Comment</th>
+                    <td class="w-80">{{ $data->evaluated_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Action Plan Completed By</th>
                     <td class="w-30">{{ $data->plan_approved_by }}</td>
-                    <th class="w-20">Plan Approved On</th>
+                    <th class="w-20">Action Plan Completed On</th>
                     <td class="w-30">{{ Helpers::getdateFormat($data->plan_approved_on) }}</td>
                 </tr>
                 <tr>
-                    <th class="w-20">Risk Analysis Completed By</th>
-                    <td class="w-30">{{ $data->risk_analysis_completed_by }}</td>
-                    <th class="w-20">Risk Analysis Completed On</th>
-                    <td class="w-30">{{ Helpers::getdateFormat($data->risk_analysis_completed_on) }}</td>
+                    <th class="w-20">Action Plan Completed Comment</th>
+                    <td class="w-80">{{ $data->plan_approved_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">All Actions Completed By</th>
+                    <td class="w-30">{{ $data->all_action_completed_by }}</td>
+                    <th class="w-20">All Actions Completed On</th>
+                    <td class="w-30">{{ Helpers::getdateFormat($data->all_action_completed_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">All Actions Completed Comment</th>
+                    <td class="w-80">{{ $data->all_action_completed_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Residual Risk Evaluation Completed By</th>
+                    <td class="w-30">{{ $data->residual_risk_completed_by }}</td>
+                    <th class="w-20">Residual Risk Evaluation Completed On</th>
+                    <td class="w-30">{{ Helpers::getdateFormat($data->residual_risk_completed_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Residual Risk Evaluation Completed Comment</th>
+                    <td class="w-80">{{ $data->residual_risk_completed_comment }}</td>
                 </tr>
                 <tr>
                     <th class="w-20">Cancelled By</th>
                     <td class="w-30">{{ $data->cancelled_by }}</td>
                     <th class="w-20">Cancelled On</th>
                     <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Cancelled Comment</th>
+                    <td class="w-80">{{ $data->cancelled_comment }}</td>
                 </tr>
 
             </table>

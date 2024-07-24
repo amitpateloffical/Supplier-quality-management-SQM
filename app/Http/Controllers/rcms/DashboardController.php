@@ -149,7 +149,7 @@ class DashboardController extends Controller
                 "type" => "Extension",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
-                "division_id" => $data->division_id,
+                "division_id" => $data->site_location_code,
                 "short_description" => $data->short_description ? $data->short_description : "-",
                 "initiator_id" => $data->initiator,
                 "intiation_date" => $data->intiation_date,
@@ -833,8 +833,8 @@ class DashboardController extends Controller
         } elseif ($type == "Extension") {
             $data = extension_new::find($id);
             $single = "singleReportNew/" .$data->id;
-            $audit = "audit_trailNew/" .$data->id;
-            $parent = "";
+            $audit = "auditReportext/" .$data->id;
+            $parent = "#";
         } elseif ($type == "Observation") {
             $data = Observation::find($id);
             $single = "ObservationSingleReport/" .$data->id;            
@@ -881,7 +881,7 @@ class DashboardController extends Controller
         $html = '';
         $html = '<div class="block">
         <div class="record_no">
-            Record No. ' . str_pad($data->record, 4, '0', STR_PAD_LEFT) .
+            Record No. ' . str_pad($data->record_number, 4, '0', STR_PAD_LEFT) .
             '</div>
         <div class="division">
         ' . Helpers::getDivisionName(session()->get('division')) . '/ ' . $type . '

@@ -243,7 +243,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Pharmacopoeial Claim</label>
-                                        <input type="text" name="pharmacopoeial_claim" id="harmacopoeial_claim">
+                                        <input type="text" name="pharmacopoeial_claim" id="pharmacopoeial_claim">
                                     </div>
                                 </div>
 

@@ -1617,6 +1617,7 @@ class SupplierController extends Controller
         $supplier->attach_batch = $request->attach_batch;
         $supplier->request_justification = $request->request_justification;
         $supplier->manufacturer_availability = $request->manufacturer_availability;
+        // dd($request->manufacturer_availability);
         $supplier->request_accepted = $request->request_accepted;
         $supplier->cqa_remark = $request->cqa_remark;
         $supplier->accepted_by = $request->accepted_by;

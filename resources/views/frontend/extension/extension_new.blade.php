@@ -151,7 +151,7 @@
                             <div class="group-input">
                                 <label for="short_description">Short Description <span class="text-danger">*</span></label>
                                 <span id="rchars">255</span> Characters remaining
-                                <div class="relative-container">
+                                <div style="position:relative;">
                                     <input 
                                         id="short_description" 
                                         type="text" 
@@ -242,7 +242,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="description">Description</label>
-                                    <div class="relative-container">
+                                    <div style="position:relative;">
                                         <textarea name="description" id="description" cols="30" class="mic-input"></textarea>
                                         <button class="mic-btn" type="button">
                                             <i class="fas fa-microphone"></i>
@@ -257,7 +257,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="justification_reason">Justification / Reason</label>
-                                    <div class="relative-container">
+                                    <div style="position:relative;">
                                         <textarea name="justification_reason" id="justification_reason" cols="30" class="mic-input"></textarea>
                                         <button class="mic-btn" type="button">
                                             <i class="fas fa-microphone"></i>
@@ -304,7 +304,7 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="reviewer_remarks">HOD Remarks</label>
-                                <div class="relative-container">
+                                <div style="position:relative;">
                                     <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30" class="mic-input"></textarea>
                                     <button class="mic-btn" type="button">
                                         <i class="fas fa-microphone"></i>
@@ -345,7 +345,7 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="approver_remarks">QA Remarks</label>
-                                <div class="relative-container">
+                                <div style="position:relative;">
                                     <textarea name="approver_remarks" id="approver_remarks" cols="30" class="mic-input"></textarea>
                                     <button class="mic-btn" type="button">
                                         <i class="fas fa-microphone"></i>
@@ -460,20 +460,51 @@
         });
     </script>
 
-<script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: none;
+        color: black;
+        display: none;
+        /* Hide the button initially */
+    }
 
-    </script>
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px;
+    }
+
+    .relative-container input:focus+.mic-btn {
+        display: inline-block;
+        /* Show the button when input is focused */
+    }
+
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none;
+    }
+</style>
+
+<script>
+    < link rel = "stylesheet"
+    href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Initialize speech recognition
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.continuous = false;
         recognition.interimResults = false;
         recognition.lang = 'en-US';
 
-        // Function to start speech recognition and append result to the target element
         function startRecognition(targetElement) {
             recognition.start();
             recognition.onresult = function(event) {
@@ -485,7 +516,6 @@
             };
         }
 
-        // Event delegation for all mic buttons
         document.addEventListener('click', function(event) {
             if (event.target.closest('.mic-btn')) {
                 const button = event.target.closest('.mic-btn');
@@ -495,49 +525,24 @@
                 }
             }
         });
+
+        document.querySelectorAll('.mic-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    micBtn.style.display = 'inline-block';
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    setTimeout(() => {
+                        micBtn.style.display = 'none';
+                    }, 200); // Delay to prevent button from hiding immediately when clicked
+                }
+            });
+        });
     });
-
-    // Show/hide the container based on user selection
-    function toggleOthersField(selectedValue) {
-        const container = document.getElementById('external_agencies_req');
-        if (selectedValue === 'others') {
-            container.classList.remove('d-none');
-        } else {
-            container.classList.add('d-none');
-        }
-    }
 </script>
-
-<style>
-    .mic-btn {
-        background: none;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        position: absolute;
-        right: 10px; /* Position the button at the right corner */
-        top: 50%; /* Center the button vertically */
-        transform: translateY(-50%); /* Adjust for the button's height */
-        box-shadow: none; /* Remove shadow */
-    }
-    .mic-btn i {
-        color: black; /* Set the color of the icon */
-        box-shadow: none; /* Remove shadow */
-    }
-    .mic-btn:focus,
-    .mic-btn:hover,
-    .mic-btn:active {
-        box-shadow: none; /* Remove shadow on hover/focus/active */
-    }
-
-    .relative-container {
-        position: relative;
-    }
-
-    .relative-container textarea {
-        width: 100%;
-        padding-right: 40px; /* Ensure the text does not overlap the button */
-    }
-</style>
-
 @endsection

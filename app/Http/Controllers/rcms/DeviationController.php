@@ -877,7 +877,7 @@ class DeviationController extends Controller
         // }
         // $data5->save();
 
-        $history = new DeviationAuditTrail();
+            $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
@@ -896,7 +896,7 @@ class DeviationController extends Controller
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = $deviation->due_date;
+            $history->current = Helpers::getDateFormat($deviation->due_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

@@ -49,7 +49,7 @@
                                         <td class="viewdetails"><a
                                                 href="{{ url('rcms/extension-audit-trial-details', $audits->id) }}">{{ $audits->activity_type }}</a>
                                         </td>
-                                        <td> {{ Helpers::getdateFormat1($audits->created_at) }} </td>
+                                        <td> {{ Helpers::getdateFormat($audits->created_at) }} </td>
                                         <td>{{ $audits->user_name }}</td>
                                         {{-- <td>{{ $audits->user_role }}</td> --}}
                                         <td>{{ $audits->origin_state }}</td>

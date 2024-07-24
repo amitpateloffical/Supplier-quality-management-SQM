@@ -128,20 +128,51 @@
 
     {{-- ------------------------------------------------- --}}
 
+    <style>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+            color: black;
+            display: none;
+            /* Hide the button initially */
+        }
+
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .relative-container input:focus+.mic-btn {
+            display: inline-block;
+            /* Show the button when input is focused */
+        }
+
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none;
+        }
+    </style>
+
     <script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    
-        </script>
+        < link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize speech recognition
-            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
             recognition.continuous = false;
             recognition.interimResults = false;
             recognition.lang = 'en-US';
-    
-            // Function to start speech recognition and append result to the target element
+
             function startRecognition(targetElement) {
                 recognition.start();
                 recognition.onresult = function(event) {
@@ -152,8 +183,7 @@
                     console.error(event.error);
                 };
             }
-    
-            // Event delegation for all mic buttons
+
             document.addEventListener('click', function(event) {
                 if (event.target.closest('.mic-btn')) {
                     const button = event.target.closest('.mic-btn');
@@ -163,50 +193,26 @@
                     }
                 }
             });
+
+            document.querySelectorAll('.mic-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        micBtn.style.display = 'inline-block';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        setTimeout(() => {
+                            micBtn.style.display = 'none';
+                        }, 200); // Delay to prevent button from hiding immediately when clicked
+                    }
+                });
+            });
         });
-    
-        // Show/hide the container based on user selection
-        function toggleOthersField(selectedValue) {
-            const container = document.getElementById('external_agencies_req');
-            if (selectedValue === 'others') {
-                container.classList.remove('d-none');
-            } else {
-                container.classList.add('d-none');
-            }
-        }
     </script>
-    
-    <style>
-        .mic-btn {
-            background: none;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            position: absolute;
-            right: 10px; /* Position the button at the right corner */
-            top: 50%; /* Center the button vertically */
-            transform: translateY(-50%); /* Adjust for the button's height */
-            box-shadow: none; /* Remove shadow */
-        }
-        .mic-btn i {
-            color: black; /* Set the color of the icon */
-            box-shadow: none; /* Remove shadow */
-        }
-        .mic-btn:focus,
-        .mic-btn:hover,
-        .mic-btn:active {
-            box-shadow: none; /* Remove shadow on hover/focus/active */
-        }
-    
-        .relative-container {
-            position: relative;
-        }
-    
-        .relative-container textarea {
-            width: 100%;
-            padding-right: 40px; /* Ensure the text does not overlap the button */
-        }
-    </style>
 
     {{-- -------------------------------------------------------- --}}
     <script>
@@ -1241,7 +1247,7 @@
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span class="text-danger"> *</span></label>
                                         <span id="rchars">255 characters remaining</span>
-                                        <div class="relative-container">
+                                        <div style="position:relative;">
                                             <input name="short_description" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="docname"
                                                 type="text" maxlength="255" required value="{{ $data->short_description }}" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}/>
                                             <button id="start-record-btn" type="button" style="position: absolute; right: 35px; top: 50%; transform: translateY(-50%);">
@@ -1305,7 +1311,7 @@
                                     <div class="col-lg-6 new-time-data-field">
     <div class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
         <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
-        <div class="relative-container">
+        <div style="position:relative;">
             <textarea id="Delay_Justification" name="Delay_Justification" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Delay_Justification }}</textarea>
             <button class="mic-btn" type="button">
                 <i class="fas fa-microphone"></i>
@@ -1335,7 +1341,7 @@
                                             @endphp
 
                                             <label for="If Other">Deviation Observed By<span class="text-danger">*</span></label>
-                                            <div class="relative-container">
+                                            <div style="position:relative;">
                                                 <input type="text" name="Facility" placeholder="Select Facility Name" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} value="{{ $data->Facility }}" class="mic-input">
                                                 <button class="mic-btn" type="button">
                                                     <i class="fas fa-microphone"></i>
@@ -1955,7 +1961,7 @@
                                         <div>
                                             <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                         </div>
-                                        <div class="relative-container">
+                                        <div style="position:relative;">
                                             <textarea name="Description_Deviation[]" id="summernote-1" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Description_Deviation }}</textarea>
                                             <button class="mic-btn" type="button">
                                                 <i class="fas fa-microphone"></i>
@@ -1986,7 +1992,7 @@
                                         <div>
                                             <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                         </div>
-                                        <div class="relative-container">
+                                        <div style="position:relative;">
                                             <textarea name="Immediate_Action[]" id="summernote-2" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Immediate_Action }}</textarea>
                                             <button class="mic-btn" type="button">
                                                 <i class="fas fa-microphone"></i>
@@ -2011,7 +2017,7 @@
         <div>
             <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
         </div>
-        <div class="relative-container">
+        <div style="position:relative;">
             <textarea name="Preliminary_Impact[]" id="summernote-3" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Preliminary_Impact }}</textarea>
             <button class="mic-btn" type="button">
                 <i class="fas fa-microphone"></i>
@@ -2122,7 +2128,7 @@
                                             <div>
                                                 <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                             </div>
-                                            <div class="relative-container">
+                                            <div style="position:relative;">
                                                 <textarea name="HOD_Remarks" id="summernote-4" class="mic-input" {{ $data->stage == 2 ? '' : 'disabled' }} required>{{ $data->HOD_Remarks }}</textarea>
                                                 <button class="mic-btn" type="button">
                                                     <i class="fas fa-microphone"></i>
@@ -2819,7 +2825,7 @@
                                     <div class="group-input">
                                         <label for="QAInitialRemark">QA Initial Remarks <span class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <div class="relative-container">
+                                        <div style="position:relative;">
                                             <textarea @if ($data->stage == 3) required @endif 
                                                 name="QAInitialRemark" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-6" class="mic-input">{{ $data->QAInitialRemark }}</textarea>
                                             <button class="mic-btn" type="button">
@@ -8990,7 +8996,7 @@
                         <span style="display: {{ $data->stage == 8 ? 'inline' : 'none' }}" class="text-danger">*</span>
                     </label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                    <div class="relative-container">
+                    <div style="position:relative;">
                         <textarea 
                             {{ $data->stage == 8 ? 'required' : 'disabled' }} 
                             name="hod_final_remarks" 
@@ -9082,7 +9088,7 @@
                         <span style="display: {{ $data->stage == 9 ? 'inline' : 'none' }}" class="text-danger">*</span>
                     </label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                    <div class="relative-container">
+                    <div style="position:relative;">
                         <textarea 
                             {{ $data->stage == 9 ? 'required' : 'disabled' }} 
                             name="qa_final_remarks" 
@@ -10025,7 +10031,7 @@
                         <div class="group-input">
                             <label for="Justification_for_categorization">Justification for categorization</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                            <div class="relative-container">
+                            <div style="position:relative;">
                                 <textarea 
                                     name="Justification_for_categorization" 
                                     id="summernote-5" 
@@ -10199,7 +10205,7 @@
                             <div>
                                 <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                             </div>
-                            <div class="relative-container">
+                            <div style="position:relative;">
                                 <textarea 
                                     name="initiator_final_remarks" 
                                     id="summernote-14" 
@@ -10307,7 +10313,7 @@
                         <div class="group-input">
                             <label for="Investigation_Of_Review">Justification for Revised Category</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                            <div class="relative-container">
+                            <div style="position:relative;">
                                 <textarea 
                                     name="Investigation_Of_Review" 
                                     {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} 
@@ -10333,7 +10339,7 @@
                                 @endif
                             </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                            <div class="relative-container">
+                            <div style="position:relative;">
                                 <textarea 
                                     name="Closure_Comments" 
                                     @if ($data->stage != 10) readonly @endif 
@@ -10361,7 +10367,7 @@
                                 @endif
                             </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                            <div class="relative-container">
+                            <div style="position:relative;">
                                 <textarea 
                                     name="Disposition_Batch" 
                                     @if ($data->stage != 10) readonly @endif 

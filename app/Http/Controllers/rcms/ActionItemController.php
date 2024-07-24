@@ -75,7 +75,7 @@ class ActionItemController extends Controller
         $openState->intiation_date = $request->intiation_date;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
-        $openState->Reference_Recores1 = implode(',', $request->related_records);
+        $openState->Reference_Recores1 = implode(',', $request->Reference_Recores1);
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
         // $openState->hod_preson = json_encode($request->hod_preson);
@@ -158,12 +158,12 @@ class ActionItemController extends Controller
             $history->save();
         }
 
-        if (!empty($openState->Reference_Recores1)) {
+        if (!empty($request->Reference_Recores1)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
             $history->activity_type = 'Action Item Related Records';
             $history->previous = "Null";
-            $history->current =  $openState->Reference_Recores1;
+            $history->current =  implode(',',$request->Reference_Recores1);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -500,7 +500,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -520,7 +520,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -539,7 +539,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -559,7 +559,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -579,7 +579,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -598,7 +598,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -617,7 +617,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -636,7 +636,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -655,7 +655,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -674,7 +674,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -693,7 +693,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -712,7 +712,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -731,7 +731,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -750,7 +750,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -766,7 +766,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = 'Not Applicable';
-            $history->change_from = $lastDocument->status;
+            $history->change_from = $lastopenState->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -785,7 +785,7 @@ class ActionItemController extends Controller
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         //     $history->origin_state = $lastopenState->status;
         //     $history->change_to = 'Not Applicable';
-        //     $history->change_from = $lastDocument->status;
+        //     $history->change_from = $lastopenState->status;
         //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
         //     $history->save();
         // }

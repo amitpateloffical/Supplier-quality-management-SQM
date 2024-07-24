@@ -271,18 +271,14 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Related Records">Action Item Related Records</label>
-                                        <select multiple id="related_records" name="related_records[]"
+                                        <select multiple id="Reference_Recores1" name="Reference_Recores1[]"
                                             placeholder="Select Reference Records">
                                             <option value="">--select record--</option>
-                                            <!-- @if (!empty($old_record))
-    -->
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
-                                            <!--
-    @endif -->
                                         </select>
                                     </div>
                                 </div>
@@ -292,7 +288,7 @@
                                         <select multiple name="hod_preson[]" placeholder="Select HOD Persons"
                                             data-search="false" data-silent-initial-value-set="true" id="hod">
                                             @foreach ($users as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->name }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -661,7 +657,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#related_records, #hod'
+            ele: '#Reference_Recores1, #hod'
         });
 
         function openCity(evt, cityName) {

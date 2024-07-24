@@ -401,7 +401,7 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current = $data->assign_to;
+            $history->current = Helpers::getInitiatorName($data->assign_to);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -435,7 +435,7 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
-            $history->current = $data->Initiator_Group;
+            $history->current = Helpers::getFullDepartmentName($data->Initiator_Group);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -907,7 +907,7 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Scheduled Start Date';
             $history->previous = "Null";
-            $history->current = $data->schedule_start_date1;
+            $history->current =  Helpers::getdateFormat($data->schedule_start_date1);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -923,7 +923,7 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Scheduled End Date';
             $history->previous = "Null";
-            $history->current = $data->schedule_end_date1;
+            $history->current =  Helpers::getdateFormat($data->schedule_end_date1);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1088,12 +1088,12 @@ class RiskManagementController extends Controller
         //     $history->save();
         // }
 
-        if (!empty($data->root_cause_methodology)) {
+        if (!empty($request->root_cause_methodology)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
             $history->activity_type = 'Root Cause Methodology';
             $history->previous = "Null";
-            $history->current = $data->root_cause_methodology;
+            $history->current = implode(',', $request->root_cause_methodology);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1380,7 +1380,7 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Scheduled End Date';
             $history->previous = "Null";
-            $history->current = $data->mitigation_due_date;
+            $history->current =  Helpers::getdateFormat($data->mitigation_due_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1869,8 +1869,8 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Assigned To';
-                $history->previous = $lastDocument->assign_to;
-                $history->current = $data->assign_to;
+                $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);;
+                $history->current = Helpers::getInitiatorName($data->assign_to);
                 $history->comment = $request->assign_id_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1889,8 +1889,8 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Initiator Group';
-            $history->previous = $lastDocument->Initiator_Group;
-            $history->current = $data->Initiator_Group;
+            $history->previous = Helpers::getFullDepartmentName($lastDocument->Initiator_Group);
+            $history->current = Helpers::getFullDepartmentName($data->Initiator_Group);
             $history->comment = $request->Initiator_Group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2410,8 +2410,8 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Scheduled Start Date';
-            $history->previous = $lastDocument->schedule_start_date1;
-            $history->current = $data->schedule_start_date1;
+            $history->previous =  Helpers::getdateFormat($lastDocument->schedule_start_date1);
+            $history->current =  Helpers::getdateFormat($data->schedule_start_date1);
             $history->comment = $request->schedule_start_date1_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2430,8 +2430,8 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Scheduled End Date';
-            $history->previous = $lastDocument->schedule_end_date1;
-            $history->current = $data->schedule_end_date1;
+            $history->previous =  Helpers::getdateFormat($lastDocument->schedule_end_date1);
+            $history->current =  Helpers::getdateFormat($data->schedule_end_date1);
             $history->comment = $request->schedule_end_date1_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2950,8 +2950,8 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Scheduled End Date';
-            $history->previous = $lastDocument->mitigation_due_date;
-            $history->current = $data->mitigation_due_date;
+            $history->previous =  Helpers::getdateFormat($lastDocument->mitigation_due_date);
+            $history->current =  Helpers::getdateFormat($data->mitigation_due_date);
             $history->comment = $request->mitigation_due_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

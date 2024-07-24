@@ -469,10 +469,9 @@
                                                 <select id="select-state" placeholder="Select..." name="assign_to"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Select a value</option>
-                                                    @foreach ($users as $key => $value)
-                                                        <option value="{{ $value->id }}"
-                                                            @if ($data->assign_to == $value->id) selected @endif>
-                                                            {{ $value->name }}</option>
+                                                    @foreach ($users as $value)
+                                                        <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
+                                                            value="{{ $value->id }}">{{ $value->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('assign_to')
@@ -619,20 +618,20 @@
                                                     id="departments"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Select Department</option>
-                                                    <option value="1"
-                                                        {{ in_array('1', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                    <option value="QA"
+                                                        {{ in_array('QA', explode(',', $data->departments)) ? 'selected' : '' }}>
                                                         QA</option>
-                                                    <option value="2"
-                                                        {{ in_array('2', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                    <option value="QC"
+                                                        {{ in_array('QC', explode(',', $data->departments)) ? 'selected' : '' }}>
                                                         QC</option>
-                                                    <option value="3"
-                                                        {{ in_array('3', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                    <option value="R&D"
+                                                        {{ in_array('R&D', explode(',', $data->departments)) ? 'selected' : '' }}>
                                                         R&D</option>
-                                                    <option value="4"
-                                                        {{ in_array('4', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                    <option value="Manufacturing"
+                                                        {{ in_array('Manufacturing', explode(',', $data->departments)) ? 'selected' : '' }}>
                                                         Manufacturing</option>
-                                                    <option value="5"
-                                                        {{ in_array('5', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                    <option value="Warehouse"
+                                                        {{ in_array('Warehouse', explode(',', $data->departments)) ? 'selected' : '' }}>
                                                         Warehouse</option>
 
                                                 </select>
@@ -825,20 +824,20 @@
                                                     id="departments"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Select Department</option>
-                                                    <option value="1"
-                                                        {{ in_array('1', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                    <option value="QA"
+                                                        {{ in_array('QA', explode(',', $data->departments2)) ? 'selected' : '' }}>
                                                         QA</option>
-                                                    <option value="2"
-                                                        {{ in_array('2', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                    <option value="QC"
+                                                        {{ in_array('QC', explode(',', $data->departments2)) ? 'selected' : '' }}>
                                                         QC</option>
-                                                    <option value="3"
-                                                        {{ in_array('3', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                    <option value="R&D"
+                                                        {{ in_array('R&D', explode(',', $data->departments2)) ? 'selected' : '' }}>
                                                         R&D</option>
-                                                    <option value="4"
-                                                        {{ in_array('4', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                    <option value="Manufacturing"
+                                                        {{ in_array('Manufacturing', explode(',', $data->departments2)) ? 'selected' : '' }}>
                                                         Manufacturing</option>
-                                                    <option value="5"
-                                                        {{ in_array('5', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                    <option value="Warehouse"
+                                                        {{ in_array('Warehouse', explode(',', $data->departments2)) ? 'selected' : '' }}>
                                                         Warehouse</option>
                                                 </select>
                                             </div>
@@ -866,24 +865,24 @@
                                                 <select name="site_name" id="site_name"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->site_name == '2' ? 'selected' : '' }}
-                                                        value="2">City MFR B</option>
-                                                    <option {{ $data->site_name == '1' ? 'selected' : '' }}
-                                                        value="1">City MFR A</option>
-                                                    <option {{ $data->site_name == '3' ? 'selected' : '' }}
-                                                        value="3">City MFR C</option>
-                                                    <option {{ $data->site_name == '4' ? 'selected' : '' }}
-                                                        value="4">Complex A</option>
-                                                    <option {{ $data->site_name == '5' ? 'selected' : '' }}
-                                                        value="5">Complex B</option>
-                                                    <option {{ $data->site_name == '6' ? 'selected' : '' }}
-                                                        value="6">Maerketing A</option>
-                                                    <option {{ $data->site_name == '7' ? 'selected' : '' }}
-                                                        value="7">Maerketing B</option>
-                                                    <option {{ $data->site_name == '8' ? 'selected' : '' }}
-                                                        value="8">Maerketing C</option>
-                                                    <option {{ $data->site_name == '9' ? 'selected' : '' }}
-                                                        value="9">Oceanside</option>
+                                                    <option {{ $data->site_name == 'City MFR A' ? 'selected' : '' }}
+                                                        value="City MFR A">City MFR A</option>
+                                                    <option {{ $data->site_name == 'City MFR B' ? 'selected' : '' }}
+                                                        value="City MFR B">City MFR B</option>
+                                                    <option {{ $data->site_name == 'City MFR C' ? 'selected' : '' }}
+                                                        value="City MFR C">City MFR C</option>
+                                                    <option {{ $data->site_name == 'Complex A' ? 'selected' : '' }}
+                                                        value="Complex A">Complex A</option>
+                                                    <option {{ $data->site_name == 'Complex B' ? 'selected' : '' }}
+                                                        value="Complex B">Complex B</option>
+                                                    <option {{ $data->site_name == 'Marketing A' ? 'selected' : '' }}
+                                                        value="Marketing A">Marketing A</option>
+                                                    <option {{ $data->site_name == 'Marketing B' ? 'selected' : '' }}
+                                                        value="Marketing B">Marketing B</option>
+                                                    <option {{ $data->site_name == 'Marketing C' ? 'selected' : '' }}
+                                                        value="Marketing C">Marketing C</option>
+                                                    <option {{ $data->site_name == 'Oceanside' ? 'selected' : '' }}
+                                                        value="Oceanside">Oceanside</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -950,19 +949,26 @@
                                                 <select name="duration" id="duration"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->duration == '1' ? 'selected' : '' }} value="1">
+                                                    <option {{ $data->duration == '2 hours' ? 'selected' : '' }}
+                                                        value="2 hours">
                                                         2 hours</option>
-                                                    <option {{ $data->duration == '2' ? 'selected' : '' }} value="2">
+                                                    <option {{ $data->duration == '4 hours' ? 'selected' : '' }}
+                                                        value="4 hours">
                                                         4 hours</option>
-                                                    <option {{ $data->duration == '3' ? 'selected' : '' }} value="3">
+                                                    <option {{ $data->duration == '8 hours' ? 'selected' : '' }}
+                                                        value="8 hours">
                                                         8 hours</option>
-                                                    <option {{ $data->duration == '4' ? 'selected' : '' }} value="4">
+                                                    <option {{ $data->duration == '16 hours' ? 'selected' : '' }}
+                                                        value="16 hours">
                                                         16 hours</option>
-                                                    <option {{ $data->duration == '5' ? 'selected' : '' }} value="5">
+                                                    <option {{ $data->duration == '24 hours' ? 'selected' : '' }}
+                                                        value="24 hours">
                                                         24 hours</option>
-                                                    <option {{ $data->duration == '6' ? 'selected' : '' }} value="6">
+                                                    <option {{ $data->duration == '36 hours' ? 'selected' : '' }}
+                                                        value="36 hours">
                                                         36 hours</option>
-                                                    <option {{ $data->duration == '7' ? 'selected' : '' }} value="7">
+                                                    <option {{ $data->duration == '72 hours' ? 'selected' : '' }}
+                                                        value="72 hours">
                                                         72 hours</option>
                                                 </select>
                                             </div>
@@ -973,25 +979,35 @@
                                                 <select name="hazard" id="hazard"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->hazard == '1' ? 'selected' : '' }} value="1">
+                                                    <option {{ $data->hazard == 'Confined Space' ? 'selected' : '' }}
+                                                        value="Confined Space">
                                                         Confined Space</option>
-                                                    <option {{ $data->hazard == '2' ? 'selected' : '' }} value="2">
+                                                    <option {{ $data->hazard == 'Electrical' ? 'selected' : '' }}
+                                                        value="Electrical">
                                                         Electrical</option>
-                                                    <option {{ $data->hazard == '3' ? 'selected' : '' }} value="3">
+                                                    <option {{ $data->hazard == 'Energy use' ? 'selected' : '' }}
+                                                        value="Energy use">
                                                         Energy use</option>
-                                                    <option {{ $data->hazard == '4' ? 'selected' : '' }} value="4">
+                                                    <option {{ $data->hazard == 'Ergonomics' ? 'selected' : '' }}
+                                                        value="Ergonomics">
                                                         Ergonomics</option>
-                                                    <option {{ $data->hazard == '5' ? 'selected' : '' }} value="5">
+                                                    <option {{ $data->hazard == 'Machine Guarding' ? 'selected' : '' }}
+                                                        value="Machine Guarding">
                                                         Machine Guarding</option>
-                                                    <option {{ $data->hazard == '6' ? 'selected' : '' }} value="6">
+                                                    <option {{ $data->hazard == 'Material Storage' ? 'selected' : '' }}
+                                                        value="Material Storage">
                                                         Material Storage</option>
-                                                    <option {{ $data->hazard == '7' ? 'selected' : '' }} value="7">
+                                                    <option {{ $data->hazard == 'Material use' ? 'selected' : '' }}
+                                                        value="Material use">
                                                         Material use</option>
-                                                    <option {{ $data->hazard == '8' ? 'selected' : '' }} value="8">
+                                                    <option {{ $data->hazard == 'Pressure' ? 'selected' : '' }}
+                                                        value="Pressure">
                                                         Pressure</option>
-                                                    <option {{ $data->hazard == '9' ? 'selected' : '' }} value="9">
+                                                    <option {{ $data->hazard == 'Thermal' ? 'selected' : '' }}
+                                                        value="Thermal">
                                                         Thermal</option>
-                                                    <option {{ $data->hazard == '10' ? 'selected' : '' }} value="10">
+                                                    <option {{ $data->hazard == 'Water use' ? 'selected' : '' }}
+                                                        value="Water use">
                                                         Water use</option>
                                                 </select>
                                             </div>
@@ -1002,86 +1018,164 @@
                                                 <select name="room2" id="room2"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->room2 == '1' ? 'selected' : '' }} value="1">
-                                                        Biochemistry</option>
-                                                    <option {{ $data->room2 == '2' ? 'selected' : '' }} value="2">
-                                                        Automation</option>
-                                                    <option {{ $data->room2 == '3' ? 'selected' : '' }} value="3">
-                                                        Blood Collection</option>
-                                                    <option {{ $data->room2 == '4' ? 'selected' : '' }} value="4">
-                                                        Enter Yo</option>
-                                                    <option {{ $data->room2 == '5' ? 'selected' : '' }} value="5">
-                                                        Buffer Preparation</option>
-                                                    <option {{ $data->room2 == '6' ? 'selected' : '' }} value="6">
-                                                        Bulk Fill</option>
-                                                    <option {{ $data->room2 == '7' ? 'selected' : '' }} value="7">
-                                                        Calibration</option>
-                                                    <option {{ $data->room2 == '8' ? 'selected' : '' }} value="8">
-                                                        Component Manufacturing</option>
-                                                    <option {{ $data->room2 == '9' ? 'selected' : '' }} value="9">
-                                                        Computer</option>
-                                                    <option {{ $data->room2 == '10' ? 'selected' : '' }} value="10">
-                                                        Computer / Automated Systems</option>
-                                                    <option {{ $data->room2 == '11' ? 'selected' : '' }} value="11">
-                                                        Despensing Donor Suitability</option>
-                                                    <option {{ $data->room2 == '12' ? 'selected' : '' }} value="12">
-                                                        Filling</option>
-                                                    <option {{ $data->room2 == '13' ? 'selected' : '' }} value="13">
-                                                        Filtration</option>
-                                                    <option {{ $data->room2 == '14' ? 'selected' : '' }} value="14">
-                                                        Formulation</option>
-                                                    <option {{ $data->room2 == '15' ? 'selected' : '' }} value="15">
-                                                        Incoming QA</option>
-                                                    <option {{ $data->room2 == '16' ? 'selected' : '' }} value="16">
-                                                        Hazard</option>
-                                                    <option {{ $data->room2 == '17' ? 'selected' : '' }} value="17">
-                                                        Laboratory</option>
-                                                    <option {{ $data->room2 == '18' ? 'selected' : '' }} value="18">
-                                                        Laboratory Support Facility</option>
-                                                    <option {{ $data->room2 == '19' ? 'selected' : '' }} value="19">
-                                                        Enter Your</option>
-                                                    <option {{ $data->room2 == '20' ? 'selected' : '' }} value="20">
-                                                        Lot Release</option>
-                                                    <option {{ $data->room2 == '21' ? 'selected' : '' }} value="21">
-                                                        Manufacturing</option>
-                                                    <option {{ $data->room2 == '22' ? 'selected' : '' }} value="22">
-                                                        Materials Management</option>
-                                                    <option {{ $data->room2 == '23' ? 'selected' : '' }} value="23">
-                                                        Room</option>
-                                                    <option {{ $data->room2 == '24' ? 'selected' : '' }} value="24">
-                                                        Operations</option>
-                                                    <option {{ $data->room2 == '25' ? 'selected' : '' }} value="25">
-                                                        Packaging</option>
-                                                    <option {{ $data->room2 == '26' ? 'selected' : '' }} value="26">
-                                                        Plant Engineering</option>
-                                                    <option {{ $data->room2 == '27' ? 'selected' : '' }} value="27">
-                                                        Enter Your Sele</option>
-                                                    <option {{ $data->room2 == '28' ? 'selected' : '' }} value="28">
-                                                        Njown</option>
-                                                    <option {{ $data->room2 == '29' ? 'selected' : '' }} value="29">
-                                                        Powder Filling</option>
-                                                    <option {{ $data->room2 == '30' ? 'selected' : '' }} value="30">
-                                                        Process Development</option>
-                                                    <option {{ $data->room2 == '31' ? 'selected' : '' }} value="31">
-                                                        Product Distribution</option>
-                                                    <option {{ $data->room2 == '32' ? 'selected' : '' }} value="32">
-                                                        Product Testing</option>
-                                                    <option {{ $data->room2 == '33' ? 'selected' : '' }} value="33">
-                                                        Production Purification</option>
-                                                    <option {{ $data->room2 == '34' ? 'selected' : '' }} value="34">
-                                                        QA</option>
-                                                    <option {{ $data->room2 == '35' ? 'selected' : '' }} value="35">
-                                                        QA Laboratory Quality Control</option>
-                                                    <option {{ $data->room2 == '36' ? 'selected' : '' }} value="36">
-                                                        Quality Control / Assurance</option>
-                                                    <option {{ $data->room2 == '37' ? 'selected' : '' }} value="37">
-                                                        Sanitization</option>
-                                                    <option {{ $data->room2 == '38' ? 'selected' : '' }} value="38">
+                                                    <option {{ $data->room2 == 'Biochemistry' ? 'selected' : '' }}
+                                                        value="Biochemistry">
+                                                        Biochemistry
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Automation' ? 'selected' : '' }}
+                                                        value="Automation">
+                                                        Automation
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Blood Collection' ? 'selected' : '' }}
+                                                        value="Blood Collection">
+                                                        Blood Collection
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Buffer Preparation' ? 'selected' : '' }}
+                                                        value="Buffer Preparation">
+                                                        Buffer Preparation
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Bulk Fill' ? 'selected' : '' }}
+                                                        value="Bulk Fill">
+                                                        Bulk Fill
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Calibration' ? 'selected' : '' }}
+                                                        value="Calibration">
+                                                        Calibration
+                                                    </option>
+                                                    <option
+                                                        {{ $data->room2 == 'Component Manufacturing' ? 'selected' : '' }}
+                                                        value="Component Manufacturing">
+                                                        Component Manufacturing
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Computer' ? 'selected' : '' }}
+                                                        value="Computer">
+                                                        Computer
+                                                    </option>
+                                                    <option
+                                                        {{ $data->room2 == 'Computer / Automated Systems' ? 'selected' : '' }}
+                                                        value="Computer / Automated Systems">
+                                                        Computer / Automated Systems
+                                                    </option>
+                                                    <option
+                                                        {{ $data->room2 == 'Despensing Donor Suitability' ? 'selected' : '' }}
+                                                        value="Despensing Donor Suitability">
+                                                        Despensing Donor Suitability
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Filling' ? 'selected' : '' }}
+                                                        value="Filling">
+                                                        Filling
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Filtration' ? 'selected' : '' }}
+                                                        value="Filtration">
+                                                        Filtration
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Formulation' ? 'selected' : '' }}
+                                                        value="Formulation">
+                                                        Formulation
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Incoming QA' ? 'selected' : '' }}
+                                                        value="Incoming QA">
+                                                        Incoming QA
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Hazard' ? 'selected' : '' }}
+                                                        value="Hazard">
+                                                        Hazard
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Laboratory' ? 'selected' : '' }}
+                                                        value="Laboratory">
+                                                        Laboratory
+                                                    </option>
+                                                    <option
+                                                        {{ $data->room2 == 'Laboratory Support Facility' ? 'selected' : '' }}
+                                                        value="Laboratory Support Facility">
+                                                        Laboratory Support Facility
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Enter Your' ? 'selected' : '' }}
+                                                        value="Enter Your">
+                                                        Enter Your
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Lot Release' ? 'selected' : '' }}
+                                                        value="Lot Release">
+                                                        Lot Release
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Manufacturing' ? 'selected' : '' }}
+                                                        value="Manufacturing">
+                                                        Manufacturing
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Materials Management' ? 'selected' : '' }}
+                                                        value="Materials Management">
+                                                        Materials Management
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Room' ? 'selected' : '' }}
+                                                        value="Room">
+                                                        Room
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Operations' ? 'selected' : '' }}
+                                                        value="Operations">
+                                                        Operations
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Packaging' ? 'selected' : '' }}
+                                                        value="Packaging">
+                                                        Packaging
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Plant Engineering' ? 'selected' : '' }}
+                                                        value="Plant Engineering">
+                                                        Plant Engineering
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Njown' ? 'selected' : '' }}
+                                                        value="Njown">
+                                                        Njown
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Powder Filling' ? 'selected' : '' }}
+                                                        value="Powder Filling">
+                                                        Powder Filling
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Process Development' ? 'selected' : '' }}
+                                                        value="Process Development">
+                                                        Process Development
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Product Distribution' ? 'selected' : '' }}
+                                                        value="Product Distribution">
+                                                        Product Distribution
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Product Testing' ? 'selected' : '' }}
+                                                        value="Product Testing">
+                                                        Product Testing
+                                                    </option>
+                                                    <option
+                                                        {{ $data->room2 == 'Production Purification' ? 'selected' : '' }}
+                                                        value="Production Purification">
+                                                        Production Purification
+                                                    </option>
+                                                    <option {{ $data->room2 == 'QA' ? 'selected' : '' }} value="QA">
+                                                        QA
+                                                    </option>
+                                                    <option
+                                                        {{ $data->room2 == 'QA Laboratory Quality Control' ? 'selected' : '' }}
+                                                        value="QA Laboratory Quality Control">
+                                                        QA Laboratory Quality Control
+                                                    </option>
+                                                    <option
+                                                        {{ $data->room2 == 'Quality Control / Assurance' ? 'selected' : '' }}
+                                                        value="Quality Control / Assurance">
+                                                        Quality Control / Assurance
+                                                    </option>
+                                                    <option {{ $data->room2 == 'Sanitization' ? 'selected' : '' }}
+                                                        value="Sanitization">
+                                                        Sanitization
+                                                    </option>
+                                                    <option
+                                                        {{ $data->room2 == 'Shipping/Distribution Storage/Distribution' ? 'selected' : '' }}
+                                                        value="Shipping/Distribution Storage/Distribution">
                                                         Shipping/Distribution Storage/Distribution
                                                     </option>
-                                                    <option {{ $data->room2 == '39' ? 'selected' : '' }} value="39">
-                                                        Storage and Distribution</option>
+                                                    <option
+                                                        {{ $data->room2 == 'Storage and Distribution' ? 'selected' : '' }}
+                                                        value="Storage and Distribution">
+                                                        Storage and Distribution
+                                                    </option>
                                                 </select>
+
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -1090,47 +1184,35 @@
                                                 <select name="regulatory_climate" id="regulatory_climate"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->regulatory_climate == '1' ? 'selected' : '' }}
-                                                        value="1">0. No significant regulatory issues affecting
-                                                        operation
+                                                    <option
+                                                        {{ $data->regulatory_climate == 'No significant regulatory issues affecting operation' ? 'selected' : '' }}
+                                                        value="No significant regulatory issues affecting operation">
+                                                        0. No significant regulatory issues affecting operation
                                                     </option>
-                                                    <option {{ $data->regulatory_climate == '2' ? 'selected' : '' }}
-                                                        value="2">1. Some regulatory or enforcement changes
-                                                        potentially
-                                                        affecting
-                                                        operation are
-                                                        anticipated </option>
-                                                    <option {{ $data->regulatory_climate == '3' ? 'selected' : '' }}
-                                                        value="3">2. A few regulatory or enforcement changes
-                                                        affect
-                                                        operations</option>
-                                                    <option {{ $data->regulatory_climate == '4' ? 'selected' : '' }}
-                                                        value="4">3. Regulatory and enforcement changes affect
-                                                        operation
+                                                    <option
+                                                        {{ $data->regulatory_climate == 'Some regulatory or enforcement changes potentially affecting operation are anticipated' ? 'selected' : '' }}
+                                                        value="Some regulatory or enforcement changes potentially affecting operation are anticipated">
+                                                        1. Some regulatory or enforcement changes potentially affecting
+                                                        operation are anticipated
                                                     </option>
-                                                    <option {{ $data->regulatory_climate == '5' ? 'selected' : '' }}
-                                                        value="5">4. Significant programatic regulatory and
-                                                        enforcement
-                                                        changes affect
-                                                        operation
+                                                    <option
+                                                        {{ $data->regulatory_climate == 'A few regulatory or enforcement changes affect operations' ? 'selected' : '' }}
+                                                        value="A few regulatory or enforcement changes affect operations">
+                                                        2. A few regulatory or enforcement changes affect operations
                                                     </option>
-                                                    <option {{ $data->regulatory_climate == '6' ? 'selected' : '' }}
-                                                        value="6">1. Some regulatory or enforcement changes
-                                                        potentially
-                                                        affecting operation are anticipated </option>
-                                                    <option {{ $data->regulatory_climate == '7' ? 'selected' : '' }}
-                                                        value="7">2. A few regulatory or enforcement changes
-                                                        affect
-                                                        operations</option>
-                                                    <option {{ $data->regulatory_climate == '8' ? 'selected' : '' }}
-                                                        value="8">3. Regulatory and enforcement changes affect
-                                                        operation
+                                                    <option
+                                                        {{ $data->regulatory_climate == 'Regulatory and enforcement changes affect operation' ? 'selected' : '' }}
+                                                        value="Regulatory and enforcement changes affect operation">
+                                                        3. Regulatory and enforcement changes affect operation
                                                     </option>
-                                                    <option {{ $data->regulatory_climate == '9' ? 'selected' : '' }}
-                                                        value="9">4. Significant programatic regulatory and
-                                                        enforcement
-                                                        changes affect operation</option>
+                                                    <option
+                                                        {{ $data->regulatory_climate == 'Significant programmatic regulatory and enforcement changes affect operation' ? 'selected' : '' }}
+                                                        value="Significant programmatic regulatory and enforcement changes affect operation">
+                                                        4. Significant programmatic regulatory and enforcement changes
+                                                        affect operation
+                                                    </option>
                                                 </select>
+
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -1139,21 +1221,26 @@
                                                 <select name="Number_of_employees" id="Number_of_employees"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->Number_of_employees == '1' ? 'selected' : '' }}
-                                                        value="1">0-50</option>
-                                                    <option {{ $data->Number_of_employees == '2' ? 'selected' : '' }}
-                                                        value="2">50-100</option>
-                                                    <option {{ $data->Number_of_employees == '3' ? 'selected' : '' }}
-                                                        value="3">100-200</option>
-                                                    <option {{ $data->Number_of_employees == '4' ? 'selected' : '' }}
-                                                        value="4">200-300</option>
-                                                    <option {{ $data->Number_of_employees == '5' ? 'selected' : '' }}
-                                                        value="5">300-500</option>
-                                                    <option {{ $data->Number_of_employees == '6' ? 'selected' : '' }}
-                                                        value="6">500-1000</option>
-                                                    <option {{ $data->Number_of_employees == '7' ? 'selected' : '' }}
-                                                        value="7">1000+</option>
+                                                    <option {{ $data->Number_of_employees == '0-50' ? 'selected' : '' }}
+                                                        value="0-50">0-50</option>
+                                                    <option {{ $data->Number_of_employees == '50-100' ? 'selected' : '' }}
+                                                        value="50-100">50-100</option>
+                                                    <option
+                                                        {{ $data->Number_of_employees == '100-200' ? 'selected' : '' }}
+                                                        value="100-200">100-200</option>
+                                                    <option
+                                                        {{ $data->Number_of_employees == '200-300' ? 'selected' : '' }}
+                                                        value="200-300">200-300</option>
+                                                    <option
+                                                        {{ $data->Number_of_employees == '300-500' ? 'selected' : '' }}
+                                                        value="300-500">300-500</option>
+                                                    <option
+                                                        {{ $data->Number_of_employees == '500-1000' ? 'selected' : '' }}
+                                                        value="500-1000">500-1000</option>
+                                                    <option {{ $data->Number_of_employees == '1000+' ? 'selected' : '' }}
+                                                        value="1000+">1000+</option>
                                                 </select>
+
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -1162,14 +1249,18 @@
                                                 <select name="risk_management_strategy" id="risk_management_strategy"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->risk_management_strategy == '1' ? 'selected' : '' }}
-                                                        value="1">Accept</option>
-                                                    <option {{ $data->risk_management_strategy == '2' ? 'selected' : '' }}
-                                                        value="2">Avoid the Risk</option>
-                                                    <option {{ $data->risk_management_strategy == '3' ? 'selected' : '' }}
-                                                        value="3">Mitigate</option>
-                                                    <option {{ $data->risk_management_strategy == '4' ? 'selected' : '' }}
-                                                        value="4">Transfer</option>
+                                                    <option
+                                                        {{ $data->risk_management_strategy == 'Accept' ? 'selected' : '' }}
+                                                        value="Accept">Accept</option>
+                                                    <option
+                                                        {{ $data->risk_management_strategy == 'Avoid the Risk' ? 'selected' : '' }}
+                                                        value="Avoid the Risk">Avoid the Risk</option>
+                                                    <option
+                                                        {{ $data->risk_management_strategy == 'Mitigate' ? 'selected' : '' }}
+                                                        value="Mitigate">Mitigate</option>
+                                                    <option
+                                                        {{ $data->risk_management_strategy == 'Transfer' ? 'selected' : '' }}
+                                                        value="Transfer">Transfer</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1267,44 +1358,100 @@
                                                 <select name="currency" id="currency"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->currency == '1' ? 'selected' : '' }}
-                                                        value="1">ARS-Argentine Peso</option>
-                                                    <option {{ $data->currency == '2' ? 'selected' : '' }}
-                                                        value="2">AUD-Australian Dollar</option>
-                                                    <option {{ $data->currency == '3' ? 'selected' : '' }}
-                                                        value="3">BRL-Brazilian Real CAD-Canadian Dollar</option>
-                                                    <option {{ $data->currency == '4' ? 'selected' : '' }}
-                                                        value="4">CHF-Swiss Franc</option>
-                                                    <option {{ $data->currency == '5' ? 'selected' : '' }}
-                                                        value="5">CNY-Chinese Yuan</option>
-                                                    <option {{ $data->currency == '6' ? 'selected' : '' }}
-                                                        value="6">EUR-Euro</option>
-                                                    <option {{ $data->currency == '7' ? 'selected' : '' }}
-                                                        value="7">HKD-Hong Kong Dollar ILS-Israeli New Sheqel
+                                                    <option
+                                                        {{ $data->currency == 'ARS-Argentine Peso' ? 'selected' : '' }}
+                                                        value="ARS-Argentine Peso">
+                                                        ARS-Argentine Peso
                                                     </option>
-                                                    <option {{ $data->currency == '8' ? 'selected' : '' }}
-                                                        value="8">INR-Indian Rupee JPY-Japanese Yen</option>
-                                                    <option {{ $data->currency == '9' ? 'selected' : '' }}
-                                                        value="9">KRW-South Korean Won</option>
-                                                    <option {{ $data->currency == '10' ? 'selected' : '' }}
-                                                        value="10">MXN-Mexican Peso</option>
-                                                    <option {{ $data->currency == '11' ? 'selected' : '' }}
-                                                        value="11">RUB-Russian Rouble</option>
-                                                    <option {{ $data->currency == '12' ? 'selected' : '' }}
-                                                        value="12">SAR-Saudi Riyal</option>
-                                                    <option {{ $data->currency == '13' ? 'selected' : '' }}
-                                                        value="13">TRY-Turkish Lira</option>
-                                                    <option {{ $data->currency == '14' ? 'selected' : '' }}
-                                                        value="14">USD-US Dollar</option>
-                                                    <option {{ $data->currency == '15' ? 'selected' : '' }}
-                                                        value="15">XAG-Silver</option>
-                                                    <option {{ $data->currency == '16' ? 'selected' : '' }}
-                                                        value="16">XAU-Gold</option>
-                                                    <option {{ $data->currency == '17' ? 'selected' : '' }}
-                                                        value="17">XPD-Palladium</option>
-                                                    <option {{ $data->currency == '18' ? 'selected' : '' }}
-                                                        value="18">XPT-Platinum</option>
+                                                    <option
+                                                        {{ $data->currency == 'AUD-Australian Dollar' ? 'selected' : '' }}
+                                                        value="AUD-Australian Dollar">
+                                                        AUD-Australian Dollar
+                                                    </option>
+                                                    <option
+                                                        {{ $data->currency == 'BRL-Brazilian Real' ? 'selected' : '' }}
+                                                        value="BRL-Brazilian Real">
+                                                        BRL-Brazilian Real
+                                                    </option>
+                                                    <option
+                                                        {{ $data->currency == 'CAD-Canadian Dollar' ? 'selected' : '' }}
+                                                        value="CAD-Canadian Dollar">
+                                                        CAD-Canadian Dollar
+                                                    </option>
+                                                    <option {{ $data->currency == 'CHF-Swiss Franc' ? 'selected' : '' }}
+                                                        value="CHF-Swiss Franc">
+                                                        CHF-Swiss Franc
+                                                    </option>
+                                                    <option {{ $data->currency == 'CNY-Chinese Yuan' ? 'selected' : '' }}
+                                                        value="CNY-Chinese Yuan">
+                                                        CNY-Chinese Yuan
+                                                    </option>
+                                                    <option {{ $data->currency == 'EUR-Euro' ? 'selected' : '' }}
+                                                        value="EUR-Euro">
+                                                        EUR-Euro
+                                                    </option>
+                                                    <option
+                                                        {{ $data->currency == 'HKD-Hong Kong Dollar' ? 'selected' : '' }}
+                                                        value="HKD-Hong Kong Dollar">
+                                                        HKD-Hong Kong Dollar
+                                                    </option>
+                                                    <option
+                                                        {{ $data->currency == 'ILS-Israeli New Sheqel' ? 'selected' : '' }}
+                                                        value="ILS-Israeli New Sheqel">
+                                                        ILS-Israeli New Sheqel
+                                                    </option>
+                                                    <option {{ $data->currency == 'INR-Indian Rupee' ? 'selected' : '' }}
+                                                        value="INR-Indian Rupee">
+                                                        INR-Indian Rupee
+                                                    </option>
+                                                    <option {{ $data->currency == 'JPY-Japanese Yen' ? 'selected' : '' }}
+                                                        value="JPY-Japanese Yen">
+                                                        JPY-Japanese Yen
+                                                    </option>
+                                                    <option
+                                                        {{ $data->currency == 'KRW-South Korean Won' ? 'selected' : '' }}
+                                                        value="KRW-South Korean Won">
+                                                        KRW-South Korean Won
+                                                    </option>
+                                                    <option {{ $data->currency == 'MXN-Mexican Peso' ? 'selected' : '' }}
+                                                        value="MXN-Mexican Peso">
+                                                        MXN-Mexican Peso
+                                                    </option>
+                                                    <option
+                                                        {{ $data->currency == 'RUB-Russian Rouble' ? 'selected' : '' }}
+                                                        value="RUB-Russian Rouble">
+                                                        RUB-Russian Rouble
+                                                    </option>
+                                                    <option {{ $data->currency == 'SAR-Saudi Riyal' ? 'selected' : '' }}
+                                                        value="SAR-Saudi Riyal">
+                                                        SAR-Saudi Riyal
+                                                    </option>
+                                                    <option {{ $data->currency == 'TRY-Turkish Lira' ? 'selected' : '' }}
+                                                        value="TRY-Turkish Lira">
+                                                        TRY-Turkish Lira
+                                                    </option>
+                                                    <option {{ $data->currency == 'USD-US Dollar' ? 'selected' : '' }}
+                                                        value="USD-US Dollar">
+                                                        USD-US Dollar
+                                                    </option>
+                                                    <option {{ $data->currency == 'XAG-Silver' ? 'selected' : '' }}
+                                                        value="XAG-Silver">
+                                                        XAG-Silver
+                                                    </option>
+                                                    <option {{ $data->currency == 'XAU-Gold' ? 'selected' : '' }}
+                                                        value="XAU-Gold">
+                                                        XAU-Gold
+                                                    </option>
+                                                    <option {{ $data->currency == 'XPD-Palladium' ? 'selected' : '' }}
+                                                        value="XPD-Palladium">
+                                                        XPD-Palladium
+                                                    </option>
+                                                    <option {{ $data->currency == 'XPT-Platinum' ? 'selected' : '' }}
+                                                        value="XPT-Platinum">
+                                                        XPT-Platinum
+                                                    </option>
                                                 </select>
+
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6">
@@ -1511,17 +1658,17 @@
                                                     placeholder="-- Select --" data-search="false"
                                                     data-silent-initial-value-set="true" id="root-cause-methodology">
                                                     <option value="0">-- Select --</option>
-                                                    <option value="1"
-                                                        {{ in_array('1', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    <option value="Why-Why Chart"
+                                                        {{ in_array('Why-Why Chart', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                         Why-Why Chart</option>
-                                                    <option value="2"
-                                                        {{ in_array('2', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    <option value="Failure Mode and Efect Analysis"
+                                                        {{ in_array('Failure Mode and Efect Analysis', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                         Failure Mode and Efect Analysis</option>
-                                                    <option value="3"
-                                                        {{ in_array('3', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    <option value="Fishbone or Ishikawa Diagram"
+                                                        {{ in_array('Fishbone or Ishikawa Diagram', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                         Fishbone or Ishikawa Diagram</option>
-                                                    <option value="4"
-                                                        {{ in_array('4', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    <option value="Is/Is Not Analysis"
+                                                        {{ in_array('Is/Is Not Analysis', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                         Is/Is Not Analysis</option>
 
 
@@ -2435,11 +2582,11 @@
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="">
                                                     <option value="">Select Mitigation </option>
-                                                    <option value="yes"
-                                                        {{ $data->mitigation_required == 'yes' ? 'selected' : '' }}>Yes
+                                                    <option value="Yes"
+                                                        {{ $data->mitigation_required == 'Yes' ? 'selected' : '' }}>Yes
                                                     </option>
-                                                    <option value="no"
-                                                        {{ $data->mitigation_required == 'no' ? 'selected' : '' }}>No
+                                                    <option value="No"
+                                                        {{ $data->mitigation_required == 'No' ? 'selected' : '' }}>No
                                                     </option>
 
                                                 </select>
@@ -2511,7 +2658,7 @@
                                                 <label for="impact">Impact</label>
                                                 <select name="impact"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
+                                                    <option value="">-- Select --</option>
                                                     <option value="high"
                                                         {{ $data->impact == 'high' ? 'selected' : '' }}>High</option>
                                                     <option value="medium"
@@ -2528,7 +2675,7 @@
                                                 <label for="criticality">Criticality</label>
                                                 <select name="criticality"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
+                                                    <option value="">-- Select --</option>
                                                     <option value="high"
                                                         {{ $data->criticality == 'high' ? 'selected' : '' }}>High</option>
                                                     <option value="medium"
@@ -2849,9 +2996,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                            <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2896,9 +3043,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                            <button>Close</button>
-                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2943,9 +3090,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                            <button>Close</button>
-                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>

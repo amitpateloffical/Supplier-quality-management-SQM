@@ -269,115 +269,129 @@ $users = DB::table('users')->select('id', 'name')->get();
     </div>
     <div id="change-control-fields">
         <div class="container-fluid">
-        <div class="inner-block state-block">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="main-head">Record Workflow </div>
-                <div class="d-flex" style="gap:20px;">
-                    @php
-                        $userRoles = DB::table('user_roles')
-                            ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => 1])
-                            ->get();
-                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                    @endphp
-                    <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/supplier-audit-trail', $data->id) }}"> Audit Trail </a> </button>
-                    @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Submit Supplier Details
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                            Cancel
-                        </button>
-                    @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                            Child
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Qualification Complete
-                        </button>
-                    @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-supplier-approve">
-                            Audit Passed
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Audit Failed
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                            Child
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-supplier-approve">
-                            Conditionally Approved
-                        </button>
-                    @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToPendingSupplierAudit">
-                            Re-Audit
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Supplier Obsolete
-                        </button>
-                    @elseif($data->stage == 5 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#supplierApprovedToObselete">
-                            Supplier Obsolete
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToPendingSupplierAudit">
-                            Reject Due To Quality Issue
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                            Child
-                        </button>
-                    @endif
-                    <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+            <div class="inner-block state-block">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="main-head">Record Workflow </div>
+                    <div class="d-flex" style="gap:20px;">
+                        @php
+                            $userRoles = DB::table('user_roles')
+                                ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => 1])
+                                ->get();
+                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                        @endphp
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/supplier-audit-trail', $data->id) }}"> Audit Trail </a> </button>
+                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Need for Sourcing of Starting Material
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
+                            </button>
+                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Request Justified
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Request Not Justified
+                            </button>
+                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-supplier-approve">
+                                CQA Review Completed
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Request More Info
+                            </button>
+                        @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToPendingSupplierAudit">
+                                Purchase Sample Request Initiated
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Request More Info
+                            </button>
+                        @elseif($data->stage == 5 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#supplierApprovedToObselete">
+                               Purchase Sample Analysis Satisfactory
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToPendingSupplierAudit">
+                                Purchase Sample Analysis Not Satisfactory
+                            </button>
+                        @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#supplierApprovedToObselete">
+                                F&D Review Completed
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToPendingSupplierAudit">
+                                Request More Info
+                            </button>
+                        @elseif($data->stage == 7 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#supplierApprovedToObselete">
+                                CQA Final Review Completed
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToPendingSupplierAudit">
+                                Request More Info
+                            </button>
+                        @endif
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                    </div>
                 </div>
-
+                <div class="status">
+                    <div class="head">Current Status</div>
+                    @if ($data->stage == 0)
+                        <div class="progress-bars">
+                            <div class="bg-danger">Closed-Cancelled</div>
+                        </div>
+                    @else
+                        <div class="progress-bars d-flex" style="font-size: 15px;">
+                            @if ($data->stage >= 1)
+                                <div class="active">Opened</div>
+                            @else
+                                <div class="">Opened</div>
+                            @endif
+    
+                            @if ($data->stage >= 2)
+                                <div class="active">Pending Initiating Department Update </div>
+                            @else
+                                <div class="">Pending Initiating Department Update</div>
+                            @endif
+    
+                            @if ($data->stage >= 3)
+                                <div class="active">Pending Update FROM CQ</div>
+                            @else
+                                <div class="">Pending Update FROM CQ</div>
+                            @endif
+    
+                            @if ($data->stage >= 4)
+                                <div class="active">Pending Purchase Sample Reques</div>
+                            @else
+                                <div class="">Pending Purchase Sample Reques</div>
+                            @endif
+    
+                            @if ($data->stage >= 5)
+                                <div class="active">Pending CQA Review After Purchase Sample Request</div>
+                            @else
+                                <div class="">Pending CQA Review After Purchase Sample Request</div>
+                            @endif
+    
+                            @if ($data->stage >= 6)
+                                <div class="active">Pending F&D Review</div>
+                            @else
+                                <div class="">Pending F&D Review</div>
+                            @endif
+    
+                            @if ($data->stage >= 7)
+                                <div class="active">Pending CQA Final Review</div>
+                            @else
+                                <div class="">Pending CQA Final Review</div>
+                            @endif
+    
+                            @if ($data->stage >= 8)
+                                <div class="active bg-danger"> Obsolete</div>
+                            @else
+                                <div class="">Obsolete</div>
+                            @endif
+                        </div>
+                    @endif
+                </div>
             </div>
-            <div class="status">
-                <div class="head">Current Status</div>
-                @if ($data->stage == 0)
-                    <div class="progress-bars">
-                        <div class="bg-danger">Closed-Cancelled</div>
-                    </div>
-                @else
-                    <div class="progress-bars d-flex" style="font-size: 15px;">
-                        @if ($data->stage >= 1)
-                            <div class="active">Opened</div>
-                        @else
-                            <div class="">Opened</div>
-                        @endif
-
-                        @if ($data->stage >= 2)
-                            <div class="active">Pending Qualification </div>
-                        @else
-                            <div class="">Pending Qualification</div>
-                        @endif
-
-                        @if ($data->stage >= 3)
-                            <div class="active">Pending Supplier Audit</div>
-                        @else
-                            <div class="">Pending Supplier Audit</div>
-                        @endif
-
-                        @if ($data->stage >= 4)
-                            <div class="active">Pending Rejction</div>
-                        @else
-                            <div class="">Pending Rejction</div>
-                        @endif
-
-                        @if ($data->stage >= 5)
-                            <div class="active">Supplier Approved</div>
-                        @else
-                            <div class="">Supplier Approved</div>
-                        @endif
-
-                        @if ($data->stage >= 6)
-                            <div class="active bg-danger"> Obsolete</div>
-                        @else
-                            <div class="">Obsolete</div>
-                        @endif
-                    </div>
-                @endif
-            </div>
-        </div>
-
-
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Supplier/Manufacturer/Vendor</button>
@@ -496,7 +510,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     $('#rchars').text(textlen);});
                             </script>
 
-<div class="sub-head">
+                                  <div class="sub-head">
                                     Purchase Department
                                 </div>
 
@@ -505,62 +519,63 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group">Initiation Department</label>
                                         <select name="initiation_group" id="initiation_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA"> Corpo  Assurance Biopharma</option>
-                                            <option value="CQC"> Central Quality Control</option>
-                                            <option value="MANU"> Manufacturing</option>
-                                            <option value="PSG"> Plasma Sourcing Group</option>
-                                            <option value="CS"> Central Stores</option>
-                                            <option value="ITG"> Information Technology Group</option>
-                                            <option value="MM"> Molecular Medicine</option>
-                                            <option value="CL"> Central Laboratory</option>
-                                            <option value="TT"> Tech Team</option>
-                                            <option value="QA"> Quality Assurance</option>
-                                            <option value="QM">Quality Management</option>
-                                            <option value="IA">Administration</option>
-                                            <option value="ACC"> Accounting</option>
-                                            <option value="LOG">Logistics</option>
-                                            <option value="SM"> Senior Management</option>
-                                            <option value="BA">Business Administration</option>
+                                            <option value="CQA" @if($data->initiator_group_code == 'CQA') selected @endif> Corpo Assurance Biopharma</option>
+                                            <option value="CQC" @if($data->initiator_group_code == 'CQC') selected @endif> Central Quality Control</option>
+                                            <option value="MANU" @if($data->initiator_group_code == 'MANU') selected @endif> Manufacturing</option>
+                                            <option value="PSG" @if($data->initiator_group_code == 'PSG') selected @endif> Plasma Sourcing Group</option>
+                                            <option value="CS" @if($data->initiator_group_code == 'CS') selected @endif> Central Stores</option>
+                                            <option value="ITG" @if($data->initiator_group_code == 'ITG') selected @endif> Information Technology Group</option>
+                                            <option value="MM" @if($data->initiator_group_code == 'MM') selected @endif> Molecular Medicine</option>
+                                            <option value="CL" @if($data->initiator_group_code == 'CL') selected @endif> Central Laboratory</option>
+                                            <option value="TT" @if($data->initiator_group_code == 'TT') selected @endif> Tech Team</option>
+                                            <option value="QA" @if($data->initiator_group_code == 'QA') selected @endif> Quality Assurance</option>
+                                            <option value="QM" @if($data->initiator_group_code == 'QM') selected @endif> Quality Management</option>
+                                            <option value="IA" @if($data->initiator_group_code == 'IA') selected @endif> Administration</option>
+                                            <option value="ACC" @if($data->initiator_group_code == 'ACC') selected @endif> Accounting</option>
+                                            <option value="LOG" @if($data->initiator_group_code == 'LOG') selected @endif> Logistics</option>
+                                            <option value="SM" @if($data->initiator_group_code == 'SM') selected @endif> Senior Management</option>
+                                            <option value="BA" @if($data->initiator_group_code == 'BA') selected @endif> Business Administration</option>
                                         </select>
-                                        @error('initiation_group')
+                                        @error('initiator_group_code')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
+                                
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Department Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" readonly>
+                                            value="{{ $data->initiator_group_code }}" readonly>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Name of Manufacturer</label>
-                                        <input type="text" name="manufacturerName" id="manufacturerName" placeholder="Name of Manufacturer">
+                                        <input type="text" name="manufacturerName" value="{{ $data->manufacturerName }}" id="manufacturerName" placeholder="Name of Manufacturer">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Name of Starting Material</label>
-                                        <input type="text" name="starting_material" id="starting_material">
+                                        <input type="text" value="{{ $data->starting_material }}" name="starting_material" id="starting_material">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Material Code</label>
-                                        <input type="text" name="material_code" id="material_code">
+                                        <input type="text" name="material_code" id="material_code" value="{{ $data->material_code }}">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Pharmacopoeial Claim</label>
-                                        <input type="text" name="pharmacopoeial_claim" id="harmacopoeial_claim">
+                                        <input type="text" name="pharmacopoeial_claim" id="pharmacopoeial_claim" value="{{ $data->pharmacopoeial_claim }}">
                                     </div>
                                 </div>
 
@@ -569,8 +584,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group Code">CEP Grade Material</label>
                                         <select id="cep_grade" name="cep_grade">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="Yes" @if($data->cep_grade == 'Yes') selected @endif>Yes</option>
+                                            <option value="No" @if($data->cep_grade == 'No') selected @endif>No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -592,34 +607,33 @@ $users = DB::table('users')->select('id', 'name')->get();
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Request For</label>
+                                        <label for="request_for">Request For</label>
                                         <select id="request_for" name="request_for">
                                             <option value="">---- Select ----</option>
-                                            <option value="API">API</option>
-                                            <option value="Excipient">Excipient</option>
-                                            <option value="New Manufacturer">New Manufacturer</option>
-                                            <option value="Existing Manufacturer">Existing Manufacturer</option>
-                                            <option value="Additional Site of Existing Manufacturer">Additional Site of Existing Manufacturer</option>
-                                            <option value="Brand New API">Brand New API</option>
-                                            <option value="Existing API">Existing API</option>
-                                            <option value="Brand New Excipient">Brand New Excipient</option>
-                                            <option value="Existing Excipient">Existing Excipient</option>
-                                            <option value="R&D development">R&D development</option>
-                                            <option value="Site Transfer">Site Transfer</option>
-                                            <option value="Alternate manufacturer">Alternate manufacturer</option>
-                                            <option value="Excipient">Excipient</option>
-                                            <option value="Excipient">Excipient</option>
+                                            <option value="API" @if(isset($data->request_for) && $data->request_for == 'API') selected @endif>API</option>
+                                            <option value="Excipient" @if(isset($data->request_for) && $data->request_for == 'Excipient') selected @endif>Excipient</option>
+                                            <option value="New Manufacturer" @if(isset($data->request_for) && $data->request_for == 'New Manufacturer') selected @endif>New Manufacturer</option>
+                                            <option value="Existing Manufacturer" @if(isset($data->request_for) && $data->request_for == 'Existing Manufacturer') selected @endif>Existing Manufacturer</option>
+                                            <option value="Additional Site of Existing Manufacturer" @if(isset($data->request_for) && $data->request_for == 'Additional Site of Existing Manufacturer') selected @endif>Additional Site of Existing Manufacturer</option>
+                                            <option value="Brand New API" @if(isset($data->request_for) && $data->request_for == 'Brand New API') selected @endif>Brand New API</option>
+                                            <option value="Existing API" @if(isset($data->request_for) && $data->request_for == 'Existing API') selected @endif>Existing API</option>
+                                            <option value="Brand New Excipient" @if(isset($data->request_for) && $data->request_for == 'Brand New Excipient') selected @endif>Brand New Excipient</option>
+                                            <option value="Existing Excipient" @if(isset($data->request_for) && $data->request_for == 'Existing Excipient') selected @endif>Existing Excipient</option>
+                                            <option value="R&D development" @if(isset($data->request_for) && $data->request_for == 'R&D development') selected @endif>R&D development</option>
+                                            <option value="Site Transfer" @if(isset($data->request_for) && $data->request_for == 'Site Transfer') selected @endif>Site Transfer</option>
+                                            <option value="Alternate manufacturer" @if(isset($data->request_for) && $data->request_for == 'Alternate manufacturer') selected @endif>Alternate manufacturer</option>
+                                            <option value="Excipient" @if(isset($data->request_for) && $data->request_for == 'Excipient') selected @endif>Excipient</option>
                                         </select>
                                     </div>
                                 </div>
-
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Attach Three Batch COAs</label>
                                         <select id="attach_batch" name="attach_batch">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                            <option value="No" @if($data->attach_batch == "No") selected @endif>No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -627,7 +641,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Justification for Request</label>
-                                        <textarea type="text" name="request_justification" id="request_justification" class=""></textarea>
+                                        <textarea type="text" name="request_justification" id="request_justification" class="">{{ $data->request_justification }}</textarea>
                                     </div>
                                 </div>
 
@@ -640,8 +654,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group Code">Availability of Manufacturer COAs</label>
                                         <select id="manufacturer_availability" name="manufacturer_availability">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="Yes" @if($data->manufacturer_availability == "Yes") selected @endif>Yes</option>
+                                            <option value="No" @if($data->manufacturer_availability == "Yes") selected @endif>No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -651,8 +665,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group Code">Request Accepted</label>
                                         <select id="request_accepted" name="request_accepted">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="Yes" @if($data->request_accepted == "Yes") selected @endif>Yes</option>
+                                            <option value="No" @if($data->request_accepted == "Yes") selected @endif>No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -660,7 +674,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Remark</label>
-                                        <textarea type="text" name="cqa_remark" id="cqa_remark" class=""></textarea>
+                                        <textarea type="text" name="cqa_remark" id="cqa_remark" class="">{{ $data->cqa_remark }}</textarea>
                                     </div>
                                 </div>
 
@@ -671,7 +685,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                             <option value="">---- Select ----</option>
                                             @if(!empty($users))
                                                 @foreach($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option value="{{ $user->id }}" @if($data->accepted_by == $user->id) selected @endif>{{ $user->name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -692,8 +706,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <div><small class="text-primary">If No then provide Justification proceed to section 16</small></div>
                                         <select id="pre_purchase_sample" name="pre_purchase_sample">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="Yes" @if($data->pre_purchase_sample == "Yes") selected @endif>Yes</option>
+                                            <option value="No" @if($data->pre_purchase_sample == "Yes") selected @endif>No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -701,7 +715,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Justification</label>
-                                        <textarea type="text" name="justification" id="justification" class=""></textarea>
+                                        <textarea type="text" name="justification" id="justification" class="">{{ $data->justification }}</textarea>
                                     </div>
                                 </div>
 
@@ -712,7 +726,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                             <option value="">---- Select ----</option>
                                             @if(!empty($users))
                                                 @foreach($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option value="{{ $user->id }}" @if($data->cqa_coordinator == $user->id) selected @endif>{{ $user->name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -724,8 +738,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group Code">Pre Purchase Sample Analysis Completed?</label>
                                         <select id="pre_purchase_sample_analysis" name="pre_purchase_sample_analysis">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="Yes" @if($data->pre_purchase_sample_analysis == "Yes") selected @endif>Yes</option>
+                                            <option value="No" @if($data->pre_purchase_sample_analysis == "Yes") selected @endif>No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -735,8 +749,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group Code">Availability of COAS After Analysis</label>
                                         <select id="availability_od_coa" name="availability_od_coa">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="Yes" @if($data->availability_od_coa == "Yes") selected @endif>Yes</option>
+                                            <option value="No" @if($data->availability_od_coa == "Yes") selected @endif>No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -744,14 +758,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Analyzed on Location</label>
-                                        <input type="text" name="analyzed_location" id="analyzed_location">
+                                        <input type="text" name="analyzed_location" id="analyzed_location" value="{{ $data->analyzed_location }}">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Review Comment of CQA</label>
-                                        <textarea type="text" name="cqa_comment" id="cqa_comment" class=""></textarea>
+                                        <textarea type="text" name="cqa_comment" id="cqa_comment" class="">{{ $data->cqa_comment }}</textarea>
                                     </div>
                                 </div>
 
@@ -766,28 +780,28 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Material Name</label>
-                                        <input type="text" name="materialName" id="materialName">
+                                        <input type="text" name="materialName" id="materialName" value="{{ $data->materialName }}">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Name of the Manufacturer</label>
-                                        <input type="text" name="manufacturerNameNew" id="manufacturerNameNew">
+                                        <input type="text" name="manufacturerNameNew" id="manufacturerNameNew" value="{{ $data->manufacturerNameNew }}">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Analyzed on Location</label>
-                                        <input type="text" name="analyzedLocation" id="analyzedLocation">
+                                        <input type="text" name="analyzedLocation" id="analyzedLocation" value="{{ $data->analyzedLocation }}">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Review Comment of Corporate CQA</label>
-                                        <textarea type="text" name="cqa_corporate_comment" id="cqa_corporate_comment" class=""></textarea>
+                                        <textarea type="text" name="cqa_corporate_comment" id="cqa_corporate_comment" class="">{{ $data->cqa_corporate_comment }}</textarea>
                                     </div>
                                 </div>
 
@@ -813,7 +827,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                             <option value="">---- Select ----</option>
                                             @if(!empty($users))
                                                 @foreach($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option value="{{ $user->id }}" @if($data->cqa_designee == $user->id) selected @endif>{{ $user->name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -830,8 +844,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <div><small class="text-primary">If no provide Justification.</small></div>
                                         <select id="sample_ordered" name="sample_ordered">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="Yes" @if($data->sample_ordered == "Yes") selected @endif>Yes</option>
+                                            <option value="No" @if($data->sample_ordered == "Yes") selected @endif>No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -839,7 +853,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Justification</label>
-                                        <textarea type="text" name="sample_order_justification" id="sample_order_justification" class=""></textarea>
+                                        <textarea type="text" name="sample_order_justification" id="sample_order_justification" class="">{{ $data->sample_order_justification }}</textarea>
                                     </div>
                                 </div>
 
@@ -850,7 +864,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                             <option value="">---- Select ----</option>
                                             @if(!empty($users))
                                                 @foreach($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option value="{{ $user->id }}" @if($data->acknowledge_by == $user->id) selected @endif>{{ $user->name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -862,8 +876,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group Code">Feedback on Trail Status Completed</label>
                                         <select id="trail_status_feedback" name="trail_status_feedback">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="Yes" @if($data->trail_status_feedback == "Yes") selected @endif>Yes</option>
+                                            <option value="No" @if($data->trail_status_feedback == "Yes") selected @endif>No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -876,9 +890,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group Code">Sample Stand Approved?</label>
                                         <select id="sample_stand_approved" name="sample_stand_approved">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            <option value="N/A">N/A</option>
+                                            <option value="Yes" @if($data->sample_stand_approved == "Yes") selected @endif>Yes</option>
+                                            <option value="No" @if($data->sample_stand_approved == "No") selected @endif>No</option>
+                                            <option value="N/A" @if($data->sample_stand_approved == "N/A") selected @endif>N/A</option>
                                         </select>
                                     </div>
                                 </div>
@@ -908,15 +922,15 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                                 <div class="group-input">
                                                                     <select id="tse_bse" name="tse_bse">
                                                                         <option value="">---- Select ----</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
+                                                                        <option value="Yes" @if($data->tse_bse == "Yes") selected @endif>Yes</option>
+                                                                        <option value="No" @if($data->tse_bse == "No") selected @endif>No</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="tse_bse_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="tse_bse_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -927,14 +941,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select id="residual_solvent" name="residual_solvent">
                                                                     <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                    <option value="Yes" @if($data->residual_solvent == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->residual_solvent == "No") selected @endif>No</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="residual_solvent_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="residual_solvent_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -945,14 +959,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select id="gmo" name="gmo">
                                                                     <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                    <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="gmo_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="gmo_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -963,14 +977,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select id="melamine" name="melamine">
                                                                     <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                    <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="melamine_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="melamine_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -981,14 +995,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select id="gluten" name="gluten">
                                                                     <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                    <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="gluten_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="gluten_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -999,14 +1013,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select id="nitrosamine" name="nitrosamine">
                                                                     <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                    <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="nitrosamine_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="nitrosamine_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1017,14 +1031,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select id="who" name="who">
                                                                     <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                    <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="who_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="who_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1035,14 +1049,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select id="gmp" name="gmp">
                                                                     <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                    <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="gmp_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="gmp_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1053,14 +1067,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select id="iso_certificate" name="iso_certificate">
                                                                     <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                    <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="iso_certificate_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="iso_certificate_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1071,14 +1085,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select id="manufacturing_license" name="manufacturing_license">
                                                                     <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                    <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="manufacturing_license_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="manufacturing_license_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1089,14 +1103,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select id="cep" name="cep">
                                                                     <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                    <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="cep_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="cep_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1107,14 +1121,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select id="msds" name="msds">
                                                                     <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                    <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="msds_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="msds_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1125,14 +1139,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select id="elemental_impurities" name="elemental_impurities">
                                                                     <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                    <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="elemental_impurities_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="elemental_impurities_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1143,14 +1157,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select id="declaration" name="declaration">
                                                                     <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                    <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="declaration_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="declaration_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1168,9 +1182,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group Code">Availability of Supply Chain?</label>
                                         <select id="supply_chain_availability" name="supply_chain_availability">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            <option value="N/A">N/A</option>
+                                            <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                            <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
+                                            <option value="N/A" @if($data->attach_batch == "Yes") selected @endif>N/A</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1180,9 +1194,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group Code">Availability of Quality Agreement?</label>
                                         <select id="quality_agreement_availability" name="quality_agreement_availability">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            <option value="N/A">N/A</option>
+                                            <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                            <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
+                                            <option value="N/A" @if($data->attach_batch == "Yes") selected @endif>N/A</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1192,9 +1206,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group Code">Risk Assessment Done?</label>
                                         <select id="risk_assessment_done" name="risk_assessment_done">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            <option value="N/A">N/A</option>
+                                            <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                            <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
+                                            <option value="N/A" @if($data->attach_batch == "Yes") selected @endif>N/A</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1204,9 +1218,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group Code">Risk Rating</label>
                                         <select id="risk_rating" name="risk_rating">
                                             <option value="">---- Select ----</option>
-                                            <option value="High">High</option>
-                                            <option value="Medium">Medium</option>
-                                            <option value="Low">Low</option>
+                                            <option value="High" @if($data->attach_batch == "Yes") selected @endif>High</option>
+                                            <option value="Medium" @if($data->attach_batch == "Yes") selected @endif>Medium</option>
+                                            <option value="Low" @if($data->attach_batch == "Yes") selected @endif>Low</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1216,8 +1230,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group Code">Manufacturer Audit planned</label>
                                         <select id="manufacturer_audit_planned" name="manufacturer_audit_planned">
                                             <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="Not Required">Not Required</option>
+                                            <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                            <option value="Not Required" @if($data->attach_batch == "Yes") selected @endif>Not Required</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1225,7 +1239,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Maufacturer Audit Conducted On</label>
-                                        <input type="text" id="manufacturer_audit_conducted" name="manufacturer_audit_conducted">
+                                        <input type="text" id="manufacturer_audit_conducted" name="manufacturer_audit_conducted" value="{{  }}">
                                     </div>
                                 </div>
 
@@ -1234,8 +1248,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <label for="Initiator Group Code">Manufacturer Can be? </label>
                                         <select id="manufacturer_can_be" name="manufacturer_can_be">
                                             <option value="">---- Select ----</option>
-                                            <option value="Approved">Approved</option>
-                                            <option value="Not Approved">Not Approved</option>
+                                            <option value="Approved" @if($data->attach_batch == "Yes") selected @endif>Approved</option>
+                                            <option value="Not Approved" @if($data->attach_batch == "Yes") selected @endif>Not Approved</option>
                                         </select>
                                     </div>
                                 </div>
@@ -3019,5 +3033,12 @@ $users = DB::table('users')->select('id', 'name')->get();
             const formattedDate = date.toLocaleDateString('en-US', options).replace(/ /g, '-');
             target.value = formattedDate;
         }
+    </script>
+     <script>
+        // JavaScript
+        document.getElementById('initiation_group').addEventListener('change', function() {
+            var selectedValue = this.value;
+            document.getElementById('initiator_group_code').value = selectedValue;
+        });
     </script>
 @endsection

@@ -10,139 +10,141 @@
 </head>
 
 <style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        margin: 0;
-        padding: 0;
-        min-width: 100vw;
-        min-height: 100vh;
-    }
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+}
 
-    .w-10 {
-        width: 10%;
-    }
+.w-10 {
+    width: 10%;
+}
 
-    .w-20 {
-        width: 20%;
-    }
+.w-20 {
+    width: 20%;
+}
 
-    .w-30 {
-        width: 30%;
-    }
+.w-30 {
+    width: 30%;
+}
 
-    .w-40 {
-        width: 40%;
-    }
+.w-40 {
+    width: 40%;
+}
 
-    .w-50 {
-        width: 50%;
-    }
+.w-50 {
+    width: 50%;
+}
 
-    .w-60 {
-        width: 60%;
-    }
+.w-60 {
+    width: 60%;
+}
 
-    .w-70 {
-        width: 70%;
-    }
+.w-70 {
+    width: 70%;
+}
 
-    .w-80 {
-        width: 80%;
-    }
+.w-80 {
+    width: 80%;
+}
 
-    .w-90 {
-        width: 90%;
-    }
+.w-90 {
+    width: 90%;
+}
 
-    .w-100 {
-        width: 100%;
-    }
+.w-100 {
+    width: 100%;
+}
 
-    .h-100 {
-        height: 100%;
-    }
+.h-100 {
+    height: 100%;
+}
 
-    table,
-    th,
-    td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-    }
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    overflow: hidden;
+    vertical-align: middle;
+}
 
-    table {
-        width: 100%;
-    }
+table {
+    width: 100%;
+}
 
-    th,
-    td {
-        padding: 10px;
-        text-align: left;
-    }
+th,
+td {
+    padding: 10px;
+    text-align: left;
+}
 
-    header .head {
-        font-weight: bold;
-        text-align: center;
-        font-size: 1.2rem;
-    }
+header .head {
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2rem;
+}
 
-    @page {
-        size: A4;
-        margin-top: 160px;
-        margin-bottom: 60px;
-    }
+@page {
+    size: A4;
+    margin-top: 160px;
+    margin-bottom: 60px;
+}
 
-    header {
-        position: fixed;
-        top: -140px;
-        left: 0;
-        width: 100%;
-        display: block;
-    }
+header {
+    position: fixed;
+    top: -140px;
+    left: 0;
+    width: 100%;
+    display: block;
+}
 
-    footer {
-        position: fixed;
-        bottom: -40px;
-        left: 0;
-        width: 100%;
-    }
+footer {
+    position: fixed;
+    bottom: -40px;
+    left: 0;
+    width: 100%;
+}
 
-    .inner-block {
-        padding: 10px;
-    }
+.inner-block {
+    padding: 10px;
+}
 
-    .inner-block .head {
-        font-weight: bold;
-        font-size: 1.2rem;
-        margin-bottom: 5px;
-    }
+.inner-block .head {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
 
-    .inner-block .division {
-        margin-bottom: 10px;
-    }
+.inner-block .division {
+    margin-bottom: 10px;
+}
 
-    .first-table {
-        border-top: 1px solid black;
-        margin-bottom: 20px;
-    }
+.first-table {
+    border-top: 1px solid black;
+    margin-bottom: 20px;
+}
 
-    .first-table table td,
-    .first-table table th,
-    .first-table table {
-        border: 0;
-    }
+.first-table table td,
+.first-table table th,
+.first-table table {
+    border: 0;
+}
 
-    .second-table td:nth-child(1)>div {
-        margin-bottom: 10px;
-    }
+.second-table td:nth-child(1)>div {
+    margin-bottom: 10px;
+}
 
-    .second-table td:nth-child(1)>div:nth-last-child(1) {
-        margin-bottom: 0px;
-    }
+.second-table td:nth-child(1)>div:nth-last-child(1) {
+    margin-bottom: 0px;
+}
 
-    .table_bg {
-        background: #4274da57;
-    }
+.table_bg {
+    background: #4274da57;
+}
 </style>
 
 <body>
@@ -151,7 +153,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                     Audit Trial Report
+                    Supplier Site Audit Trial Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -163,10 +165,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Supplier Site No.</strong>
+                    <strong> SupplierSite No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::getDivisionName($doc->division_id) }}/SS/{{ Helpers::year($doc->created_at)}}/ {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::getDivisionName(session()->get('division')) }}/SS/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -174,75 +176,6 @@
             </tr>
         </table>
     </header>
-
-    <div class="inner-block">
-
-        <div class="head">Audit Trial Histroy Configuration Report</div>
-        <div class="first-table">
-            <table>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>Start Date (GMT) :</strong> {{ Helpers::getDateFormat($doc->created_at) }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Sub Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>End Date (GMT) :</strong>
-                        @if ($doc->stage >= 9)
-                            {{ Helpers::getDateFormat($doc->updated_at) }}
-                        @endif
-                    </td>
-                </tr>
-               
-            </table>
-        </div>
-
-        <div class="second-table">
-            <table>
-                <tr class="table_bg">
-                    <th>Field History</th>
-                    <th>Date Performed</th>
-                    <th>Person Responsible</th>
-                    <th>Change Type</th>
-                </tr>
-                @foreach ($data as $datas)
-                    <tr>
-                        <td>
-                            <div>{{ $datas->activity_type }}</div>
-                            <div>
-                                <div><strong>Changed From :</strong></div>
-                                @if(!empty($datas->previous))
-                                <div>{{ $datas->previous }}</div>
-                                @else
-                                <div>Null</div>
-                                @endif
-                            </div>
-                            <div>
-                                <div><strong>Changed To :</strong></div>
-                                <div>{{ $datas->current }}</div>
-                            </div>
-                        </td>
-                        <td>{{ Helpers::getDateFormat($datas->created_at) }}</td>
-                        <td>{{ $datas->user_name }}</td>
-                        <td>
-                            @if ($datas->previous != "NULL")
-                                Modify
-                            @else
-                                New
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            </table>
-        </div>
-
-    </div>
 
     <footer>
         <table>
@@ -257,6 +190,115 @@
             </tr>
         </table>
     </footer>
+
+    <div class="inner-block">
+        <div class="second-table">
+            <table>
+                <thead>
+                    <tr class="table_bg">
+                        <th>S.No</th>
+                        <th>Flow Changed From</th>
+                        <th>Flow Changed To</th>
+                        <th>Data Field</th>
+                        <th>Action Type</th>
+                        <th>Performer</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach ($data as $dataDemo)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>
+                            <div><strong>Changed From :</strong> {{ $dataDemo->change_from }}</div>
+                        </td>
+                        <td>
+                            <div><strong>Changed To :</strong> {{ $dataDemo->change_to }}</div>
+                        </td>
+                        <td>
+                            <div>
+                                <strong>Data Field Name :</strong>
+                                {{ $dataDemo->activity_type ?: 'Not Applicable' }}
+                            </div>
+                            <div style="margin-top: 5px;" class="imageContainer">
+                                <!-- Assuming $dataDemo->image_url contains the URL of your image -->
+                                @if ($dataDemo->activity_type == 'Activity Log')
+                                <strong>Change From :</strong>
+                                @if ($dataDemo->change_from)
+                                {{-- Check if the change_from is a date --}}
+                                @if (strtotime($dataDemo->change_from))
+                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d-M-Y') }}
+                                @else
+                                {{ str_replace(',', ', ', $dataDemo->change_from) }}
+                                @endif
+                                @elseif($dataDemo->change_from && trim($dataDemo->change_from) == '')
+                                NULL
+                                @else
+                                Not Applicable
+                                @endif
+                                @else
+                                <strong>Change From :</strong>
+                                @if (!empty(strip_tags($dataDemo->previous)))
+                                {{-- Check if the previous is a date --}}
+                                @if (strtotime($dataDemo->previous))
+                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d-M-Y') }}
+                                @else
+                                {!! $dataDemo->previous !!}
+                                @endif
+                                @elseif($dataDemo->previous == null)
+                                Null
+                                @else
+                                Not Applicable
+                                @endif
+                                @endif
+                            </div>
+                            <br>
+
+                            <div class="imageContainer">
+                                @if ($dataDemo->activity_type == 'Activity Log')
+                                <strong>Change To :</strong>
+                                @if (strtotime($dataDemo->change_to))
+                                {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
+                                @else
+                                {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
+                                @endif
+                                @else
+                                <strong>Change To :</strong>
+                                @if (strtotime($dataDemo->current))
+                                {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
+                                @else
+                                {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
+                                @endif
+                                @endif
+                            </div>
+                            <div style="margin-top: 5px;">
+                                <strong>Change Type :</strong>
+                                {{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
+                            </div>
+                        </td>
+                        <td>
+                            <div><strong>Action Name :</strong>
+                                {{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}</div>
+                        </td>
+                        <td>
+                            <div><strong>Performed By :</strong>
+                                {{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}</div>
+                            <div style="margin-top: 5px;"> <strong>Performed On
+                                    :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
+                            </div>
+                            <div style="margin-top: 5px;"><strong>Comments :</strong>
+                                {{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            </table>
+        </div>
+
+    </div>
+
 
 </body>
 

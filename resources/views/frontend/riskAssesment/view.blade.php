@@ -580,7 +580,7 @@
                                                     <input id="docname" type="text" name="short_description"
                                                         class="mic-input" maxlength="255" required
                                                         value="{{ $data->short_description }}"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <button class="mic-btn" type="button">
                                                         <i class="fas fa-microphone"></i>
                                                     </button>
@@ -617,7 +617,7 @@
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="departments"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    <option value="">Select Department</option>
+
                                                     <option value="QA"
                                                         {{ in_array('QA', explode(',', $data->departments)) ? 'selected' : '' }}>
                                                         QA</option>
@@ -823,7 +823,7 @@
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="departments"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    <option value="">Select Department</option>
+
                                                     <option value="QA"
                                                         {{ in_array('QA', explode(',', $data->departments2)) ? 'selected' : '' }}>
                                                         QA</option>
@@ -1657,7 +1657,7 @@
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                     placeholder="-- Select --" data-search="false"
                                                     data-silent-initial-value-set="true" id="root-cause-methodology">
-                                                    <option value="0">-- Select --</option>
+
                                                     <option value="Why-Why Chart"
                                                         {{ in_array('Why-Why Chart', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                         Why-Why Chart</option>
@@ -2754,7 +2754,7 @@
                                                 <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                     multiple id="reference_record" name="refrence_record[]"
                                                     id="">
-                                                    <option value="">--Select---</option>
+
                                                     @foreach ($old_record as $new)
                                                         <option value="{{ $new->id }}"
                                                             {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
@@ -2870,6 +2870,27 @@
                                                 <div class="static">{{ $data->action_plan_approved_comment }}</div>
                                             </div>
                                         </div>
+
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Reject Action Plan By">Reject Action Plan By</label>
+                                                <div class="static">{{ $data->reject_action_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Reject Action Plan On">Reject Action Plan On</label>
+                                                <div class="static">{{ $data->reject_action_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Reject Action Plan Comment">Reject Action Plan
+                                                    Comment</label>
+                                                <div class="static">{{ $data->reject_action_comment }}</div>
+                                            </div>
+                                        </div>
+
                                         <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="All Actions Completed By">All Actions Completed By</label>
@@ -2996,9 +3017,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                        <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                    <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3043,9 +3064,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                    <button>Close</button>
+                                                                                                                                                                                                                                                </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3090,9 +3111,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                    <button>Close</button>
+                                                                                                                                                                                                                                                </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>

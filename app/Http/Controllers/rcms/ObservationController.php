@@ -197,9 +197,26 @@ class ObservationController extends Controller
     if (! empty($data->division_code)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Division Code';
+        $history->activity_type = 'Site/Location Code';
         $history->previous = "Null";
         $history->current = $data->division_code;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->change_from = "Initiation";
+        $history->change_to = "Opened";
+        $history->action_name = "Create";
+        $history->save();
+    }
+
+    if (! empty($data->initiator_id)) {
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Initiator';
+        $history->previous = "Null";
+        $history->current = Helpers::getInitiatorName($data->initiator_id);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -214,9 +231,26 @@ class ObservationController extends Controller
     if (! empty($data->intiation_date)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Intiation Date';
+        $history->activity_type = 'Date of Initiation';
         $history->previous ="Null";
-        $history->current = $data->intiation_date;
+        $history->current = Helpers::getdateFormat($data->intiation_date);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->change_from = "Initiation";
+        $history->change_to = "Opened";
+        $history->action_name = "Create";
+        $history->save();
+    }
+    
+    if (! empty($data->assign_to)) {
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Assigned To';
+        $history->previous = "Null";
+        $history->current = Helpers::getInitiatorName($data->assign_to);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -234,23 +268,6 @@ class ObservationController extends Controller
         $history->activity_type = 'Due Date';
         $history->previous ="Null";
         $history->current = $data->due_date;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->change_from = "Initiation";
-        $history->change_to = "Opened";
-        $history->action_name = "Create";
-        $history->save();
-    }
-
-    if (! empty($data->assign_to)) {
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Assigned To';
-        $history->previous = "Null";
-        $history->current = Helpers::getInitiatorName($data->assign_to);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -598,7 +615,7 @@ class ObservationController extends Controller
         $history->Observation_id = $data->id;
         $history->activity_type = 'Actual Start Date ';
         $history->previous = "Null";
-        $history->current = $data->actual_start_date;
+        $history->current = Helpers::getdateFormat($data->actual_start_date);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -615,7 +632,7 @@ class ObservationController extends Controller
         $history->Observation_id = $data->id;
         $history->activity_type = 'Actual End Date ';
         $history->previous = "Null";
-        $history->current = $data->actual_end_date;
+        $history->current = Helpers::getdateFormat($data->actual_end_date);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1403,8 +1420,8 @@ class ObservationController extends Controller
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Actual Start Date ';
-            $history->previous = $lastDocument->actual_start_date;
-            $history->current = $data->actual_start_date;
+            $history->previous = Helpers::getdateFormat($lastDocument->actual_start_date);
+            $history->current = Helpers::getdateFormat($data->actual_start_date);
             $history->comment = $request->actual_start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1423,8 +1440,8 @@ class ObservationController extends Controller
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Actual End Date ';
-            $history->previous = $lastDocument->actual_end_date;
-            $history->current = $data->actual_end_date;
+            $history->previous = Helpers::getdateFormat($lastDocument->actual_end_date);
+            $history->current = Helpers::getdateFormat($data->actual_end_date);
             $history->comment = $request->actual_end_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

@@ -396,6 +396,57 @@ class RiskManagementController extends Controller
 
         $data6->save();
         // ------------------------------------------------
+        if (!empty($data->division_code)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Site/Location Code';
+            $history->previous = "Null";
+            $history->current =$data->division_code;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_from = "Initiation";
+            $history->change_to = "Opened";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        if (!empty($data->initiator_id)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = Helpers::getInitiatorName($data->initiator_id);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_from = "Initiation";
+            $history->change_to = "Opened";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        if (!empty($data->intiation_date)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Date of Initiation';
+            $history->previous = "Null";
+            $history->current = Helpers::getdateFormat($data->intiation_date);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_from = "Initiation";
+            $history->change_to = "Opened";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
         if (!empty($data->assign_to)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;

@@ -463,7 +463,7 @@
                                             <select name="departments[]" placeholder="Select Departments"
                                                 data-search="false" data-silent-initial-value-set="true" id="departments"
                                                 multiple>
-                                                <option value="">Select Department</option>
+
                                                 <option value="QA">QA</option>
                                                 <option value="QC">QC</option>
                                                 <option value="R&D">R&D</option>
@@ -621,7 +621,7 @@
                                             <select multiple name="departments2[]" placeholder="Select Departments"
                                                 data-search="false" data-silent-initial-value-set="true"
                                                 id="departments">
-                                                <option value="">Select Department</option>
+
                                                 <option value="QA">QA</option>
                                                 <option value="QC">QC</option>
                                                 <option value="R&D">R&D</option>
@@ -1101,7 +1101,7 @@
                                             <select name="root_cause_methodology[]" multiple placeholder="-- Select --"
                                                 data-search="false" data-silent-initial-value-set="true"
                                                 id="root-cause-methodology">
-                                                <option value="">-- Select --</option>
+
                                                 <option value="Why-Why Chart">Why-Why Chart</option>
                                                 <option value="Failure Mode and Efect Analysis">Failure Mode and Efect
                                                     Analysis</option>
@@ -1859,7 +1859,7 @@
                                         <div class="group-input">
                                             <label for="Reference Recores">Reference Record</label>
                                             <select multiple id="reference_record" name="refrence_record[]">
-                                                <option value="">--Select---</option>
+
                                                 @foreach ($old_record as $new)
                                                     <option value="{{ $new->id }}">
                                                         {{ Helpers::getDivisionName($new->division_id) }}/RA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
@@ -2020,6 +2020,24 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Action Plan Approved Comment">Action Plan Approved Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Reject Action Plan By">Reject Action Plan By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Reject Action Plan On">Reject Action Plan On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Reject Action Plan Comment">Reject Action Plan Comment</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>

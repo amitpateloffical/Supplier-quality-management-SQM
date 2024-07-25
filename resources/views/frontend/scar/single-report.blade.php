@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    SCAR Report
+                    SCAR Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -196,7 +196,7 @@
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
 
-                        <th class="w-20">Date Initiation</th>
+                        <th class="w-20"> Initiation Date</th>
                         <td class="w-30">{{ Helpers::getDateFormat($data->initiation_date) }}</td>
                     </tr>
                     <tr>
@@ -209,10 +209,12 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Assign To</th>
+                        <th class="w-20">Assigned To</th>
                         <td class="w-30">
                             @if ($data->assign_to)
-                                {{ Helpers::getInitiatorName($data->assign_to) }}
+                            {{ $data->assign_to }}
+
+                                {{-- {{ Helpers::getInitiatorName($data->assign_to) }} --}}
                             @else
                                 Not Applicable
                             @endif
@@ -230,16 +232,6 @@
                         </td>
                     </tr>
 
-                    <tr>
-                        <th class="w-20">Description</th>
-                        <td class="w-80" colspan="3">
-                            @if ($data->description)
-                                {{ $data->description }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
 
                     <tr>
                         <th class="w-20">SCAR Name</th>
@@ -262,7 +254,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">FollowUp Date</th>
+                        <th class="w-20">Follow Up Date</th>
                         <td class="w-30">
                             @if ($data->followup_date)
                                 {{ Helpers::getdateFormat($data->followup_date) }}
@@ -301,6 +293,22 @@
                         </td>
                     </tr>
 
+                    <tr>
+                        <th class="w-20">Description</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->description)
+                                {{ $data->description }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+                <table>
+
+                    <div class="block-head">
+                        Supplier Response
+                    </div>
                     <tr>
                         <th class="w-20">Recommended Action</th>
                         <td class="w-80" colspan="3">
@@ -343,7 +351,7 @@
                         </td>
                     </tr>
 
-                    
+
                     <tr>
                         <th class="w-20">Root Cause</th>
                         <td class="w-80" colspan="3">

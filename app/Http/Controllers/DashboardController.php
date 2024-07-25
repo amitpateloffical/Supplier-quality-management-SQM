@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Helpers;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use App\Models\CC;
@@ -20,6 +21,7 @@ use App\Models\Extension;
 use App\Models\EffectivenessCheck;
 use App\Models\InternalAudit;
 use App\Models\Capa;
+use App\Models\Supplier;
 use App\Models\RiskManagement;
 use App\Models\ManagementReview;
 use App\Models\LabIncident;
@@ -188,6 +190,7 @@ class DashboardController extends Controller
     {
         return view('frontend.analytics');
     }
+
     public function analyticsData(Request $request)
     {
         if ($request->value == "due") {
@@ -228,4 +231,107 @@ class DashboardController extends Controller
         $dataCounts = array_values($data);
         return response()->json(array_values($data));
     }
+
+    public function siteWiseDocument()
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            $data = [];
+
+            for ($i = 5; $i >= 0; $i--)
+            {
+                $monthly_data = [];
+                $month = Carbon::now()->subMonths($i);
+
+                $corporateDoc = DB::table('deviations')
+                                ->join('q_m_s_divisions', 'deviations.division_id', '=', 'q_m_s_divisions.id')
+                                ->select('deviations.*', 'q_m_s_divisions.name as division_name')
+                                ->whereDate('deviations.created_at', '>=', $month->startOfMonth())
+                                ->whereDate('deviations.created_at', '<=', $month->endOfMonth())
+                                ->where('q_m_s_divisions.name', 'Corporate')
+                                ->get()->count();
+
+                $plantDoc = DB::table('deviations')
+                            ->join('q_m_s_divisions', 'deviations.division_id', '=', 'q_m_s_divisions.id')
+                            ->select('deviations.*', 'q_m_s_divisions.name as division_name')
+                            ->whereDate('deviations.created_at', '>=', $month->startOfMonth())
+                            ->whereDate('deviations.created_at', '<=', $month->endOfMonth())
+                            ->where('q_m_s_divisions.name', 'Plant')
+                            ->get()->count();
+
+                $monthly_data['month'] = $month->format('M');
+                $monthly_data['corporate'] = $corporateDoc;
+                $monthly_data['plant'] = $plantDoc;
+
+                array_push($data, $monthly_data);
+
+            }
+
+            $res['body'] = $data;
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+        return response()->json($res);
+    }
+
+    public function brandPieVisitorData()
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            $data = [];
+
+            for ($i = 5; $i >= 0; $i--)
+            {
+                $supplierdata = [];
+                $month = Carbon::now()->subMonths($i);
+
+
+                // foreach ($brandName as $brandName)
+                // {
+                    $supplierproduct = Supplier::where('supplier_products', '!=', null)
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+
+                    $suppliercontact = Supplier::where('supplier_contact_person', '!=', null)
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+                    $supplierperson = Supplier::where('supplier_person', '!=', null)
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+
+                                    $supplierdata['month'] = $month->format('M');
+                                    $supplierdata['supplierproduct'] = $supplierproduct;
+                                    $supplierdata['suppliercontact'] = $suppliercontact;
+                                    $supplierdata['supplierperson'] = $supplierperson;
+
+                                    array_push($data, $supplierdata);
+                // }
+
+            }
+
+
+            $res['body'] = $data;
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+        return response()->json($res);
+
+       }
+
+
+
+
+
 }

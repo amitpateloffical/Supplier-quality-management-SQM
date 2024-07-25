@@ -47,14 +47,14 @@ $users = DB::table('users')->get();
         @endif
             <div id="step-form">
                 <!--Investigation-->
-                
+
                 <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="RLS Record Number"><b>Record Number</b></label>
+                                    <label for="RLS Record Number"><b>Record Number </b></label>
                                     <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/{{ $record_number }}">
 
                                 </div>
@@ -185,7 +185,7 @@ $users = DB::table('users')->get();
                                 </div>
                             </div>
 
-                            
+
                                 <script>
                                     // Format the due date to DD-MM-YYYY
                                     // Your input date
@@ -284,13 +284,27 @@ $users = DB::table('users')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department">Department(s)</label>
-                                    <select multiple name="department" placeholder="Select Department(s)" data-search="false" data-silent-initial-value-set="true" id="department">
+                                    <select multiple name="department" placeholder="Select Department(s)"
+                                     data-search="false" data-silent-initial-value-set="true" id="department">
                                         <option value="1">Work Instruction</option>
                                         <option value="2">Quality Assurance</option>
                                         <option value="3">Specifications</option>
                                         <option value="4">Production</option>
                                     </select>
                                 </div>
+                            </div>
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="department">Department(s)</label>
+                                    <select name="department" placeholder="Select Department(s)"
+                                     name="department"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} placeholder="Select Department(s)"
+                                        data-search="false" data-silent-initial-value-set="true" id="department">
+                                        <option @if ($data->department== 'Work Instruction') selected @endif  value="Work Instruction">Work Instruction</option>
+                                        <option @if ($data->department== 'Quality Assurance') selected @endif value="Quality Assurance">Quality Assurance</option>
+                                        <option @if ($data->department== 'Specifications') selected @endif value="Specifications">Specifications</option>
+                                        <option @if ($data->department== 'Production') selected @endif value="Production">Production</option>
+                                    </select>
+                                </div> --}}
                             </div>
                             <div class="col-12">
                                 <div class="sub-head">Investigation details</div>
@@ -380,7 +394,7 @@ $users = DB::table('users')->get();
                                                     <th>Probability</th>
                                                     <th>Remarks</th>
                                                      <th>Action</th>
-                                                    
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -390,12 +404,17 @@ $users = DB::table('users')->get();
                                                 <td><input type="text" name="Root_Cause_Sub_Category[]"></td>
                                                 <td><input type="text" name="Probability[]"></td>
                                                 <td><input type="text" name="Remarks[]"></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
+                            <script>
+                                $(document).on('click', '.removeRowBtn', function() {
+                                    $(this).closest('tr').remove();
+                                })
+                            </script>
                             <div class="col-12 sub-head"></div>
                             <div class="col-12 mb-4">
                                 <div class="group-input">

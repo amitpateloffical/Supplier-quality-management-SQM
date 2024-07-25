@@ -35,25 +35,26 @@
                                     </div>
                                 </div>
                             </div>
+                            <button onclick="downloadPieChartData()">click</button>
                             <div class="chart-grid">
                                 <div class="inner-block chart-block">
                                     <div class="chart-container">
                                         <div class="head">
-                                            Deviations and Complaints by Supplier
+                                            Deviation Bysite
                                         </div>
-                                        <div id="chart-18"></div>
+                                        <div id="documentSiteCharts"></div>
                                     </div>
                                 </div>
-                                
+
                                     <div class="inner-block table-block cal-table">
                                         <div class="head">
                                             Average Scorecard Ranking
                                         </div>
                                     <div id="chart-24"></div>
                                     </div>
-                                   
-                            </div> 
-                           
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -66,15 +67,15 @@
                             <div id="chart-35"></div>
                         </div>
                         </div>
-   
+
                         <div class="col-lg-6">
                         <div class="inner-block table-block cal-table">
                             <div class="head">Last Audit Score by Supplier</div>
                             {{-- <div id="chart-23"></div> --}}
-                        <div id="chart-25"></div>  
+                        <div id="chart-25"></div>
                         </div>
                     </div>
-                 </div> 
+                 </div>
                  <div class="row">
                     <div class="col-lg-6">
                     <div class="inner-block table-block cal-table">
@@ -88,7 +89,7 @@
                     <div class="inner-block table-block cal-table">
                         <div class="head">Defects By Products</div>
                         {{-- <div id="chart-23"></div> --}}
-                    <div id="chart-37"></div>  
+                    <div id="chart-37"></div>
                     </div>
                 </div>
              </div>
@@ -105,11 +106,12 @@
                 <div class="inner-block table-block cal-table">
                     <div class="head">Total Defect Quantity</div>
                     {{-- <div id="chart-23"></div> --}}
-                <div id="chart-39"></div>  
+                <div id="chart-39"></div>
                 </div>
             </div>
-         </div>   
+         </div>
             </div>
+
  <script>
     var options = {
           series: [{
@@ -143,7 +145,7 @@
           title: {
             text: 'Total Defect Qty.',
           },
-        
+
         }, {
           opposite: true,
           title: {
@@ -161,7 +163,7 @@
             name: "Session Duration",
             data: [45, 52, 38, 24, 33, 26, 21, 90, 6, 8, 15, 10]
           },
-          
+
           {
             name: 'Total Visits',
             data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
@@ -234,8 +236,8 @@
 
         var chart = new ApexCharts(document.querySelector("#chart-39"), options);
         chart.render();
-      
-      
+
+
  </script>
         </div>
     </div>
@@ -499,7 +501,7 @@
                                         <div class="group-input input-date">
                                             <label for="due-date">Due Date</label>
                                             <!-- <input type="date" name="due_date"> -->
-                                            <div class="calenderauditee">                                     
+                                            <div class="calenderauditee">
                                                 <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
                                                 <input type="date" name="due_date" value=""
                                                 class="hide-input"
@@ -901,7 +903,7 @@
         setInterval(updateTime, 1000);
     </script>
   <script>
-                        
+
     var options = {
       series: [{
       name: 'Servings',
@@ -947,7 +949,7 @@
       labels: {
         rotate: -45
       },
-      
+
       categories: [ 'Ships Today', 'Supply or Die', 'Why Supply Stuff', 'Shadow Supplier', 'Supply Supplier', 'Supplier a Lot',
         'Total Supply', 'Last Min Supply', 'Supply For Me'
       ],
@@ -978,7 +980,7 @@
 
 
     // =========================
-    
+
  </script>
  <script>
     var options = {
@@ -1048,7 +1050,7 @@
                  }
                ]
              },
-             
+
            ]
          }
        ],
@@ -1079,8 +1081,8 @@
        chart.render();
 
        // ===================================
-       
-     
+
+
 </script>
 <script>
     var options = {
@@ -1394,7 +1396,7 @@ var options = {
         chart.render();
     //   =========================================================new chard added 5
 
-    
+
     var options = {
           series: [
           {
@@ -1538,7 +1540,7 @@ var options = {
             const goals =
               opt.w.config.series[opt.seriesIndex].data[opt.dataPointIndex]
                 .goals
-        
+
             if (goals && goals.length) {
               return `${val} / ${goals[0].value}`
             }
@@ -1558,7 +1560,7 @@ var options = {
         var chart = new ApexCharts(document.querySelector("#chart-25"), options);
         chart.render();
 
-        
+
     //   ===============================================chart new added 6 ==
     var options = {
           series: [44, 55, 41, 17, 15],
@@ -3076,8 +3078,11 @@ var options = {
 
 
 
+
+
+
         var options18 = {
-            series: [44, 55, 67],
+            series: [43, 35, 60],
             chart: {
                 height: 350,
                 type: 'radialBar',
@@ -3104,8 +3109,149 @@ var options = {
             labels: ['SOP', 'WI', 'Production'],
         };
 
-        var chart18 = new ApexCharts(document.querySelector("#chart-18"), options18);
+        var chart18 = new ApexCharts(document.querySelector("#documentSiteCharts"), downloadPieChartData());
+
+        console.log('test', chart18);
         chart18.render();
+        function downloadPieChartData() {
+            const url = "{{ route('api.documents-by-brand-visitor-pie') }}";
+            axios.get(url)
+                .then(response => {
+                    if (response.data.status === 'ok') {
+                        let bodyData = response.data.body;
+                        console.log(bodyData);
+
+                        let totalSupplierProduct = 0;
+                        let totalSupplierContact = 0;
+                        let totalSupplierPerson = 0;
+
+                        bodyData.forEach(data => {
+                            totalSupplierProduct += parseInt(data.supplierproduct, 10);
+                            totalSupplierContact += parseInt(data.suppliercontact, 10);
+                            totalSupplierPerson += parseInt(data.supplierperson, 10);
+                        });
+
+                        let data = [
+                            ["Category", "Total"],
+                            ["Supplier Product", totalSupplierProduct],
+                            ["Supplier Contact", totalSupplierContact],
+                            ["Supplier Person", totalSupplierPerson]
+                        ];
+
+                        console.log('check', data);
+                        // Create a new workbook
+                        let workbook = XLSX.utils.book_new();
+
+                        // Convert data to a worksheet
+                        let worksheet = XLSX.utils.aoa_to_sheet(data);
+
+                        // Append worksheet to workbook
+                        XLSX.utils.book_append_sheet(workbook, worksheet, "PieChartData");
+
+                        // Write workbook and trigger download
+                        XLSX.writeFile(workbook, 'PieChartData.xlsx');
+
+                        // Extract categories and totals
+                        let categories = data.slice(1).map(item => item[0]);
+                        let totals = data.slice(1).map(item => item[1]);
+
+                        // Update the chart
+                        updateChart(categories, totals);
+                    }
+                })
+                .catch(err => {
+                    console.log('Error in downloading pie chart data', err.message);
+                });
+            }
+
+            function updateChart(categories, totals) {
+                var options18 = {
+                    series: totals,
+                    chart: {
+                        height: 350,
+                        type: 'radialBar',
+                    },
+                    plotOptions: {
+                        radialBar: {
+                            dataLabels: {
+                                name: {
+                                    fontSize: '1.1rem',
+                                },
+                                value: {
+                                    fontSize: '0.85rem',
+                                },
+                                total: {
+                                    show: true,
+                                    label: 'Total',
+                                    formatter: function(w) {
+                                        return totals.reduce((a, b) => a + b, 0); // Sum of all totals
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    labels: categories,
+                };
+
+                var chart18 = new ApexCharts(document.querySelector("#documentSiteCharts"), options18);
+                chart18.render();
+            }
+
+function renderUserChart() {
+    const url = "{{ route('api.documents-by-brand-visitor-pie') }}";
+
+    axios.get(url)
+        .then(response => {
+            if (response.data.status === 'ok') {
+                let bodyData = response.data.body;
+
+                let totalSupplierProduct = 0;
+                let totalSupplierContact = 0;
+                let totalSupplierPerson = 0;
+
+                bodyData.forEach(data => {
+                    totalSupplierProduct += parseInt(data.supplierproduct, 10);
+                    totalSupplierContact += parseInt(data.suppliercontact, 10);
+                    totalSupplierPerson += parseInt(data.supplierperson, 10);
+                });
+
+                let seriesData = [totalSupplierProduct, totalSupplierContact, totalSupplierPerson];
+                let labelsData = ['Supplier Product', 'Supplier Contact', 'Supplier Person'];
+
+                var options = {
+                    series: seriesData,
+                    chart: {
+                        width: 380,
+                        type: 'pie',
+                    },
+                    labels: labelsData,
+                    colors: ['#91B7FF', '#002366', '#FFA500'], // Added an additional color for Supplier Person
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 200
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }]
+                };
+
+                var pieDataChart = new ApexCharts(document.querySelector("#pieDataChart"), options);
+                pieDataChart.render();
+            }
+        })
+        .catch(err => {
+            console.log('Error in rendering pie chart data', err.message);
+        });
+}
+
+// Call the function to render the chart
+renderUserChart();
+
+
 
         var options19 = {
             series: [{
@@ -3181,7 +3327,82 @@ var options = {
             top: 0 !important;
         }
     </style>
-    <script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
 
-    </script>
+    async function renderUserChart(data) {
+      var options = {
+        series: [
+          {
+            name: "Supplier Products",
+            data: data.map(item => item.supplierproduct)
+          },
+          {
+            name: "Supplier Contacts",
+            data: data.map(item => item.suppliercontact)
+          },
+          {
+            name: "Supplier Persons",
+            data: data.map(item => item.supplierperson)
+          }
+        ],
+        chart: {
+          height: 350,
+          type: 'radialBar',
+        },
+        plotOptions: {
+          radialBar: {
+            dataLabels: {
+              name: {
+                fontSize: '1.1rem',
+              },
+              value: {
+                fontSize: '0.85rem',
+              },
+              total: {
+                show: true,
+                label: 'Total',
+                formatter: function(w) {
+                  return 249; // Example total value, modify as needed
+                }
+              }
+            }
+          }
+        },
+        labels: data.map(item => item.month),
+      };
+
+      var chart = new ApexCharts(document.querySelector("#documentSiteCharts"), options);
+      await chart.render();
+    }
+
+    async function prepareBrandVisitorChart() {
+      $('#documentSiteCharts > .spinner-border').show(); // Show spinner while loading
+
+      try {
+        const url = "{{ route('api.documents-by-brand-visitor-pie') }}"; // Replace with your actual route
+        const res = await axios.get(url); // Fetch data using Axios
+
+        if (res.data.status == 'ok') {
+          let data = res.data.body;
+
+          // Render chart with fetched data
+          await renderUserChart(data);
+        } else {
+          throw new Error('Failed to fetch data');
+        }
+      } catch (err) {
+        console.error('Error in fetching or rendering chart:', err); // Log any errors
+      } finally {
+        $('#documentSiteCharts > .spinner-border').hide(); // Hide spinner after loading
+      }
+    }
+
+    // Ensure DOM is fully loaded before executing JavaScript
+    document.addEventListener('DOMContentLoaded', () => {
+      prepareBrandVisitorChart(); // Call the function to prepare and render the chart
+      console.log('hello');
+    });
+//   </script>
 @endsection

@@ -877,7 +877,7 @@ class DeviationController extends Controller
         // }
         // $data5->save();
 
-        $history = new DeviationAuditTrail();
+            $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
@@ -896,7 +896,7 @@ class DeviationController extends Controller
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = $deviation->due_date;
+            $history->current = Helpers::getDateFormat($deviation->due_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2951,28 +2951,29 @@ class DeviationController extends Controller
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
+//===========================uncomment karna hai =============
+                // $list = Helpers::getHodUserList();
+                // foreach ($list as $u) {
+                //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //         $email = Helpers::getInitiatorEmail($u->user_id);
+                //         if ($email !== null) {
 
-                $list = Helpers::getHodUserList();
-                foreach ($list as $u) {
-                    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if ($email !== null) {
-
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                //log error
-                            }
-                        }
-                    }
-                }
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $deviation],
+                //                     function ($message) use ($email) {
+                //                         $message->to($email)
+                //                             ->subject("Activity Performed By " . Auth::user()->name);
+                //                     }
+                //                 );
+                //             } catch (\Exception $e) {
+                //                 //log error
+                //             }
+                //         }
+                //     }
+                // }
+//=============================uncomment karna hai ==============                
 
                 // $list = Helpers::getHeadoperationsUserList();
                 // foreach ($list as $u) {

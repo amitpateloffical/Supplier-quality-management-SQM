@@ -153,7 +153,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    data Program data Trial Report
+                    CAPA Audit Trial Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -165,15 +165,15 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> data Program No.</strong>
+                    <strong> CAPA</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($doc->division_id) }}/ AI
+                    {{ Helpers::getDivisionName($doc->division_id) }}/ CAPA
                     /{{ Helpers::year($doc->created_at) }}/
                     {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong> {{ Helpers::divisionNameForQMS($doc->division_id) }}/CAPA/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
@@ -193,7 +193,7 @@
         </table>
     </footer>
 
-    <div class="inner-block">
+
 
 
         <div class="second-table">
@@ -311,7 +311,7 @@
             </table>
         </div>
 
-    </div>
+
 
 
 </body>

@@ -323,7 +323,7 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
+                            <div> <strong>Record ID.</strong> {{ Helpers::getDivisionName(session()->get('division')) }}/SCAR/{{ date('Y') }}/{{ str_pad( $document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ $document->originator ? $document->originator : '' }}
                             </div>
@@ -375,10 +375,10 @@
                                 <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change From
-                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
+                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }}
                                     @else
                                         <strong>Change From
-                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
                                     @endif
                                 </div>
                                 <br>
@@ -418,7 +418,7 @@
                     @endforeach
                 </table>
             </div>
-        </div> 
+        </div>
         <div style="float: inline-end; margin: 10px;">
             <style>
                 .pagination>.active>span {

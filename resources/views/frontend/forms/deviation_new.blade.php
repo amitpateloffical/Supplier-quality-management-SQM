@@ -120,8 +120,27 @@
 
             } */
     </style>
+    <style>
+        #start-record-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+        #start-record-btn i {
+            color: black; /* Set the color of the icon */
+            box-shadow: none; /* Remove shadow */
+        }
+        #start-record-btn:focus,
+        #start-record-btn:hover,
+        #start-record-btn:active {
+            box-shadow: none; /* Remove shadow on hover/focus/active */
+        }
+    </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
     <style>
         .calenderauditee {
             position: relative;
@@ -763,17 +782,21 @@
                                 </div> --}}
 
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars">255</span>
-                                        Characters remaining
-                                        <input id="docname" type="text" name="short_description" maxlength="255"
-                                            required>
-                                    </div>
-                                    @error('short_description')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+    <div class="group-input">
+        <label for="Short Description">Short Description<span class="text-danger">*</span></label>
+        <span id="rchars">255 Characters remaining</span>
+        <div style="position:relative;">
+            <input id="docname" type="text" name="short_description" maxlength="255" class="mic-input" required>
+            <button class="mic-btn" type="button" style="position: absolute; right: 45px; top: 51%; transform: translateY(-50%);">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+    @error('short_description')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
+
 
                                 
 
@@ -809,12 +832,18 @@
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time delayJustificationBlock">
                                         <label for="deviation_time">Delay Justification</label>
-                                        <textarea id="Delay_Justification" name="Delay_Justification"></textarea>
+                                        <div style="position:relative;">
+                                            <textarea id="Delay_Justification" name="Delay_Justification" class="mic-input"></textarea>
+                                            <button class="mic-btn" type="button" style="position: absolute; right: 15px; top: 51%; transform: translateY(-50%);">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     {{-- @error('Deviation_date')
-                                        <div class="text-danger">{{  $message  }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror --}}
                                 </div>
+
 
                                 <script>
                                     flatpickr("#deviation_time", {
@@ -828,7 +857,12 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="facility">Deviation Observed By</label>
-                                        <input type="text" name="Facility" id="deviation_observed_by" placeholder="Enter Facility Name">
+                                        <div style="position:relative;">
+                                            <input type="text" name="Facility" id="deviation_observed_by" placeholder="Enter Facility Name" class="mic-input">
+                                            <button class="mic-btn" type="button" style="position: absolute; right: 45px; top: 51%; transform: translateY(-50%);">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
@@ -1335,15 +1369,19 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Description Deviation">Description of Deviation</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="tiny-disable" name="Description_Deviation[]" id="summernote-1" required>
-                                    </textarea>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <div style="position:relative;">
+                                            <textarea class="tiny-disable mic-input" name="Description_Deviation[]" id="summernote-1" required></textarea>
+                                            <button class="mic-btn" type="button" style="position: absolute; right: 15px; top: 51%; transform: translateY(-50%);">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     @error('Description_Deviation[]')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
 
                                 {{-- <div class="col-6">
                                 <div class="group-input">
@@ -1354,15 +1392,19 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Immediate Action">Immediate Action (if any)</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="tiny-disable" name="Immediate_Action[]" id="summernote-2"required>
-                                    </textarea>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <div style="position:relative;">
+                                            <textarea class="tiny-disable mic-input" name="Immediate_Action[]" id="summernote-2" required></textarea>
+                                            <button class="mic-btn" type="button" style="position: absolute; right: 15px; top: 51%; transform: translateY(-50%);">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     @error('record')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                 {{-- <div class="col-6">
                                 <div class="group-input">
                                         <label for="Preliminary Impact">Preliminary Impact of Deviation</label>
@@ -1371,16 +1413,20 @@
                                 </div> --}}
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Preliminary Impact">Preliminary Impact of Deviation </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="tiny-disable" name="Preliminary_Impact[]" id="summernote-3" required>
-                                    </textarea>
+                                        <label for="Preliminary Impact">Preliminary Impact of Deviation</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <div style="position:relative;">
+                                            <textarea class="tiny-disable mic-input" name="Preliminary_Impact[]" id="summernote-3" required></textarea>
+                                            <button class="mic-btn" type="button" style="position: absolute; right: 15px; top: 51%; transform: translateY(-50%);">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     @error('Preliminary_Impact')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments">Initial Attachments</label>
@@ -8007,5 +8053,91 @@
                 });
             }
         </script>
+
+        <style>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+            color: black;
+            display: none;
+            /* Hide the button initially */
+        }
+
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .relative-container input:focus+.mic-btn {
+            display: inline-block;
+            /* Show the button when input is focused */
+        }
+
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none;
+        }
+    </style>
+
+    <script>
+        < link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
+
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
+                }
+            });
+
+            document.querySelectorAll('.mic-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        micBtn.style.display = 'inline-block';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        setTimeout(() => {
+                            micBtn.style.display = 'none';
+                        }, 200); // Delay to prevent button from hiding immediately when clicked
+                    }
+                });
+            });
+        });
+    </script>
 
     @endsection

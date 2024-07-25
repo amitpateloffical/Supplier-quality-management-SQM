@@ -259,18 +259,22 @@
                                 {{-- <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden"> --}}
                             </div>
                         </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Short Description">Short Description<span
-                                            class="text-danger">*</span></label><span id="rchars">255</span>
-                                    Characters remaining
-                                    <input id="docname" type="text" name="short_description" value="{{$extensionNew->short_description}}" maxlength="255"
-                                        required>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="docname">Short Description<span class="text-danger">*</span></label>
+                                <span id="rchars">255</span> Characters remaining
+                                <div style="position:relative;">
+                                    <input id="docname" type="text" name="short_description" value="{{$extensionNew->short_description}}" maxlength="255" required class="mic-input">
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
                                 </div>
-                                {{-- @error('short_description')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror --}}
                             </div>
+                            {{-- @error('short_description')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror --}}
+                        </div>
+                        
                             <script>
                                 var maxLength = 255;
                                 $('#docname').keyup(function() {
@@ -338,23 +342,34 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Short Description"> Description</label>
-                                    <textarea id="docname" type="text" name="description" value="" >{{$extensionNew->description}}</textarea>
+                                    <label for="docname">Description</label>
+                                    <div style="position:relative;">
+                                        <textarea id="docname" name="description" class="mic-input">{{$extensionNew->description}}</textarea>
+                                        <button class="mic-btn" type="button">
+                                            <i class="fas fa-microphone"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                {{-- @error('short_description')
+                                {{-- @error('description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                             </div>
+                            
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Short Description"> Justification / Reason </label>
-                                 
-                                    <textarea id="docname" type="text" name="justification_reason" value="" >{{$extensionNew->justification_reason}}</textarea>
+                                    <label for="docname">Justification / Reason</label>
+                                    <div style="position:relative;">
+                                        <textarea id="docname" name="justification_reason" class="mic-input">{{$extensionNew->justification_reason}}</textarea>
+                                        <button class="mic-btn" type="button">
+                                            <i class="fas fa-microphone"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                {{-- @error('short_description')
+                                {{-- @error('justification_reason')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                             </div>
+                            
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments"> Extension Attachment</label>
@@ -405,10 +420,16 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Assigned To">HOD Remarks</label>
-                               <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30" >{{$extensionNew->reviewer_remarks}}</textarea>
+                                <label for="reviewer_remarks">HOD Remarks</label>
+                                <div style="position:relative;">
+                                    <textarea name="reviewer_remarks" id="reviewer_remarks" class="mic-input" cols="30">{{$extensionNew->reviewer_remarks}}</textarea>
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
+                        
                         {{-- <div class="col-12">
                             <div class="group-input">
                                 <label for="Guideline Attachment">Reviewer Attachment  </label>
@@ -471,10 +492,16 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Assigned To">QA Remarks</label>
-                               <textarea name="approver_remarks" id="approver_remarks" cols="30" >{{$extensionNew->approver_remarks}}</textarea>
+                                <label for="approver_remarks">QA Remarks</label>
+                                <div style="position:relative;">
+                                    <textarea name="approver_remarks" id="approver_remarks" class="mic-input" cols="30">{{$extensionNew->approver_remarks}}</textarea>
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
+                        
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Inv Attachments"> QA Attachment</label>
@@ -886,4 +913,91 @@
             ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #designee, #hod'
         });
     </script>
+
+
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: none;
+        color: black;
+        display: none;
+        /* Hide the button initially */
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px;
+    }
+
+    .relative-container input:focus+.mic-btn {
+        display: inline-block;
+        /* Show the button when input is focused */
+    }
+
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none;
+    }
+</style>
+
+<script>
+    < link rel = "stylesheet"
+    href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+
+        document.querySelectorAll('.mic-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    micBtn.style.display = 'inline-block';
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    setTimeout(() => {
+                        micBtn.style.display = 'none';
+                    }, 200); // Delay to prevent button from hiding immediately when clicked
+                }
+            });
+        });
+    });
+</script>
 @endsection

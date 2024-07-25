@@ -222,9 +222,9 @@
                     <th>Change Type</th>
                 </tr>
                 @foreach ($data as $datas)
-                    <tr>
-                        <td>
-                            <div>{{ $datas->activity_type }}</div>
+                    <tr >
+                        <td class="row">
+                            <div class="col-2">{{ $datas->activity_type }}</div>
                             <div>
                                 <div><strong>Changed From :</strong></div>
                                 @if(!empty($datas->previous))
@@ -233,14 +233,14 @@
                                 <div>Null</div>
                                 @endif
                             </div>
-                            <div>
+                            <div class="col-4">
                                 <div><strong>Changed To :</strong></div>
                                 <div>{{ $datas->current }}</div>
                             </div>
                         </td>
-                        <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
-                        <td>{{ $datas->user_name }}</td>
-                        <td>
+                        <td class="col-2">{{ Helpers::getdateFormat($datas->created_at) }}</td>
+                        <td class="col-2">{{ $datas->user_name }}</td>
+                        <td class="col-2">
                             @if ($datas->previous == "NULL")
                                 Modify
                             @else

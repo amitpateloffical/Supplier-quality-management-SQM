@@ -9,6 +9,143 @@
         display: none;
     }
 </style>
+{{-- <style>
+    #start-record-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    #start-record-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    #start-record-btn:focus,
+    #start-record-btn:hover,
+    #start-record-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+</style>
+
+    <script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </script>
+
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            const docnameInput = document.getElementById('docname');
+            const startRecordBtn = document.getElementById('start-record-btn');
+
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            startRecordBtn.addEventListener('click', function() {
+                recognition.start();
+            });
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                docnameInput.value += transcript;
+            };
+
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        });
+    </script> --}}
+    {{-- voice Command --}}
+    
+    <style>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+            color: black;
+            display: none;
+            /* Hide the button initially */
+        }
+
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .relative-container input:focus+.mic-btn {
+            display: inline-block;
+            /* Show the button when input is focused */
+        }
+
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none;
+        }
+    </style>
+
+    <script>
+        < link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
+
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
+                }
+            });
+
+            document.querySelectorAll('.mic-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        micBtn.style.display = 'inline-block';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        setTimeout(() => {
+                            micBtn.style.display = 'none';
+                        }, 200); // Delay to prevent button from hiding immediately when clicked
+                    }
+                });
+            });
+        });
+    </script>
+
 
 <div class="form-field-head">
     <div class="division-bar">
@@ -133,26 +270,6 @@ $users = DB::table('users')->get();
                                     <input type="text" name="initiator_group_code" id="initiator_group_code" value="">
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255</span>
-                                    characters remaining
-                                    <input id="docname" type="text" name="short_description" maxlength="255" required>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="severity-level">Sevrity Level</label>
-                                    <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
-                                    <select name="severity_level">
-                                        <option value="0">-- Select --</option>
-                                        <option value="minor">Minor</option>
-                                        <option value="major">Major</option>
-                                        <option value="critical">Critical</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="search">
@@ -169,23 +286,54 @@ $users = DB::table('users')->get();
                                     @enderror
                                 </div>
                             </div>
-                           @php
-                                // Calculate the due date (30 days from the initiation date)
-                                $initiationDate = date('Y-m-d'); // Current date as initiation date
-                                $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
-                            @endphp
+
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Due Date"> Due Date </label>
                                     <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                     <div class="calenderauditee">
-                                        <input type="text" name="due_date" readonly value="{{ Helpers::getdateFormat($dueDate) }}" />
+                                        <input type="text" name="due_date" readonly value="{{ Helpers::getdateFormat($due_date) }}" />
                                         <!-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" /> -->
                                     </div>
                                 </div>
                             </div>
 
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Short Description">Short Description<span class="text-danger">*</span></label>
+                                    <span id="rchars">255</span> characters remaining
+                                    <div style="position:relative;">
+                                        <input id="docname" class="mic-input" type="text" name="short_description" maxlength="255" required>
+                                        <button id="start-record-btn" type="button" class="mic-btn">
+                                            <i class="fas fa-microphone"></i>
+                                        </button>
+                                    </div>
+                                
+                                   </div>
+                            </div>
+
                             
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="severity-level">Sevrity Level</label>
+                                    <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
+                                    <select name="severity_level">
+                                        <option value="0">-- Select --</option>
+                                        <option value="minor">Minor</option>
+                                        <option value="major">Major</option>
+                                        <option value="critical">Critical</option>
+                                    </select>
+                                </div>
+                            </div>
+                           
+                           @php
+                                // Calculate the due date (30 days from the initiation date)
+                                $initiationDate = date('Y-m-d'); // Current date as initiation date
+                                $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                            @endphp
+                          
+                        </div>
                                 <script>
                                     // Format the due date to DD-MM-YYYY
                                     // Your input date
@@ -211,8 +359,8 @@ $users = DB::table('users')->get();
                                     // Set the formatted due date value to the input field
                                     document.getElementById('due_date').value = dueDateFormatted;
                                 </script>
-                                </div>
-
+                               
+                        <div class="row">
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator Group">Initiated Through</label>
@@ -230,27 +378,36 @@ $users = DB::table('users')->get();
                                     </select>
                                 </div>
                             </div>
+                           
+                             
                             <div class="col-lg-6">
-                                <div class="group-input" id="initiated_through_req">
-                                    <label for="If Other">Others<span class="text-danger d-none">*</span></label>
-                                    <textarea name="initiated_if_other"></textarea>
-                                </div>
+                                  <div class="group-input" id="initiated_through_req">
+                                          <label for="initiated_if_other">Others<span class="text-danger d-none">*</span></label>
+                                          <div style="position:relative;">
+                                             <textarea name="initiated_if_other" class="mic-input" id="initiated_if_other"></textarea>
+                                             <button class="mic-btn" type="button">
+                                              <i class="fas fa-microphone"></i>
+                                          </button>
+                                      </div>
+                                  </div>
                             </div>
+                        
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Type">Type</label>
                                     <select name="Type">
                                         <option value="0">-- Select --</option>
-                                        <option value="1">Facillties</option>
-                                        <option value="2">Other</option>
-                                        <option value="3">Stabillity</option>
-                                        <option value="4">Raw Material</option>
-                                        <option value="5">Clinical Production</option>
-                                        <option value="6">Commercial Production</option>
-                                        <option value="7">Labellling</option>
-                                        <option value="8">laboratory</option>
-                                        <option value="9">Utillities</option>
-                                        <option value="10">Validation</option>
+                                        <option value="Facillties">Facillties</option>
+                                        <option value="Other">Other</option>
+                                        <option value="Stabillity">Stabillity</option>
+                                        <option value="Raw Material">Raw Material</option>
+                                        <option value="Clinical Production">Clinical Production</option>
+                                        <option value="Commercial Production">Commercial Production</option>
+                                        <option value="Labellling">Labellling</option>
+                                        <option value="laboratory">laboratory</option>
+                                        <option value="Utillities">Utillities</option>
+                                        <option value="Validation">Validation</option>
                                     </select>
                                 </div>
                             </div>
@@ -284,29 +441,43 @@ $users = DB::table('users')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department">Department(s)</label>
-                                    <select multiple name="department" placeholder="Select Department(s)" data-search="false" data-silent-initial-value-set="true" id="department">
-                                        <option value="1">Work Instruction</option>
-                                        <option value="2">Quality Assurance</option>
-                                        <option value="3">Specifications</option>
-                                        <option value="4">Production</option>
+                                    <select multiple name="department[]" placeholder="Select Department(s)" data-search="false" data-silent-initial-value-set="true" id="department">
+                                        <option value="Work Instruction">Work Instruction</option>
+                                        <option value="Quality Assurance">Quality Assurance</option>
+                                        <option value="Specifications">Specifications</option>
+                                        <option value="Production">Production</option>
                                     </select>
                                 </div>
                             </div>
+                            </div>
+                        
                             <div class="col-12">
                                 <div class="sub-head">Investigation details</div>
                             </div>
                             <div class="col-12">
-                                <div class="group-input">
-                                    <label for="description">Description</label>
-                                    <textarea name="description"></textarea>
-                                </div>
+                                 <div class="group-input">
+                                     <label for="description">Description</label>
+                                     <div style="position:relative;">
+                                         <textarea name="description" class="mic-input" id="description"></textarea>
+                                         <button class="mic-btn" type="button">
+                                             <i class="fas fa-microphone"></i>
+                                         </button>
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                             <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="comments">Comments</label>
+                                            <div style="position:relative;">
+                                                <textarea name="comments" class="mic-input" ></textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
+                                        </div>
                             </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="comments">Comments</label>
-                                    <textarea name="comments"></textarea>
-                                </div>
-                            </div>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments">Initial Attachment</label>
@@ -357,10 +528,11 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="root-cause-methodology">Root Cause Methodology</label>
                                     <select name="root_cause_methodology[]" multiple placeholder="-- Select --" data-search="false" data-silent-initial-value-set="true" id="root-cause-methodology">
-                                        <option value="1">Why-Why Chart</option>
-                                        <option value="2">Failure Mode and Efect Analysis</option>
-                                        <option value="3">Fishbone or Ishikawa Diagram</option>
-                                        <option value="4">Is/Is Not Analysis</option>
+                                      
+                                        <option value="Why-Why Chart">Why-Why Chart</option>
+                                        <option value="Failure Mode and Efect Analysis">Failure Mode and Efect Analysis</option>
+                                        <option value="Fishbone or Ishikawa Diagram">Fishbone or Ishikawa Diagram</option>
+                                        <option value="Is/Is Not Analysis">Is/Is Not Analysis</option>
                                     </select>
                                 </div>
                             </div>
@@ -430,9 +602,11 @@ $users = DB::table('users')->get();
                                                     <th>Mitigation proposal (Mention either CAPA reference number, IQ,
                                                         OQ or
                                                         PQ)</th>
+                                                        <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -655,19 +829,33 @@ $users = DB::table('users')->get();
                                 </div>
                             </div>
                             <div class="col-12 sub-head"></div>
+
                             <div class="col-12">
-                                <div class="group-input">
-                                    <label for="root_cause_description">Root Cause Description</label>
-                                    <textarea name="root_cause_description"></textarea>
+                                    <div class="group-input">
+                                        <label for="root_cause_description">Root Cause Description</label>
+                                        <div style="position:relative;">
+                                            <textarea name="root_cause_description" class="mic-input"  id="root_cause_description"></textarea>
+                                            <button class="mic-btn" type="button" id="start-record-btn"  class="mic-btn">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                            </div>
+
+                           <div class="col-12">
+                            <div class="group-input">
+                                <label for="investigation_summary">Investigation Summary</label>
+                                <div style="position:relative;">
+                                    <textarea name="investigation_summary" class="mic-input" id="investigation_summary"></textarea>
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="investigation_summary">Investigation Summary</label>
-                                    <textarea name="investigation_summary"></textarea>
-                                </div>
-                            </div>
+                           </div>
                         </div>
+                           
+                        
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -682,8 +870,13 @@ $users = DB::table('users')->get();
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="comments">Final Comments</label>
-                                    <textarea name="cft_comments_new"></textarea>
+                                    <label for="cft_comments_new">Final Comments</label>
+                                    <div style="position:relative;">
+                                        <textarea name="cft_comments_new" id="cft_comments_new" class="mic-input"></textarea>
+                                        <button class="mic-btn" type="button">
+                                            <i class="fas fa-microphone"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -1126,4 +1319,71 @@ $users = DB::table('users')->get();
         $('#rchars').text(textlen);
     });
 </script>
+
+// <style>
+//     .mic-btn {
+//         background: none;
+//         border: none;
+//         outline: none;
+//         cursor: pointer;
+//         position: absolute;
+//         right: 10px; /* Position the button at the right corner */
+//         top: 50%; /* Center the button vertically */
+//         transform: translateY(-50%); /* Adjust for the button's height */
+//         box-shadow: none; /* Remove shadow */
+//     }
+//     .mic-btn i {
+//         color: black; /* Set the color of the icon */
+//         box-shadow: none; /* Remove shadow */
+//     }
+//     .mic-btn:focus,
+//     .mic-btn:hover,
+//     .mic-btn:active {
+//         box-shadow: none; /* Remove shadow on hover/focus/active */
+//     }
+
+//     .relative-container {
+//         position: relative;
+//     }
+
+//     .relative-container textarea {
+//         width: 100%;
+//         padding-right: 40px; /* Ensure the text does not overlap the button */
+//     }
+// </style>
+
+// <script>
+//     document.addEventListener('DOMContentLoaded', function() {
+//         // Initialize speech recognition
+//         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+//         recognition.continuous = false;
+//         recognition.interimResults = false;
+//         recognition.lang = 'en-US';
+
+//         // Function to start speech recognition and append result to the target element
+//         function startRecognition(targetElement) {
+//             recognition.start();
+//             recognition.onresult = function(event) {
+//                 const transcript = event.results[0][0].transcript;
+//                 targetElement.value += transcript;
+//             };
+//             recognition.onerror = function(event) {
+//                 console.error(event.error);
+//             };
+//         }
+
+//         // Event delegation for all mic buttons
+//         document.addEventListener('click', function(event) {
+//             if (event.target.closest('.mic-btn')) {
+//                 const button = event.target.closest('.mic-btn');
+//                 const inputField = button.previousElementSibling;
+//                 if (inputField && inputField.classList.contains('mic-input')) {
+//                     startRecognition(inputField);
+//                 }
+//             }
+//         });
+//     });
+// </script>
+
+
 @endsection

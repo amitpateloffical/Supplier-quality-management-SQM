@@ -236,6 +236,7 @@ Route::group(['prefix' => 'rcms'], function () {
             //===============================extension new --------------
             Route::get('singleReportNew/{id}', [ExtensionNewController::class, 'singleReport'])->name('singleReportNew');
             Route::get('audit_trailNew/{id}', [ExtensionNewController::class, 'extensionNewAuditTrail']);
+            Route::get('auditReportext/{id}', [ExtensionNewController::class, 'auditReportext'])->name('auditReportext');
              
 
         }

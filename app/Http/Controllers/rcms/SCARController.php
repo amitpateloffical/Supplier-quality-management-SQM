@@ -34,7 +34,7 @@ class SCARController extends Controller
         $supplierName = Supplier::select('id','supplier_name')->get();
         $supplierProduct = Supplier::where('supplier_products' , '!=' , "null")->get();
         $distributionSites = Supplier::where('distribution_sites', '!=', "null")->get();
-        
+
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         return view('frontend.scar.scar_new',compact('record_number', 'due_date','supplierName','supplierProduct','distributionSites'));
@@ -76,7 +76,7 @@ class SCARController extends Controller
         $scar->stage = 1;
         $scar->status = "Opened";
         $scar->save();
-        
+
 
         /******************* Audit Trail Code ***********************/
         $history = new ScarAuditTrail;
@@ -128,7 +128,7 @@ class SCARController extends Controller
         $history->scar_id = $scar->id;
         $history->activity_type = 'Initiation Date';
         $history->previous = "Null";
-        $history->current = $scar->intiation_date;
+        $history->current = $scar->initiation_date;
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -142,7 +142,7 @@ class SCARController extends Controller
         if(!empty($request->assign_to)){
             $history = new ScarAuditTrail;
             $history->scar_id = $scar->id;
-            $history->activity_type = 'Assign To';
+            $history->activity_type = 'Assigned To';
             $history->previous = "Null";
             $history->current = $request->assign_to;
             $history->comment = "Not Applicable";
@@ -432,6 +432,9 @@ class SCARController extends Controller
         $scar->update();
 
         if($lastDocument->short_description != $request->short_description){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Short Description')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Short Description';
@@ -444,10 +447,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->assign_to != $request->assign_to){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Assigned To')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Assigned To';
@@ -460,10 +466,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->scar_name != $request->scar_name){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'SCAR Name')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'SCAR Name';
@@ -476,13 +485,16 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->owner_name != $request->owner_name){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Owner Name')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
-            $history->activity_type = 'Owner';
+            $history->activity_type = 'Owner Name';
             $history->previous = $lastDocument->owner_name;
             $history->current = $request->owner_name;
             $history->comment = "Not Applicable";
@@ -492,10 +504,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->followup_date != $request->followup_date){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Follow Up Date')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Follow Up Date';
@@ -508,10 +523,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->supplier_site != $request->supplier_site){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Supplier Site')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Supplier Site';
@@ -524,10 +542,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->supplier_product != $request->supplier_product){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Supplier Product')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Supplier Product';
@@ -540,10 +561,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->supplier_site_contact_email != $request->supplier_site_contact_email){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Supplier Site Contact Email')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Supplier Site Contact Email';
@@ -556,10 +580,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->description != $request->description){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Description')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Description';
@@ -572,10 +599,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->recommended_action != $request->recommended_action){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Recommended Action')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Recommended Action';
@@ -588,10 +618,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->non_conformance != $request->non_conformance){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Non Conformance')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Non Conformance';
@@ -604,10 +637,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->expected_closure_date != $request->expected_closure_date){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Expected Closure Date')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Expected Closure Date';
@@ -620,10 +656,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->expected_closure_time != $request->expected_closure_time){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Expected Closure Time')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Expected Closure Time';
@@ -636,10 +675,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->root_cause != $request->root_cause){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Root Cause')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Root Cause';
@@ -652,10 +694,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->risk_analysis != $request->risk_analysis){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Risk Analysis')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Risk Analysis';
@@ -668,10 +713,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->effectiveness_check_summary != $request->effectiveness_check_summary){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'Effectiveness Check Summary')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Effectiveness Check Summary';
@@ -684,10 +732,13 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->capa_plan != $request->capa_plan){
+            $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
+            ->where('activity_type', 'CAPA Plan')
+            ->exists();
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'CAPA Plan';
@@ -700,7 +751,7 @@ class SCARController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         toastr()->success("Record Updated Successfully");
@@ -709,9 +760,10 @@ class SCARController extends Controller
 
     public function singleReport($id){
         $data = SCAR::find($id);
+        // dd($data);
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
-            
+
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.scar.single-report', compact(
@@ -752,7 +804,7 @@ class SCARController extends Controller
         $document = SCAR::where('id', $id)->first();
         $document->originator = User::where('id', $document->initiator_id)->value('name');
 
-        return view('frontend.scar.audit-trail', compact('audit', 'document', 'today'));        
+        return view('frontend.scar.audit-trail', compact('audit', 'document', 'today'));
     }
 
     public function auditTrailPdf($id){
@@ -762,7 +814,7 @@ class SCARController extends Controller
             $data = ScarAuditTrail::where('scar_id', $id)->orderByDesc('id')->get();
             $audit = ScarAuditTrail::where('scar_id', $id)->orderByDesc('id')->get();
 
-    
+
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.scar.audit-trail-pdf', compact('data', 'doc' ,'audit'))
@@ -777,9 +829,9 @@ class SCARController extends Controller
             $canvas = $pdf->getDomPDF()->getCanvas();
             $height = $canvas->get_height();
             $width = $canvas->get_width();
-    
+
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-    
+
             $canvas->page_text(
                 $width / 3,
                 $height / 2,
@@ -844,7 +896,7 @@ class SCARController extends Controller
             }
             if ($scar->stage == 2) {
                     $scar->stage = "3";
-                    $scar->status = "Acknowleged by Supplier";
+                    $scar->status = "Acknowledged by Supplier";
                     $scar->acknowledge_by = Auth::user()->name;
                     $scar->acknowledge_on = Carbon::now()->format('d-M-Y');
                     $scar->acknowledge_comment = $request->comments;
@@ -881,7 +933,7 @@ class SCARController extends Controller
                     //      }
                     //   }
                     $scar->update();
-                    
+
                     toastr()->success('Sent to Acknowleged by Supplier');
                     return back();
             }
@@ -1028,7 +1080,7 @@ class SCARController extends Controller
             $scar->cancelled_by = Auth::user()->name;
             $scar->cancelled_on = Carbon::now()->format('d-M-Y');
             $scar->cancelled_comment = $request->comments;
-        
+
             $history = new ScarAuditTrail();
             $history->scar_id = $id;
             $history->activity_type = 'Activity Log';
@@ -1041,7 +1093,7 @@ class SCARController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to =  "Close - Cancelled";
-            $history->change_from = $lastDocument->status;        
+            $history->change_from = $lastDocument->status;
             $history->save();
             $scar->update();
 
@@ -1085,7 +1137,7 @@ class SCARController extends Controller
             $scar->rejected_by = Auth::user()->name;
             $scar->rejected_on = Carbon::now()->format('d-M-Y');
             $scar->rejected_comment = $request->comments;
-        
+
             $history = new ScarAuditTrail();
             $history->scar_id = $id;
             $history->activity_type = 'Activity Log';
@@ -1098,7 +1150,7 @@ class SCARController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to =  "Work in Progress";
-            $history->change_from = $lastDocument->status;        
+            $history->change_from = $lastDocument->status;
             $history->save();
             $scar->update();
 
@@ -1131,4 +1183,6 @@ class SCARController extends Controller
             return back();
         }
     }
+
+
 }

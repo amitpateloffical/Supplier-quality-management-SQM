@@ -169,9 +169,9 @@
                 </tr>
                 <tr>
                     <th class="w-20">Current Due Date (Parent)</th>
-                    <td class="w-30">@if($data->current_due_date){{ $data->current_due_date }} @else Not Applicable @endif</td>
+                    <td class="w-30">@if($data->current_due_date){{ Helpers::getdateFormat($data->current_due_date) }} @else Not Applicable @endif</td>
                     <th class="w-20">Proposed Due Date</th>
-                    <td class="w-30">@if($data->proposed_due_date){{ $data->proposed_due_date }} @else Not Applicable @endif</td>
+                    <td class="w-30">@if($data->proposed_due_date){{ Helpers::getdateFormat($data->proposed_due_date) }} @else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20"> Description</th>

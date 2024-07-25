@@ -8,8 +8,51 @@
         header {
             display: none;
         }
+        #start-record-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    #start-record-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    #start-record-btn:focus,
+    #start-record-btn:hover,
+    #start-record-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
     </style>
+    <script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+        </script>
      <script>
+       
+        document.addEventListener('DOMContentLoaded', function() {
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        const docnameInput = document.getElementById('docname');
+        const startRecordBtn = document.getElementById('start-record-btn');
+
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        startRecordBtn.addEventListener('click', function() {
+            recognition.start();
+        });
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            docnameInput.value += transcript;
+        };
+
+        recognition.onerror = function(event) {
+            console.error(event.error);
+        };
+    });
+
         function addFishBone(top, bottom) {
             let mainBlock = document.querySelector('.fishbone-ishikawa-diagram');
             let topBlock = mainBlock.querySelector(top)
@@ -115,8 +158,7 @@
                         $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                     @endphp
-                        <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button>
+                        
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rootAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
@@ -249,7 +291,7 @@
                                             <label for="Initiator Group"><b>Initiator Group</b></label>
                                             <select name="initiator_Group"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                  id="initiator_group">
-                                               
+                                                 <option value="">-- Select --</option>
                                                 <option value="CQA"
                                                     @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
                                                     Quality Assurance</option>
@@ -314,13 +356,51 @@
                                         </div>
                                     </div>
                                    
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="search">
+                                                Assigned To <span class="text-danger"></span>
+                                            </label>
+                                            <select id="select-state" placeholder="Select..." name="assign_to"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <option value="">Select a value</option>
+                                                @foreach ($users as $key => $value)
+                                                    <option value="{{ $value->id }}"
+                                                        @if ($data->assign_to == $value->id) selected @endif>
+                                                        {{ $value->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('assign_to')
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Due Date"> Due Date</label>
+                                            <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                        
+                                            <div class="calenderauditee">
+                                                <input readonly type="text" value="{{ Helpers::getdateFormat($data->due_date) }}" id="due_date" />
+                                            </div>
+    
+                                        </div> 
+                                    </div>
+
                                     <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Short Description">Short Description<span
                                                             class="text-danger">*</span></label><span id="rchars">255</span>
                                                     characters remaining
                                                     
-                                                    <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                    <div style="position:relative;">
+                                                        <textarea name="short_description" class="mic-input"  id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                   
+                                                </div>
                                                 </div>
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
             
@@ -344,43 +424,14 @@
                                             </select> --}}
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="search">
-                                                Assigned To <span class="text-danger"></span>
-                                            </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <option value="">Select a value</option>
-                                                @foreach ($users as $key => $value)
-                                                    <option value="{{ $value->id }}"
-                                                        @if ($data->assign_to == $value->id) selected @endif>
-                                                        {{ $value->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('assign_to')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
 
                                     @php
                                         $initiationDate = $data->intiation_date;
                                         $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
                                     @endphp
-
-
-                                    <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Due Date"> Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                       
-                                        <div class="calenderauditee">
-                                            <input readonly type="text" value="{{ Helpers::getdateFormat($dueDate) }}" id="due_date" />
-                                        </div>
  
-                                    </div>  
-                                 </div>                                  <!-- <div class="col-lg-6">
+                                 </div>                                  
+                                 <!-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Initiator Group</b></label>
                                             <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -448,6 +499,18 @@
                                                 value="{{ $data->initiator_Group }}" disabled>
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Due Date"> Due Date</label>
+                                            <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                        
+                                            <div class="calenderauditee">
+                                                <input readonly type="text" value="{{ Helpers::getdateFormat($dueDate) }}" id="due_date" />
+                                            </div>
+    
+                                        </div> 
+                                    </div> 
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Short Description">Short Description <span
@@ -456,125 +519,146 @@
                                             <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                         </div>
                                     </div> -->
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Initiator Group">Initiated Through</label>
-                                            <div><small class="text-primary">Please select related information</small></div>
-                                            <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_through"
-                                                onchange="otherController(this.value, 'others', 'initiated_through_req')">
-                                                <option value="">-- select --</option>
-                                                <option @if ($data->initiated_through == 'recall') selected @endif
-                                                    value="recall">Recall</option>
-                                                <option @if ($data->initiated_through == 'return') selected @endif
-                                                    value="return">Return</option>
-                                                <option @if ($data->initiated_through == 'deviation') selected @endif
-                                                    value="deviation">Deviation</option>
-                                                <option @if ($data->initiated_through == 'complaint') selected @endif
-                                                    value="complaint">Complaint</option>
-                                                <option @if ($data->initiated_through == 'regulatory') selected @endif
-                                                    value="regulatory">Regulatory</option>
-                                                <option @if ($data->initiated_through == 'lab-incident') selected @endif
-                                                    value="lab-incident">Lab Incident</option>
-                                                <option @if ($data->initiated_through == 'improvement') selected @endif
-                                                    value="improvement">Improvement</option>
-                                                <option @if ($data->initiated_through == 'others') selected @endif
-                                                    value="others">Others</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input" id="initiated_through_req">
-                                            <label for="If Other">Others<span
-                                                    class="text-danger d-none">*</span></label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other">{{$data->initiated_if_other}}</textarea>
-                                        </div>
-                                    </div>
-                                     
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Type">Type</label>
-                                            <select  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="Type">
-                                                <option value="0">-- Select --</option>
-                                                <option {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="0">-- Select --</option>
-                                                <option @if ($data->Type =='1') selected @endif value="1">Facillties</option>
-                                                <option @if ($data->Type =='2') selected @endif value="2">Other</option>
-                                                <option @if ($data->Type =='3') selected @endif value="3">Stabillity</option>
-                                                <option @if ($data->Type =='4') selected @endif value="4">Raw Material</option>
-                                                <option @if ($data->Type =='5') selected @endif value="5">Clinical Production</option>
-                                                <option @if ($data->Type =='6') selected @endif value="6">Commercial Production</option>
-                                                <option  @if ($data->Type =='7') selected @endif  value="7">Labellling</option>
-                                                <option @if ($data->Type =='8') selected @endif value="8">laboratory</option>
-                                                <option @if ($data->Type =='9') selected @endif value="9">Utillities</option>
-                                                <option  @if ($data->Type =='10') selected @endif value="10">Validation</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="priority_level">Priority Level</label>
-                                            <div><small class="text-primary">Choose high if Immidiate actions are
-                                                    required</small></div>
-                                           
-                                            <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="priority_level">
-                                                <!-- {{-- <option value="0">-- Select --</option>
-                                                <option value="low">Low</option>
-                                                <option value="medium">Medium</option>
-                                                <option value="high">High</option> --}} -->
-                                                <option value="0">-- Select --</option>
-                                                <option @if ($data->priority_level == 'low') selected @endif
-                                                 value="low">Low</option>
-                                                <option  @if ($data->priority_level == 'medium') selected @endif 
-                                                value="medium">Medium</option>
-                                                <option @if ($data->priority_level == 'high') selected @endif
-                                                value="high">High</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="investigators">Additional Investigators</label>
-                                            <select  name="investigators" placeholder="Select Investigators"
-                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  name="investigators" placeholder="Select Investigators"
-                                                data-search="false" data-silent-initial-value-set="true" id="investigators">
-                                                <option value="">Select Investigators</option>
-                                                <option @if ($data->investigators=='1') selected @endif value="1">Amit Guru</option>
-                                                <option @if ($data->investigators=='2') selected @endif value="2">Shaleen Mishra</option>
-                                                <option @if ($data->investigators=='3') selected @endif value="3">Madhulika Mishra</option>
-                                                <option @if ($data->investigators=='4') selected @endif value="4"> Patel</option>
-                                                <option @if ($data->investigators=='5') selected @endif value="5">Harsh Mishra</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
-                            
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="department">Department(s)</label>
-                                            <select name="department" placeholder="Select Department(s)"
-                                             name="department"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} placeholder="Select Department(s)"
-                                                data-search="false" data-silent-initial-value-set="true" id="department">
-                                                <option @if ($data->department== 'Work Instruction') selected @endif  value="Work Instruction">Work Instruction</option>
-                                                <option @if ($data->department== 'Quality Assurance') selected @endif value="Quality Assurance">Quality Assurance</option>
-                                                <option @if ($data->department== 'Specifications') selected @endif value="Specifications">Specifications</option>
-                                                <option @if ($data->department== 'Production') selected @endif value="Production">Production</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Initiator Group">Initiated Through</label>
+                                                    <div><small class="text-primary">Please select related information</small></div>
+                                                    <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_through"
+                                                        onchange="otherController(this.value, 'others', 'initiated_through_req')">
+                                                        <option value="">-- select --</option>
+                                                        <option @if ($data->initiated_through == 'recall') selected @endif
+                                                            value="recall">Recall</option>
+                                                        <option @if ($data->initiated_through == 'return') selected @endif
+                                                            value="return">Return</option>
+                                                        <option @if ($data->initiated_through == 'deviation') selected @endif
+                                                            value="deviation">Deviation</option>
+                                                        <option @if ($data->initiated_through == 'complaint') selected @endif
+                                                            value="complaint">Complaint</option>
+                                                        <option @if ($data->initiated_through == 'regulatory') selected @endif
+                                                            value="regulatory">Regulatory</option>
+                                                        <option @if ($data->initiated_through == 'lab-incident') selected @endif
+                                                            value="lab-incident">Lab Incident</option>
+                                                        <option @if ($data->initiated_through == 'improvement') selected @endif
+                                                            value="improvement">Improvement</option>
+                                                        <option @if ($data->initiated_through == 'others') selected @endif
+                                                            value="others">Others</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                                <div class="col-lg-6">
+                                                    <div class="group-input" id="initiated_through_req">
+                                                        <label for="initiated_if_other">Others<span class="text-danger d-none">*</span></label>
+                                                        <div style="position:relative;">
+                                                            <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other" id="initiated_if_other">{{$data->initiated_if_other}}</textarea>
+                                                            <button class="mic-btn" type="button" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                <i class="fas fa-microphone"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Type">Type</label>
+                                                    <select  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="Type">
+                                                        {{-- <option value="0">-- Select --</option> --}}
+                                                        <option {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="0">-- Select --</option>
+                                                        <option @if ($data->Type =='Facillties') selected @endif value="Facillties">Facillties</option>
+                                                        <option @if ($data->Type =='Other') selected @endif value="Other">Other</option>
+                                                        <option @if ($data->Type =='Stabillity') selected @endif value="Stabillity">Stabillity</option>
+                                                        <option @if ($data->Type =='Raw Material') selected @endif value="Raw Material">Raw Material</option>
+                                                        <option @if ($data->Type =='Clinical Production') selected @endif value="Clinical Production">Clinical Production</option>
+                                                        <option @if ($data->Type =='Commercial Production') selected @endif value="Commercial Production">Commercial Production</option>
+                                                        <option  @if ($data->Type =='Labellling') selected @endif  value="Labellling">Labellling</option>
+                                                        <option @if ($data->Type =='laboratory') selected @endif value="laboratory">laboratory</option>
+                                                        <option @if ($data->Type =='Utillities') selected @endif value="Utillities">Utillities</option>
+                                                        <option  @if ($data->Type =='Validation') selected @endif value="Validation">Validation</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="priority_level">Priority Level</label>
+                                                    <div><small class="text-primary">Choose high if Immidiate actions are
+                                                            required</small></div>
+                                                
+                                                    <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="priority_level">
+                                                        <!-- {{-- <option value="0">-- Select --</option>
+                                                        <option value="low">Low</option>
+                                                        <option value="medium">Medium</option>
+                                                        <option value="high">High</option> --}} -->
+                                                        <option value="0">-- Select --</option>
+                                                        <option @if ($data->priority_level == 'low') selected @endif
+                                                        value="low">Low</option>
+                                                        <option  @if ($data->priority_level == 'medium') selected @endif 
+                                                        value="medium">Medium</option>
+                                                        <option @if ($data->priority_level == 'high') selected @endif
+                                                        value="high">High</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            {{-- <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="investigators">Additional Investigators</label>
+                                                    <select  name="investigators" placeholder="Select Investigators"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  name="investigators" placeholder="Select Investigators"
+                                                        data-search="false" data-silent-initial-value-set="true" id="investigators">
+                                                        <option value="">Select Investigators</option>
+                                                        <option @if ($data->investigators=='1') selected @endif value="1">Amit Guru</option>
+                                                        <option @if ($data->investigators=='2') selected @endif value="2">Shaleen Mishra</option>
+                                                        <option @if ($data->investigators=='3') selected @endif value="3">Madhulika Mishra</option>
+                                                        <option @if ($data->investigators=='4') selected @endif value="4"> Patel</option>
+                                                        <option @if ($data->investigators=='5') selected @endif value="5">Harsh Mishra</option>
+                                                    </select>
+                                                </div>
+                                            </div> --}}
+                                    
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="department">Department(s)</label>
+                                                    <select name="department" multiple placeholder="Select Department(s)"
+                                                    name="department"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} placeholder="Select Department(s)"
+                                                        data-search="false" data-silent-initial-value-set="true" id="department">
+                                                    
+                                                        <option value="Work Instruction" {{ strpos($data->department, 'Work Instruction') !== false ? 'selected' : '' }}>Work Instruction</option>
+                                                        <option value="Quality Assurance" {{ strpos($data->department, 'Quality Assurance') !== false ? 'selected' : '' }}>Quality Assurance</option>
+                                                        <option value="Specifications" {{ strpos($data->department, 'Specifications') !== false ? 'selected' : '' }}>Specifications</option>
+                                                        <option value="Production" {{ strpos($data->department, 'Specifications') !== false ? 'selected' : '' }}>Production</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                </div>
                                     <div class="col-12">
                                         <div class="sub-head">Investigation details</div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="description">Description</label>
-                                         
-                                            <textarea name="description"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->description }}</textarea>
+                                            <div style="position:relative;">
+                                            <textarea class="mic-input" name="description"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->description }}</textarea>
+                                            <button class="mic-btn" type="button">
+                                              <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="comments">Comments</label>
-                                            <textarea  name="comments"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
+                           
+                                    
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="comments">Comments</label>
+                                                <div style="position:relative;">
+                                                    <textarea name="comments" class="mic-input" id="comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->comments}}</textarea>
+                                                   
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                   
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Inv Attachments">Initial Attachment</label>
@@ -605,18 +689,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                      <!-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="severity-level">Sevrity Level</label>
-                                            <select name="severity-level">
-                                                <option value="0">-- Select --</option>
-                                                <option value="minor">Minor</option>
-                                                <option value="major">Major</option>
-                                                <option value="critical">Critical</option>
-                                            </select>
-                                        </div>
-                                    </div>  -->
-                                    
+                                     
                                     <div class="col-12">
                                <div class="group-input">
                               <label for="related_url">Related URL</label>
@@ -652,21 +725,21 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="root-cause-methodology">Root Cause Methodology</label>
-                                            <select name="root_cause_methodology[]"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                placeholder="-- Select --" data-search="false"
+                                            <select name="root_cause_methodology[]" id="root_cause_methodology" multiple {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                placeholder="-- Select --" data-search="false" 
                                                 data-silent-initial-value-set="true" id="root-cause-methodology">
-                                                <option value="0">-- Select --</option>
-                                                <option value="1"
-                                                    {{ in_array('1', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                               
+                                                <option value="Why-Why Chart"
+                                                    {{ in_array('Why-Why Chart', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                     Why-Why Chart</option>
-                                                <option value="2"
-                                                    {{ in_array('2', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                <option value="Failure Mode and Efect Analysis"
+                                                    {{ in_array('Failure Mode and Efect Analysis', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                     Failure Mode and Efect Analysis</option>
-                                                <option value="3"
-                                                    {{ in_array('3', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                <option value="Fishbone or Ishikawa Diagram"
+                                                    {{ in_array('Fishbone or Ishikawa Diagram', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                     Fishbone or Ishikawa Diagram</option>
-                                                <option value="4"
-                                                    {{ in_array('4', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                <option value="Is/Is Not Analysis"
+                                                    {{ in_array('Is/Is Not Analysis', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                     Is/Is Not Analysis</option>
 
 
@@ -683,7 +756,7 @@
                                                 <table class="table table-bordered" id="root-cause-first-table">
                                                     <thead>
                                                         <tr>
-                                                            <th>Row #</th>
+                                                            <th style="width:4%">Row #</th>
                                                             <th>Root Cause Category</th>
                                                             <th>Root Cause Sub-Category</th>
                                                             <th>Probability</th>
@@ -723,7 +796,7 @@
                                                     id="risk-assessment-risk-management">
                                                     <thead>
                                                         <tr>
-                                                            <th>Row #</th>
+                                                            <th style="width:4%">Row #</th>
                                                             <th>Risk Factor</th>
                                                             <th>Risk element </th>
                                                             <th>Probable cause of risk element</th>
@@ -841,6 +914,7 @@
                                                                     <input name="mitigation_proposal[]" type="text" value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}" >
                                                                 </td>
                                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                                
                                                             </tr>    
                                                             @endforeach
                                                         @endif
@@ -1212,13 +1286,23 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="root_cause_description">Root Cause Description</label>
-                                            <textarea name="root_cause_description"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->root_cause_description }}</textarea>
+                                            <div style="position:relative;">
+                                                <textarea name="root_cause_description" class="mic-input"  id="root_cause_description">{{ $data->root_cause_description }}</textarea>
+                                                <button class="mic-btn" type="button" id="start-record-btn"  class="mic-btn">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
+                                   </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="investigation_summary">Investigation Summary</label>
-                                            <textarea name="investigation_summary"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->investigation_summary }}</textarea>
+                                            <div style="position:relative;">
+                                                <textarea name="investigation_summary" class="mic-input" id="investigation_summary">{{ $data->investigation_summary }}</textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                  {{-- <div class="col-12">
@@ -1282,15 +1366,20 @@
                        
                         <div id="CCForm4" class="inner-block cctabcontent">
                             <div class="inner-block-content">
-                             <!-- <div class="sub-head">
+                             <div class="sub-head">
                                     CFT Feedback
-                                </div>  -->
+                                </div> 
                                 <div class="row">
     
-                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="comments">Final Comments</label>
-                                            <textarea name="cft_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->cft_comments_new }}</textarea>
+                                            <label for="cft_comments_new">Final Comments</label>
+                                            <div style="position:relative;">
+                                                <textarea name="cft_comments_new" id="cft_comments_new" class="mic-input">{{ $data->cft_comments_new }}</textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -1736,7 +1825,7 @@ function add4Input_case(tableId) {
     cell5.innerHTML = "<input type='text'  name='Remarks[]'>";
 
     var cell6 = newRow.insertCell(5);
-    cell6.innerHTML = '<button type="text" class="removeRowBtn">Remove</button';
+    cell6.innerHTML = '<button type="text" class="removeRowBtn">Remove</button>';
     for (var i = 1; i < currentRowCount; i++) {
         var row = table.rows[i];
         row.cells[0].innerHTML = i;
@@ -1745,7 +1834,7 @@ function add4Input_case(tableId) {
             </script>
         <script>
             VirtualSelect.init({
-                ele: '#investigators'
+                ele: '#investigators, #root_cause_methodology',
             });
 
             function openCity(evt, cityName) {
@@ -1833,7 +1922,7 @@ function add4Input_case(tableId) {
         </script>
          <script>
             VirtualSelect.init({
-                ele: '#departments, #team_members, #training-require, #impacted_objects'
+                ele: '#departments, #team_members, #training-require, #impacted_objects ,#department'
             });
         </script>
           <script>
@@ -1926,4 +2015,94 @@ function add4Input_case(tableId) {
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);});
     </script>
+    
+{{-- voice Command --}}
+    
+<style>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+            color: black;
+            display: none;
+            /* Hide the button initially */
+        }
+
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .relative-container input:focus+.mic-btn {
+            display: inline-block;
+            /* Show the button when input is focused */
+        }
+
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none;
+        }
+    </style>
+
+    <script>
+        < link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
+
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
+                }
+            });
+
+            document.querySelectorAll('.mic-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        micBtn.style.display = 'inline-block';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        setTimeout(() => {
+                            micBtn.style.display = 'none';
+                        }, 200); // Delay to prevent button from hiding immediately when clicked
+                    }
+                });
+            });
+        });
+    </script>
+
     @endsection
+

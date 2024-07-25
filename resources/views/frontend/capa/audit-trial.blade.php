@@ -323,7 +323,7 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
+                            <div> <strong>Record ID.</strong>{{ Helpers::divisionNameForQMS($document->division_id) }}/CAPA/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }} </div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ $document->originator ? $document->originator : '' }}
                             </div>
@@ -369,8 +369,7 @@
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                    <strong> Data Field Name :</strong>{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')
@@ -418,7 +417,7 @@
                     @endforeach
                 </table>
             </div>
-        </div> 
+        </div>
         <div style="float: inline-end; margin: 10px;">
             <style>
                 .pagination>.active>span {

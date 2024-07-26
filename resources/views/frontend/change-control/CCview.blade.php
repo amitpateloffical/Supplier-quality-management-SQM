@@ -1,3 +1,4 @@
+
 @extends('frontend.rcms.layout.main_rcms')
 @section('rcms_container')
 
@@ -390,10 +391,13 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Short Description">Short Description<span
-                                                            class="text-danger">*</span></label><span id="rchars"  class="text-primary">255 </span><span class="text-primary"> characters remaining</span>
-                                                    
-                                                    
-                                                    <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                            class="text-danger">*</span></label><span id="rchars"  class="text-primary">255 </span><span class="text-primary"> characters remaining</span>   
+                                                    <div style="position:relative;">
+                                                        <textarea class="mic-input" name="short_description">{{$data->short_description}}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
             
@@ -443,7 +447,12 @@
                                                 <div class="group-input" id="initiated_through_req">
                                                     <label for="initiated_through">Others<span
                                                             class="text-danger d-none">*</span></label>
-                                                    <textarea name="initiated_through_req">{{ $data->initiated_through_req }}</textarea>
+                                                            <div style="position:relative;">
+                                                                <textarea class="mic-input" name="initiated_through_req">{{$data->initiated_through_req }}</textarea>
+                                                                <button class="mic-btn" type="button">
+                                                                    <i class="fas fa-microphone"></i>
+                                                                </button>
+                                                            </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -466,13 +475,19 @@
                                                 <div class="group-input" id="repeat_nature">
                                                     <label for="repeat_nature">Repeat Nature<span
                                                             class="text-danger d-none">*</span></label>
-                                                    <textarea name="repeat_nature">{{ $data->repeat_nature }}</textarea>
+                                                            <div style="position:relative;">
+                                                                <textarea class="mic-input" name="repeat_nature">{{$data->repeat_nature}}</textarea>
+                                                                <button class="mic-btn" type="button">
+                                                                    <i class="fas fa-microphone"></i>
+                                                                </button>
+                                                            </div>
+                                                    
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="nature-change">Nature Of Change</label>
-                                                    <select name="naturechange">
+                                                    <label for="nature-Change">Nature Of Change</label>
+                                                    <select name="nature_Change">
                                                         <option value="">-- Select --</option>
                                                         <option {{ $data->doc_change == 'Temporary' ? 'selected' : '' }}
                                                             value="Temporary">Temporary
@@ -486,7 +501,13 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="others">If Others</label>
-                                                    <textarea name="others">{{ $data->If_Others }}</textarea>
+                                                     <div style="position:relative;">
+                                                        <textarea class="mic-input" name="If_Others">{{ $data->If_Others}}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -570,11 +591,13 @@
                                                     <table class="table-bordered table" id="doc-detail">
                                                         <thead>
                                                             <tr>
-                                                                <th>Sr. No.</th>
+                                                                <th style='width:4%'>Sr. No.</th>
                                                                 <th>Current Document No.</th>
                                                                 <th>Current Version No.</th>
                                                                 <th>New Document No.</th>
                                                                 <th>New Version No.</th>
+                                                                <th>Action</th>
+                                                                
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -595,6 +618,9 @@
                                                                         </td>
                                                                         <td><input type="text" name="new_version[]"
                                                                                 value="{{ unserialize($docdetail->new_version_no)[$key] ? unserialize($docdetail->new_version_no)[$key] : '' }}">
+                                                                        </td>
+                                                                        <td>
+                                                                            <button type="text" class="removeBtnDD">Remove</button>
                                                                         </td>
 
                                                                     </tr>
@@ -647,7 +673,7 @@
                                             </div>
                                         </div>
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="submit"id="ChangesaveButton" class="saveButton">Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -985,7 +1011,12 @@
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="comments">Comments</label>
-                                                    <textarea name="cft_comments">{{ $comments->cft_comments }}</textarea>
+                                                    <div style="position:relative;">
+                                                        <textarea class="mic-input" name="cft_comments">{{ $comments->cft_comments }}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -1028,49 +1059,90 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">QA Comments</label>
-                                                    <textarea name="qa_commentss">{{ $comments->qa_commentss }}</textarea>
+                                                    <div style="position:relative;">
+                                                        <textarea class="mic-input" name="qa_comments">{{ $comments->qa_comments }}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">QA Head Designee Comments</label>
-                                                    <textarea name="designee_comments">{{ $comments->designee_comments }}</textarea>
+                                                    <div style="position:relative;">
+                                                        <textarea class="mic-input" name="designee_comments">{{ $comments->designee_comments }}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">Warehouse Comments</label>
-                                                    <textarea name="Warehouse_comments">{{ $comments->Warehouse_comments }}</textarea>
+                                                    <div style="position:relative;">
+                                                        <textarea class="mic-input" name="Warehouse_comments">{{ $comments->Warehouse_comments }}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">Engineering Comments</label>
-                                                    <textarea name="Engineering_comments">{{ $comments->Engineering_comments }}</textarea>
+                                                    <div style="position:relative;">
+                                                        <textarea class="mic-input" name="Engineering_comments">{{ $comments->Engineering_comments }}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">Instrumentation Comments</label>
-                                                    <textarea name="Instrumentation_comments">{{ $comments->Instrumentation_comments }}</textarea>
+                                                    <div style="position:relative;">
+                                                        <textarea class="mic-input" name="Instrumentation_comments">{{ $comments->Instrumentation_comments }}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">Validation Comments</label>
-                                                    <textarea name="Validation_comments">{{ $comments->Validation_comments }}</textarea>
+                                                    <div style="position:relative;">
+                                                        <textarea class="mic-input" name="Validation_comments">{{ $comments->Validation_comments }}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">Others Comments</label>
-                                                    <textarea name="Others_comments">{{ $comments->Others_comments }}</textarea>
+                                                    <div style="position:relative;">
+                                                        <textarea class="mic-input" name="Others_comments">{{ $comments->Others_comments }}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">Comments</label>
-                                                    <textarea name="Group_comments">{{ $comments->Group_comments }}</textarea>
+                                                    <div style="position:relative;">
+                                                        <textarea class="mic-input" name="Group_comments">{{ $comments->Group_comments }}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
+                                                
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1124,7 +1196,12 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="risk-identification">Risk Identification</label>
-                                                    <textarea name="risk_identification">{{ $assessment->risk_identification }}</textarea>
+                                                    <div style="position:relative;">
+                                                        <textarea class="mic-input" name="risk_identification">{{ $assessment->risk_identification }}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -1194,13 +1271,23 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="risk-evaluation">Risk Evaluation</label>
-                                                    <textarea name="risk_evaluation">{{ $assessment->risk_evaluation }}</textarea>
+                                                    <div style="position:relative;">
+                                                        <textarea class="mic-input" name="risk_evaluation">{{ $assessment->risk_evaluation }}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="migration-action">Migration Action</label>
-                                                    <textarea name="migration_action">{{ $assessment->migration_action }}</textarea>
+                                                    <div style="position:relative;">
+                                                        <textarea class="mic-input" name="migration_action">{{ $assessment->migration_action }}</textarea>
+                                                        <button class="mic-btn" type="button">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1217,11 +1304,22 @@
                                     <div class="inner-block-content">
                                         <div class="group-input">
                                             <label for="qa-appro-comments">QA Approval Comments</label>
-                                            <textarea name="qa_appro_comments">{{ $approcomments->qa_appro_comments }}</textarea>
+                                            <div style="position:relative;">
+                                                <textarea class="mic-input" name="qa_appro_comments">{{ $approcomments->qa_appro_comments}}</textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
+                                           
                                         </div>
                                         <div class="group-input">
                                             <label for="feedback">Training Feedback</label>
-                                            <textarea name="feedback">{{ $approcomments->feedback }}</textarea>
+                                            <div style="position:relative;">
+                                                <textarea class="mic-input" name="feedback">{{ $approcomments->feedback}}</textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                         <div class="group-input">
                                             <label for="tran-attach">Training Attachments</label>
@@ -1271,7 +1369,7 @@
                                             <table class="table table-bordered" id="affected-documents">
                                                 <thead>
                                                     <tr>
-                                                        <th>Sr. No.</th>
+                                                        <th style='width:3%'>Sr. No.</th>
                                                         <th>Affected Documents</th>
                                                         <th>Document Name</th>
                                                         <th>Document No.</th>
@@ -1317,7 +1415,7 @@
                                                              <td><input type="text" name="new_version_no[]"
                                                                 value="{{ unserialize($closure->new_version_no)[$key] ? unserialize($closure->new_version_no)[$key] : '' }}">
                                                              </td>
-                                                             <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                             <td><button type="text" class="removeaddAffectedDocumentsbtn">Remove</button></td>
                                                         </tr>
                                                     @endforeach
                                                 @endif
@@ -1327,7 +1425,13 @@
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-closure-comments">QA Closure Comments</label>
-                                            <textarea name="qa_closure_comments">{{ $closure->qa_closure_comments }}</textarea>
+                                            <div style="position:relative;">
+                                                <textarea class="mic-input" name="qa_closure_comments">{{ $closure->qa_closure_comments }}</textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
+                                            </div>
+                                           
                                         </div>
                                         <!-- <div class="group-input">
                                             <label for="attach-list">List Of Attachments</label>
@@ -1440,9 +1544,14 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">                                                    
-                                                    <label for="due_date_extension">Due Date Extension
-                                                        Justification</label>
-                                                    <textarea name="due_date_extension"> {{ $due_date_extension }}</textarea>
+                                                    <label for="due_date_extension">Due Date Extension Justification</label>
+                                                        <div style="position:relative;">
+                                                            <textarea class="mic-input" name="due_date_extension">{{$due_date_extension }}</textarea>
+                                                            <button class="mic-btn" type="button">
+                                                                <i class="fas fa-microphone"></i>
+                                                            </button>
+                                                        </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -2093,4 +2202,90 @@
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);});
     </script>
+
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: none;
+        color: black;
+        display: none;
+        /* Hide the button initially */
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px;
+    }
+
+    .relative-container input:focus+.mic-btn {
+        display: inline-block;
+        /* Show the button when input is focused */
+    }
+
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none;
+    }
+</style>
+
+<script>
+    < link rel = "stylesheet"
+    href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+
+        document.querySelectorAll('.mic-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    micBtn.style.display = 'inline-block';
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    setTimeout(() => {
+                        micBtn.style.display = 'none';
+                    }, 200); // Delay to prevent button from hiding immediately when clicked
+                }
+            });
+        });
+    });
+</script>   
 @endsection

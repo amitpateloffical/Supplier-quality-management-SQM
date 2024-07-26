@@ -377,7 +377,7 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                @elseif($datas->type == 'Capa')
+                                                @elseif($datas->type == 'CAPA')
                                                     <a href="{{ route('capashow', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>

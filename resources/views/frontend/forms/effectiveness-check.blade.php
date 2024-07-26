@@ -9,6 +9,128 @@
             display: none;
         }
     </style>
+    {{-- <style>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px; /* Position the button at the right corner */
+            top: 50%; /* Center the button vertically */
+            transform: translateY(-50%); /* Adjust for the button's height */
+            box-shadow: none; /* Remove shadow */
+        }
+        .mic-btn i {
+            color: black; /* Set the color of the icon */
+            box-shadow: none; /* Remove shadow */
+        }
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none; /* Remove shadow on hover/focus/active */
+        }
+    
+        .relative-container {
+            position: relative;
+        }
+    
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px; /* Ensure the text does not overlap the button */
+        }
+    </style> --}}
+
+    {{-- voice Command --}}
+    
+    <style>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+            color: black;
+            display: none;
+            /* Hide the button initially */
+        }
+
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .relative-container input:focus+.mic-btn {
+            display: inline-block;
+            /* Show the button when input is focused */
+        }
+
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none;
+        }
+    </style>
+
+    <script>
+        < link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
+
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
+                }
+            });
+
+            document.querySelectorAll('.mic-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        micBtn.style.display = 'inline-block';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        setTimeout(() => {
+                            micBtn.style.display = 'none';
+                        }, 200); // Delay to prevent button from hiding immediately when clicked
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
 
     <div class="form-field-head">
 
@@ -156,10 +278,14 @@
                                 </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
-                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                        <div style="position:relative;">
+                                        <input id="docname" type="text" name="short_description" class="mic-input" maxlength="255" required>
+                                        <button class="mic-btn" type="button">
+                                            <i class="fas fa-microphone"></i>
+                                        </button>
+                                        </div>
                                     </div>
                                 </div>  
                                 {{-- <div class="col-lg-6">
@@ -176,10 +302,16 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
-                                        <input type="text" name="Effectiveness_check_Plan">
+                                        <div style="position:relative;">
+                                        <input type="text" name="Effectiveness_check_Plan" class="mic-input">
+                                        <button class="mic-btn" type="button">
+                                            <i class="fas fa-microphone"></i>
+                                        </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="group-input">
                                         <label for="Attachments">Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -213,7 +345,12 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <textarea type="text" name="effect_summary"></textarea>
+                                        <div style="position:relative;">
+                                        <textarea type="text" name="effect_summary" class="mic-input"></textarea>
+                                        <button class="mic-btn" type="button">
+                                            <i class="fas fa-microphone"></i>
+                                        </button>
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
@@ -222,7 +359,12 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
-                                        <textarea type="text" name="Effectiveness_Results"></textarea>
+                                        <div style="position:relative;">
+                                        <textarea type="text" name="Effectiveness_Results" class="mic-input"></textarea>
+                                        <button class="mic-btn" type="button">
+                                            <i class="fas fa-microphone"></i>
+                                        </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
@@ -252,7 +394,12 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Comments"><b>Addendum Comments</b></label>
-                                        <textarea type="text" name="Addendum_Comments"></textarea>
+                                        <div style="position:relative;">
+                                        <textarea type="text" name="Addendum_Comments" class="mic-input"></textarea>
+                                        <button class="mic-btn" type="button">
+                                            <i class="fas fa-microphone"></i>
+                                        </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
@@ -297,7 +444,12 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments"><b>Comments</b></label>
-                                        <textarea name="Comments"></textarea>
+                                        <div style="position:relative;">
+                                        <textarea name="Comments" class="mic-input" ></textarea>
+                                        <button class="mic-btn" type="button">
+                                            <i class="fas fa-microphone"></i>
+                                        </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
@@ -599,4 +751,49 @@
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);});
     </script>
+    {{-- ========================================= --}}
+
+    {{-- <script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+        </script>
+    
+    
+    
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize speech recognition
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+    
+            // Function to start speech recognition and append result to the target element
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
+    
+            // Event delegation for all mic buttons
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
+                }
+            });
+        });
+    </script> --}}
+
+    
+
+
 @endsection

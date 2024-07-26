@@ -46,6 +46,7 @@ class SupplierSiteController extends Controller
     }
 
     public function store(Request $request){
+        // dd($request->all());
         $supplierSite = new SupplierSite();
         $supplierSite->type = "Supplier Site";
         $supplierSite->division_id = $request->division_id;
@@ -123,10 +124,11 @@ class SupplierSiteController extends Controller
         $supplierSite->other_contacts = $request->other_contacts;
         $supplierSite->supplier_serivce = $request->supplier_serivce;
         $supplierSite->zone = $request->zone;
-        $supplierSite->country = $request->country;
-        $supplierSite->state = $request->state;
-        $supplierSite->city = $request->city;
+        $supplierSite->country = $request->country == 'Select Country' ? null: $request->country;
+        $supplierSite->state = $request->state == 'Select State/District' ? null: $request->state;
+        $supplierSite->city = $request->city == 'Select City' ? null: $request->city ;
         $supplierSite->address = $request->address;
+        $supplierSite->suppplier_web_site = $request->suppplier_web_site;
         $supplierSite->iso_certified_date = $request->iso_certified_date;
         $supplierSite->suppplier_contacts = $request->suppplier_contacts;
         $supplierSite->related_non_conformance = $request->related_non_conformance;
@@ -324,6 +326,8 @@ class SupplierSiteController extends Controller
         $certificationData->identifier = 'CertificationData';
         $certificationData->data = $request->certificationData;
         $certificationData->save();
+
+        
 
         /******************* Audit Trail Code ***********************/
         $history = new SupplierSiteAuditTrail;
@@ -1547,16 +1551,20 @@ class SupplierSiteController extends Controller
         return redirect(url('rcms/qms-dashboard'));
     }
 
-    public function show(Request $request, $id){
+    public function show(Request $request, $id)
+    {
+        
         $data = SupplierSite::find($id);
         $gridData = SupplierSiteGrid::where(['supplier_site_id' => $id, 'identifier' => "CertificationData"])->first();
         $certificationData = json_decode($gridData->data, true);
         return view('frontend.supplier-site.suppliersite_view', compact('data', 'certificationData'));
     }
 
-    public function update(Request $request, $id){       
+    public function update(Request $request, $id){ 
+       // dd(request->all());      
         $lastDocument = SupplierSite::find($id);
         $supplierSite = SupplierSite::find($id);
+        
 
         $supplierSite->date_opened = $request->date_opened;
         $supplierSite->short_description = $request->short_description;
@@ -1628,10 +1636,11 @@ class SupplierSiteController extends Controller
         $supplierSite->other_contacts = $request->other_contacts;
         $supplierSite->supplier_serivce = $request->supplier_serivce;
         $supplierSite->zone = $request->zone;
-        $supplierSite->country = $request->country;
-        $supplierSite->state = $request->state;
-        $supplierSite->city = $request->city;
+        $supplierSite->country = $request->country == 'Select Country' ? null: $request->country;
+        $supplierSite->state = $request->state == 'Select State/District' ? null: $request->state;
+        $supplierSite->city = $request->city == 'Select City' ? null: $request->city ;
         $supplierSite->address = $request->address;
+        $supplierSite->suppplier_web_site = $request->suppplier_web_site;
         $supplierSite->iso_certified_date = $request->iso_certified_date;
         $supplierSite->suppplier_contacts = $request->suppplier_contacts;
         $supplierSite->related_non_conformance = $request->related_non_conformance;
@@ -1838,7 +1847,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->short_description) || $lastDocument->short_description === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->supplier_contact_person != $request->supplier_contact_person){
@@ -1854,7 +1867,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->supplier_contact_person) || $lastDocument->supplier_contact_person === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->supplier_products != $request->supplier_products){
@@ -1870,7 +1887,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->supplier_products) || $lastDocument->supplier_products === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->description != $request->description){
@@ -1886,7 +1907,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->description) || $lastDocument->description === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->supplier_type != $request->supplier_type){
@@ -1902,7 +1927,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->supplier_type) || $lastDocument->supplier_type === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->supplier_sub_type != $request->supplier_sub_type){
@@ -1918,7 +1947,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->supplier_sub_type) || $lastDocument->supplier_sub_type === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->supplier_other_type != $request->supplier_other_type){
@@ -1934,7 +1967,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->supplier_other_type) || $lastDocument->supplier_other_type === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->supply_from != $request->supply_from){
@@ -1950,7 +1987,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->supply_from) || $lastDocument->supply_from === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->supply_to != $request->supply_to){
@@ -1966,7 +2007,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->supply_to) || $lastDocument->supply_to === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->supplier_website != $request->supplier_website){
@@ -1982,7 +2027,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->supplier_website) || $lastDocument->supplier_website === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->related_url != $request->related_url){
@@ -1998,7 +2047,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->related_url) || $lastDocument->related_url === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->related_quality_events != $request->related_quality_events){
@@ -2014,7 +2067,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->related_quality_events) || $lastDocument->related_quality_events === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->HOD_feedback != $request->HOD_feedback){
@@ -2030,7 +2087,12 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->HOD_feedback) || $lastDocument->HOD_feedback === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            
             $history->save();
         }
         if($lastDocument->HOD_comment != $request->HOD_comment){
@@ -2046,7 +2108,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->HOD_comment) || $lastDocument->HOD_comment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->supplier_name != $request->supplier_name){
@@ -2062,7 +2128,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->supplier_name) || $lastDocument->supplier_name === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->supplier_id != $request->supplier_id){
@@ -2078,7 +2148,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->supplier_id) || $lastDocument->supplier_id === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->manufacturer_name != $request->manufacturer_name){
@@ -2094,7 +2168,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->manufacturer_name) || $lastDocument->manufacturer_name === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->manufacturer_id != $request->manufacturer_id){
@@ -2110,7 +2188,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->manufacturer_id) || $lastDocument->manufacturer_id === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->vendor_name != $request->vendor_name){
@@ -2126,7 +2208,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->vendor_name) || $lastDocument->vendor_name === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->vendor_id != $request->vendor_id){
@@ -2142,7 +2228,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->vendor_id) || $lastDocument->vendor_id === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->contact_person != $request->contact_person){
@@ -2158,7 +2248,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->contact_person) || $lastDocument->contact_person === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->other_contacts != $request->other_contacts){
@@ -2174,7 +2268,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->other_contacts) || $lastDocument->other_contacts === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->supplier_serivce != $request->supplier_serivce){
@@ -2190,7 +2288,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->supplier_serivce) || $lastDocument->supplier_serivce === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->zone != $request->zone){
@@ -2206,7 +2308,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->zone) || $lastDocument->zone === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->country != $request->country){
@@ -2222,7 +2328,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->country) || $lastDocument->country === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->state != $request->state){
@@ -2238,7 +2348,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->state) || $lastDocument->state === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->city != $request->city){
@@ -2254,7 +2368,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->city) || $lastDocument->city === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->address != $request->address){
@@ -2270,7 +2388,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->address) || $lastDocument->address === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->suppplier_web_site != $request->suppplier_web_site){
@@ -2286,7 +2408,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->suppplier_web_site) || $lastDocument->suppplier_web_site === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->iso_certified_date != $request->iso_certified_date){
@@ -2302,7 +2428,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->iso_certified_date) || $lastDocument->iso_certified_date === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->suppplier_contacts != $request->suppplier_contacts){
@@ -2318,7 +2448,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->suppplier_contacts) || $lastDocument->suppplier_contacts === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->related_non_conformance != $request->related_non_conformance){
@@ -2334,7 +2468,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->related_non_conformance) || $lastDocument->related_non_conformance === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->suppplier_agreement != $request->suppplier_agreement){
@@ -2350,7 +2488,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->suppplier_agreement) || $lastDocument->suppplier_agreement === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->regulatory_history != $request->regulatory_history){
@@ -2366,7 +2508,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->regulatory_history) || $lastDocument->regulatory_history === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->distribution_sites != $request->distribution_sites){
@@ -2382,7 +2528,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->distribution_sites) || $lastDocument->distribution_sites === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->manufacturing_sited != $request->manufacturing_sited){
@@ -2398,7 +2548,12 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            
+            if (is_null($lastDocument->manufacturing_sited) || $lastDocument->manufacturing_sited === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->quality_management != $request->quality_management){
@@ -2414,7 +2569,13 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            
+            if (is_null($lastDocument->quality_management) || $lastDocument->quality_management === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            
             $history->save();
         }
         if($lastDocument->bussiness_history != $request->bussiness_history){
@@ -2430,7 +2591,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->bussiness_history) || $lastDocument->bussiness_history === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->performance_history != $request->performance_history){
@@ -2446,7 +2611,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->performance_history) || $lastDocument->performance_history === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->compliance_risk != $request->compliance_risk){
@@ -2462,7 +2631,12 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            
+            if (is_null($lastDocument->compliance_risk) || $lastDocument->compliance_risk === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->cost_reduction != $request->cost_reduction){
@@ -2478,7 +2652,12 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            
+            if (is_null($lastDocument->cost_reduction) || $lastDocument->cost_reduction === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->cost_reduction_weight != $request->cost_reduction_weight){
@@ -2494,7 +2673,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->cost_reduction_weight) || $lastDocument->cost_reduction_weight === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->payment_term != $request->payment_term){
@@ -2510,7 +2693,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->payment_term) || $lastDocument->payment_term === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->payment_term_weight != $request->payment_term_weight){
@@ -2526,7 +2713,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->payment_term_weight) || $lastDocument->payment_term_weight === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->lead_time_days != $request->lead_time_days){
@@ -2542,7 +2733,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->lead_time_days) || $lastDocument->lead_time_day === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->lead_time_days_weight != $request->lead_time_days_weight){
@@ -2558,7 +2753,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->lead_time_days_weight) || $lastDocument->lead_time_days_weight === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->ontime_delivery != $request->ontime_delivery){
@@ -2574,7 +2773,12 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            
+            if (is_null($lastDocument->ontime_delivery) || $lastDocument->ontime_delivery === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->ontime_delivery_weight != $request->ontime_delivery_weight){
@@ -2590,7 +2794,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->ontime_delivery_weight) || $lastDocument->ontime_delivery_weight === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->supplier_bussiness_planning != $request->supplier_bussiness_planning){
@@ -2606,7 +2814,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->supplier_bussiness_planning) || $lastDocument->supplier_bussiness_planning === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->supplier_bussiness_planning_weight != $request->supplier_bussiness_planning_weight){
@@ -2622,7 +2834,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if(is_null($lastDocument->supplier_bussiness_planning_weight) || $lastDocument->supplier_bussiness_planning_weight === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->rejection_ppm != $request->rejection_ppm){
@@ -2638,7 +2854,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->rejection_ppm) || $lastDocument->rejection_ppm === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->rejection_ppm_weight != $request->rejection_ppm_weight){
@@ -2654,7 +2874,12 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            
+            if (is_null($lastDocument->rejection_ppm_weight) || $lastDocument->rejection_ppm_weight === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->quality_system != $request->quality_system){
@@ -2670,7 +2895,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->quality_system) || $lastDocument->quality_system === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->quality_system_ranking != $request->quality_system_ranking){
@@ -2686,7 +2915,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->quality_system_ranking) || $lastDocument->quality_system_ranking === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->car_generated != $request->car_generated){
@@ -2702,7 +2935,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->car_generated) || $lastDocument->car_generated === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->car_generated_weight != $request->car_generated_weight){
@@ -2718,7 +2955,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->car_generated_weight) || $lastDocument->car_generated_weight === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->closure_time != $request->closure_time){
@@ -2734,7 +2975,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->closure_time) || $lastDocument->closure_time === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->closure_time_weight != $request->closure_time_weight){
@@ -2750,7 +2995,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->closure_time_weight) || $lastDocument->closure_time_weight === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->end_user_satisfaction != $request->end_user_satisfaction){
@@ -2766,7 +3015,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->end_user_satisfaction) || $lastDocument->end_user_satisfaction === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->end_user_satisfaction_weight != $request->end_user_satisfaction_weight){
@@ -2782,7 +3035,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->end_user_satisfaction_weight) || $lastDocument->end_user_satisfaction_weight === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->QA_reviewer_feedback != $request->QA_reviewer_feedback){
@@ -2798,7 +3055,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->QA_reviewer_feedback) || $lastDocument->QA_reviewer_feedback === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->QA_reviewer_comment != $request->QA_reviewer_comment){
@@ -2814,7 +3075,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->QA_reviewer_comment) || $lastDocument->QA_reviewer_comment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->last_audit_date != $request->last_audit_date){
@@ -2830,7 +3095,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->last_audit_date) || $lastDocument->last_audit_date === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->next_audit_date != $request->next_audit_date){
@@ -2846,7 +3115,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->next_audit_date) || $lastDocument->next_audit_date === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->audit_frequency != $request->audit_frequency){
@@ -2862,7 +3135,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->audit_frequency) || $lastDocument->audit_frequency === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->last_audit_result != $request->last_audit_result){
@@ -2878,7 +3155,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->last_audit_result) || $lastDocument->last_audit_result === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->facility_type != $request->facility_type){
@@ -2894,7 +3175,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->facility_type) || $lastDocument->facility_type === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->nature_of_employee != $request->nature_of_employee){
@@ -2910,7 +3195,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->nature_of_employee) || $lastDocument->nature_of_employee === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->technical_support != $request->technical_support){
@@ -2926,7 +3215,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->technical_support) || $lastDocument->technical_support === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->survice_supported != $request->survice_supported){
@@ -2942,7 +3235,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->survice_supported) || $lastDocument->survice_supported === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->reliability != $request->reliability){
@@ -2958,7 +3255,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->reliability) || $lastDocument->reliability === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->revenue != $request->revenue){
@@ -2974,7 +3275,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->revenue) || $lastDocument->revenue === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->client_base != $request->client_base){
@@ -2990,7 +3295,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->client_base) || $lastDocument->client_base === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->previous_audit_result != $request->previous_audit_result){
@@ -3006,7 +3315,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->previous_audit_result) || $lastDocument->previous_audit_result === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
         if($lastDocument->QA_head_comment != $request->QA_head_comment){
@@ -3022,7 +3335,11 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->QA_head_comment) || $lastDocument->QA_head_comment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -3031,15 +3348,20 @@ class SupplierSiteController extends Controller
 
     public function singleReport(Request $request, $id){
         $data = SupplierSite::find($id);
+        $supplierData = SupplierSite::find($id);
+       
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
-            $gridData = SupplierSiteGrid::where('supplier_site_id', $data->id)->first();
-            
+            $gridData = SupplierSiteGrid::where(['supplier_site_id' => $id, 'identifier' => "CertificationData"])->first();
+            $certificationData = json_decode($gridData->data, true);
+            // $gridData = SupplierSiteGrid::where('supplier_site_id', $data->id)->first();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.supplier-site.suppliersite-single-report', compact(
                 'data',
                 'gridData',
+                'certificationData',
+                'supplierData',
             ))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
@@ -3084,7 +3406,6 @@ class SupplierSiteController extends Controller
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
             $data = SupplierSiteAuditTrail::where('supplier_site_id', $doc->id)->orderByDesc('id')->get();
-    
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.supplier-site.suppliersite-audit-trail-pdf', compact('data', 'doc'))

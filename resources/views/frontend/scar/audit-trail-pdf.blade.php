@@ -153,11 +153,11 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Audit Program Audit Trial Report
+                    SCAR Audit Trial Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">
+                        <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>

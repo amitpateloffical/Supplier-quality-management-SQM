@@ -53,7 +53,7 @@
         #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(1) {
             border-radius: 20px 0px 0px 20px;
         }
-        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(6) {
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(8) {
             border-radius: 0px 20px 20px 0px;
         }
     </style>

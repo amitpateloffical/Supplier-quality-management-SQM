@@ -1,6 +1,6 @@
 @extends('frontend.layout.main')
 @section('container')
-@php 
+@php
 $users = DB::table('users')->select('id', 'name')->get();
 @endphp
 <style>
@@ -155,7 +155,7 @@ $users = DB::table('users')->select('id', 'name')->get();
 <div class="form-field-head">
     <div class="division-bar">
         <strong>Site Division/Project</strong> :
-        {{ Helpers::getDivisionName($data->division_id) }} / SCAR 
+        {{ Helpers::getDivisionName($data->division_id) }} / SCAR
     </div>
 </div>
 
@@ -227,9 +227,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                         @endif
 
                         @if ($data->stage >= 3)
-                            <div class="active">Acknowleged by Supplier</div>
+                            <div class="active">Acknowledged by Supplier</div>
                         @else
-                            <div class="">Acknowleged by Supplier</div>
+                            <div class="">Acknowledged by Supplier</div>
                         @endif
 
                         @if ($data->stage >= 4)
@@ -295,7 +295,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <input disabled type="text" value="{{ Helpers::getdateFormat($data->initiation_date) }}">
                                 </div>
                             </div>
-                        
+
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Due Date">Date Due</label>
@@ -318,16 +318,21 @@ $users = DB::table('users')->select('id', 'name')->get();
                                             @foreach($users as $user)
                                                 <option value="{{$user->id }}" @if($data->assign_to == $user->id) selected @endif>{{ $user->name }}</option>
                                             @endforeach
-                                        @endif                                    
+                                        @endif
                                     </select>
                                 </div>
                             </div>
-                       
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255</span>
                                     characters remaining
-                                    <input id="docname" type="text" name="short_description" value="{{ $data->short_description }}" maxlength="255" required @if($data->stage >= 6) disabled @endif>
+                                    <div style="position: relative;">
+                                    <input id="docname" type="text" name="short_description" class="mic-input"value="{{ $data->short_description }}" maxlength="255" required @if($data->stage >= 6) disabled @endif>
+                                    <button class="mic-btn"type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <script>
@@ -336,18 +341,28 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     var textlen = maxLength - $(this).val().length;
                                     $('#rchars').text(textlen);});
                             </script>
-                             
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="SCAR Name">SCAR Name</label>
-                                    <input type="text" value="{{ $data->scar_name }}" name="scar_name" placeholder="Enter SCAR Name" @if($data->stage >= 6) disabled @endif>
+                                    <div style="position: relative;">
+                                    <input type="text" value="{{ $data->scar_name }}"class="mic-input" name="scar_name" placeholder="Enter SCAR Name" @if($data->stage >= 6) disabled @endif>
+                                    <button class="mic-btn"type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Owner">Owner</label>
-                                    <input type="text" value="{{ $data->owner_name }}" name="owner_name" placeholder="Enter Owner Name" @if($data->stage >= 6) disabled @endif>
+                                    <div style="position: relative;">
+                                    <label for="Owner">Owner Name</label>
+                                    <input type="text" value="{{ $data->owner_name }}" class="mic-input"name="owner_name" placeholder="Enter Owner Name" @if($data->stage >= 6) disabled @endif>
+                                    <button class="mic-btn"type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -361,7 +376,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     </div>
                                 </div>
                             </div>
-                          
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier Site">Supplier Site</label>
@@ -403,15 +418,25 @@ $users = DB::table('users')->select('id', 'name')->get();
 
                             <div class="col-lg-12">
                                 <div class="group-input">
+                                    <div style="position: relative;">
                                     <label for="Description">Description</label>
-                                   <textarea name="description" id="description" cols="30" value="{{ $data->description }}" @if($data->stage >= 6) disabled @endif>{{$data->description}}</textarea>
+                                   <textarea name="description" id="description" cols="30"class="mic-input" value="{{ $data->description }}" @if($data->stage >= 6) disabled @endif>{{$data->description}}</textarea>
+                                   <button class="mic-btn"type="button">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                </div>
                                 </div>
                             </div>
 
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Recommended Action">Recommended Action</label>
-                                   <textarea id="recommended_action" cols="30" name="recommended_action" value="{{ $data->recommended_action }}" @if($data->stage >= 6) disabled @endif>{{ $data->recommended_action }}</textarea>
+                                    <div style="position: relative;">
+                                   <textarea id="recommended_action" cols="30" class="mic-input"name="recommended_action" value="{{ $data->recommended_action }}" @if($data->stage >= 6) disabled @endif>{{ $data->recommended_action }}</textarea>
+                                   <button class="mic-btn"type="button">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                </div>
                                 </div>
                             </div>
 
@@ -421,10 +446,12 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Non Conformance">Non Conformance</label>
-                                    <textarea id="non_conformance" cols="30" name="non_conformance" value="{{ $data->non_conformance }}" @if($data->stage >= 6) disabled @endif>{{ $data->non_conformance }}</textarea>
-                                    <!-- <select name="non_conformance">
-                                        <option value="">Enter Your Selection Here</option>
-                                    </select> -->
+                                    <div style="position: relative;">
+                                    <textarea id="non_conformance" cols="30" class="mic-input"name="non_conformance" value="{{ $data->non_conformance }}" @if($data->stage >= 6) disabled @endif>{{ $data->non_conformance }}</textarea>
+                                    <button class="mic-btn"type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -448,32 +475,52 @@ $users = DB::table('users')->select('id', 'name')->get();
 
                             <div class="col-lg-12">
                                 <div class="group-input">
+                                    <div style="position: relative;">
                                     <label for="Root Cause">Root Cause</label>
-                                   <textarea id="root_cause" cols="30" name="root_cause" value="{{ $data->root_cause }}" @if($data->stage >= 6) disabled @endif>{{ $data->root_cause }}</textarea>
+                                   <textarea id="root_cause" cols="30" class="mic-input" name="root_cause" value="{{ $data->root_cause }}" @if($data->stage >= 6) disabled @endif>{{ $data->root_cause }}</textarea>
+                                   <button class="mic-btn"type="button">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                </div>
                                 </div>
                             </div>
 
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Risk Analysis">Risk Analysis</label>
-                                   <textarea cols="30" id="risk_analysis" name="risk_analysis" value="{{ $data->risk_analysis }}" @if($data->stage >= 6) disabled @endif>{{ $data->risk_analysis }}</textarea>
+                                    <div style="position: relative;">
+                                   <textarea cols="30" id="risk_analysis" name="risk_analysis" class="mic-input"value="{{ $data->risk_analysis }}" @if($data->stage >= 6) disabled @endif>{{ $data->risk_analysis }}</textarea>
+                                   <button class="mic-btn"type="button">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                </div>
                                 </div>
                             </div>
 
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Effectiveness Check Summary">Effectiveness Check Summary</label>
-                                   <textarea cols="30" name="effectiveness_check_summary" value="{{ $data->effectiveness_check_summary }}" id="effectiveness_check_summary" @if($data->stage >= 6) disabled @endif>{{ $data->effectiveness_check_summary }}</textarea>
+                                    <div style="position: relative;">
+                                   <textarea cols="30" name="effectiveness_check_summary"class="mic-input" value="{{ $data->effectiveness_check_summary }}" id="effectiveness_check_summary" @if($data->stage >= 6) disabled @endif>{{ $data->effectiveness_check_summary }}</textarea>
+                                   <button class="mic-btn"type="button">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                </div>
                                 </div>
                             </div>
 
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="CAPA Plan">CAPA Plan</label>
-                                   <textarea id="capa_plan" cols="30" name="capa_plan" value="{{ $data->capa_plan }}" @if($data->stage >= 6) disabled @endif>{{ $data->capa_plan }}</textarea>
+                                    <div style="position: relative;">
+                                   <textarea id="capa_plan" cols="30" name="capa_plan" class="mic-input"value="{{ $data->capa_plan }}" @if($data->stage >= 6) disabled @endif>{{ $data->capa_plan }}</textarea>
+                                   <button class="mic-btn"type="button">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                </div>
                                 </div>
                             </div>
-                           
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -625,8 +672,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                     </div>
                 </div>
             </div>
-        </form>  
-        
+        </form>
+
             <!-- Forword Stage Modal -->
             <div class="modal fade" id="signature-modal">
                 <div class="modal-dialog modal-dialog-centered">
@@ -750,6 +797,74 @@ $users = DB::table('users')->select('id', 'name')->get();
                     display: block;
                 }
             </style>
+
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
+    }
+</style>
+<script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+</script>
+
 
             <script>
                 VirtualSelect.init({

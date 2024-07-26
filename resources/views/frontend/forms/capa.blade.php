@@ -13,6 +13,167 @@
         }
     </style>
 
+
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
+    }
+</style>
+
+    <style>
+    #start-record-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    #start-record-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    #start-record-btn:focus,
+    #start-record-btn:hover,
+    #start-record-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+</style>
+
+
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
+    }
+</style>
+
+<style>
+    .group-input {
+        margin-bottom: 20px;
+    }
+    .mic-btn, .speak-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: none;
+    }
+    .mic-btn i, .speak-btn i {
+        color: black;
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active,
+    .speak-btn:focus,
+    .speak-btn:hover,
+    .speak-btn:active {
+        /* box-shadow: none; */
+    }
+    .relative-container {
+        position: relative;
+    }
+    .relative-container input {
+        width: 100%;
+        padding-right: 40px;
+    }
+</style>
+
+<style>
+    .mini-modal {
+      display: none;
+      position: absolute;
+      z-index: 1;
+      padding: 10px;
+      background-color: #fefefe;
+      border: 1px solid #888;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 200px; /* Adjust width as needed */
+  }
+  .mini-modal-content {
+      background-color: #fefefe;
+      padding: 10px;
+      border-radius: 4px;
+  }
+  .mini-modal-content h2 {
+      font-size: 16px;
+      margin-top: 0;
+  }
+  .close {
+      color: #aaa;
+      float: right;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+  }
+  .close:hover,
+  .close:focus {
+      color: black;
+      text-decoration: none;
+  }
+
+  .mic-btn {
+            right: 50px; /* Adjust position to avoid overlap with speaker button */
+        }
+
+        .speak-btn {
+            right: 16px;
+        }
+
+</style>
     <script>
         function otherController(value, checkValue, blockID) {
             let block = document.getElementById(blockID)
@@ -39,12 +200,12 @@
                         '"></td>' +
                         '<td><input type="text" name="material_name[]"></td>' +
                         '<td><input type="text" name="material_batch_no[]"></td>' +
-                       
+
                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_mfg_date[]" id="material_mfg_date' + serialNumber +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`);checkDate(`material_mfg_date1' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
 
-                        
+
                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_expiry_date[]" id="material_expiry_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`);checkDate(`material_mfg_date' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
-                        
+
                         '<td><input type="text" name="material_batch_desposition[]"></td>' +
                         '<td><input type="text" name="material_remark[]"></td>' +
                         '<td><select name="material_batch_status[]">' +
@@ -55,8 +216,8 @@
                     }
 
                     html += '</select></td>' +
-                      
-                     
+
+
                         '</tr>';
 
                     return html;
@@ -84,7 +245,7 @@
     {{-- ======================================
                     DATA FIELDS
     ======================================= --}}
-  
+
     <div id="change-control-fields">
         <div class="container-fluid">
 
@@ -177,7 +338,7 @@
                                     $initiationDate = date('Y-m-d');
                                     $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
                                 @endphp
-                            
+
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due"> Due Date</label>
@@ -185,12 +346,12 @@
                                         <div class="calenderauditee">
                                             <input type="text" name="due_date" id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input disabled type="date" name="due_date_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input disabled type="date"  disabled name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <script>
                                     // Format the due date to DD-MM-YYYY
                                     // Your input date
@@ -277,13 +438,52 @@
                                 </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars">255</span>
-                                        characters remaining
-                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                        <label for="short_description">Short Description<span class="text-danger">*</span></label>
+                                        <div class="relative-container">
+                                            <input id="short_description" type="text" class="mic-input" name="short_description" maxlength="255" required>
+                                            <button class="mic-btn" type="button" style="display: none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>  
-                                    <p id="docnameError" style="color:red">**Short Description is required</p>
+                                </div>
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
@@ -318,11 +518,54 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" id="initiated_through_req">
-                                        <label for="initiated_through">Others<span
-                                                class="text-danger d-none">*</span></label>
-                                        <textarea name="initiated_through_req"></textarea>
+                                        <label for="initiated_through_req">Others<span class="text-danger d-none">*</span></label>
+                                        <div class="relative-container">
+                                            <textarea name="initiated_through_req" id="initiated_through_req_textarea" class="mic-input"   ></textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="repeat">Repeat</label>
@@ -338,18 +581,102 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="repeat_nature">
-                                        <label for="repeat_nature">Repeat Nature<span
-                                                class="text-danger d-none">*</span></label>
-                                        <textarea name="repeat_nature"></textarea>
+                                    <div class="group-input" id="repeat_nature_group">
+                                        <label for="repeat_nature">Repeat Nature<span class="text-danger d-none">*</span></label>
+                                        <div class="relative-container">
+                                            <textarea name="repeat_nature" id="repeat_nature_textarea" class="mic-input" ></textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Problem Description">Problem Description</label>
-                                        <textarea name="problem_description"></textarea>
+                                    <div class="group-input" id="problem_description_group">
+                                        <label for="problem_description">Problem Description</label>
+                                        <div class="relative-container">
+                                            <textarea name="problem_description" id="problem_description_textarea" class="mic-input" ></textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                                                       {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="CAPA Team">CAPA Team</label>
@@ -408,11 +735,53 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Initial Observation">Initial Observation</label>
-                                        <textarea name="initial_observation"></textarea>
+                                    <div class="group-input" id="initial_observation_group">
+                                        <label for="initial_observation">Initial Observation</label>
+                                        <div class="relative-container">
+                                            <textarea name="initial_observation" id="initial_observation_textarea" class="mic-input" ></textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Interim Containnment">Interim Containnment</label>
@@ -425,14 +794,54 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="containment_comments">
-                                        <label for="Containment Comments">
-                                            Containment Comments <span class="text-danger d-none">*</span>
-                                        </label>
-                                        <textarea name="containment_comments" id="containment_comments"></textarea>
+                                    <div class="group-input" id="containment_comments_group">
+                                        <label for="containment_comments">Containment Comments <span class="text-danger d-none">*</span></label>
+                                        <div class="relative-container">
+                                            <textarea name="containment_comments" id="containment_comments_textarea" class="mic-input" ></textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                              
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="CAPA Attachments">CAPA Attachment</label>
@@ -450,12 +859,53 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Comments"> CAPA QA Comments </label>
-                                        <textarea name="capa_qa_comments"></textarea>
+                                    <div class="group-input" id="capa_qa_comments_group">
+                                        <label for="capa_qa_comments">CAPA QA Comments</label>
+                                        <div class="relative-container">
+                                            <textarea name="capa_qa_comments" id="capa_qa_comments_textarea" class="mic-input" ></textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
@@ -463,6 +913,7 @@
 
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- Product Information content -->
@@ -532,18 +983,18 @@
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
                                                                 <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
+                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input"
                                                                 oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
                                                             <div  class="calenderauditee">
                                                                 <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                                  oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
                                                         </div>
@@ -628,24 +1079,24 @@
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
                                                                 <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
+                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input"
                                                                 oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
                                                             <div  class="calenderauditee">
                                                                 <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                                  oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                
+
                                                 <td><input type="text" name="material_batch_desposition[]"></td>
                                                 <td><input type="text" name="material_remark[]"></td>
                                                 <td>
@@ -679,9 +1130,9 @@
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
-                                            
 
-                                            
+
+
                                          <tbody>
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
@@ -689,7 +1140,7 @@
                                                 <td><input type="text" name="equipment_instruments[]"></td>
                                                 <td><input type="text" name="equipment_comments[]"></td>
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                            </tbody> 
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -697,18 +1148,101 @@
                                     Other type CAPA Details
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Details">Details</label>
-                                        <input type="text" name="details_new">
+                                    <div class="group-input" id="details_new_group">
+                                        <label for="details_new">Details</label>
+                                        <div class="relative-container">
+                                            <input type="text" name="details_new" id="details_new_input" class="mic-input"  >
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Comments"> CAPA QA Comments </label>
-                                        <textarea name="capa_qa_comments2"></textarea>
+                                    <div class="group-input" id="capa_qa_comments2_group">
+                                        <label for="capa_qa_comments2">CAPA QA Comments</label>
+                                        <div class="relative-container">
+                                            <textarea name="capa_qa_comments2" id="capa_qa_comments2_textarea" class="mic-input" ></textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -772,7 +1306,7 @@
                                         <label for="General Deviation">General Deviation</label>
                                         <textarea name="general_deviation"></textarea>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -805,24 +1339,150 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Corrective Action">Corrective Action</label>
-                                        <textarea name="corrective_action"></textarea>
+                                    <div class="group-input" id="corrective_action_group">
+                                        <label for="corrective_action">Corrective Action</label>
+                                        <div class="relative-container">
+                                            <textarea name="corrective_action" id="corrective_action_textarea" class="mic-input" ></textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Preventive Action">Preventive Action</label>
-                                        <textarea name="preventive_action"></textarea>
+                                    <div class="group-input" id="preventive_action_group">
+                                        <label for="preventive_action">Preventive Action</label>
+                                        <div class="relative-container">
+                                            <textarea name="preventive_action" id="preventive_action_textarea" class="mic-input" ></textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Supervisor Review Comments">Supervisor Review Comments</label>
-                                        <textarea name="supervisor_review_comments"></textarea>
+                                    <div class="group-input" id="supervisor_review_comments_group">
+                                        <label for="supervisor_review_comments">Supervisor Review Comments</label>
+                                        <div class="relative-container">
+                                            <textarea name="supervisor_review_comments" id="supervisor_review_comments_textarea" class="mic-input"></textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -830,6 +1490,7 @@
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
+                    </div>
                     </div>
                       <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -964,7 +1625,7 @@
 
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
@@ -985,7 +1646,7 @@
                                                 documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="cft_attchament_new"> </div>
-                                                                                        
+
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="cft_attchament_new[]"
@@ -1077,11 +1738,55 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="QA Review & Closure">QA Review & Closure</label>
-                                        <textarea name="qa_review"></textarea>
+                                    <div class="group-input" id="qa_review_group">
+                                        <label for="qa_review_textarea">QA Review & Closure</label>
+                                        <div class="relative-container">
+                                            <textarea name="qa_review" id="qa_review_textarea" class="mic-input"></textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal" style="display:none;">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Closure Attachments">Closure Attachment</label>
@@ -1145,23 +1850,65 @@
                                     Extension Justification
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="due_date_extension">Due Date Extension Justification</label>
-                                        <div><small class="text-primary">Please Mention justification if due date is
-                                                crossed</small></div>
-                                        <textarea name="due_date_extension"></textarea>
+                                    <div class="group-input" id="due_date_extension_group">
+                                        <label for="due_date_extension_textarea">Due Date Extension Justification</label>
+                                        <div>
+                                            <small class="text-primary">Please Mention justification if due date is crossed</small>
+                                        </div>
+                                        <div class="relative-container">
+                                            <textarea name="due_date_extension" id="due_date_extension_textarea" class="mic-input"></textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                  <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
                     </div>
-
+                </div>
                     <!-- Activity Log content -->
                     <div id="CCForm8" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1268,7 +2015,7 @@
                             </div>
                             <div class="button-block">
                                 {{-- <button type="submit" class="saveButton">Save</button> --}}
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button> 
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 {{-- <button type="submit">Submit</button> --}}
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" href="#"> Exit </a> </button>
                             </div>
@@ -1399,7 +2146,7 @@
             var selectedValue = this.value;
             document.getElementById('initiator_group_code').value = selectedValue;
         });
-        
+
         function setCurrentDate(item){
             if(item == 'yes'){
                 $('#effect_check_date').val('{{ date('d-M-Y')}}');
@@ -1415,4 +2162,205 @@
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);});
     </script>
+
+
+
+
+<script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize speech recognition
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    // Function to start speech recognition and append result to the target element
+    function startRecognition(targetElement) {
+        recognition.start();
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            targetElement.value += transcript;
+        };
+        recognition.onerror = function(event) {
+            console.error(event.error);
+        };
+    }
+
+    // Event delegation for all mic buttons
+    document.addEventListener('click', function(event) {
+        if (event.target.closest('.mic-btn')) {
+            const button = event.target.closest('.mic-btn');
+            const inputField = button.previousElementSibling;
+            if (inputField && inputField.classList.contains('mic-input')) {
+                startRecognition(inputField);
+            }
+        }
+    });
+
+    // Show/hide the container based on user selection
+    function toggleOthersField(selectedValue) {
+        const container = document.getElementById('external_agencies_req');
+        if (selectedValue === 'others') {
+            container.classList.remove('d-none');
+        } else {
+            container.classList.add('d-none');
+        }
+    }
+});
+
+$(document).ready(function() {
+    let audio = null;
+    let selectedLanguage = 'en-us'; // Default language
+    const apiKey = '16f141b794484a71b679325faf2d5fc4'; // Use the provided API key
+
+    // When the user clicks the button, open the mini modal
+    $(document).on('click', '.speak-btn', function() {
+        let inputField = $(this).siblings('textarea, input');
+        let textToSpeak = inputField.val();
+        let modal = $(this).siblings('.mini-modal');
+        if (textToSpeak) {
+            // Store the input field element
+            $(modal).data('inputField', inputField);
+            modal.css({
+                display: 'block',
+                top: $(this).position().top - modal.outerHeight() - 10,
+                left: $(this).position().left + $(this).outerWidth() - modal.outerWidth()
+            });
+        }
+    });
+
+    // When the user clicks on <span> (x), close the mini modal
+    $(document).on('click', '.close', function() {
+        $(this).closest('.mini-modal').css('display', 'none');
+    });
+
+    // When the user selects a language and clicks the button
+    $(document).on('click', '#select-language-btn', function(event) {
+        event.preventDefault(); // Prevent form submission
+        let modal = $(this).closest('.mini-modal');
+        selectedLanguage = modal.find('#language-select').val();
+        let inputField = modal.data('inputField');
+        let textToSpeak = inputField.val();
+
+        if (textToSpeak) {
+            if (audio) {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+
+            const url = `https://api.voicerss.org/?key=${apiKey}&hl=${selectedLanguage}&src=${encodeURIComponent(textToSpeak)}&r=0&c=WAV&f=44khz_16bit_stereo`;
+            audio = new Audio(url);
+            audio.play();
+            audio.onended = function() {
+                audio = null;
+            };
+        }
+
+        modal.css('display', 'none');
+    });
+
+    // Speech-to-Text functionality
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    function startRecognition(targetElement) {
+        recognition.start();
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            targetElement.value += transcript;
+        };
+        recognition.onerror = function(event) {
+            console.error(event.error);
+        };
+    }
+
+    $(document).on('click', '.mic-btn', function() {
+        const inputField = $(this).siblings('textarea, input');
+        startRecognition(inputField[0]);
+    });
+
+    // Show mic button on hover
+    $('.relative-container').hover(
+        function() {
+            $(this).find('.mic-btn').show();
+        },
+        function() {
+            $(this).find('.mic-btn').hide();
+        }
+    );
+});
+</script>
+
+
+
 @endsection

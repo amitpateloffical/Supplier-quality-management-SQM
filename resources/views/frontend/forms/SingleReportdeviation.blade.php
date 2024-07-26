@@ -223,7 +223,7 @@
                         <th class="w-20">Due Date</th>
                         <td class="w-30">
                             @if ($data->due_date)
-                            {{ \Carbon\Carbon::parse($data->due_date)->format('d-m-Y') }}
+                            {{ Helpers::getdateFormat(\Carbon\Carbon::parse($data->due_date)->format('d-m-Y')) }}
                         @else
                             Not Applicable
                         @endif
@@ -255,7 +255,7 @@
                         <th class="w-20"> Deviation Observed On</th>
                         <td class="w-30">
                             @if ($data->Deviation_date)
-                            {{ \Carbon\Carbon::parse($data->Deviation_date)->format('d-m-Y') }}
+                            {{ Helpers::getdateFormat(\Carbon\Carbon::parse($data->Deviation_date)->format('d-m-Y')) }}
                         @else
                             Not Applicable
                         @endif
@@ -300,7 +300,7 @@
                         <th class="w-20">Deviation Reported On </th>
                         <td class="w-30">
                             @if ($data->Deviation_reported_date)
-                            {{ \Carbon\Carbon::parse($data->Deviation_reported_date)->format('d-m-Y') }}
+                            {{ Helpers::getdateFormat(\Carbon\Carbon::parse($data->Deviation_reported_date)->format('d-m-Y')) }}
                         @else
                             Not Applicable
                         @endif

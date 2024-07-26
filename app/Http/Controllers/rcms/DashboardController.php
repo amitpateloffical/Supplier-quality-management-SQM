@@ -149,7 +149,7 @@ class DashboardController extends Controller
                 "type" => "Extension",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
-                "division_id" => $data->division_id,
+                "division_id" => $data->site_location_code,
                 "short_description" => $data->short_description ? $data->short_description : "-",
                 "initiator_id" => $data->initiator,
                 "intiation_date" => $data->intiation_date,
@@ -207,7 +207,7 @@ class DashboardController extends Controller
                 "id" => $data->id,
                 "parent" => $data->parent_id ? $data->parent_id : "-",
                 "record" => $data->record,
-                "type" => "Capa",
+                "type" => "CAPA",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -617,7 +617,7 @@ class DashboardController extends Controller
 
             $data = extension_new::where('id', $id)->orderByDesc('id')->first();
 
-            if ($data->parent_type == "Capa") {
+            if ($data->parent_type == "CAPA") {
                 $data2 = Capa::where('id', $data->parent_id)->first();
                 $data2->create = Carbon::parse($data2->created_at)->format('d-M-Y h:i A');
                 array_push(
@@ -626,7 +626,7 @@ class DashboardController extends Controller
                         "id" => $data2->id,
                         "parent" => $data2->parent_record ? $data2->parent_record : "-",
                         "record" => $data2->record,
-                        "type" => "Capa",
+                        "type" => "CAPA",
                         "parent_id" => $data2->parent_id,
                         "parent_type" => $data2->parent_type,
                         "division_id" => $data2->division_id,
@@ -799,7 +799,7 @@ class DashboardController extends Controller
             $single = "change_control_single_pdf/" . $data->id;
             $audit = "audit/" . $data->id;
             $parent = "#";
-        } elseif ($type == "Capa") {
+        } elseif ($type == "CAPA") {
             $data = Capa::find($id);
             $single = "capaSingleReport/" . $data->id;
             $audit = "capaAuditReport/" . $data->id;
@@ -833,8 +833,8 @@ class DashboardController extends Controller
         } elseif ($type == "Extension") {
             $data = extension_new::find($id);
             $single = "singleReportNew/" .$data->id;
-            $audit = "audit_trailNew/" .$data->id;
-            $parent = "";
+            $audit = "auditReportext/" .$data->id;
+            $parent = "#";
         } elseif ($type == "Observation") {
             $data = Observation::find($id);
             $single = "ObservationSingleReport/" .$data->id;            
@@ -844,6 +844,7 @@ class DashboardController extends Controller
             $data = EffectivenessCheck::find($id);
             $single = "effectiveSingleReport/" .$data->id;
             $audit = "effectiveAuditReport/" .$data->id;
+            $parent="#" . $data->id;
         } elseif ($type == "Management-Review") {
             $data = ManagementReview::find($id);
             $single = "managementReview/" . $data->id;
@@ -881,7 +882,7 @@ class DashboardController extends Controller
         $html = '';
         $html = '<div class="block">
         <div class="record_no">
-            Record No. ' . str_pad($data->record, 4, '0', STR_PAD_LEFT) .
+            Record No. ' . str_pad($data->record_number, 4, '0', STR_PAD_LEFT) .
             '</div>
         <div class="division">
         ' . Helpers::getDivisionName(session()->get('division')) . '/ ' . $type . '

@@ -219,57 +219,58 @@
                     <tr>
 
                             <td>
-                                <div><strong>Changed From :</strong>{{ $data->change_from }}</div>
+                                
+                                <div><strong>Changed From:</strong> {{ isset($datas->change_from) ? $datas->change_from : 'N/A' }}</div>
                             </td>
 
                             <td>
-                                <div><strong>Changed To :</strong>{{ $data->change_to }}</div>
+                                <div><strong>Changed To :</strong>{{ $datas->change_to }}</div>
                             </td>
                             <td>
                                 <div>
                                     <strong> Data Field Name :</strong><a
-                                        href="#">{{ $data->activity_type ? $data->activity_type : 'Not Applicable' }}</a>
+                                        href="#">{{ $datas->activity_type ? $datas->activity_type : 'Not Applicable' }}</a>
                                 </div>
                                 <div style="margin-top: 5px;">
-                                    @if ($data->activity_type == 'Activity Log')
+                                    @if ($datas->activity_type == 'Activity Log')
                                         <strong>Change From
-                                            :</strong>{{ $data->change_from ? $data->change_from : 'Not Applicable' }}
+                                            :</strong>{{ $datas->change_from ? $datas->change_from : 'Not Applicable' }}
                                     @else
                                         <strong>Change From
-                                            :</strong>{{ $data->previous ? $data->previous : 'Not Applicable' }}
+                                            :</strong>{{ $datas->previous ? $datas->previous : 'Not Applicable' }}
                                     @endif
                                 </div>
                                 <br>
                                 <div>
-                                    @if ($data->activity_type == 'Activity Log')
+                                    @if ($datas->activity_type == 'Activity Log')
                                         <strong>Change To
-                                            :</strong>{{ $data->change_to ? $data->change_to : 'Not Applicable' }}
+                                            :</strong>{{ $datas->change_to ? $datas->change_to : 'Not Applicable' }}
                                     @else
                                         <strong>Change To
-                                            :</strong>{{ $data->current ? $data->current : 'Not Applicable' }}
+                                            :</strong>{{ $datas->current ? $datas->current : 'Not Applicable' }}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">
                                     <strong>Change Type
-                                        :</strong>{{ $data->action_name ? $data->action_name : 'Not Applicable' }}
+                                        :</strong>{{ $datas->action_name ? $datas->action_name : 'Not Applicable' }}
                                 </div>
                             </td>
                             <td>
                                 <div>
                                     <strong> Action Name
-                                        :</strong>{{ $data->action ? $data->action : 'Not Applicable' }}
+                                        :</strong>{{ $datas->action ? $datas->action : 'Not Applicable' }}
 
                                 </div>
                             </td>
                             <td>
                                 <div><strong> Peformed By
-                                        :</strong>{{ $data->user_name ? $data->user_name : 'Not Applicable' }}
+                                        :</strong>{{ $datas->user_name ? $datas->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $data->created_at ? Helpers::getdateFormat($data->created_at) : 'Not Applicable' }}
+                                        :</strong>{{ $datas->created_at ? Helpers::getdateFormat($datas->created_at) : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
-                                        :</strong>{{ $data->comment ? $data->comment : 'Not Applicable' }}</div>
+                                        :</strong>{{ $datas->comment ? $datas->comment : 'Not Applicable' }}</div>
 
                             </td>
                     </tr>

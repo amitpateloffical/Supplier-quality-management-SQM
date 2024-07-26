@@ -25,6 +25,50 @@ $users = DB::table('users')
             color: white;
         }
     </style>
+      <style>
+          .mini-modal {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            padding: 10px;
+            background-color: #fefefe;
+            border: 1px solid #888;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 200px; /* Adjust width as needed */
+        }
+        .mini-modal-content {
+            background-color: #fefefe;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .mini-modal-content h2 {
+            font-size: 16px;
+            margin-top: 0;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+        button {
+    border: 0;
+    background: white;
+    color: #060606;
+    /* border: 2px solid black; */
+    transition: all 0.3s linear;
+}
+
+button:hover {
+    color: #0c0c0c;
+}
+    </style>
     <script>
         $(document).ready(function () {
     let multipleCancelButton = new Choices("#choices-multiple-remove-button", {
@@ -106,19 +150,19 @@ function addMultipleFiles(input, block_id) {
         cell2.innerHTML = "<input type='text' name='audit[]'>";
 
         var cell3 = newRow.insertCell(2);
-        cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+        cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="scheduled_start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
         var cell4 = newRow.insertCell(3);
         cell4.innerHTML = "<input type='time' name='scheduled_start_time[]' >";
 
         var cell5 = newRow.insertCell(4);
-        cell5.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+        cell5.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="scheduled_end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
         var cell6 = newRow.insertCell(5);
         cell6.innerHTML = "<input type='time' name='scheduled_end_time[]' >";
 
         var cell7 = newRow.insertCell(6);
-        var userHtml = '<select name="auditor[]"><option value="">-- Select --</option>';
+        var userHtml = '<select name="auditor[]"><option value="">-Select-</option>';
                 for (var i = 0; i < users.length; i++) {
                     userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                 }
@@ -128,7 +172,7 @@ function addMultipleFiles(input, block_id) {
 
         var cell8 = newRow.insertCell(7);
         
-        var userHtml = '<select name="auditee[]"><option value="">-- Select --</option>';
+        var userHtml = '<select name="auditee[]"><option value="">-Select-</option>';
             for (var i = 0; i < users.length; i++) {
                 userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
             }
@@ -463,14 +507,14 @@ function addMultipleFiles(input, block_id) {
                                     </div>
 
                                 </div>
-                                        {{-- <div class="col-12">
+                                     <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description <span
                                                         class="text-danger">*</span></label>
                                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                                 <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
-                                        </div> --}}
+                                        </div>  -->
                                         <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
@@ -482,16 +526,51 @@ function addMultipleFiles(input, block_id) {
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
         
                                         </div> -->
-
                                         <div class="col-12">
     <div class="group-input">
         <label for="Short Description">Short Description<span class="text-danger">*</span></label>
         <span id="rchars">255</span> characters remaining
         <div style="position: relative;">
-            <input id="docname" type="text" value = "{{ $data->short_description }}" name="short_description" maxlength="255" required>
-            <button id="start-record-btn" type="button" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+            <input id="docname" type="text" value="{{ $data->short_description }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="short_description" maxlength="255" required>
+            <button class="mic-btn" type="button" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button" style="position: absolute; right: 40px; top: 50%; transform: translateY(-50%);">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -536,14 +615,50 @@ function addMultipleFiles(input, block_id) {
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+       <div class="col-lg-6">
     <div class="group-input" id="initiated_through_req">
         <label for="initiated_if_other">Others<span class="text-danger d-none">*</span></label>
         <div class="relative-container">
             <textarea name="initiated_if_other" id="initiated_if_other" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->initiated_if_other}}</textarea>
-            <button class="mic-btn" type="button" style="display:none;">
+            <button class="mic-btn" type="button" style="display: none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -587,12 +702,48 @@ function addMultipleFiles(input, block_id) {
 
 <div class="col-lg-6">
     <div class="group-input" id="if_other">
-        <label for="if_other">If Other<span class="text-danger d-none">*</span></label>
+        <label for="if_other_textarea">If Other<span class="text-danger d-none">*</span></label>
         <div class="relative-container">
             <textarea name="if_other" id="if_other_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_other }}</textarea>
-            <button class="mic-btn" type="button" style="display:none;">
+            <button class="mic-btn" type="button" style="display: none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -623,19 +774,53 @@ function addMultipleFiles(input, block_id) {
     </div>
 </div>
 
-
 <div class="col-12">
     <div class="group-input">
         <label for="initial_comments">Description</label>
         <div class="relative-container">
             <textarea name="initial_comments" id="initial_comments" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_comments }}</textarea>
-            <button class="mic-btn" type="button" style="display:none;">
+            <button class="mic-btn" type="button" style="display: none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 
                                         
                                     
@@ -790,6 +975,42 @@ function addMultipleFiles(input, block_id) {
             <button class="mic-btn" type="button" style="display:none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -802,6 +1023,42 @@ function addMultipleFiles(input, block_id) {
             <button class="mic-btn" type="button" style="display:none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -1014,6 +1271,42 @@ function addMultipleFiles(input, block_id) {
             <button class="mic-btn" type="button" style="display:none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -1026,6 +1319,42 @@ function addMultipleFiles(input, block_id) {
             <button class="mic-btn" type="button" style="display:none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -1038,6 +1367,42 @@ function addMultipleFiles(input, block_id) {
             <button class="mic-btn" type="button" style="display:none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -1050,6 +1415,42 @@ function addMultipleFiles(input, block_id) {
             <button class="mic-btn" type="button" style="display:none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -1107,6 +1508,42 @@ function addMultipleFiles(input, block_id) {
             <button class="mic-btn" type="button" style="display:none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -1115,14 +1552,49 @@ function addMultipleFiles(input, block_id) {
     <div class="group-input">
         <label for="Supplier_Site">Supplier/Vendor/Manufacturer Site</label>
         <div class="relative-container">
-            <textarea type="text" name="Supplier_Site" id="Supplier_Site" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Site }}</textarea>
+            <textarea name="Supplier_Site" id="Supplier_Site" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Site }}</textarea>
             <button class="mic-btn" type="button" style="display:none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 <div class="col-12">
     <div class="group-input">
         <label for="Comments">Comments</label>
@@ -1131,6 +1603,42 @@ function addMultipleFiles(input, block_id) {
             <button class="mic-btn" type="button" style="display:none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -1258,6 +1766,42 @@ function addMultipleFiles(input, block_id) {
             <button class="mic-btn" type="button" style="display:none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -2267,11 +2811,316 @@ function addMultipleFiles(input, block_id) {
     }
 </script>
 
+// <script>
+// $(document).ready(function(){
+//     let audio = null;
+//     let selectedLanguage = 'en-us'; // Default language
+//     let inputText = '';
+
+//     // When the user clicks the button, open the mini modal 
+//     $(document).on('click', '.speak-btn', function() {
+//         let inputField = $(this).siblings('textarea, input');
+//         inputText = inputField.val();
+//         let modal = $(this).siblings('.mini-modal');
+//         if (inputText) {
+//             // Store the input field element
+//             $(modal).data('inputField', inputField);
+//             modal.css({
+//                 display: 'block',
+//                 top: $(this).position().top - modal.outerHeight() - 10,
+//                 left: $(this).position().left + $(this).outerWidth() - modal.outerWidth()
+//             });
+//         }
+//     });
+
+//     // When the user clicks on <span> (x), close the mini modal
+//     $(document).on('click', '.close', function() {
+//         $(this).closest('.mini-modal').css('display', 'none');
+//     });
+
+//     // When the user selects a language and clicks the button
+//     $(document).on('click', '#select-language-btn', function(event) {
+//         event.preventDefault(); // Prevent form submission
+//         let modal = $(this).closest('.mini-modal');
+//         selectedLanguage = modal.find('#language-select').val();
+//         let inputField = modal.data('inputField');
+//         let textToSpeak = inputText;
+
+//         if (textToSpeak) {
+//             if (audio) {
+//                 audio.pause();
+//                 audio.currentTime = 0;
+//             }
+
+//             // Translate the text before converting to speech
+//             translateText(textToSpeak, selectedLanguage.split('-')[0]).then(translatedText => {
+//                 const apiKey = '2273705f1f6f434194956a200a586470';
+//                 const url = `https://api.voicerss.org/?key=${apiKey}&hl=${selectedLanguage}&src=${encodeURIComponent(translatedText)}&r=0&c=WAV&f=44khz_16bit_stereo`;
+//                 audio = new Audio(url);
+//                 audio.play();
+//                 audio.onended = function() {
+//                     audio = null;
+//                 };
+//             });
+
+//         }
+
+//         modal.css('display', 'none');
+//     });
+
+//     // Speech-to-Text functionality
+//     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+//     recognition.continuous = false;
+//     recognition.interimResults = false;
+//     recognition.lang = 'en-US';
+
+//     function startRecognition(targetElement) {
+//         recognition.start();
+//         recognition.onresult = function(event) {
+//             const transcript = event.results[0][0].transcript;
+//             targetElement.value += transcript;
+//         };
+//         recognition.onerror = function(event) {
+//             console.error(event.error);
+//         };
+//     }
+
+//     $(document).on('click', '.mic-btn', function() {
+//         const inputField = $(this).siblings('textarea, input');
+//         startRecognition(inputField[0]);
+//     });
+
+//     // Show mic button on hover
+//     $('.relative-container').hover(
+//         function() {
+//             $(this).find('.mic-btn').show();
+//         }, 
+//         function() {
+//             $(this).find('.mic-btn').hide();
+//         }
+//     );
+
+//     // Function to translate text using RapidAPI
+//     async function translateText(text, targetLanguage) {
+//         const url = 'https://text-translator2.p.rapidapi.com/translate';
+//         const data = new FormData();
+//         data.append('source_language', 'en');
+//         data.append('target_language', targetLanguage);
+//         data.append('text', text);
+
+//         const options = {
+//             method: 'POST',
+//             headers: {
+//                 'x-rapidapi-key': '5246c9098fmshc966ee7f6cea588p14a110jsn3979434fe858',
+//                 'x-rapidapi-host': 'text-translator2.p.rapidapi.com'
+//             },
+//             body: data
+//         };
+
+//         const response = await fetch(url, options);
+//         const result = await response.json();
+//         return result.data.translatedText;
+//     }
+
+//     // Update remaining characters
+//     $('#docname').on('input', function() {
+//         const remaining = 255 - $(this).val().length;
+//         $('#rchars').text(remaining);
+//     });
+
+//     // Initialize remaining characters count
+//     const remaining = 255 - $('#docname').val().length;
+//     $('#rchars').text(remaining);
+// });
+
+// </script>
+
+
+
+<script>
+$(document).ready(function(){
+    let audio = null;
+    let selectedLanguage = 'en-us'; // Default language
+
+    // When the user clicks the button, open the mini modal 
+    $(document).on('click', '.speak-btn', function() {
+        let inputField = $(this).siblings('textarea, input');
+        let textToSpeak = inputField.val();
+        let modal = $(this).siblings('.mini-modal');
+        if (textToSpeak) {
+            // Store the input field element
+            $(modal).data('inputField', inputField);
+            modal.css({
+                display: 'block',
+                top: $(this).position().top - modal.outerHeight() - 10,
+                left: $(this).position().left + $(this).outerWidth() - modal.outerWidth()
+            });
+        }
+    });
+
+    // When the user clicks on <span> (x), close the mini modal
+    $(document).on('click', '.close', function() {
+        $(this).closest('.mini-modal').css('display', 'none');
+    });
+
+    // When the user selects a language and clicks the button
+    $(document).on('click', '#select-language-btn', function(event) {
+        event.preventDefault(); // Prevent form submission
+        let modal = $(this).closest('.mini-modal');
+        selectedLanguage = modal.find('#language-select').val();
+        let inputField = modal.data('inputField');
+        let textToSpeak = inputField.val();
+
+        if (textToSpeak) {
+            if (audio) {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+
+            const apiKey = '1459833052cf4857b523c5b1c9064726';
+            const url = `https://api.voicerss.org/?key=${apiKey}&hl=${selectedLanguage}&src=${encodeURIComponent(textToSpeak)}&r=0&c=WAV&f=44khz_16bit_stereo`;
+            audio = new Audio(url);
+            audio.play();
+            audio.onended = function() {
+                audio = null;
+            };
+        }
+
+        modal.css('display', 'none');
+    });
+
+    // Speech-to-Text functionality
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    function startRecognition(targetElement) {
+        recognition.start();
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            targetElement.value += transcript;
+        };
+        recognition.onerror = function(event) {
+            console.error(event.error);
+        };
+    }
+
+    $(document).on('click', '.mic-btn', function() {
+        const inputField = $(this).siblings('textarea, input');
+        startRecognition(inputField[0]);
+    });
+
+    // Show mic button on hover
+    $('.relative-container').hover(
+        function() {
+            $(this).find('.mic-btn').show();
+        }, 
+        function() {
+            $(this).find('.mic-btn').hide();
+        }
+    );
+});
+
+    </script>
 
 <!-- Ensure this CSS is present to initially hide the Others field and its group -->
 <style>
     #others_group {
         display: none;
+    }
+</style>
+
+<style>
+        .group-input {
+            margin-bottom: 20px;
+        }
+        .mic-btn, .speak-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+        }
+        .mic-btn i, .speak-btn i {
+            color: black;
+        }
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active,
+        .speak-btn:focus,
+        .speak-btn:hover,
+        .speak-btn:active {
+            box-shadow: none;
+        }
+        .relative-container {
+            position: relative;
+        }
+        .relative-container input {
+            width: 100%;
+            padding-right: 40px;
+        }
+    </style>
+
+    <style>
+    #start-record-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    #start-record-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    #start-record-btn:focus,
+    #start-record-btn:hover,
+    #start-record-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+</style>
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none;
+         /* Remove shadow */
+    }
+    .mic-btn {
+            right: 50px; /* Adjust position to avoid overlap with speaker button */
+        }
+
+        .speak-btn {
+            right: 16px;
+        }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        // box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+        // display: none;
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
     }
 </style>
 

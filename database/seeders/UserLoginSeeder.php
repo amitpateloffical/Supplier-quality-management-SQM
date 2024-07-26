@@ -34,6 +34,13 @@ class UserLoginSeeder extends Seeder
                     'departmentid' => 1,
                     'roles' => range(1, $roleGroupCount),
             ],
+            [
+                'name' => 'Nilesh Birla',
+                'email' => 'nilesh.vidyagxp@gmail.com',
+                'password' => '$2y$10$ybcHMuQ8soPzXcdljEQ/wOUx0JximT3yb5naubluqz3TjOz/tGBlC',
+                'departmentid' => 1,
+                'roles' => range(1, $roleGroupCount),
+        ],
         ];
         foreach ($users as $userData) {
             $user = User::create([

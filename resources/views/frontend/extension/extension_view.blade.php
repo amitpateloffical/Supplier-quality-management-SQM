@@ -190,8 +190,11 @@
                             @endif
                             @if ($extensionNew->stage >= 6)
                             <div class="bg-danger" style="display: none">Closed - Reject</div>
-                            <div  class="active"> In CQA Approval</div>
-
+                                @if($count >= 2)
+                                    <div  class="active" > In CQA Approval</div>
+                                @else
+                                    <div  class="active" style="display: none"> In CQA Approval</div>
+                                @endif
                                 <div class="bg-danger">Closed - Done</div>
                             @endif
                         </div>
@@ -287,13 +290,13 @@
                                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                         name="reviewers" placeholder="Select Reviewers" >
                                         <option value="">-- Select --</option>
-                                        @if (!empty($reviewers))
-                                            @foreach ($reviewers as $lan)
-                                                @if(Helpers::checkUserRolesreviewer($lan))
-                                                    <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->reviewers) selected @endif>
+                                        @if (!empty($users))
+                                            @foreach ($users as $lan)
+                                                {{-- @if(Helpers::checkUserRolesreviewer($lan)) --}}
+                                                    <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->users) selected @endif>
                                                         {{ $lan->name }}
                                                     </option>
-                                                @endif
+                                                {{-- @endif --}}
                                             @endforeach
                                         @endif
                                     </select>
@@ -305,13 +308,13 @@
                                     <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
                                         name="approvers" placeholder="Select Approvers" >
                                         <option value="">-- Select --</option>
-                                        @if (!empty($approvers))
-                                            @foreach ($approvers as $lan)
-                                                @if(Helpers::checkUserRolesApprovers($lan))
-                                                    <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->approvers) selected @endif>
+                                        @if (!empty($users))
+                                            @foreach ($users as $lan)
+                                                {{-- @if(Helpers::checkUserRolesApprovers($lan)) --}}
+                                                    <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->users) selected @endif>
                                                         {{ $lan->name }}
                                                     </option>
-                                                @endif
+                                                {{-- @endif --}}
                                             @endforeach
                                         @endif
                                     </select>

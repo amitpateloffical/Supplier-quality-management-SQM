@@ -182,9 +182,9 @@
                                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                         name="reviewers" placeholder="Select Reviewers"  >
                                         <option value="">-- Select --</option>
-                                        @if (!empty($reviewers))
+                                        @if (!empty($users))
                                         
-                                            @foreach ($reviewers as $lan)
+                                            @foreach ($users as $lan)
                                                 @if(Helpers::checkUserRolesreviewer($lan))
                                                     <option value="{{ $lan->id }}">
                                                         {{ $lan->name }}

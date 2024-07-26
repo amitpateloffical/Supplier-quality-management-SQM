@@ -238,7 +238,7 @@ class ExtensionNewController extends Controller
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'Site Location Code';
             $history->previous = "Null";
-            $history->current = $extensionNew->site_location_code;
+            $history->current = Helpers::getDivisionName($extensionNew->site_location_code);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -476,7 +476,9 @@ class ExtensionNewController extends Controller
         $extensionNew->save();
 
         if ($lastextensionNew->short_description != $extensionNew->short_description || !empty ($request->comment)) {
-            // return 'history';
+            $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
+            ->where('activity_type', 'Short Description')
+            ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
             $history->activity_type = 'Short Description';
@@ -489,7 +491,7 @@ class ExtensionNewController extends Controller
             $history->origin_state = $lastextensionNew->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
@@ -507,12 +509,14 @@ class ExtensionNewController extends Controller
             $history->origin_state = $lastextensionNew->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
+             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
         if ($lastextensionNew->current_due_date != $extensionNew->current_due_date || !empty ($request->comment)) {
-            // return 'history';
+            $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
+            ->where('activity_type', 'Current Due Date')
+            ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
             $history->activity_type = 'Current Due Date';
@@ -525,12 +529,14 @@ class ExtensionNewController extends Controller
             $history->origin_state = $lastextensionNew->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';;
             $history->save();
         }
 
         if ($lastextensionNew->proposed_due_date != $extensionNew->proposed_due_date || !empty ($request->comment)) {
-            // return 'history';
+            $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
+            ->where('activity_type', 'Proposed Due Date')
+            ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
             $history->activity_type = 'Proposed Due Date';
@@ -543,12 +549,14 @@ class ExtensionNewController extends Controller
             $history->origin_state = $lastextensionNew->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
+             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
         if ($lastextensionNew->description != $extensionNew->description || !empty ($request->comment)) {
-            // return 'history';
+            $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
+            ->where('activity_type', 'Description')
+            ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
             $history->activity_type = 'Description';
@@ -561,12 +569,14 @@ class ExtensionNewController extends Controller
             $history->origin_state = $lastextensionNew->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
+             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
         if ($lastextensionNew->justification_reason != $extensionNew->justification_reason || !empty ($request->comment)) {
-            // return 'history';
+            $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
+            ->where('activity_type', 'Justification Reason')
+            ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
             $history->activity_type = 'Justification Reason';
@@ -579,12 +589,14 @@ class ExtensionNewController extends Controller
             $history->origin_state = $lastextensionNew->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
+             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
         if ($lastextensionNew->reviewer_remarks != $extensionNew->reviewer_remarks || !empty ($request->comment)) {
-            // return 'history';
+            $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
+            ->where('activity_type', 'Reviewer Remarks')
+            ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
             $history->activity_type = 'Reviewer Remarks';
@@ -597,12 +609,14 @@ class ExtensionNewController extends Controller
             $history->origin_state = $lastextensionNew->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
+             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
         if ($lastextensionNew->approver_remarks != $extensionNew->approver_remarks || !empty ($request->comment)) {
-            // return 'history';
+            $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
+            ->where('activity_type', 'Approver Remarks')
+            ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
             $history->activity_type = 'Approver Remarks';
@@ -610,22 +624,24 @@ class ExtensionNewController extends Controller
             $history->current = $extensionNew->approver_remarks;
             $history->comment = $extensionNew->comment;
             $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
+            $history->user_name = Auth::user()->name ;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastextensionNew->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
+             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
         if ($lastextensionNew->site_location_code != $extensionNew->site_location_code || !empty ($request->comment)) {
-            // return 'history';
+            $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
+            ->where('activity_type', 'Site Location Code')
+            ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
             $history->activity_type = 'Site Location Code';
              $history->previous = $lastextensionNew->site_location_code;
-            $history->current = $extensionNew->site_location_code;
+            $history->current = Helpers::getDivisionName($extensionNew->site_location_code);
             $history->comment = $extensionNew->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -633,30 +649,34 @@ class ExtensionNewController extends Controller
             $history->origin_state = $lastextensionNew->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
+             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
-        if ($lastextensionNew->initiation_date != $extensionNew->initiation_date || !empty ($request->comment)) {
-            // return 'history';
-            $history = new ExtensionNewAuditTrail;
-            $history->extension_id = $id;
-            $history->activity_type = 'Initiation Date';
-             $history->previous =  Helpers::getDateFormat($lastextensionNew->initiation_date);
-            $history->current =  Helpers::getDateFormat($extensionNew->initiation_date);
-            $history->comment = $extensionNew->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastextensionNew->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
-            $history->save();
-        }
+        // if ($lastextensionNew->initiation_date != $extensionNew->initiation_date || !empty ($request->comment)) {
+        //     $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
+        //     ->where('activity_type', 'Initiation Date')
+        //     ->exists();
+        //     $history = new ExtensionNewAuditTrail;
+        //     $history->extension_id = $id;
+        //     $history->activity_type = 'Initiation Date';
+        //      $history->previous =  Helpers::getDateFormat($lastextensionNew->initiation_date);
+        //     $history->current =  Helpers::getDateFormat($extensionNew->initiation_date);
+        //     $history->comment = $extensionNew->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastextensionNew->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastextensionNew->status;
+        //      $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
 
         if ($lastextensionNew->reviewers != $extensionNew->reviewers || !empty ($request->comment)) {
-            // return 'history';
+            $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
+            ->where('activity_type', 'HOD Reviewer')
+            ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
             $history->activity_type = 'HOD Reviewer';
@@ -669,12 +689,14 @@ class ExtensionNewController extends Controller
             $history->origin_state = $lastextensionNew->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
+             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
         if ($lastextensionNew->approvers != $extensionNew->approvers || !empty ($request->comment)) {
-            // return 'history';
+            $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
+            ->where('activity_type', 'QA Approver')
+            ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
             $history->activity_type = 'QA Approver';
@@ -687,12 +709,14 @@ class ExtensionNewController extends Controller
             $history->origin_state = $lastextensionNew->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
+             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
         if ($lastextensionNew->reviewer_remarks != $extensionNew->reviewer_remarks || !empty ($request->comment)) {
-            // return 'history';
+            $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
+            ->where('activity_type', 'HOD Remarks')
+            ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
             $history->activity_type = 'HOD Remarks';
@@ -705,12 +729,14 @@ class ExtensionNewController extends Controller
             $history->origin_state = $lastextensionNew->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
+             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
         if ($lastextensionNew->approver_remarks != $extensionNew->approver_remarks || !empty ($request->comment)) {
-            // return 'history';
+            $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
+            ->where('activity_type', 'QA Remarks')
+            ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
             $history->activity_type = 'QA Remarks';
@@ -723,7 +749,7 @@ class ExtensionNewController extends Controller
             $history->origin_state = $lastextensionNew->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastextensionNew->status;
-            $history->action_name = "Update";
+             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 

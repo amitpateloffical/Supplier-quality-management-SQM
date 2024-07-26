@@ -16,7 +16,7 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / Action Item
+            {{ Helpers::getDivisionName($parent_division_id) }} / Action Item
         </div>
     </div>
 
@@ -148,16 +148,16 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $parent_record }}">
+                                            value="{{ Helpers::getDivisionName($parent_division_id) }}/AI/{{ date('Y') }}/{{ $record_number }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
-                                        <input disabled type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        <input disabled type="text" name="division_id"
+                                            value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                        <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>

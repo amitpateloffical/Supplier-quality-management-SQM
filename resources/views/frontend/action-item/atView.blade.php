@@ -661,29 +661,29 @@
                                 </div>
                             </div>
                             <!--<div class="col-lg-6 new-date-data-field">
-                                                                                                                                <div class="group-input input-date">
-                                                                                                                                        <label for="Audit Start Date">Actual Start Date</label>
-                                                                                                                                         <div class="calenderauditee">
-                                                                                                                                                <input type="text" id="start_date" readonly
-                                                                                                                                                    placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"/>
-                                                                                                                                                 <input type="date" id="start_date_checkdate" value="{{ $data->start_date }} "
-                                                                                                                                                name="start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
-                                                                                                                                                    oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" /> -->
-                            <!-- </div>
-                                                                                                                             </div>
-                                                                                                                         </div>
-                                                                                                                                <div class="col-lg-6 new-date-data-field">
                                                                                                                                     <div class="group-input input-date">
-                                                                                                                                        <label for="Audit End Date">Actual End Date</label>
-                                                                                                                                           <div class="calenderauditee">
-                                                                                                                                                <input type="text"  id="end_date" readonly
-                                                                                                                                                    placeholder="DD-MM-YYYY"value="{{ Helpers::getdateFormat($data->end_date) }}"/> -->
-                            <!-- <input type="date" name="end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->end_date }} "
-                                                                                                                                                id="end_date_checkdate" class="hide-input"
-                                                                                                                                                    oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" /> -->
+                                                                                                                                            <label for="Audit Start Date">Actual Start Date</label>
+                                                                                                                                             <div class="calenderauditee">
+                                                                                                                                                    <input type="text" id="start_date" readonly
+                                                                                                                                                        placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"/>
+                                                                                                                                                     <input type="date" id="start_date_checkdate" value="{{ $data->start_date }} "
+                                                                                                                                                    name="start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
+                                                                                                                                                        oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" /> -->
                             <!-- </div>
-                                                                                                                                    </div>
-                                                                                                                                </div> -->
+                                                                                                                                 </div>
+                                                                                                                             </div>
+                                                                                                                                    <div class="col-lg-6 new-date-data-field">
+                                                                                                                                        <div class="group-input input-date">
+                                                                                                                                            <label for="Audit End Date">Actual End Date</label>
+                                                                                                                                               <div class="calenderauditee">
+                                                                                                                                                    <input type="text"  id="end_date" readonly
+                                                                                                                                                        placeholder="DD-MM-YYYY"value="{{ Helpers::getdateFormat($data->end_date) }}"/> -->
+                            <!-- <input type="date" name="end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->end_date }} "
+                                                                                                                                                    id="end_date_checkdate" class="hide-input"
+                                                                                                                                                        oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" /> -->
+                            <!-- </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div> -->
                             {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="Support_doc">Supporting Documents</label>
@@ -1040,9 +1040,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                        <button>Close</button>
-                                                                                                                    </div> -->
+                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                            <button>Close</button>
+                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1086,9 +1086,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                    <button>Close</button>
+                                                                                                                                                                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1133,9 +1133,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                        <button>Close</button>
-                                                                                                                    </div> -->
+                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                            <button>Close</button>
+                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>

@@ -229,7 +229,7 @@
                     <tr>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">
-                            @if ($data->division_code)
+                            @if ($data->division_id)
                                 {{-- {{ Helpers::getDivisionName($data->division_code) }} --}}
                                 {{-- {{ Helpers::getDivisionName(session()->get('division')) }} --}}
                                 {{ Helpers::getDivisionName($data->division_id) }}
@@ -268,7 +268,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Attached Files</th>
+                        {{-- <th class="w-20">Attached Files</th>
                         <td class="w-30">
                             @if ($data->attach_files1)
                                 <a href="{{ asset('upload/document/', $data->attach_files1) }}">
@@ -276,7 +276,7 @@
                             @else
                                 Not Applicable
                             @endif
-                        </td>
+                        </td> --}}
                         <th class="w-20">Recomendation Due Date for CAPA</th>
                         <td class="w-30">
                             @if ($data->recomendation_capa_date_due)
@@ -306,7 +306,7 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Related Obsevations</th>
                         <td class="w-80">
                             @if ($data->related_observations)
@@ -315,8 +315,60 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
                 </table>
+                <div class="block-head">
+                    Attached Files
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">File </th>
+                        </tr>
+                        @if ($data->attach_files1)
+                            @foreach (json_decode($data->attach_files1) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
+                <div class="block-head">
+                    Related Obsevations
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">File </th>
+                        </tr>
+                        @if ($data->related_observations)
+                            @foreach (json_decode($data->related_observations) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
             </div>
 
             <div class="block">
@@ -492,8 +544,35 @@
                     <div class="block-head">
                         Response Summary
                     </div>
+
+                    <div class="block-head">
+                        Attached Files
+                    </div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">File </th>
+                            </tr>
+                            @if ($data->attach_files2)
+                                @foreach (json_decode($data->attach_files2) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+
+                        </table>
+                    </div>
                     <table>
-                        <tr>
+                        {{-- <tr>
                             <th class="w-20">Attached Files</th>
                             <td class="w-80">
                                 @if ($data->attach_files2)
@@ -502,7 +581,7 @@
                                     Not Applicable
                                 @endif
                             </td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <th class="w-20">Related URL</th>
                             <td class="w-80">

@@ -194,9 +194,9 @@
                 <table>
                     <tr> {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ $data->originator }}</td>
+                        <td class="w-80">{{ $data->originator }}</td>
                         <th class="w-20">Date of Initiation</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Site/Location Code</th>
@@ -217,10 +217,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Severity Level</th>
-                        <td class="w-30">
-                            @if ($data->severity2_level)
-                                {{ $data->severity2_level }}
+
+                        <th class="w-20">Due Date</th>
+                        <td class="w-80">
+                            @if ($data->due_date)
+                                {{ $data->due_date }}
                             @else
                                 Not Applicable
                             @endif
@@ -252,37 +253,33 @@
                             @endif
                         </td>
                     </tr>
+
                     <tr>
-                        <th class="w-20">Team Members</th>
-                        <td class="w-30">
-                            @if ($data->team_members)
-                                {{ Helpers::getInitiatorName($data->team_members) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Due Date</th>
+                        <th class="w-20"> Short Description</th>
                         <td class="w-80">
-                            @if ($data->due_date)
-                                {{ $data->due_date }}
+                            @if ($data->short_description)
+                                {{ $data->short_description }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                     </tr>
-                    <tr>
-                        <th class="w-20">Risk/Opportunity Description</th>
-                        <td class="w-30">
-                            @if ($data->description)
-                                {{ $data->description }}
+
+                    {{-- <tr>
+                        <th class="w-20">Comments</th>
+                        <td class="w-80">
+                            @if ($data->comments)
+                                {{ $data->comments }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Risk/Opportunity Comments</th>
-                        <td class="w-30">
-                            @if ($data->comments)
-                                {{ $data->comments }}
+                    </tr> --}}
+                    <tr>
+                        <th class="w-20">Severity Level</th>
+                        <td class="w-80">
+                            @if ($data->severity2_level)
+                                {{ $data->severity2_level }}
                             @else
                                 Not Applicable
                             @endif
@@ -297,15 +294,18 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20"> Short Description</th>
-                        <td class="w-30">
-                            @if ($data->short_description)
-                                {{ $data->short_description }}
+                    </tr>
+                    <tr>
+                        <th class="w-20">Source of Risk/Opportunity</th>
+                        <td class="w-80">
+                            @if ($data->source_of_risk)
+                                {{ $data->source_of_risk }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                     </tr>
+
                     <tr>
                         <th class="w-20">Type</th>
                         <td class="w-80">
@@ -315,15 +315,6 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Comments</th>
-                        <td class="w-80">
-                            @if ($data->comments)
-                                {{ $data->comments }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
                     </tr>
                     <tr>
                         <th class="w-20">Priority Level</th>
@@ -334,15 +325,28 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Source of Risk/Opportunity</th>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Risk/Opportunity Description</th>
                         <td class="w-80">
-                            @if ($data->source_of_risk)
-                                {{ $data->source_of_risk }}
+                            @if ($data->description)
+                                {{ $data->description }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <th class="w-20">Risk/Opportunity Comments</th>
+                        <td class="w-80">
+                            @if ($data->comments)
+                                {{ $data->comments }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
 
                 </table>
             </div>

@@ -296,36 +296,37 @@
                         </td>
 
                     </tr>
-
-
-
-                    <div class="block-head">
-                        File Attachments
-                    </div>
-                    <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">File </th>
-                            </tr>
-                            @if ($data->file_attach)
-                                @foreach (json_decode($data->file_attach) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                                target="_blank"><b>{{ $file }}</b></a> </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
-                                </tr>
-                            @endif
-
-                        </table>
-                    </div>
                 </table>
+
+
+
+                <div class="block-head">
+                    File Attachments
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">File </th>
+                        </tr>
+                        @if ($data->file_attach)
+                            @foreach (json_decode($data->file_attach) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
+
             </div>
 
             <!-- <div class="block">

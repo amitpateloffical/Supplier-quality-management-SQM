@@ -160,7 +160,7 @@ class RiskManagementController extends Controller
 
         $data->analysisN2 = $request->analysisN2;
         $data->analysisRPN2 = $request->analysisRPN2;
-        // $data->initial_rpn = $request->initial_rpn;
+        $data->initial_rpn = $request->initial_rpn;
         //$data->severity = $request->severity;
         //$data->occurance = $request->occurance;
 

@@ -1537,7 +1537,7 @@
                                                                 <td><input disabled type="text" name="serial_number[]"
                                                                         value="{{ $key + 1 }}"></td>
                                                                 <td><input type="text" name="action[]"
-                                                                        value="{{ $temps ? $temps : 'N/A ' }}"></td>
+                                                                        value="{{ $temps ? $temps : ' ' }}"></td>
                                                                 {{-- <td><input type="text" name="responsible[]"
                                                                         value="{{ unserialize($action_plan->responsible)[$key] ? unserialize($action_plan->responsible)[$key] : '' }}">
                                                                 </td> --}}
@@ -1562,10 +1562,10 @@
                                                                                 <input type="text"
                                                                                     id="deadline{{ $key }}' + serialNumber +'"
                                                                                     readonly placeholder="DD-MM-YYYY"
-                                                                                    value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) ? Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) : 'N/A' }}" />
+                                                                                    value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) ? Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) : ' ' }}" />
                                                                                 <input type="date" name="deadline[]"
                                                                                     class="hide-input"
-                                                                                    value="{{ unserialize($action_plan->deadline)[$key] ? unserialize($action_plan->deadline)[$key] : '' }}"
+                                                                                    value="{{ unserialize($action_plan->deadline)[$key] ? unserialize($action_plan->deadline)[$key] : ' ' }}"
                                                                                     oninput="handleDateInput(this, `deadline{{ $key }}' + serialNumber +'`)" />
                                                                             </div>
                                                                         </div>
@@ -1573,7 +1573,7 @@
                                                                 </td>
 
                                                                 <td><input type="text" name="item_static[]"
-                                                                        value="{{ unserialize($action_plan->item_static)[$key] ? unserialize($action_plan->item_static)[$key] : 'N/A' }}">
+                                                                        value="{{ unserialize($action_plan->item_static)[$key] ? unserialize($action_plan->item_static)[$key] : ' ' }}">
                                                                 </td>
                                                                 <td><button
                                                                         type="text"class="removeBtnMI">Remove</button>
@@ -1746,23 +1746,6 @@
                                                                         </td>
                                                                         <td>
                                                                             <select onchange="calculateInitialResult(this)"
-                                                                                class="fieldP"
-                                                                                name="initial_detectability[]">
-                                                                                <option value="">-- Select --
-                                                                                </option>
-                                                                                <option value="1"
-                                                                                    {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                    1</option>
-                                                                                <option value="2"
-                                                                                    {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                    2</option>
-                                                                                <option value="3"
-                                                                                    {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                    3</option>
-                                                                            </select>
-                                                                        </td>
-                                                                        <td>
-                                                                            <select onchange="calculateInitialResult(this)"
                                                                                 class="fieldN"
                                                                                 name="initial_probability[]">
                                                                                 <option value="">-- Select --
@@ -1779,10 +1762,29 @@
                                                                             </select>
                                                                         </td>
                                                                         <td>
+                                                                            <select onchange="calculateInitialResult(this)"
+                                                                                class="fieldP"
+                                                                                name="initial_detectability[]">
+                                                                                <option value="">-- Select --
+                                                                                </option>
+                                                                                <option value="1"
+                                                                                    {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                                    1</option>
+                                                                                <option value="2"
+                                                                                    {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                                    2</option>
+                                                                                <option value="3"
+                                                                                    {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                                    3</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
                                                                             <input name="initial_rpn[]" type="text"
                                                                                 class='initial-rpn'
                                                                                 value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}">
                                                                         </td>
+                                                                        
+                                                                        
                                                                         <td>
                                                                             <input name="risk_acceptance[]" type="text"
                                                                                 value="{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}">
@@ -3017,9 +3019,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                    <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3064,9 +3066,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3111,9 +3113,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>

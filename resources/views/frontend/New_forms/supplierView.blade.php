@@ -104,7 +104,7 @@ function addMultipleFiles(input, block_id) {
                     '<td><input type="text" name="observation_description[]"></td>' +
                     '<td><input type="text" name="area[]"></td>' +
                     '<td><input type="text" name="auditee_response[]"></td>' +
-                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '<td><button type="button" class="removeRowBtn" style="background-color: black;color: white;">Remove</button></td>' +
                     '</tr>';
 
                 return html;
@@ -183,7 +183,7 @@ function addMultipleFiles(input, block_id) {
         var cell9 = newRow.insertCell(8);
         cell9.innerHTML = "<input type='text'name='remark[]'>";
         var cell10 = newRow.insertCell(9);
-        cell10.innerHTML = '<button type="button" class="removeRowBtn" onclick="removeRow(this)">Remove</button>';
+        cell10.innerHTML = '<button type="button" class="removeRowBtn" style="background-color: black;color: white;" onclick="removeRow(this)">Remove</button>';
 
         // Update row numbering
         for (var i = 1; i < currentRowCount; i++) {
@@ -958,7 +958,7 @@ function addMultipleFiles(input, block_id) {
                                 </select>
                             </td>
                             <td><input type="text" name="remark[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($sgrid->remark)[$key] ?? '' }}"></td>
-                            <td><button type="button" class="removeRowBtn" onclick="removeRow(this)">Remove</button></td>
+                            <td><button type="button" class="removeRowBtn" style="background-color: black;color: white;" onclick="removeRow(this)">Remove</button></td>
                         </tr>
                     @endforeach
                 @endif
@@ -1722,7 +1722,7 @@ function addMultipleFiles(input, block_id) {
                         <td><input type="text" name="observation_description[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}"></td>
                         <td><input type="text" name="area[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td>
                         <td><input type="text" name="auditee_response[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key]: "" }}"></td>
-                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                        <td><button type="button" class="removeRowBtn" style="background-color: black;color: white;">Remove</button></td>
                     </tr>
                     @endforeach
                     @endif
@@ -1828,6 +1828,7 @@ function addMultipleFiles(input, block_id) {
                                             Audit Response
                                         </div>
                                         <div class="col-12">
+                                        <div class="col-12">
     <div class="group-input">
         <label for="Remarks">Remarks</label>
         <div class="relative-container">
@@ -1835,6 +1836,42 @@ function addMultipleFiles(input, block_id) {
             <button class="mic-btn" type="button" style="display:none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -1914,11 +1951,48 @@ function addMultipleFiles(input, block_id) {
             <button class="mic-btn" type="button" style="display:none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+                                                </div>
 
-<div class="col-12">
+                                                <div class="col-12">
     <div class="group-input">
         <label for="due_date_extension">Due Date Extension Justification</label>
         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
@@ -1927,11 +2001,45 @@ function addMultipleFiles(input, block_id) {
             <button class="mic-btn" type="button" style="display:none;">
                 <i class="fas fa-microphone"></i>
             </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
-                                    </div>
+</div></div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
@@ -2811,143 +2919,18 @@ function addMultipleFiles(input, block_id) {
     }
 </script>
 
-// <script>
-// $(document).ready(function(){
-//     let audio = null;
-//     let selectedLanguage = 'en-us'; // Default language
-//     let inputText = '';
-
-//     // When the user clicks the button, open the mini modal 
-//     $(document).on('click', '.speak-btn', function() {
-//         let inputField = $(this).siblings('textarea, input');
-//         inputText = inputField.val();
-//         let modal = $(this).siblings('.mini-modal');
-//         if (inputText) {
-//             // Store the input field element
-//             $(modal).data('inputField', inputField);
-//             modal.css({
-//                 display: 'block',
-//                 top: $(this).position().top - modal.outerHeight() - 10,
-//                 left: $(this).position().left + $(this).outerWidth() - modal.outerWidth()
-//             });
-//         }
-//     });
-
-//     // When the user clicks on <span> (x), close the mini modal
-//     $(document).on('click', '.close', function() {
-//         $(this).closest('.mini-modal').css('display', 'none');
-//     });
-
-//     // When the user selects a language and clicks the button
-//     $(document).on('click', '#select-language-btn', function(event) {
-//         event.preventDefault(); // Prevent form submission
-//         let modal = $(this).closest('.mini-modal');
-//         selectedLanguage = modal.find('#language-select').val();
-//         let inputField = modal.data('inputField');
-//         let textToSpeak = inputText;
-
-//         if (textToSpeak) {
-//             if (audio) {
-//                 audio.pause();
-//                 audio.currentTime = 0;
-//             }
-
-//             // Translate the text before converting to speech
-//             translateText(textToSpeak, selectedLanguage.split('-')[0]).then(translatedText => {
-//                 const apiKey = '2273705f1f6f434194956a200a586470';
-//                 const url = `https://api.voicerss.org/?key=${apiKey}&hl=${selectedLanguage}&src=${encodeURIComponent(translatedText)}&r=0&c=WAV&f=44khz_16bit_stereo`;
-//                 audio = new Audio(url);
-//                 audio.play();
-//                 audio.onended = function() {
-//                     audio = null;
-//                 };
-//             });
-
-//         }
-
-//         modal.css('display', 'none');
-//     });
-
-//     // Speech-to-Text functionality
-//     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-//     recognition.continuous = false;
-//     recognition.interimResults = false;
-//     recognition.lang = 'en-US';
-
-//     function startRecognition(targetElement) {
-//         recognition.start();
-//         recognition.onresult = function(event) {
-//             const transcript = event.results[0][0].transcript;
-//             targetElement.value += transcript;
-//         };
-//         recognition.onerror = function(event) {
-//             console.error(event.error);
-//         };
-//     }
-
-//     $(document).on('click', '.mic-btn', function() {
-//         const inputField = $(this).siblings('textarea, input');
-//         startRecognition(inputField[0]);
-//     });
-
-//     // Show mic button on hover
-//     $('.relative-container').hover(
-//         function() {
-//             $(this).find('.mic-btn').show();
-//         }, 
-//         function() {
-//             $(this).find('.mic-btn').hide();
-//         }
-//     );
-
-//     // Function to translate text using RapidAPI
-//     async function translateText(text, targetLanguage) {
-//         const url = 'https://text-translator2.p.rapidapi.com/translate';
-//         const data = new FormData();
-//         data.append('source_language', 'en');
-//         data.append('target_language', targetLanguage);
-//         data.append('text', text);
-
-//         const options = {
-//             method: 'POST',
-//             headers: {
-//                 'x-rapidapi-key': '5246c9098fmshc966ee7f6cea588p14a110jsn3979434fe858',
-//                 'x-rapidapi-host': 'text-translator2.p.rapidapi.com'
-//             },
-//             body: data
-//         };
-
-//         const response = await fetch(url, options);
-//         const result = await response.json();
-//         return result.data.translatedText;
-//     }
-
-//     // Update remaining characters
-//     $('#docname').on('input', function() {
-//         const remaining = 255 - $(this).val().length;
-//         $('#rchars').text(remaining);
-//     });
-
-//     // Initialize remaining characters count
-//     const remaining = 255 - $('#docname').val().length;
-//     $('#rchars').text(remaining);
-// });
-
-// </script>
-
-
-
 <script>
 $(document).ready(function(){
     let audio = null;
     let selectedLanguage = 'en-us'; // Default language
+    let inputText = '';
 
     // When the user clicks the button, open the mini modal 
     $(document).on('click', '.speak-btn', function() {
         let inputField = $(this).siblings('textarea, input');
-        let textToSpeak = inputField.val();
+        inputText = inputField.val();
         let modal = $(this).siblings('.mini-modal');
-        if (textToSpeak) {
+        if (inputText) {
             // Store the input field element
             $(modal).data('inputField', inputField);
             modal.css({
@@ -2969,7 +2952,7 @@ $(document).ready(function(){
         let modal = $(this).closest('.mini-modal');
         selectedLanguage = modal.find('#language-select').val();
         let inputField = modal.data('inputField');
-        let textToSpeak = inputField.val();
+        let textToSpeak = inputText;
 
         if (textToSpeak) {
             if (audio) {
@@ -2977,13 +2960,17 @@ $(document).ready(function(){
                 audio.currentTime = 0;
             }
 
-            const apiKey = '1459833052cf4857b523c5b1c9064726';
-            const url = `https://api.voicerss.org/?key=${apiKey}&hl=${selectedLanguage}&src=${encodeURIComponent(textToSpeak)}&r=0&c=WAV&f=44khz_16bit_stereo`;
-            audio = new Audio(url);
-            audio.play();
-            audio.onended = function() {
-                audio = null;
-            };
+            // Translate the text before converting to speech
+            translateText(textToSpeak, selectedLanguage.split('-')[0]).then(translatedText => {
+                const apiKey = '2273705f1f6f434194956a200a586470';
+                const url = `https://api.voicerss.org/?key=${apiKey}&hl=${selectedLanguage}&src=${encodeURIComponent(translatedText)}&r=0&c=WAV&f=44khz_16bit_stereo`;
+                audio = new Audio(url);
+                audio.play();
+                audio.onended = function() {
+                    audio = null;
+                };
+            });
+
         }
 
         modal.css('display', 'none');
@@ -3020,9 +3007,44 @@ $(document).ready(function(){
             $(this).find('.mic-btn').hide();
         }
     );
+
+    // Function to translate text using RapidAPI
+    async function translateText(text, targetLanguage) {
+        const url = 'https://text-translator2.p.rapidapi.com/translate';
+        const data = new FormData();
+        data.append('source_language', 'en');
+        data.append('target_language', targetLanguage);
+        data.append('text', text);
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'x-rapidapi-key': '5246c9098fmshc966ee7f6cea588p14a110jsn3979434fe858',
+                'x-rapidapi-host': 'text-translator2.p.rapidapi.com'
+            },
+            body: data
+        };
+
+        const response = await fetch(url, options);
+        const result = await response.json();
+        return result.data.translatedText;
+    }
+
+    // Update remaining characters
+    $('#docname').on('input', function() {
+        const remaining = 255 - $(this).val().length;
+        $('#rchars').text(remaining);
+    });
+
+    // Initialize remaining characters count
+    const remaining = 255 - $('#docname').val().length;
+    $('#rchars').text(remaining);
 });
 
-    </script>
+</script>
+
+
+
 
 <!-- Ensure this CSS is present to initially hide the Others field and its group -->
 <style>

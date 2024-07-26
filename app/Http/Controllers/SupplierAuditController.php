@@ -381,6 +381,7 @@ if (!empty($internalAudit->others)) {
     $history->save();
 }
 
+
 if (!empty($internalAudit->initiated_through)) {
     $history = new ExternalAuditTrailSupplier();
     $history->supplier_id = $internalAudit->id;
@@ -2065,6 +2066,8 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             }
             $history->save();
         }
+
+        
         if ($lastDocument->file_attachment != $internalAudit->file_attachment || !empty($request->file_attachment_comment)) {
 
 

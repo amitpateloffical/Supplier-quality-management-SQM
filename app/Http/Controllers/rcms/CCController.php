@@ -99,19 +99,20 @@ class CCController extends Controller
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
         // dd($request->due_date);
-        $openState->doc_change = $request->natureChange;
-        $openState->If_Others = $request->others;
+        $openState->doc_change = $request->doc_change;
+        $openState->If_Others = $request->If_Others;
         $openState->Division_Code = $request->div_code;
         $openState->severity_level1 = $request->severity_level1;
         $openState->initiated_through = $request->initiated_through;
         $openState->initiated_through_req = $request->initiated_through_req;
         $openState->repeat = $request->repeat;
-        // $openState->repeat_nature = $request->repeat_nature;
+        $openState->repeat_nature = $request->repeat_nature;
         $openState->current_practice = $request->current_practice;
         $openState->proposed_change = $request->proposed_change;
         $openState->reason_change = $request->reason_change;
         $openState->other_comment = $request->other_comment; 
-        $openState->supervisor_comment = $request->supervisor_comment;
+        $openState->designee_comments= $request->designee_comments;
+        
 
         $openState->type_chnage = $request->type_chnage;
         $openState->qa_comments = $request->qa_comments;
@@ -450,6 +451,22 @@ class CCController extends Controller
             $history->save();
         }
 
+        if(!empty($request->initiated_through_req)){
+            $history = new RcmDocHistory;
+            $history->cc_id = $openState->id;
+            $history->activity_type = 'Initiated Through Req';
+            $history->previous = "Null";
+            $history->current = $openState->initiated_through_req;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
         if(!empty($request->assign_to)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
@@ -507,6 +524,40 @@ class CCController extends Controller
             $history->activity_type = 'Division Code';
             $history->previous = "Null";
             $history->current = $openState->Division_Code;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->repeat_nature)){
+            $history = new RcmDocHistory;
+            $history->cc_id = $openState->id;
+            $history->activity_type = 'Repeat Nature';
+            $history->previous = "Null";
+            $history->current = $openState->repeat_nature;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+
+        if(!empty($request->doc_change)){
+            $history = new RcmDocHistory;
+            $history->cc_id = $openState->id;
+            $history->activity_type = 'Nature Of ChangE';
+            $history->previous = "Null";
+            $history->current = $openState->doc_change;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1001,22 +1052,22 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->group_attachments)){
-            $history = new RcmDocHistory;
-            $history->cc_id = $comments->id;
-            $history->activity_type = 'Attachments';
-            $history->previous = "Null";
-            $history->current = $comments->group_attachments;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $openState->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+        // if(!empty($request->group_attachments)){
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $comments->id;
+        //     $history->activity_type = 'Attachments';
+        //     $history->previous = "Null";
+        //     $history->current = $comments->group_attachments;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $openState->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
 
         // ----------------------Risk Assesments------------------------
 
@@ -1266,22 +1317,22 @@ class CCController extends Controller
         //     $history->save();
         // }
 
-        if(!empty($request->attach_list)){
-            $history = new RcmDocHistory;
-            $history->cc_id = $closure->id;
-            $history->activity_type = 'Initial attachment';
-            $history->previous = "Null";
-            $history->current = $closure->attach_list;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $openState->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+        // if(!empty($request->attach_list)){
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $closure->id;
+        //     $history->activity_type = 'Initial attachment';
+        //     $history->previous = "Null";
+        //     $history->current = $closure->attach_list;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $openState->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
 
         return redirect('rcms/qms-dashboard');
     }
@@ -1339,14 +1390,15 @@ class CCController extends Controller
         $openState->short_description = $request->short_description;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
-        $openState->doc_change = $request->naturechange;
-        $openState->If_Others = $request->others;
+        $openState->doc_change = $request->nature_Change;
+        $openState->If_Others = $request->If_Others;
         $openState->Division_Code = $request->div_code;
         $openState->severity_level1 = $request->severity_level1;
         $openState->initiated_through = $request->initiated_through;
         $openState->initiated_through_req = $request->initiated_through_req;
         $openState->repeat = $request->repeat;
         $openState->repeat_nature = $request->repeat_nature;
+        //dd($request->repeat_nature);    
         $openState->current_practice = $request->current_practice;
         $openState->proposed_change = $request->proposed_change;
         $openState->reason_change = $request->reason_change;
@@ -1354,8 +1406,10 @@ class CCController extends Controller
         $openState->supervisor_comment = $request->supervisor_comment;
         $openState->type_chnage = $request->type_chnage;
         $openState->qa_comments = $request->qa_comments;
+        $openState->designee_comments = $request->designee_comments;
+        
        // $openState->related_records = $request->related_records;
-        $openState->related_records = implode(',', $request->related_records);
+       // $openState->related_records = implode(',', $request->related_records);
         $openState->qa_head = $request->qa_head;
 
         $openState->qa_eval_comments = $request->qa_eval_comments;
@@ -1397,7 +1451,8 @@ class CCController extends Controller
         $openState->Occurance = $request->Occurance;
         $openState->Detection = $request->Detection;
         $openState->RPN = $request->RPN;
-        $openState->risk_evaluation = $request->risk_evaluation;
+        // $openState->risk_evaluation = $request->risk_evaluation;
+        // dd($request->risk_evaluation);
         $openState->migration_action = $request->migration_action;
 
         $openState->qa_appro_comments = $request->qa_appro_comments;
@@ -1576,6 +1631,7 @@ class CCController extends Controller
         $assessment->Detection = $request->Detection;
         $assessment->RPN = $request->RPN;
         $assessment->risk_evaluation = $request->risk_evaluation;
+        // dd($request->risk_evaluation);  
         $assessment->migration_action = $request->migration_action;
         $assessment->update();
 
@@ -1701,6 +1757,24 @@ class CCController extends Controller
             $history->save();
         }
 
+        // if ($lastDocument-nature_Change != $openState->nature_Change) {
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Nature Of Change';
+        //     $history->previous = $lastDocument->nature_Change;
+        //     $history->current = $openState->nature_Change;
+        //     $history->comment = $request->nature_Change_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+        //     $history->save();
+        // }
+
+
         if ($lastDocument->due_date != $openState->due_date) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -1757,6 +1831,22 @@ class CCController extends Controller
             $history->previous = $lastDocument->Division_Code;
             $history->current = $openState->Division_Code;
             $history->comment = $request->Division_Code_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        if ($lastdocdetail->repeat_nature != $docdetail->repeat_nature) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Repeat Nature';
+            $history->previous = $lastdocdetail->repeat_nature;
+            $history->current = $docdetail->repeat_nature;
+            $history->comment = $request->repeat_nature_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -2842,6 +2932,47 @@ class CCController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
+            if ($changeControl->stage == 4) {
+                $changeControl->stage = "2";
+                $changeControl->status = "HOD Review";
+                $changeControl->requested_to_hod_by = Auth::user()->name;
+                $changeControl->requested_to_hod_on = Carbon::now()->format('d-M-Y');
+                $changeControl->requested_to_hod_comment = $request->comment;
+
+                $history = new RcmDocHistory;
+                $history->cc_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->current = Auth::user()->name;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $openState->status;
+                $history->change_from = $openState->status;
+                $history->change_to = "HOD Review";
+                $history->action = 'Request More Information';
+                $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      } 
+                //   }
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -3084,6 +3215,7 @@ class CCController extends Controller
             }
         }
         $data = RcmDocHistory::where('cc_id', $doc->id)->orderByDesc('id')->get();
+        // dd($data);
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();

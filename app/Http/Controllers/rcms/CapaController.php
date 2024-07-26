@@ -1978,7 +1978,7 @@ class CapaController extends Controller
                 $capa->status = "Pending CAPA Plan";
                 $capa->plan_proposed_by = Auth::user()->name;
                 $capa->plan_proposed_on = Carbon::now()->format('d-M-Y');
-                $capa->plan_proposed_comment = $request->comment;
+                // $capa->plan_proposed_comment = $request->comment;
 
 
 

@@ -3331,7 +3331,7 @@
                                     </div>
                                     <div class="col-lg-6 p_erson">
                                         <div class="group-input ">
-                                            <label for="Production Review Completed On">Production Review Completedss
+                                            <label for="  Production Review Completed On  ">Production Review Completedss
                                                 On</label>
                                                 <input type="text" id="production_on" readonly
                                                 name="production_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}

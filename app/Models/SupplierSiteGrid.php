@@ -7,5 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class SupplierSiteGrid extends Model
 {
+    
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'supplier_site_id',
+        'identifier',
+        'data',
+    ];
+
 }

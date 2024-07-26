@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('cancelled_on')->nullable();
             $table->text('cancelled_by')->nullable();
             $table->text('cancelled_comment')->nullable();
+            $table->longText('qa_head_designee_comments')->nullable();
         });
     }
 

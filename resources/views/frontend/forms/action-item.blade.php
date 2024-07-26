@@ -22,7 +22,7 @@
 
     {{-- voice Command --}}
 
-    <style>
+    {{-- <style>
         .mic-btn {
             background: none;
             border: none;
@@ -106,7 +106,7 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 
 
     @php
@@ -258,13 +258,12 @@
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
-                                        <div style="position: relative;">
+
+                                        <div class="relative-container">
                                             <input class="mic-input" id="docname" type="text" name="short_description"
                                                 maxlength="255" required>
-
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model', ['name' => 'short_description', 'id' => 'short_description'])
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
@@ -297,13 +296,12 @@
                                     <div class="group-input">
                                         <label for="Short Description"> Description<span
                                                 class="text-danger"></span></label>
-                                        <div style="position: relative;">
-                                            <textarea class="mic-input" name="description"></textarea>
-
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                        <div class="relative-container">
+                                            <textarea name="description" id="description" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model', ['name' => 'description', 'id' => 'description'])
+                                            @endcomponent
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-12">

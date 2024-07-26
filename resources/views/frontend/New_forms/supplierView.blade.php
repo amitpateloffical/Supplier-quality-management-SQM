@@ -25,6 +25,50 @@ $users = DB::table('users')
             color: white;
         }
     </style>
+      <style>
+          .mini-modal {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            padding: 10px;
+            background-color: #fefefe;
+            border: 1px solid #888;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 200px; /* Adjust width as needed */
+        }
+        .mini-modal-content {
+            background-color: #fefefe;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .mini-modal-content h2 {
+            font-size: 16px;
+            margin-top: 0;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+        button {
+    border: 0;
+    background: white;
+    color: #060606;
+    /* border: 2px solid black; */
+    transition: all 0.3s linear;
+}
+
+button:hover {
+    color: #0c0c0c;
+}
+    </style>
     <script>
         $(document).ready(function () {
     let multipleCancelButton = new Choices("#choices-multiple-remove-button", {
@@ -106,19 +150,19 @@ function addMultipleFiles(input, block_id) {
         cell2.innerHTML = "<input type='text' name='audit[]'>";
 
         var cell3 = newRow.insertCell(2);
-        cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+        cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="scheduled_start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
         var cell4 = newRow.insertCell(3);
         cell4.innerHTML = "<input type='time' name='scheduled_start_time[]' >";
 
         var cell5 = newRow.insertCell(4);
-        cell5.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+        cell5.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="scheduled_end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
         var cell6 = newRow.insertCell(5);
         cell6.innerHTML = "<input type='time' name='scheduled_end_time[]' >";
 
         var cell7 = newRow.insertCell(6);
-        var userHtml = '<select name="auditor[]"><option value="">-- Select --</option>';
+        var userHtml = '<select name="auditor[]"><option value="">-Select-</option>';
                 for (var i = 0; i < users.length; i++) {
                     userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                 }
@@ -128,7 +172,7 @@ function addMultipleFiles(input, block_id) {
 
         var cell8 = newRow.insertCell(7);
         
-        var userHtml = '<select name="auditee[]"><option value="">-- Select --</option>';
+        var userHtml = '<select name="auditee[]"><option value="">-Select-</option>';
             for (var i = 0; i < users.length; i++) {
                 userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
             }
@@ -463,15 +507,15 @@ function addMultipleFiles(input, block_id) {
                                     </div>
 
                                 </div>
-                                        {{-- <div class="col-12">
+                                     <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description <span
                                                         class="text-danger">*</span></label>
                                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                                 <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
-                                        </div> --}}
-                                        <div class="col-12">
+                                        </div>  -->
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
@@ -481,7 +525,55 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
         
-                                        </div>
+                                        </div> -->
+                                        <div class="col-12">
+    <div class="group-input">
+        <label for="Short Description">Short Description<span class="text-danger">*</span></label>
+        <span id="rchars">255</span> characters remaining
+        <div style="position: relative;">
+            <input id="docname" type="text" value="{{ $data->short_description }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="short_description" maxlength="255" required>
+            <button class="mic-btn" type="button" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button" style="position: absolute; right: 40px; top: 50%; transform: translateY(-50%);">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
@@ -523,13 +615,54 @@ function addMultipleFiles(input, block_id) {
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input" id="initiated_through_req">
-                                                <label for="If Other">Others<span
-                                                        class="text-danger d-none">*</span></label>
-                                                <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other">{{$data->initiated_if_other}}</textarea>
-                                            </div>
-                                        </div>
+       <div class="col-lg-6">
+    <div class="group-input" id="initiated_through_req">
+        <label for="initiated_if_other">Others<span class="text-danger d-none">*</span></label>
+        <div class="relative-container">
+            <textarea name="initiated_if_other" id="initiated_if_other" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->initiated_if_other}}</textarea>
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                                         {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="repeat">Repeat</label>
@@ -567,13 +700,54 @@ function addMultipleFiles(input, block_id) {
     </div>
 </div>
 
-                                        <div class="col-lg-6">
-                                            <div class="group-input" id="if_other">
-                                                <label for="If Other">If Other<span
-                                                        class="text-danger d-none">*</span></label>
-                                                <textarea name="if_other" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_other }}</textarea>
-                                            </div>
-                                        </div>
+<div class="col-lg-6">
+    <div class="group-input" id="if_other">
+        <label for="if_other_textarea">If Other<span class="text-danger d-none">*</span></label>
+        <div class="relative-container">
+            <textarea name="if_other" id="if_other_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_other }}</textarea>
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                                         
                                         <div class="col-lg-6">
     <div class="group-input">
@@ -595,48 +769,90 @@ function addMultipleFiles(input, block_id) {
       
 <div class="col-lg-6" id="others_group">
     <div class="group-input">
-        <label for="others">Others<span class="text-danger d-none">*</span></label>
+        <label for="others">Supplier Agencies Others<span class="text-danger d-none">*</span></label>
         <textarea name="others" id="others" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->others }}</textarea>
     </div>
 </div>
 
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Initial Comments">Description</label>
-                                                <textarea name="initial_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_comments }}</textarea>
-                                            </div>
-                                        </div>
+<div class="col-12">
+    <div class="group-input">
+        <label for="initial_comments">Description</label>
+        <div class="relative-container">
+            <textarea name="initial_comments" id="initial_comments" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_comments }}</textarea>
+            <button class="mic-btn" type="button" style="display: none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                                         
                                     
-                                        <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="File Attachments">Initial Attachment</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled  class="file-attachment-list" id="inv_attachment">
-                                                        @if ($data->inv_attachment)
-                                                            @foreach(json_decode($data->inv_attachment) as $file)
-                                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
-                                                        @endif
-
-                                                    </div>
-                                                    <div  class="add-btn">
-                                                        <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="inv_attachment[]"
-                                                         oninput="addMultipleFiles(this, 'inv_attachment')"
-                                                            multiple>
-                                                    </div>
-                                                </div>
-                                                {{-- <input type="file" id="myfile" name="file_attachment"
-                                                    value="{{ $data->file_attachment }}" --}}
-                                                    {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
-                                            </div>
-                                        </div>
+<div class="col-lg-12">
+    <div class="group-input">
+        <label for="File Attachments">Initial Attachment</label>
+        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+        <div class="file-attachment-field">
+            <div disabled class="file-attachment-list" id="inv_attachment">
+                @if ($data->inv_attachment)
+                    @foreach(json_decode($data->inv_attachment) as $file)
+                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                            <b>{{ $file }}</b>
+                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                            </a>
+                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                            </a>
+                        </h6>
+                    @endforeach
+                @endif
+            </div>
+            <div class="file-input-wrapper">
+                <div class="add-btn">
+                    <div>Add</div>
+                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="inv_attachment[]" oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
@@ -751,20 +967,102 @@ function addMultipleFiles(input, block_id) {
     </div>
 </div>
                                        
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Product/Material Name">Product/Material Name</label>
-                                                <input type="text" name="material_name"
-                                                    value="{{ $data->material_name }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Comments(If Any)">Comments(If Any)</label>
-                                                <textarea name="if_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_comments }}</textarea>
-                                            </div>
-                                        </div>
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="material_name">Product/Material Name</label>
+        <div class="relative-container">
+            <input type="text" name="material_name" id="material_name" class="mic-input" value="{{ $data->material_name }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="if_comments">Comments(If Any)</label>
+        <div class="relative-container">
+            <textarea name="if_comments" id="if_comments" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_comments }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
@@ -932,61 +1230,231 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div> --}}
                                         <div class="col-6">
-                                            <div class="group-input">
-                                                <label for="Audit Team">Audit Team</label>
-                                                <select multiple name="Audit_team[]" placeholder="Select Audit Team"
-                                                    data-search="false" data-silent-initial-value-set="true"
-                                                    id="Audit"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}"
-                                                            {{ in_array($user->id, explode(',', $data->Audit_team)) ? 'selected' : '' }}>
-                                                            {{ $user->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="group-input">
-                                                <label for="Auditee">Auditee</label>
-                                                <select multiple name="Auditee[]" placeholder="Select Auditee"
-                                                    data-search="false" data-silent-initial-value-set="true"
-                                                    id="Auditee"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}"
-                                                            {{ in_array($user->id, explode(',', $data->Auditee)) ? 'selected' : '' }}>
-                                                            {{ $user->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="External Auditor Details">Suppliers Auditor Details</label>
-                                                <textarea name="Auditor_Details" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Auditor_Details }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="External Auditing Agency">Supplier Auditing Agency</label>
-                                                <textarea name="External_Auditing_Agency" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->External_Auditing_Agency }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Relevant Guidelines / Industry Standards">Relevant Guidelines / Industry Standards</label>
-                                                <textarea name="Relevant_Guidelines" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Relevant_Guidelines}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="QA Comments">QA Comments</label>
-                                                <textarea name="QA_Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->QA_Comments}}</textarea>
-                                            </div>
-                                        </div>
+    <div class="group-input">
+        <label for="Audit Team">Audit Team</label>
+        <select multiple name="Audit_team[]" placeholder="Select Audit Team"
+            data-search="false" data-silent-initial-value-set="true"
+            id="Audit"
+            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+            @foreach ($users as $user)
+                <option value="{{ $user->id }}"
+                    {{ in_array($user->id, explode(',', $data->Audit_team)) ? 'selected' : '' }}>
+                    {{ $user->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+<div class="col-6">
+    <div class="group-input">
+        <label for="Auditee">Auditee</label>
+        <select multiple name="Auditee[]" placeholder="Select Auditee"
+            data-search="false" data-silent-initial-value-set="true"
+            id="Auditee"
+            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+            @foreach ($users as $user)
+                <option value="{{ $user->id }}"
+                    {{ in_array($user->id, explode(',', $data->Auditee)) ? 'selected' : '' }}>
+                    {{ $user->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="Auditor_Details">Suppliers Auditor Details</label>
+        <div class="relative-container">
+            <textarea name="Auditor_Details" id="Auditor_Details" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Auditor_Details }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="External_Auditing_Agency">Supplier Auditing Agency</label>
+        <div class="relative-container">
+            <textarea name="External_Auditing_Agency" id="External_Auditing_Agency" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->External_Auditing_Agency }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="Relevant_Guidelines">Relevant Guidelines / Industry Standards</label>
+        <div class="relative-container">
+            <textarea name="Relevant_Guidelines" id="Relevant_Guidelines" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Relevant_Guidelines }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="QA_Comments">QA Comments</label>
+        <div class="relative-container">
+            <textarea name="QA_Comments" id="QA_Comments" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->QA_Comments }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Guideline Attachment">Guideline Attachment</label>
@@ -1033,23 +1501,148 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Supplier/Vendor/Manufacturer Details">Supplier/Vendor/Manufacturer Details</label>
-                                                <textarea type="text" name="Supplier_Details" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Details}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Supplier/Vendor/Manufacturer Site">Supplier/Vendor/Manufacturer Site</label>
-                                                <textarea type="text" name="Supplier_Site" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Site}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Comments">Comments</label>
-                                                <textarea name="Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Comments }}</textarea>
-                                            </div>
-                                        </div>
+    <div class="group-input">
+        <label for="Supplier_Details">Supplier/Vendor/Manufacturer Details</label>
+        <div class="relative-container">
+            <textarea name="Supplier_Details" id="Supplier_Details" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Details }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="Supplier_Site">Supplier/Vendor/Manufacturer Site</label>
+        <div class="relative-container">
+            <textarea name="Supplier_Site" id="Supplier_Site" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Site }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12">
+    <div class="group-input">
+        <label for="Comments">Comments</label>
+        <div class="relative-container">
+            <textarea name="Comments" id="Comments" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Comments }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
@@ -1166,11 +1759,53 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Audit Comments">Audit Comments</label>
-                                                <textarea name="Audit_Comments1" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments1 }}</textarea>
-                                            </div>
-                                        </div>
+    <div class="group-input">
+        <label for="Audit_Comments1">Audit Comments</label>
+        <div class="relative-container">
+            <textarea name="Audit_Comments1" id="Audit_Comments1" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments1 }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="speak-btn" type="button">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="mini-modal">
+                <div class="mini-modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Select Language</h2>
+                    <select id="language-select">
+                        <option value="en-us">English</option>
+                        <option value="hi-in">Hindi</option>
+                        <option value="te-in">Telugu</option>
+                        <option value="fr-fr">French</option>
+                        <option value="es-es">Spanish</option>
+                        <option value="zh-cn">Chinese (Mandarin)</option>
+                        <option value="ja-jp">Japanese</option>
+                        <option value="de-de">German</option>
+                        <option value="ru-ru">Russian</option>
+                        <option value="ko-kr">Korean</option>
+                        <option value="it-it">Italian</option>
+                        <option value="pt-br">Portuguese (Brazil)</option>
+                        <option value="ar-sa">Arabic</option>
+                        <option value="bn-in">Bengali</option>
+                        <option value="pa-in">Punjabi</option>
+                        <option value="mr-in">Marathi</option>
+                        <option value="gu-in">Gujarati</option>
+                        <option value="ur-pk">Urdu</option>
+                        <option value="ta-in">Tamil</option>
+                        <option value="kn-in">Kannada</option>
+                        <option value="ml-in">Malayalam</option>
+                        <option value="or-in">Odia</option>
+                        <option value="as-in">Assamese</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                    <button id="select-language-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
@@ -1193,11 +1828,17 @@ function addMultipleFiles(input, block_id) {
                                             Audit Response
                                         </div>
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Remarks">Remarks</label>
-                                                <textarea name="Remarks" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
-                                            </div>
-                                        </div>
+    <div class="group-input">
+        <label for="Remarks">Remarks</label>
+        <div class="relative-container">
+            <textarea name="Remarks" id="Remarks" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
 
                                         <div class="col-lg-12">
                                             <div class="group-input">
@@ -1266,18 +1907,30 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Audit Comments">Audit Comments</label>
-                                                <textarea name="Audit_Comments2" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments2 }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="due_date_extension">Due Date Extension Justification</label>
-                                                <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                            <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->due_date_extension}}</textarea>
-                                            </div>
-                                        </div>
+    <div class="group-input">
+        <label for="Audit_Comments2">Audit Comments</label>
+        <div class="relative-container">
+            <textarea name="Audit_Comments2" id="Audit_Comments2" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments2 }}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="group-input">
+        <label for="due_date_extension">Due Date Extension Justification</label>
+        <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
+        <div class="relative-container">
+            <textarea name="due_date_extension" id="due_date_extension" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->due_date_extension}}</textarea>
+            <button class="mic-btn" type="button" style="display:none;">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
@@ -1372,6 +2025,24 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="Audit Schedule On"> Comment</label>
                                                 <div class="static">{{$data->comment_cancelled_comment}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="No CAPA Required By">No CAPA Required By</label>
+                                                <div class="static">{{ $data->audit_response_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="No Capa Required On">No CAPA Required On</label>
+                                                <div class="static">{{ $data->audit_response_completed_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On"> Comment</label>
+                                                <div class="static">{{$data->comment_closed_done_by_comment}}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
@@ -1853,10 +2524,604 @@ function addMultipleFiles(input, block_id) {
     });
 </script>
 
+<!-- for Voice Access -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        const docnameInput = document.getElementById('docname');
+        const startRecordBtn = document.getElementById('start-record-btn');
+
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        startRecordBtn.addEventListener('click', function() {
+            recognition.start();
+        });
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            docnameInput.value += transcript;
+        };
+
+        recognition.onerror = function(event) {
+            console.error(event.error);
+        };
+    });
+</script>
+<script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+
+    // Show/hide the container based on user selection
+    function toggleOthersField(selectedValue) {
+        const container = document.getElementById('external_agencies_req');
+        if (selectedValue === 'others') {
+            container.classList.remove('d-none');
+        } else {
+            container.classList.add('d-none');
+        }
+    }
+</script>
+
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
+    }
+</style>
+
+    <style>
+    #start-record-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    #start-record-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    #start-record-btn:focus,
+    #start-record-btn:hover,
+    #start-record-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+</style>
+
+
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            const button = event.target.closest('.mic-btn');
+            if (button) {
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+                return;
+            }
+        });
+
+        // Show/hide mic button on focus/blur of input fields
+        const micInputs = document.querySelectorAll('.mic-input');
+        micInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    micBtn.style.display = 'block';
+                }
+            });
+            input.addEventListener('blur', function(event) {
+                const micBtn = this.nextElementSibling;
+                if (micBtn && micBtn.classList.contains('mic-btn')) {
+                    // Use a timeout to prevent immediate hiding when the button is clicked
+                    setTimeout(() => {
+                        if (!event.relatedTarget || !event.relatedTarget.classList.contains('mic-btn')) {
+                            micBtn.style.display = 'none';
+                        }
+                    }, 200);
+                }
+            });
+        });
+    });
+
+    // Show/hide the container based on user selection
+    function toggleOthersField(selectedValue) {
+        const container = document.getElementById('external_agencies_req');
+        if (selectedValue === 'others') {
+            container.classList.remove('d-none');
+        } else {
+            container.classList.add('d-none');
+        }
+    }
+</script>
+
+// <script>
+// $(document).ready(function(){
+//     let audio = null;
+//     let selectedLanguage = 'en-us'; // Default language
+//     let inputText = '';
+
+//     // When the user clicks the button, open the mini modal 
+//     $(document).on('click', '.speak-btn', function() {
+//         let inputField = $(this).siblings('textarea, input');
+//         inputText = inputField.val();
+//         let modal = $(this).siblings('.mini-modal');
+//         if (inputText) {
+//             // Store the input field element
+//             $(modal).data('inputField', inputField);
+//             modal.css({
+//                 display: 'block',
+//                 top: $(this).position().top - modal.outerHeight() - 10,
+//                 left: $(this).position().left + $(this).outerWidth() - modal.outerWidth()
+//             });
+//         }
+//     });
+
+//     // When the user clicks on <span> (x), close the mini modal
+//     $(document).on('click', '.close', function() {
+//         $(this).closest('.mini-modal').css('display', 'none');
+//     });
+
+//     // When the user selects a language and clicks the button
+//     $(document).on('click', '#select-language-btn', function(event) {
+//         event.preventDefault(); // Prevent form submission
+//         let modal = $(this).closest('.mini-modal');
+//         selectedLanguage = modal.find('#language-select').val();
+//         let inputField = modal.data('inputField');
+//         let textToSpeak = inputText;
+
+//         if (textToSpeak) {
+//             if (audio) {
+//                 audio.pause();
+//                 audio.currentTime = 0;
+//             }
+
+//             // Translate the text before converting to speech
+//             translateText(textToSpeak, selectedLanguage.split('-')[0]).then(translatedText => {
+//                 const apiKey = '2273705f1f6f434194956a200a586470';
+//                 const url = `https://api.voicerss.org/?key=${apiKey}&hl=${selectedLanguage}&src=${encodeURIComponent(translatedText)}&r=0&c=WAV&f=44khz_16bit_stereo`;
+//                 audio = new Audio(url);
+//                 audio.play();
+//                 audio.onended = function() {
+//                     audio = null;
+//                 };
+//             });
+
+//         }
+
+//         modal.css('display', 'none');
+//     });
+
+//     // Speech-to-Text functionality
+//     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+//     recognition.continuous = false;
+//     recognition.interimResults = false;
+//     recognition.lang = 'en-US';
+
+//     function startRecognition(targetElement) {
+//         recognition.start();
+//         recognition.onresult = function(event) {
+//             const transcript = event.results[0][0].transcript;
+//             targetElement.value += transcript;
+//         };
+//         recognition.onerror = function(event) {
+//             console.error(event.error);
+//         };
+//     }
+
+//     $(document).on('click', '.mic-btn', function() {
+//         const inputField = $(this).siblings('textarea, input');
+//         startRecognition(inputField[0]);
+//     });
+
+//     // Show mic button on hover
+//     $('.relative-container').hover(
+//         function() {
+//             $(this).find('.mic-btn').show();
+//         }, 
+//         function() {
+//             $(this).find('.mic-btn').hide();
+//         }
+//     );
+
+//     // Function to translate text using RapidAPI
+//     async function translateText(text, targetLanguage) {
+//         const url = 'https://text-translator2.p.rapidapi.com/translate';
+//         const data = new FormData();
+//         data.append('source_language', 'en');
+//         data.append('target_language', targetLanguage);
+//         data.append('text', text);
+
+//         const options = {
+//             method: 'POST',
+//             headers: {
+//                 'x-rapidapi-key': '5246c9098fmshc966ee7f6cea588p14a110jsn3979434fe858',
+//                 'x-rapidapi-host': 'text-translator2.p.rapidapi.com'
+//             },
+//             body: data
+//         };
+
+//         const response = await fetch(url, options);
+//         const result = await response.json();
+//         return result.data.translatedText;
+//     }
+
+//     // Update remaining characters
+//     $('#docname').on('input', function() {
+//         const remaining = 255 - $(this).val().length;
+//         $('#rchars').text(remaining);
+//     });
+
+//     // Initialize remaining characters count
+//     const remaining = 255 - $('#docname').val().length;
+//     $('#rchars').text(remaining);
+// });
+
+// </script>
+
+
+
+<script>
+$(document).ready(function(){
+    let audio = null;
+    let selectedLanguage = 'en-us'; // Default language
+
+    // When the user clicks the button, open the mini modal 
+    $(document).on('click', '.speak-btn', function() {
+        let inputField = $(this).siblings('textarea, input');
+        let textToSpeak = inputField.val();
+        let modal = $(this).siblings('.mini-modal');
+        if (textToSpeak) {
+            // Store the input field element
+            $(modal).data('inputField', inputField);
+            modal.css({
+                display: 'block',
+                top: $(this).position().top - modal.outerHeight() - 10,
+                left: $(this).position().left + $(this).outerWidth() - modal.outerWidth()
+            });
+        }
+    });
+
+    // When the user clicks on <span> (x), close the mini modal
+    $(document).on('click', '.close', function() {
+        $(this).closest('.mini-modal').css('display', 'none');
+    });
+
+    // When the user selects a language and clicks the button
+    $(document).on('click', '#select-language-btn', function(event) {
+        event.preventDefault(); // Prevent form submission
+        let modal = $(this).closest('.mini-modal');
+        selectedLanguage = modal.find('#language-select').val();
+        let inputField = modal.data('inputField');
+        let textToSpeak = inputField.val();
+
+        if (textToSpeak) {
+            if (audio) {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+
+            const apiKey = '1459833052cf4857b523c5b1c9064726';
+            const url = `https://api.voicerss.org/?key=${apiKey}&hl=${selectedLanguage}&src=${encodeURIComponent(textToSpeak)}&r=0&c=WAV&f=44khz_16bit_stereo`;
+            audio = new Audio(url);
+            audio.play();
+            audio.onended = function() {
+                audio = null;
+            };
+        }
+
+        modal.css('display', 'none');
+    });
+
+    // Speech-to-Text functionality
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    function startRecognition(targetElement) {
+        recognition.start();
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            targetElement.value += transcript;
+        };
+        recognition.onerror = function(event) {
+            console.error(event.error);
+        };
+    }
+
+    $(document).on('click', '.mic-btn', function() {
+        const inputField = $(this).siblings('textarea, input');
+        startRecognition(inputField[0]);
+    });
+
+    // Show mic button on hover
+    $('.relative-container').hover(
+        function() {
+            $(this).find('.mic-btn').show();
+        }, 
+        function() {
+            $(this).find('.mic-btn').hide();
+        }
+    );
+});
+
+    </script>
+
 <!-- Ensure this CSS is present to initially hide the Others field and its group -->
 <style>
     #others_group {
         display: none;
     }
 </style>
+
+<style>
+        .group-input {
+            margin-bottom: 20px;
+        }
+        .mic-btn, .speak-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+        }
+        .mic-btn i, .speak-btn i {
+            color: black;
+        }
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active,
+        .speak-btn:focus,
+        .speak-btn:hover,
+        .speak-btn:active {
+            box-shadow: none;
+        }
+        .relative-container {
+            position: relative;
+        }
+        .relative-container input {
+            width: 100%;
+            padding-right: 40px;
+        }
+    </style>
+
+    <style>
+    #start-record-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    #start-record-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    #start-record-btn:focus,
+    #start-record-btn:hover,
+    #start-record-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+</style>
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none;
+         /* Remove shadow */
+    }
+    .mic-btn {
+            right: 50px; /* Adjust position to avoid overlap with speaker button */
+        }
+
+        .speak-btn {
+            right: 16px;
+        }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        // box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+        // display: none;
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
+    }
+</style>
+
         @endsection

@@ -16,7 +16,8 @@ class SupplierAudit extends Model
         'audit_start_date' => 'date',
         'end_date' => 'date',
         'start_date' => 'date',
-        'created_at'=>'date'
+        'created_at'=>'date',
+        'intiation_date' =>'date'
         
      ];
 

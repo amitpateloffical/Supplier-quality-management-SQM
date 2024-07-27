@@ -366,3 +366,90 @@
         }
     });
 </script>
+
+{{-- <script>
+    $(document).ready(function() {
+        let audio = null;
+        let selectedLanguage = 'en-us'; // Default language
+
+        // When the user clicks the button, open the mini modal 
+        $(document).on('click', '.speak-btn', function() {
+            let inputField = $(this).siblings('textarea, input');
+            let textToSpeak = inputField.val();
+            let modal = $(this).siblings('.mini-modal');
+            if (textToSpeak) {
+                // Store the input field element
+                $(modal).data('inputField', inputField);
+                modal.css({
+                    display: 'block',
+                    top: $(this).position().top - modal.outerHeight() - 10,
+                    left: $(this).position().left + $(this).outerWidth() - modal.outerWidth()
+                });
+            }
+        });
+
+        // When the user clicks on <span> (x), close the mini modal
+        $(document).on('click', '.close', function() {
+            $(this).closest('.mini-modal').css('display', 'none');
+        });
+
+        // When the user selects a language and clicks the button
+        $(document).on('click', '#select-language-btn', function(event) {
+            event.preventDefault(); // Prevent form submission
+            let modal = $(this).closest('.mini-modal');
+            selectedLanguage = modal.find('#language-select').val();
+            let inputField = modal.data('inputField');
+            let textToSpeak = inputField.val();
+
+            if (textToSpeak) {
+                if (audio) {
+                    audio.pause();
+                    audio.currentTime = 0;
+                }
+
+                const apiKey = '1459833052cf4857b523c5b1c9064726';
+                const url =
+                    `https://api.voicerss.org/?key=${apiKey}&hl=${selectedLanguage}&src=${encodeURIComponent(textToSpeak)}&r=0&c=WAV&f=44khz_16bit_stereo`;
+                audio = new Audio(url);
+                audio.play();
+                audio.onended = function() {
+                    audio = null;
+                };
+            }
+
+            modal.css('display', 'none');
+        });
+
+        // Speech-to-Text functionality
+        const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        $(document).on('click', '.mic-btn', function() {
+            const inputField = $(this).siblings('textarea, input');
+            startRecognition(inputField[0]);
+        });
+
+        // Show mic button on hover
+        $('.relative-container').hover(
+            function() {
+                $(this).find('.mic-btn').show();
+            },
+            function() {
+                $(this).find('.mic-btn').hide();
+            }
+        );
+    });
+</script> --}}

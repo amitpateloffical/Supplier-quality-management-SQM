@@ -194,12 +194,12 @@ class ObservationController extends Controller
         $history->save();
     }
 
-    if (! empty($data->division_code)) {
+    if (! empty($data->division_id)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Site/Location Code';
         $history->previous = "Null";
-        $history->current = $data->division_code;
+        $history->current = Helpers::getDivisionName($data->division_id);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -2059,8 +2059,8 @@ class ObservationController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = "QA Approval Without CAPA";
                 $history->change_to = 'Closed - Done';
-$history->change_from = 'Pending Approval';
-$history->action_name = 'Not Applicable';
+                $history->change_from = 'Pending Approval';
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 
                 $list = Helpers::getLeadAuditeeUserList();

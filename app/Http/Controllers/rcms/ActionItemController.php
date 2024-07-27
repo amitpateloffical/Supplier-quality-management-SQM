@@ -174,12 +174,12 @@ class ActionItemController extends Controller
             $history->save();
         }
     
-        if (!empty($openState->division_code)) {
+        if (!empty($openState->division_id)) {
             $history = new ActionItemHistory();
             $history->cc_id = $openState->id;
             $history->activity_type = 'Division Code';
             $history->previous = "Null";
-            $history->current =  $openState->division_code;
+            $history->current =  Helpers::getDivisionName($openState->division_id);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -976,6 +976,7 @@ class ActionItemController extends Controller
                 $history->activity_type = 'Activity Log';
                 $history->current = $changeControl->submitted_by;
                 $history->comment = $request->comment;
+                $history->action = 'Submit';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -983,7 +984,7 @@ class ActionItemController extends Controller
                 $history->change_to = 'Work In Progress';
                 $history->change_from = 'Opened';
                 $history->action_name = 'Not Applicable';
-                $history->stage = "Submitted";
+                $history->stage = "Submit";
                 $history->save();
                 $changeControl->update();
 
@@ -1030,6 +1031,7 @@ class ActionItemController extends Controller
                 $history->previous = $lastopenState->completed_by;
                 $history->current = $changeControl->completed_by;
                 $history->comment = $request->comment;
+                $history->action = 'Complete';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1037,7 +1039,7 @@ class ActionItemController extends Controller
                 $history->change_to = 'Closed-Done';
                 $history->change_from = 'Work In Progress';
                 $history->action_name = 'Not Applicable';
-                $history->stage = "Completed";
+                $history->stage = "Complete";
                 $history->save();
                 $changeControl->update();
 
@@ -1137,6 +1139,7 @@ class ActionItemController extends Controller
                 $history->activity_type = 'Activity Log';
                 $history->current = $changeControl->cancelled_by;
                 $history->comment = $request->comment;
+                $history->action = 'Cancel';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1144,7 +1147,7 @@ class ActionItemController extends Controller
                 $history->change_to = 'Closed-Cancelled';
                 $history->change_from = 'Opened';
                 $history->action_name = 'Not Applicable';
-                $history->stage = "Cancelled";
+                $history->stage = "Cancel";
                 $history->save();
                 $changeControl->update();
 
@@ -1201,6 +1204,7 @@ class ActionItemController extends Controller
                 $history->activity_type = 'Activity Log';
                 $history->current = $changeControl->more_information_required_by;
                 $history->comment = $request->comment;
+                $history->action = 'More Information Required';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

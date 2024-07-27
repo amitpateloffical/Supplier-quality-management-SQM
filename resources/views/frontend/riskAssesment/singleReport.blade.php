@@ -474,6 +474,9 @@
             <div class="block-head">
                 Work Group Assignment
             </div>
+            <div class="block-head">
+                Assignment Details
+            </div>
             <table>
                 <tr>
                     <th class="w-20">Scheduled Start Date</th>
@@ -494,8 +497,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="w-50">Estimated Man-Hours</th>
-                    <td class="w-50">
+                    <th class="w-20">Estimated Man-Hours</th>
+                    <td class="w-80">
                         @if ($data->estimated_man_hours)
                             {{ $data->estimated_man_hours }}
                         @else
@@ -505,15 +508,18 @@
                 </tr>
                 <tr>
                     <th class="w-20">Estimated Cost</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         @if ($data->estimated_cost)
                             {{ $data->estimated_cost }}
                         @else
                             Not Applicable
                         @endif
                     </td>
+                </tr>
+
+                <tr>
                     <th class="w-20">Currency</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         @if ($data->currency)
                             {{ $data->currency }}
                         @else
@@ -523,7 +529,7 @@
                 </tr>
                 <tr>
                     <th class="w-20">Justification/Rationale</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         @if ($data->justification)
                             {{ $data->justification }}
                         @else
@@ -532,24 +538,7 @@
                     </td>
 
                 </tr>
-                <!-- <tr>
-                        <th class="w-20">Action Plan</th>
-                        <td class="w-30">
-@if ($data->action_plan)
-{{ $data->action_plan }}
-@else
-Not Applicable
-@endif
-</td>
-                        <th class="w-20"></th>
-                        <td class="w-30">
-@if ($data->work_group_attachments)
-{{ $data->work_group_attachments }}
-@else
-Not Applicable
-@endif
-</td>
-                    </tr> -->
+
             </table>
             <div class="border-table">
                 <div class="block-head">
@@ -584,6 +573,9 @@ Not Applicable
                 <div class="block-head">
                     Risk/Opportunity Analysis
                 </div>
+                <div class="block-head">
+                    RCA Results
+                </div>
                 <table>
                     <tr>
                         <th class="w-20">Root Cause Methodology</th>
@@ -613,6 +605,12 @@ Not Applicable
                             @endif
                         </td>
                     </tr>
+                </table>
+
+                <div class="block-head">
+                    Risk Analysis
+                </div>
+                <table>
                     <tr>
                         <th class="w-20">Severity Rate</th>
                         <td class="w-80">
@@ -1245,6 +1243,11 @@ Not Applicable
                             @endif
                         </td>
                     </tr>
+                </table>
+                <div class="block-head">
+                    Overall Assessment
+                </div>
+                <table>
                     <tr>
                         <th class="w-20">Impact</th>
                         <td class="w-30">
@@ -1283,15 +1286,23 @@ Not Applicable
                     </tr>
                     <tr>
                         <th class="w-20">Reference Record</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->refrence_record)
                                 {{ Helpers::getDivisionName($data->refrence_record) }}/RA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+
+                    </tr>
+                </table>
+                <div class="block-head">
+                    Extension Justification
+                </div>
+                <table>
+                    <tr>
                         <th class="w-20">Due Date Extension Justification</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->due_date_extension)
                                 {{ $data->due_date_extension }}
                             @else
@@ -1299,6 +1310,7 @@ Not Applicable
                             @endif
                         </td>
                     </tr>
+
                 </table>
             </div>
         </div>

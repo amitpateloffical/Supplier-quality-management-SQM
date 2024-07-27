@@ -13,6 +13,20 @@
     header {
         display: none;
     }
+    .custom-file-upload {
+    background-color: #007bff;
+    color: white;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+#fileName {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+}
 </style>
 <style>
         textarea.note-codable {
@@ -149,6 +163,22 @@
         .swal-icon {
             scale: 0.8 !important;
         }
+        .custom-select{
+        border: 1px solid black !important;
+        height: 32px;
+        margin-top: -11px;
+    }
+    .custom-date-picker{
+        height:35px;
+        border: 1px solid black !important;
+        padding: 11px !important;
+    }
+    .custom-border{
+        border: 1px solid black !important;
+        /* padding: 10px;
+        margin-bottom: 10px;
+        margin-top: 10px; */
+    }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
@@ -401,7 +431,7 @@
             </div>
             <!-- Tab links -->
             <div class="cctab">
-                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Supplier/Manufacturer/Vendor</button>
+                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Request for Creation of New Manufacturer</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Supplier Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Score Card</button>
@@ -626,21 +656,19 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="request_for">Request For</label>
-                                        <select id="request_for" name="request_for">
-                                            <option value="">---- Select ----</option>
-                                            <option value="API" @if(isset($data->request_for) && $data->request_for == 'API') selected @endif>API</option>
-                                            <option value="Excipient" @if(isset($data->request_for) && $data->request_for == 'Excipient') selected @endif>Excipient</option>
-                                            <option value="New Manufacturer" @if(isset($data->request_for) && $data->request_for == 'New Manufacturer') selected @endif>New Manufacturer</option>
-                                            <option value="Existing Manufacturer" @if(isset($data->request_for) && $data->request_for == 'Existing Manufacturer') selected @endif>Existing Manufacturer</option>
-                                            <option value="Additional Site of Existing Manufacturer" @if(isset($data->request_for) && $data->request_for == 'Additional Site of Existing Manufacturer') selected @endif>Additional Site of Existing Manufacturer</option>
-                                            <option value="Brand New API" @if(isset($data->request_for) && $data->request_for == 'Brand New API') selected @endif>Brand New API</option>
-                                            <option value="Existing API" @if(isset($data->request_for) && $data->request_for == 'Existing API') selected @endif>Existing API</option>
-                                            <option value="Brand New Excipient" @if(isset($data->request_for) && $data->request_for == 'Brand New Excipient') selected @endif>Brand New Excipient</option>
-                                            <option value="Existing Excipient" @if(isset($data->request_for) && $data->request_for == 'Existing Excipient') selected @endif>Existing Excipient</option>
-                                            <option value="R&D development" @if(isset($data->request_for) && $data->request_for == 'R&D development') selected @endif>R&D development</option>
-                                            <option value="Site Transfer" @if(isset($data->request_for) && $data->request_for == 'Site Transfer') selected @endif>Site Transfer</option>
-                                            <option value="Alternate manufacturer" @if(isset($data->request_for) && $data->request_for == 'Alternate manufacturer') selected @endif>Alternate manufacturer</option>
-                                            <option value="Excipient" @if(isset($data->request_for) && $data->request_for == 'Excipient') selected @endif>Excipient</option>
+                                        <select id="request_for" name="request_for[]" multiple>
+                                            <option value="API" {{ strpos($data->request_for, 'API') !== false ? 'selected' : '' }}>API</option>
+                                            <option value="Excipient" {{ strpos($data->request_for, 'Excipient') !== false ? 'selected' : '' }}>Excipient</option>
+                                            <option value="New Manufacturer" {{ strpos($data->request_for, 'New Manufacturer') !== false ? 'selected' : '' }}>New Manufacturer</option>
+                                            <option value="Existing Manufacturer" {{ strpos($data->request_for, 'Existing Manufacturer') !== false ? 'selected' : '' }}>Existing Manufacturer</option>
+                                            <option value="Additional Site of Existing Manufacturer" {{ strpos($data->request_for, 'Additional Site of Existing Manufacturer') !== false ? 'selected' : '' }}>Additional Site of Existing Manufacturer</option>
+                                            <option value="Brand New API" {{ strpos($data->request_for, 'Brand New API') !== false ? 'selected' : '' }}>Brand New API</option>
+                                            <option value="Existing API" {{ strpos($data->request_for, 'Existing API') !== false ? 'selected' : '' }}>Existing API</option>
+                                            <option value="Brand New Excipient" {{ strpos($data->request_for, 'Brand New Excipient') !== false ? 'selected' : '' }}>Brand New Excipient</option>
+                                            <option value="Existing Excipient" {{ strpos($data->request_for, 'Existing Excipient') !== false ? 'selected' : '' }}>Existing Excipient</option>
+                                            <option value="R&D development" {{ strpos($data->request_for, 'R&D development') !== false ? 'selected' : '' }}>R&D development</option>
+                                            <option value="Site Transfer" {{ strpos($data->request_for, 'Site Transfer') !== false ? 'selected' : '' }}>Site Transfer</option>
+                                            <option value="Alternate manufacturer" {{ strpos($data->request_for, 'Alternate manufacturer') !== false ? 'selected' : '' }}>Alternate manufacturer</option>
                                         </select>
                                     </div>
                                 </div>
@@ -751,6 +779,69 @@
                                     </div>
                                 </div>
 
+                                <!-- Certificate Checklist Data -->
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <div class="why-why-chart">
+                                        @php
+                                            $types = ['tse', 'residual_solvent','melamine','gmo','gluten','manufacturer_evaluation','who','gmp','ISO','manufacturing_license','CEP','risk_assessment','elemental_impurity','azido_impurities'];
+                                        @endphp
+
+                                        @foreach ($types as $type)
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 15%">Certificate Name</th>
+                                                        <th style="width: 25%">Attachment</th>
+                                                        <th style="width: 15%">Issue Date</th>
+                                                        <th style="width: 15%">Expiry Date</th>
+                                                        <th>Remark</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="{{ $type }}_rows">
+                                                    @foreach ($supplierChecklist->where('doc_type', $type) as $grid)
+                                                    @php
+                                                        $filePath = $grid->attachment;
+                                                        $fileName = str_replace('upload\\', '', $filePath);
+                                                    @endphp
+                                                        <tr>
+                                                            <td>
+                                                                {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
+                                                                <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
+                                                                <button type="button" onclick="removeRow(this)">Remove</button>
+                                                            </td>
+                                                            <td>
+                                                                @if ($grid->attachment)
+                                                                    <input type="file" name="{{ $type }}_attachment[]" class="custom-border" style="color: white;">
+                                                                    <span type="button" class="file-container text-dark mt-2" style="background-color: rgb(243, 242, 240);">
+                                                                        <b>{{ $fileName }}</b>
+                                                                        <a href="{{ asset('upload/' . $fileName) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $fileName }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                    </span>
+                                                                @else
+                                                                    <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <input type="date" name="certificate_issue_{{ $type }}[]" value="{{ $grid->issue_date }}" class="custom-border">
+                                                            </td>
+                                                            <td>
+                                                                <input type="date" name="certificate_expiry_{{ $type }}[]" value="{{ $grid->expiry_date }}" class="custom-border">
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="{{ $type }}_remarks[]" class="custom-border">{{ $grid->remarks }}</textarea>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            
+                                        @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Pre Purchase Sample Analysis Completed?</label>
@@ -813,6 +904,13 @@
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Analyzed on Location</label>
                                         <input type="text" name="analyzedLocation" id="analyzedLocation" value="{{ $data->analyzedLocation }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Justification</label>
+                                        <textarea type="text" name="supplierJustification" id="supplierJustification" class="">{{ $data->supplierJustification }}</textarea>
                                     </div>
                                 </div>
 
@@ -2951,7 +3049,7 @@
     
     <script>
         VirtualSelect.init({
-            ele: '#supplier-product, #ppap-elements, #supplier-services, #other-products, #manufacture-sites'
+            ele: '#supplier-product, #ppap-elements, #supplier-services, #other-products, #manufacture-sites, #request_for'
         });
 
         function openCity(evt, cityName) {
@@ -3029,5 +3127,46 @@
             var selectedValue = this.value;
             document.getElementById('initiator_group_code').value = selectedValue;
         });
+    </script>
+
+    <script>
+        function addRow(type) {
+            let tbody = document.getElementById(`${type}_rows`);
+            let newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>
+                <td><input type="file" name="${type}_attachment[]" class="custom-border"></td>
+                <td><input type="date" name="certificate_issue_${type}[]" class="custom-border"></td>
+                <td><input type="date" name="certificate_expiry_${type}[]" class="custom-border"></td>
+                <td><textarea name="${type}_remarks[]" class="custom-border"></textarea></td>
+            `;
+            tbody.appendChild(newRow);
+        }
+
+        function removeRow(button) {
+            let row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        function removeFile(id) {
+        // Hide the file view and remove buttons
+        document.querySelector(`#row-${id} a.btn-info`).style.display = 'none';
+        document.querySelector(`#row-${id} button.btn-danger`).style.display = 'none';
+
+        // Show the file input
+        document.querySelector(`#row-${id} input[type="file"]`).style.display = 'block';
+
+        // Mark the file for removal
+        let removeInput = document.createElement('input');
+        removeInput.type = 'hidden';
+        removeInput.name = 'remove_files[]';
+        removeInput.value = id;
+        document.getElementById('supplierForm').appendChild(removeInput);
+    }
+
+    document.getElementById('fileInput').addEventListener('change', function() {
+        var fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+        document.getElementById('fileName').textContent = fileName;
+    });
     </script>
 @endsection

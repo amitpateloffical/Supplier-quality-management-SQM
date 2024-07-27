@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\rcms;
 
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -30,7 +31,8 @@ User,
 OpenStage,
 SCAR,
 Capa,
-    RiskManagement
+RiskManagement,
+SupplierChecklist
 };
 
 class SupplierController extends Controller
@@ -66,7 +68,7 @@ class SupplierController extends Controller
         $supplier->material_code = $request->material_code;
         $supplier->pharmacopoeial_claim = $request->pharmacopoeial_claim;
         $supplier->cep_grade = $request->cep_grade;
-        $supplier->request_for = $request->request_for;
+        $supplier->request_for = implode(',',$request->request_for);
         $supplier->attach_batch = $request->attach_batch;
         $supplier->request_justification = $request->request_justification;
         $supplier->manufacturer_availability = $request->manufacturer_availability;
@@ -125,8 +127,8 @@ class SupplierController extends Controller
         $supplier->risk_rating = $request->risk_rating;
         $supplier->manufacturer_audit_planned = $request->manufacturer_audit_planned;
         $supplier->manufacturer_audit_conducted = $request->manufacturer_audit_conducted;
-        $supplier->manufacturer_can_be = $request->manufacturer_can_be;
-    
+        $supplier->manufacturer_can_be = $request->manufacturer_can_be;  
+        $supplier->supplierJustification = $request->supplierJustification;     
 
         if (!empty($request->cep_attachment)) {
             $files = [];
@@ -375,6 +377,46 @@ class SupplierController extends Controller
         $supplier->status = 'Opened';
         $supplier->stage = 1;
         $supplier->save();
+        
+        /******************** Supplier Checklist ******************/
+        $supplierId = $supplier->id;
+        $types = ['tse', 'residual_solvent','melamine','gmo','gluten','manufacturer_evaluation','who','gmp','ISO','manufacturing_license','CEP','risk_assessment','elemental_impurity','azido_impurities'];
+
+        foreach ($types as $type) {
+            $attachments = $request->file("{$type}_attachment") ?? [];
+            $issueDates = $request->input("certificate_issue_{$type}") ?? [];
+            $expiryDates = $request->input("certificate_expiry_{$type}") ?? [];
+            $remarks = $request->input("{$type}_remarks") ?? [];
+
+            $maxRows = max(count($attachments), count($issueDates), count($expiryDates), count($remarks));
+
+            Log::info("Processing type: {$type}, rows: {$maxRows}");
+
+            for ($index = 0; $index < $maxRows; $index++) {
+                $attachmentPath = null;
+                if (isset($attachments[$index]) && $attachments[$index] != null) {
+                    $attachment = $attachments[$index];
+                    $filename =  "Supplier-" . "Certificate" . rand(1, 100) . '.' . $attachment->getClientOriginalExtension();
+                    $attachmentPath = $attachment->move('upload/', $filename);
+                }
+
+                // Safely handle possibly missing array elements
+                $issueDate = $issueDates[$index] ?? 'NULL';
+                $expiryDate = $expiryDates[$index] ?? 'NULL';
+                $remark = $remarks[$index] ?? 'NULL';
+
+                Log::info("Creating row: index={$index}, issue_date={$issueDate}, expiry_date={$expiryDate}, remarks={$remark}, attachment={$attachmentPath}");
+
+                SupplierChecklist::create([
+                    'supplier_id' => $supplierId,
+                    'doc_type' => $type,
+                    'attachment' => $attachmentPath,
+                    'issue_date' => $issueDates[$index] ?? null,
+                    'expiry_date' => $expiryDates[$index] ?? null,
+                    'remarks' => $remarks[$index] ?? null,
+                ]);
+            }
+        }
 
         $certificationData = SupplierGrid::where(['supplier_id' => $supplier->id, 'identifier' =>'CertificationData'])->firstOrCreate();
         $certificationData->supplier_id = $supplier->id;
@@ -1590,10 +1632,10 @@ class SupplierController extends Controller
 
     public function show(Request $request, $id){
         $data = Supplier::find($id);
-        // dd($data);
+        $supplierChecklist = SupplierChecklist::where('supplier_id', $id)->get();
         $gridData = SupplierGrid::where(['supplier_id' => $id, 'identifier' => "CertificationData"])->first();
         $certificationData = json_decode($gridData->data, true);
-        return view('frontend.supplier.supplier_view', compact('data', 'certificationData'));
+        return view('frontend.supplier.supplier_view', compact('data', 'certificationData', 'supplierChecklist'));
     }
 
     public function update(Request $request, $id){       
@@ -1613,7 +1655,7 @@ class SupplierController extends Controller
         $supplier->material_code = $request->material_code;
         $supplier->pharmacopoeial_claim = $request->pharmacopoeial_claim;
         $supplier->cep_grade = $request->cep_grade;
-        $supplier->request_for = $request->request_for;
+        $supplier->request_for = implode(',',$request->request_for);
         $supplier->attach_batch = $request->attach_batch;
         $supplier->request_justification = $request->request_justification;
         $supplier->manufacturer_availability = $request->manufacturer_availability;
@@ -1674,6 +1716,7 @@ class SupplierController extends Controller
         $supplier->manufacturer_audit_planned = $request->manufacturer_audit_planned;
         $supplier->manufacturer_audit_conducted = $request->manufacturer_audit_conducted;
         $supplier->manufacturer_can_be = $request->manufacturer_can_be;
+        $supplier->supplierJustification = $request->supplierJustification;
     
 
         if (!empty($request->cep_attachment)) {
@@ -1920,6 +1963,65 @@ class SupplierController extends Controller
         }
         
         $supplier->update();
+
+        /***************** Certificate Checklist *************************/
+
+        
+        $types = ['tse', 'residual_solvent','melamine','gmo','gluten','manufacturer_evaluation','who','gmp','ISO','manufacturing_license','CEP','risk_assessment','elemental_impurity','azido_impurities'];
+        if ($request->has('remove_files')) {
+            foreach ($request->input('remove_files') as $id) {
+                $grid = SupplierChecklist::find($id);
+                if ($grid && $grid->attachment) {
+                    Storage::delete('public/upload/' . $grid->attachment);
+                    $grid->attachment = null;
+                    $grid->save();
+                }
+            }
+        }
+
+        foreach ($types as $type) {
+            $attachments = $request->file("{$type}_attachment") ?? [];
+            $issueDates = $request->input("certificate_issue_{$type}") ?? [];
+            $expiryDates = $request->input("certificate_expiry_{$type}") ?? [];
+            $remarks = $request->input("{$type}_remarks") ?? [];
+
+            $maxRows = max(count($attachments), count($issueDates), count($expiryDates), count($remarks));
+
+            for ($index = 0; $index < $maxRows; $index++) {
+                $grid = SupplierChecklist::where('supplier_id', $id)
+                                    ->where('doc_type', $type)
+                                    ->skip($index)
+                                    ->first();
+
+                $attachmentPath = null;
+                if (isset($attachments[$index]) && $attachments[$index] != null) {
+                    $attachment = $attachments[$index];
+                    // $filename = $attachment->getClientOriginalName();
+                    // $attachmentPath = $attachment->move('upload/', $filename);
+                    
+                    $filename =  "Supplier-" . "Certificate" . rand(1, 100) . '.' . $attachment->getClientOriginalExtension();
+                    $attachmentPath = $attachment->move('upload/', $filename);// Store the file in public/attachments
+                }
+
+                if ($grid) {
+                    $grid->update([
+                        'attachment' => $attachmentPath ?? $grid->attachment,
+                        'issue_date' => $issueDates[$index] ?? $grid->issue_date,
+                        'expiry_date' => $expiryDates[$index] ?? $grid->expiry_date,
+                        'remarks' => $remarks[$index] ?? $grid->remarks,
+                    ]);
+                } else {
+                    SupplierChecklist::create([
+                        'supplier_id' => $id,
+                        'doc_type' => $type,
+                        'attachment' => $attachmentPath,
+                        'issue_date' => $issueDates[$index] ?? null,
+                        'expiry_date' => $expiryDates[$index] ?? null,
+                        'remarks' => $remarks[$index] ?? null,
+                    ]);
+                }
+            }
+        }
 
         $certificationData = SupplierGrid::where(['supplier_id' => $supplier->id, 'identifier' =>'CertificationData'])->firstOrCreate();
         $certificationData->supplier_id = $supplier->id;

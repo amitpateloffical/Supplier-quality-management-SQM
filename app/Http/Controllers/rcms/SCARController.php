@@ -140,11 +140,14 @@ class SCARController extends Controller
         $history->save();
 
         if(!empty($request->assign_to)){
+
+            $assign_to_name = User::where('id', $request->assign_to)->value('name');
+
             $history = new ScarAuditTrail;
             $history->scar_id = $scar->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current = $request->assign_to;
+            $history->current = $assign_to_name;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -454,11 +457,15 @@ class SCARController extends Controller
             $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
             ->where('activity_type', 'Assigned To')
             ->exists();
+
+            $previous_assign_to_name = User::where('id', $lastDocument->assign_to)->value('name');
+            $current_assign_to_name = User::where('id', $scar->assign_to)->value('name');
+
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Assigned To';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $request->assign_to;
+            $history->previous = $previous_assign_to_name;
+            $history->current = $current_assign_to_name;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

@@ -109,27 +109,28 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
-                                         class="text-danger">*</span></label><span id="rchars">255</span>characters remaining
-                                        <div style="position: relative;">
+                                                class="text-danger">*</span></label><span
+                                            id="rchars">255</span>characters remaining
+                                        <div class="relative-container">
                                             <input id="docname" class="mic-input" type="text" name="short_description"
                                                 maxlength="255" required>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
+
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="SCAR Name">SCAR Name</label>
-                                        <div style="position: relative;">
+                                        <div class="relative-container">
                                             <input type="text" name="scar_name" class="mic-input"
                                                 placeholder="Enter SCAR Name">
-                                            <button class="mic-btn"type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -137,12 +138,11 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Owner">Owner</label>
-                                        <div style="position: relative;">
+                                        <div class="relative-container">
                                             <input type="text" name="owner_name"
                                                 placeholder="Enter Owner Name"class="mic-input">
-                                            <button class="mic-btn"type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
 
                                     </div>
@@ -172,12 +172,12 @@
                                             <option value="supplier-site-4">Supplier Site-4</option>
                                             <option value="supplier-site-5">Supplier Site-5</option>
 
-                                            {{--@if (!empty($distributionSites))
+                                            {{-- @if (!empty($distributionSites))
                                                 @foreach ($distributionSites as $supplier)
                                                     <option value="{{ $supplier->distribution_sites }}">
                                                         {{ $supplier->distribution_sites }}</option>
                                                 @endforeach
-                                            @endif--}}
+                                            @endif --}}
                                         </select>
                                     </div>
                                 </div>
@@ -193,12 +193,12 @@
                                             <option value="supplier-product-4">Supplier Product-4</option>
                                             <option value="supplier-product-5">Supplier Product-5</option>
 
-                                            {{--@if (!empty($supplierProduct))
+                                            {{-- @if (!empty($supplierProduct))
                                                 @foreach ($supplierProduct as $supplier)
                                                     <option value="{{ $supplier->supplier_products }}">
                                                         {{ $supplier->supplier_products }}</option>
                                                 @endforeach
-                                            @endif--}}
+                                            @endif --}}
                                         </select>
                                     </div>
                                 </div>
@@ -207,137 +207,134 @@
                                     <div class="group-input">
 
                                         <label for="Supplier Site Contact Email">Supplier Site Contact Email</label>
-                                        <div style="position: relative;">
+                                        <div class="relative-container">
                                             <input type="text" name="supplier_site_contact_email" class="mic-input">
-                                            <button class="mic-btn"type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
+
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Description">Description</label>
-                                        <div style="position: relative;">
+                                        <div class="relative-container">
                                             <textarea name="description" id="description" cols="30" class="mic-input"></textarea>
-                                            <button class="mic-btn"type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Recommended Action">Recommended Action</label>
+                                        <div class="relative-container">
+                                            <textarea id="recommended_action" cols="30" value="" name="recommended_action"class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="sub-head">
+                                    Supplier Response
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+
+                                        <label for="Non Conformance">Non Conformance</label>
+                                        <div class="relative-container">
+                                            <textarea id="non_conformance" cols="30" value="" name="non_conformance"class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Expected Closure Date">Expected Closure Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="expected_closure_date" placeholder="DD-MM-YYYY" />
+                                            <input type="date" name="expected_closure_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'expected_closure_date')" />
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="Recommended Action">Recommended Action</label>
-                                            <div style="position: relative;">
-                                                <textarea id="recommended_action" cols="30" value="" name="recommended_action"class="mic-input"></textarea>
-                                                <button class="mic-btn"type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
-                                            </div>
-                                        </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Expected Closure Time">Expected Closure Time</label>
+                                        <input type="time" name="expected_closure_time">
                                     </div>
-                                        <div class="sub-head">
-                                            Supplier Response
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-
-                                                <label for="Non Conformance">Non Conformance</label>
-                                                <div style="position: relative;">
-                                                    <textarea id="non_conformance" cols="30" value="" name="non_conformance"class="mic-input"></textarea>
-                                                    <button class="mic-btn"type="button">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-md-6 new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="Expected Closure Date">Expected Closure Date</label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="expected_closure_date"
-                                                        placeholder="DD-MM-YYYY" />
-                                                    <input type="date" name="expected_closure_date"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        class="hide-input"
-                                                        oninput="handleDateInput(this, 'expected_closure_date')" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Expected Closure Time">Expected Closure Time</label>
-                                                <input type="time" name="expected_closure_time">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="Root Cause">Root Cause</label>
-                                                <div style="position: relative;">
-                                                    <textarea id="root_cause" cols="30" name="root_cause" class="mic-input"></textarea>
-                                                    <button class="mic-btn"type="button">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="Risk Analysis">Risk Analysis</label>
-                                            <div style="position: relative;">
-                                                <textarea cols="30" id="risk_analysis" name="risk_analysis"class="mic-input"></textarea>
-                                                <button class="mic-btn"type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="Effectiveness Check Summary">Effectiveness Check Summary</label>
-                                            <div style="position: relative;">
-                                                <textarea cols="30" name="effectiveness_check_summary" id="effectiveness_check_summary"class="mic-input"></textarea>
-                                                <button class="mic-btn"type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12">
-                                        <div class="group-input"style="position: relative;">
-                                            {{-- <div style="position: relative;"> --}}
-                                            <label for="CAPA Plan">CAPA Plan</label>
-                                            <div style="position: relative;">
-                                                <textarea id="capa_plan" cols="30" name="capa_plan"class="mic-input"></textarea>
-                                                <button class="mic-btn"type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
 
-                                <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
-                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a class="text-white"
-                                            href="{{ url('rcms/qms-dashboard') }}">Exit</a></button>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Root Cause">Root Cause</label>
+                                        <div class="relative-container">
+                                            <textarea id="root_cause" cols="30" name="root_cause" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                    </div>
                                 </div>
+
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Risk Analysis">Risk Analysis</label>
+                                        <div class="relative-container">
+                                            <textarea cols="30" id="risk_analysis" name="risk_analysis"class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness Check Summary">Effectiveness Check Summary</label>
+                                        <div class="relative-container">
+                                            <textarea cols="30" name="effectiveness_check_summary" id="effectiveness_check_summary"class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="CAPA Plan">CAPA Plan</label>
+                                        <div class="relative-container">
+                                            <textarea id="capa_plan" cols="30" name="capa_plan"class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white"
+                                        href="{{ url('rcms/qms-dashboard') }}">Exit</a></button>
                             </div>
                         </div>
                     </div>
+                </div>
 
                 <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -460,167 +457,86 @@
                             </div>
 
                             <div class="button-block">
-                                {{--<button type="submit" class="saveButton">Save</button>--}}
+                                {{-- <button type="submit" class="saveButton">Save</button> --}}
                                 <button type="button" class="nextButton" onclick="previousStep()">Back</button>
-                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit</a></button>
+                                <button type="button"> <a class="text-white"
+                                        href="{{ url('rcms/qms-dashboard') }}">Exit</a></button>
                             </div>
 
                         </div>
                     </div>
                 </div>
-            </div>
+        </div>
         </form>
 
     </div>
-</div>
+    </div>
 
 
-                <style>
-                    #step-form>div {
-                        display: none
-                    }
+    <style>
+        #step-form>div {
+            display: none
+        }
 
-                    #step-form>div:nth-child(1) {
-                        display: block;
-                    }
-                </style>
+        #step-form>div:nth-child(1) {
+            display: block;
+        }
+    </style>
 
-                <style>
-                    .mic-btn {
-                        background: none;
-                        border: none;
-                        outline: none;
-                        cursor: pointer;
-                        position: absolute;
-                        right: 10px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        box-shadow: none;
-                        color: black;
-                        display: none;
-                        /* Hide the button initially */
-                    }
+    <script>
+        VirtualSelect.init({
+            ele: '#related_records, #hod'
+        });
 
-                    .relative-container textarea {
-                        width: 100%;
-                        padding-right: 40px;
-                    }
-
-                    .relative-container input:focus+.mic-btn {
-                        display: inline-block;
-                        /* Show the button when input is focused */
-                    }
-
-                    .mic-btn:focus,
-                    .mic-btn:hover,
-                    .mic-btn:active {
-                        box-shadow: none;
-                    }
-                </style>
-
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
-                        recognition.continuous = false;
-                        recognition.interimResults = false;
-                        recognition.lang = 'en-US';
-
-                        function startRecognition(targetElement) {
-                            recognition.start();
-                            recognition.onresult = function(event) {
-                                const transcript = event.results[0][0].transcript;
-                                targetElement.value += transcript;
-                            };
-                            recognition.onerror = function(event) {
-                                console.error(event.error);
-                            };
-                        }
-
-                        document.addEventListener('click', function(event) {
-                            if (event.target.closest('.mic-btn')) {
-                                const button = event.target.closest('.mic-btn');
-                                const inputField = button.previousElementSibling;
-                                if (inputField && inputField.classList.contains('mic-input')) {
-                                    startRecognition(inputField);
-                                }
-                            }
-                        });
-
-                        document.querySelectorAll('.mic-input').forEach(input => {
-                            input.addEventListener('focus', function() {
-                                const micBtn = this.nextElementSibling;
-                                if (micBtn && micBtn.classList.contains('mic-btn')) {
-                                    micBtn.style.display = 'inline-block';
-                                }
-                            });
-
-                            input.addEventListener('blur', function() {
-                                const micBtn = this.nextElementSibling;
-                                if (micBtn && micBtn.classList.contains('mic-btn')) {
-                                    setTimeout(() => {
-                                        micBtn.style.display = 'none';
-                                    }, 200); // Delay to prevent button from hiding immediately when clicked
-                                }
-                            });
-                        });
-                    });
-              </script>
-
-
-        <script>
-            VirtualSelect.init({
-                ele: '#related_records, #hod'
-            });
-
-            function openCity(evt, cityName) {
-                var i, cctabcontent, cctablinks;
-                cctabcontent = document.getElementsByClassName("cctabcontent");
-                for (i = 0; i < cctabcontent.length; i++) {
-                    cctabcontent[i].style.display = "none";
-                }
-                cctablinks = document.getElementsByClassName("cctablinks");
-                for (i = 0; i < cctablinks.length; i++) {
-                    cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-                }
-                document.getElementById(cityName).style.display = "block";
-                evt.currentTarget.className += " active";
-                const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
-                currentStep = index;
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
             }
-
-            const saveButtons = document.querySelectorAll(".saveButton");
-            const nextButtons = document.querySelectorAll(".nextButton");
-            const form = document.getElementById("step-form");
-            const stepButtons = document.querySelectorAll(".cctablinks");
-            const steps = document.querySelectorAll(".cctabcontent");
-            let currentStep = 0;
-
-            function nextStep() {
-                if (currentStep < steps.length - 1) {
-                    steps[currentStep].style.display = "none";
-                    steps[currentStep + 1].style.display = "block";
-                    stepButtons[currentStep + 1].classList.add("active");
-                    stepButtons[currentStep].classList.remove("active");
-                    currentStep++;
-                }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
             }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+            currentStep = index;
+        }
 
-            function previousStep() {
-                if (currentStep > 0) {
-                    steps[currentStep].style.display = "none";
-                    steps[currentStep - 1].style.display = "block";
-                    stepButtons[currentStep - 1].classList.add("active");
-                    stepButtons[currentStep].classList.remove("active");
-                    currentStep--;
-                }
+        const saveButtons = document.querySelectorAll(".saveButton");
+        const nextButtons = document.querySelectorAll(".nextButton");
+        const form = document.getElementById("step-form");
+        const stepButtons = document.querySelectorAll(".cctablinks");
+        const steps = document.querySelectorAll(".cctabcontent");
+        let currentStep = 0;
+
+        function nextStep() {
+            if (currentStep < steps.length - 1) {
+                steps[currentStep].style.display = "none";
+                steps[currentStep + 1].style.display = "block";
+                stepButtons[currentStep + 1].classList.add("active");
+                stepButtons[currentStep].classList.remove("active");
+                currentStep++;
             }
-        </script>
+        }
 
-                <script>
-                    var maxLength = 255;
-                    $('#docname').keyup(function() {
-                        var textlen = maxLength - $(this).val().length;
-                        $('#rchars').text(textlen);
-                    });
-                </script>
-            @endsection
+        function previousStep() {
+            if (currentStep > 0) {
+                steps[currentStep].style.display = "none";
+                steps[currentStep - 1].style.display = "block";
+                stepButtons[currentStep - 1].classList.add("active");
+                stepButtons[currentStep].classList.remove("active");
+                currentStep--;
+            }
+        }
+    </script>
+
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);
+        });
+    </script>
+@endsection

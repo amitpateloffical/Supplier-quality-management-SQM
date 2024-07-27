@@ -108,47 +108,40 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars">255</span>
-                                        characters remaining
-                                        <div style="position: relative;">
-                                            <input id="docname" class="mic-input" type="text" name="short_description"
-                                                maxlength="255" required>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                        <label for="Short Description">Short Description<span>class="text-danger">*</span>
+                                        </label><span id="rchars">255</span> characters remaining
+
+                                        <div class="relative-container">
+                                            <input id="docname" class="mic-input" type="text" name="short_description" maxlength="255" required>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
+
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="SCAR Name">SCAR Name</label>
-                                        <div style="position: relative;">
-                                            <input type="text" name="scar_name" class="mic-input"
-                                                placeholder="Enter SCAR Name">
-                                            <button class="mic-btn"type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                        <div class="relative-container">
+                                            <input id="docname" class="mic-input" type="text" name="scar_name" maxlength="255">
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Owner">Owner</label>
-                                        <div style="position: relative;">
-                                            <input type="text" name="owner_name"
-                                                placeholder="Enter Owner Name"class="mic-input">
-                                            <button class="mic-btn"type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                        <div class="relative-container">
+                                            <input id="docname" class="mic-input" type="text" name="owner_name" maxlength="255">
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
 
                                     </div>
                                 </div>
-
 
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -167,10 +160,14 @@
                                         <label for="Supplier Site">Supplier Site</label>
                                         <select name="supplier_site">
                                             <option value="">Select Supplier Site</option>
+                                            <option value="Quality Assurance-CQA">Global Supply</option>
+                                            <option value="Research and development"> Essential Supplies.</option>
+                                            <option value="Regulatory Science">Supply Savvy</option>
+                                            <option value="Regulatory Science">Trusted Traders</option>
+                                            <option value="Regulatory Science"></option>
                                             @if (!empty($distributionSites))
                                                 @foreach ($distributionSites as $supplier)
-                                                    <option value="{{ $supplier->distribution_sites }}">
-                                                        {{ $supplier->distribution_sites }}</option>
+                                                    <option value="{{ $supplier->distribution_sites }}">{{ $supplier->distribution_sites }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -182,10 +179,15 @@
                                         <label for="Supplier Product">Supplier Product</label>
                                         <select name="supplier_product">
                                             <option value="">Select Supplier Product</option>
+                                            <option value="Quality Assurance-CQA">All In One Supply Warehouse</option>
+                                            <option value="Research and development">Boundless Supply</option>
+                                            <option value="Regulatory Science">Multiproduct Solutions</option>
+                                            <option value="Quality Assurance-CQA">Supply Central</option>
+                                            <option value="Research and development">Supply Empire</option>
+                                            <option value="Regulatory Science">Fresh Supplies</option>
                                             @if (!empty($supplierProduct))
                                                 @foreach ($supplierProduct as $supplier)
-                                                    <option value="{{ $supplier->supplier_products }}">
-                                                        {{ $supplier->supplier_products }}</option>
+                                                    <option value="{{ $supplier->supplier_products }}"> {{ $supplier->supplier_products }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -196,50 +198,49 @@
                                     <div class="group-input">
 
                                         <label for="Supplier Site Contact Email">Supplier Site Contact Email</label>
-                                        <div style="position: relative;">
+                                        <div class="relative-container">
+                                            <input id="docname" class="mic-input" type="text" name="supplier_site_contact_email" maxlength="255">
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                        {{-- <div style="position: relative;">
                                             <input type="text" name="supplier_site_contact_email" class="mic-input">
                                             <button class="mic-btn"type="button">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Description">Description</label>
-                                        <div style="position: relative;">
-                                            <textarea name="description" id="description" cols="30" class="mic-input"></textarea>
-                                            <button class="mic-btn"type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                        <div class="relative-container">
+                                            <input id="docname" class="mic-input" type="text" name="description" maxlength="255" >
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Recommended Action">Recommended Action</label>
-                                            <div style="position: relative;">
-                                                <textarea id="recommended_action" cols="30" value="" name="recommended_action"class="mic-input"></textarea>
-                                                <button class="mic-btn"type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                            <div class="relative-container">
+                                                <input id="docname" class="mic-input" type="text" name="recommended_action" maxlength="255">
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
 
-                                        <div class="sub-head">
-                                            Supplier Response
-                                        </div>
-
+                                        <div class="sub-head"> Supplier Response</div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
 
                                                 <label for="Non Conformance">Non Conformance</label>
-                                                <div style="position: relative;">
-                                                    <textarea id="non_conformance" cols="30" value="" name="non_conformance"class="mic-input"></textarea>
-                                                    <button class="mic-btn"type="button">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
+                                                <div class="relative-container">
+                                                    <input id="docname" class="mic-input" type="text" name="non_conformance" maxlength="255">
+                                                    @component('frontend.forms.language-model')
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -269,12 +270,12 @@
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Root Cause">Root Cause</label>
-                                                <div style="position: relative;">
-                                                    <textarea id="root_cause" cols="30" name="root_cause" class="mic-input"></textarea>
-                                                    <button class="mic-btn"type="button">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
+                                                <div class="relative-container">
+                                                    <input id="docname" class="mic-input" type="text" name="root_cause"  maxlength="255">
+                                                    @component('frontend.forms.language-model')
+                                                    @endcomponent
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -282,24 +283,24 @@
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Risk Analysis">Risk Analysis</label>
-                                            <div style="position: relative;">
-                                                <textarea cols="30" id="risk_analysis" name="risk_analysis"class="mic-input"></textarea>
-                                                <button class="mic-btn"type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                            <div class="relative-container">
+                                                <input id="docname" class="mic-input" type="text" name="risk_analysis" maxlength="255" >
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
+
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Effectiveness Check Summary">Effectiveness Check Summary</label>
-                                            <div style="position: relative;">
-                                                <textarea cols="30" name="effectiveness_check_summary" id="effectiveness_check_summary"class="mic-input"></textarea>
-                                                <button class="mic-btn"type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                            <div class="relative-container">
+                                                <input id="docname" class="mic-input" type="text" name="effectiveness_check_summary" maxlength="255">
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
+
                                         </div>
                                     </div>
 
@@ -307,12 +308,12 @@
                                         <div class="group-input"style="position: relative;">
                                             {{-- <div style="position: relative;"> --}}
                                             <label for="CAPA Plan">CAPA Plan</label>
-                                            <div style="position: relative;">
-                                                <textarea id="capa_plan" cols="30" name="capa_plan"class="mic-input"></textarea>
-                                                <button class="mic-btn"type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                            <div class="relative-container">
+                                                <input id="docname" class="mic-input" type="text" name="capa_plan" maxlength="255">
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
+
                                         </div>
                                     </div>
 
@@ -320,8 +321,7 @@
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a class="text-white"
-                                            href="{{ url('rcms/qms-dashboard') }}">Exit</a></button>
+                                    <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit</a></button>
                                 </div>
                             </div>
                         </div>
@@ -345,9 +345,6 @@
                                     <label for="Submitted Comment">Submitted Comment</label>
                                 </div>
                             </div>
-
-
-
 
                             <div class="col-lg-3">
                                 <div class="group-input">
@@ -432,9 +429,6 @@
                     </div>
                 </div>
 
-
-
-
                 <style>
                     #step-form>div {
                         display: none
@@ -445,7 +439,7 @@
                     }
                 </style>
 
-                <style>
+                {{-- <style>
                     .mic-btn {
                         background: none;
                         border: none;
@@ -476,9 +470,9 @@
                     .mic-btn:active {
                         box-shadow: none;
                     }
-                </style>
+                </style> --}}
 
-                <script>
+                {{-- <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
                         recognition.continuous = false;
@@ -525,7 +519,7 @@
                         });
                     });
 </script>
-
+ --}}
 
                     <script >
                         VirtualSelect.init({

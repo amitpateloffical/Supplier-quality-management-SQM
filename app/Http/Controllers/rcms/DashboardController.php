@@ -885,7 +885,7 @@ class DashboardController extends Controller
             Record No. ' . str_pad($data->record, 4, '0', STR_PAD_LEFT) .
             '</div>
         <div class="division">
-        ' . Helpers::getDivisionName(session()->get('division')) . '/ ' . $type . '
+        ' . Helpers::getDivisionName($data->division_id) . '/ ' . $type . '
         </div>
         <div class="status">' .
             $data->status . '

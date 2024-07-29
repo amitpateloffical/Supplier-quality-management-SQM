@@ -81,6 +81,38 @@ class SCARController extends Controller
         /******************* Audit Trail Code ***********************/
         $history = new ScarAuditTrail;
         $history->scar_id = $scar->id;
+        $history->activity_type = 'Record Number';
+        $history->previous = "Null";
+        $history->current = str_pad($scar->record, 4, '0', STR_PAD_LEFT);
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $scar->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save(); 
+
+       
+        $history = new ScarAuditTrail();
+        $history->scar_id = $scar->id;
+        $history->activity_type = 'Division';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName($scar->division_id);
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $scar->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+     
+        
+        $history = new ScarAuditTrail;
+        $history->scar_id = $scar->id;
         $history->activity_type = 'Inititator';
         $history->previous = "Null";
         $history->current = Auth::user()->name;
@@ -307,7 +339,7 @@ class SCARController extends Controller
             $history->scar_id = $scar->id;
             $history->activity_type = 'Expected Closure Date';
             $history->previous = "Null";
-            $history->current = $request->expected_closure_date;
+            $history->current =  Helpers::getDateFormat($request->expected_closure_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -433,6 +465,7 @@ class SCARController extends Controller
         $scar->effectiveness_check_summary = $request->effectiveness_check_summary;
         $scar->capa_plan = $request->capa_plan;
         $scar->update();
+        
 
         if($lastDocument->short_description != $request->short_description){
             $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
@@ -654,8 +687,7 @@ class SCARController extends Controller
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Expected Closure Date';
-            $history->previous = $lastDocument->expected_closure_date;
-            $history->current = $request->expected_closure_date;
+            $history->current =  Helpers::getDateFormat($request->expected_closure_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

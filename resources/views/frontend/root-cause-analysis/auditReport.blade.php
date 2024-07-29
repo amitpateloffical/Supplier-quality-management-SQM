@@ -216,14 +216,102 @@
         <div class="second-table">
             <table>
                 <tr class="table_bg">
-                    <th>Field History</th>
-                    <th>Date Performed</th>
-                    <th>Person Responsible</th>
-                    <th>Change Type</th>
+                    
+                    <th>S.No</th>
+                        <th>Flow Changed From</th>
+                        <th>Flow Changed To</th>
+                        <th>Data Field</th>
+                        <th>Action Type</th>
+                        <th>Performer</th>
                 </tr>
                 @foreach ($data as $datas)
                     <tr >
-                        <td class="row">
+                        <td>{{ $loop->iteration }}</td>
+                        <td>
+                            <div><strong>Changed From :</strong> {{ $datas->change_from }}</div>
+                        </td>
+                        <td>
+                            <div><strong>Changed To :</strong> {{ $datas->change_to }}</div>
+                        </td>
+
+                        <td>
+                            <div>
+                                <strong>Data Field Name :</strong>
+                                {{ $datas->activity_type ?: 'Not Applicable' }}
+                            </div>
+                            <div style="margin-top: 5px;" class="imageContainer">
+                                <!-- Assuming $dataDemo->image_url contains the URL of your image -->
+                                @if ($datas->activity_type == 'Activity Log')
+                                    <strong>Change From :</strong>
+                                    @if ($datas->change_from)
+                                        {{-- Check if the change_from is a date --}}
+                                        @if (strtotime($datas->change_from))
+                                            {{ \Carbon\Carbon::parse($datas->change_from)->format('d-M-Y') }}
+                                        @else
+                                            {{ str_replace(',', ', ', $datas->change_from) }}
+                                        @endif
+                                    @elseif($datas->change_from && trim($datas->change_from) == '')
+                                        NULL
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                @else
+                                    <strong>Change From :</strong>
+                                    @if (!empty(strip_tags($datas->previous)))
+                                        {{-- Check if the previous is a date --}}
+                                        @if (strtotime($datas->previous))
+                                            {{ \Carbon\Carbon::parse($datas->previous)->format('d-M-Y') }}
+                                        @else
+                                            {!! $datas->previous !!}
+                                        @endif
+                                    @elseif($datas->previous == null)
+                                        Null
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                @endif
+                            </div>
+                        
+
+                        <div class="imageContainer">
+                            @if ($datas->activity_type == 'Activity Log')
+                                <strong>Change To :</strong>
+                                @if (strtotime($datas->change_to))
+                                    {{ \Carbon\Carbon::parse($datas->change_to)->format('d-M-Y') }}
+                                @else
+                                    {!! str_replace(',', ', ', $datas->change_to) ?: 'Not Applicable' !!}
+                                @endif
+                            @else
+                                <strong>Change To :</strong>
+                                @if (strtotime($datas->current))
+                                    {{ \Carbon\Carbon::parse($datas->current)->format('d-M-Y') }}
+                                @else
+                                    {!! !empty(strip_tags($datas->current)) ? $datas->current : 'Not Applicable' !!}
+                                @endif
+                            @endif
+                        </div>
+                        <div style="margin-top: 5px;">
+                            <strong>Change Type :</strong>
+                            {{ $datas->action_name ? $datas->action_name : 'Not Applicable' }}
+                        </div>
+                    </td>
+                    <td>
+                        <div><strong>Action Name :</strong>
+                            {{ $datas->action ? $datas->action : 'Not Applicable' }}</div>
+                    </td>
+                    <td>
+                        <div><strong>Performed By :</strong>
+                            {{ $datas->user_name ? $datas->user_name : 'Not Applicable' }}</div>
+                        <div style="margin-top: 5px;"> <strong>Performed On
+                                :</strong>{{ $datas->created_at ? \Carbon\Carbon::parse($datas->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
+                        </div>
+                        <div style="margin-top: 5px;"><strong>Comments :</strong>
+                            {{ $datas->comment ? $datas->comment : 'Not Applicable' }}</div>
+                    </td>
+
+
+
+                        {{-- <td class="row">
                             <div class="col-2">{{ $datas->activity_type }}</div>
                             <div>
                                 <div><strong>Changed From :</strong></div>
@@ -237,8 +325,8 @@
                                 <div><strong>Changed To :</strong></div>
                                 <div>{{ $datas->current }}</div>
                             </div>
-                        </td>
-                        <td class="col-2">{{ Helpers::getdateFormat($datas->created_at) }}</td>
+                        </td> --}}
+                        {{-- <td class="col-2">{{ Helpers::getdateFormat($datas->created_at) }}</td>
                         <td class="col-2">{{ $datas->user_name }}</td>
                         <td class="col-2">
                             @if ($datas->previous == "NULL")
@@ -246,7 +334,7 @@
                             @else
                                 New
                             @endif
-                        </td>
+                        </td> --}}
                     </tr>
                 @endforeach
             </table>

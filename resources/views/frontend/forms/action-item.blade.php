@@ -262,7 +262,7 @@
                                         <div class="relative-container">
                                             <input class="mic-input" id="docname" type="text" name="short_description"
                                                 maxlength="255" required>
-                                            @component('frontend.forms.language-model', ['name' => 'short_description', 'id' => 'short_description'])
+                                            @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
                                     </div>
@@ -298,7 +298,7 @@
                                                 class="text-danger"></span></label>
                                         <div class="relative-container">
                                             <textarea name="description" id="description" class="mic-input"></textarea>
-                                            @component('frontend.forms.language-model', ['name' => 'description', 'id' => 'description'])
+                                            @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
 
@@ -432,13 +432,12 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>
-                                        <div style="position: relative;">
+                                        <div class="relative-container">
                                             <textarea class="mic-input" name="action_taken"></textarea>
-
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
@@ -468,13 +467,13 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments">Comments</label>
-                                        <div style="position: relative;">
-                                            <textarea class="mic-input" name="comments"></textarea>
 
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                        <div class="relative-container">
+                                            <textarea class="mic-input" name="comments"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-12">
@@ -509,13 +508,12 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="qa_comments">QA Review Comments</label>
-                                        <div style="position: relative;">
+                                        <div class="relative-container">
                                             <textarea class="mic-input" name="qa_comments"></textarea>
-
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
+
                                     </div>
                                 </div>
                                 {{--
@@ -540,13 +538,12 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="due-dateextension">Due Date Extension Justification</label>
-                                        <div style="position: relative;">
+                                        <div class="relative-container">
                                             <textarea class="mic-input" name="due_date_extension"></textarea>
-
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

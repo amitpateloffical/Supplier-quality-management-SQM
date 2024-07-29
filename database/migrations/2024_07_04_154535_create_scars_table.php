@@ -23,24 +23,24 @@ return new class extends Migration
             $table->integer('initiator_id')->nullable();
             $table->text('initiation_date')->nullable();
             $table->longText('short_description')->nullable();
-            $table->integer('assign_to')->nullable();
+            $table->text('assign_to')->nullable();
             $table->text('due_date')->nullable();
 
-            $table->text('scar_name')->nullable();   
-            $table->text('owner_name')->nullable();   
-            $table->text('followup_date')->nullable();   
-            $table->longText('description')->nullable();  
+            $table->text('scar_name')->nullable();
+            $table->text('owner_name')->nullable();
+            $table->text('followup_date')->nullable();
+            $table->longText('description')->nullable();
             $table->text('supplier_site')->nullable();
-            $table->longText('recommended_action')->nullable();   
-            $table->text('supplier_site_contact_email')->nullable();   
+            $table->longText('recommended_action')->nullable();
+            $table->text('supplier_site_contact_email')->nullable();
             $table->text('supplier_product')->nullable();
-            $table->longText('root_cause')->nullable();   
+            $table->longText('root_cause')->nullable();
             $table->text('expected_closure_date')->nullable();
-            $table->text('expected_closure_time')->nullable();   
+            $table->text('expected_closure_time')->nullable();
             $table->longText('risk_analysis')->nullable();
-            $table->longText('effectiveness_check_summary')->nullable();   
-            $table->text('non_conformance')->nullable();   
-            $table->longText('capa_plan')->nullable();   
+            $table->longText('effectiveness_check_summary')->nullable();
+            $table->text('non_conformance')->nullable();
+            $table->longText('capa_plan')->nullable();
 
 
             $table->integer('stage')->nullable();

@@ -71,16 +71,16 @@
         }
 
         /* .sub-head {
-                        margin-left: 280px;
-                        margin-right: 280px;
-                        color: #4274da;
-                        border-bottom: 2px solid #4274da;
-                        padding-bottom: 5px;
-                        margin-bottom: 20px;
-                        font-weight: bold;
-                        font-size: 1.2rem;
+                                                                                                                                                                                            margin-left: 280px;
+                                                                                                                                                                                            margin-right: 280px;
+                                                                                                                                                                                            color: #4274da;
+                                                                                                                                                                                            border-bottom: 2px solid #4274da;
+                                                                                                                                                                                            padding-bottom: 5px;
+                                                                                                                                                                                            margin-bottom: 20px;
+                                                                                                                                                                                            font-weight: bold;
+                                                                                                                                                                                            font-size: 1.2rem;
 
-                    } */
+                                                                                                                                                                                        } */
         .launch_extension {
             background: #4274da;
             color: white;
@@ -130,10 +130,10 @@
         }
 
         /* .saveButton:disabled{
-                            background: black!important;
-                            border:  black!important;
+                                                                                                                                                                                                background: black!important;
+                                                                                                                                                                                                border:  black!important;
 
-                        } */
+                                                                                                                                                                                            }  */
 
         .main-danger-block {
             display: flex;
@@ -337,7 +337,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Qualification Complete
                             </button>
-                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
                         @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -557,16 +557,18 @@
                                     <label for="Short Description">Short Description<span
                                             class="text-danger">*</span></label><span id="rchars">255</span>
                                     characters remaining
-                                    <div style="position:relative;">
+
+                                    <div class="relative-container">
                                         <input id="docname" type="text" name="short_description" maxlength="255"
                                             value="{{ $data->short_description }}" class="mic-input" required>
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
-                                        </button>
+                                            @component('frontend.forms.language-model', ['name' => 'short_description', 'id' => 'short_description'])
+                                            @endcomponent
                                     </div>
 
                                 </div>
                             </div>
+
                             <script>
                                 var maxLength = 255;
                                 $('#docname').keyup(function() {
@@ -574,6 +576,7 @@
                                     $('#rchars').text(textlen);
                                 });
                             </script>
+
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Supplier.">Supplier</label>
@@ -593,8 +596,11 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for=" Attachments">Logo</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
+                                    <div>
+                                        <small class="text-primary">Please Attach all relevant or supporting
+                                            documents
+                                        </small>
+                                    </div>
                                     <div class="file-attachment-field">
                                         <div disabled class="file-attachment-list" id="logo_attachment">
                                             @if ($data->logo_attachment)
@@ -639,26 +645,26 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Suppliers Products">Suppliers Products</label>
-                                    <div style="position:relative;">
-                                        <input name="supplier_products" id="supplier_products" type="text"
-                                            value="{{ $data->supplier_products }}" class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="supplier_products" type="text" name="supplier_products"
+                                            maxlength="255" value="{{ $data->supplier_products }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'supplier_products', 'id' => 'supplier_products'])
+                                            @endcomponent
                                         </button>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Description">Description</label>
-                                    <div style="position:relative;">
-                                        <textarea name="description" placeholder class="mic-input">{{ $data->description }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea id="description" name="description" maxlength="255" class="mic-input"> {{ $data->description }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'description', 'id' => 'description'])
+                                            @endcomponent
                                         </button>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -677,10 +683,7 @@
                                         <option value="Legal" @if ($data->supplier_type == 'Legal') selected @endif>Legal
                                         </option>
                                         <option value="Midecinal + Medical Devices"
-                                            @if (
-                                                $data->supplier_type ==
-                                                    "Midecinal +
-                                                                                                                                                                            Medical Devices") selected @endif>Midecinal + Medical Devices
+                                            @if ($data->supplier_type == 'Midecinal + Medical Devices') selected @endif>Midecinal + Medical Devices
                                         </option>
                                         <option value="Vendor" @if ($data->supplier_type == 'Vendor') selected @endif>Vendor
                                         </option>
@@ -715,76 +718,64 @@
                                     <label for="Sub Type.">Sub Type</label>
                                     <select name="supplier_sub_type">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Other" @if ($data->supplier_type == 'Other') selected @endif>Other
+                                        <option value="Other" @if ($data->supplier_sub_type == 'Other') selected @endif>Other
                                         </option>
-                                        <option value="Vendor" @if ($data->supplier_type == 'Vendor') selected @endif>Vendor
+                                        <option value="Vendor" @if ($data->supplier_sub_type == 'Vendor') selected @endif>Vendor
                                         </option>
-                                        <option value="Finished Goods" @if ($data->supplier_type == 'Finished Goods') selected @endif>
+                                        <option value="Finished Goods" @if ($data->supplier_sub_type == 'Finished Goods') selected @endif>
                                             Finished Goods</option>
-                                        <option value="Legal" @if ($data->supplier_type == 'Legal') selected @endif>Legal
+                                        <option value="Legal" @if ($data->supplier_sub_type == 'Legal') selected @endif>Legal
                                         </option>
-                                        <option value="Other Fruits" @if ($data->supplier_type == 'Other Fruits') selected @endif>
+                                        <option value="Other Fruits" @if ($data->supplier_sub_type == 'Other Fruits') selected @endif>
                                             Other Fruits</option>
-                                        <option value="Exotic Fruits" @if ($data->supplier_type == 'Exotic Fruits') selected @endif>
+                                        <option value="Exotic Fruits" @if ($data->supplier_sub_type == 'Exotic Fruits') selected @endif>
                                             Exotic Fruits</option>
                                         <option value="Other Vegetables"
-                                            @if ($data->supplier_type == 'Other Vegetables') selected @endif>Other Vegetables</option>
-                                        <option value="Beans & Peas" @if ($data->supplier_type == 'Beans & Peas') selected @endif>
+                                            @if ($data->supplier_sub_type == 'Other Vegetables') selected @endif>Other Vegetables</option>
+                                        <option value="Beans & Peas" @if ($data->supplier_sub_type == 'Beans & Peas') selected @endif>
                                             Beans & Peas</option>
                                         <option value="Red & Orange Vegetables"
-                                            @if (
-                                                $data->supplier_type ==
-                                                    "Red & Orange
-                                                                                                                                                                            Vegetables") selected @endif>Red & Orange Vegetables
+                                            @if ($data->supplier_sub_type == 'Red & Orange Vegetables') selected @endif>Red & Orange Vegetables
                                         </option>
                                         <option value="Starchy Vegetables"
-                                            @if ($data->supplier_type == 'Starchy Vegetables') selected @endif>Starchy Vegetables</option>
+                                            @if ($data->supplier_sub_type == 'Starchy Vegetables') selected @endif>Starchy Vegetables</option>
                                         <option value="Dark Green Vegetables"
-                                            @if (
-                                                $data->supplier_type ==
-                                                    "Dark Green
-                                                                                                                                                                            Vegetables") selected @endif>VendorDark Green Vegetables
+                                            @if ($data->supplier_sub_type == 'Dark Green Vegetables') selected @endif>VendorDark Green Vegetables
                                         </option>
-                                        <option value="CRO" @if ($data->supplier_type == 'CRO') selected @endif>CRO
+                                        <option value="CRO" @if ($data->supplier_sub_type == 'CRO') selected @endif>CRO
                                         </option>
-                                        <option value="Raw Material" @if ($data->supplier_type == 'Raw Material') selected @endif>
+                                        <option value="Raw Material" @if ($data->supplier_sub_type == 'Raw Material') selected @endif>
                                             Raw Material</option>
                                         <option value="Interfaction Diesease"
-                                            @if (
-                                                $data->supplier_type ==
-                                                    "Interfaction
-                                                                                                                                                                            Diesease") selected @endif>Interfaction Diesease
+                                            @if ($data->supplier_sub_type == 'Interfaction Diesease') selected @endif>Interfaction Diesease
                                         </option>
-                                        <option value="Pedriatrics" @if ($data->supplier_type == 'Pedriatrics') selected @endif>
+                                        <option value="Pedriatrics" @if ($data->supplier_sub_type == 'Pedriatrics') selected @endif>
                                             Pedriatrics</option>
-                                        <option value="Sleep Medicine" @if ($data->supplier_type == 'Sleep Medicine') selected @endif>
+                                        <option value="Sleep Medicine" @if ($data->supplier_sub_type == 'Sleep Medicine') selected @endif>
                                             Sleep Medicine</option>
-                                        <option value="Nephrology" @if ($data->supplier_type == 'Nephrology') selected @endif>
+                                        <option value="Nephrology" @if ($data->supplier_sub_type == 'Nephrology') selected @endif>
                                             Nephrology</option>
-                                        <option value="Geriatrics" @if ($data->supplier_type == 'Geriatrics') selected @endif>
+                                        <option value="Geriatrics" @if ($data->supplier_sub_type == 'Geriatrics') selected @endif>
                                             Geriatrics</option>
-                                        <option value="Critical Care" @if ($data->supplier_type == 'Critical Care') selected @endif>
+                                        <option value="Critical Care" @if ($data->supplier_sub_type == 'Critical Care') selected @endif>
                                             Critical Care</option>
-                                        <option value="Cardiology" @if ($data->supplier_type == 'Cardiology') selected @endif>
+                                        <option value="Cardiology" @if ($data->supplier_sub_type == 'Cardiology') selected @endif>
                                             Cardiology</option>
-                                        <option value="Vitamins" @if ($data->supplier_type == 'Vitamins') selected @endif>
+                                        <option value="Vitamins" @if ($data->supplier_sub_type == 'Vitamins') selected @endif>
                                             Vitamins</option>
-                                        <option value="Meat & Poultry" @if ($data->supplier_type == 'Meat & Poultry') selected @endif>
+                                        <option value="Meat & Poultry" @if ($data->supplier_sub_type == 'Meat & Poultry') selected @endif>
                                             Meat & Poultry</option>
                                         <option value="Fruits & Vegetables"
-                                            @if (
-                                                $data->supplier_type ==
-                                                    "Fruits &
-                                                                                                                                                                            Vegetables") selected @endif>Fruits & Vegetables</option>
-                                        <option value="Pastry" @if ($data->supplier_type == 'Pastry') selected @endif>Pastry
+                                            @if ($data->supplier_sub_type == 'Fruits & Vegetables') selected @endif>Fruits & Vegetables</option>
+                                        <option value="Pastry" @if ($data->supplier_sub_type == 'Pastry') selected @endif>Pastry
                                         </option>
-                                        <option value="Frozen Fruits" @if ($data->supplier_type == 'Frozen Fruits') selected @endif>
+                                        <option value="Frozen Fruits" @if ($data->supplier_sub_type == 'Frozen Fruits') selected @endif>
                                             Frozen Fruits</option>
-                                        <option value="Dairy" @if ($data->supplier_type == 'Dairy') selected @endif>Dairy
+                                        <option value="Dairy" @if ($data->supplier_sub_type == 'Dairy') selected @endif>Dairy
                                         </option>
-                                        <option value="Beverages" @if ($data->supplier_type == 'Beverages') selected @endif>
+                                        <option value="Beverages" @if ($data->supplier_sub_type == 'Beverages') selected @endif>
                                             Beverages</option>
-                                        <option value="Flavour" @if ($data->supplier_type == 'Flavour') selected @endif>Flavour
+                                        <option value="Flavour" @if ($data->supplier_sub_type == 'Flavour') selected @endif>Flavour
                                         </option>
                                     </select>
                                 </div>
@@ -792,68 +783,80 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Other Type">Other Type</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="supplier_other_type"
-                                            value="{{ $data->supplier_other_type }}" placeholder="Enter Other Type"
-                                            class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="supplier_other_type" type="text" name="supplier_other_type"
+                                            maxlength="255" value="{{ $data->supplier_other_type }}"
+                                            placeholder="Enter Other Type" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'supplier_other_type', 'id' => 'supplier_other_type'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supply from">Supply from</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="supply_from" value="{{ $data->supply_from }}"
-                                            placeholder="Enter Supply From" class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="supply_from" type="text" name="supply_from" maxlength="255"
+                                            value="{{ $data->supply_from }}" placeholder="Enter Supply From"
+                                            class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'supply_from', 'id' => 'supply_from'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supply to">Supply to</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="supply_to" value="{{ $data->supply_to }}"
-                                            placeholder="Enter Supply To" class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="supply_to" type="text" name="supply_to" maxlength="255"
+                                            value="{{ $data->supply_to }}" placeholder="Enter Supply To"
+                                            class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'supply_to', 'id' => 'supply_to'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier Web Site">Supplier Web Site</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="supplier_website"
-                                            value="{{ $data->supplier_website }}" placeholder="Enter Supply Website"
-                                            class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="supplier_website" type="text" name="supplier_website"
+                                            maxlength="255" value="{{ $data->supplier_website }}"
+                                            placeholder="Enter Supplier Website" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'supplier_website', 'id' => 'supplier_website'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Web Search">Web Search</label>
-                                    <div style="position:relative;">
-                                        <input type="search" name="supplier_web_search"
-                                            value="{{ $data->supplier_web_search }}"
-                                            placeholder="Enter Supply Web Search" class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="supplier_web_search" type="search" name="supplier_web_search"
+                                            maxlength="255" value="{{ $data->supplier_web_search }}"
+                                            placeholder="Enter Supply Web Search" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'supplier_web_search', 'id' => 'supplier_web_search'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
@@ -924,26 +927,32 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Related URLs">Related URLs</label>
-                                    <input type="text" name="related_url" value="{{ $data->related_url }}"
+                                    <input type="url" name="related_url" value="{{ $data->related_url }}"
                                         placeholder="Enter Related URLs">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Related Quality Events">Related Quality Events</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="related_quality_events"
-                                            value="{{ $data->related_quality_events }}"
-                                            placeholder="Enter Related Quality Events" class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="related_quality_events" type="text" name="related_quality_events"
+                                            maxlength="255" value="{{ $data->related_quality_events }}"
+                                            placeholder="Enter Related Quality Events" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', [
+                                                'name' => 'related_quality_events',
+                                                'id' => 'related_quality_events',
+                                            ])
+                                            @endcomponent
                                         </button>
                                     </div>
 
+
                                 </div>
                             </div>
+                        </div>
 
-                            {{-- <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Of Complaints/Deviations"># Of Complaints/Deviations</label>
                                     <input type="text" name="">
@@ -955,7 +964,7 @@
                                     <input type="text" name="" id="totalDemeritPoints">
                                 </div>
                             </div> --}}
-                        </div>
+
 
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
@@ -976,22 +985,25 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_feedback">HOD Feedback</label>
-                                    <div style="position:relative;">
-                                        <textarea name="HOD_feedback" placeholder="Enter HOD Feedback" id="HOD_feedback" class="mic-input">{{ $data->HOD_feedback }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea id="HOD_feedback" name="HOD_feedback" maxlength="255" placeholder="Enter HOD Feedback" class="mic-input">{{ $data->HOD_feedback }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'HOD_feedback', 'id' => 'HOD_feedback'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_comment">HOD Comment</label>
-                                    <div style="position:relative;">
-                                        <textarea name="HOD_comment" placeholder="Enter HOD Comment" id="HOD_comment" class="mic-input">{{ $data->HOD_comment }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea id="HOD_comment" name="HOD_comment" maxlength="255" placeholder="Enter HOD Comment" class="mic-input">{{ $data->HOD_comment }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'HOD_comment', 'id' => 'HOD_comment'])
+                                            @endcomponent
                                         </button>
                                     </div>
 
@@ -1157,11 +1169,13 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier.">Supplier</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="supplier_name" value="{{ $data->supplier_name }}"
-                                            id="supplier_name" placeholder="Enter Supplier Name" class="mic-input">
+                                    <div class="relative-container">
+                                        <input id="supplier_name" type="text" name="supplier_name" maxlength="255"
+                                            value="{{ $data->supplier_name }}" placeholder="Enter Supplier Name"
+                                            class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'supplier_name', 'id' => 'supplier_name'])
+                                            @endcomponent
                                         </button>
                                     </div>
 
@@ -1170,65 +1184,77 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier.">Supplier ID</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="supplier_id" value="{{ $data->supplier_id }}"
-                                            placeholder="Enter Supplier ID" class="mic-input">
+                                    <div class="relative-container">
+                                        <input id="supplier_id" type="text" name="supplier_id" maxlength="255"
+                                            value="{{ $data->supplier_id }}" placeholder="Enter Supplier ID"
+                                            class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'supplier_id', 'id' => 'supplier_id'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="">Manufacturer</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="manufacturer_name"
-                                            value="{{ $data->manufacturer_name }}" placeholder="Enter Manufacturer Name"
-                                            class="mic-input">
+                                    <div class="relative-container">
+                                        <input id="manufacturer_name" type="text" name="manufacturer_name"
+                                            maxlength="255" value="{{ $data->manufacturer_name }}"
+                                            placeholder="Enter Manufacturer Name" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'manufacturer_name', 'id' => 'manufacturer_name'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="manufacturer">Manufacturer ID</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="manufacturer_id"
-                                            value="{{ $data->manufacturer_id }}" placeholder="Enter Manufacturer ID"
-                                            class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="manufacturer_id" type="text" name="manufacturer_id"
+                                            maxlength="255" value="{{ $data->manufacturer_id }}"
+                                            placeholder="Enter Manufacturer ID" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'manufacturer_id', 'id' => 'manufacturer_id'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="">Vendor</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="vendor_name" value="{{ $data->vendor_name }}"
-                                            placeholder="Enter Vendor Name" class="mic-input">
+                                    <div class="relative-container">
+                                        <input id="vendor_name" type="text" name="vendor_name" maxlength="255"
+                                            value="{{ $data->vendor_name }}" placeholder="Enter Vendor Name"
+                                            class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'vendor_name', 'id' => 'vendor_name'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="manufacturer">Vendor ID</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="vendor_id" value="{{ $data->vendor_id }}"
-                                            placeholder="Enter Vendor ID" class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="vendor_id" type="text" name="vendor_id" maxlength="255"
+                                            value="{{ $data->vendor_id }}" placeholder="Enter Vendor ID"
+                                            class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'vendor_id', 'id' => 'vendor_id'])
+                                            @endcomponent
                                         </button>
                                     </div>
 
@@ -1237,37 +1263,43 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Contact Person">Contact Person</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="contact_person" value="{{ $data->contact_person }}"
-                                            id="contact_person" placeholder="Enter Contact Person" class="mic-input"
-                                            >
+                                    <div class="relative-container">
+                                        <input id="contact_person" type="text" name="contact_person" maxlength="255"
+                                            value="{{ $data->contact_person }}" placeholder="Enter Contact Person"
+                                            class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'contact_person', 'id' => 'contact_person'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="Other Contacts">Other Contacts</label>
-                                    <div style="position:relative;">
-                                        <textarea id="other_contacts" name="other_contacts" placeholder="Enter Other Contacts" class="mic-input">{{ $data->other_contacts }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea id="other_contacts" name="other_contacts" maxlength="255" placeholder="Enter Other Contacts"
+                                            class="mic-input">{{ $data->other_contacts }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'other_contacts', 'id' => 'other_contacts'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Supplier Services">Supplier Services</label>
-                                    <div style="position:relative;">
-                                        <textarea name="supplier_serivce" id="supplier_service" cols="30" placeholder="Enter Supplier Service"
-                                            class="mic-input">{{ $data->supplier_serivce }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea id="supplier_serivce" name="supplier_serivce" cols="30" maxlength="255"
+                                            placeholder="Enter Supplier Service" class="mic-input">{{ $data->supplier_serivce }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'supplier_serivce', 'id' => 'supplier_serivce'])
+                                            @endcomponent
                                         </button>
                                     </div>
 
@@ -1279,16 +1311,25 @@
                                     <label for="Zone">Zone</label>
                                     <select name="zone">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option>Asia</option>
-                                        <option>Europe</option>
-                                        <option>Africa</option>
-                                        <option>Central America</option>
-                                        <option>South America</option>
-                                        <option>Oceania</option>
-                                        <option>North America</option>
+                                        <option value="Asia" @if ($data->zone == 'Asia') selected @endif>
+                                            Asia</option>
+                                        <option value="Europe" @if ($data->zone == 'Europe') selected @endif>
+                                            Europe</option>
+                                        <option value="Africa" @if ($data->zone == 'Africa') selected @endif>
+                                            Africa</option>
+                                        <option value="Central America"
+                                            @if ($data->zone == 'Central America') selected @endif>
+                                            Central America</option>
+                                        <option value="South America" @if ($data->zone == 'South America') selected @endif>
+                                            South America</option>
+                                        <option value="Oceania" @if ($data->zone == 'Oceania') selected @endif>
+                                            Oceania</option>
+                                        <option value="North America" @if ($data->zone == 'North America') selected @endif>
+                                            North America</option>
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Country">Country</label>
@@ -1407,26 +1448,30 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Address">Address</label>
-                                    <div style="position:relative;">
-                                        <textarea name="address" id="address" placeholder="Enter Address" class="mic-input">{{ $data->address }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea id="address" name="address" maxlength="255" placeholder="Enter Address" class="mic-input">{{ $data->address }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'address', 'id' => 'address'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier Web Site">Supplier Web Site</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="suppplier_web_site"
-                                            value="{{ $data->suppplier_web_site }}" id="suppplier_web_site"
-                                            placeholder="Enter Website" class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="supplier_website" type="text" name="supplier_website"
+                                            maxlength="255" value="{{ $data->supplier_website }}"
+                                            placeholder="Enter Website" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'supplier_website', 'id' => 'supplier_website'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
@@ -1480,41 +1525,49 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Contracts">Contracts</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="suppplier_contacts"
-                                            value="{{ $data->suppplier_contacts }}" id="suppplier_contacts"
-                                            class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="suppplier_contacts" type="text" name="suppplier_contacts"
+                                            maxlength="255" value="{{ $data->suppplier_contacts }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'suppplier_contacts', 'id' => 'suppplier_contacts'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Related Non Conformances">Related Non Conformances</label>
-                                    <div style="position:relative;">
-                                        <input type="text" name="related_non_conformance"
-                                            value="{{ $data->related_non_conformance }}" id="related_non_conformance"
-                                            class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="related_non_conformance" type="text" name="related_non_conformance"
+                                            maxlength="255" value="{{ $data->related_non_conformance }}"
+                                            class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', [
+                                                'name' => 'related_non_conformance',
+                                                'id' => 'related_non_conformance',
+                                            ])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier Contracts/Agreements">Supplier Contracts/Agreements</label>
-                                    <div style="position:relative;">
-                                        <input type="text" id="suppplier_agreement" name="suppplier_agreement"
-                                            value="{{ $data->suppplier_agreement }}" class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="suppplier_agreement" type="text" name="suppplier_agreement"
+                                            maxlength="255" value="{{ $data->suppplier_agreement }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'suppplier_agreement', 'id' => 'suppplier_agreement'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
@@ -1522,13 +1575,15 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Regulatory History">Regulatory History</label>
-                                    <div style="position:relative;">
-                                        <input type="text" id="regulatory_history" name="regulatory_history"
-                                            value="{{ $data->regulatory_history }}" class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="regulatory_history" type="text" name="regulatory_history"
+                                            maxlength="255" value="{{ $data->regulatory_history }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'regulatory_history', 'id' => 'regulatory_history'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
@@ -1536,24 +1591,27 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Distribution Sites">Distribution Sites</label>
-                                    <div style="position:relative;">
-                                        <input type="text" id="distribution_sites" name="distribution_sites"
-                                            value="{{ $data->distribution_sites }}" class="mic-input" >
+                                    <div class="relative-container">
+                                        <input id="distribution_sites" type="text" name="distribution_sites"
+                                            maxlength="255" value="{{ $data->distribution_sites }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'distribution_sites', 'id' => 'distribution_sites'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Quality Management ">Manufacturing Sites </label>
-                                    <div style="position:relative;">
-                                        <textarea id="manufacturing_sited" name="manufacturing_sited" placeholder="Enter Manufacturing Sites"
-                                            class="mic-input">{{ $data->manufacturing_sited }}</textarea>
+                                    <div class="relative-container">
+                                        <input id="distribution_sites" type="text" name="distribution_sites"
+                                            maxlength="255" value="{{ $data->distribution_sites }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'distribution_sites', 'id' => 'distribution_sites'])
+                                            @endcomponent
                                         </button>
                                     </div>
 
@@ -1562,25 +1620,30 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Quality Management ">Quality Management </label>
-                                    <div style="position:relative;">
-                                        <textarea id="quality_management" name="quality_management" placeholder="Enter Quality Management"
-                                            class="mic-input">{{ $data->quality_management }}</textarea>
+                                    <div class="relative-container">
+                                        <input id="distribution_sites" type="text" name="distribution_sites"
+                                            maxlength="255" value="{{ $data->distribution_sites }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'distribution_sites', 'id' => 'distribution_sites'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Business History">Business History</label>
-                                    <div style="position:relative;">
-                                        <textarea id="bussiness_history" name="bussiness_history" placeholder="Enter Business History" class="mic-input">{{ $data->bussiness_history }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea id="bussiness_history" name="bussiness_history" maxlength="255" placeholder="Enter Business History"
+                                            class="mic-input">{{ $data->bussiness_history }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'bussiness_history', 'id' => 'bussiness_history'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
@@ -1588,25 +1651,30 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Performance History ">Performance History </label>
-                                    <div style="position:relative;">
-                                        <textarea id="performance_history" name="performance_history" placeholder="Enter Performance History"
-                                            class="mic-input">{{ $data->performance_history }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea id="performance_history" name="performance_history" maxlength="255"
+                                            placeholder="Enter Performance History" class="mic-input">{{ $data->performance_history }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'performance_history', 'id' => 'performance_history'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Compliance Risk">Compliance Risk</label>
-                                    <div style="position:relative;">
-                                        <textarea id="compliance_risk" name="compliance_risk" placeholder="Enter Compliance Risk" class="mic-input">{{ $data->compliance_risk }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea id="compliance_risk" name="compliance_risk" maxlength="255" placeholder="Enter Compliance Risk"
+                                            class="mic-input">{{ $data->compliance_risk }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'compliance_risk', 'id' => 'compliance_risk'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
@@ -1669,21 +1737,12 @@
                                         <option value="Unacceptable" @if ($data->cost_reduction == 'Unacceptable') selected @endif>
                                             Unacceptable</option>
                                         <option value="Does Not Meet Expectation"
-                                            @if (
-                                                $data->cost_reduction ==
-                                                    "Does Not
-                                                                                                                                                                            Meet Expectation") selected @endif>Does Not Meet Expectation
+                                            @if ($data->cost_reduction == 'Does Not Meet Expectation') selected @endif>Does Not Meet Expectation
                                         </option>
                                         <option value="Meets Expectations"
-                                            @if (
-                                                $data->cost_reduction ==
-                                                    "Meets
-                                                                                                                                                                            Expectations") selected @endif>Meets Expectations</option>
+                                            @if ($data->cost_reduction == 'Meets Expectations') selected @endif>Meets Expectations</option>
                                         <option value="Exceeds Expectations"
-                                            @if (
-                                                $data->cost_reduction ==
-                                                    "Exceeds
-                                                                                                                                                                            Expectations") selected @endif>Exceeds Expectations
+                                            @if ($data->cost_reduction == 'Exceeds Expectations') selected @endif>Exceeds Expectations
                                         </option>
                                     </select>
                                 </div>
@@ -1708,9 +1767,11 @@
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="< 30 Days" @if ($data->payment_term == '< 30 Days') selected @endif>
                                             < 30 Days</option>
-                                        <option value="30 - 45 Days" @if ($data->payment_term == '30 - 45 Days') selected @endif>30
+                                        <option value="30 - 45 Days" @if ($data->payment_term == '30 - 45 Days') selected @endif>
+                                            30
                                             - 45 Days</option>
-                                        <option value="45 - 60 Days" @if ($data->payment_term == '45 - 60 Days') selected @endif>45
+                                        <option value="45 - 60 Days" @if ($data->payment_term == '45 - 60 Days') selected @endif>
+                                            45
                                             - 60 Days</option>
                                         <option value=">= 60 Days" @if ($data->payment_term == '>= 60 Days')
                                             selected
@@ -1746,10 +1807,7 @@
                                         <option value="3 -5" @if ($data->lead_time_days == '3 -5') selected @endif>3 -5
                                         </option>
                                         <option value="1 Day or Consignment"
-                                            @if (
-                                                $data->lead_time_days ==
-                                                    "1 Day or
-                                                                                                                                                                            Consignment") selected @endif>1 Day or Consignment
+                                            @if ($data->lead_time_days == '1 Day or Consignment') selected @endif>1 Day or Consignment
                                         </option>
                                     </select>
                                 </div>
@@ -1833,33 +1891,22 @@
                                     <label for="Rejection in PPM">Rejection in PPM</label>
                                     <select id="rejection_ppm" name="rejection_ppm">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="> 500001 Defects PPM" @if (
-                                            $data->rejection_ppm ==
-                                                "> 500001 Defects
-                                                                                                                                                                PPM")
+                                        <option value=">500001 Defects PPM" @if ($data->rejection_ppm == '>500001 Defect PPM')
                                             selected
                                             @endif>> 500001 Defects PPM</option>
                                         <option value="5001 - 50000 Defects PPM"
-                                            @if (
-                                                $data->rejection_ppm ==
-                                                    "5001 - 50000
-                                                                                                                                                                            Defects PPM") selected @endif>5001 - 50000 Defects PPM
+                                            @if ($data->rejection_ppm == '5001 - 50000 Defects PPM') selected @endif>5001 - 50000 Defects PPM
                                         </option>
                                         <option value="501 - 500 Defects PPM"
-                                            @if (
-                                                $data->rejection_ppm ==
-                                                    "501 - 500 Defects
-                                                                                                                                                                            PPM") selected @endif>501 - 5000 Defects PPM
+                                            @if ($data->rejection_ppm == '501 - 500 Defects PPM') selected @endif>501 - 5000 Defects PPM
                                         </option>
                                         <option value="Upto 500 Defects PPM"
-                                            @if (
-                                                $data->rejection_ppm ==
-                                                    "Upto 500 Defects
-                                                                                                                                                                            PPM") selected @endif>Upto 500 Defects PPM"
+                                            @if ($data->rejection_ppm == 'Upto 500 Defects PPM') selected @endif>Upto 500 Defects PPM
                                         </option>
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Rejection in PPM Weight">Rejection in PPM Weight</label>
@@ -1882,22 +1929,18 @@
                                         <option value="No System/No Team"
                                             @if ($data->quality_system == 'No System/No Team') selected @endif>No System/No Team</option>
                                         <option value="System Not Certified"
-                                            @if (
-                                                $data->quality_system ==
-                                                    "System Not
-                                                                                                                                                                            Certified") selected @endif>System Not Certified
+                                            @if ($data->quality_system == 'System Not Certified') selected @endif>System Not Certified
                                         </option>
-                                        <option value="ISO 9000 Cert" @if ($data->quality_system == 'ISO 9000 Cert') selected @endif>
+                                        <option value="ISO 9000 Cert"
+                                            @if ($data->quality_system == 'ISO 9000 Cert') selected @endif>
                                             ISO 9000 Cert</option>
                                         <option value="ISO 9000 & 1400 Cert"
-                                            @if (
-                                                $data->quality_system ==
-                                                    "ISO 9000 & 1400
-                                                                                                                                                                            Cert") selected @endif>ISO 9000 & 1400 Cert
+                                            @if ($data->quality_system == 'ISO 9000 & 1400 Cert') selected @endif>ISO 9000 & 1400 Cert
                                         </option>
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Quality Systems Weight">Quality Systems Weight</label>
@@ -1979,27 +2022,19 @@
                                     <select id="end_user_satisfaction" name="end_user_satisfaction">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="Information Lacks"
-                                            @if (
-                                                $data->end_user_satisfaction ==
-                                                    "Information
-                                                                                                                                                                            Lacks") selected @endif>Information Lacks</option>
+                                            @if ($data->end_user_satisfaction == 'Information Lacks') selected @endif>Information Lacks</option>
                                         <option value="Not Reactive Enough"
-                                            @if (
-                                                $data->end_user_satisfaction ==
-                                                    "Not
-                                                                                                                                                                            Reactive Enough") selected @endif>Not Reactive Enough
+                                            @if ($data->end_user_satisfaction == 'Not Reactive Enough') selected @endif>Not Reactive Enough
                                         </option>
                                         <option value="Required" @if ($data->end_user_satisfaction == 'Required') selected @endif>
                                             Required</option>
                                         <option value="Active Participation"
-                                            @if (
-                                                $data->end_user_satisfaction ==
-                                                    "Active
-                                                                                                                                                                            Participation") selected @endif>Active Participation
+                                            @if ($data->end_user_satisfaction == 'Active Participation') selected @endif>Active Participation
                                         </option>
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="End-User Satisfaction Weight">End-User Satisfaction Weight</label>
@@ -2095,26 +2130,30 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_feedback">QA Reviewer Feedback</label>
-                                    <div style="position:relative;">
-                                        <textarea name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback" id="QA_reviewer_feedback"
-                                            class="mic-input">{{ $data->QA_reviewer_feedback }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea id="QA_reviewer_feedback" name="QA_reviewer_feedback" maxlength="255"
+                                            placeholder="Enter QA Reviewer Feedback" class="mic-input">{{ $data->QA_reviewer_feedback }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'QA_reviewer_feedback', 'id' => 'QA_reviewer_feedback'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_comment">QA Reviewer Comment</label>
-                                    <div style="position:relative;">
-                                        <textarea name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment" id="QA_reviewer_comment"
-                                            class="mic-input">{{ $data->QA_reviewer_comment }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea id="QA_reviewer_comment" name="QA_reviewer_comment" maxlength="255"
+                                            placeholder="Enter QA Reviewer Comment" class="mic-input">{{ $data->QA_reviewer_comment }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'QA_reviewer_comment', 'id' => 'QA_reviewer_comment'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
@@ -2249,7 +2288,8 @@
                                             @if ($data->audit_frequency == 'Every 3 Years') selected @endif>Every 3 Years</option>
                                         <option value="Every 2 Years"
                                             @if ($data->audit_frequency == 'Every 2 Years') selected @endif>Every 2 Years</option>
-                                        <option value="Annual" @if ($data->audit_frequency == 'Annual') selected @endif>Annual
+                                        <option value="Annual" @if ($data->audit_frequency == 'Annual') selected @endif>
+                                            Annual
                                         </option>
                                     </select>
                                 </div>
@@ -2284,17 +2324,11 @@
                                         <option value="">Enter Your Selection Here</option>
 
                                         <option value="Operation, R&M - Level 3"
-                                            @if (
-                                                $data->facility_type ==
-                                                    "Operation, R&M
-                                                                                                                                                                            - Level 3") selected @endif> Operation, R&M - Level 3
+                                            @if ($data->facility_type == 'Operation, R&M - Level 3') selected @endif> Operation, R&M - Level 3
                                         </option>
 
                                         <option value="Operation, R&M - Level 2"
-                                            @if (
-                                                $data->facility_type ==
-                                                    "Operation, R&M
-                                                                                                                                                                            - Level 2") selected @endif>Operation, R&M - Level 2
+                                            @if ($data->facility_type == 'Operation, R&M - Level 2') selected @endif>Operation, R&M - Level 2
                                         </option>
 
                                         <option value="Operation Only, Stock Point Only"
@@ -2327,18 +2361,12 @@
                                         <option value="">Enter Your Selection Here</option>
 
                                         <option value="Very Limited Access"
-                                            @if (
-                                                $data->technical_support ==
-                                                    "Very Limited
-                                                                                                                                                                            Access") selected @endif> Very Limited Access to
+                                            @if ($data->technical_support == 'Very Limited Access') selected @endif> Very Limited Access to
                                             Technical Experts
                                         </option>
 
                                         <option value="Available When Requested"
-                                            @if (
-                                                $data->technical_support ==
-                                                    "Available
-                                                                                                                                                                            When Requested") selected @endif> Available When Requested
+                                            @if ($data->technical_support == 'Available When Requested') selected @endif> Available When Requested
                                             or Via Beacon Center
                                         </option>
 
@@ -2360,16 +2388,10 @@
                                             Jobs
                                         </option>
                                         <option value="Basic D&E Services"
-                                            @if (
-                                                $data->survice_supported ==
-                                                    "Basic D&E
-                                                                                                                                                                            Services") selected @endif>Basic D&E Services
+                                            @if ($data->survice_supported == 'Basic D&E Services') selected @endif>Basic D&E Services
                                         </option>
                                         <option value="Motors or Standalone MWD"
-                                            @if (
-                                                $data->survice_supported ==
-                                                    "Motors or
-                                                                                                                                                                            Standalone MWD") selected @endif>Motors or Standalone MWD
+                                            @if ($data->survice_supported == 'Motors or Standalone MWD') selected @endif>Motors or Standalone MWD
                                         </option>
                                     </select>
                                 </div>
@@ -2383,10 +2405,7 @@
                                             @if ($data->reliability == 'Significantly Below Expectations') selected @endif>Significantly Below
                                             Expectations</option>
                                         <option value="Marginally Below Expectations"
-                                            @if (
-                                                $data->reliability ==
-                                                    "Marginally
-                                                                                                                                                                            Below Expectations") selected @endif>Marginally Below
+                                            @if ($data->reliability == 'Marginally Below Expectations') selected @endif>Marginally Below
                                             Expectations</option>
                                         <option value="Meets Expectations"
                                             @if ($data->reliability == 'Meets Expectations') selected @endif>Meets Expectations
@@ -2416,10 +2435,7 @@
                                     <select id="client_base" name="client_base">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="Single or Disproportionally Skewed"
-                                            @if (
-                                                $data->client_base ==
-                                                    "Single
-                                                                                                                                                                            or Disproportionally Skewed") selected @endif>Single or
+                                            @if ($data->client_base == 'Single or Disproportionally Skewed') selected @endif>Single or
                                             Disproportionally Skewed
                                         </option>
                                         <option value="Multiple Clients"
@@ -2429,6 +2445,7 @@
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Previous Audit Results">Previous Audit Results</label>
@@ -2528,12 +2545,15 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_head_comment">QA Head Comment</label>
-                                    <div style="position:relative;">
-                                        <textarea name="QA_head_comment" placeholder="Enter QA Head Comment" id="QA_head_comment" class="mic-input">{{ $data->QA_head_comment }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea id="QA_head_comment" name="QA_head_comment" maxlength="255" placeholder="Enter QA Head Comment"
+                                            class="mic-input">{{ $data->QA_head_comment }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
+                                            @component('frontend.forms.language-model', ['name' => 'QA_head_comment', 'id' => 'QA_head_comment'])
+                                            @endcomponent
                                         </button>
                                     </div>
+
 
                                 </div>
                             </div>
@@ -2666,7 +2686,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Qualification Complete By</label>
+                                    <label for="Suppplier Review On">Qualification Complete on</label>
                                     <div class="static">{{ $data->pending_qualification_on }}</div>
                                 </div>
                             </div>
@@ -2737,38 +2757,38 @@
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Supplier Approved to Obselete By</label>
+                                    <label for="Suppplier Review By">Supplier Approved to Obsolete By</label>
                                     <div class="static">{{ $data->supplier_approved_to_obselete_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Supplier Approved to Obselete On</label>
+                                    <label for="Suppplier Review On">Supplier Approved to Obsolete On</label>
                                     <div class="static">{{ $data->supplier_approved_to_obselete_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Supplier Approved to Obselete Comment</label>
+                                    <label for="Suppplier Review Comment">Supplier Approved to Obsolete Comment</label>
                                     <div class="static">{{ $data->supplier_approved_to_obselete_comment }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">ReAudit By</label>
+                                    <label for="Suppplier Review By">Re-Audit By</label>
                                     <div class="static">{{ $data->reAudit_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">ReAudit On</label>
+                                    <label for="Suppplier Review On">Re-Audit On</label>
                                     <div class="static">{{ $data->reAudit_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">ReAudit Comment</label>
+                                    <label for="Suppplier Review Comment">Re-Audit Comment</label>
                                     <div class="static">{{ $data->reAudit_comment }}</div>
                                 </div>
                             </div>

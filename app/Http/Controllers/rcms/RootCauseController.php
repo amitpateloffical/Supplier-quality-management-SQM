@@ -631,7 +631,7 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = 'Create';
             $history->save();
         }
-        if (!empty($root->cft_comments_newy)){
+        if (!empty($root->cft_comments_new)){
 
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
@@ -1003,7 +1003,9 @@ use Illuminate\Support\Facades\Hash;
         //     $history->save();
         // }
         if ($lastDocument->initiator_Group != $root->initiator_Group || !empty($request->initiator_Group_comment)) {
-
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'initiator_Group')
+            ->exists();
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Initiator Group';
@@ -1016,12 +1018,14 @@ use Illuminate\Support\Facades\Hash;
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
         if ($lastDocument->assign_to != $root->assign_to || !empty($request->assign_to_comment)) {
-
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'assign_to')
+            ->exists();
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Assign To';
@@ -1034,11 +1038,13 @@ use Illuminate\Support\Facades\Hash;
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if ($lastDocument->due_date != $root->due_date || !empty($request->due_date_comment)) {
-
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'due_date')
+            ->exists();
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Due Date';
@@ -1051,12 +1057,14 @@ use Illuminate\Support\Facades\Hash;
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';       
             $history->save();
         }
 
         if ($lastDocument->short_description != $root->short_description || !empty($request->short_description_comment)) {
-
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'short_description')
+            ->exists();
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Short Description';
@@ -1069,12 +1077,14 @@ use Illuminate\Support\Facades\Hash;
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';           
             $history->save();
         }
      
         if ($lastDocument->severity_level != $root->severity_level || !empty($request->division_code_comment)) {
-
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'severity_level')
+            ->exists();
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Severity Level';
@@ -1087,11 +1097,14 @@ use Illuminate\Support\Facades\Hash;
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';          
             $history->save();
         }
         
         if ($lastDocument->initiated_through != $root->initiated_through|| !empty($request->initiated_through_comment)){
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'initiated_through')
+            ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Initiated Through';
@@ -1104,10 +1117,13 @@ use Illuminate\Support\Facades\Hash;
         $history->origin_state = $lastDocument->status;
         $history->change_to =    "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
+        $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+         $history->save();
         }
         if ($lastDocument->initiated_if_other != $root->initiated_if_other || !empty($request->initiated_if_other_comment)){
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'initiated_if_other')
+            ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Other';
@@ -1120,12 +1136,30 @@ use Illuminate\Support\Facades\Hash;
         $history->origin_state = $lastDocument->status;
         $history->change_to =    "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';        
         $history->save();
         }
+        //    if ($lastDocument->initiated_if_other != $root->initiated_if_other|| !empty($request->initiated_if_other_comment)){
+        //     $history = new RootAuditTrial();
+        // $history->root_id = $root->id;
+        // $history->activity_type = 'Initiatedn If Other';
+        // $history->previous = $lastDocument->initiated_if_other;
+        // $history->current =$root->initiated_if_other;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $lastDocument->status;
+        // $history->change_to =    "Not Applicable";
+        // $history->change_from = $lastDocument->status;
+        // $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';      
+        // $history->save();
+        // }
        
         if ($lastDocument->Type != $root->Type || !empty($request->Type_comment)) {
-
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'Type')
+            ->exists();
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Type';
@@ -1138,12 +1172,15 @@ use Illuminate\Support\Facades\Hash;
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';            
             $history->save();
         }
        
 
         if ($lastDocument->priority_level != $root->priority_level || !empty($request->priority_level_comment)){
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'priority_level')
+            ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Priority Level';
@@ -1156,10 +1193,13 @@ use Illuminate\Support\Facades\Hash;
         $history->origin_state = $lastDocument->status;
         $history->change_to =    "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';        
         $history->save();
         }
         if ($lastDocument->department != $root->department || !empty($request->department_comment)){
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'department')
+            ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Department';
@@ -1173,10 +1213,13 @@ use Illuminate\Support\Facades\Hash;
         $history->origin_state = $lastDocument->status;
         $history->change_to =    "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';        
         $history->save();
         }
         if ($lastDocument->description != $root->description || !empty($request->description_comment)){
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'description')
+            ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Description';
@@ -1189,10 +1232,13 @@ use Illuminate\Support\Facades\Hash;
         $history->origin_state = $lastDocument->status;
         $history->change_to =    "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';        
         $history->save();
         }
         if ($lastDocument->comments != $root->comments || !empty($request->comments_comment)) {
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'comments')
+            ->exists();
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
@@ -1206,10 +1252,13 @@ use Illuminate\Support\Facades\Hash;
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';            
             $history->save();
         }
         if ($lastDocument->related_url != $root->related_url || !empty($request->related_url_comment)){
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'related_url')
+            ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Related Url';
@@ -1222,26 +1271,14 @@ use Illuminate\Support\Facades\Hash;
         $history->origin_state = $lastDocument->status;
         $history->change_to =    "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';      
         $history->save();
         }
-        if ($lastDocument->root_cause_methodology ){
-            $history = new RootAuditTrial();
-        $history->root_id = $root->id;
-        $history->activity_type = 'Root Cause Methodology';
-        $history->previous = $lastDocument->root_cause_methodology;
-        $history->current =$root->root_cause_methodology;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_to =    "Not Applicable";
-        $history->change_from = $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-        }
+     
         if ($lastDocument->root_cause_methodology != $root->root_cause_methodology || !empty($request->root_cause_methodology_comment)){
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'root_cause_methodology')
+            ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Root Cause Methodology';
@@ -1254,11 +1291,14 @@ use Illuminate\Support\Facades\Hash;
         $history->origin_state = $lastDocument->status;
         $history->change_to =    "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';      
         $history->save();
         }
 
         if ($lastDocument->root_cause_description != $root->root_cause_description || !empty($request->root_cause_description_comment)){
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'root_cause_description')
+            ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Root Cause Description';
@@ -1271,10 +1311,13 @@ use Illuminate\Support\Facades\Hash;
         $history->origin_state = $lastDocument->status;
         $history->change_to =    "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';      
         $history->save();
         }
         if ($lastDocument->investigation_summary != $root->investigation_summary || !empty($request->investigation_summary_comment)){
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'investigation_summary')
+            ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Investigation Summary';
@@ -1287,11 +1330,14 @@ use Illuminate\Support\Facades\Hash;
         $history->origin_state = $lastDocument->status;
         $history->change_to =    "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';      
         $history->save();
         }
 
         if ($lastDocument->cft_comments_new != $root->cft_comments_new|| !empty($request->cft_comments_new_comment)){
+            $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
+            ->where('activity_type', 'Final oomments')
+            ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'CFT Comments New';
@@ -1304,26 +1350,11 @@ use Illuminate\Support\Facades\Hash;
         $history->origin_state = $lastDocument->status;
         $history->change_to =    "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';      
         $history->save();
         }
 
-         if ($lastDocument->initiated_if_other != $root->initiated_if_other|| !empty($request->initiated_if_other_comment)){
-            $history = new RootAuditTrial();
-        $history->root_id = $root->id;
-        $history->activity_type = 'Initiatedn If Other';
-        $history->previous = $lastDocument->initiated_if_other;
-        $history->current =$root->initiated_if_other;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_to =    "Not Applicable";
-        $history->change_from = $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-        }
+      
         // if ($lastDocument->due_date != $root->due_date || !empty($request->due_date_comment)) {
 
         //     $history = new RootAuditTrial();
@@ -1482,59 +1513,62 @@ use Illuminate\Support\Facades\Hash;
             $root = RootCauseAnalysis::find($id);
             $lastDocument =  RootCauseAnalysis::find($id);
             $data =  RootCauseAnalysis::find($id);
+            if ($root->stage == 1){
 
-            $root->stage = "0";
-            $root->status = "Closed-Cancelled";
-            $root->cancelled_by = Auth::user()->name;
-            $root->cancelled_on = Carbon::now()->format('d-M-Y');
-
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Activity Log';
-            // $history->previous = $lastDocument->cancelled_by;
-            $history->current = $root->cancelled_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->stage='Cancelled ';
-            $history->change_from = $lastDocument->status;
-            $history->change_to = "Closed - Cancelled";
-            $history->action = 'Cancel';
-            $history->save();
-
-            //     $list = Helpers::getQAUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $root->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //             if ($email !== null) {
-            //                 try {
-            //                     Mail::send(
-            //                         'mail.view-mail',
-            //                         ['data' => $root],
-            //                     function ($message) use ($email) {
-            //                         $message->to($email)
-            //                             ->subject("Document sent ".Auth::user()->name);
-            //                     }
-            //                     );
-            //                 } catch (\Exception $e) {
-            //                     // 
-            //                 }
-            //             }
-            //     } 
-            // }
-            $root->update();
-            $history = new RootCauseAnalysisHistory();
-            $history->type = "Root Cause Analysis";
-            $history->doc_id = $id;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->stage_id = $root->stage;
-            $history->status = $root->status;
-            $history->save();
-            toastr()->success('Document Sent');
-            return back();
+                $root->stage = "0";
+                $root->status = "Closed-Cancelled";
+                $root->cancelled_by = Auth::user()->name;
+                $root->cancelled_on = Carbon::now()->format('d-M-Y');
+                $root->cancelled_comment = $request->comment;
+                $history = new RootAuditTrial();
+                $history->root_id = $id;
+                $history->activity_type = 'Activity Log';
+                // $history->previous = $lastDocument->cancelled_by;
+                $history->current = $root->cancelled_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Cancelled ';
+                $history->change_from = $lastDocument->status;
+                $history->change_to = "Closed - Cancelled";
+                $history->action = 'Cancel';
+                $history->save();
+    
+                //     $list = Helpers::getQAUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //             if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $root],
+                //                     function ($message) use ($email) {
+                //                         $message->to($email)
+                //                             ->subject("Document sent ".Auth::user()->name);
+                //                     }
+                //                     );
+                //                 } catch (\Exception $e) {
+                //                     // 
+                //                 }
+                //             }
+                //     } 
+                // }
+                $root->update();
+                $history = new RootCauseAnalysisHistory();
+                $history->type = "Root Cause Analysis";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $root->stage;
+                $history->status = $root->status;
+                $history->save();
+                toastr()->success('Document Sent');
+                return back();
+            }
+           
         } else {
             toastr()->error('E-signature Not match');
             return back();

@@ -376,7 +376,7 @@ function addRiskAssessment(tableId) {
         "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
 
     var cell9 = newRow.insertCell(8);
-    cell9.innerHTML = "<input name='initial_rpn[]' disabled='text' class='initial-rpn'>";
+    cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' disabled>";
 
     var cell10 = newRow.insertCell(9);
     cell10.innerHTML =
@@ -398,7 +398,7 @@ function addRiskAssessment(tableId) {
         "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
 
     var cell15 = newRow.insertCell(14);
-    cell15.innerHTML = "<input name='residual_rpn[]'  type='text' class='residual-rpn' >";
+    cell15.innerHTML = "<input name='residual_rpn[]'  type='text' class='residual-rpn'  disabled>";
 
     var cell16 = newRow.insertCell(15);
     cell16.innerHTML =
@@ -415,6 +415,10 @@ function addRiskAssessment(tableId) {
         var row = table.rows[i];
         row.cells[0].innerHTML = i;
     }
+    $(document).on('click', '.removeBtnaddRiskAssessment', function () {
+        $(this).closest('tr').remove();
+    })
+
 }
 
 // ================================ EIGHT INPUTS
@@ -481,10 +485,18 @@ function addRootCauseAnalysisRiskAssessment(tableId) {
 
     var cell17 = newRow.insertCell(16);
     cell17.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
+
+    var cell18 = newRow.insertCell(17);
+    cell18.innerHTML = "<button  class='removeBtnRCA'>Remove</button>";
+
     for (var i = 1; i < currentRowCount; i++) {
         var row = table.rows[i];
         row.cells[0].innerHTML = i;
     }
+
+    $(document).on('click', '.removeBtnRCA', function () {
+        $(this).closest('tr').remove();
+    })
 }
 
 function addDistributionRetrieval(tableId) {

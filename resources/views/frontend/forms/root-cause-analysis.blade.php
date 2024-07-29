@@ -9,142 +9,9 @@
         display: none;
     }
 </style>
-{{-- <style>
-    #start-record-btn {
-        background: none;
-        border: none;
-        outline: none;
-        cursor: pointer;
-    }
-    #start-record-btn i {
-        color: black; /* Set the color of the icon */
-        box-shadow: none; /* Remove shadow */
-    }
-    #start-record-btn:focus,
-    #start-record-btn:hover,
-    #start-record-btn:active {
-        box-shadow: none; /* Remove shadow on hover/focus/active */
-    }
-</style>
 
-    <script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    </script>
-
-
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            const docnameInput = document.getElementById('docname');
-            const startRecordBtn = document.getElementById('start-record-btn');
-
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.lang = 'en-US';
-
-            startRecordBtn.addEventListener('click', function() {
-                recognition.start();
-            });
-
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                docnameInput.value += transcript;
-            };
-
-            recognition.onerror = function(event) {
-                console.error(event.error);
-            };
-        });
-    </script> --}}
-    {{-- voice Command --}}
     
-    <style>
-        .mic-btn {
-            background: none;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            box-shadow: none;
-            color: black;
-            display: none;
-            /* Hide the button initially */
-        }
-
-        .relative-container textarea {
-            width: 100%;
-            padding-right: 40px;
-        }
-
-        .relative-container input:focus+.mic-btn {
-            display: inline-block;
-            /* Show the button when input is focused */
-        }
-
-        .mic-btn:focus,
-        .mic-btn:hover,
-        .mic-btn:active {
-            box-shadow: none;
-        }
-    </style>
-
-    <script>
-        < link rel = "stylesheet"
-        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.lang = 'en-US';
-
-            function startRecognition(targetElement) {
-                recognition.start();
-                recognition.onresult = function(event) {
-                    const transcript = event.results[0][0].transcript;
-                    targetElement.value += transcript;
-                };
-                recognition.onerror = function(event) {
-                    console.error(event.error);
-                };
-            }
-
-            document.addEventListener('click', function(event) {
-                if (event.target.closest('.mic-btn')) {
-                    const button = event.target.closest('.mic-btn');
-                    const inputField = button.previousElementSibling;
-                    if (inputField && inputField.classList.contains('mic-input')) {
-                        startRecognition(inputField);
-                    }
-                }
-            });
-
-            document.querySelectorAll('.mic-input').forEach(input => {
-                input.addEventListener('focus', function() {
-                    const micBtn = this.nextElementSibling;
-                    if (micBtn && micBtn.classList.contains('mic-btn')) {
-                        micBtn.style.display = 'inline-block';
-                    }
-                });
-
-                input.addEventListener('blur', function() {
-                    const micBtn = this.nextElementSibling;
-                    if (micBtn && micBtn.classList.contains('mic-btn')) {
-                        setTimeout(() => {
-                            micBtn.style.display = 'none';
-                        }, 200); // Delay to prevent button from hiding immediately when clicked
-                    }
-                });
-            });
-        });
-    </script>
+  
 
 
 <div class="form-field-head">
@@ -299,20 +166,23 @@ $users = DB::table('users')->get();
                             </div>
 
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Short Description">Short Description<span class="text-danger">*</span></label>
-                                    <span id="rchars">255</span> characters remaining
-                                    <div style="position:relative;">
-                                        <input id="docname" class="mic-input" type="text" name="short_description" maxlength="255" required>
-                                        <button id="start-record-btn" type="button" class="mic-btn">
-                                            <i class="fas fa-microphone"></i>
-                                        </button>
-                                    </div>
-                                
-                                   </div>
-                            </div>
+                          
 
+
+                            <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+
+                                        <div class="relative-container">
+                                            <input class="mic-input" id="docname" type="text" name="short_description"
+                                                maxlength="255" required>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                    </div>
+                                </div>
                             
                             <div class="col-12">
                                 <div class="group-input">
@@ -383,15 +253,17 @@ $users = DB::table('users')->get();
                             <div class="col-lg-6">
                                   <div class="group-input" id="initiated_through_req">
                                           <label for="initiated_if_other">Others<span class="text-danger d-none">*</span></label>
-                                          <div style="position:relative;">
+                                          <div class="relative-container">
                                              <textarea name="initiated_if_other" class="mic-input" id="initiated_if_other"></textarea>
-                                             <button class="mic-btn" type="button">
-                                              <i class="fas fa-microphone"></i>
-                                          </button>
+                                           
+                                          @component('frontend.forms.language-model')
+                                          @endcomponent
                                       </div>
                                   </div>
                             </div>
                         
+
+                            
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -454,26 +326,28 @@ $users = DB::table('users')->get();
                             <div class="col-12">
                                 <div class="sub-head">Investigation details</div>
                             </div>
-                            <div class="col-12">
-                                 <div class="group-input">
-                                     <label for="description">Description</label>
-                                     <div style="position:relative;">
-                                         <textarea name="description" class="mic-input" id="description"></textarea>
-                                         <button class="mic-btn" type="button">
-                                             <i class="fas fa-microphone"></i>
-                                         </button>
-                                     </div>
-                                 </div>
-                             </div>
+                           
                              
+                             <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Short Description"> Description<span
+                                                class="text-danger"></span></label>
+                                        <div class="relative-container">
+                                            <textarea name="description" id="description" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                    </div>
+                                </div>
                              <div class="col-12">
                                         <div class="group-input">
                                             <label for="comments">Comments</label>
-                                            <div style="position:relative;">
-                                                <textarea name="comments" class="mic-input" ></textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                            <div class="relative-container">
+                                                <textarea name="comments" class="mic-input" id="comments" ></textarea>
+                                                @component('frontend.forms.language-model')
+                                            @endcomponent
+
                                             </div>
                                         </div>
                             </div>
@@ -678,8 +552,10 @@ $users = DB::table('users')->get();
                                             <tbody>
                                                 <tr style="background: #f4bb22">
                                                     <th style="width:150px;">Problem Statement :</th>
-                                                    <td>
+                                                    <td class="relative-container">
                                                         <textarea name="why_problem_statement"></textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
                                                 </tr>
                                                 <tr class="why-row">
@@ -687,8 +563,10 @@ $users = DB::table('users')->get();
                                                         Why 1 <span onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
                                                     </th>
                                                     <td>
-                                                        <div class="why_1_block">
+                                                        <div class="why_1_block  relative-container">
                                                             <textarea name="why_1[]"></textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -697,8 +575,10 @@ $users = DB::table('users')->get();
                                                         Why 2 <span onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
                                                     </th>
                                                     <td>
-                                                        <div class="why_2_block">
+                                                        <div class="why_2_block  relative-container">
                                                             <textarea name="why_2[]"></textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -707,8 +587,10 @@ $users = DB::table('users')->get();
                                                         Why 3 <span onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
                                                     </th>
                                                     <td>
-                                                        <div class="why_3_block">
+                                                        <div class="why_3_block  relative-container">
                                                             <textarea name="why_3[]"></textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -717,8 +599,10 @@ $users = DB::table('users')->get();
                                                         Why 4 <span onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
                                                     </th>
                                                     <td>
-                                                        <div class="why_4_block">
+                                                        <div class="why_4_block  relative-container">
                                                             <textarea name="why_4[]"></textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -727,15 +611,19 @@ $users = DB::table('users')->get();
                                                         Why 5 <span onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
                                                     </th>
                                                     <td>
-                                                        <div class="why_5_block">
+                                                        <div class="why_5_block  relative-container">
                                                             <textarea name="why_5[]"></textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
                                                         </div>
                                                     </td>
                                                 </tr>
                                                 <tr style="background: #0080006b;">
                                                     <th style="width:150px;">Root Cause :</th>
-                                                    <td>
+                                                    <td class=" relative-container">
                                                         <textarea name="why_root_cause"></textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -765,62 +653,94 @@ $users = DB::table('users')->get();
                                             <tbody>
                                                 <tr>
                                                     <th style="background: #0039bd85">What</th>
-                                                    <td>
+                                                    <td class="relative-container">
                                                         <textarea name="what_will_be"></textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
-                                                    <td>
+                                                    <td class="relative-container">
                                                         <textarea name="what_will_not_be"></textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
-                                                    <td>
+                                                    <td class="relative-container">
                                                         <textarea name="what_rationable"></textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th style="background: #0039bd85">Where</th>
-                                                    <td>
+                                                    <td class="relative-container">
                                                         <textarea name="where_will_be"></textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
-                                                    <td>
+                                                    <td class="relative-container">
                                                         <textarea name="where_will_not_be"></textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                         @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
-                                                    <td>
+                                                    <td class="relative-container">
                                                         <textarea name="where_rationable"></textarea>
+                                                         @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th style="background: #0039bd85">When</th>
-                                                    <td>
+                                                    <td class="relative-container">
                                                         <textarea name="when_will_be"></textarea>
+                                                         @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
-                                                    <td>
+                                                    <td class="relative-container">
                                                         <textarea name="when_will_not_be"></textarea>
+                                                         @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
-                                                    <td>
+                                                    <td class="relative-container">
                                                         <textarea name="when_rationable"></textarea>
+                                                         @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th style="background: #0039bd85">Coverage</th>
-                                                    <td>
+                                                    <td  class="relative-container">
                                                         <textarea name="coverage_will_be"></textarea>
+                                                         @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
-                                                    <td>
+                                                    <td  class="relative-container">
                                                         <textarea name="coverage_will_not_be"></textarea>
+                                                         @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
-                                                    <td>
+                                                    <td  class="relative-container">
                                                         <textarea name="coverage_rationable"></textarea>
+                                                         @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th style="background: #0039bd85">Who</th>
-                                                    <td>
+                                                    <td  class="relative-container">
                                                         <textarea name="who_will_be"></textarea>
+                                                         @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
-                                                    <td>
+                                                    <td  class="relative-container">
                                                         <textarea name="who_will_not_be"></textarea>
+                                                         @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
-                                                    <td>
+                                                    <td  class="relative-container">
                                                         <textarea name="who_rationable"></textarea>
+                                                         @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -833,23 +753,20 @@ $users = DB::table('users')->get();
                             <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause_description">Root Cause Description</label>
-                                        <div style="position:relative;">
+                                        <div class="relative-container">
                                             <textarea name="root_cause_description" class="mic-input"  id="root_cause_description"></textarea>
-                                            <button class="mic-btn" type="button" id="start-record-btn"  class="mic-btn">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                             </div>
-
                            <div class="col-12">
                             <div class="group-input">
                                 <label for="investigation_summary">Investigation Summary</label>
-                                <div style="position:relative;">
+                                <div class="relative-container">
                                     <textarea name="investigation_summary" class="mic-input" id="investigation_summary"></textarea>
-                                    <button class="mic-btn" type="button">
-                                        <i class="fas fa-microphone"></i>
-                                    </button>
+                                    @component('frontend.forms.language-model')
+                                            @endcomponent
                                 </div>
                             </div>
                            </div>
@@ -871,14 +788,17 @@ $users = DB::table('users')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="cft_comments_new">Final Comments</label>
-                                    <div style="position:relative;">
+                                    <div class="relative-container">
                                         <textarea name="cft_comments_new" id="cft_comments_new" class="mic-input"></textarea>
-                                        <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
-                                        </button>
+                                         @component('frontend.forms.language-model')
+                                            @endcomponent
                                     </div>
                                 </div>
                             </div>
+                          
+                      
+
+                            
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments">Final Attachment</label>
@@ -1320,70 +1240,7 @@ $users = DB::table('users')->get();
     });
 </script>
 
-// <style>
-//     .mic-btn {
-//         background: none;
-//         border: none;
-//         outline: none;
-//         cursor: pointer;
-//         position: absolute;
-//         right: 10px; /* Position the button at the right corner */
-//         top: 50%; /* Center the button vertically */
-//         transform: translateY(-50%); /* Adjust for the button's height */
-//         box-shadow: none; /* Remove shadow */
-//     }
-//     .mic-btn i {
-//         color: black; /* Set the color of the icon */
-//         box-shadow: none; /* Remove shadow */
-//     }
-//     .mic-btn:focus,
-//     .mic-btn:hover,
-//     .mic-btn:active {
-//         box-shadow: none; /* Remove shadow on hover/focus/active */
-//     }
 
-//     .relative-container {
-//         position: relative;
-//     }
-
-//     .relative-container textarea {
-//         width: 100%;
-//         padding-right: 40px; /* Ensure the text does not overlap the button */
-//     }
-// </style>
-
-// <script>
-//     document.addEventListener('DOMContentLoaded', function() {
-//         // Initialize speech recognition
-//         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-//         recognition.continuous = false;
-//         recognition.interimResults = false;
-//         recognition.lang = 'en-US';
-
-//         // Function to start speech recognition and append result to the target element
-//         function startRecognition(targetElement) {
-//             recognition.start();
-//             recognition.onresult = function(event) {
-//                 const transcript = event.results[0][0].transcript;
-//                 targetElement.value += transcript;
-//             };
-//             recognition.onerror = function(event) {
-//                 console.error(event.error);
-//             };
-//         }
-
-//         // Event delegation for all mic buttons
-//         document.addEventListener('click', function(event) {
-//             if (event.target.closest('.mic-btn')) {
-//                 const button = event.target.closest('.mic-btn');
-//                 const inputField = button.previousElementSibling;
-//                 if (inputField && inputField.classList.contains('mic-input')) {
-//                     startRecognition(inputField);
-//                 }
-//             }
-//         });
-//     });
-// </script>
 
 
 @endsection

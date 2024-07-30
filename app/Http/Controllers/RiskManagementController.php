@@ -446,7 +446,22 @@ class RiskManagementController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-
+        if (!empty($data->record)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = str_pad($data->record, 4, '0', STR_PAD_LEFT) ;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_from = "Initiation";
+            $history->change_to = "Opened";
+            $history->action_name = "Create";
+            $history->save();
+        }
         if (!empty($data->assign_to)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
@@ -1547,7 +1562,7 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Reference Record';
             $history->previous = "Null";
-            $history->current = $data->refrence_record;
+            $history->current = implode(',', $request->refrence_record);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

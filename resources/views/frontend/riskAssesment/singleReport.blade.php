@@ -226,14 +226,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">State/District</th>
-                        <td class="w-30">
-                            @if ($data->state)
-                                {{ $data->state }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -289,7 +282,7 @@
                         <th class="w-20">Department(s)</th>
                         <td class="w-80">
                             @if ($data->departments)
-                                {{ Helpers::getDepartmentNameWithString($data->departments) }}
+                                {{ $data->departments }}
                             @else
                                 Not Applicable
                             @endif
@@ -360,8 +353,8 @@
                     <tr>
                         <th class="w-20">Department(s)</th>
                         <td class="w-80">
-                            @if ($data->departments)
-                                {{ Helpers::getDepartmentNameWithString($data->departments) }}
+                            @if ($data->departments2)
+                                {{ $data->departments2 }}
                             @else
                                 Not Applicable
                             @endif
@@ -480,17 +473,17 @@
             <table>
                 <tr>
                     <th class="w-20">Scheduled Start Date</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         @if ($data->schedule_start_date1)
-                            {{ $data->schedule_start_date1 }}
+                            {{ Helpers::getdateFormat($data->schedule_start_date1) }}
                         @else
                             Not Applicable
                         @endif
                     </td>
                     <th class="w-20">Scheduled End Date</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         @if ($data->schedule_end_date1)
-                            {{ $data->schedule_end_date1 }}
+                            {{ Helpers::getdateFormat($data->schedule_end_date1) }}
                         @else
                             Not Applicable
                         @endif
@@ -1007,7 +1000,7 @@
                         <th class="w-20">Who Will Be</th>
                         <td class="w-80">
                             @if ($riskgrdwhat_who_where->who_will_be)
-                                {{ $riskgrdwhat_who_where->wh0_will_be }}
+                                {{ $riskgrdwhat_who_where->who_will_be }}
                             @else
                                 Not Applicable
                             @endif
@@ -1288,7 +1281,7 @@ Not Applicable
                         <th class="w-20">Reference Record</th>
                         <td class="w-80">
                             @if ($data->refrence_record)
-                                {{ Helpers::getDivisionName($data->refrence_record) }}/RA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}
+                                {{ $data->refrence_record }}
                             @else
                                 Not Applicable
                             @endif

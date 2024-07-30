@@ -153,7 +153,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Risk Assesment Audit Trial Report
+                    Risk Assesment Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">

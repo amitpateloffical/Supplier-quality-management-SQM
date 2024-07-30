@@ -145,93 +145,6 @@
                 display: none;
             }
         </style>
-        {{-- voice Command --}}
-
-        <style>
-            .mic-btn {
-                background: none;
-                border: none;
-                outline: none;
-                cursor: pointer;
-                position: absolute;
-                right: 10px;
-                top: 50%;
-                transform: translateY(-50%);
-                box-shadow: none;
-                color: black;
-                display: none;
-                /* Hide the button initially */
-            }
-
-            .relative-container textarea {
-                width: 100%;
-                padding-right: 40px;
-            }
-
-            .relative-container input:focus+.mic-btn {
-                display: inline-block;
-                /* Show the button when input is focused */
-            }
-
-            .mic-btn:focus,
-            .mic-btn:hover,
-            .mic-btn:active {
-                box-shadow: none;
-            }
-        </style>
-
-        <script>
-            < link rel = "stylesheet"
-            href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
-        </script>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
-                recognition.continuous = false;
-                recognition.interimResults = false;
-                recognition.lang = 'en-US';
-
-                function startRecognition(targetElement) {
-                    recognition.start();
-                    recognition.onresult = function(event) {
-                        const transcript = event.results[0][0].transcript;
-                        targetElement.value += transcript;
-                    };
-                    recognition.onerror = function(event) {
-                        console.error(event.error);
-                    };
-                }
-
-                document.addEventListener('click', function(event) {
-                    if (event.target.closest('.mic-btn')) {
-                        const button = event.target.closest('.mic-btn');
-                        const inputField = button.previousElementSibling;
-                        if (inputField && inputField.classList.contains('mic-input')) {
-                            startRecognition(inputField);
-                        }
-                    }
-                });
-
-                document.querySelectorAll('.mic-input').forEach(input => {
-                    input.addEventListener('focus', function() {
-                        const micBtn = this.nextElementSibling;
-                        if (micBtn && micBtn.classList.contains('mic-btn')) {
-                            micBtn.style.display = 'inline-block';
-                        }
-                    });
-
-                    input.addEventListener('blur', function() {
-                        const micBtn = this.nextElementSibling;
-                        if (micBtn && micBtn.classList.contains('mic-btn')) {
-                            setTimeout(() => {
-                                micBtn.style.display = 'none';
-                            }, 200); // Delay to prevent button from hiding immediately when clicked
-                        }
-                    });
-                });
-            });
-        </script>
 
         <div class="form-field-head">
 
@@ -434,12 +347,11 @@
                                             <label for="Short Description">Short Description<span
                                                     class="text-danger">*</span></label><span id="rchars">255</span>
                                             characters remaining
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <input class="mic-input" id="docname" type="text"
                                                     name="short_description" maxlength="255" required>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>
@@ -572,11 +484,10 @@
                                     <div class="col-6">
                                         <div class="group-input">
                                             <label for="Description">Risk/Opportunity Description</label>
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <textarea class="mic-input" name="description" id="description"></textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>
@@ -591,11 +502,10 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Risk/Opportunity Comments</label>
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <textarea class="mic-input" name="comments" id="comments"></textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>
@@ -902,25 +812,22 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Estimated Man-Hours">Estimated Man-Hours</label>
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <input class="mic-input" type="text" name="estimated_man_hours"
                                                     id="estimated_man_hours">
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
-
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Estimated Cost">Estimated Cost</label>
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <input class="mic-input" type="text" name="estimated_cost"
                                                     id="estimated_cost">
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>
@@ -992,11 +899,10 @@
                                     <div class="col-6">
                                         <div class="group-input">
                                             <label for="Justification / Rationale">Justification / Rationale</label>
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <textarea class="mic-input" name="justification" id="justification"></textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>
@@ -1226,11 +1132,10 @@
                                                         <tr style="background: #f4bb22">
                                                             <th style="width:150px;">Problem Statement :</th>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="why_problem_statement"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1292,11 +1197,10 @@
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="why_root_cause"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1330,135 +1234,120 @@
                                                         <tr>
                                                             <th style="background: #0039bd85">What</th>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="what_will_be"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="what_will_not_be"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="what_rationable"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Where</th>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="where_will_be"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="where_will_not_be"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="where_rationable"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">When</th>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="when_will_be"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="when_will_not_be"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="when_rationable"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Coverage</th>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="coverage_will_be"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="coverage_will_not_be"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="coverage_rationable"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Who</th>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="who_will_be"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="who_will_not_be"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div style="position: relative;">
+                                                                <div class="relative-container">
                                                                     <textarea class="mic-input" name="who_rationable"></textarea>
-                                                                    <button class="mic-btn" type="button">
-                                                                        <i class="fas fa-microphone"></i>
-                                                                    </button>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1469,24 +1358,20 @@
                                     </div>
                                     <div class="col-12 sub-head"></div>
                                     <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="root_cause_description">Root Cause Description</label>
-                                            <div style="position: relative;">
-                                                <textarea class="mic-input" name="root_cause_description"></textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
-                                            </div>
+                                        <label for="root_cause_description">Root Cause Description</label>
+                                        <div class="relative-container">
+                                            <textarea class="mic-input" name="root_cause_description"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="investigation_summary">Investigation Summary</label>
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <textarea class="mic-input" name="investigation_summary"></textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>
@@ -1562,12 +1447,11 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Residual Risk">Residual Risk</label>
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <input class="mic-input" type="text" name="residual_risk"
                                                     id="residual_risk">
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>
@@ -1621,13 +1505,11 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <textarea class="mic-input" name="comments2" id="comments2"></textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -1740,11 +1622,10 @@
                                         <div class="group-input" id="initiated_through_req">
                                             <label for="mitigation-plan">Mitigation Plan<span
                                                     class="text-danger d-none">*</span></label>
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <textarea class="mic-input" name="mitigation_plan"></textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>
@@ -1764,20 +1645,19 @@
                                             <label for="mitigation-status">Status of Mitigation</label>
                                             <select name="mitigation_status">
                                                 <option value="0">-- Select --</option>
-                                                <option value="green">Green Status</option>
-                                                <option value="amber">Amber Status</option>
-                                                <option value="red">Red Staus</option>
+                                                <option value="Green Status">Green Status</option>
+                                                <option value="Amber Status">Amber Status</option>
+                                                <option value="Red Status">Red Status</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="mitigation-status-comments">Mitigation Status Comments</label>
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <textarea class="mic-input" name="mitigation_status_comments"></textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>
@@ -1810,22 +1690,20 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="impact-analysis">Impact Analysis</label>
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <textarea class="mic-input" name="impact_analysis"></textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="risk-analysis">Risk Analysis</label>
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <textarea class="mic-input" name="risk_analysis"></textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>
@@ -1861,8 +1739,9 @@
                                             <select multiple id="reference_record" name="refrence_record[]">
 
                                                 @foreach ($old_record as $new)
-                                                    <option value="{{ $new->id }}">
-                                                        {{ Helpers::getDivisionName($new->division_id) }}/RA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                                    <option
+                                                        value="{{ Helpers::getDivisionName($new->division_id) . '/RA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                        {{ Helpers::getDivisionName($new->division_id) . '/RA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -1876,11 +1755,10 @@
                                             <label for="due_date_extension">Due Date Extension Justification</label>
                                             <div><small class="text-primary">Please Mention justification if due date is
                                                     crossed</small></div>
-                                            <div style="position: relative;">
+                                            <div class="relative-container">
                                                 <textarea class="mic-input" name="due_date_extension"></textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>

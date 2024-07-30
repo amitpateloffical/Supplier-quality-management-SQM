@@ -53,6 +53,8 @@
         top: 50%;
         transform: translateY(-50%);
         box-shadow: none;
+        opacity: 0;
+        transition: opacity 0.3s;
     }
 
     .mic-btn i,
@@ -76,6 +78,14 @@
     .relative-container input {
         width: 100%;
         padding-right: 40px;
+    }
+
+    .relative-container:hover .mic-btn {
+        opacity: 1;
+    }
+
+    .relative-container:hover .speak-btn {
+        opacity: 1;
     }
 </style>
 

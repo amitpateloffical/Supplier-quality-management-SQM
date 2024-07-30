@@ -190,7 +190,23 @@ class ActionItemController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-
+        if (!empty($openState->record)) {
+            $history = new ActionItemHistory();
+            $history->cc_id = $openState->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = str_pad($openState->record, 4, '0', STR_PAD_LEFT) ;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_from = "Initiation";
+            $history->change_to = "Opened";
+            $history->action_name = "Create";
+            $history->save();
+        }
+        
         if (!empty($openState->initiator_id)) {
             $history = new ActionItemHistory();
             $history->cc_id = $openState->id;
@@ -298,7 +314,7 @@ class ActionItemController extends Controller
             $history->cc_id =   $openState->id;
             $history->activity_type = 'HOD Persons';
             $history->previous = "Null";
-            $history->current =  implode(',', $request->hod_preson);
+            $history->current =  implode(', ', $request->hod_preson);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -553,7 +569,7 @@ class ActionItemController extends Controller
         $openState->assign_to = $request->assign_to;
         $openState->short_description = $request->short_description;
         $openState->Reference_Recores1 = implode(',', $request->related_records);
-        $openState->hod_preson =  implode(',', $request->hod_preson);
+        $openState->hod_preson =  implode(', ', $request->hod_preson);
         $openState->description = $request->description;
         $openState->departments = $request->departments;
         $openState->action_taken = $request->action_taken;

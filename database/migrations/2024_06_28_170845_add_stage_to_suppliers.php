@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('vendor_id')->nullable()->after('manufacturer_id');
 
             $table->integer('division_id')->nullable()->after('type');
-            $table->integer('stage')->nullable()->after('cancelled_comment');
+            $table->integer('stage')->nullable();
             $table->text('status')->nullable()->after('stage');
         });
     }

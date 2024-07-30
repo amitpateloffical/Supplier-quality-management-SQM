@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('suppliers', function (Blueprint $table) {
-
+            $table->longText('supplierJustification')->nullable();
         });
     }
 

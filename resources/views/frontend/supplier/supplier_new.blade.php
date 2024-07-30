@@ -1,5 +1,8 @@
 @extends('frontend.layout.main')
 @section('container')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 
 @php 
     $users = DB::table('users')->select('id', 'name')->get();
@@ -12,6 +15,22 @@
 
     header {
         display: none;
+    }
+    .custom-select{
+        border: 1px solid black !important;
+        height: 32px;
+        margin-top: -11px;
+    }
+    .custom-date-picker{
+        height:35px;
+        border: 1px solid black !important;
+        padding: 11px !important;
+    }
+    .custom-border{
+        border: 1px solid black !important;
+        /* padding: 10px;
+        margin-bottom: 10px;
+        margin-top: 10px; */
     }
 </style>
 
@@ -63,7 +82,7 @@
 
             <!-- Tab links -->
             <div class="cctab">
-                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Supplier/Manufacturer/Vendor</button>
+                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Request for Creation of New Manufacturer</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Supplier Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Score Card</button>
@@ -214,8 +233,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Department Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" readonly>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholer="Enter Initiator Department Code" readonly>
                                     </div>
                                 </div>
 
@@ -229,21 +247,21 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Name of Starting Material</label>
-                                        <input type="text" name="starting_material" id="starting_material">
+                                        <input type="text" name="starting_material" id="starting_material" placeholder="Enter Name of Starting Material">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Material Code</label>
-                                        <input type="text" name="material_code" id="material_code">
+                                        <input type="text" name="material_code" id="material_code" placeholder="Enter Material Code">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Pharmacopoeial Claim</label>
-                                        <input type="text" name="pharmacopoeial_claim" id="pharmacopoeial_claim">
+                                        <input type="text" name="pharmacopoeial_claim" id="pharmacopoeial_claim" placeholder="Enter Pharmacopoeial Claim">
                                     </div>
                                 </div>
 
@@ -276,8 +294,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Request For</label>
-                                        <select id="request_for" name="request_for">
-                                            <option value="">---- Select ----</option>
+                                        <select id="request_for" name="request_for[]" multiple >
                                             <option value="API">API</option>
                                             <option value="Excipient">Excipient</option>
                                             <option value="New Manufacturer">New Manufacturer</option>
@@ -290,8 +307,6 @@
                                             <option value="R&D development">R&D development</option>
                                             <option value="Site Transfer">Site Transfer</option>
                                             <option value="Alternate manufacturer">Alternate manufacturer</option>
-                                            <option value="Excipient">Excipient</option>
-                                            <option value="Excipient">Excipient</option>
                                         </select>
                                     </div>
                                 </div>
@@ -402,6 +417,53 @@
                                     </div>
                                 </div>
 
+                                <!-- To be filled by Purchase Department -->
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <div class="why-why-chart">
+                                        @php
+                                            $types = ['tse', 'residual_solvent','melamine','gmo','gluten','manufacturer_evaluation','who','gmp','ISO','manufacturing_license','CEP','risk_assessment','elemental_impurity','azido_impurities'];
+                                        @endphp
+
+                                        @foreach ($types as $type)
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 15%">Certificate Name</th>
+                                                    <th style="width: 20%">Attachment</th>
+                                                    <th style="width: 15%">Issue Date</th>
+                                                    <th style="width: 15%">Expiry Date</th>
+                                                    <th>Remark</th>
+                                                </tr>
+                                            </thead>
+                                                <tbody id="{{ $type }}_rows">
+                                                    <tr>
+                                                        <td>
+                                                            {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
+                                                            <!-- <span style="font-size: 16px;" onclick="addRow('{{ $type }}')">+</span> -->
+                                                            <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
+                                                        </td>
+                                                        <td>
+                                                            <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" name="certificate_issue_{{ $type }}[]" class="custom-border">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" name="certificate_expiry_{{ $type }}[]" class="custom-border">
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="{{ $type }}_remarks[]" class="custom-border"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Pre Purchase Sample Analysis Completed?</label>
@@ -449,21 +511,28 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Material Name</label>
-                                        <input type="text" name="materialName" id="materialName">
+                                        <input type="text" name="materialName" id="materialName" placeholder="Enter Material Name">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Name of the Manufacturer</label>
-                                        <input type="text" name="manufacturerNameNew" id="manufacturerNameNew">
+                                        <input type="text" name="manufacturerNameNew" id="manufacturerNameNew" placeholder="Enter Name of the Manufacturer">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Analyzed on Location</label>
-                                        <input type="text" name="analyzedLocation" id="analyzedLocation">
+                                        <label for="Initiator Group Code">Analyzed at Location</label>
+                                        <input type="text" name="analyzedLocation" id="analyzedLocation" placeholder="Enter Analyzed on Location">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Justification</label>
+                                        <textarea type="text" name="supplierJustification" id="supplierJustification" class=""></textarea>
                                     </div>
                                 </div>
 
@@ -584,17 +653,15 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td class="flex text-center">1.1</td>
+                                                        <td class="flex text-center">1</td>
                                                         <td>TSE/BSE</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <div class="group-input">
-                                                                    <select id="tse_bse" name="tse_bse">
-                                                                        <option value="">---- Select ----</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
-                                                                    </select>
-                                                                </div>
+                                                                <select class="custom-select" id="tse_bse" name="tse_bse">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -604,11 +671,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.2</td>
+                                                        <td class="flex text-center">2</td>
                                                         <td>Residual Solvent</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select id="residual_solvent" name="residual_solvent">
+                                                                <select class="custom-select" id="residual_solvent" name="residual_solvent">
                                                                     <option value="">---- Select ----</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -622,11 +689,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.3</td>
+                                                        <td class="flex text-center">3</td>
                                                         <td>GMO</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select id="gmo" name="gmo">
+                                                                <select class="custom-select" id="gmo" name="gmo">
                                                                     <option value="">---- Select ----</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -640,11 +707,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.4</td>
+                                                        <td class="flex text-center">4</td>
                                                         <td>Melamine</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select id="melamine" name="melamine">
+                                                                <select class="custom-select" id="melamine" name="melamine">
                                                                     <option value="">---- Select ----</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -658,11 +725,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.5</td>
+                                                        <td class="flex text-center">5</td>
                                                         <td>Gluten</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select id="gluten" name="gluten">
+                                                                <select class="custom-select" id="gluten" name="gluten">
                                                                     <option value="">---- Select ----</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -676,11 +743,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.6</td>
+                                                        <td class="flex text-center">6</td>
                                                         <td>Nitrosamine</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select id="nitrosamine" name="nitrosamine">
+                                                                <select class="custom-select" id="nitrosamine" name="nitrosamine">
                                                                     <option value="">---- Select ----</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -694,11 +761,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.7</td>
+                                                        <td class="flex text-center">7</td>
                                                         <td>WHO</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select id="who" name="who">
+                                                                <select class="custom-select" id="who" name="who">
                                                                     <option value="">---- Select ----</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -712,11 +779,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.8</td>
+                                                        <td class="flex text-center">8</td>
                                                         <td>GMP</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select id="gmp" name="gmp">
+                                                                <select class="custom-select" id="gmp" name="gmp">
                                                                     <option value="">---- Select ----</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -730,11 +797,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.9</td>
+                                                        <td class="flex text-center">9</td>
                                                         <td>ISO Cerificates</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select id="iso_certificate" name="iso_certificate">
+                                                                <select class="custom-select" id="iso_certificate" name="iso_certificate">
                                                                     <option value="">---- Select ----</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -748,11 +815,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.10</td>
+                                                        <td class="flex text-center">10</td>
                                                         <td>Manufacturing License</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select id="manufacturing_license" name="manufacturing_license">
+                                                                <select class="custom-select" id="manufacturing_license" name="manufacturing_license">
                                                                     <option value="">---- Select ----</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -766,11 +833,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.11</td>
+                                                        <td class="flex text-center">11</td>
                                                         <td>CEP</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select id="cep" name="cep">
+                                                                <select class="custom-select" id="cep" name="cep">
                                                                     <option value="">---- Select ----</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -784,11 +851,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.12</td>
+                                                        <td class="flex text-center">12</td>
                                                         <td>MSDS</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select id="msds" name="msds">
+                                                                <select class="custom-select" id="msds" name="msds">
                                                                     <option value="">---- Select ----</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -802,11 +869,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">13</td>
                                                         <td>Elemental Impurities</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select id="elemental_impurities" name="elemental_impurities">
+                                                                <select class="custom-select" id="elemental_impurities" name="elemental_impurities">
                                                                     <option value="">---- Select ----</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -820,11 +887,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.14</td>
+                                                        <td class="flex text-center">14</td>
                                                         <td>Assessment/Declaration of Azido Impurities as Applicable</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select id="declaration" name="declaration">
+                                                                <select class="custom-select" id="declaration" name="declaration">
                                                                     <option value="">---- Select ----</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -2141,7 +2208,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#supplier-product, #ppap-elements, #supplier-services, #other-products, #manufacture-sites'
+            ele: '#supplier-product, #ppap-elements, #supplier-services, #other-products, #manufacture-sites, #request_for'
         });
 
         function openCity(evt, cityName) {
@@ -2212,4 +2279,44 @@
             document.getElementById('initiator_group_code').value = selectedValue;
         });
     </script>
+
+    <script>
+        flatpickr("#datepicker", {
+            dateFormat: "d-M-Y", // Display format
+            altFormat: "d-M-Y", // Format to show in the input field
+            altInput: true,
+            altInputClass: "form-control",
+            onChange: function(selectedDates, dateStr, instance) {
+                instance._input.value = dateStr; // Ensure the displayed format is stored
+            }
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function addRow(type) {
+                // console.log(`Adding row for type: ${type}`);
+                let tbody = document.getElementById(`${type}_rows`);
+                let newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+                    <td><input type="file" name="${type}_attachment[]" class="custom-border"></td>
+                    <td><input type="date" name="certificate_issue_${type}[]" class="custom-border"></td>
+                    <td><input type="date" name="certificate_expiry_${type}[]" class="custom-border"></td>
+                    <td><textarea name="${type}_remarks[]" class="custom-border"></textarea></td>
+                `;
+                tbody.appendChild(newRow);
+                // console.log(`Row added for type: ${type}`);
+            }
+
+            window.addRow = addRow;
+        });
+        function removeRow(button) {
+            let row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+
+
 @endsection

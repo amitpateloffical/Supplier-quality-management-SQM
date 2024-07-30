@@ -1,6 +1,5 @@
 @extends('frontend.layout.main')
 @section('container')
-@php $formStatus = $data->stage;  @endphp
     <style>
         textarea.note-codable {
             display: none !important;
@@ -9,11 +8,51 @@
         header {
             display: none;
         }
-       
+        #start-record-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    #start-record-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    #start-record-btn:focus,
+    #start-record-btn:hover,
+    #start-record-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
     </style>
-     
+    <script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+        </script>
      <script>
-              
+       
+        document.addEventListener('DOMContentLoaded', function() {
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        const docnameInput = document.getElementById('docname');
+        const startRecordBtn = document.getElementById('start-record-btn');
+
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        startRecordBtn.addEventListener('click', function() {
+            recognition.start();
+        });
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            docnameInput.value += transcript;
+        };
+
+        recognition.onerror = function(event) {
+            console.error(event.error);
+        };
+    });
+
         function addFishBone(top, bottom) {
             let mainBlock = document.querySelector('.fishbone-ishikawa-diagram');
             let topBlock = mainBlock.querySelector(top)
@@ -311,7 +350,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group Code">Initiator Group Code</label>
-                                            <input type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
+                                            <input type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : ''}}
                                                 value="{{ $data->initiator_Group}}" id="initiator_group_code"
                                                 readonly>
                                         </div>
@@ -355,17 +394,17 @@
                                                             class="text-danger">*</span></label><span id="rchars">255</span>
                                                     characters remaining
                                                     
-                                                    <div class="relative-container">
-                                                        <textarea name="short_description" class="mic-input"  id="docname" type="text"    maxlength="255" required  {{$data->stage == 0 || $data->stage == 4 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
-                                                        @component('frontend.forms.language-model')
-                                                        @endcomponent
-                                                    
-                                                    </div>
+                                                    <div style="position:relative;">
+                                                        <textarea name="short_description" class="mic-input"  id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 4 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                   
+                                                </div>
                                                 </div>
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
             
                                             </div>
-
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="severity-level">Severity Level</label>
@@ -395,7 +434,7 @@
                                  <!-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Initiator Group</b></label>
-                                            <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                            <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                 id="initiator-group">
                                                 <option value="CQA"
                                                     @if ($data->initiatorGroup == 'CQA') selected @endif>Corporate
@@ -456,7 +495,7 @@
                                         <div class="group-input">
                                             <label for="Initiator Group Code">Initiator Group Code</label>
                                             <input type="text" name="initiator_group_code"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                 value="{{ $data->initiator_Group }}" disabled>
                                         </div>
                                     </div>
@@ -477,7 +516,7 @@
                                             <label for="Short Description">Short Description <span
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please mention brief summary</small></div>
-                                            <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                            <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                         </div>
                                     </div> -->
                                     <div class="row">
@@ -510,10 +549,11 @@
                                                 <div class="col-lg-6">
                                                     <div class="group-input" id="initiated_through_req">
                                                         <label for="initiated_if_other">Others<span class="text-danger d-none">*</span></label>
-                                                        <div class="relative-container">
+                                                        <div style="position:relative;">
                                                             <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} name="initiated_if_other" id="initiated_if_other">{{$data->initiated_if_other}}</textarea>
-                                                            @component('frontend.forms.language-model')
-                                                            @endcomponent
+                                                            <button class="mic-btn" type="button" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                <i class="fas fa-microphone"></i>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -596,11 +636,12 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="description">Description</label>
-                                            <div class="relative-container">
-                                                    <textarea class="mic-input" name="description"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->description }}</textarea>
-                                                    @component('frontend.forms.language-model')
-                                                    @endcomponent
-                                            </div>
+                                            <div style="position:relative;">
+                                            <textarea class="mic-input" name="description"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->description }}</textarea>
+                                            <button class="mic-btn" type="button">
+                                              <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>
                                         </div>
                                     </div>
                            
@@ -608,10 +649,12 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="comments">Comments</label>
-                                                <div class="relative-container">
+                                                <div style="position:relative;">
                                                     <textarea name="comments" class="mic-input" id="comments" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{$data->comments}}</textarea>
-                                                   @component('frontend.forms.language-model')
-                                                    @endcomponent
+                                                   
+                                                    <button class="mic-btn" type="button">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
                                                    
                                                 </div>
                                             </div>
@@ -655,7 +698,7 @@
                      </div>
 
                                                 <div class="button-block">
-                                                    <button type="submit" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id="ChangesaveButton" class="saveButton">Save</button>
+                                                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                                     <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                                                 </div>
@@ -707,7 +750,7 @@
                                         <div class="group-input">
                                             <label for="root_cause">
                                                 Root Cause
-                                                <button type="button" onclick="add4Input_case('root-cause-first-table')"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                <button type="button" onclick="add4Input_case('root-cause-first-table')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                             </label>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered" id="root-cause-first-table">
@@ -870,7 +913,7 @@
                                                                 <td>
                                                                     <input name="mitigation_proposal[]" type="text" value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}" >
                                                                 </td>
-                                                                <td><button class="removeBtnRCA">Remove</button></td>
+                                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                                 
                                                             </tr>    
                                                             @endforeach
@@ -972,12 +1015,10 @@
                                             <div class="why-why-chart">
                                                 <table class="table table-bordered">
                                                     <tbody>
-                                                        <tr style="background: #f4bb22" >
+                                                        <tr style="background: #f4bb22">
                                                             <th style="width:150px;">Problem Statement</th>
-                                                              <td class="relative-container">
+                                                              <td>
                                                             <textarea name="why_problem_statement">{{ $data->why_problem_statement }}</textarea>
-                                                            @component('frontend.forms.language-model')
-                                                            @endcomponent
                                                         </td>
                                                             
                                                         </tr>
@@ -987,13 +1028,11 @@
                                                                     onclick="addWhyField('why_1_block', 'why_1[]')"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</span>
                                                             </th>
                                                             <td>
-                                                                <div class="why_1_block  relative-container"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                <div class="why_1_block"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                                     @if (!empty($data->why_1))
                                                                         @foreach (unserialize($data->why_1) as $key => $measure)
                                                                             <textarea name="why_1[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
-                                                                            @component('frontend.forms.language-model')
-                                                                            @endcomponent
-                                                                            @endforeach
+                                                                        @endforeach
                                                                     @endif
 
                                                                 </div>
@@ -1005,13 +1044,11 @@
                                                                     onclick="addWhyField('why_2_block', 'why_2[]')"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : ''}}>+</span>
                                                             </th>
                                                             <td>
-                                                                <div class="why_2_block  relative-container">
+                                                                <div class="why_2_block">
                                                                     @if (!empty($data->why_2))
                                                                         @foreach (unserialize($data->why_2) as $key => $measure)
                                                                             <textarea name="why_2[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
-                                                                            @component('frontend.forms.language-model')
-                                                                            @endcomponent
-                                                                            @endforeach
+                                                                        @endforeach
                                                                     @endif
                                                                 </div>
                                                             </td>
@@ -1022,12 +1059,10 @@
                                                                     onclick="addWhyField('why_3_block', 'why_3[]')"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</span>
                                                             </th>
                                                             <td>
-                                                                <div class="why_3_block relative-container">
+                                                                <div class="why_3_block">
                                                                     @if (!empty($data->why_3))
                                                                         @foreach (unserialize($data->why_3) as $key => $measure)
                                                                             <textarea name="why_3[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
-                                                                            @component('frontend.forms.language-model')
-                                                                            @endcomponent
                                                                         @endforeach
                                                                     @endif
                                                                 </div>
@@ -1039,12 +1074,10 @@
                                                                     onclick="addWhyField('why_4_block', 'why_4[]')"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</span>
                                                             </th>
                                                             <td>
-                                                                <div class="why_4_block relative-container">
+                                                                <div class="why_4_block">
                                                                     @if (!empty($data->why_4))
                                                                         @foreach (unserialize($data->why_4) as $key => $measure)
                                                                             <textarea name="why_4[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
-                                                                            @component('frontend.forms.language-model')
-                                                                            @endcomponent
                                                                         @endforeach
                                                                     @endif
                                                                 </div>
@@ -1056,12 +1089,10 @@
                                                                     onclick="addWhyField('why_5_block', 'why_5[]')"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</span>
                                                             </th>
                                                             <td>
-                                                                <div class="why_5_block relative-container">
+                                                                <div class="why_5_block">
                                                                     @if (!empty($data->why_5))
                                                                         @foreach (unserialize($data->why_5) as $key => $measure)
                                                                             <textarea name="why_5[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
-                                                                            @component('frontend.forms.language-model')
-                                                                            @endcomponent
                                                                         @endforeach
                                                                     @endif
                                                                 </div>
@@ -1069,11 +1100,8 @@
                                                         </tr>
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
-                                                            <td  class="relative-container">
-                                                           
+                                                            <td>
                                                                 <textarea name="why_root_cause"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->why_root_cause }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1191,98 +1219,62 @@
                                                     <tbody>
                                                         <tr>
                                                             <th style="background: #0039bd85">What</th>
-                                                            <td class="relative-container">
+                                                            <td>
                                                                 <textarea name="what_will_be" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->what_will_be }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
                                                             </td>
-                                                            <td class="relative-container">
+                                                            <td>
                                                                 <textarea name="what_will_not_be" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->what_will_not_be }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
                                                             </td>
-                                                            <td class="relative-container">
+                                                            <td>
                                                                 <textarea name="what_rationable"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->what_rationable }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Where</th>
-                                                            <td class="relative-container">
+                                                            <td>
                                                                 <textarea name="where_will_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->where_will_be }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
                                                             </td>
-                                                            <td class="relative-container">
+                                                            <td>
                                                                 <textarea name="where_will_not_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->where_will_not_be }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
                                                             </td>
-                                                            <td class="relative-container">
+                                                            <td>
                                                                 <textarea name="where_rationable"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->where_rationable }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">When</th>
-                                                            <td class="relative-container">
+                                                            <td>
                                                                 <textarea name="when_will_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->when_will_be }}</textarea>
-                                                                
-                                                                @component('frontend.forms.language-model')
-                                                              @endcomponent
-                                                           
                                                             </td>
-                                                            <td class="relative-container">
+                                                            <td>
                                                                 <textarea name="when_will_not_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->when_will_not_be }}</textarea>
-                                                                
-                                                                @component('frontend.forms.language-model')
-                                                                 @endcomponent
                                                             </td>
-                                                            <td class="relative-container">
+                                                            <td>
                                                                 <textarea name="when_rationable"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->when_rationable }}</textarea>
-                                                                
-                                                                @component('frontend.forms.language-model')
-                                                              @endcomponent
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Coverage</th>
-                                                            <td class="relative-container">
+                                                            <td>
                                                                 <textarea name="coverage_will_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->coverage_will_be }}</textarea>
-                                                               
-                                                                @component('frontend.forms.language-model')
-                                                                 @endcomponent
                                                             </td>
-                                                            <td class="relative-container">
+                                                            <td>
                                                                 <textarea name="coverage_will_not_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->coverage_will_not_be }}</textarea>
-                                                                
-                                                                 @component('frontend.forms.language-model')
-                                                                    @endcomponent
                                                             </td>
-                                                            <td class="relative-container">
+                                                            <td>
                                                                 <textarea name="coverage_rationable"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->coverage_rationable }}</textarea>
-                                                           
-                                                           @component('frontend.forms.language-model')
-                                                              @endcomponent </td>
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Who</th>
-                                                            <td   class="relative-container">
+                                                            <td>
                                                                 <textarea name="who_will_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->who_will_be }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
                                                             </td>
-                                                            <td  class="relative-container">
+                                                            <td>
                                                                 <textarea name="who_will_not_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->who_will_not_be }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                              @endcomponent
                                                             </td>
-                                                            <td  class="relative-container">
+                                                            <td>
                                                                 <textarea name="who_rationable"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->who_rationable }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1294,20 +1286,22 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="root_cause_description">Root Cause Description</label>
-                                            <div class="relative-container">
-                                                <textarea name="root_cause_description"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} class="mic-input"  id="root_cause_description">{{ $data->root_cause_description }}</textarea>
-                                                @component('frontend.forms.language-model')
-                                                @endcomponent
+                                            <div style="position:relative;">
+                                                <textarea name="root_cause_description" class="mic-input" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}  id="root_cause_description">{{ $data->root_cause_description }}</textarea>
+                                                <button class="mic-btn" type="button" id="start-record-btn"  class="mic-btn">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
                                             </div>
                                         </div>
                                    </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="investigation_summary">Investigation Summary</label>
-                                            <div class="relative-container">
-                                                <textarea name="investigation_summary" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} class="mic-input" id="investigation_summary">{{ $data->investigation_summary }}</textarea>
-                                                @component('frontend.forms.language-model')
-                                                @endcomponent
+                                            <div style="position:relative;">
+                                                <textarea name="investigation_summary" class="mic-input" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id="investigation_summary">{{ $data->investigation_summary }}</textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -1380,10 +1374,11 @@
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="cft_comments_new">Final Comments</label>
-                                            <div class="relative-container">
-                                                <textarea name="cft_comments_new" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id="cft_comments_new" class="mic-input">{{ $data->cft_comments_new }}</textarea>
-                                                @component('frontend.forms.language-model')
-                                               @endcomponent
+                                            <div style="position:relative;">
+                                                <textarea name="cft_comments_new" id="cft_comments_new" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} class="mic-input">{{ $data->cft_comments_new }}</textarea>
+                                                <button class="mic-btn" type="button">
+                                                    <i class="fas fa-microphone"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -1400,7 +1395,7 @@
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                            <a  type="button" class="remove-file"  data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                     @endforeach
                                                    {{-- @endif --}}
@@ -1628,10 +1623,10 @@
                                 </div>
                                 <div class="button-block">
                                     <!-- <button type="submit" class="saveButton"
-                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button> -->
+                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button> -->
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <!-- <button type="submit"
-                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button> -->
+                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Submit</button> -->
                                     <button type="button"> <a class="text-white"
                                             href="{{ url('rcms/qms-dashboard') }}">
                                             Exit </a> </button>
@@ -2021,9 +2016,93 @@ function add4Input_case(tableId) {
             $('#rchars').text(textlen);});
     </script>
     
-
-
+{{-- voice Command --}}
     
-   
+<style>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+            color: black;
+            display: none;
+            /* Hide the button initially */
+        }
+
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .relative-container input:focus+.mic-btn {
+            display: inline-block;
+            /* Show the button when input is focused */
+        }
+
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none;
+        }
+    </style>
+
+    <script>
+        < link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
+
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
+                }
+            });
+
+            document.querySelectorAll('.mic-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        micBtn.style.display = 'inline-block';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        setTimeout(() => {
+                            micBtn.style.display = 'none';
+                        }, 200); // Delay to prevent button from hiding immediately when clicked
+                    }
+                });
+            });
+        });
+    </script>
+
     @endsection
 

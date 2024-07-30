@@ -67,7 +67,7 @@
         #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(1) {
             border-radius: 20px 0px 0px 20px;
         }
-        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(8) {
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(14) {
             border-radius: 0px 20px 20px 0px;
         }
     </style>
@@ -321,50 +321,112 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Need for Sourcing of Starting Material
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Approved By Contract Giver
+                            </button>
+                            @if(!empty($data->approvedBy_contract_giver_by))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Link Manufacturer Code to Material Code through MPN in SAP
+                                </button>
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Initiate Periodic Revaluation
+                                </button>
+                            @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Request Justified
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request Not Justified
                             </button>
                         @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-supplier-approve">
-                                CQA Review Completed
-                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Pre-Purchase Sample Required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pendingCQAReview-modal">
+                                Pre-Purchase Sample Not Required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
                             </button>
                         @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToPendingSupplierAudit">
-                                Purchase Sample Request Initiated
-                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Purchase Sample Request Initiated & Acknowledgement By Purchase Department
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
                             </button>
                         @elseif($data->stage == 5 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#supplierApprovedToObselete">
-                               Purchase Sample Analysis Satisfactory
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Purchase Sample Analysis Satisfactory
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToPendingSupplierAudit">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Purchase Sample Analysis Not Satisfactory
                             </button>
                         @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#supplierApprovedToObselete">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 F&D Review Completed
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToPendingSupplierAudit">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
                             </button>
                         @elseif($data->stage == 7 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#supplierApprovedToObselete">
-                                CQA Final Review Completed
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Acknowledgement By Purchase Departament
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToPendingSupplierAudit">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
+                            </button>
+                        @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                All Requirements Fulfilled
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#manufacturer-reject-modal">
+                                All Requirements Not Fulfilled
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
+                                Request More Info
+                            </button>
+                        @elseif($data->stage == 10 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Risk Rating Observed as High/Medium 
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#risk-rating-low-modal">
+                                Risk Rating Observed as Low
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
+                                Request More Info
+                            </button>
+                        @elseif($data->stage == 11 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Manufacturer Audit Passed 
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
+                                Request More Info
+                            </button>
+                        @elseif($data->stage == 12 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Initiate Periodic Revaluation 
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">
+                                Link Manufacturer Code to Material Code through MPN in SAP
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
+                                Request More Info
+                            </button>
+                        @elseif($data->stage == 13 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Risk Rating Observed as High/Medium
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
+                                Risk Rating Observed as Low
+                            </button>
+                        @elseif($data->stage == 14 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
+                                Manufacturer Audit Failed
                             </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
@@ -385,21 +447,21 @@
                             @endif
     
                             @if ($data->stage >= 2)
-                                <div class="active">Pending Initiating Department Update </div>
+                                <div class="active">Pending Initiating Department Update</div>
                             @else
                                 <div class="">Pending Initiating Department Update</div>
                             @endif
     
                             @if ($data->stage >= 3)
-                                <div class="active">Pending Update FROM CQ</div>
+                                <div class="active">Pending Update FROM CQA</div>
                             @else
-                                <div class="">Pending Update FROM CQ</div>
+                                <div class="">Pending Update FROM CQA</div>
                             @endif
     
                             @if ($data->stage >= 4)
-                                <div class="active">Pending Purchase Sample Reques</div>
+                                <div class="active">Pending Purchase Sample Request</div>
                             @else
-                                <div class="">Pending Purchase Sample Reques</div>
+                                <div class="">Pending Purchase Sample Request</div>
                             @endif
     
                             @if ($data->stage >= 5)
@@ -415,15 +477,51 @@
                             @endif
     
                             @if ($data->stage >= 7)
+                                <div class="active">Pending Acknowledgement By Purchase Department</div>
+                            @else
+                                <div class="">Pending Acknowledgement By Purchase Department</div>
+                            @endif
+    
+                            @if ($data->stage >= 8)
                                 <div class="active">Pending CQA Final Review</div>
                             @else
                                 <div class="">Pending CQA Final Review</div>
                             @endif
-    
-                            @if ($data->stage >= 8)
-                                <div class="active bg-danger"> Obsolete</div>
+
+                            @if ($data->stage >= 9)
+                                <div class="active bg-danger">Manufacturer Rejected</div>
                             @else
-                                <div class="">Obsolete</div>
+                                <div class="">Manufacturer Rejected</div>
+                            @endif
+
+                            @if ($data->stage >= 10)
+                                <div class="active" @if($data->stage == 9) style="display: none" @endif>Pending Manufacturer Risk Assessment</div>
+                            @else
+                                <div class="" @if($data->stage == 9) style="display: none" @endif>Pending Manufacturer Risk Assessment</div>
+                            @endif
+
+                            @if ($data->stage >= 11)
+                                <div class="active" @if($data->stage == 9) style="display: none" @endif >Pending Manufacturer Audit</div>
+                            @else
+                                <div class="" @if($data->stage == 9) style="display: none" @endif>Pending Manufacturer Audit</div>
+                            @endif
+
+                            @if ($data->stage >= 12)
+                                <div class="active" @if($data->stage == 9) style="display: none" @endif>Approved Manufacturer/Supplier</div>
+                            @else
+                                <div class="" @if($data->stage == 9) style="display: none" @endif>Approved Manufacturer/Supplier</div>
+                            @endif
+
+                            @if ($data->stage >= 13)
+                                <div class="active" @if($data->stage == 9) style="display: none" @endif>Pending Manufacturer Risk Assessment</div>
+                            @else
+                                <div class="" @if($data->stage == 9) style="display: none" @endif>Pending Manufacturer Risk Assessment</div>
+                            @endif
+
+                            @if ($data->stage >= 14)
+                                <div class="active" @if($data->stage == 9) style="display: none" @endif>Pending Manufacturer Audit</div>
+                            @else
+                                <div class="" @if($data->stage == 9) style="display: none" @endif>Pending Manufacturer Audit</div>
                             @endif
                         </div>
                     @endif
@@ -2624,7 +2722,7 @@
                         </div>
 
 
-                        <div class="col-lg-3">
+                        <!-- <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Suppplier Review By">Request Justified   By</label>
                                 <div class="static">{{$data->request_justified_by}}</div>
@@ -2736,7 +2834,7 @@
                                 <label for="CQA Final Review Completed Comment">CQA Final Review Completed Comment</label>
                                 <div class="static">{{$data->cqa_final_review_comment}}</div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -2781,120 +2879,6 @@
                 </div>
             </div>
 
-            <!-- Send To Obsolete from Supplier Approved Stage Modal -->
-            <div class="modal fade" id="supplierApprovedToObselete">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">E-Signature</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <form action="{{ url('rcms/supplier-approved-to-obselete', $data->id) }}" method="POST">
-                            @csrf
-                            <div class="modal-body">
-                                <div class="mb-3 text-justify">
-                                    Please select a meaning and a outcome for this task and enter your username
-                                    and password for this task. You are performing an electronic signature,
-                                    which is legally binding equivalent of a hand written signature.
-                                </div>
-                                <div class="group-input">
-                                    <label for="username">Username <span class="text-danger">*</span></label>
-                                    <input type="text" name="username" required class="form-control">
-                                </div>
-                                <div class="group-input mt-4">
-                                    <label for="password">Password <span class="text-danger">*</span></label>
-                                    <input type="password" name="password" required class="form-control">
-                                </div>
-                                <div class="group-input mt-4">
-                                    <label for="comment">Comment</label>
-                                    <input type="comment" name="comments" class="form-control">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button type="button" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Send to Pending Supplier Audit Stage Modal -->
-            <div class="modal fade" id="sendToPendingSupplierAudit">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">E-Signature</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <form action="{{ url('rcms/sendToPendingSupplierAudit', $data->id) }}" method="POST">
-                            @csrf
-                            <div class="modal-body">
-                                <div class="mb-3 text-justify">
-                                    Please select a meaning and a outcome for this task and enter your username
-                                    and password for this task. You are performing an electronic signature,
-                                    which is legally binding equivalent of a hand written signature.
-                                </div>
-                                <div class="group-input">
-                                    <label for="username">Username <span class="text-danger">*</span></label>
-                                    <input type="text" name="username" class="form-control" required>
-                                </div>
-                                <div class="group-input mt-4">
-                                    <label for="password">Password <span class="text-danger">*</span></label>
-                                    <input type="password" name="password" class="form-control" required>
-                                </div>
-                                <div class="group-input mt-4">
-                                    <label for="comment">Comment <span class="text-danger">*</span></label>
-                                    <input type="comment" name="comments" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button type="button" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Send to Supplier Approve Stage Modal -->
-            <div class="modal fade" id="send-to-supplier-approve">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">E-Signature</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <form action="{{ url('rcms/sendTo-supplier-approved', $data->id) }}" method="POST">
-                            @csrf
-                            <div class="modal-body">
-                                <div class="mb-3 text-justify">
-                                    Please select a meaning and a outcome for this task and enter your username
-                                    and password for this task. You are performing an electronic signature,
-                                    which is legally binding equivalent of a hand written signature.
-                                </div>
-                                <div class="group-input">
-                                    <label for="username">Username <span class="text-danger">*</span></label>
-                                    <input type="text" name="username" required class="form-control">
-                                </div>
-                                <div class="group-input mt-4">
-                                    <label for="password">Password <span class="text-danger">*</span></label>
-                                    <input type="password" name="password" required class="form-control">
-                                </div>
-                                <div class="group-input mt-4">
-                                    <label for="comment">Comment</label>
-                                    <input type="comment" name="comments" class="form-control">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button type="button" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
             <!-- Close Cancelled Stage Modal -->
             <div class="modal fade" id="cancel-modal">
                 <div class="modal-dialog modal-dialog-centered">
@@ -2904,6 +2888,158 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <form action="{{ url('rcms/supplier-close-cancelled', $data->id) }}" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input type="text" name="username" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input type="password" name="password" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="comment">Comment</label>
+                                    <input type="comment" name="comments">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backword Stage Modal -->
+            <div class="modal fade" id="backword-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ url('rcms/supplier-reject-stage', $data->id) }}" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input type="text" name="username" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input type="password" name="password" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
+                                    <input type="comment" name="comments" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Manufacturer Reject Modal -->
+             <div class="modal fade" id="manufacturer-reject-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ url('rcms/manufacturer-reject', $data->id) }}" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input type="text" name="username" required class="form-control">
+                                </div>
+                                <div class="group-input mt-3">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input type="password" name="password" required class="form-control">
+                                </div>
+                                <div class="group-input mt-3">
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
+                                    <input type="comment" name="comments" required class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Pending CQA Review Modal -->
+             <div class="modal fade" id="pendingCQAReview-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ url('rcms/sendTo-pendig-CQA', $data->id) }}" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input type="text" name="username" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input type="password" name="password" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="comment">Comment</label>
+                                    <input type="comment" name="comments">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk Rating Observed Low Modal -->
+            <div class="modal fade" id="risk-rating-low-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ url('rcms/risk-rating-observed-low', $data->id) }}" method="POST">
                             @csrf
                             <div class="modal-body">
                                 <div class="mb-3 text-justify">

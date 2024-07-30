@@ -3364,7 +3364,7 @@ class SupplierController extends Controller
                     //   }
                     $supplier->update();
 
-                    toastr()->success('Sent to HOD Review');
+                    toastr()->success('Sent to Pending Initiating Department Update');
                     return back();
             }
             if ($supplier->stage == 2) {
@@ -3412,23 +3412,23 @@ class SupplierController extends Controller
             }
             if ($supplier->stage == 3) {
                 $supplier->stage = "4";
-                $supplier->status = "Pending Purchase Sample Reques";
-                $supplier->cqa_review_by = Auth::user()->name;
-                $supplier->cqa_review_on = Carbon::now()->format('d-M-Y');
-                $supplier->cqa_review_comment = $request->comments;
+                $supplier->status = "Pending Purchase Sample Request";
+                $supplier->prepurchase_sample_by = Auth::user()->name;
+                $supplier->prepurchase_sample_on = Carbon::now()->format('d-M-Y');
+                $supplier->prepurchase_sample_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action = 'CQA Review Completed';
+                    $history->action = 'Pre-Purchase Sample Required';
                     $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Pending Purchase Sample Reques";
+                    $history->change_to =  "Pending Purchase Sample Request";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
@@ -3456,15 +3456,15 @@ class SupplierController extends Controller
             if ($supplier->stage == 4) {
                 $supplier->stage = "5";
                 $supplier->status = "Pending CQA Review After Purchase Sample Request";
-                $supplier->purchase_sample_initiated_by = Auth::user()->name;
-                $supplier->purchase_sample_initiated_on = Carbon::now()->format('d-M-Y');
-                $supplier->purchase_sample_initiated_comment = $request->comments;
+                $supplier->pendigPurchaseSampleRequested_by = Auth::user()->name;
+                $supplier->pendigPurchaseSampleRequested_on = Carbon::now()->format('d-M-Y');
+                $supplier->pendigPurchaseSampleRequested_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action = 'Purchase Sample Request Initiated';
+                    $history->action = 'Purchase Sample Request Initiated & Acknowledgement By PD';
                     $history->current = $supplier->submit_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
@@ -3499,9 +3499,9 @@ class SupplierController extends Controller
             if ($supplier->stage == 5) {
                 $supplier->stage = "6";
                 $supplier->status = "Pending F&D Review";
-                $supplier->purchase_sample_satisfactory_by = Auth::user()->name;
-                $supplier->purchase_sample_satisfactory_on = Carbon::now()->format('d-M-Y');
-                $supplier->purchase_sample_satisfactory_comment = $request->comments;
+                $supplier->purchaseSampleanalysis_by = Auth::user()->name;
+                $supplier->purchaseSampleanalysis_on = Carbon::now()->format('d-M-Y');
+                $supplier->purchaseSampleanalysis_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
@@ -3541,16 +3541,59 @@ class SupplierController extends Controller
             }
             if ($supplier->stage == 6) {
                 $supplier->stage = "7";
-                $supplier->status = "Pending CQA Final Review";
-                $supplier->FD_review_by = Auth::user()->name;
-                $supplier->FD_review_on = Carbon::now()->format('d-M-Y');
-                $supplier->FD_review_comment = $request->comments;
+                $supplier->status = "Pending Acknowledgement By Purchase Department";
+                $supplier->FdReviewCompleted_by = Auth::user()->name;
+                $supplier->FdReviewCompleted_on = Carbon::now()->format('d-M-Y');
+                $supplier->FdReviewCompleted_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action = 'F&D Review Completed';
+                    $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Acknowledgement By Purchase Department";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Pending CFT Review');
+                return back();
+            }
+            if ($supplier->stage == 7) {
+                $supplier->stage = "8";
+                $supplier->status = "Pending CQA Final Review";
+                $supplier->acknowledgByPD_by = Auth::user()->name;
+                $supplier->acknowledgByPD_on = Carbon::now()->format('d-M-Y');
+                $supplier->acknowledgByPD_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action = 'Acknowledgement By Purchase Department';
                     $history->current = $supplier->submit_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
@@ -3582,25 +3625,240 @@ class SupplierController extends Controller
                 toastr()->success('Pending CFT Review');
                 return back();
             }
-            if ($supplier->stage == 7) {
-                $supplier->stage = "8";
-                $supplier->status = "Closed - Done";
-                $supplier->cqa_final_review_by = Auth::user()->name;
-                $supplier->cqa_final_review_on = Carbon::now()->format('d-M-Y');
-                $supplier->cqa_final_review_comment = $request->comments;
+            if ($supplier->stage == 8) {
+                $supplier->stage = "10";
+                $supplier->status = "Pending Manufacturer Risk Assessment";
+                $supplier->requirementFullfilled_by = Auth::user()->name;
+                $supplier->requirementFullfilled_on = Carbon::now()->format('d-M-Y');
+                $supplier->requirementFullfilled_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action = 'CQA Final Review Completed';
+                    $history->action = 'All Requirements Fulfilled';
                     $history->current = $supplier->submit_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Closed - Done";
+                    $history->change_to = "Pending Manufacturer Risk Assessment";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Pending CFT Review');
+                return back();
+            }
+            if ($supplier->stage == 10) {
+                $supplier->stage = "11";
+                $supplier->status = "Pending Manufacturer Audit";
+                $supplier->riskRatingObservedAsHigh_by = Auth::user()->name;
+                $supplier->riskRatingObservedAsHigh_on = Carbon::now()->format('d-M-Y');
+                $supplier->riskRatingObservedAsHigh_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action = 'Risk Rating Observed as High/Medium';
+                    $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Manufacturer Audit";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Pending CFT Review');
+                return back();
+            }
+            if ($supplier->stage == 11) {
+                $supplier->stage = "12";
+                $supplier->status = "Approved Manufacturer/Supplier";
+                $supplier->manufacturerAuditPassed_by = Auth::user()->name;
+                $supplier->manufacturerAuditPassed_on = Carbon::now()->format('d-M-Y');
+                $supplier->manufacturerAuditPassed_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action = 'Manufacturer Audit Passed';
+                    $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Approved Manufacturer/Supplier";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Pending CFT Review');
+                return back();
+            }
+            if ($supplier->stage == 12) {
+                $supplier->stage = "13";
+                $supplier->status = "Pending Manufacturer Risk Assessment";
+                $supplier->periodicRevolutionInitiated_by = Auth::user()->name;
+                $supplier->periodicRevolutionInitiated_on = Carbon::now()->format('d-M-Y');
+                $supplier->periodicRevolutionInitiated_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action = 'Initiate Periodic Revaluation';
+                    $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Manufacturer Risk Assessment";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Pending CFT Review');
+                return back();
+            }
+            if ($supplier->stage == 13) {
+                $supplier->stage = "14";
+                $supplier->status = "Pending Manufacturer Audit";
+                $supplier->riskRatingObservedAsHighMedium_by = Auth::user()->name;
+                $supplier->riskRatingObservedAsHighMedium_on = Carbon::now()->format('d-M-Y');
+                $supplier->riskRatingObservedAsHighMedium_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action = 'Risk Rating Observed as High/Medium';
+                    $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Manufacturer Audit";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Pending CFT Review');
+                return back();
+            }
+            if ($supplier->stage == 14) {
+                $supplier->stage = "12";
+                $supplier->status = "Approved Manufacturer/Supplier";
+                $supplier->pendingManufacturerAuditFailed_by = Auth::user()->name;
+                $supplier->pendingManufacturerAuditFailed_on = Carbon::now()->format('d-M-Y');
+                $supplier->pendingManufacturerAuditFailed_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action = 'Manufacturer Audit Failed';
+                    $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Approved Manufacturer/Supplier";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
@@ -3637,25 +3895,25 @@ class SupplierController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $supplier = Supplier::find($id);
             $lastDocument = Supplier::find($id);
-            if ($supplier->stage == 7) {
-                    $supplier->stage = "6";
-                    $supplier->status = "Pending F&D Review";
-                    $supplier->requestedTo_pendig_review_by = Auth::user()->name;
-                    $supplier->requestedTo_pendig_review_on = Carbon::now()->format('d-M-Y');
-                    $supplier->requestedTo_pendig_review_comment = $request->comments;
+            if ($supplier->stage == 13) {
+                    $supplier->stage = "12";
+                    $supplier->status = "Approved Manufacturer/Supplier";
+                    $supplier->riskRatingObservedLow_by = Auth::user()->name;
+                    $supplier->riskRatingObservedLow_on = Carbon::now()->format('d-M-Y');
+                    $supplier->riskRatingObservedLow_comment = $request->comments;
 
                     $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action = 'Request More Info';
+                    $history->action = 'Risk Rating Observed as Low';
                     $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Pending F&D Review";
+                    $history->change_to =   "Approved Manufacturer/Supplier";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
@@ -3677,15 +3935,15 @@ class SupplierController extends Controller
                     //   }
                     $supplier->update();
 
-                    toastr()->success('Sent to HOD Review');
+                    toastr()->success('Sent to Approved Manufacturer/Supplier');
                     return back();
             }
-            if ($supplier->stage == 6) {
-                    $supplier->stage = "5";
-                    $supplier->status = "Pending CQA Review After Purchase Sample Request";
-                    $supplier->requestedTo_pendingCQA_by = Auth::user()->name;
-                    $supplier->requestedTo_pendingCQA_on = Carbon::now()->format('d-M-Y');
-                    $supplier->requestedTo_pendingCQA_comment = $request->comments;
+            if ($supplier->stage == 12) {
+                    $supplier->stage = "11";
+                    $supplier->status = "Pending Manufacturer Audit";
+                    $supplier->requestedToPendingManufacturerAudit_by = Auth::user()->name;
+                    $supplier->requestedToPendingManufacturerAudit_on = Carbon::now()->format('d-M-Y');
+                    $supplier->requestedToPendingManufacturerAudit_comment = $request->comments;
 
                     $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
@@ -3698,7 +3956,7 @@ class SupplierController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Pending CQA Review After Purchase Sample Request";
+                    $history->change_to = "Pending Manufacturer Audit";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
@@ -3720,15 +3978,15 @@ class SupplierController extends Controller
                     //   }
                     $supplier->update();
                     
-                    toastr()->success('Sent to Pending Supplier Audit');
+                    toastr()->success('Sent to Pending Manufacturer Audit');
                     return back();
             }
-            if ($supplier->stage == 5) {
-                $supplier->stage = "4";
-                $supplier->status = "Pending Purchase Sample Request";
-                $supplier->requestedTo_pendingPurchase_by = Auth::user()->name;
-                $supplier->requestedTo_pendingPurchase_on = Carbon::now()->format('d-M-Y');
-                $supplier->requestedTo_pendingPurchase_comment = $request->comments;
+            if ($supplier->stage == 11) {
+                $supplier->stage = "10";
+                $supplier->status = "Pending Manufacturer Risk Assessment";
+                $supplier->requestedToPendigManufacturerRA_by = Auth::user()->name;
+                $supplier->requestedToPendigManufacturerRA_on = Carbon::now()->format('d-M-Y');
+                $supplier->requestedToPendigManufacturerRA_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
@@ -3741,7 +3999,7 @@ class SupplierController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Pending Purchase Sample Request";
+                    $history->change_to = "Pending Manufacturer Risk Assessment";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
@@ -3763,15 +4021,230 @@ class SupplierController extends Controller
                 //   }
                 $supplier->update();
 
-                toastr()->success('Sent to Pending Rejction');
+                toastr()->success('Sent to Pending Manufacturer Risk Assessment');
+                return back();
+            }
+            if ($supplier->stage == 10) {
+                $supplier->stage = "8";
+                $supplier->status = "Pending CQA Final Review";
+                $supplier->requestedToPendingCQAFinal_by = Auth::user()->name;
+                $supplier->submitterequestedToPendingCQAFinal_on = Carbon::now()->format('d-M-Y');
+                $supplier->requestedToPendingCQAFinal_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action = 'Request More Info';
+                    $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending CQA Final Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Sent to Pending CQA Final Review');
+                return back();
+            }
+            if ($supplier->stage == 8) {
+                $supplier->stage = "7";
+                $supplier->status = "Pending Acknowledgement By Purchase Department";
+                $supplier->requestedToPD_by = Auth::user()->name;
+                $supplier->requestedToPD_on = Carbon::now()->format('d-M-Y');
+                $supplier->requestedToPD_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action = 'Request More Info';
+                    $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Acknowledgement By Purchase Department";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Sent to Pending Acknowledgement By Purchase Department');
+                return back();
+            }
+            if ($supplier->stage == 7) {
+                $supplier->stage = "6";
+                $supplier->status = "Pending F&D Review";
+                $supplier->reqquestedToFD_by = Auth::user()->name;
+                $supplier->reqquestedToFD_on = Carbon::now()->format('d-M-Y');
+                $supplier->reqquestedToFD_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action = 'Request More Info';
+                    $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending F&D Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Sent to Pending F&D Review');
+                return back();
+            }
+            if ($supplier->stage == 6) {
+                $supplier->stage = "5";
+                $supplier->status = "Pending CQA Review After Purchase Sample Request";
+                $supplier->requestedToCQA_by = Auth::user()->name;
+                $supplier->requestedToCQA_on = Carbon::now()->format('d-M-Y');
+                $supplier->requestedToCQA_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action = 'Request More Info';
+                    $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending CQA Review After Purchase Sample Request";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Sent to Pending CQA Review After Purchase Sample Request');
+                return back();
+            }
+            if ($supplier->stage == 5) {
+                $supplier->stage = "4";
+                $supplier->status = "Pending Purchase Sample Request";
+                $supplier->purchaseSampleanalysisNotSatisfactory_by = Auth::user()->name;
+                $supplier->purchaseSampleanalysisNotSatisfactory_on = Carbon::now()->format('d-M-Y');
+                $supplier->purchaseSampleanalysisNotSatisfactory_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action = 'Purchase Sample Analysis Not Satisfactory';
+                    $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Purchase Sample Request";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Sent to Pending Purchase Sample Request');
                 return back();
             }
             if ($supplier->stage == 4) {
                 $supplier->stage = "3";
-                $supplier->status = "Pending Update FROM CQ";
-                $supplier->requestedTo_pendingFromCQA_by = Auth::user()->name;
-                $supplier->requestedTo_pendingFromCQA_on = Carbon::now()->format('d-M-Y');
-                $supplier->requestedTo_pendingFromCQA_comment = $request->comments;
+                $supplier->status = "Pending Update FROM CQA";
+                $supplier->requestedToPendingCQA_by = Auth::user()->name;
+                $supplier->requestedToPendingCQA_on = Carbon::now()->format('d-M-Y');
+                $supplier->requestedToPendingCQA_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
@@ -3784,7 +4257,7 @@ class SupplierController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending Update FROM CQ";
+                    $history->change_to = "Pending Update FROM CQA";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
@@ -3806,15 +4279,15 @@ class SupplierController extends Controller
                 //   }
                 $supplier->update();
                 
-                toastr()->success('Pending CFT Review');
+                toastr()->success('Sent to Pending Update FROM CQA');
                 return back();
             }
             if ($supplier->stage == 3) {
                 $supplier->stage = "2";
-                $supplier->status = "Pending Initiating Department Updat";
-                $supplier->requestedTo_pendingInitiating_by = Auth::user()->name;
-                $supplier->requestedTo_pendingInitiating_on = Carbon::now()->format('d-M-Y');
-                $supplier->requestedTo_pendingInitiating_comment = $request->comments;
+                $supplier->status = "Pending Initiating Department Update";
+                $supplier->requestedTo_initiating_department_by = Auth::user()->name;
+                $supplier->requestedTo_initiating_department_on = Carbon::now()->format('d-M-Y');
+                $supplier->requestedTo_initiating_department_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
@@ -3827,7 +4300,7 @@ class SupplierController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending Initiating Department Updat";
+                    $history->change_to = "Pending Initiating Department Update";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
@@ -3849,21 +4322,21 @@ class SupplierController extends Controller
                 //   }
                 $supplier->update();
                 
-                toastr()->success('Pending CFT Review');
+                toastr()->success('Sent to Pending Initiating Department Update');
                 return back();
             }
             if ($supplier->stage == 2) {
                 $supplier->stage = "1";
                 $supplier->status = "Opened";
-                $supplier->requestedTo_opened_by = Auth::user()->name;
-                $supplier->requestedTo_opened_on = Carbon::now()->format('d-M-Y');
-                $supplier->requestedTo_opened_comment = $request->comments;
+                $supplier->request_justified_by = Auth::user()->name;
+                $supplier->request_justified_on = Carbon::now()->format('d-M-Y');
+                $supplier->request_justified_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action = 'Request More Info';
+                    $history->action = 'Request Not Justified';
                     $history->current = $supplier->submit_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
@@ -3892,7 +4365,7 @@ class SupplierController extends Controller
                 //   }
                 $supplier->update();
                 
-                toastr()->success('Pending CFT Review');
+                toastr()->success('Sent to Opened');
                 return back();
             }
             if ($supplier->stage == 1) {
@@ -3935,7 +4408,7 @@ class SupplierController extends Controller
                 //   }
                 $supplier->update();
                 
-                toastr()->success('Pending CFT Review');
+                toastr()->success('Sent to Closed - Cancelled');
                 return back();
             }
         } else {
@@ -3944,29 +4417,29 @@ class SupplierController extends Controller
         }
     }
 
-    public function sendToSupplierApproved(Request $request, $id){
+    public function sendToPendingCQAReview(Request $request, $id){
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $supplier = Supplier::find($id);
             $lastDocument = Supplier::find($id);
 
             $supplier->stage = "5";
-            $supplier->status = "Supplier Approved";
-            $supplier->supplier_approved_by = Auth::user()->name;
-            $supplier->supplier_approved_on = Carbon::now()->format('d-M-Y');
-            $supplier->supplier_approved_comment = $request->comments;
+            $supplier->status = "Pending CQA Review After Purchase Sample Request";
+            $supplier->prepurchase_sample_notRequired_by = Auth::user()->name;
+            $supplier->prepurchase_sample_notRequired_on = Carbon::now()->format('d-M-Y');
+            $supplier->prepurchase_sample_notRequired_comment = $request->comments;
         
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
             $history->activity_type = 'Activity Log';
             $history->previous = "";
-            $history->action = 'Audit Passed';
+            $history->action = 'Pre-Purchase Sample Not Required';
             $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Supplier Approved";
+            $history->change_to = "Pending CQA Review After Purchase Sample Request";
             $history->change_from = $lastDocument->status;        
             $history->save();
             $supplier->update();
@@ -3992,7 +4465,7 @@ class SupplierController extends Controller
             //     }
             // }
             $supplier->update();
-            toastr()->success('Document Sent');
+            toastr()->success('Sent to Pending CQA Review After Purchase Sample Request');
             return back();
 
         } else {
@@ -4001,30 +4474,29 @@ class SupplierController extends Controller
         }
     }
 
-    public function supplierApprovedToObselete(Request $request, $id)
-    {
+    public function sendToApprovedManufacturerFromPendingManufacturer(Request $request, $id){
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $supplier = Supplier::find($id);
             $lastDocument = Supplier::find($id);
 
-            $supplier->stage = "6";
-            $supplier->status = "Obselete";
-            $supplier->supplier_approved_to_obselete_by = Auth::user()->name;
-            $supplier->supplier_approved_to_obselete_on = Carbon::now()->format('d-M-Y');
-            $supplier->supplier_approved_to_obselete_comment = $request->comments;
+            $supplier->stage = "12";
+            $supplier->status = "Approved Manufacturer/Supplier";
+            $supplier->prepurchase_sample_notRequired_by = Auth::user()->name;
+            $supplier->prepurchase_sample_notRequired_on = Carbon::now()->format('d-M-Y');
+            $supplier->prepurchase_sample_notRequired_comment = $request->comments;
         
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
             $history->activity_type = 'Activity Log';
             $history->previous = "";
-            $history->action = 'Supplier Obsolete';
+            $history->action = 'Risk Rating Observed as Low';
             $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Obselete";
+            $history->change_to = "Approved Manufacturer/Supplier";
             $history->change_from = $lastDocument->status;        
             $history->save();
             $supplier->update();
@@ -4050,7 +4522,65 @@ class SupplierController extends Controller
             //     }
             // }
             $supplier->update();
-            toastr()->success('Document Sent');
+            toastr()->success('Sent to Approved Manufacturer/Supplier');
+            return back();
+
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+    public function manufacturerRejected(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $supplier = Supplier::find($id);
+            $lastDocument = Supplier::find($id);
+
+            $supplier->stage = "9";
+            $supplier->status = "Manufacturer Rejected";
+            $supplier->requiredNotFulfilled_by = Auth::user()->name;
+            $supplier->requiredNotFulfilled_on = Carbon::now()->format('d-M-Y');
+            $supplier->requiredNotFulfilled_comment = $request->comments;
+        
+            $history = new SupplierAuditTrail();
+            $history->supplier_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->previous = "";
+            $history->action = 'All Requirements Not Fulfilled';
+            $history->current = "";
+            $history->comment = $request->comments;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Manufacturer Rejected";
+            $history->change_from = $lastDocument->status;        
+            $history->save();
+            $supplier->update();
+
+            // foreach ($list as $u) {
+            //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
+            //         $email = Helpers::getInitiatorEmail($u->user_id);
+            //         if ($email !== null) {
+
+            //             try {
+            //                 Mail::send(
+            //                     'mail.view-mail',
+            //                     ['data' => $deviation],
+            //                     function ($message) use ($email) {
+            //                         $message->to($email)
+            //                             ->subject("Activity Performed By " . Auth::user()->name);
+            //                     }
+            //                 );
+            //             } catch (\Exception $e) {
+            //                 //log error
+            //             }
+            //         }
+            //     }
+            // }
+            $supplier->update();
+            toastr()->success('Sent to Manufacturer Rejected');
             return back();
 
         } else {
@@ -4110,102 +4640,6 @@ class SupplierController extends Controller
             toastr()->success('Document Sent');
             return back();
 
-        } else {
-            toastr()->error('E-signature Not match');
-            return back();
-        }
-    }
-
-    public function sendToPendingSupplierAudit(Request $request, $id){
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $supplier = Supplier::find($id);
-            $lastDocument = Supplier::find($id);
-            if ($supplier->stage == 4) {
-                    $supplier->stage = "3";
-                    $supplier->status = "Pending Supplier Audit";
-                    $supplier->reAudit_by = Auth::user()->name;
-                    $supplier->reAudit_on = Carbon::now()->format('d-M-Y');
-                    $supplier->reAudit_comment = $request->comments;
-
-                    $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action = 'Re-Audit';
-                    $history->current = "Not Applicable";
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Pending Supplier Audit";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    $history->save();
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $supplier],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
-                    $supplier->update();
-
-                    toastr()->success('Sent to HOD Review');
-                    return back();
-            }
-            if ($supplier->stage == 5) {
-                    $supplier->stage = "3";
-                    $supplier->status = "Pending Supplier Audit";
-                    $supplier->rejectedDueToQuality_by = Auth::user()->name;
-                    $supplier->rejectedDueToQuality_on = Carbon::now()->format('d-M-Y');
-                    $supplier->rejectedDueToQuality_comment = $request->comments;
-
-                    $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action = 'Reject Due To Quality Issues';
-                    $history->current = "Not Applicable";
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Pending Supplier Audit";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    $history->save();
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $supplier],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
-                    $supplier->update();
-                    
-                    toastr()->success('Sent to Pending Supplier Audit');
-                    return back();
-            }
         } else {
             toastr()->error('E-signature Not match');
             return back();

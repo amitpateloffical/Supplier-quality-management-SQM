@@ -101,13 +101,6 @@ return new class extends Migration
             $table->text('risk_raw_total')->nullable();
             $table->text('risk_assessment_total')->nullable();
 
-            $table->text('submitted_by')->nullable();
-            $table->text('submitted_on')->nullable();
-            $table->longText('submitted_comment')->nullable();
-            $table->text('cancelled_by')->nullable();
-            $table->text('cancelled_on')->nullable();
-            $table->longText('cancelled_comment')->nullable();
-
             $table->timestamps();
         });
     }

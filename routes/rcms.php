@@ -157,10 +157,11 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('supplier-audit-trail/{id}', [SupplierController::class, 'auditTrail']);
             Route::get('supplier-audit-trail-pdf/{id}', [SupplierController::class, 'auditTrailPdf']);
             Route::post('supplier-send-stage/{id}', [SupplierController::class, 'supplierSendStage'])->name('supplier-send-stage');
-            Route::post('sendTo-supplier-approved/{id}', [SupplierController::class, 'sendToSupplierApproved'])->name('sendTo-supplier-approved');
+            Route::post('supplier-reject-stage/{id}', [SupplierController::class, 'supplierStageReject'])->name('supplier-reject-stage');
+            Route::post('sendTo-pendig-CQA/{id}', [SupplierController::class, 'sendToPendingCQAReview'])->name('sendTo-pendig-CQA');
+            Route::post('manufacturer-reject/{id}', [SupplierController::class, 'manufacturerRejected'])->name('manufacturer-reject');
             Route::post('supplier-close-cancelled/{id}', [SupplierController::class, 'cancelDocument'])->name('supplier-close-cancelled');
-            Route::post('supplier-approved-to-obselete/{id}', [SupplierController::class, 'supplierApprovedToObselete'])->name('supplier-approved-to-obselete');
-            Route::post('sendToPendingSupplierAudit/{id}', [SupplierController::class, 'sendToPendingSupplierAudit'])->name('sendToPendingSupplierAudit');
+            Route::post('risk-rating-observed-low/{id}', [SupplierController::class, 'sendToApprovedManufacturerFromPendingManufacturer'])->name('risk-rating-observed-low');
             Route::post('supplier_child/{id}', [SupplierController::class, 'supplier_child'])->name('supplier_child_1');            
             Route::post('store_audit_review/{id}', [SupplierController::class, 'store_audit_review'])->name('store_audit_review');
 

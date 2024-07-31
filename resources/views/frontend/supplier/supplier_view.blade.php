@@ -881,7 +881,7 @@
 
                                 <!-- Certificate Checklist Data -->
 
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <div class="why-why-chart">
                                         @php
@@ -911,10 +911,10 @@
                                                                 <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
                                                                 <button type="button" onclick="removeRow(this)">Remove</button>
                                                             </td>
-                                                            <td style="display: flex">
+                                                            <td>
                                                                 @if ($grid->attachment)
-                                                                    <input type="file" name="{{ $type }}_attachment[]" class="custom-border" style="">
-                                                                    <span type="button" class="file-container text-dark" style=" margin-left: -197px; background-color: rgba(243, 242, 240, 0.56);">
+                                                                    <input type="file" name="{{ $type }}_attachment[]" class="custom-border" style="color: white;">
+                                                                    <span type="button" class="file-container text-dark mt-2" style="background-color: rgb(243, 242, 240);">
                                                                         <b>{{ $fileName }}</b>
                                                                         <a href="{{ asset('upload/' . $fileName) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file" data-file-name="{{ $fileName }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
@@ -938,6 +938,67 @@
                                             </table>
                                             
                                         @endforeach
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <input type="hidden" name="supplier_id" value="{{ $data->id }}">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <div class="why-why-chart">
+                                            @php
+                                                $types = ['tse', 'residual_solvent', 'melamine', 'gmo', 'gluten', 'manufacturer_evaluation', 'who', 'gmp', 'ISO', 'manufacturing_license', 'CEP', 'risk_assessment', 'elemental_impurity', 'azido_impurities'];
+                                            @endphp
+
+                                            @foreach ($types as $type)
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 15%">Certificate Name</th>
+                                                            <th style="width: 25%">Attachment</th>
+                                                            <th style="width: 15%">Issue Date</th>
+                                                            <th style="width: 15%">Expiry Date</th>
+                                                            <th>Remark</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="{{ $type }}_rows">
+                                                        @foreach ($supplierChecklist->where('doc_type', $type) as $grid)
+                                                            @php
+                                                                $filePath = $grid->attachment;
+                                                                $fileName = str_replace('upload\\', '', $filePath);
+                                                            @endphp
+                                                            <tr>
+                                                                <td>
+                                                                    {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
+                                                                    <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
+                                                                    <button type="button" onclick="removeRow(this)">Remove</button>
+                                                                </td>
+                                                                <td>
+                                                                    @if ($grid->attachment)
+                                                                        <input type="file" name="{{ $type }}_attachment[]" class="custom-border" style="color: white;">
+                                                                        <span type="button" class="file-container text-dark mt-2" style="background-color: rgb(243, 242, 240);">
+                                                                            <b>{{ $fileName }}</b>
+                                                                            <a href="{{ asset('upload/' . $fileName) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                            <a type="button" class="remove-file" data-file-name="{{ $fileName }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                        </span>
+                                                                    @else
+                                                                        <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    <input type="date" name="certificate_issue_{{ $type }}[]" value="{{ $grid->issue_date }}" class="custom-border">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="date" name="certificate_expiry_{{ $type }}[]" value="{{ $grid->expiry_date }}" class="custom-border">
+                                                                </td>
+                                                                <td>
+                                                                    <textarea name="{{ $type }}_remarks[]" class="custom-border">{{ $grid->remarks }}</textarea>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -1111,7 +1172,7 @@
 
                                 <!-- To be filled by CQA Department -->
 
-                                <div class="col-lg-6"></div>
+                                <!-- <div class="col-lg-6"></div> -->
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Sample Stand Approved?</label>
@@ -1146,13 +1207,11 @@
                                                         <td>TSE/BSE</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                {{-- <div class="group-input"> --}}
-                                                                    <select class="custom-select" id="tse_bse" name="tse_bse">
-                                                                        <option value="">---- Select ----</option>
-                                                                        <option value="Yes" @if($data->tse_bse == "Yes") selected @endif>Yes</option>
-                                                                        <option value="No" @if($data->tse_bse == "No") selected @endif>No</option>
-                                                                    </select>
-                                                                {{-- </div> --}}
+                                                                <select class="custom-select" id="tse_bse" name="tse_bse">
+                                                                    <option value="">---- Select ----</option>
+                                                                    <option value="Yes" @if($data->tse_bse == "Yes") selected @endif>Yes</option>
+                                                                    <option value="No" @if($data->tse_bse == "No") selected @endif>No</option>
+                                                                </select>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -3267,44 +3326,47 @@
         });
     </script>
 
-    <script>
-        function addRow(type) {
-            let tbody = document.getElementById(`${type}_rows`);
-            let newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>
-                <td><input type="file" name="${type}_attachment[]" class="custom-border"></td>
-                <td><input type="date" name="certificate_issue_${type}[]" class="custom-border"></td>
-                <td><input type="date" name="certificate_expiry_${type}[]" class="custom-border"></td>
-                <td><textarea name="${type}_remarks[]" class="custom-border"></textarea></td>
-            `;
-            tbody.appendChild(newRow);
-        }
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        function addRow(type) {
+                            let tbody = document.getElementById(`${type}_rows`);
+                            let newRow = document.createElement('tr');
+                            newRow.innerHTML = `
+                                <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+                                <td><input type="file" name="${type}_attachment[]" class="custom-border"></td>
+                                <td><input type="date" name="certificate_issue_${type}[]" class="custom-border"></td>
+                                <td><input type="date" name="certificate_expiry_${type}[]" class="custom-border"></td>
+                                <td><textarea name="${type}_remarks[]" class="custom-border"></textarea></td>
+                            `;
+                            tbody.appendChild(newRow);
+                        }
 
-        function removeRow(button) {
-            let row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-        }
+                        window.addRow = addRow;
+                    });
 
-        function removeFile(id) {
-        // Hide the file view and remove buttons
-        document.querySelector(`#row-${id} a.btn-info`).style.display = 'none';
-        document.querySelector(`#row-${id} button.btn-danger`).style.display = 'none';
+                    function removeRow(button) {
+                        let row = button.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                    }
 
-        // Show the file input
-        document.querySelector(`#row-${id} input[type="file"]`).style.display = 'block';
+                    function removeFile(id) {
+                        document.querySelector(`#row-${id} a.btn-info`).style.display = 'none';
+                        document.querySelector(`#row-${id} button.btn-danger`).style.display = 'none';
+                        document.querySelector(`#row-${id} input[type="file"]`).style.display = 'block';
 
-        // Mark the file for removal
-        let removeInput = document.createElement('input');
-        removeInput.type = 'hidden';
-        removeInput.name = 'remove_files[]';
-        removeInput.value = id;
-        document.getElementById('supplierForm').appendChild(removeInput);
-    }
+                        let removeInput = document.createElement('input');
+                        removeInput.type = 'hidden';
+                        removeInput.name = 'remove_files[]';
+                        removeInput.value = id;
+                        document.getElementById('supplierForm').appendChild(removeInput);
+                    }
 
-    document.getElementById('fileInput').addEventListener('change', function() {
-        var fileName = this.files[0] ? this.files[0].name : 'No file chosen';
-        document.getElementById('fileName').textContent = fileName;
-    });
-    </script>
+                    document.getElementById('fileInput').addEventListener('change', function() {
+                        var fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+                        document.getElementById('fileName').textContent = fileName;
+                    });
+
+                </script>              
+
+    
 @endsection

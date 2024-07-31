@@ -18,7 +18,7 @@
         }
     </style>
     {{-- voice Command --}}
-    
+
     <style>
         .mic-btn {
             background: none;
@@ -108,21 +108,19 @@
     {{-- ======================================
                 CHANGE CONTROL VIEW
     ======================================= --}}
-    <!-- <div id="rcms_form-head">
-        <div class="container-fluid">
-            <div class="inner-block">
-                <div class="head">PR-0001</div>
-                <div class="slogan">
-                    <strong>Division / Project :</strong>
-                    QMS-EMEA / Change Control
-                </div>
-            </div>
 
-        </div>
-    </div> -->
+
+
 
     <div id="change-control-view">
         <div class="container-fluid">
+            <div class="division-bar">
+                    <!-- <strong>Site Division/Project</strong> :
+                    QMS-North America / Effectiveness-Check -->
+                    <strong>Site Division/Project :</strong>
+                    {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check
+                </div>
+
 
             <div class="inner-block state-block">
                 <div class="d-flex justify-content-between align-items-center">
@@ -137,8 +135,9 @@
                             class="new-doc-btn">Print</button>
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 
-                        <button class="button_theme1"> <a class="text-white"
-                                href="{{ url('rcms/effective-audit-trial-show', $data->id) }}"> Audit Trail </a> </button>
+                        <a class="text-white"
+                                href="{{ url('rcms/effective-audit-trial-show', $data->id) }}">  <button class="button_theme1"> Audit Trail </button> </a>
+
                         @if ($data->stage == 1  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
@@ -233,26 +232,15 @@
 
 
         </div>
-        <form action="{{ route('effectiveness.update', $data->id) }}" method="POST" enctype="multipart/form-data">
 
-            @csrf
-            @method('PUT')
-            <div class="form-field-head">
-                <div class="division-bar">
-                    <!-- <strong>Site Division/Project</strong> :
-                    QMS-North America / Effectiveness-Check -->
-                    <strong>Site Division/Project :</strong>
-                    {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check
-                </div>
-                <div class="button-bar">
-                    {{--  <button type="button">Cancel</button>
-                <button type="button">New</button>
-                <button type="button">Copy</button>
-                <button type="button">Child</button>
-                <button type="button">Check Spelling</button>
-                <button type="button">Change Project</button>  --}}
-                </div>
-            </div>
+
+                  {{--  <button type="button">Cancel</button>
+            //     <button type="button">New</button>
+            //     <button type="button">Copy</button>
+            //     <button type="button">Child</button>
+            //     <button type="button">Check Spelling</button>
+            //     <button type="button">Change Project</button>  --}}
+
             {{-- ======================================
                             DATA FIELDS
             ======================================= --}}
@@ -267,9 +255,13 @@
                             Results</button>
                         <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm3')">Reference
                             Info/Comments</button>
-                         <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button> 
+                         <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
                     </div>
+                    <form action="{{ route('effectiveness.update', $data->id) }}" method="POST" enctype="multipart/form-data">
 
+@csrf
+@method('PUT')
+<div class="form-field-head">
                     <!-- General Information -->
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -289,13 +281,13 @@
                                         <label for="Division Code"><b>Division Code</b></label>
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                      
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
-                                        <input disabled type="text" name="initiator_id" 
+                                        <input disabled type="text" name="initiator_id"
                                         value="{{ Helpers::getInitiatorName($data->initiator_id) }}">
                                     </div>
                                 </div>
@@ -338,13 +330,18 @@
                                         </div>
                                 <div class="col-12">
                                     <div class="group-input">
+
                                         <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255</span>
-                                        characters remaining   
-                                        <div style="position:relative;">           
+                                        characters remaining
+                                        <div style="position:relative;">
+                                            <div class="relative-container">
                                         <textarea name="short_description"   id="docname" type="text" class="mic-input" maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                         <button class="mic-btn" type="button">
                                             <i class="fas fa-microphone"></i>
                                         </button>
+                                        @component('frontend.forms.language-model')
+                                @endcomponent
+                            </div>
                                         </div>
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
@@ -356,8 +353,8 @@
                                         <textarea  name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                     </div>
                                 </div> -->
-                               
-                               
+
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
@@ -386,10 +383,15 @@
                                     <div class="group-input">
                                         <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
                                         <div style="position:relative;">
+
+                                            <div class="relative-container">
                                         <input type="text" name="Effectiveness_check_Plan" class="mic-input" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->Effectiveness_check_Plan }}">
                                         <button class="mic-btn" type="button">
                                             <i class="fas fa-microphone"></i>
                                         </button>
+                                        @component('frontend.forms.language-model')
+                                @endcomponent
+                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -420,7 +422,7 @@
                                             </div>
                                         </div>
                             </div>
-                             
+
                             <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
@@ -444,10 +446,15 @@
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
                                         <div style="position:relative;">
+                                            <div class="relative-container">
                                         <textarea type="text" name="effect_summary" class="mic-input" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} > {{ $data->effect_summary }}</textarea>
                                         <button class="mic-btn" type="button">
                                             <i class="fas fa-microphone"></i>
                                         </button>
+                                        @component('frontend.forms.language-model')
+                                @endcomponent
+                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -464,10 +471,14 @@
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
                                         <div style="position:relative;">
+                                            <div class="relative-container">
                                         <textarea type="text" name="Effectiveness_Results" class="mic-input" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} >{{ $data->Effectiveness_Results }}</textarea>
                                         <button class="mic-btn" type="button">
                                             <i class="fas fa-microphone"></i>
                                         </button>
+                                        @component('frontend.forms.language-model')
+                                @endcomponent
+                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -511,10 +522,14 @@
                                     <div class="group-input">
                                         <label for="Addendum Comments"><b>Addendum Comments</b></label>
                                         <div style="position:relative;">
+                                            <div class="relative-container">
                                         <textarea type="text" name="Addendum_Comments" class="mic-input" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}>{{ $data->Addendum_Comments }}</textarea>
                                         <button class="mic-btn" type="button">
                                             <i class="fas fa-microphone"></i>
                                         </button>
+                                        @component('frontend.forms.language-model')
+                                @endcomponent
+                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -575,10 +590,14 @@
                                     <div class="group-input">
                                         <label for="Comments"><b>Comments</b></label>
                                         <div style="position:relative;">
+                                            <div class="relative-container">
                                         <textarea name="Comments" class="mic-input" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} >{{ $data->Comments }}</textarea>
                                         <button class="mic-btn" type="button">
                                             <i class="fas fa-microphone"></i>
                                         </button>
+                                            @component('frontend.forms.language-model')
+                                @endcomponent
+                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -657,10 +676,10 @@
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
-                                       
+
                                     </div>
                         </div>
-                    
+
 
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -938,16 +957,16 @@
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
                                                 {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}>Save</button>
                                         @endif
-                                    
+
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="submit">Submit</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
                                     </div>
-                    </div> 
+                    </div>
 
 
-                
+
             </div>
         </form>
     </div>
@@ -1294,7 +1313,7 @@
                 confirmButtonColor: '#3085d6', // Customize the confirm button color
             });
         </script>
-        
+
         @php session()->forget('errorMessages'); @endphp
     @endif
     <script>
@@ -1322,5 +1341,5 @@
             });
         </script>
 
-        
+
 @endsection

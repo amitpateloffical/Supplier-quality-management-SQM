@@ -911,10 +911,10 @@
                                                                 <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
                                                                 <button type="button" onclick="removeRow(this)">Remove</button>
                                                             </td>
-                                                            <td>
+                                                            <td style="display: flex">
                                                                 @if ($grid->attachment)
-                                                                    <input type="file" name="{{ $type }}_attachment[]" class="custom-border" style="color: white;">
-                                                                    <span type="button" class="file-container text-dark mt-2" style="background-color: rgb(243, 242, 240);">
+                                                                    <input type="file" name="{{ $type }}_attachment[]" class="custom-border" style="">
+                                                                    <span type="button" class="file-container text-dark" style=" margin-left: -197px; background-color: rgba(243, 242, 240, 0.56);">
                                                                         <b>{{ $fileName }}</b>
                                                                         <a href="{{ asset('upload/' . $fileName) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file" data-file-name="{{ $fileName }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>

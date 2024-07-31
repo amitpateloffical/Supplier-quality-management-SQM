@@ -75,6 +75,7 @@ class DeviationController extends Controller
      */
     public function store(Request $request)
     {
+//dd($request->all());
         $form_progress = null; // initialize form progress
 
         if ($request->form_name == 'general')
@@ -377,7 +378,7 @@ class DeviationController extends Controller
 
             $deviation->initial_file = json_encode($files);
         }
-        
+
         if (!empty ($request->Initial_attachment)) {
             $files = [];
             if ($request->hasfile('Initial_attachment')) {
@@ -944,7 +945,7 @@ class DeviationController extends Controller
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Department';
             $history->previous = "Null";
-            $history->current = $deviation->Initiator_Group;
+            $history->current = Helpers::getInitiatorGroupFullName($deviation->Initiator_Group);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1116,6 +1117,159 @@ class DeviationController extends Controller
             $history->save();
         }
 
+        //if (!empty($request->initial_file)){
+        //    $history = new DeviationAuditTrail();
+        //    $history->deviation_id = $deviation->id;
+        //    $history->activity_type = 'Initial Attachments';
+        //    $history->previous = "Null";
+        //    $history->current = $deviation->initial_file;
+        //    $history->comment = "Not Applicable";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->change_to =   "Opened";
+        //    $history->change_from = "Initiation";
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $deviation->status;
+        //    $history->action_name = 'Create';
+        //    $history->save();
+        //}
+
+        //if (!empty($request->Audit_file)){
+        //    $history = new DeviationAuditTrail();
+        //    $history->deviation_id = $deviation->id;
+        //    $history->activity_type = 'HOD Attachments';
+        //    $history->previous = "Null";
+        //    $history->current = $deviation->Audit_file;
+        //    $history->comment = "Not Applicable";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->change_to =   "Opened";
+        //    $history->change_from = "Initiation";
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $deviation->status;
+        //    $history->action_name = 'Create';
+        //    $history->save();
+        //}
+
+        //if (!empty($request->Initial_attachment)){
+        //    $history = new DeviationAuditTrail();
+        //    $history->deviation_id = $deviation->id;
+        //    $history->activity_type = 'QA Initial Attachments';
+        //    $history->previous = "Null";
+        //    $history->current = $deviation->Initial_attachment;
+        //    $history->comment = "Not Applicable";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->change_to =   "Opened";
+        //    $history->change_from = "Initiation";
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $deviation->status;
+        //    $history->action_name = 'Create';
+        //    $history->save();
+        //}
+
+        //if (!empty($request->Other5_attachment)){
+        //    $history = new DeviationAuditTrail();
+        //    $history->deviation_id = $deviation->id;
+        //    $history->activity_type = 'CFT Attachments';
+        //    $history->previous = "Null";
+        //    $history->current = $deviation->Other5_attachment;
+        //    $history->comment = "Not Applicable";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->change_to =   "Opened";
+        //    $history->change_from = "Initiation";
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $deviation->status;
+        //    $history->action_name = 'Create';
+        //    $history->save();
+        //}
+
+        //if (!empty($request->QA_attachments)){
+        //    $history = new DeviationAuditTrail();
+        //    $history->deviation_id = $deviation->id;
+        //    $history->activity_type = 'QA Attachments';
+        //    $history->previous = "Null";
+        //    $history->current = $deviation->QA_attachments;
+        //    $history->comment = "Not Applicable";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->change_to =   "Opened";
+        //    $history->change_from = "Initiation";
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $deviation->status;
+        //    $history->action_name = 'Create';
+        //    $history->save();
+        //}
+
+        //if (!empty($request->initiator_final_attachments)){
+        //    $history = new DeviationAuditTrail();
+        //    $history->deviation_id = $deviation->id;
+        //    $history->activity_type = 'Initiator Final Attachments';
+        //    $history->previous = "Null";
+        //    $history->current = $deviation->initiator_final_attachments;
+        //    $history->comment = "Not Applicable";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->change_to =   "Opened";
+        //    $history->change_from = "Initiation";
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $deviation->status;
+        //    $history->action_name = 'Create';
+        //    $history->save();
+        //}
+
+        //if (!empty($request->hod_final_attachments)){
+        //    $history = new DeviationAuditTrail();
+        //    $history->deviation_id = $deviation->id;
+        //    $history->activity_type = 'HOD Final Attachments';
+        //    $history->previous = "Null";
+        //    $history->current = $deviation->hod_final_attachments;
+        //    $history->comment = "Not Applicable";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->change_to =   "Opened";
+        //    $history->change_from = "Initiation";
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $deviation->status;
+        //    $history->action_name = 'Create';
+        //    $history->save();
+        //}
+
+        //if (!empty($request->qa_final_attachments)){
+        //    $history = new DeviationAuditTrail();
+        //    $history->deviation_id = $deviation->id;
+        //    $history->activity_type = 'QA Final Attachments';
+        //    $history->previous = "Null";
+        //    $history->current = $deviation->qa_final_attachments;
+        //    $history->comment = "Not Applicable";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->change_to =   "Opened";
+        //    $history->change_from = "Initiation";
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $deviation->status;
+        //    $history->action_name = 'Create';
+        //    $history->save();
+        //}
+
+        //if (!empty($request->closure_attachment)){
+        //    $history = new DeviationAuditTrail();
+        //    $history->deviation_id = $deviation->id;
+        //    $history->activity_type = 'Closure Attachments';
+        //    $history->previous = "Null";
+        //    $history->current = $deviation->closure_attachment;
+        //    $history->comment = "Not Applicable";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->change_to =   "Opened";
+        //    $history->change_from = "Initiation";
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $deviation->status;
+        //    $history->action_name = 'Create';
+        //    $history->save();
+        //}
+
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
@@ -1178,6 +1332,7 @@ class DeviationController extends Controller
      */
     public function update(Request $request, $id)
     {
+//dd($request->all());
         $form_progress = null;
         $lastDeviation = deviation::find($id);
         $deviation = deviation::find($id);
@@ -1976,7 +2131,7 @@ class DeviationController extends Controller
                         }
                         // $files = is_array(json_decode($deviation->Initial_attachment)) ? $deviation->Initial_attachment : [];
                     }
-        
+
                     if ($request->hasfile('Initial_attachment')) {
                         foreach ($request->file('Initial_attachment') as $file) {
                             $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -2044,7 +2199,7 @@ class DeviationController extends Controller
         }
 
         $deviation->initial_file = json_encode($files);
-        
+
         if (!empty ($request->QA_attachment)) {
             $files = [];
 
@@ -2264,9 +2419,37 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = "Update";
+            if (is_null($lastDeviation->hod_final_remarks) || $lastDeviation->hod_final_remarks === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
+
+        //if ($lastDeviation->hod_final_attachments != $deviation->hod_final_attachments || !empty ($request->comment)) {
+        //    // return 'history';
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'HOD Final Attachments';
+        //     $history->previous = $lastDeviation->hod_final_attachments;
+        //    $history->current = $deviation->hod_final_attachments;
+        //    $history->comment = $deviation->submit_comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDeviation->status;
+        //    $history->change_to =   "Not Applicable";
+        //    $history->change_from = $lastDeviation->status;
+        //    if (is_null($lastDeviation->hod_final_attachments) || $lastDeviation->hod_final_attachments === '') {
+        //        $history->action_name = 'New';
+        //    } else {
+        //        $history->action_name = 'Update';
+        //    }
+        //    $history->save();
+        //}
+
+
         if ($lastDeviation->qa_final_remarks != $deviation->qa_final_remarks || !empty ($request->comment)) {
             // return 'history';
             $history = new DeviationAuditTrail;
@@ -2281,9 +2464,37 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = "Update";
+            if (is_null($lastDeviation->qa_final_remarks) || $lastDeviation->qa_final_remarks === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
+
+        //if ($lastDeviation->qa_final_attachments != $deviation->qa_final_attachments || !empty ($request->comment)) {
+        //    // return 'history';
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'QA Final Attachments';
+        //     $history->previous = $lastDeviation->qa_final_attachments;
+        //    $history->current = $deviation->qa_final_attachments;
+        //    $history->comment = $deviation->submit_comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDeviation->status;
+        //    $history->change_to =   "Not Applicable";
+        //    $history->change_from = $lastDeviation->status;
+        //    if (is_null($lastDeviation->qa_final_attachments) || $lastDeviation->qa_final_attachments === '') {
+        //        $history->action_name = 'New';
+        //    } else {
+        //        $history->action_name = 'Update';
+        //    }
+        //    $history->save();
+        //}
+
+
         if ($lastDeviation->initiator_final_remarks != $deviation->initiator_final_remarks || !empty ($request->comment)) {
             // return 'history';
             $history = new DeviationAuditTrail;
@@ -2298,9 +2509,37 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = "Update";
+            if (is_null($lastDeviation->initiator_final_remarks) || $lastDeviation->initiator_final_remarks === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
+
+        //if ($lastDeviation->initiator_final_attachments != $deviation->initiator_final_attachments || !empty ($request->comment)) {
+        //    // return 'history';
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'Initiator Final Attachments';
+        //     $history->previous = $lastDeviation->initiator_final_attachments;
+        //    $history->current = $deviation->initiator_final_attachments;
+        //    $history->comment = $deviation->submit_comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDeviation->status;
+        //    $history->change_to =   "Not Applicable";
+        //    $history->change_from = $lastDeviation->status;
+        //    if (is_null($lastDeviation->initiator_final_attachments) || $lastDeviation->initiator_final_attachments === '') {
+        //        $history->action_name = 'New';
+        //    } else {
+        //        $history->action_name = 'Update';
+        //    }
+        //    $history->save();
+        //}
+
+
         if ($lastDeviation->short_description != $deviation->short_description || !empty ($request->comment)) {
             // return 'history';
             $history = new DeviationAuditTrail;
@@ -2315,16 +2554,21 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = "Update";
+            if (is_null($lastDeviation->short_description) || $lastDeviation->short_description === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
+
         if ($lastDeviation->Initiator_Group != $deviation->Initiator_Group || !empty ($request->comment)) {
             // return 'history';
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Initiator Group';
-            $history->previous = $lastDeviation->Initiator_Group;
-            $history->current = $deviation->Initiator_Group;
+            $history->activity_type = 'Department';
+            $history->previous = Helpers::getInitiatorGroupFullName($lastDeviation->Initiator_Group);
+            $history->current = Helpers::getInitiatorGroupFullName($deviation->Initiator_Group);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2332,7 +2576,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Initiator_Group) || $lastDeviation->Initiator_Group === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2350,7 +2598,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Deviation_date) || $lastDeviation->Deviation_date === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2368,7 +2620,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Observed_by) || $lastDeviation->Observed_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2386,7 +2642,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Deviation_reported_date) || $lastDeviation->Deviation_reported_date === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2404,7 +2664,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->audit_type) || $lastDeviation->audit_type === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2422,7 +2686,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Others) || $lastDeviation->Others === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2440,7 +2708,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Facility_Equipment) || $lastDeviation->Facility_Equipment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2458,7 +2730,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Document_Details_Required) || $lastDeviation->Document_Details_Required === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2476,7 +2752,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Description_Deviation) || $lastDeviation->Description_Deviation === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2494,7 +2774,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Immediate_Action) || $lastDeviation->Immediate_Action === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2512,9 +2796,35 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Preliminary_Impact) || $lastDeviation->Preliminary_Impact === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
+
+        //if ($lastDeviation->initial_file != $deviation->initial_file || !empty ($request->comment)) {
+        //    // return 'history';
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'Initial Attachments';
+        //    $history->previous = $lastDeviation->initial_file;
+        //    $history->current = $deviation->initial_file;
+        //    $history->comment = $request->comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDeviation->status;
+        //    $history->change_to =   "Not Applicable";
+        //    $history->change_from = $lastDeviation->status;
+        //    if (is_null($lastDeviation->initial_file) || $lastDeviation->initial_file === '') {
+        //        $history->action_name = 'New';
+        //    } else {
+        //        $history->action_name = 'Update';
+        //    }
+        //    $history->save();
+        //}
 
         if ($lastDeviation->HOD_Remarks != $deviation->HOD_Remarks || !empty ($request->comment)) {
             // return 'history';
@@ -2530,9 +2840,59 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->HOD_Remarks) || $lastDeviation->HOD_Remarks === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
+
+        //if ($lastDeviation->Audit_file != $deviation->Audit_file || !empty($request->comment)) {
+        //    // return 'history';
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'HOD Attachments';
+        //    $history->previous = $lastDeviation->Audit_file;
+        //    $history->current = $deviation->Audit_file;
+        //    $history->comment = $request->comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDeviation->status;
+        //    $history->change_to =   "Not Applicable";
+        //    $history->change_from = $lastDeviation->status;
+        //    if (is_null($lastDeviation->Audit_file) || $lastDeviation->Audit_file === '') {
+        //        $history->action_name = 'New';
+        //    } else {
+        //        $history->action_name = 'Update';
+        //    }
+        //    $history->save();
+        //}
+
+
+        //if ($lastDeviation->Other5_attachment != $deviation->Other5_attachment || !empty ($request->comment)) {
+        //    // return 'history';
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'CFT Attachments';
+        //    $history->previous = $lastDeviation->Other5_attachment;
+        //    $history->current = $deviation->Other5_attachment;
+        //    $history->comment = $request->comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDeviation->status;
+        //    $history->change_to =   "Not Applicable";
+        //    $history->change_from = $lastDeviation->status;
+        //    if (is_null($lastDeviation->Other5_attachment) || $lastDeviation->Other5_attachment === '') {
+        //        $history->action_name = 'New';
+        //    } else {
+        //        $history->action_name = 'Update';
+        //    }
+        //    $history->save();
+        //}
+
 
         if ($lastDeviation->Deviation_category != $deviation->Deviation_category || !empty ($request->comment)) {
             // return 'history';
@@ -2548,7 +2908,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Deviation_category) || $lastDeviation->Deviation_category === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2566,7 +2930,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Justification_for_categorization) || $lastDeviation->Justification_for_categorization === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2584,7 +2952,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Investigation_required) || $lastDeviation->Investigation_required === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2602,7 +2974,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Investigation_Details) || $lastDeviation->Investigation_Details === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2620,7 +2996,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Customer_notification) || $lastDeviation->Customer_notification === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2638,7 +3018,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->customers) || $lastDeviation->customers === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2656,9 +3040,35 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->QAInitialRemark) || $lastDeviation->QAInitialRemark === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
+
+        //if ($lastDeviation->Initial_attachment != $deviation->Initial_attachment || !empty ($request->comment)) {
+        //    // return 'history';
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'QA Initial Attachments';
+        //    $history->previous = $lastDeviation->Initial_attachment;
+        //    $history->current = $deviation->Initial_attachment;
+        //    $history->comment = $request->comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDeviation->status;
+        //    $history->change_to =   "Not Applicable";
+        //    $history->change_from = $lastDeviation->status;
+        //    if (is_null($lastDeviation->Initial_attachment) || $lastDeviation->Initial_attachment === '') {
+        //        $history->action_name = 'New';
+        //    } else {
+        //        $history->action_name = 'Update';
+        //    }
+        //    $history->save();
+        //}
 
         if ($lastDeviation->Root_cause != $deviation->Root_cause || !empty ($request->comment)) {
             // return 'history';
@@ -2674,7 +3084,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Root_cause) || $lastDeviation->Root_cause === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2693,7 +3107,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Post_Categorization) || $lastDeviation->Post_Categorization === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2711,7 +3129,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Investigation_Of_Review) || $lastDeviation->Investigation_Of_Review === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2729,9 +3151,35 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->QA_Feedbacks) || $lastDeviation->QA_Feedbacks === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
+
+        //if ($lastDeviation->QA_attachments != $deviation->QA_attachments || !empty ($request->comment)) {
+        //    // return 'history';
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'QA Attachments';
+        //    $history->previous = $lastDeviation->QA_attachments;
+        //    $history->current = $deviation->QA_attachments;
+        //    $history->comment = $request->comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDeviation->status;
+        //    $history->change_to =   "Not Applicable";
+        //    $history->change_from = $lastDeviation->status;
+        //    if (is_null($lastDeviation->QA_attachments) || $lastDeviation->QA_attachments === '') {
+        //        $history->action_name = 'New';
+        //    } else {
+        //        $history->action_name = 'Update';
+        //    }
+        //    $history->save();
+        //}
 
         if ($lastDeviation->Closure_Comments != $deviation->Closure_Comments || !empty ($request->comment)) {
             // return 'history';
@@ -2747,7 +3195,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Closure_Comments) || $lastDeviation->Closure_Comments === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
 
@@ -2765,9 +3217,36 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDeviation->Disposition_Batch) || $lastDeviation->Disposition_Batch === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         }
+
+        //if ($lastDeviation->closure_attachment != $deviation->closure_attachment || !empty ($request->comment)) {
+        //    // return 'history';
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'Closure Attachments';
+        //    $history->previous = $lastDeviation->closure_attachment;
+        //    $history->current = $deviation->closure_attachment;
+        //    $history->comment = $request->comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDeviation->status;
+        //    $history->change_to =   "Not Applicable";
+        //    $history->change_from = $lastDeviation->status;
+        //    if (is_null($lastDeviation->closure_attachment) || $lastDeviation->closure_attachment === '') {
+        //        $history->action_name = 'New';
+        //    } else {
+        //        $history->action_name = 'Update';
+        //    }
+        //    $history->save();
+        //}
+
 
         toastr()->success('Record is Update Successfully');
 
@@ -2973,7 +3452,7 @@ class DeviationController extends Controller
                 //         }
                 //     }
                 // }
-//=============================uncomment karna hai ==============                
+//=============================uncomment karna hai ==============
 
                 // $list = Helpers::getHeadoperationsUserList();
                 // foreach ($list as $u) {
@@ -3096,7 +3575,7 @@ class DeviationController extends Controller
                 $deviation->QA_Initial_Review_Complete_By = Auth::user()->name;
                 $deviation->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $deviation->QA_Initial_Review_Comments = $request->comment;
-                
+
                 $history = new DeviationAuditTrail();
                 $history->deviation_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3233,7 +3712,7 @@ class DeviationController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Complete';
                 $history->save();
-                
+
                 // $list = Helpers::getQAUserList();
                 //     foreach ($list as $u) {
                 //         if ($u->q_m_s_divisions_id == $deviation->division_id) {
@@ -5134,7 +5613,7 @@ if ($deviation->stage == 5) {
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             $Extensionchild = Deviation::find($id);
-            $Extensionchild->Extensionchild = $record_number;            
+            $Extensionchild->Extensionchild = $record_number;
             $parentDivisionId = Deviation::where('id', $id)->value('division_id');
             $Extensionchild->save();
             return view('frontend.extension.extension_new', compact('parent_id','parent_record','parentDivisionId', 'parent_name','parent_type', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at'));
@@ -5343,7 +5822,7 @@ if ($deviation->stage == 5) {
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
             $data = DeviationAuditTrail::where('deviation_id', $doc->id)->orderByDesc('id')->get();
-    
+
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.forms.auditReport', compact('data', 'doc'))
@@ -5358,9 +5837,9 @@ if ($deviation->stage == 5) {
             $canvas = $pdf->getDomPDF()->getCanvas();
             $height = $canvas->get_height();
             $width = $canvas->get_width();
-    
+
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-    
+
             $canvas->page_text(
                 $width / 3,
                 $height / 2,

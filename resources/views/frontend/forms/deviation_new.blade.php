@@ -338,7 +338,7 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td> <select name="facility_name[]" id="facility_name">  <option value="">-- Select --</option>  <option value="1">Facility</option>  <option value="2"> Equipment</option> <option value="3">Instrument</option></select> </td>' +
+                        '<td> <select name="facility_name[]" id="facility_name">  <option value="">-- Select --</option>  <option value="Facility">Facility</option>  <option value="Equipment"> Equipment</option> <option value="Instrument">Instrument</option></select> </td>' +
                         '<td><input type="text" name="IDnumber[]"></td>' +
                         '<td><input type="text" name="Remarks[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
@@ -416,7 +416,7 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="product_name[]"></td>' +
-                        '<td> <select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' +
+                        '<td> <select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="1">1 <option value="2">2</option> <option value="3">3</option><option value="4">4</option> <option value="5">5</option><option value="6">6</option> <option value="7">7</option> <option value="8">8</option><option value="9">9</option><option value="Final">Final</option> </select></td>' +
                         '<td><input type="text" name="batch_no[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
 
@@ -583,11 +583,11 @@
                 <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
                 <button class="cctablinks " id="Investigation_button" style="display: none"
                     onclick="openCity(event, 'CCForm9')">Investigation</button>
-               <button id="QRM_button" class="cctablinks" 
+               <button id="QRM_button" class="cctablinks"
                     onclick="openCity(event, 'CCForm115')">QA Secondary Review</button>
 
-                <button id="CAPA_button" class="cctablinks" 
-                    onclick="openCity(event, 'CCForm105')">Initiator Update</button> 
+                <button id="CAPA_button" class="cctablinks"
+                    onclick="openCity(event, 'CCForm105')">Initiator Update</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Investigation & CAPA</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Final Review</button>
@@ -670,49 +670,49 @@
                                                 </div>
                                     </div>
                                 </div>
-                                
+
                                 <script>
                                     // Function to handle date input and update the display
                                     function handleDateInput(element, textInputID) {
                                         let textInput = document.getElementById(textInputID);
                                         const date = new Date(element.value);
-                                
+
                                         if (!isNaN(date)) {
                                             const day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
                                             const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Ensuring two digits
                                             const year = date.getFullYear();
-                                
+
                                             // Formatting the date in "DD/MM/YYYY" format
                                             textInput.value = `${day}/${month}/${year}`;
                                         } else {
                                             textInput.value = "";
                                         }
                                     }
-                                
+
                                     // Set min attribute for date input to today
                                     document.addEventListener('DOMContentLoaded', function() {
                                         var today = new Date();
                                         var day = today.getDate().toString().padStart(2, '0');
                                         var month = (today.getMonth() + 1).toString().padStart(2, '0');
                                         var year = today.getFullYear();
-                                
+
                                         var minDate = `${year}-${month}-${day}`;
                                         document.getElementById('due_date').setAttribute('min', minDate);
-                                
+
                                         var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
-                                
+
                                         if (dueDate) {
                                             var parts = dueDate.split('/');
                                             if (parts.length === 3) {
                                                 var date = new Date(parts[2], parts[1] - 1, parts[0]);
-                                
+
                                                 if (!isNaN(date)) {
                                                     const formattedDay = date.getDate().toString().padStart(2, '0');
                                                     const formattedMonth = (date.getMonth() + 1).toString().padStart(2, '0');
                                                     const formattedYear = date.getFullYear();
-                                
+
                                                     var dueDateFormatted = `${formattedDay}/${formattedMonth}/${formattedYear}`;
-                                
+
                                                     document.getElementById('due_date_display').value = dueDateFormatted;
                                                     document.getElementById('due_date').value = `${formattedYear}-${formattedMonth}-${formattedDay}`;
                                                 }
@@ -720,7 +720,7 @@
                                         }
                                     });
                                 </script>
-                                
+
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -783,8 +783,8 @@
 
                                 <div class="col-12">
     <div class="group-input">
-        <label for="Short Description">Short Description<span class="text-danger">*</span></label>
-        <span id="rchars">255 Characters remaining</span>
+        <label for="Short Description">Short Description<span
+            class="text-danger">*</span></label><span id="rchars">255</span> characters remaining
         <div style="position:relative;">
             <input id="docname" type="text" name="short_description" maxlength="255" class="mic-input" required>
             <button class="mic-btn" type="button" style="position: absolute; right: 45px; top: 51%; transform: translateY(-50%);">
@@ -798,7 +798,7 @@
 </div>
 
 
-                                
+
 
 
                                 <div class="col-lg-6 new-date-data-field">
@@ -1224,8 +1224,6 @@
                                                         <th style="width: 16%">Batch No</th>
                                                         <th style="width: 8%">Action</th>
 
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1238,16 +1236,16 @@
                                                         <select name="product_stage[]" id="product_stage"
                                                             class="productStage">
                                                             <option value="">-- Select --</option>
-                                                            <option value="">1</option>
-                                                            <option value="">2</option>
-                                                            <option value="">3</option>
-                                                            <option value="">4</option>
-                                                            <option value="">5</option>
-                                                            <option value="">6</option>
-                                                            <option value="">7</option>
-                                                            <option value="">8</option>
-                                                            <option value="">9</option>
-                                                            <option value="">Final</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="6">6</option>
+                                                            <option value="7">7</option>
+                                                            <option value="8">8</option>
+                                                            <option value="9">9</option>
+                                                            <option value="Final">Final</option>
                                                         </select>
                                                     </td>
                                                     <td><input type="text" class="productBatchNo" name="batch_no[]">
@@ -1609,7 +1607,7 @@
 
 
 
-                                
+
 
                                  <div class="col-lg-6">
                                     <div class="group-input">
@@ -1620,7 +1618,7 @@
                                             <option value="no">No</option>
                                         </select>
                                     </div>
-                                </div> 
+                                </div>
 
                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
@@ -1734,11 +1732,11 @@
                                             class="text-danger">*</span></label>
                                         <select disabled name="Customer_notification" id="Customer_notification" >
                                             <option value="0">-- Select --</option>
-                                            <option 
+                                            <option
                                             value="Yes">Yes</option>
-                                            <option  
+                                            <option
                                             value="No">No</option>
-                                            <option  
+                                            <option
                                                 value="NA">NA</option>
                                         </select>
                                         @error('Customer_notification')
@@ -5317,7 +5315,7 @@
             <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                     Exit </a> </button>
-                   
+
         </div>
     </div>
 </div>
@@ -5359,7 +5357,7 @@
             <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                     Exit </a> </button>
-                   
+
         </div>
     </div>
 </div>
@@ -5401,7 +5399,7 @@
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                       
+
                             </div>
                         </div>
                     </div>
@@ -5444,7 +5442,7 @@
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                       
+
                             </div>
                         </div>
                     </div>

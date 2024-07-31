@@ -176,10 +176,11 @@
                     <strong> Effectiveness Check No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/EC/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong>    {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
@@ -205,25 +206,25 @@
                         <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
-                    
+
                     <tr>
                        <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
-                       
+
                     </tr>
                      <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                     </tr>
                     </table>
-               
+
                     <div class="block-head">
                        Effectiveness Planning Information
                    </div>
                    <table>
-                    
+
                    <tr>
                         <th class="w-20">Effectiveness check Plan</th>
                         <td class="w-80">@if($data->Effectiveness_check_Plan){{ $data->Effectiveness_check_Plan }}@else Not Applicable @endif</td>
@@ -274,7 +275,7 @@
                      <tr>
                         <th class="w-20">Effectiveness Results</th>
                         <td class="w-80">@if($data->Effectiveness_Results){{ $data->Effectiveness_Results }}@else Not Applicable @endif</td>
-                       
+
                       </tr>
                   </table>
                     <div class="block-head">
@@ -302,7 +303,7 @@
 
                         </table>
                       </div>
-               
+
                     <div class="block-head">
                        Reopen
                     </div>
@@ -310,7 +311,7 @@
                      <tr>
                         <th class="w-20">Addendum Comments</th>
                         <td class="w-80">@if($data->Addendum_Comments){{ $data->Addendum_Comments }}@else Not Applicable @endif</td>
-                       
+
                       </tr>
                   </table>
                     <div class="block-head">
@@ -346,7 +347,7 @@
                      <tr>
                         <th class="w-20">Comments</th>
                         <td class="w-80">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
-                       
+
                       </tr>
                   </table>
                     <div class="block-head">
@@ -444,7 +445,7 @@
                         Effective Approval Complete On</th>
                         <td class="w-30">{{ $data->effective_approval_complete_on }}</td>
                     </tr>
-                   
+
                 </table>
             </div>
         </div>

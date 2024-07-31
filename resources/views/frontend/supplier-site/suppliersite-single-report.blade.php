@@ -272,7 +272,7 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Supplier Type</th>
+                        <th class="w-20">Type</th>
                         <td class="w-30">
                             @if ($data->supplier_type)
                             {{ $data->supplier_type }}
@@ -787,7 +787,7 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Supplier Contact</th>
+                        <th class="w-20">Contracts</th>
                         <td class="w-30">
                             @if (is_object($supplierData) && !empty($supplierData->suppplier_contacts))
                             {{ $supplierData->suppplier_contacts }}
@@ -808,7 +808,7 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Supplier Agreement</th>
+                        <th class="w-20">Supplier Contracts/Agreements</th>
                         <td class="w-30">
                             @if (is_object($supplierData) && !empty($supplierData->suppplier_agreement))
                             {{ $supplierData->suppplier_agreement }}
@@ -1208,7 +1208,7 @@ footer td {
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Feedback</th>
+                        <th class="w-20">QA Reviewer Feedback</th>
                         <td class="w-80" colspan="3">
                             @if (!empty($supplierData->QA_reviewer_feedback))
                             {{ $supplierData->QA_reviewer_feedback }}
@@ -1220,7 +1220,7 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">QA Reviewer Comment</th>
                         <td class="w-80" colspan="3">
                             @if (!empty($supplierData->QA_reviewer_comment))
                             {{ $supplierData->QA_reviewer_comment }}
@@ -1468,7 +1468,7 @@ footer td {
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20">QA Head Comment</th>
                         <td class="w-80" colspan="3">
                             @if (!empty($supplierData->QA_head_comment))
                             {{ $supplierData->QA_head_comment }}
@@ -1483,7 +1483,7 @@ footer td {
 
             <div class="border-table">
                 <div class="block-head">
-                    QA Head Reviewer Attachments
+                    QA Head  Attachments
                 </div>
                 <table>
                     <tr class="table_bg">

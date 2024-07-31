@@ -268,41 +268,31 @@
                                             value="" readonly>
                                     </div>
                                 </div>
-                                <!-- {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="short-desc">Short Description <span
-                                                class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please mention brief summary</small></div>
-                                        <textarea name="short_description" class="mic-input" id="short_description">{{ old('short_description') }}</textarea>
-                                        @error('short_description')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div> -->
-                                <!-- </div>  --}} -->                   
+                                               
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="short_description">Short Description<span
                                                 class="text-danger">*</span></label>
                                                 <span id="rchars" class="text-primary">255</span><span class="text-primary">
                                                 characters remaining</span>
-                                        <div style="position:relative;">
-                                            <input id="short_description" class="mic-input" type="text"
-                                                name="short_description" maxlength="255" required>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                       
+                                        <div class="relative-container">
+                                        <input id="short_description" class="mic-input" type="text"
+                                        name="short_description" maxlength="255" required>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
+
                                       
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="current_practice">Current Practice</label>
-                                        <div style="position:relative;">
+                                        <div class="relative-container">
                                             <input name="other_comment" id="other_comment" class="mic-input">
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
 
                                     </div>
@@ -346,11 +336,11 @@
                                     <div class="group-input">
                                         <label for="initiated_through">Others<span
                                                 class="text-danger d-none">*</span></label>
-                                        <div style="position:relative;">
-                                            <textarea name="initiated_through_req"  maxlength="255"  class="mic-input"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                        <div class="relative-container">
+                                            <textarea name="initiated_through_req" 
+                                              class="mic-input"></textarea>
+                                              @component('frontend.forms.language-model')
+                                              @endcomponent
                                         </div>
                                      
                                     </div>
@@ -374,11 +364,10 @@
                                     <div class="group-input" id="repeat_nature">
                                         <label for="repeat-nature">Repeat Nature<span
                                                 class="text-danger d-none">*</span></label>
-                                        <div style="position:relative;">
+                                        <div  class="relative-container">
                                             <textarea name="repeat_nature" id="" class="mic-input"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
 
@@ -399,8 +388,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="nature-Change">Nature Of Change</label>
-                                        <select name="nature_Change">
-                                            <option value="0">-- Select --</option>
+                                        <select name="doc_change">
+                                            <option value="">-- Select --</option>
                                             <option value="Temporary">Temporary</option>
                                             <option value="Permanent">Permanent</option>
                                         </select>
@@ -409,11 +398,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="others">If Others</label>
-                                        <div style="position:relative;">
+                                        <div class="relative-container">
                                             <textarea name="If_Others" id="If_Others" class="mic-input"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
 
@@ -507,11 +495,10 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="current_practice">Current Practice</label>
-                                        <div style="position:relative;">
+                                        <div class="relative-container">
                                             <textarea name="current_practice" class="mic-input" id="current_practice" ></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                               @component('frontend.forms.language-model')
+                                              @endcomponent
                                         </div>
 
                                     </div>
@@ -519,22 +506,20 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="proposed_change">Proposed Change</label>
-                                        <div style="position:relative;">
-                                            <textarea name="proposed_change" id="proposed_change" maxlength="255"  class="mic-input"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                        <div class="relative-container">
+                                            <textarea name="proposed_change" id="proposed_change"   class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                              @endcomponent
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="reason_change">Reason for Change</label>
-                                        <div style="position:relative;">
-                                            <textarea name="reason_change" id="reason_change" maxlength="255"  class="mic-input"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                        <div class="relative-container">
+                                            <textarea name="reason_change" id="reason_change"   class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
 
                                     </div>
@@ -543,11 +528,10 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="other_comment">Any Other Comments</label>
-                                        <div style="position:relative;">
+                                        <div class="relative-container">
                                             <textarea name="other_comment" id="other_comment" class="mic-input"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                              @endcomponent
                                         </div>
                                     </div>
                                 </div>
@@ -555,11 +539,10 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="supervisor_comment">Supervisor Comments</label>
-                                        <div style="position:relative;">
+                                        <div class="relative-container">
                                             <textarea name="supervisor_comment" id="supervisor_comment" class="mic-input"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
@@ -600,11 +583,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="qa_comments">QA Comments</label>
-                                        <div style="position:relative;">
+                                        <div class="relative-container">
                                             <textarea name="qa_comments" id="qa_comments" class="mic-input"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
@@ -660,11 +642,10 @@
                         </div>
                         <div class="group-input">
                             <label for="qa-eval-comments">QA Evaluation Comments</label>
-                            <div style="position:relative;">
+                            <div class="relative-container">
                                 <textarea name="qa_eval_comments" id="qa-eval-comments" class="mic-input"></textarea>
-                                <button class="mic-btn" type="button">
-                                    <i class="fas fa-microphone"></i>
-                                </button>
+                                @component('frontend.forms.language-model')
+                                @endcomponent
                             </div>
                         </div>
 
@@ -698,11 +679,10 @@
                     </div>
                     <div class="group-input">
                         <label for="train-comments">Training Comments</label>
-                        <div style="position:relative;">
+                        <div class="relative-container">
                             <textarea name="train_comments" id="train-comments" class="mic-input"></textarea>
-                            <button class="mic-btn" type="button">
-                                <i class="fas fa-microphone"></i>
-                            </button>
+                            @component('frontend.forms.language-model')
+                                @endcomponent
                         </div>
                     </div>
 
@@ -867,11 +847,10 @@
                     <div class="col-lg-12">
                         <div class="group-input">
                             <label for="comments">Comments</label>
-                            <div style="position:relative;">
+                            <div  class="relative-container">
                                 <textarea name="cft_comments" id="comments" class="mic-input"></textarea>
-                                <button class="mic-btn" type="button">
-                                    <i class="fas fa-microphone"></i>
-                                </button>
+                                @component('frontend.forms.language-model')
+                                @endcomponent
                             </div>
                         </div>
                     </div>
@@ -901,33 +880,30 @@
                 <div class="col-lg-6">
                     <div class="group-input">
                         <label for="qa_comments">QA Comments</label>
-                        <div style="position:relative;">
+                        <div class="relative-container">
                             <textarea name="qa_comments" id="qa_comments" class="mic-input"></textarea>
-                            <button class="mic-btn" type="button">
-                                <i class="fas fa-microphone"></i>
-                            </button>
+                            @component('frontend.forms.language-model')
+                            @endcomponent
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="group-input">
                         <label for="designee_comments">QA Head Designee Comments</label>
-                        <div style="position:relative;">
+                        <div class="relative-container">
                             <textarea name="designee_comments" id="designee_comments" class="mic-input"></textarea>
-                            <button class="mic-btn" type="button">
-                                <i class="fas fa-microphone"></i>
-                            </button>
+                            @component('frontend.forms.language-model')
+                            @endcomponent
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="group-input">
                         <label for="Warehouse_comments">Warehouse Comments</label>
-                        <div style="position:relative;">
+                        <div class="relative-container">
                             <textarea name="Warehouse_comments" id="Warehouse_comments" class="mic-input"></textarea>
-                            <button class="mic-btn" type="button">
-                                <i class="fas fa-microphone"></i>
-                            </button>
+                            @component('frontend.forms.language-model')
+                            @endcomponent
                         </div>
                     </div>
                 </div>
@@ -935,22 +911,20 @@
                 <div class="col-lg-6">
                     <div class="group-input">
                         <label for="Engineering_comments">Engineering Comments</label>
-                        <div style="position:relative;">
+                        <div class="relative-container">
                             <textarea name="Engineering_comments" id="Engineering_comments" class="mic-input"></textarea>
-                            <button class="mic-btn" type="button">
-                                <i class="fas fa-microphone"></i>
-                            </button>
+                            @component('frontend.forms.language-model')
+                            @endcomponent
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="group-input">
                         <label for="Instrumentation_comments">Instrumentation Comments</label>
-                        <div style="position:relative;">
+                        <div class="relative-container">
                             <textarea name="Instrumentation_comments" id="Instrumentation_comments" class="mic-input"></textarea>
-                            <button class="mic-btn" type="button">
-                                <i class="fas fa-microphone"></i>
-                            </button>
+                            @component('frontend.forms.language-model')
+                            @endcomponent
                         </div>
                     </div>
                 </div>
@@ -958,11 +932,10 @@
                 <div class="col-lg-6">
                     <div class="group-input">
                         <label for="validation-comments">Validation Comments</label>
-                        <div style="position:relative;">
+                        <div class="relative-container">
                             <textarea name="Validation_comments" id="validation-comments" class="mic-input"></textarea>
-                            <button class="mic-btn" type="button">
-                                <i class="fas fa-microphone"></i>
-                            </button>
+                            @component('frontend.forms.language-model')
+                            @endcomponent
                         </div>
                     </div>
 
@@ -970,11 +943,10 @@
                 <div class="col-lg-6">
                     <div class="group-input">
                         <label for="others-comments">Others Comments</label>
-                        <div style="position:relative;">
+                        <div class="relative-container">
                             <textarea name="Others_comments" id="others-comments" class="mic-input"></textarea>
-                            <button class="mic-btn" type="button">
-                                <i class="fas fa-microphone"></i>
-                            </button>
+                            @component('frontend.forms.language-model')
+                            @endcomponent
                         </div>
                     </div>
 
@@ -982,11 +954,10 @@
                 <div class="col-lg-6">
                     <div class="group-input">
                         <label for="group-comments">Comments</label>
-                        <div style="position:relative;">
+                        <div class="relative-container">
                             <textarea name="Group_comments" id="group-comments" class="mic-input"></textarea>
-                            <button class="mic-btn" type="button">
-                                <i class="fas fa-microphone"></i>
-                            </button>
+                            @component('frontend.forms.language-model')
+                            @endcomponent
                         </div>
                     </div>
 
@@ -1030,11 +1001,10 @@
                 <div class="col-12">
                     <div class="group-input">
                         <label for="risk-identification">Risk Identification</label>
-                        <div style="position:relative;">
+                        <div class="relative-container">
                             <textarea name="risk_identification" id="risk-identification" class="mic-input"></textarea>
-                            <button class="mic-btn" type="button">
-                                <i class="fas fa-microphone"></i>
-                            </button>
+                            @component('frontend.forms.language-model')
+                            @endcomponent
                         </div>
                     </div>
                 </div>
@@ -1090,11 +1060,10 @@
                 <div class="col-12">
                     <div class="group-input">
                         <label for="risk-evaluation">Risk Evaluation</label>
-                        <div style="position:relative;">
+                        <div  class="relative-container">
                             <textarea name="risk_evaluation" id="risk-evaluation" class="mic-input"></textarea>
-                            <button class="mic-btn" type="button">
-                                <i class="fas fa-microphone"></i>
-                            </button>
+                            @component('frontend.forms.language-model')
+                            @endcomponent
                         </div>
                     </div>
                 </div>
@@ -1102,11 +1071,10 @@
                 <div class="col-12">
                     <div class="group-input">
                         <label for="migration-action">Migration Action</label>
-                        <div style="position:relative;">
+                        <div class="relative-container">
                             <textarea name="migration_action" id="migration-action" class="mic-input"></textarea>
-                            <button class="mic-btn" type="button">
-                                <i class="fas fa-microphone"></i>
-                            </button>
+                            @component('frontend.forms.language-model')
+                            @endcomponent
                         </div>
                     </div>
                 </div>
@@ -1127,21 +1095,19 @@
         <div class="inner-block-content">
             <div class="group-input">
                 <label for="qa_appro_comments">QA Approval Comments</label>
-                <div style="position:relative;">
+                <div  class="relative-container">
                     <textarea name="qa_appro_comments" id="qa_appro_comments" class="mic-input"></textarea>
-                    <button class="mic-btn" type="button">
-                        <i class="fas fa-microphone"></i>
-                    </button>
+                    @component('frontend.forms.language-model')
+                            @endcomponent
                 </div>
             </div>
 
             <div class="group-input">
                 <label for="feedback">Training Feedback</label>
-                <div style="position:relative;">
+                <div  class="relative-container">
                     <textarea name="feedback" id="feedback" class="mic-input"></textarea>
-                    <button class="mic-btn" type="button">
-                        <i class="fas fa-microphone"></i>
-                    </button>
+                    @component('frontend.forms.language-model')
+                    @endcomponent
                 </div>
             </div>
 
@@ -1228,11 +1194,10 @@
             </div>
             <div class="group-input">
                 <label for="qa_closure_comments">QA Closure Comments</label>
-                <div style="position:relative;">
+                <div  class="relative-container">
                     <textarea name="qa_closure_comments" id="qa_closure_comments" class="mic-input"></textarea>
-                    <button class="mic-btn" type="button">
-                        <i class="fas fa-microphone"></i>
-                    </button>
+                    @component('frontend.forms.language-model')
+                    @endcomponent
                 </div>
             </div>
             <div class="group-input">
@@ -1298,11 +1263,10 @@
                 <div class="group-input">
                     <label for="due_date_extension">Due Date Extension Justification</label>
                     <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                    <div style="position:relative;">
+                    <div class="relative-container">
                         <textarea name="due_date_extension" id="due_date_extension" class="mic-input"></textarea>
-                        <button class="mic-btn" type="button">
-                            <i class="fas fa-microphone"></i>
-                        </button>
+                        @component('frontend.forms.language-model')
+                        @endcomponent
                     </div>
                 </div>
             </div>
@@ -1692,89 +1656,8 @@
             $('#rchars').text(textlen);
         });
     </script>
-    <style>
-        .mic-btn {
-            background: none;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            box-shadow: none;
-            color: black;
-            display: none;
-            /* Hide the button initially */
-        }
+   
 
-        .relative-container textarea {
-            width: 100%;
-            padding-right: 40px;
-        }
 
-        .relative-container input:focus+.mic-btn {
-            display: inline-block;
-            /* Show the button when input is focused */
-        }
-
-        .mic-btn:focus,
-        .mic-btn:hover,
-        .mic-btn:active {
-            box-shadow: none;
-        }
-    </style>
-
-    <script>
-        < link rel = "stylesheet"
-        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.lang = 'en-US';
-
-            function startRecognition(targetElement) {
-                recognition.start();
-                recognition.onresult = function(event) {
-                    const transcript = event.results[0][0].transcript;
-                    targetElement.value += transcript;
-                };
-                recognition.onerror = function(event) {
-                    console.error(event.error);
-                };
-            }
-
-            document.addEventListener('click', function(event) {
-                if (event.target.closest('.mic-btn')) {
-                    const button = event.target.closest('.mic-btn');
-                    const inputField = button.previousElementSibling;
-                    if (inputField && inputField.classList.contains('mic-input')) {
-                        startRecognition(inputField);
-                    }
-                }
-            });
-
-            document.querySelectorAll('.mic-input').forEach(input => {
-                input.addEventListener('focus', function() {
-                    const micBtn = this.nextElementSibling;
-                    if (micBtn && micBtn.classList.contains('mic-btn')) {
-                        micBtn.style.display = 'inline-block';
-                    }
-                });
-
-                input.addEventListener('blur', function() {
-                    const micBtn = this.nextElementSibling;
-                    if (micBtn && micBtn.classList.contains('mic-btn')) {
-                        setTimeout(() => {
-                            micBtn.style.display = 'none';
-                        }, 200); // Delay to prevent button from hiding immediately when clicked
-                    }
-                });
-            });
-        });
-    </script>
+   
 @endsection

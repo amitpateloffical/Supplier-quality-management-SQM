@@ -99,7 +99,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
                         @elseif($data->stage == 2  && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -260,7 +260,7 @@
                                                     <label for="search">
                                                         Assigned To
                                                     </label>
-                                                    <select placeholder="Select..." name="assign_to" required>
+                                                    <select placeholder="Select..." name="assign_to" required {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $datas)
                                                         @if(Helpers::checkUserRolesassign_to($datas))
@@ -277,7 +277,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Microbiology">CFT Reviewer</label>
-                                                    <select name="Microbiology">
+                                                    <select name="Microbiology" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option value="yes" selected>Yes</option>
                                                         <option value="no">No</option>
@@ -289,17 +289,15 @@
                                                     <label for="Microbiology-Person">CFT Reviewer Person</label>
                                                     <select multiple name="Microbiology_Person[]"
                                                         placeholder="Select CFT Reviewers" data-search="false"
-                                                        data-silent-initial-value-set="true" id="cft_reviewer">
-                                                         <option value="">-- Select --</option>
+                                                        data-silent-initial-value-set="true" id="cft_reviewer" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                         <!-- <option value="">-- Select --</option> -->
                                                         @foreach ($cft as $data1)
-                                                        @if(Helpers::checkUserRolesMicrobiology_Person($data1))
-                                                            @if(in_array($data1->id, $cft_aff))
-                                                                <option value="{{ $data1->id }}" selected>{{ $data1->name }}</option>
-                                                            @else
-                                                                <option value="{{ $data1->id }}">{{ $data1->name }}</option>
-                                                            @endif    
-                                                            @endif
+                                                            <option value="{{ $data1->id }}" {{ in_array($data1->id, $cftReviewerIds) ? 'selected' : '' }}> {{$data1->name}}</option>
                                                         @endforeach
+
+                                                        
+
+
                                                     </select>
 
                                                 </div>
@@ -316,7 +314,9 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiator Group</label>
-                                                    <select name="Initiator_Group" id="initiator_group">
+                                                    <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
+                                                        
+                                                    >
                                                         <option value="CQA"
                                                             @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
                                                             Quality Assurance</option>
@@ -377,12 +377,13 @@
                                                     <label for="Initiator Group Code">Initiator Group Code</label>
                                                     <input type="text" name="initiator_group_code"
                                                     value="{{ $data->Initiator_Group}}" id="initiator_group_code"
-                                                    readonly>
+                                                    readonly {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     {{-- <div class="default-name"> <span
                                                     id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-12">
+                                            {{-- <div class="col-12">@component('frontend.forms.language-model', ['name' => 'short_description', 'id' => 'short_description'])
+                                                @endcomponent
                                                 <div class="group-input">
                                                     <label for="short-desc">Short Description</label>
                                                     <textarea name="short_description">{{ $data->short_description }}</textarea>
@@ -392,11 +393,10 @@
                                                 <div class="group-input">
                                                     <label for="Short Description">Short Description<span
                                                             class="text-danger">*</span></label><span id="rchars"  class="text-primary">255 </span><span class="text-primary"> characters remaining</span>   
-                                                    <div style="position:relative;">
-                                                        <textarea class="mic-input" name="short_description">{{$data->short_description}}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                    <div class="relative-container">
+                                                        <textarea class="mic-input" name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->short_description}} </textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </div>
                                                 </div>
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
@@ -406,7 +406,7 @@
                                                 <div class="group-input">
                                                     <label for="severity-level">Severity Level</label>
                                                     <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
-                                                    <select name="severity_level1">
+                                                    <select name="severity_level1" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     <option @if ($data->severity_level1 == 'minor') selected @endif
                                                      value="minor">Minor</option>
@@ -421,7 +421,7 @@
                                                 <div class="group-input">
                                                     <label for="Initiator Group">Initiated Through</label>
                                                     <div><small class="text-primary">Please select related information</small></div>
-                                                    <select name="initiated_through"
+                                                    <select name="initiated_through" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                                         <option value="">Enter Your Selection Here</option>
                                                     <option @if ($data->initiated_through == 'recall') selected @endif
@@ -447,11 +447,10 @@
                                                 <div class="group-input" id="initiated_through_req">
                                                     <label for="initiated_through">Others<span
                                                             class="text-danger d-none">*</span></label>
-                                                            <div style="position:relative;">
-                                                                <textarea class="mic-input" name="initiated_through_req">{{$data->initiated_through_req }}</textarea>
-                                                                <button class="mic-btn" type="button">
-                                                                    <i class="fas fa-microphone"></i>
-                                                                </button>
+                                                            <div class="relative-container">
+                                                                <textarea class="mic-input" name="initiated_through_req" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->initiated_through_req }}</textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                 @endcomponent
                                                             </div>
                                                 </div>
                                             </div>
@@ -460,8 +459,8 @@
                                                     <label for="repeat">Repeat</label>
                                                     <div><small class="text-primary">Please select yes if it is has recurred in past six months</small></div>
                                                     <select name="repeat"
-                                                        onchange="otherController(this.value, 'yes', 'repeat_nature')">
-                                                        <option value="">Enter Your Selection Here</option>
+                                                        onchange="otherController(this.value, 'yes', 'repeat_nature')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                        <option value="" >{{$data->repeat_nature}}>Enter Your Selection Here</option>
                                                         <option @if ($data->repeat == 'yes') selected @endif
                                                             value="yes">Yes</option>
                                                         <option @if ($data->repeat == 'no') selected @endif
@@ -475,11 +474,10 @@
                                                 <div class="group-input" id="repeat_nature">
                                                     <label for="repeat_nature">Repeat Nature<span
                                                             class="text-danger d-none">*</span></label>
-                                                            <div style="position:relative;">
-                                                                <textarea class="mic-input" name="repeat_nature">{{$data->repeat_nature}}</textarea>
-                                                                <button class="mic-btn" type="button">
-                                                                    <i class="fas fa-microphone"></i>
-                                                                </button>
+                                                            <div class="relative-container">
+                                                                <textarea class="mic-input" name="repeat_nature" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->repeat_nature}}</textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                 @endcomponent
                                                             </div>
                                                     
                                                 </div>
@@ -487,7 +485,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="nature-Change">Nature Of Change</label>
-                                                    <select name="nature_Change">
+                                                    <select name="nature_Change" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $data->doc_change == 'Temporary' ? 'selected' : '' }}
                                                             value="Temporary">Temporary
@@ -495,17 +493,16 @@
                                                         <option {{ $data->doc_change == 'Permanent' ? 'selected' : '' }}
                                                             value="Permanent">Permanent
                                                         </option>
-                                                    </select>
+                                                    </select>                          
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="others">If Others</label>
-                                                     <div style="position:relative;">
-                                                        <textarea class="mic-input" name="If_Others">{{ $data->If_Others}}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                     <div class="relative-container">
+                                                        <textarea class="mic-input" name="If_Others" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->If_Others}}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </div>
                                                     
                                                 </div>
@@ -513,7 +510,7 @@
                                             <div class="col-md-6">
                                                 <div class="group-input">
                                                     <label for="div_code">Division Code</label>
-                                                    <select name="div_code">
+                                                    <select name="div_code" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $data->Division_Code == 'Instrumental Lab' ? 'selected' : '' }}
                                                             value="Instrumental Lab">Instrumental Lab</option>
@@ -605,19 +602,19 @@
                                                                 @foreach (unserialize($docdetail->current_doc_no) as $key => $datas)
                                                                     <tr>
                                                                         <td><input type="text" name="serial_number[]"
-                                                                                value="{{ $key ? $key + 1 : '1' }}"></td>
+                                                                                value="{{ $key ? $key + 1 : '1' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></td>
                                                                         <td><input type="text"
                                                                                 name="current_doc_number[]"
-                                                                                value="{{ unserialize($docdetail->current_doc_no)[$key] ? unserialize($docdetail->current_doc_no)[$key] : '' }}">
+                                                                                value="{{ unserialize($docdetail->current_doc_no)[$key] ? unserialize($docdetail->current_doc_no)[$key] : '' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                         </td>
                                                                         <td><input type="text" name="current_version[]"
-                                                                                value="{{ unserialize($docdetail->current_version_no)[$key] ? unserialize($docdetail->current_version_no)[$key] : '' }}">
+                                                                                value="{{ unserialize($docdetail->current_version_no)[$key] ? unserialize($docdetail->current_version_no)[$key] : '' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                         </td>
                                                                         <td><input type="text" name="new_doc_number[]"
-                                                                                value="{{ unserialize($docdetail->new_doc_no)[$key] ? unserialize($docdetail->new_doc_no)[$key] : '' }}">
+                                                                                value="{{ unserialize($docdetail->new_doc_no)[$key] ? unserialize($docdetail->new_doc_no)[$key] : '' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                         </td>
                                                                         <td><input type="text" name="new_version[]"
-                                                                                value="{{ unserialize($docdetail->new_version_no)[$key] ? unserialize($docdetail->new_version_no)[$key] : '' }}">
+                                                                                value="{{ unserialize($docdetail->new_version_no)[$key] ? unserialize($docdetail->new_version_no)[$key] : '' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                         </td>
                                                                         <td>
                                                                             <button type="text" class="removeBtnDD">Remove</button>
@@ -636,31 +633,47 @@
                                                     <label for="current-practice">
                                                         Current Practice
                                                     </label>
-                                                    <textarea name="current_practice">{{ $docdetail->current_practice }}</textarea>
-                                                </div>
+                                                    <div class="relative-container">
+                                                    <textarea name="current_practice" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $docdetail->current_practice }}</textarea>
+                                                    @component('frontend.forms.language-model')
+                                                    @endcomponent
+                                            </div>
+                                              </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="proposed_change">
                                                         Proposed Change
                                                     </label>
-                                                    <textarea name="proposed_change">{{ $docdetail->proposed_change }}</textarea>
-                                                </div>
+                                                  <div class="relative-container">
+                                                        <textarea name="proposed_change" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $docdetail->proposed_change }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                 </div>
+                                              </div>
                                             </div>
-                                            <div class="col-12">
+                                          <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="reason_change">
                                                         Reason for Change
                                                     </label>
-                                                    <textarea name="reason_change">{{ $docdetail->reason_change }}</textarea>
+                                                    <div class="relative-container">
+                                                        <textarea name="reason_change" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $docdetail->reason_change }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                   </div>
                                                 </div>
-                                            </div>
+                                         </div>
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="other_comment">
                                                         Any Other Comments
                                                     </label>
-                                                    <textarea name="other_comment">{{ $docdetail->other_comment }}</textarea>
+                                                    <div class="relative-container">
+                                                        <textarea name="other_comment" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $docdetail->other_comment }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                                @endcomponent
+                                                   </div>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -668,7 +681,11 @@
                                                     <label for="supervisor_comment">
                                                         Supervisor Comments
                                                     </label>
-                                                    <textarea name="supervisor_comment">{{ $docdetail->supervisor_comment }}</textarea>
+                                                    <div class="relative-container">
+                                                        <textarea name="supervisor_comment" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $docdetail->supervisor_comment }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                                @endcomponent
+                                                   </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -687,7 +704,7 @@
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="type_change">Type of Change</label>
-                                                    <select name="type_chnage">
+                                                    <select name="type_chnage" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $review->type_chnage == 'major' ? 'selected' : '' }}
                                                             value="major">Major</option>
@@ -706,13 +723,17 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="qa_comments">QA Review Comments</label>
-                                                    <textarea name="qa_review_comments">{{ $review->qa_comments }}</textarea>
+                                                    <div class="relative-container">
+                                                        <textarea name="qa_review_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $review->qa_comments }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                  </div>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="related_records">Related Records</label>
-                                                    {{--  <input type="text" name="related_records"
+                                                    {{--  <input type="text" name="related_records" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         value="{{ $review->related_records }}">  --}}
                                                     <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
                                                         placeholder="Select Reference Records" data-search="false"
@@ -749,8 +770,8 @@
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input type="file" id="myfile" name="qa_head[]"
-                                                                oninput="addMultipleFiles(this, 'qa_head')" multiple>
+                                                            <input type="file" id="myfile" name="qa_head[]" 
+                                                                oninput="addMultipleFiles(this, 'qa_head')" multiple {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -772,7 +793,11 @@
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-comments">QA Evaluation Comments</label>
-                                            <textarea name="qa_eval_comments">{{ $evaluation->qa_eval_comments }}</textarea>
+                                            <div class="relative-container">
+                                                <textarea name="qa_eval_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $evaluation->qa_eval_comments }}</textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-attach">QA Evaluation Attachments</label>
@@ -795,8 +820,8 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="qa_eval_attach[]"
-                                                        oninput="addMultipleFiles(this, 'qa_eval_attach')" multiple>
+                                                    <input  type="file" id="myfile" name="qa_eval_attach[]"
+                                                        oninput="addMultipleFiles(this, 'qa_eval_attach')" multiple {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 </div>
                                             </div>
 
@@ -806,7 +831,7 @@
                                         </div>
                                         <div class="group-input">
                                             <label for="nature-change">Training Required</label>
-                                            <select name="training_required">
+                                            <select name="training_required" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <option value="">-- Select --</option>
                                                 <option {{ $evaluation->training_required == 'no' ? 'selected' : '' }}
                                                     value="no">No</option>
@@ -816,7 +841,11 @@
                                         </div>
                                         <div class="group-input">
                                             <label for="train-comments">Training Comments</label>
-                                            <textarea name="train_comments">{{ $evaluation->train_comments }}</textarea>
+                                            <div class="relative-container">
+                                                    <textarea name="train_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $evaluation->train_comments }}</textarea>
+                                                    @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                            </div>            
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
@@ -844,24 +873,6 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Microbiology-Person">CFT Reviewer Person</label>
-                                                    <select multiple name="Microbiology_Person[]"
-                                                        placeholder="Select CFT Reviewers" data-search="false"
-                                                        data-silent-initial-value-set="true" id="cft_reviewer">
-                                                         <option value="">-- Select --</option>
-                                                        @foreach ($cft as $data1)
-                                                            @if(in_array($data1->id, $cft_aff))
-                                                                <option value="{{ $data1->id }}" selected>{{ $data1->name }}</option>
-                                                            @else
-                                                                <option value="{{ $data1->id }}">{{ $data1->name }}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-
-                                                </div>
-                                            </div>
 
 
                                         </div>
@@ -872,7 +883,7 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="group_review">Is Concerned Group Review Required?</label>
-                                                    <select name="goup_review">
+                                                    <select name="goup_review" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $info->goup_review == 'yes' ? 'selected' : '' }}
                                                             value="yes">Yes</option>
@@ -884,7 +895,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Production">Production</label>
-                                                    <select name="Production">
+                                                    <select name="Production" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $info->Production == 'yes' ? 'selected' : '' }}
                                                             value="yes">Yes</option>
@@ -896,7 +907,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Production-Person">Production Person</label>
-                                                    <select name="Production_Person">
+                                                    <select name="Production_Person" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $datas)
                                                             <option
@@ -910,7 +921,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Quality-Approver">Quality Approver</label>
-                                                    <select name="Quality_Approver">
+                                                    <select name="Quality_Approver" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $info->Quality_Approver == 'yes' ? 'selected' : '' }}
                                                             value="yes">Yes</option>
@@ -922,7 +933,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Quality-Approver-Person">Quality Approver Person</label>
-                                                    <select name="Quality_Approver_Person">
+                                                    <select name="Quality_Approver_Person" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $datas)
                                                             <option {{ $info->Quality_Approver_Person == $datas->id ? 'selected' : '' }}
@@ -936,7 +947,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="bd_domestic">Others</label>
-                                                    <select name="bd_domestic">
+                                                    <select name="bd_domestic" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $info->bd_domestic == 'yes' ? 'selected' : '' }}
                                                             value="yes">Yes</option>
@@ -948,7 +959,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="bd_domestic-Person">Others Person</label>
-                                                    <select name="Bd_Person">
+                                                    <select name="Bd_Person" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
 
                                                         @foreach ($users as $datas)
@@ -985,7 +996,7 @@
                                                             <input type="file" id="myfile"
                                                                 name="additional_attachments[]"
                                                                 oninput="addMultipleFiles(this, 'additional_attachments')"
-                                                                multiple>
+                                                                multiple {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1011,11 +1022,10 @@
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="comments">Comments</label>
-                                                    <div style="position:relative;">
-                                                        <textarea class="mic-input" name="cft_comments">{{ $comments->cft_comments }}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                    <div class="relative-container">
+                                                        <textarea class="mic-input" name="cft_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $comments->cft_comments }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </div>
                                                 </div>
                                             </div>
@@ -1045,7 +1055,7 @@
                                                             <div>Add</div>
                                                             <input type="file" id="myfile" name="cft_attchament[]"
                                                                 oninput="addMultipleFiles(this, 'cft_attchament')"
-                                                                multiple>
+                                                                multiple {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         </div>
                                                     </div>
 
@@ -1059,90 +1069,81 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">QA Comments</label>
-                                                    <div style="position:relative;">
-                                                        <textarea class="mic-input" name="qa_comments">{{ $comments->qa_comments }}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                    <div class="relative-container">
+                                                        <textarea class="mic-input" name="qa_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $comments->qa_comments }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">QA Head Designee Comments</label>
-                                                    <div style="position:relative;">
-                                                        <textarea class="mic-input" name="designee_comments">{{ $comments->designee_comments }}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                    <div class="relative-container">
+                                                        <textarea class="mic-input" name="designee_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $comments->designee_comments }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">Warehouse Comments</label>
-                                                    <div style="position:relative;">
-                                                        <textarea class="mic-input" name="Warehouse_comments">{{ $comments->Warehouse_comments }}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                    <div class="relative-container">
+                                                        <textarea class="mic-input" name="Warehouse_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $comments->Warehouse_comments }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">Engineering Comments</label>
-                                                    <div style="position:relative;">
-                                                        <textarea class="mic-input" name="Engineering_comments">{{ $comments->Engineering_comments }}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                    <div class="relative-container">
+                                                        <textarea class="mic-input" name="Engineering_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $comments->Engineering_comments }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">Instrumentation Comments</label>
-                                                    <div style="position:relative;">
-                                                        <textarea class="mic-input" name="Instrumentation_comments">{{ $comments->Instrumentation_comments }}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                    <div class="relative-container">
+                                                        <textarea class="mic-input" name="Instrumentation_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $comments->Instrumentation_comments }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="comments">Validation Comments</label>
-                                                    <div style="position:relative;">
-                                                        <textarea class="mic-input" name="Validation_comments">{{ $comments->Validation_comments }}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                      <label for="comments">Validation Comments</label>
+                                                    <div class="relative-container">
+                                                        <textarea class="mic-input" name="Validation_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $comments->Validation_comments }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="comments">Others Comments</label>
-                                                    <div style="position:relative;">
-                                                        <textarea class="mic-input" name="Others_comments">{{ $comments->Others_comments }}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                        <label for="comments">Others Comments</label>
+                                                    <div class="relative-container">
+                                                        <textarea class="mic-input" name="Others_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $comments->Others_comments }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="comments">Comments</label>
-                                                    <div style="position:relative;">
-                                                        <textarea class="mic-input" name="Group_comments">{{ $comments->Group_comments }}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                      <label for="comments">Comments</label>
+                                                    <div class="relative-container">
+                                                        <textarea class="mic-input" name="Group_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $comments->Group_comments }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </div>
-                                                
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1172,7 +1173,7 @@
                                                             <input type="file" id="myfile"
                                                                 name="group_attachments[]"
                                                                 oninput="addMultipleFiles(this, 'group_attachments')"
-                                                                multiple>
+                                                                multiple {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1196,11 +1197,10 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="risk-identification">Risk Identification</label>
-                                                    <div style="position:relative;">
-                                                        <textarea class="mic-input" name="risk_identification">{{ $assessment->risk_identification }}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                    <div class="relative-container">
+                                                        <textarea class="mic-input" name="risk_identification" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $assessment->risk_identification }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </div>
                                                 </div>
                                             </div>
@@ -1208,7 +1208,7 @@
                                                 <div class="group-input">
                                                     <label for="severity">Severity</label>
                                                     <select name="severity" id="analysisR"
-                                                        onchange='calculateRiskAnalysis(this)'>
+                                                        onchange='calculateRiskAnalysis(this)' {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $assessment->severity == '1' ? 'selected' : '' }}
                                                             value="1">Negligible</option>
@@ -1227,7 +1227,7 @@
                                                 <div class="group-input">
                                                     <label for="Occurance">Occurance</label>
                                                     <select name="Occurance" id="analysisP"
-                                                        onchange='calculateRiskAnalysis(this)'>
+                                                        onchange='calculateRiskAnalysis(this)' {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option
                                                             {{ $assessment->Occurance == '5' ? 'selected' : '' }}
@@ -1247,7 +1247,7 @@
                                                 <div class="group-input">
                                                     <label for="Detection">Detection</label>
                                                     <select name="Detection" id="analysisN"
-                                                        onchange='calculateRiskAnalysis(this)'>
+                                                        onchange='calculateRiskAnalysis(this)' {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $assessment->Detection == '5' ? 'selected' : '' }}
                                                             value="5">Impossible</option>
@@ -1265,28 +1265,26 @@
                                                 <div class="group-input">
                                                     <label for="RPN">RPN</label>
                                                     <input type="text" name="RPN" id="analysisRPN"
-                                                        value="{{ $assessment->RPN }}">
+                                                        value="{{ $assessment->RPN }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="risk-evaluation">Risk Evaluation</label>
-                                                    <div style="position:relative;">
-                                                        <textarea class="mic-input" name="risk_evaluation">{{ $assessment->risk_evaluation }}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                    <div class="relative-container">
+                                                        <textarea class="mic-input" name="risk_evaluation" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $assessment->risk_evaluation }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="migration-action">Migration Action</label>
-                                                    <div style="position:relative;">
-                                                        <textarea class="mic-input" name="migration_action">{{ $assessment->migration_action }}</textarea>
-                                                        <button class="mic-btn" type="button">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
+                                                    <div class="relative-container">
+                                                        <textarea class="mic-input" name="migration_action" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $assessment->migration_action }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1304,21 +1302,19 @@
                                     <div class="inner-block-content">
                                         <div class="group-input">
                                             <label for="qa-appro-comments">QA Approval Comments</label>
-                                            <div style="position:relative;">
-                                                <textarea class="mic-input" name="qa_appro_comments">{{ $approcomments->qa_appro_comments}}</textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="qa_appro_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $approcomments->qa_appro_comments}}</textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                            
                                         </div>
                                         <div class="group-input">
                                             <label for="feedback">Training Feedback</label>
-                                            <div style="position:relative;">
-                                                <textarea class="mic-input" name="feedback">{{ $approcomments->feedback}}</textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="feedback" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $approcomments->feedback}}</textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                         </div>
                                         <div class="group-input">
@@ -1344,7 +1340,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input type="file" id="myfile" name="tran_attach[]"
-                                                        oninput="addMultipleFiles(this, 'tran_attach')" multiple>
+                                                        oninput="addMultipleFiles(this, 'tran_attach')" multiple {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 </div>
                                             </div>
 
@@ -1385,35 +1381,35 @@
                                                     @foreach (unserialize($closure->affected_document) as $key => $datas)
                                                         <tr>
                                                             <td><input type="text" name="serial_number[]"
-                                                                    value="{{ $key ? $key + 1 : '1' }}"></td>
+                                                                    value="{{ $key ? $key + 1 : '1' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></td>
                                                             <td><input type="text"
                                                                     name="affected_documents[]"
-                                                                    value="{{ unserialize($closure->affected_document)[$key] ? unserialize($closure->affected_document)[$key] : '' }}">
+                                                                    value="{{ unserialize($closure->affected_document)[$key] ? unserialize($closure->affected_document)[$key] : '' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                             </td>
                                                             <td><input type="text" name="document_name[]"
-                                                                    value="{{ unserialize($closure->doc_name)[$key] ? unserialize($closure->doc_name)[$key] : '' }}">
+                                                                    value="{{ unserialize($closure->doc_name)[$key] ? unserialize($closure->doc_name)[$key] : '' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                             </td>
                                                             <td>                                                                
                                                                 <input type="number" name="document_no[]"
-                                                                    value="{{ unserialize($closure->doc_no)[$key] ? unserialize($closure->doc_no)[$key] : '' }}">
+                                                                    value="{{ unserialize($closure->doc_no)[$key] ? unserialize($closure->doc_no)[$key] : '' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                             </td>
                                                              <td>
                                                                 @if (!empty($closure->version_no))
-                                                                <input type="text" name="version_no[]" value="{{ unserialize($closure->version_no)[$key] ? unserialize($closure->version_no)[$key] : '' }}">
+                                                                <input type="text" name="version_no[]" value="{{ unserialize($closure->version_no)[$key] ? unserialize($closure->version_no)[$key] : '' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                 @else
-                                                                <input type="text" name="version_no[]" value="">
+                                                                <input type="text" name="version_no[]" value="" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                 @endif
                                                             </td> 
                                                             
                                                             <td>
-                                                                <input type="date" name="implementation_date[]" value="{{ unserialize($closure->implementation_date)[$key] ? unserialize($closure->implementation_date)[$key] : '' }}" >                                                               
+                                                                <input type="date" name="implementation_date[]" value="{{ unserialize($closure->implementation_date)[$key] ? unserialize($closure->implementation_date)[$key] : '' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>                                                               
                                                             </td>
                                                             
                                                             <td><input type="text" name="new_document_no[]"
-                                                                value="{{ unserialize($closure->new_doc_no)[$key] ? unserialize($closure->new_doc_no)[$key] : '' }}">
+                                                                value="{{ unserialize($closure->new_doc_no)[$key] ? unserialize($closure->new_doc_no)[$key] : '' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                              </td>
                                                              <td><input type="text" name="new_version_no[]"
-                                                                value="{{ unserialize($closure->new_version_no)[$key] ? unserialize($closure->new_version_no)[$key] : '' }}">
+                                                                value="{{ unserialize($closure->new_version_no)[$key] ? unserialize($closure->new_version_no)[$key] : '' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                              </td>
                                                              <td><button type="text" class="removeaddAffectedDocumentsbtn">Remove</button></td>
                                                         </tr>
@@ -1425,11 +1421,10 @@
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-closure-comments">QA Closure Comments</label>
-                                            <div style="position:relative;">
-                                                <textarea class="mic-input" name="qa_closure_comments">{{ $closure->qa_closure_comments }}</textarea>
-                                                <button class="mic-btn" type="button">
-                                                    <i class="fas fa-microphone"></i>
-                                                </button>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="qa_closure_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $closure->qa_closure_comments }}</textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
                                             </div>
                                            
                                         </div>
@@ -1545,11 +1540,10 @@
                                             <div class="col-12">
                                                 <div class="group-input">                                                    
                                                     <label for="due_date_extension">Due Date Extension Justification</label>
-                                                        <div style="position:relative;">
-                                                            <textarea class="mic-input" name="due_date_extension">{{$due_date_extension }}</textarea>
-                                                            <button class="mic-btn" type="button">
-                                                                <i class="fas fa-microphone"></i>
-                                                            </button>
+                                                    <div class="relative-container">
+                                                            <textarea class="mic-input" name="due_date_extension" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$due_date_extension }}</textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
                                                         </div>
                                                     
                                                 </div>
@@ -2203,89 +2197,6 @@
             $('#rchars').text(textlen);});
     </script>
 
-<style>
-    .mic-btn {
-        background: none;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        box-shadow: none;
-        color: black;
-        display: none;
-        /* Hide the button initially */
-    }
 
-    .relative-container textarea {
-        width: 100%;
-        padding-right: 40px;
-    }
 
-    .relative-container input:focus+.mic-btn {
-        display: inline-block;
-        /* Show the button when input is focused */
-    }
-
-    .mic-btn:focus,
-    .mic-btn:hover,
-    .mic-btn:active {
-        box-shadow: none;
-    }
-</style>
-
-<script>
-    < link rel = "stylesheet"
-    href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
-
-        function startRecognition(targetElement) {
-            recognition.start();
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                targetElement.value += transcript;
-            };
-            recognition.onerror = function(event) {
-                console.error(event.error);
-            };
-        }
-
-        document.addEventListener('click', function(event) {
-            if (event.target.closest('.mic-btn')) {
-                const button = event.target.closest('.mic-btn');
-                const inputField = button.previousElementSibling;
-                if (inputField && inputField.classList.contains('mic-input')) {
-                    startRecognition(inputField);
-                }
-            }
-        });
-
-        document.querySelectorAll('.mic-input').forEach(input => {
-            input.addEventListener('focus', function() {
-                const micBtn = this.nextElementSibling;
-                if (micBtn && micBtn.classList.contains('mic-btn')) {
-                    micBtn.style.display = 'inline-block';
-                }
-            });
-
-            input.addEventListener('blur', function() {
-                const micBtn = this.nextElementSibling;
-                if (micBtn && micBtn.classList.contains('mic-btn')) {
-                    setTimeout(() => {
-                        micBtn.style.display = 'none';
-                    }, 200); // Delay to prevent button from hiding immediately when clicked
-                }
-            });
-        });
-    });
-</script>   
 @endsection

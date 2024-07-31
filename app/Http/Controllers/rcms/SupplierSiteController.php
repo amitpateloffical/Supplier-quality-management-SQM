@@ -184,8 +184,10 @@ class SupplierSiteController extends Controller
         }
 
         /****************** Risk Assessment Content ********************/
+        
         $supplierSite->last_audit_date = $request->last_audit_date;
-        $supplierSite->next_audit_date = $request->next_audit_date;        
+        $supplierSite->next_audit_date = $request->next_audit_date;   
+              
         $supplierSite->audit_frequency = $request->audit_frequency;
         $supplierSite->last_audit_result = $request->last_audit_result;
         $supplierSite->facility_type = $request->facility_type;
@@ -1546,6 +1548,217 @@ class SupplierSiteController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+        if (!empty($request->logo_attachment)) {
+            $history = new SupplierSiteAuditTrail();
+            $history->supplier_site_id = $supplierSite->id;
+            $history->activity_type = 'Logo';
+            $history->previous = "Null";
+            $history->current = $supplierSite->logo_attachment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+        if (!empty($request->supplier_attachment)) {
+            $history = new SupplierSiteAuditTrail();
+            $history->supplier_site_id = $supplierSite->id;
+            $history->activity_type = 'File Attachment';
+            $history->previous = "Null";
+            $history->current = $supplierSite->supplier_attachment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+        if (!empty($request->gi_additional_attachment)) {
+            $history = new SupplierSiteAuditTrail();
+            $history->supplier_site_id = $supplierSite->id;
+            $history->activity_type = 'Additional Attachment';
+            $history->previous = "Null";
+            $history->current = $supplierSite->gi_additional_attachment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+        if (!empty($request->HOD_attachment)) {
+            $history = new SupplierSiteAuditTrail();
+            $history->supplier_site_id = $supplierSite->id;
+            $history->activity_type = 'HOD Attachments';
+            $history->previous = "Null";
+            $history->current = $supplierSite->HOD_attachment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+        if (!empty($request->hod_additional_attachment)) {
+            $history = new SupplierSiteAuditTrail();
+            $history->supplier_site_id = $supplierSite->id;
+            $history->activity_type = 'HOD Additional Attachments';
+            $history->previous = "Null";
+            $history->current = $supplierSite->hod_additional_attachment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+        
+        if (!empty($request->iso_certificate_attachment)) {
+            $history = new SupplierSiteAuditTrail();
+            $history->supplier_site_id = $supplierSite->id;
+            $history->activity_type = 'Certificate Attachment';
+            $history->previous = "Null";
+            $history->current = $supplierSite->iso_certificate_attachment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+        if (!empty($request->supplier_detail_additional_attachment)) {
+            $history = new SupplierSiteAuditTrail();
+            $history->supplier_site_id = $supplierSite->id;
+            $history->activity_type = 'Supplier detail additional attachment';
+            $history->previous = "Null";
+            $history->current = $supplierSite->supplier_detail_additional_attachment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+        if (!empty($request->score_card_additional_attachment)) {
+            $history = new SupplierSiteAuditTrail();
+            $history->supplier_site_id = $supplierSite->id;
+            $history->activity_type = 'Score card additional attachment';
+            $history->previous = "Null";
+            $history->current = $supplierSite->score_card_additional_attachment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+        if (!empty($request->QA_reviewer_attachment)) {
+            $history = new SupplierSiteAuditTrail();
+            $history->supplier_site_id = $supplierSite->id;
+            $history->activity_type = 'QA Reviewer Attachment';
+            $history->previous = "Null";
+            $history->current = $supplierSite->QA_reviewer_attachment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+         if (!empty($request->qa_reviewer_additional_attachment)) {
+            $history = new SupplierSiteAuditTrail();
+            $history->supplier_site_id = $supplierSite->id;
+            $history->activity_type = 'QA Reviewer Additional Attachment';
+            $history->previous = "Null";
+            $history->current = $supplierSite->qa_reviewer_additional_attachment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+        if (!empty($request->risk_assessment_additional_attachment)) {
+            $history = new SupplierSiteAuditTrail();
+            $history->supplier_site_id = $supplierSite->id;
+            $history->activity_type = 'Risk Assessment Additional Attachment';
+            $history->previous = "Null";
+            $history->current = $supplierSite->risk_assessment_additional_attachment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+        if (!empty($request->QA_head_attachment)) {
+            $history = new SupplierSiteAuditTrail();
+            $history->supplier_site_id = $supplierSite->id;
+            $history->activity_type = 'QA Head Attachment';
+            $history->previous = "Null";
+            $history->current = $supplierSite->QA_head_attachment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+        if (!empty($request->qa_head_additional_attachment)) {
+            $history = new SupplierSiteAuditTrail();
+            $history->supplier_site_id = $supplierSite->id;
+            $history->activity_type = 'QA Head Additional Attachment';
+            $history->previous = "Null";
+            $history->current = $supplierSite->qa_head_additional_attachment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+
+
+
 
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
@@ -1557,11 +1770,12 @@ class SupplierSiteController extends Controller
         $data = SupplierSite::find($id);
         $gridData = SupplierSiteGrid::where(['supplier_site_id' => $id, 'identifier' => "CertificationData"])->first();
         $certificationData = json_decode($gridData->data, true);
-        return view('frontend.supplier-site.suppliersite_view', compact('data', 'certificationData'));
+        
+        return view('frontend.supplier-site.suppliersite_view', compact('data', 'certificationData',));
     }
 
     public function update(Request $request, $id){ 
-       // dd(request->all());      
+        //dd(request->all());      
         $lastDocument = SupplierSite::find($id);
         $supplierSite = SupplierSite::find($id);
         
@@ -3343,7 +3557,283 @@ class SupplierSiteController extends Controller
             $history->save();
         }
 
-        return back();
+         if($lastDocument->logo_attachment != $request->logo_attachment){
+            $history = new SupplierSiteAuditTrail;
+            $history->supplier_site_id = $lastDocument->id;
+            $history->activity_type = 'Logo';
+            $history->previous = $lastDocument->logo_attachment;
+            $history->current = $request->logo_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->logo_attachment) || $lastDocument->logo_attachment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+        if($lastDocument->supplier_attachment != $request->supplier_attachment){
+            $history = new SupplierSiteAuditTrail;
+            $history->supplier_site_id = $lastDocument->id;
+            $history->activity_type = 'File Attachment';
+            $history->previous = $lastDocument->supplier_attachment;
+            $history->current = $request->supplier_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->supplier_attachment) || $lastDocument->supplier_attachment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+        
+        if($lastDocument->gi_additional_attachment != $request->gi_additional_attachment){
+            $history = new SupplierSiteAuditTrail;
+            $history->supplier_site_id = $lastDocument->id;
+            $history->activity_type = 'Additional Attachment';
+            $history->previous = $lastDocument->gi_additional_attachment;
+            $history->current = $request->gi_additional_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->gi_additional_attachment) || $lastDocument->gi_additional_attachment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+        if($lastDocument->HOD_attachment != $request->HOD_attachment){
+            $history = new SupplierSiteAuditTrail;
+            $history->supplier_site_id = $lastDocument->id;
+            $history->activity_type = 'HOD Attachments';
+            $history->previous = $lastDocument->HOD_attachment;
+            $history->current = $request->HOD_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->HOD_attachment) || $lastDocument->HOD_attachment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+         if($lastDocument->hod_additional_attachment != $request->hod_additional_attachment){
+            $history = new SupplierSiteAuditTrail;
+            $history->supplier_site_id = $lastDocument->id;
+            $history->activity_type = 'HOD Additional Attachments';
+            $history->previous = $lastDocument->hod_additional_attachment;
+            $history->current = $request->hod_additional_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->hod_additional_attachment) || $lastDocument->hod_additional_attachment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+        if($lastDocument->supplier_detail_additional_attachment != $request->supplier_detail_additional_attachment){
+            $history = new SupplierSiteAuditTrail;
+            $history->supplier_site_id = $lastDocument->id;
+            $history->activity_type = 'Supplier Detail Additional Attachment';
+            $history->previous = $lastDocument->supplier_detail_additional_attachment;
+            $history->current = $request->supplier_detail_additional_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->supplier_detail_additional_attachment) || $lastDocument->supplier_detail_additional_attachment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+        if($lastDocument->iso_certificate_attachment != $request->iso_certificate_attachment){
+            $history = new SupplierSiteAuditTrail;
+            $history->supplier_site_id = $lastDocument->id;
+            $history->activity_type = 'Certificate Attachment';
+            $history->previous = $lastDocument->iso_certificate_attachment;
+            $history->current = $request->iso_certificate_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->iso_certificate_attachment) || $lastDocument->iso_certificate_attachment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+         if($lastDocument->QA_reviewer_attachment != $request->QA_reviewer_attachment){
+            $history = new SupplierSiteAuditTrail;
+            $history->supplier_site_id = $lastDocument->id;
+            $history->activity_type = 'QA Reviewer Attachment';
+            $history->previous = $lastDocument->QA_reviewer_attachment;
+            $history->current = $request->QA_reviewer_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->QA_reviewer_attachment) || $lastDocument->QA_reviewer_attachment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+         if($lastDocument->qa_reviewer_additional_attachment != $request->qa_reviewer_additional_attachment){
+            $history = new SupplierSiteAuditTrail;
+            $history->supplier_site_id = $lastDocument->id;
+            $history->activity_type = 'QA Reviewer Additional Attachment';
+            $history->previous = $lastDocument->qa_reviewer_additional_attachment;
+            $history->current = $request->qa_reviewer_additional_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->qa_reviewer_additional_attachment) || $lastDocument->qa_reviewer_additional_attachment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+        if($lastDocument->score_card_additional_attachment != $request->score_card_additional_attachment){
+            $history = new SupplierSiteAuditTrail;
+            $history->supplier_site_id = $lastDocument->id;
+            $history->activity_type = 'Score Card Additional Attachment';
+            $history->previous = $lastDocument->score_card_additional_attachment;
+            $history->current = $request->score_card_additional_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->score_card_additional_attachment) || $lastDocument->score_card_additional_attachment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+         if($lastDocument->risk_assessment_additional_attachment != $request->risk_assessment_additional_attachment){
+            $history = new SupplierSiteAuditTrail;
+            $history->supplier_site_id = $lastDocument->id;
+            $history->activity_type = 'Risk Additional Attachment';
+            $history->previous = $lastDocument->risk_assessment_additional_attachment;
+            $history->current = $request->risk_assessment_additional_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->risk_assessment_additional_attachment) || $lastDocument->risk_assessment_additional_attachment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+        if($lastDocument->QA_head_attachment != $request->QA_head_attachment){
+            $history = new SupplierSiteAuditTrail;
+            $history->supplier_site_id = $lastDocument->id;
+            $history->activity_type = 'QA Head Attachment';
+            $history->previous = $lastDocument->QA_head_attachment;
+            $history->current = $request->QA_head_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->QA_head_attachment) || $lastDocument->QA_head_attachment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+        if($lastDocument->qa_head_additional_attachment != $request->qa_head_additional_attachment){
+            $history = new SupplierSiteAuditTrail;
+            $history->supplier_site_id = $lastDocument->id;
+            $history->activity_type = 'QA Head Additional Attachment';
+            $history->previous = $lastDocument->qa_head_additional_attachment;
+            $history->current = $request->qa_head_additional_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->qa_head_additional_attachment) || $lastDocument->qa_head_additional_attachment === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+
+        toastr()->success("Record is updated Successfully");
+        return redirect(url('rcms/qms-dashboard'));
     }
 
     public function singleReport(Request $request, $id){
@@ -3574,7 +4064,7 @@ class SupplierSiteController extends Controller
             }
             if ($supplierSite->stage == 4) {
                 $supplierSite->stage = "6";
-                $supplierSite->status = "Obselete";
+                $supplierSite->status = "Obsolete";
                 $supplierSite->pending_rejection_by = Auth::user()->name;
                 $supplierSite->pending_rejection_on = Carbon::now()->format('d-M-Y');
                 $supplierSite->pending_rejection_comment = $request->comments;

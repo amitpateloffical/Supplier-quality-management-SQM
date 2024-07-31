@@ -2049,7 +2049,7 @@ class CapaController extends Controller
                 $capa->status = "QA Review";
                 $capa->completed_by = Auth::user()->name;
                 $capa->completed_on = Carbon::now()->format('d-M-Y');
-                $capa->completed_comment = $request->comment;
+                // $capa->completed_comment = $request->comment;
 
 
                     $history = new CapaAuditTrial();

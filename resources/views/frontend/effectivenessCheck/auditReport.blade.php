@@ -134,11 +134,11 @@
         border: 0;
     }
 
-    .second-table td:nth-child(1)>div {
+    .second-table td:nth-child(1) > div {
         margin-bottom: 10px;
     }
 
-    .second-table td:nth-child(1)>div:nth-last-child(1) {
+    .second-table td:nth-child(1) > div:nth-last-child(1) {
         margin-bottom: 0px;
     }
 
@@ -153,11 +153,11 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Effectiveness-Check Audit Trial Report
+                    Effectiveness-Check Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="" class="w-100">
+                        <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="Logo" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -165,13 +165,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> Effectiveness-Check No.</strong>
+                    <strong>Effectiveness-Check No.</strong>
                 </td>
                 <td class="w-40">
-
-
-                    {{ Helpers::getDivisionName(session()->get('division')) }}/EFF/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
-
+                    {{ Helpers::getDivisionName(session()->get('division')) }}/EC/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -184,131 +181,111 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                    <strong>Printed On:</strong> {{ date('d-M-Y') }}
                 </td>
                 <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                    <strong>Printed By:</strong> {{ Auth::user()->name }}
                 </td>
-
             </tr>
         </table>
     </footer>
 
-    
-
-
-        <div class="second-table">
-            <table>
-                <thead>
-                    <tr class="table_bg">
-                        <th>S.No</th>
-                        <th>Flow Changed From</th>
-                        <th>Flow Changed To</th>
-                        <th>Data Field</th>
-                        <th>Action Type</th>
-                        <th>Performer</th>
-                    </tr>
-                </thead>
-                {{-- @foreach ($data as $datas)
-                    <tr>
-                        @php
-                            $previousItem = null;
-                        @endphp --}}
-
-                <tbody>
-                    @foreach ($data as $index => $dataDemo)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>
-                                <div><strong>Changed From :</strong> {{ $dataDemo->change_from }}</div>
-                            </td>
-                            <td>
-                                <div><strong>Changed To :</strong> {{ $dataDemo->change_to }}</div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong>Data Field Name :</strong>
-                                    {{ $dataDemo->activity_type ?: 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;" class="imageContainer">
-                                    <!-- Assuming $dataDemo->image_url contains the URL of your image -->
-                                    @if ($dataDemo->activity_type == 'Activity Log')
-                                        <strong>Change From :</strong>
-                                        @if ($dataDemo->change_from)
-                                            {{-- Check if the change_from is a date --}}
-                                            @if (strtotime($dataDemo->change_from))
-                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d-M-Y') }}
-                                            @else
-                                                {{ str_replace(',', ', ', $dataDemo->change_from) }}
-                                            @endif
-                                        @elseif($dataDemo->change_from && trim($dataDemo->change_from) == '')
-                                            NULL
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    @else
-                                        <strong>Change From :</strong>
-                                        @if (!empty(strip_tags($dataDemo->previous)))
-                                            {{-- Check if the previous is a date --}}
-                                            @if (strtotime($dataDemo->previous))
-                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d-M-Y') }}
-                                            @else
-                                                {!! $dataDemo->previous !!}
-                                            @endif
-                                        @elseif($dataDemo->previous == null)
-                                            Null
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    @endif
-                                </div>
-                                <br>
-
-                                <div class="imageContainer">
-                                    @if ($dataDemo->activity_type == 'Activity Log')
-                                        <strong>Change To :</strong>
-                                        @if (strtotime($dataDemo->change_to))
-                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
-                                        @else
-                                            {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
-                                        @endif
-                                    @else
-                                        <strong>Change To :</strong>
-                                        @if (strtotime($dataDemo->current))
-                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
-                                        @else
-                                            {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
-                                        @endif
-                                    @endif
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    <strong>Change Type :</strong>
-                                    {{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
-                                </div>
-                            </td>
-                            <td>
-                                <div><strong>Action Name :</strong>
-                                    {{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}</div>
-                            </td>
-                            <td>
-                                <div><strong>Performed By :</strong>
-                                    {{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}</div>
-                                <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"><strong>Comments :</strong>
-                                    {{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-
-            </table>
-        </div>
-
-    
-
+    <div class="second-table">
+        <table>
+            <thead>
+                <tr class="table_bg">
+                    <th>S.No</th>
+                    <th>Flow Changed From</th>
+                    <th>Flow Changed To</th>
+                    <th>Data Field</th>
+                    <th>Action Type</th>
+                    <th>Performer</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($data as $index => $dataDemo)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>
+                        <div><strong>Changed From:</strong> {{ $dataDemo->change_from }}</div>
+                    </td>
+                    <td>
+                        <div><strong>Changed To:</strong> {{ $dataDemo->change_to }}</div>
+                    </td>
+                    <td>
+                        <div>
+                            <strong>Data Field Name:</strong>
+                            {{ $dataDemo->activity_type ?: 'Not Applicable' }}
+                        </div>
+                        <div style="margin-top: 5px;" class="imageContainer">
+                            @if ($dataDemo->activity_type == 'Activity Log')
+                            <strong>Change From:</strong>
+                            @if ($dataDemo->change_from)
+                            @if (strtotime($dataDemo->change_from))
+                            {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d-M-Y') }}
+                            @else
+                            {{ str_replace(',', ', ', $dataDemo->change_from) }}
+                            @endif
+                            @elseif($dataDemo->change_from && trim($dataDemo->change_from) == '')
+                            NULL
+                            @else
+                            Not Applicable
+                            @endif
+                            @else
+                            <strong>Change From:</strong>
+                            @if (!empty(strip_tags($dataDemo->previous)))
+                            @if (strtotime($dataDemo->previous))
+                            {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d-M-Y') }}
+                            @else
+                            {!! $dataDemo->previous !!}
+                            @endif
+                            @elseif($dataDemo->previous == null)
+                            Null
+                            @else
+                            Not Applicable
+                            @endif
+                            @endif
+                        </div>
+                        <br>
+                        <div class="imageContainer">
+                            @if ($dataDemo->activity_type == 'Activity Log')
+                            <strong>Change To:</strong>
+                            @if (strtotime($dataDemo->change_to))
+                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
+                            @else
+                            {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
+                            @endif
+                            @else
+                            <strong>Change To:</strong>
+                            @if (strtotime($dataDemo->current))
+                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
+                            @else
+                            {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
+                            @endif
+                            @endif
+                        </div>
+                        <div style="margin-top: 5px;">
+                            <strong>Change Type:</strong>
+                            {{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
+                        </div>
+                    </td>
+                    <td>
+                        <div><strong>Action Name:</strong>
+                            {{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}</div>
+                    </td>
+                    <td>
+                        <div><strong>Performed By:</strong>
+                            {{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}</div>
+                        <div style="margin-top: 5px;"> <strong>Performed On:</strong> {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
+                        </div>
+                        <div style="margin-top: 5px;"><strong>Comments:</strong>
+                            {{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
 </body>
 

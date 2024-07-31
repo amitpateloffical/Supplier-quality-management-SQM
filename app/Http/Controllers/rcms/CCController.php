@@ -555,7 +555,7 @@ class CCController extends Controller
         if(!empty($request->doc_change)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Nature Of ChangE';
+            $history->activity_type = 'Nature Of Change';
             $history->previous = "Null";
             $history->current = $openState->doc_change;
             $history->comment = "NA";
@@ -865,7 +865,7 @@ class CCController extends Controller
             $history->cc_id = $info->id;
             $history->activity_type = 'CFT Reviewer Person';
             $history->previous = "Null";
-            $history->current = $info->Microbiology_Person;
+            $history->current = Helpers::getInitiatorName($info->Microbiology_Person);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1341,6 +1341,8 @@ class CCController extends Controller
     {
 
         $data = CC::find($id);
+        $cftReviewerIds = explode(',', $data->Microbiology_Person);
+        // dd($cftReviewerIds);
         $cc_lid = $data->id;
         $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
         $docdetail = Docdetail::where('cc_id', $id)->first();
@@ -1375,7 +1377,8 @@ class CCController extends Controller
             "cft_aff",
             "due_date_extension",
             "cc_lid",
-            "pre"
+            "pre",
+            'cftReviewerIds'
         ));
     }
 
@@ -1390,7 +1393,7 @@ class CCController extends Controller
         $openState->short_description = $request->short_description;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
-        $openState->doc_change = $request->nature_Change;
+        $openState->doc_change = $request->doc_change;
         $openState->If_Others = $request->If_Others;
         $openState->Division_Code = $request->div_code;
         $openState->severity_level1 = $request->severity_level1;
@@ -1757,22 +1760,22 @@ class CCController extends Controller
             $history->save();
         }
 
-        // if ($lastDocument-nature_Change != $openState->nature_Change) {
-        //     $history = new RcmDocHistory;
-        //     $history->cc_id = $id;
-        //     $history->activity_type = 'Nature Of Change';
-        //     $history->previous = $lastDocument->nature_Change;
-        //     $history->current = $openState->nature_Change;
-        //     $history->comment = $request->nature_Change_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     $history->action_name = 'Update';
-        //     $history->save();
-        // }
+        if ($lastDocument->nature_Change != $openState->nature_Change) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Nature Of Change';
+            $history->previous = $lastDocument->nature_Change;
+            $history->current = $openState->nature_Change;
+            $history->comment = $request->nature_Change_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
 
 
         if ($lastDocument->due_date != $openState->due_date) {
@@ -2159,7 +2162,7 @@ class CCController extends Controller
             $history->cc_id = $id;
             $history->activity_type = 'CFT Reviewer Person';
             $history->previous = $lastinfo->Microbiology_Person;
-            $history->current = $info->Microbiology_Person;
+            $history->current = Helpers::getInitiatorName($info->Microbiology_Person);
             $history->comment = $request->Microbiology_Person_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3022,6 +3025,7 @@ class CCController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $openState = CC::find($id);
+            $lastDocument = CC::find($id);
  
             $changeControl->stage = "0";
             $changeControl->status = "Closed- Cancelled";

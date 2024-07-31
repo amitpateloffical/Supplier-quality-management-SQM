@@ -70,17 +70,17 @@
             margin-bottom: 7px;
         }
 
-        /* .sub-head {
-                                                                                                                                                                                            margin-left: 280px;
-                                                                                                                                                                                            margin-right: 280px;
-                                                                                                                                                                                            color: #4274da;
-                                                                                                                                                                                            border-bottom: 2px solid #4274da;
-                                                                                                                                                                                            padding-bottom: 5px;
-                                                                                                                                                                                            margin-bottom: 20px;
-                                                                                                                                                                                            font-weight: bold;
-                                                                                                                                                                                            font-size: 1.2rem;
+        /* .sub-head { 
+        margin-left: 280px;
+        margin-right: 280px;
+        color: #4274da;
+        border-bottom: 2px solid #4274da;
+        padding-bottom: 5px;
+        margin-bottom: 20px;
+        font-weight: bold;
+        font-size: 1.2rem;
+         } */
 
-                                                                                                                                                                                        } */
         .launch_extension {
             background: #4274da;
             color: white;
@@ -129,11 +129,13 @@
             margin-bottom: 3px;
         }
 
-        /* .saveButton:disabled{
-                                                                                                                                                                                                background: black!important;
-                                                                                                                                                                                                border:  black!important;
-
-                                                                                                                                                                                            }  */
+        /* .saveButton:disabled
+        {
+           background: black!important;
+           border:  black!important;
+         }  
+           
+        */
 
         .main-danger-block {
             display: flex;
@@ -202,45 +204,80 @@
 
     <script>
         $(document).ready(function() {
-            let certificationDataIndex =
-                {{ $certificationData && is_array($certificationData) ? count($certificationData) : 1 }};
-            $('#certificationData').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        ' <td><input type="text" name="certificationData[' + certificationDataIndex +
-                        '][type]"></td>' +
-                        ' <td><input type="text" name="certificationData[' + certificationDataIndex +
-                        '][issuingAgency]"></td>' +
-                        '<td><input type="date" name="certificationData[' + certificationDataIndex +
-                        '][issueDate]"></td>' +
-                        '<td><input type="date" name="certificationData[' + certificationDataIndex +
-                        '][expiryDate]"></td>' +
-                        ' <td><input type="text" name="certificationData[' + certificationDataIndex +
-                        '][supportingDoc]"></td>' +
-                        '<td><input type="text" name="certificationData[' + certificationDataIndex +
-                        '][remarks]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                        '</tr>';
+            let certificateIndex =
+                {{ isset($certificationData) && is_array($certificationData) ? count($certificationData) : 1 }};
 
-                    certificationDataIndex++;
-                    return html;
+            $('#certificationData').click(function(e) {
+                e.preventDefault();
+
+                function generateTableRow(index) {
+                    return `
+                <tr>
+                    <td><input disabled type="text" name="serial[]" value="${index + 1}"></td>
+                    <td><input type="text" name="certificationData[${index}][type]"></td>
+                    <td><input type="text" name="certificationData[${index}][issuingAgency]"></td>
+                    <td><input type="date" name="certificationData[${index}][issueDate]" id="issueDate_${index}" onchange="updateExpiryDateMin(${index})"></td>
+                    <td><input type="date" name="certificationData[${index}][expiryDate]" id="expiryDate_${index}" onchange="validateExpiryDate(${index})"></td>
+                    <td><input type="text" name="certificationData[${index}][supportingDoc]"></td>
+                    <td><input type="text" name="certificationData[${index}][remarks]"></td>
+                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                </tr>`;
                 }
 
                 var tableBody = $('#certificationDataTable tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
+                var newRow = generateTableRow(certificateIndex);
                 tableBody.append(newRow);
+                certificateIndex++;
+            });
+
+            $(document).on('click', '.removeRowBtn', function() {
+                $(this).closest('tr').remove();
+            });
+
+            $(document).on('change', '[id^="issueDate_"]', function() {
+                var index = $(this).attr('id').split('_')[1];
+                updateExpiryDateMin(index);
+            });
+
+            $(document).on('change', '[id^="expiryDate_"]', function() {
+                var index = $(this).attr('id').split('_')[1];
+                validateExpiryDate(index);
             });
         });
+
+        function updateExpiryDateMin(index) {
+            var issueDateInput = document.getElementById('issueDate_' + index);
+            var expiryDateInput = document.getElementById('expiryDate_' + index);
+
+            if (issueDateInput && expiryDateInput) {
+                var issueDate = new Date(issueDateInput.value);
+                if (issueDate) {
+                    expiryDateInput.min = issueDate.toISOString().split('T')[0];
+                    if (new Date(expiryDateInput.value) < issueDate) {
+                        expiryDateInput.value = expiryDateInput.min;
+                    }
+                }
+            }
+        }
+
+        function validateExpiryDate(index) {
+            var issueDateInput = document.getElementById('issueDate_' + index);
+            var expiryDateInput = document.getElementById('expiryDate_' + index);
+
+            if (issueDateInput && expiryDateInput) {
+                var issueDate = new Date(issueDateInput.value);
+                var expiryDate = new Date(expiryDateInput.value);
+
+                if (expiryDate < issueDate) {
+                    expiryDateInput.value = issueDate.toISOString().split('T')[0];
+                    alert('Expiry date cannot be earlier than issue date.');
+                }
+            }
+        }
     </script>
-    <script>
-        $(document).on('click', '.removeRowBtn', function() {
-            $(this).closest('tr').remove();
-        })
-    </script>
+
+
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -584,8 +621,8 @@
                                         <option value="">Select Supplier</option>
                                         @if (!empty($users))
                                             @foreach ($users as $user)
-                                                <option value="{{ $user->id }}"
-                                                    @if ($data->supplier_person == $user->id) selected @endif>{{ $user->name }}
+                                                <option value="{{ $user->name }}"
+                                                    @if ($data->supplier_person == $user->name) selected @endif>{{ $user->name }}
                                                 </option>
                                             @endforeach
                                         @endif
@@ -641,17 +678,18 @@
                                         @endif
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppliers Products">Suppliers Products</label>
-                                    <div class="relative-container">
-                                        <input id="supplier_products" type="text" name="supplier_products"
-                                            maxlength="255" value="{{ $data->supplier_products }}" class="mic-input">
-                                        <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'supplier_products', 'id' => 'supplier_products'])
-                                            @endcomponent
-                                        </button>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Suppliers Products">Suppliers Products</label>
+                                        <div class="relative-container">
+                                            <input id="supplier_products" type="text" name="supplier_products"
+                                                maxlength="255" value="{{ $data->supplier_products }}"
+                                                class="mic-input">
+                                            <button class="mic-btn" type="button">
+                                                @component('frontend.forms.language-model', ['name' => 'supplier_products', 'id' => 'supplier_products'])
+                                                @endcomponent
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -659,7 +697,7 @@
                                 <div class="group-input">
                                     <label for="Description">Description</label>
                                     <div class="relative-container">
-                                        <textarea id="description" name="description" maxlength="255" class="mic-input"> {{ $data->description }}</textarea>
+                                        <textarea id="description" name="description" class="mic-input"> {{ $data->description }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'description', 'id' => 'description'])
                                             @endcomponent
@@ -798,7 +836,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Supply from">Supply from</label>
+                                    <label for="Supply from">Supply From</label>
                                     <div class="relative-container">
                                         <input id="supply_from" type="text" name="supply_from" maxlength="255"
                                             value="{{ $data->supply_from }}" placeholder="Enter Supply From"
@@ -814,7 +852,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Supply to">Supply to</label>
+                                    <label for="Supply to">Supply To</label>
                                     <div class="relative-container">
                                         <input id="supply_to" type="text" name="supply_to" maxlength="255"
                                             value="{{ $data->supply_to }}" placeholder="Enter Supply To"
@@ -968,7 +1006,7 @@
 
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                          {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
                                 </a>
@@ -986,7 +1024,7 @@
                                 <div class="group-input">
                                     <label for="HOD_feedback">HOD Feedback</label>
                                     <div class="relative-container">
-                                        <textarea id="HOD_feedback" name="HOD_feedback" maxlength="255" placeholder="Enter HOD Feedback" class="mic-input">{{ $data->HOD_feedback }}</textarea>
+                                        <textarea id="HOD_feedback" name="HOD_feedback" placeholder="Enter HOD Feedback" class="mic-input">{{ $data->HOD_feedback }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'HOD_feedback', 'id' => 'HOD_feedback'])
                                             @endcomponent
@@ -1000,7 +1038,7 @@
                                 <div class="group-input">
                                     <label for="HOD_comment">HOD Comment</label>
                                     <div class="relative-container">
-                                        <textarea id="HOD_comment" name="HOD_comment" maxlength="255" placeholder="Enter HOD Comment" class="mic-input">{{ $data->HOD_comment }}</textarea>
+                                        <textarea id="HOD_comment" name="HOD_comment" placeholder="Enter HOD Comment" class="mic-input">{{ $data->HOD_comment }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'HOD_comment', 'id' => 'HOD_comment'])
                                             @endcomponent
@@ -1108,59 +1146,58 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="certificationDataTable">
                                             @if ($certificationData && is_array($certificationData))
                                                 @foreach ($certificationData as $gridData)
                                                     <tr>
-                                                        <td>
-                                                            <input disabled type="text"
+                                                        <td><input disabled type="text"
                                                                 name="certificationData[{{ $loop->index }}][serial]"
-                                                                value="{{ $loop->index + 1 }}">
-                                                        </td>
-                                                        <td>
-                                                            <input class="type" type="text"
+                                                                value="{{ $loop->index + 1 }}"></td>
+                                                        <td><input type="text"
                                                                 name="certificationData[{{ $loop->index }}][type]"
                                                                 value="{{ isset($gridData['type']) ? $gridData['type'] : '' }}">
                                                         </td>
-                                                        <td>
-                                                            <input class="issuingAgency" type="text"
+                                                        <td><input type="text"
                                                                 name="certificationData[{{ $loop->index }}][issuingAgency]"
                                                                 value="{{ isset($gridData['issuingAgency']) ? $gridData['issuingAgency'] : '' }}">
                                                         </td>
-                                                        <td>
-                                                            <input class="issueDate" type="date"
+                                                        <td><input type="date"
                                                                 name="certificationData[{{ $loop->index }}][issueDate]"
-                                                                value="{{ isset($gridData['issueDate']) ? $gridData['issueDate'] : '' }}">
-                                                        </td>
-                                                        <td>
-                                                            <input class="expiryDate" type="date"
+                                                                value="{{ isset($gridData['issueDate']) ? $gridData['issueDate'] : '' }}"
+                                                                id="issueDate_{{ $loop->index }}"
+                                                                onchange="updateExpiryDateMin({{ $loop->index }})"></td>
+                                                        <td><input type="date"
                                                                 name="certificationData[{{ $loop->index }}][expiryDate]"
-                                                                value="{{ isset($gridData['expiryDate']) ? $gridData['expiryDate'] : '' }}">
-                                                        </td>
-                                                        <td>
-                                                            <input class="supportingDoc" type="text"
+                                                                value="{{ isset($gridData['expiryDate']) ? $gridData['expiryDate'] : '' }}"
+                                                                id="expiryDate_{{ $loop->index }}"></td>
+                                                        <td><input type="text"
                                                                 name="certificationData[{{ $loop->index }}][supportingDoc]"
                                                                 value="{{ isset($gridData['supportingDoc']) ? $gridData['supportingDoc'] : '' }}">
                                                         </td>
-                                                        <td>
-                                                            <input class="remarks" type="text"
+                                                        <td><input type="text"
                                                                 name="certificationData[{{ $loop->index }}][remarks]"
                                                                 value="{{ isset($gridData['remarks']) ? $gridData['remarks'] : '' }}">
                                                         </td>
-                                                        <td><button type="text" class="removeRowBtn">Remove</button>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button>
                                                         </td>
                                                     </tr>
                                                 @endforeach
                                             @else
-                                                <td><input type="text" name="certificationData[0][serial]"
-                                                        value="1" readonly></td>
-                                                <td><input type="text" name="certificationData[0][type]"></td>
-                                                <td><input type="text" name="certificationData[0][issuingAgency]"></td>
-                                                <td><input type="date" name="certificationData[0][issueDate]"></td>
-                                                <td><input type="date" name="certificationData[0][expiryDate]"></td>
-                                                <td><input type="text" name="certificationData[0][supportingDoc]"></td>
-                                                <td><input type="text" name="certificationData[0][remarks]"></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                <tr>
+                                                    <td><input disabled type="text" name="certificationData[0][serial]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="certificationData[0][type]"></td>
+                                                    <td><input type="text" name="certificationData[0][issuingAgency]">
+                                                    </td>
+                                                    <td><input type="date" name="certificationData[0][issueDate]"
+                                                            id="issueDate_0" onchange="updateExpiryDateMin(0)"></td>
+                                                    <td><input type="date" name="certificationData[0][expiryDate]"
+                                                            id="expiryDate_0"></td>
+                                                    <td><input type="text" name="certificationData[0][supportingDoc]">
+                                                    </td>
+                                                    <td><input type="text" name="certificationData[0][remarks]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
                                             @endif
                                         </tbody>
                                     </table>
@@ -1280,7 +1317,7 @@
                                 <div class="group-input">
                                     <label for="Other Contacts">Other Contacts</label>
                                     <div class="relative-container">
-                                        <textarea id="other_contacts" name="other_contacts" maxlength="255" placeholder="Enter Other Contacts"
+                                        <textarea id="other_contacts" name="other_contacts" placeholder="Enter Other Contacts"
                                             class="mic-input">{{ $data->other_contacts }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'other_contacts', 'id' => 'other_contacts'])
@@ -1295,7 +1332,7 @@
                                 <div class="group-input">
                                     <label for="Supplier Services">Supplier Services</label>
                                     <div class="relative-container">
-                                        <textarea id="supplier_serivce" name="supplier_serivce" cols="30" maxlength="255"
+                                        <textarea id="supplier_serivce" name="supplier_serivce" cols="30" 
                                             placeholder="Enter Supplier Service" class="mic-input">{{ $data->supplier_serivce }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'supplier_serivce', 'id' => 'supplier_serivce'])
@@ -1449,7 +1486,7 @@
                                 <div class="group-input">
                                     <label for="Address">Address</label>
                                     <div class="relative-container">
-                                        <textarea id="address" name="address" maxlength="255" placeholder="Enter Address" class="mic-input">{{ $data->address }}</textarea>
+                                        <textarea id="address" name="address" placeholder="Enter Address" class="mic-input">{{ $data->address }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'address', 'id' => 'address'])
                                             @endcomponent
@@ -1607,10 +1644,10 @@
                                 <div class="group-input">
                                     <label for="Quality Management ">Manufacturing Sites </label>
                                     <div class="relative-container">
-                                        <input id="distribution_sites" type="text" name="distribution_sites"
-                                            maxlength="255" value="{{ $data->distribution_sites }}" class="mic-input">
+                                        <input id="manufacturing_sited" type="text" name="manufacturing_sited"
+                                            maxlength="255" value="{{ $data->manufacturing_sited }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'distribution_sites', 'id' => 'distribution_sites'])
+                                            @component('frontend.forms.language-model', ['name' => 'manufacturing_sited', 'id' => 'manufacturing_sited'])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1621,10 +1658,10 @@
                                 <div class="group-input">
                                     <label for="Quality Management ">Quality Management </label>
                                     <div class="relative-container">
-                                        <input id="distribution_sites" type="text" name="distribution_sites"
-                                            maxlength="255" value="{{ $data->distribution_sites }}" class="mic-input">
+                                        <input id="quality_management" type="text" name="quality_management"
+                                            maxlength="255" value="{{ $data->quality_management }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'distribution_sites', 'id' => 'distribution_sites'])
+                                            @component('frontend.forms.language-model', ['name' => 'quality_management', 'id' => 'quality_management'])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1636,7 +1673,7 @@
                                 <div class="group-input">
                                     <label for="Business History">Business History</label>
                                     <div class="relative-container">
-                                        <textarea id="bussiness_history" name="bussiness_history" maxlength="255" placeholder="Enter Business History"
+                                        <textarea id="bussiness_history" name="bussiness_history" placeholder="Enter Business History"
                                             class="mic-input">{{ $data->bussiness_history }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'bussiness_history', 'id' => 'bussiness_history'])
@@ -1652,7 +1689,7 @@
                                 <div class="group-input">
                                     <label for="Performance History ">Performance History </label>
                                     <div class="relative-container">
-                                        <textarea id="performance_history" name="performance_history" maxlength="255"
+                                        <textarea id="performance_history" name="performance_history"
                                             placeholder="Enter Performance History" class="mic-input">{{ $data->performance_history }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'performance_history', 'id' => 'performance_history'])
@@ -1667,7 +1704,7 @@
                                 <div class="group-input">
                                     <label for="Compliance Risk">Compliance Risk</label>
                                     <div class="relative-container">
-                                        <textarea id="compliance_risk" name="compliance_risk" maxlength="255" placeholder="Enter Compliance Risk"
+                                        <textarea id="compliance_risk" name="compliance_risk" placeholder="Enter Compliance Risk"
                                             class="mic-input">{{ $data->compliance_risk }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'compliance_risk', 'id' => 'compliance_risk'])
@@ -2131,7 +2168,7 @@
                                 <div class="group-input">
                                     <label for="QA_reviewer_feedback">QA Reviewer Feedback</label>
                                     <div class="relative-container">
-                                        <textarea id="QA_reviewer_feedback" name="QA_reviewer_feedback" maxlength="255"
+                                        <textarea id="QA_reviewer_feedback" name="QA_reviewer_feedback" 
                                             placeholder="Enter QA Reviewer Feedback" class="mic-input">{{ $data->QA_reviewer_feedback }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'QA_reviewer_feedback', 'id' => 'QA_reviewer_feedback'])
@@ -2146,7 +2183,7 @@
                                 <div class="group-input">
                                     <label for="QA_reviewer_comment">QA Reviewer Comment</label>
                                     <div class="relative-container">
-                                        <textarea id="QA_reviewer_comment" name="QA_reviewer_comment" maxlength="255"
+                                        <textarea id="QA_reviewer_comment" name="QA_reviewer_comment" 
                                             placeholder="Enter QA Reviewer Comment" class="mic-input">{{ $data->QA_reviewer_comment }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'QA_reviewer_comment', 'id' => 'QA_reviewer_comment'])
@@ -2243,12 +2280,12 @@
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Last Audit Date</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="last_audit_date" placeholder="DD-MMM-YYYY"
+                                        <input type="text" id="last_audit_date" readonly placeholder="DD-MMM-YYYY"
                                             value="{{ Helpers::getdateFormat($data->last_audit_date) }}" />
                                         <input type="date" name="last_audit_date"
-                                            value="{{ $data->last_audit_date }}"
-                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'last_audit_date')" />
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            {{-- value="{{ $data->last_audit_date }}" --}} {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" --}}
+                                            oninput="handleDateInput(this, 'last_audit_date'); updateNextAuditDate(this.value)" />
                                     </div>
                                 </div>
                             </div>
@@ -2259,8 +2296,8 @@
                                         <input type="text" id="next_audit_date" placeholder="DD-MMM-YYYY"
                                             value="{{ Helpers::getdateFormat($data->next_audit_date) }}" />
                                         <input type="date" name="next_audit_date"
-                                            value="{{ $data->next_audit_date }}"
-                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            {{-- value="{{ $data->next_audit_date }}" --}} {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" --}}
                                             oninput="handleDateInput(this, 'next_audit_date')" />
                                     </div>
                                 </div>
@@ -2546,7 +2583,7 @@
                                 <div class="group-input">
                                     <label for="QA_head_comment">QA Head Comment</label>
                                     <div class="relative-container">
-                                        <textarea id="QA_head_comment" name="QA_head_comment" maxlength="255" placeholder="Enter QA Head Comment"
+                                        <textarea id="QA_head_comment" name="QA_head_comment" placeholder="Enter QA Head Comment"
                                             class="mic-input">{{ $data->QA_head_comment }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'QA_head_comment', 'id' => 'QA_head_comment'])
@@ -2811,6 +2848,12 @@
                                     <div class="static">{{ $data->rejectedDueToQuality_comment }}</div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a>
+                            </button>  
                         </div>
                     </div>
                 </div>
@@ -3186,6 +3229,31 @@
             };
             const formattedDate = date.toLocaleDateString('en-US', options).replace(/ /g, '-');
             target.value = formattedDate;
+        }
+        
+        function updateNextAuditDate(lastAuditDate) {
+            const date = new Date(lastAuditDate);
+
+            // Calculate the next audit date (one day after the last audit date)
+            date.setDate(date.getmonth() + 1);
+
+            // Format the date in the desired format
+            const formattedDate = date.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            }).replace(/ /g, '-');
+
+            // Get the next audit date input fields
+            const nextAuditDateInput = document.querySelector('input[name="next_audit_date"]');
+            const nextAuditDateDisplay = document.getElementById('next_audit_date');
+
+            // Set the value of the input fields
+            nextAuditDateInput.value = date.toISOString().split('T')[0];
+            nextAuditDateDisplay.value = formattedDate;
+
+            // Make the input field editable
+            nextAuditDateInput.readOnly = false;
         }
     </script>
 @endsection

@@ -217,7 +217,7 @@
     {{-- -------------------------------------------------------- --}}
     <script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    
+
         </script>
         <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -380,9 +380,8 @@
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td> <select name="facility_name[]" id="facility_name"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>  <option value="">-- Select --</option>  <option value="Facility">Facility</option>  <option value="Equipment"> Equipment</option> <option value="Instrument">Instrument</option></select> </td>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        '<td><select name="facility_name[]" id="facility_name"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>  <option value="">-- Select --</option>  <option value="Facility">Facility</option><option value="Equipment"> Equipment</option> <option value="Instrument">Instrument</option></select> </td>' +
                         '<td><input type="text" name="IDnumber[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}></td>' +
                         '<td><input type="text" name="Remarks[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
@@ -453,7 +452,7 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
                         '<td><input type="text" name="product_name[]"></td>' +
-                        '<td> <select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' +
+                        '<td><select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="1">1 <option value="2">2</option> <option value="3">3</option><option value="4">4</option> <option value="5">5</option><option value="6">6</option> <option value="7">7</option> <option value="8">8</option><option value="9">9</option><option value="Final">Final</option> </select></td>' +
                         '<td><input type="text" name="batch_no[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
@@ -778,7 +777,7 @@
                         @elseif(
                             $data->stage == 4 &&
                                 (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
-                            
+
                                 <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#more-info-required-modal">
                                     More Info Required
@@ -786,7 +785,7 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     CFT Review Complete
                                 </button>
-                           
+
                         @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Opened
@@ -862,7 +861,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             QA Final Approval Complete
                             </button>
-                        
+
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -1083,7 +1082,7 @@
 
                     <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                 </div>
-                
+
                 <form  id="auditForm" action="{{ route('deviationupdate', $data->id) }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
@@ -1113,7 +1112,7 @@
                                         </div>
                                     </div>
 
-                                    
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Division Code"><b>Site/Location Code</b></label>
@@ -1142,7 +1141,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12 new-date-data-field">
+                                    <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Due Date">Due Date</label>
                                             <div><small class="text-primary">If revising Due Date, kindly mention revision
@@ -1167,7 +1166,7 @@
 
 
 
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Department</b> <span
                                                     class="text-danger">*</span></label>
@@ -1245,8 +1244,8 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description<span class="text-danger"> *</span></label>
-                                        <span id="rchars">255 characters remaining</span>
+                                        <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255 </span>
+                                        characters remaining
                                         <div style="position:relative;">
                                             <input name="short_description" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="docname"
                                                 type="text" maxlength="255" required value="{{ $data->short_description }}" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}/>
@@ -1264,12 +1263,12 @@
                                         function handleDateInput(element, textInputID) {
                                         let textInput = document.getElementById(textInputID);
                                         const date = new Date(element.value);
-                                
+
                                         if (!isNaN(date)) {
                                             const day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
                                             const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Ensuring two digits
                                             const year = date.getFullYear();
-                                
+
                                             // Formatting the date in "DD/MM/YYYY" format
                                             textInput.value = `${day}/${month}/${year}`;
                                         } else {
@@ -1277,7 +1276,7 @@
                                         }
                                     }
                                     </script>
-                                    
+
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Deviation date">Deviation Observed On<span
@@ -1308,7 +1307,7 @@
                                     </div>
 
 
-                                    <div class="col-lg-6 new-time-data-field">
+    <div class="col-lg-6 new-time-data-field">
     <div class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
         <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
         <div style="position:relative;">
@@ -1352,7 +1351,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Audit Schedule End Date">Deviation Reported on<span
@@ -1409,7 +1408,7 @@
                                                 name="audit_type[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                 id="audit_type">
                                                 {{-- <option value="">Enter Your Selection Here</option> --}}
-                                                
+
                                                 <option
                                                     value="Facility"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                     {{ strpos($data->audit_type, 'Facility') !== false ? 'selected' : '' }}>
@@ -1833,17 +1832,9 @@
                                                             @if ($grid_data2->product_name)
                                                                 @foreach (unserialize($grid_data2->product_name) as $key => $temps)
                                                                 <tr>
-                                                                    <td><input disabled type="text"
-                                                                            name="serial[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                                            value="{{ $key + 1 }}"></td>
-                                                                    <td><input class="productName" type="text"
-                                                                            name="product_name[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                                            value="{{ isset(unserialize($grid_data2->product_name)[$key]) ? unserialize($grid_data2->product_name)[$key] : '' }}">
-                                                                    </td>
-                                                                    <td>
-                                                                        <select class="productStage"
-                                                                            name="product_stage[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                                            id="product_stage">
+                                                                    <td><input disabled type="text" name="serial[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
+                                                                    <td><input class="productName" type="text" name="product_name[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} value="{{ isset(unserialize($grid_data2->product_name)[$key]) ? unserialize($grid_data2->product_name)[$key] : '' }}"></td>
+                                                                    <td><select class="productStage" name="product_stage[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="product_stage">
                                                                             @if (isset($grid_data2->product_stage))
                                                                                 @php
                                                                                     $product_stage = unserialize(
@@ -1851,39 +1842,18 @@
                                                                                     );
                                                                                 @endphp
                                                                                 <option value="">-- Select -- </option>
-                                                                                <option value="1"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '1' ? 'selected' : '1' }}>
-                                                                                    1</option>
-                                                                                <option value="2"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '2' ? 'selected' : '2' }}>
-                                                                                    2</option>
-                                                                                <option value="3"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '3' ? 'selected' : '3' }}>
-                                                                                    3</option>
-                                                                                <option value="4"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '4' ? 'selected' : '4' }}>
-                                                                                    4</option>
-                                                                                <option value="5"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '5' ? 'selected' : '5' }}>
-                                                                                    5</option>
-                                                                                <option value="6"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '6' ? 'selected' : '6' }}>
-                                                                                    6</option>
-                                                                                <option value="7"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '7' ? 'selected' : '7' }}>
-                                                                                    7</option>
-                                                                                <option value="8"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '8' ? 'selected' : '8' }}>
-                                                                                    8</option>
-                                                                                <option value="9"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '9' ? 'selected' : '9' }}>
-                                                                                    9</option>
-                                                                                <option value="Final"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == 'Final' ? 'selected' : 'Final' }}>
-                                                                                    Final</option>
+                                                                                <option value="1" {{ isset($product_stage[$key]) && $product_stage[$key] == '1' ? 'selected' : '1' }}>1</option>
+                                                                                <option value="2" {{ isset($product_stage[$key]) && $product_stage[$key] == '2' ? 'selected' : '2' }}>2</option>
+                                                                                <option value="3" {{ isset($product_stage[$key]) && $product_stage[$key] == '3' ? 'selected' : '3' }}>3</option>
+                                                                                <option value="4" {{ isset($product_stage[$key]) && $product_stage[$key] == '4' ? 'selected' : '4' }}>4</option>
+                                                                                <option value="5" {{ isset($product_stage[$key]) && $product_stage[$key] == '5' ? 'selected' : '5' }}>5</option>
+                                                                                <option value="6" {{ isset($product_stage[$key]) && $product_stage[$key] == '6' ? 'selected' : '6' }}>6</option>
+                                                                                <option value="7" {{ isset($product_stage[$key]) && $product_stage[$key] == '7' ? 'selected' : '7' }}>7</option>
+                                                                                <option value="8" {{ isset($product_stage[$key]) && $product_stage[$key] == '8' ? 'selected' : '8' }}>8</option>
+                                                                                <option value="9" {{ isset($product_stage[$key]) && $product_stage[$key] == '9' ? 'selected' : '9' }}>9</option>
+                                                                                <option value="Final" {{ isset($product_stage[$key]) && $product_stage[$key] == 'Final' ? 'selected' : 'Final' }}>Final</option>
                                                                             @endif
-                                                                        </select>
-                                                                    </td>
+                                                                        </select></td>
                                                                     <td><input class="productBatchNo" type="text"
                                                                             name="batch_no[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                                             value="{{ isset(unserialize($grid_data2->batch_no)[$key]) ? unserialize($grid_data2->batch_no)[$key] : '' }}">
@@ -2556,7 +2526,7 @@
                                             </select>
                                              @error('capa_required')
                                                 <div class="text-danger">{{ $message }}</div>
-                                            @enderror 
+                                            @enderror
                                         </div>
                                     </div> --}}
 
@@ -2635,6 +2605,8 @@
                                         <label for="nature_of_repeat">Repeat Nature <span id="asteriskInviRecurring"
                                                 style="display: {{ $data->short_description_required == 'Recurring' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
                                         <textarea class="nature_of_repeat"
                                             name="nature_of_repeat"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="nature_of_repeat"
                                             class="nature_of_repeat">{{ $data->nature_of_repeat }}</textarea>
@@ -2687,7 +2659,7 @@
                                         }
                                     }
                                 </script>
-                                  
+
 
                                     {{-- <div class="col-md-12">
                                         <div class="group-input" id="investigation_details_block" style="display: none">
@@ -2749,7 +2721,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                </div> 
+                                </div>
                                     {{-- <div class="col-5">
                                     {{-- <div class="group-input">
                                             @php
@@ -2826,7 +2798,7 @@
                                         <label for="QAInitialRemark">QA Initial Remarks <span class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         <div style="position:relative;">
-                                            <textarea @if ($data->stage == 3) required @endif 
+                                            <textarea @if ($data->stage == 3) required @endif
                                                 name="QAInitialRemark" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-6" class="mic-input">{{ $data->QAInitialRemark }}</textarea>
                                             <button class="mic-btn" type="button">
                                                 <i class="fas fa-microphone"></i>
@@ -2996,7 +2968,7 @@
                                         @enderror
                                     </div> --}}
                                 </div>
-                                
+
 
                                 {{-- <div class="col-lg-12">
                                     <div class="group-input">
@@ -3151,7 +3123,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input disabled type="file" 
+                                                <input disabled type="file"
                                                     name="Initial_attachment[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'Initial_attachment')" multiple>
                                             </div>
@@ -3316,7 +3288,7 @@
                                                 @if ($data->stage == 3 || Auth::user()->id != $data1->Production_person) readonly @endif name="Production_assessment" id="summernote-17">{{ $data1->Production_assessment }}</textarea>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md-6 mb-3 p_erson">
                                         <div class="group-input">
                                             <label for="Production Review Completed By">Production Review Completed
@@ -3331,7 +3303,7 @@
                                     </div>
                                     <div class="col-lg-6 p_erson">
                                         <div class="group-input ">
-                                            <label for="  Production Review Completed On  ">Production Review Completedss
+                                            <label for="  Production Review Completed On  ">Production Review Completed
                                                 On</label>
                                                 <input type="text" id="production_on" readonly
                                                 name="production_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
@@ -4381,6 +4353,8 @@
                                             Laboratory) <span id="asteriskAD1"
                                                 style="display: {{ $data1->Analytical_Development_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
                                         <textarea @if ($data1->Analytical_Development_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Analytical_Development_person || $data->stage == 11? 'tiny Analytical_Development_assessment' : 'tiny-disable' }}
                                             name="Analytical_Development_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Analytical_Development_person) readonly @endif
                                             id="summernote-27">{{ $data1->Analytical_Development_assessment }}</textarea>
@@ -4545,6 +4519,8 @@
                                             Laboratory / Kilo Lab) <span id="asteriskPDL1"
                                                 style="display: {{ $data1->Kilo_Lab_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
                                         <textarea @if ($data1->Kilo_Lab_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Kilo_Lab_person || $data->stage == 11 ? 'tiny Analytical_Development_assessment' : 'tiny-disable' }}
                                             name="Kilo_Lab_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Kilo_Lab_person) readonly @endif id="summernote-29">{{ $data1->Kilo_Lab_assessment }}</textarea>
                                     </div>
@@ -4709,6 +4685,8 @@
                                             Design) <span id="asteriskTT1"
                                                 style="display: {{ $data1->Technology_transfer_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
                                         <textarea @if ($data1->Technology_transfer_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Technology_transfer_person || $data->stage == 11 ? 'tiny Technology_transfer_assessment' : 'tiny-disable' }}
                                             name="Technology_transfer_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Technology_transfer_person) readonly @endif id="summernote-31">{{ $data1->Technology_transfer_assessment }}</textarea>
                                     </div>
@@ -4876,6 +4854,8 @@
                                             Safety) <span id="asteriskEH1"
                                                 style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
                                         <textarea @if ($data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Environment_Health_Safety_person || $data->stage == 11 ? 'tiny' : 'tiny-disable' }} name="Health_Safety_assessment"
                                             @if ($data->stage == 3 || Auth::user()->id != $data1->Environment_Health_Safety_person) readonly @endif id="summernote-33">{{ $data1->Health_Safety_assessment }}</textarea>
                                     </div>
@@ -5042,6 +5022,8 @@
                                             Administration ) <span id="asteriskHR1"
                                                 style="display: {{ $data1->Human_Resource_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
                                         <textarea @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Human_Resource_person || $data->stage == 11 ? 'tiny Human_Resource_assessment' : 'tiny-disable' }}
                                             name="Human_Resource_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Human_Resource_person) readonly @endif id="summernote-35">{{ $data1->Human_Resource_assessment }}</textarea>
                                     </div>
@@ -5207,6 +5189,8 @@
                                             <span id="asteriskITP"
                                                 style="display: {{ $data1->Information_Technology_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
                                         <textarea @if ($data1->Information_Technology_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Information_Technology_person || $data->stage == 11 ? 'tiny Information_Technology_assessment' : 'tiny-disable' }}
                                             name="Information_Technology_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Information_Technology_person) readonly @endif
                                             id="summernote-37">{{ $data1->Information_Technology_assessment }}</textarea>
@@ -5369,6 +5353,8 @@
                                                 id="asteriskPMP"
                                                 style="display: {{ $data1->Project_management_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
                                         <textarea @if ($data1->Project_management_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Project_management_person || $data->stage == 11 ? 'tiny Project_management_assessment' : 'tiny-disable' }}
                                             name="Project_management_assessment" id="summernote-39" @if ($data->stage == 3 || Auth::user()->id != $data1->Project_management_person) readonly @endif>{{ $data1->Project_management_assessment }}</textarea>
                                     </div>
@@ -5841,7 +5827,8 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Impact Assessment5">Impact Assessment (By Analytical Development
-                                            Laboratory)</label>
+                                            Laboratory)</label><div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
                                         <textarea class={{$data->stage == 4 || Auth::user()->id == $data1->Analytical_Development_person || $data->stage == 11 ? 'tiny' : 'tiny-disable' }}
                                             name="Analytical_Development_assessment"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="summernote-27">{{ $data1->Analytical_Development_assessment }}</textarea>
@@ -5954,7 +5941,8 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Impact Assessment6">Impact Assessment (By Process Development
-                                            Laboratory / Kilo Lab)</label>
+                                            Laboratory / Kilo Lab)</label><div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
                                         <textarea class={{$data->stage == 4 || Auth::user()->id == $data1->Kilo_Lab_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Kilo_Lab_assessment"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="summernote-29">{{ $data1->Kilo_Lab_assessment }}</textarea>
                                     </div>
@@ -6066,7 +6054,8 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Impact Assessment7">Impact Assessment (By Technology Transfer /
-                                            Design)</label>
+                                            Design)</label><div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
                                         <textarea class={{$data->stage == 4 || Auth::user()->id == $data1->Technology_transfer_person || $data->stage == 11 ? 'tiny Technology_transfer_assessment' : 'tiny-disable' }}
                                             name="Technology_transfer_assessment"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="summernote-31">{{ $data1->Technology_transfer_assessment }}</textarea>
@@ -6181,6 +6170,8 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment8">Impact Assessment (By Environment, Health &
                                             Safety)</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
                                         <textarea class={{$data->stage == 4 || Auth::user()->id == $data1->Environment_Health_Safety_person || $data->stage == 11? 'tiny ' : 'tiny-disable' }}
                                             name="Health_Safety_assessment"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="summernote-33">{{ $data1->Health_Safety_assessment }}</textarea>
@@ -6294,6 +6285,8 @@
                                     <div class="group-input">
                                         <label for="productionfeedback">Impact Assessment (By Human Resource &
                                             Administration )</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
                                         <textarea class={{$data->stage == 4 || Auth::user()->id == $data1->Human_Resource_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }}
                                             name="Human_Resource_assessment"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="summernote-35">{{ $data1->Human_Resource_assessment }}</textarea>
@@ -6409,6 +6402,8 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment10">Impact Assessment (By Information
                                             Technology)</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
                                         <textarea class={{$data->stage == 4 || Auth::user()->id == $data1->Information_Technology_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }}
                                             name="Information_Technology_assessment"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="summernote-37">{{ $data1->Information_Technology_assessment }}</textarea>
@@ -6522,6 +6517,8 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment11">Impact Assessment (By Project management
                                             )</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
                                         <textarea class={{$data->stage == 4 || Auth::user()->id == $data1->Project_management_person || $data->stage == 11? 'tiny' : 'tiny-disable' }}
                                             name="Project_management_assessment"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="summernote-39">{{ $data1->Project_management_assessment }}</textarea>
@@ -6616,7 +6613,7 @@
 
                                     });
                                 </script>
-                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Review Required1"> Other's 1 Review Required? </label>
@@ -6707,6 +6704,8 @@
                                                 id=""
                                                 style="display: {{ $data1->Other1_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
                                         <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other1_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other1_assessment"
                                             @if ($data->stage == 3 || Auth::user()->id != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
                                     </div>
@@ -6938,6 +6937,8 @@
                                                 id=""
                                                 style="display: {{ $data1->Other2_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other2_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other2_person || $data->stage == 11? 'tiny ' : 'tiny-disable' }} name="Other2_Assessment"
                                             @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
                                     </div>
@@ -7140,7 +7141,8 @@
                                         <label for="Impact Assessment14">Impact Assessment (By Other's 3) <span
                                                 id=""
                                                 style="display: {{ $data1->Other3_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span></label>
+                                                class="text-danger">*</span></label><div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other3_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other3_person || Auth::user()->id == $data1->Other3_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other3_Assessment"
                                             @if ($data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
                                     </div>
@@ -7340,6 +7342,8 @@
                                                 id=""
                                                 style="display: {{ $data1->Other4_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other4_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other4_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other4_Assessment"
                                             @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
                                     </div>
@@ -7541,6 +7545,8 @@
                                                 id=""
                                                 style="display: {{ $data1->Other5_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other5_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other5_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }}
                                             name="Other5_Assessment"@if ($data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
                                     </div>
@@ -7555,7 +7561,7 @@
                                     </div>
                                 </div> --}}
 
-                                
+
                                 <div class="col-md-6 mb-3 Other5_reviews">
                                     <div class="group-input">
                                         <label for="Review Completed By5"> Other's 5 Review Completed By</label>
@@ -7692,6 +7698,8 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Impact Assessment12">Impact Assessment (By Other's 1)</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
                                         <textarea disabled class={{$data->stage == 4 || Auth::user()->id == $data1->Other1_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }}
                                             name="Other1_assessment"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
                                     </div>
@@ -7839,6 +7847,8 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Impact Assessment13">Impact Assessment (By Other's 2)</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
                                         <textarea class={{$data->stage == 4 || Auth::user()->id == $data1->Other2_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }}
                                             name="Other2_Assessment"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
                                     </div>
@@ -7986,6 +7996,8 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Impact Assessment14">Impact Assessment (By Other's 3)</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
                                         <textarea disabled class={{$data->stage == 4 || Auth::user()->id == $data1->Other3_person || $data->stage == 11 ? 'tiny' : 'tiny-disable' }}
                                             name="Other3_Assessment"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
                                     </div>
@@ -8130,6 +8142,8 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Impact Assessment15">Impact Assessment (By Other's 4)</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
                                         <textarea disabled class={{$data->stage == 4 || Auth::user()->id == $data1->Other4_person || $data->stage == 11 ? 'tiny' : 'tiny-disable' }}
                                             name="Other4_Assessment"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
                                     </div>
@@ -8277,6 +8291,8 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Impact Assessment16">Impact Assessment (By Other's 5)</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
                                         <textarea disabled class={{$data->stage == 4 || Auth::user()->id == $data1->Other5_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }}
                                             name="Other5_Assessment"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
                                     </div>
@@ -8289,7 +8305,7 @@
                                     </div>
                                 </div> --}}
 
-                               
+
                                 <div class="col-md-6 mb-3">
                                     <div class="group-input">
                                         <label for="Review Completed By5"> Other's 5 Review Completed By</label>
@@ -8378,7 +8394,7 @@
             </div>
         </div>
 
-        
+
 
         <!-- investigation -->
         <div id="CCForm9" class="inner-block cctabcontent">
@@ -8396,7 +8412,7 @@
                             <div class="group-input">
                                 <label for="Proposed Due Date">Proposed Due Date</label>
                                 <input name="investigation_proposed_due_date" id="investigation_proposed_due_date" placeholder="Deviation Proposed Due Date"  disabled>
-                            </div>  
+                            </div>
 
 
                             Investigation summary, root cause, impact assessment, corrective & preventive actions, Investigation HOD remarks, Investigation QA remarks.
@@ -8765,7 +8781,7 @@
                             </div>
 
                             <script>
-                                    $(document).on('change', '.Root_Cause_Category_Select', function () {
+                                 $(document).on('change', '.Root_Cause_Category_Select', function () {
                                         console.log('this', $(this))
                                         console.log('change')
                                         var selectedCategory = $(this).val();
@@ -8790,7 +8806,7 @@
 
 
 
-                                        } else if (selectedCategory === 'M-Maintenance') {
+                                        } elseif (selectedCategory === 'M-Maintenance') {
                                             subCategorySelect.append('<option value="Infrequent_Audits">Infrequent Audits</option>');
                                             subCategorySelect.append('<option value="No_Preventive_Maintenance">No Preventive Maintenance</option>');
                                             subCategorySelect.append('<option value="Other">Other</option>');
@@ -8802,7 +8818,7 @@
 
 
 
-                                        } else if (selectedCategory === 'M-Man Power (physical work)') {
+                                        } elseif (selectedCategory === 'M-Man Power (physical work)') {
                                             subCategorySelect.append('<option value="Failure_to_Follow_SOP">Failure to Follow SOP</option>');
                                             subCategorySelect.append('<option value="Human_Machine_Interface">Human-Machine Interface</option>');
                                             subCategorySelect.append('<option value="Misunderstood_Verbal_Communication">Misunderstood Verbal Communication</option>');
@@ -8818,7 +8834,7 @@
                                             subCategorySelect.append('<option value="Skill">Skill</option>');
 
                                         }
-                                        else if(selectedCategory === 'M-Management'){
+                                        elseif(selectedCategory === 'M-Management'){
                                             subCategorySelect.append('<option value="Inattention to task">Inattention to task</option>');
                                             subCategorySelect.append('<option value="Lack of Process">Lack of Process</option>');
                                             subCategorySelect.append('<option value="Methods">Methods</option>');
@@ -8832,7 +8848,7 @@
                                             subCategorySelect.append('<option value="Task hazards not guarded properly">Task hazards not guarded properly</option>');
                                             subCategorySelect.append('<option value="Training or education lacking">Training or education lacking</option>');
                                          }
-                                         else if(selectedCategory === 'M-Material (Raw,Consumables etc.)'){
+                                         elseif(selectedCategory === 'M-Material (Raw,Consumables etc.)'){
                                             subCategorySelect.append('<option value="Defective equipment or tool">Defective equipment or tool</option>');
                                             subCategorySelect.append('<option value="Defective raw material">Defective raw material</option>');
                                             subCategorySelect.append('<option value="Incorrect tool selection">Incorrect tool selection</option>');
@@ -8844,7 +8860,7 @@
                                             subCategorySelect.append('<option value="Wrong type for job">Wrong type for job</option>');
 
                                         }
-                                        else if(selectedCategory === 'M-Method (Process/Inspection)'){
+                                        elseif(selectedCategory === 'M-Method (Process/Inspection)'){
                                             subCategorySelect.append('<option value="Instruction Needs Improvement">Instruction Needs Improvement</option>');
                                             subCategorySelect.append('<option value="Learning Objective Needs Improvement">Learning Objective Needs Improvement</option>');
                                             subCategorySelect.append('<option value="Other">Other</option>');
@@ -8856,7 +8872,7 @@
                                             subCategorySelect.append('<option value="Wrong Sequence">Wrong Sequence</option>');
                                          }
 
-                                        else if(selectedCategory === 'M-Mother Nature (Environment)'){
+                                        elseif(selectedCategory === 'M-Mother Nature (Environment)'){
                                             subCategorySelect.append('<option value="Forces of nature">Forces of nature</option>');
                                             subCategorySelect.append('<option value="Job design or layout of work">Job design or layout of work</option>');
                                             subCategorySelect.append('<option value="Orderly workplace">Orderly workplace</option>');
@@ -8864,7 +8880,7 @@
                                             subCategorySelect.append('<option value="Physical demands of the task">Physical demands of the task</option>');
                                             subCategorySelect.append('<option value="Surfaces poorly maintained">Surfaces poorly maintained</option>');
                                          }
-                                        else if(selectedCategory === 'P-Place/Plant'){
+                                        elseif(selectedCategory === 'P-Place/Plant'){
                                             subCategorySelect.append('<option value="Forces of nature">Forces of nature</option>');
                                             subCategorySelect.append('<option value="Job design or layout of work">Job design or layout of work</option>');
                                             subCategorySelect.append('<option value="Orderly workplace">Orderly workplace</option>');
@@ -8873,7 +8889,7 @@
                                             subCategorySelect.append('<option value="Surfaces poorly maintained">Surfaces poorly maintained</option>');
 
                                         }
-                                        else if(selectedCategory === 'P-Policies'){
+                                        elseif(selectedCategory === 'P-Policies'){
                                             subCategorySelect.append('<option value="Instruction Needs Improvement">Instruction Needs Improvement</option>');
                                             subCategorySelect.append('<option value="Learning Objective Needs Improvement">Learning Objective Needs Improvement</option>');
                                             subCategorySelect.append('<option value="No Standard / Policy">No Standard / Policy</option>');
@@ -8882,7 +8898,7 @@
 
 
                                         }
-                                        else if(selectedCategory === 'P-Price'){
+                                        elseif(selectedCategory === 'P-Price'){
                                             subCategorySelect.append('<option value="No Budget">No Budget</option>');
                                             subCategorySelect.append('<option value="No Preparation">No Preparation</option>');
                                             subCategorySelect.append('<option value="No Standard / Policy">No Standard / Policy</option>');
@@ -8891,7 +8907,7 @@
 
 
                                         }
-                                        else if(selectedCategory === 'P-Procedures'){
+                                        elseif(selectedCategory === 'P-Procedures'){
                                             subCategorySelect.append('<option value="Learning Objective Needs Improvement">Learning Objective Needs Improvement</option>');
                                             subCategorySelect.append('<option value="Management system">Management system</option>');
                                             subCategorySelect.append('<option value="No or poor procedures">No or poor procedures</option>');
@@ -8906,7 +8922,7 @@
 
                                         }
 
-                                        else if(selectedCategory === 'P-Process'){
+                                        elseif(selectedCategory === 'P-Process'){
                                             subCategorySelect.append('<option value="Instruction Needs Improvement">Instruction Needs Improvement</option>');
                                             subCategorySelect.append('<option value="Learning Objective Needs Improvement">Learning Objective Needs Improvement</option>');
                                             subCategorySelect.append('<option value="Other">Other</option>');
@@ -8920,7 +8936,7 @@
 
                                         }
 
-                                        else if(selectedCategory === 'P-Product'){
+                                        elseif(selectedCategory === 'P-Product'){
                                             subCategorySelect.append('<option value="Defective equipment or tool">Defective equipment or tool</option>');
                                             subCategorySelect.append('<option value="Defective raw material">Defective raw material</option>');
                                             subCategorySelect.append('<option value="Incorrect tool selection">Incorrect tool selection</option>');
@@ -8933,7 +8949,7 @@
 
                                         }
 
-                                        else if(selectedCategory === 'S-Suppliers'){
+                                        elseif(selectedCategory === 'S-Suppliers'){
                                             subCategorySelect.append('<option value="Infrequent Audits">Infrequent Audits</option>');
                                             subCategorySelect.append('<option value="Misunderstood Verbal Communication">Misunderstood Verbal Communication</option>');
                                             subCategorySelect.append('<option value="Other">Other</option>');
@@ -8942,7 +8958,7 @@
                                             subCategorySelect.append('<option value="Task Not Analyzed">Task Not Analyzed</option>');
                                            }
 
-                                        else if(selectedCategory === 'S-Surroundings'){
+                                        elseif(selectedCategory === 'S-Surroundings'){
                                             subCategorySelect.append('<option value="Forces of nature">Forces of nature</option>');
                                             subCategorySelect.append('<option value="Job design or layout of work">Job design or layout of work</option>');
                                             subCategorySelect.append('<option value="Orderly workplace">Orderly workplace</option>');
@@ -8953,7 +8969,7 @@
 
                                         }
 
-                                        else if(selectedCategory === 'S-Systems'){
+                                        elseif(selectedCategory === 'S-Systems'){
                                             subCategorySelect.append('<option value="Infrequent Audits">Infrequent Audits</option>');
                                             subCategorySelect.append('<option value="No Preventive Maintenance">No Preventive Maintenance</option>');
                                             subCategorySelect.append('<option value="Other">Other</option>');
@@ -8966,8 +8982,10 @@
 
                                         }
                                     });
+
                             </script>
-                    
+
+
                 </div>
 
                 <div class="button-block">
@@ -8992,17 +9010,12 @@
         <div class="row">
             <div class="col-md-12 mb-3">
                 <div class="group-input">
-                    <label for="hod_final_remarks">HOD Final Remarks 
+                    <label for="hod_final_remarks">HOD Final Remarks
                         <span style="display: {{ $data->stage == 8 ? 'inline' : 'none' }}" class="text-danger">*</span>
                     </label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                     <div style="position:relative;">
-                        <textarea 
-                            {{ $data->stage == 8 ? 'required' : 'disabled' }} 
-                            name="hod_final_remarks" 
-                            id="summernote-14" 
-                            class="mic-input">{{ $data->hod_final_remarks }}
-                        </textarea>
+                        <textarea {{ $data->stage == 8 ? 'required' : 'disabled' }} name="hod_final_remarks" id="summernote-14" class="mic-input">{{ $data->hod_final_remarks }}</textarea>
                         <button class="mic-btn" type="button">
                             <i class="fas fa-microphone"></i>
                         </button>
@@ -9047,7 +9060,7 @@
                             <input
                             {{ $data->stage == 8 ? '' : 'disabled' }}
                                 type="file" id="HOD_Attachments"
-                                name="hod_final_attachments[]" 
+                                name="hod_final_attachments[]"
                                 oninput="addMultipleFiles(this, 'hod_final_attachments')" multiple>
                         </div>
                     </div>
@@ -9073,7 +9086,7 @@
             {{-- <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button> --}}
             <button type="button" style=" justify-content: center; width: 4rem; "> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                     Exit </a> </button>
-                   
+
         </div>
     </div>
 </div>
@@ -9084,17 +9097,12 @@
         <div class="row">
             <div class="col-md-12 mb-3">
                 <div class="group-input">
-                    <label for="qa_final_remarks">QA Final Remarks 
+                    <label for="qa_final_remarks">QA Final Remarks
                         <span style="display: {{ $data->stage == 9 ? 'inline' : 'none' }}" class="text-danger">*</span>
                     </label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                     <div style="position:relative;">
-                        <textarea 
-                            {{ $data->stage == 9 ? 'required' : 'disabled' }} 
-                            name="qa_final_remarks" 
-                            id="qa_final_remarks" 
-                            class="mic-input">{{ $data->qa_final_remarks }}
-                        </textarea>
+                        <textarea {{ $data->stage == 9 ? 'required' : 'disabled' }} name="qa_final_remarks" id="qa_final_remarks" class="mic-input">{{ $data->qa_final_remarks }}</textarea>
                         <button class="mic-btn" type="button">
                             <i class="fas fa-microphone"></i>
                         </button>
@@ -9139,7 +9147,7 @@
                             <input
                             {{ $data->stage == 9 ? '' : 'disabled' }}
                                 type="file" id="HOD_Attachments"
-                                name="qa_final_attachments[]" 
+                                name="qa_final_attachments[]"
                                 oninput="addMultipleFiles(this, 'qa_final_attachments')" multiple>
                         </div>
                     </div>
@@ -9164,7 +9172,7 @@
             {{-- <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button> --}}
             <button type="button" style=" justify-content: center; width: 4rem; "> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                     Exit </a> </button>
-                   
+
         </div>
     </div>
 </div>
@@ -10025,16 +10033,16 @@
                             </select>
                         </div>
                     </div>
-                
+
 
                     <div class="col-md-12">
                         <div class="group-input">
                             <label for="Justification_for_categorization">Justification for categorization</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                             <div style="position:relative;">
-                                <textarea 
-                                    name="Justification_for_categorization" 
-                                    id="summernote-5" 
+                                <textarea
+                                    name="Justification_for_categorization"
+                                    id="summernote-5"
                                     class="mic-input"
                                     {{ $data->stage == 0 || $data->stage == 11 || $data->stage != 5 ? 'disabled' : '' }}
                                 >{{ $data->Justification_for_categorization }}</textarea>
@@ -10199,19 +10207,14 @@
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="initiator_final_remarks">Initiator Final Remarks 
+                            <label for="initiator_final_remarks">Initiator Final Remarks
                                 <span style="display: {{ $data->stage == 7 ? 'inline' : 'none' }}" class="text-danger">*</span>
                             </label>
                             <div>
                                 <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                             </div>
                             <div style="position:relative;">
-                                <textarea 
-                                    name="initiator_final_remarks" 
-                                    id="summernote-14" 
-                                    class="mic-input" 
-                                    {{ $data->stage == 7 ? 'required' : 'disabled' }}>{{ $data->initiator_final_remarks }}
-                                </textarea>
+                                <textarea name="initiator_final_remarks" id="summernote-14" class="mic-input" {{ $data->stage == 7 ? 'required' : 'disabled' }}>{{ $data->initiator_final_remarks }}</textarea>
                                 <button class="mic-btn" type="button">
                                     <i class="fas fa-microphone"></i>
                                 </button>
@@ -10258,7 +10261,7 @@
                                     <input
                                     {{ $data->stage == 7 ? '' : 'disabled' }}
                                         type="file" id="HOD_Attachments"
-                                        name="initiator_final_attachments[]" 
+                                        name="initiator_final_attachments[]"
                                         oninput="addMultipleFiles(this, 'initiator_final_attachments')" multiple>
                                 </div>
                             </div>
@@ -10314,10 +10317,10 @@
                             <label for="Investigation_Of_Review">Justification for Revised Category</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                             <div style="position:relative;">
-                                <textarea 
-                                    name="Investigation_Of_Review" 
-                                    {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} 
-                                    id="Investigation_Of_Review" 
+                                <textarea
+                                    name="Investigation_Of_Review"
+                                    {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                    id="Investigation_Of_Review"
                                     class="mic-input"
                                 >{{ $data->Investigation_Of_Review }}</textarea>
                                 <button class="mic-btn" type="button">
@@ -10340,12 +10343,12 @@
                             </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                             <div style="position:relative;">
-                                <textarea 
-                                    name="Closure_Comments" 
-                                    @if ($data->stage != 10) readonly @endif 
-                                    required 
-                                    {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} 
-                                    id="Closure_Comments" 
+                                <textarea
+                                    name="Closure_Comments"
+                                    @if ($data->stage != 10) readonly @endif
+                                    required
+                                    {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                    id="Closure_Comments"
                                     class="mic-input"
                                 >{{ $data->Closure_Comments }}</textarea>
                                 <button class="mic-btn" type="button">
@@ -10368,12 +10371,12 @@
                             </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                             <div style="position:relative;">
-                                <textarea 
-                                    name="Disposition_Batch" 
-                                    @if ($data->stage != 10) readonly @endif 
-                                    required 
-                                    {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} 
-                                    id="Disposition_Batch" 
+                                <textarea
+                                    name="Disposition_Batch"
+                                    @if ($data->stage != 10) readonly @endif
+                                    required
+                                    {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                    id="Disposition_Batch"
                                     class="mic-input"
                                 >{{ $data->Disposition_Batch }}</textarea>
                                 <button class="mic-btn" type="button">
@@ -10457,7 +10460,7 @@
             </div>
         </div>
         <!-- Effectiveness Check-->
-{{-- 
+{{--
         <div id="CCForm12" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="row">
@@ -10642,7 +10645,7 @@
                         @endif
 
                     </div>
-                  
+
                     <div class="sub-head">
                         Quality Risk Management Extension
                     </div>
@@ -10733,7 +10736,7 @@
                             </div>
                         @endif
                     </div>
-                   
+
 
                     <div class="sub-head">
                         Investigation Extension
@@ -11228,7 +11231,7 @@
                                        <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
-                                        </a> 
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -11296,7 +11299,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px;">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                             <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
                             <div class="static">{{ $data->QA_Initial_Review_Comments }}</div>
                         </div>
@@ -11316,7 +11319,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                             <label for="CFT Review Comments">CFT Review Comments :-</label>
                             <div class="static">{{ $data->CFT_Review_Comments }}</div>
                         </div>
@@ -13751,6 +13754,6 @@
             });
         }
     </script>
-    
+
 
 @endsection

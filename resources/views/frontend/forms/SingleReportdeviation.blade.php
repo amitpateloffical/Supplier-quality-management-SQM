@@ -195,7 +195,7 @@
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
                 {{-- <td class="w-30">
-                    <strong>Page :</strong> 
+                    <strong>Page :</strong>
                 </td> --}}
             </tr>
         </table>
@@ -218,7 +218,7 @@
                         <th class="w-20">Date of Initiation</th>
                         {{-- <td class="w-30">@if{{ Helpers::getdateFormat($data->intiation_date) }} @else Not Applicable @endif</td> --}}
                         {{-- <td class="w-30">@if (Helpers::getdateFormat($data->intiation_date)) {{ Helpers::getdateFormat($data->intiation_date) }} @else Not Applicable @endif</td> --}}
-                        <td class="w-30">{{ $data->created_at ? $data->created_at->format('d-m-Y') : '' }} </td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) ? Helpers::getdateFormat($data->created_at) : '' }} </td>
 
                         <th class="w-20">Due Date</th>
                         <td class="w-30">
@@ -250,7 +250,7 @@
                         {{-- <th class="w-20">Department Code</th> --}}
                         {{-- <td class="w-30">@if ($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td> --}}
                     </tr>
-                   
+
                     <tr>
                         <th class="w-20"> Deviation Observed On</th>
                         <td class="w-30">
@@ -361,7 +361,7 @@
                     {{-- <th class="w-20">Name of Product & Batch No</th> --}}
                     {{-- <td class="w-30">@if ($data->Product_Batch){{ ($data->Product_Batch) }} @else Not Applicable @endif</td> --}}
                     {{-- </tr> --}}
-                 
+
 
                 </table>
                 <div class="block">
@@ -647,7 +647,7 @@
                             @endif
                         </td>
                     </tr>
-                  
+
                     <tr>
                         {{-- <th class="w-20">Customer Notification Required ?</th> --}}
                         {{-- <td class="w-30">@if ($data->Customer_notification){{$data->Customer_notification}}@else Not Applicable @endif</td> --}}
@@ -667,8 +667,8 @@
                     </td> --}}
                     </tr>
 
-                   
-                   
+
+
                 </table>
                 <div class="border-table">
                     <div class="block-head">
@@ -698,7 +698,7 @@
                     </table>
                 </div>
             </div>
-           
+
             <div class="block">
                 <div class="head">
                     <div class="block-head">
@@ -749,7 +749,7 @@
                                         @endif
                                     </div>
                                 </td>
-                               
+
                             </tr>
                         </table>
                         <table>
@@ -780,7 +780,7 @@
 
                         </table>
                     </div>
-                   
+
 
                     <div class="block">
                         <div class="head">
@@ -827,7 +827,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                   
+
                                 </tr>
                             </table>
                             <table>
@@ -856,7 +856,7 @@
                                 </tr>
                             </table>
                         </div>
-                     
+
                     </div>
                     <div class="block">
                         <div class="head">
@@ -903,7 +903,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                   
+
                                 </tr>
                             </table>
                             <table>
@@ -932,7 +932,7 @@
                                 </tr>
                             </table>
                         </div>
-                       
+
                     </div>
 
 
@@ -982,7 +982,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                   
+
                                 </tr>
                             </table>
                             <table>
@@ -1011,7 +1011,7 @@
                                 </tr>
                             </table>
                         </div>
-                      
+
                     </div>
                     <div class="block">
                         <div class="head">
@@ -1058,7 +1058,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    
+
                                 </tr>
                             </table>
                             <table>
@@ -1087,7 +1087,7 @@
                                 </tr>
                             </table>
                         </div>
-                        
+
                     </div>
                     <div class="block">
                         <div class="head">
@@ -1134,7 +1134,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                  
+
                                 </tr>
                             </table>
                             <table>
@@ -1163,7 +1163,7 @@
                                 </tr>
                             </table>
                         </div>
-                      
+
                     </div>
                     <div class="block">
                         <div class="head">
@@ -1211,7 +1211,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                  
+
                                 </tr>
                             </table>
                             <table>
@@ -1242,7 +1242,7 @@
                                 </tr>
                             </table>
                         </div>
-                      
+
                     </div>
 
                     <div class="block">
@@ -1290,7 +1290,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    
+
                                 </tr>
                             </table>
                             <table>
@@ -1319,7 +1319,7 @@
                                 </tr>
                             </table>
                         </div>
-                      
+
                     </div>
 
                     <div class="block">
@@ -1363,7 +1363,7 @@
                                             {!!$data1->Health_Safety_assessment ? $data1->Health_Safety_assessment  : "Not Applicable"!!}
                                         </div>
                                     </td>
-                                   
+
                                 </tr>
                             </table>
                             <table>
@@ -1392,7 +1392,7 @@
                                 </tr>
                             </table>
                         </div>
-                       
+
                     </div>
                     <div class="block">
                         <div class="head">
@@ -1439,7 +1439,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    
+
                                 </tr>
                             </table>
                             <table>
@@ -1468,9 +1468,9 @@
                                 </tr>
                             </table>
                         </div>
-                       
+
                     </div>
-                   
+
                     <div class="block">
                         <div class="head">
                             <div class="block-head">
@@ -1517,7 +1517,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    
+
                                 </tr>
                             </table>
                             <table>
@@ -1546,7 +1546,7 @@
                                 </tr>
                             </table>
                         </div>
-                        
+
                     </div>
 
                     <div class="block">
@@ -1595,7 +1595,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    
+
                                 </tr>
                             </table>
                             <table>
@@ -1624,7 +1624,7 @@
                                 </tr>
                             </table>
                         </div>
-                       
+
                     </div>
                     <div class="block">
                         <div class="head">
@@ -1680,7 +1680,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    
+
                                 </tr>
                                 <tr>
 
@@ -1707,7 +1707,7 @@
                                 </tr>
                             </table>
                         </div>
-                      
+
                     </div>
                     <div class="block">
                         <div class="head">
@@ -1763,7 +1763,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                   
+
                                 </tr>
                                 <tr>
 
@@ -1790,7 +1790,7 @@
                                 </tr>
                             </table>
                         </div>
-                       
+
                     </div>
                     <div class="block">
                         <div class="head">
@@ -1846,7 +1846,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                  
+
                                 </tr>
                                 <tr>
 
@@ -1873,7 +1873,7 @@
                                 </tr>
                             </table>
                         </div>
-                       
+
                     </div>
                     <div class="block">
                         <div class="head">
@@ -1929,7 +1929,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                   
+
                                 </tr>
                                 <tr>
 
@@ -1956,7 +1956,7 @@
                                 </tr>
                             </table>
                         </div>
-                     
+
                     </div>
                     <div class="block">
                         <div class="head">
@@ -2012,7 +2012,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                   
+
                                 </tr>
                                 <tr>
 
@@ -2062,18 +2062,18 @@
                                             <td class="w-20">Not Applicable</td>
                                         </tr>
                                     @endif
-                
+
                                 </table>
                             </div>
                         </div>
-                      
+
                     </div>
                     <div class="block">
                         <div class="block-head">
                             QA Secondary  Review
                         </div>
                         <table>
-        
+
                             <tr>
                                 <th class="w-20">Initial Deviation category</th>
                                 <td class="w-30">
@@ -2083,16 +2083,6 @@
                                         Not Applicable
                                     @endif
                                 </td>
-                                <th class="w-20">Justification for categorization</th>
-                                <td class="w-30">
-                                    @if ($data->Justification_for_categorization)
-                                        {{ strip_tags($data->Justification_for_categorization) }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                            </tr>
-                            <tr>
                                 <th class="w-20">Investigation Required?</th>
                                 <td class="w-30">
                                     @if ($data->Investigation_required)
@@ -2101,6 +2091,8 @@
                                         Not Applicable
                                     @endif
                                 </td>
+                            </tr>
+                            {{--<tr>
                                 <th class="w-20">Investigation Details</th>
                                 <td class="w-30">
                                     @if ($data->Investigation_Details)
@@ -2109,8 +2101,8 @@
                                         Not Applicable
                                     @endif
                                 </td>
-                            </tr>
-                            <tr>
+
+                            <tr>--}}
                                 {{-- <th class="w-20">Customer Notification Required ?</th> --}}
                                 {{-- <td class="w-30">@if ($data->Customer_notification){{$data->Customer_notification}}@else Not Applicable @endif</td> --}}
                                 {{-- <th class="w-20">Customers</th> --}}
@@ -2119,7 +2111,7 @@
                                     $customer = DB::table('customer-details')->where('id', $data->customers)->first();
                                     $customer_name = $customer ? $customer->customer_name : 'Not Applicable';
                                 @endphp --}}
-        
+
                                 {{-- <td>
                                 @if ($data->customers)
                                     {{ $customer_name }}
@@ -2128,24 +2120,39 @@
                                 @endif
                             </td> --}}
                             </tr>
-        
+                        </table>
+
+                        <table>
+                        <tr>
+                            <th class="w-20">QA Feedbacks</th>
+                            <td class="w-80">
+                                @if ($data->QA_Feedbacks)
+                                    {{ strip_tags($data->QA_Feedbacks) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        </tr>
+                        </table>
+                        <table>
                             <tr>
                                 {{-- <th class="w-20">Related Records</th> --}}
                                 {{-- <td class="w-30">@if ($data->related_records){{$data->related_records }}@else Not Applicable @endif</td> --}}
-                                <th class="w-20">QA Feedbacks</th>
-                                <td class="w-30">
-                                    @if ($data->QA_Feedbacks)
-                                        {{ strip_tags($data->QA_Feedbacks) }}
+                                <th class="w-20">Justification for categorization</th>
+                                <td class="w-80">
+                                    @if ($data->Justification_for_categorization)
+                                        {{ strip_tags($data->Justification_for_categorization) }}
                                     @else
                                         Not Applicable
                                     @endif
                                 </td>
-        
+
                             </tr>
-        
+
                         </table>
                     </div>
-        
+
                     <div class="border-table">
                         <div class="block-head">
                             QA Attachments
@@ -2169,7 +2176,7 @@
                                     <td class="w-20">Not Applicable</td>
                                 </tr>
                             @endif
-        
+
                         </table>
                     </div>
                     <!-- **************************INVESTIGATION TAB START******************************* -->
@@ -2183,7 +2190,7 @@
                                 <tr>
                                     <th class="w-20">Investigation summary
                                     </th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data->Discription_Event) {{ strip_tags($data->Discription_Event) }} @else Not Applicable @endif
 
@@ -2192,13 +2199,14 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="w-20">Impact Assessment
-                                    </th>
-                                    <td class="w-30">
+                                    <th class="w-20">Impact Assessment</th>
+                                    <td class="w-80">
                                         <div>
                                             @if ($data->objective) {{ strip_tags($data->objective) }} @else Not Applicable @endif
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <th class="w-20">Corrective & Preventive Actions</th>
                                     <td class="w-30">
                                         <div>
@@ -2206,6 +2214,7 @@
                                         </div>
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <th class="w-20">Investigation HOD remarks</th>
                                     <td class="w-80">
@@ -2213,14 +2222,15 @@
                                             @if ($data->imidiate_action) {{ strip_tags($data->imidiate_action) }} @else Not Applicable @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Investigation QA remarks</th>
-                                    <td class="w-30">
-                                        <div>
-                                            @if ($data->imidiate_action1) {{ strip_tags($data->imidiate_action1) }} @else Not Applicable @endif
-                                        </div>
-                                    </td>
                                 </tr>
 
+                                    <tr><th class="w-20">Investigation QA remarks</th>
+                                        <td class="w-80">
+                                            <div>
+                                                @if ($data->imidiate_action1) {{ strip_tags($data->imidiate_action1) }} @else Not Applicable @endif
+                                            </div>
+                                        </td>
+                                    </tr>
                                 <!-- {{-- <tr> --}} -->
 
 
@@ -2233,7 +2243,7 @@
                                 <!-- {{-- </tr> --}} -->
                                 <tr>
 
-                                 
+
                             </table>
 
                             {{-- <div class="border-table" style="margin-bottom: 15px;">
@@ -2374,7 +2384,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
 
@@ -2404,7 +2414,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
 
@@ -2434,7 +2444,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
 
@@ -2464,7 +2474,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
 
@@ -2494,7 +2504,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -2551,7 +2561,7 @@
                                             <td>{{ $data->skill_issues}}</td>
                                             <td>{{ $data->skill_actions}}</td>
                                             <td>{{ $data->skill_remarks}}</td>
-                                        </tr>                                        
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -2602,7 +2612,7 @@
                                             <td>{{ $data->who_will_be}}</td>
                                             <td>{{ $data->who_will_not_be}}</td>
                                             <td>{{ $data->who_rationable}}</td>
-                                        </tr>                                        
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -2670,7 +2680,7 @@
 
                                 <tr>
                                     <th class="w-20">QA Feedbacks</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         @if ($data->QA_Feedbacks)
                                             {{ strip_tags($data->QA_Feedbacks) }}
                                         @else
@@ -2841,7 +2851,7 @@
                                                     <td>{{$grid_item['initial_rpn']}}</td>
                                                     <td>{{$grid_item['risk_acceptance']}}</td>
                                                     <td>{{$grid_item['proposed_additional_risk_control']}}</td>
-                                                </tr>                                                
+                                                </tr>
                                             @endforeach
                                         @else
                                             <tr>
@@ -2864,7 +2874,7 @@
                                         <th>Residual RPN</th>
                                         <th>Risk Acceptance (Y/N)</th>
                                         <th>Mitigation proposal</th>
-                                    </tr> 
+                                    </tr>
 
                                     <tbody>
                                         @if ($grid_data_qrms && is_array($grid_data_qrms->data))
@@ -2895,7 +2905,7 @@
                                     </tbody>
                                 </table>
 
-                               
+
                             </div>
 
                             <div class="border-table">
@@ -3085,7 +3095,7 @@
 
                             <tr>
                                 <th class="w-20">HOD Final Remarks</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     @if ($data->hod_final_remarks)
                                         {{ strip_tags($data->hod_final_remarks) }}
                                     @else
@@ -3131,7 +3141,7 @@
 
                             <tr>
                                 <th class="w-20">QA Final Remarks</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     @if ($data->qa_final_remarks)
                                         {{ strip_tags($data->qa_final_remarks) }}
                                     @else
@@ -3184,8 +3194,11 @@
                                         Not Applicable
                                     @endif
                                 </td>
+                            </tr>
+
+                            <tr>
                                 <th class="w-20">Justification for Revised Category</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     @if ($data->qa_final_remarks)
                                         {{ strip_tags($data->Investigation_Of_Review) }}
                                     @else
@@ -3198,15 +3211,18 @@
 
                             <tr>
                                 <th class="w-20">Closure Comments</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     @if ($data->Closure_Comments)
                                         {{ strip_tags($data->Closure_Comments) }}
                                     @else
                                         Not Applicable
                                     @endif
                                 </td>
+                            </tr>
+
+                            <tr>
                                 <th class="w-20">Disposition of Batch</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     @if ($data->Disposition_Batch)
                                         {{ strip_tags($data->Disposition_Batch) }}
                                     @else
@@ -3286,19 +3302,19 @@
                     </tr>
                     <tr>
                         <th class="w-20">QA Secondary Review Complete By</th>
-                        <td class="w-30"></td>
+                        <td class="w-30">{{ $data->QA_Final_Review_Complete_By }}</td>
                         <th class="w-20">QA Secondary Review Complete On</th>
-                        <td class="w-30"></td>
+                        <td class="w-30">{{ $data->QA_Final_Review_Complete_On }}</td>
                         <th class="w-20">QA Secondary Review Complete Comments</th>
-                        <td class="w-30"></td>
+                        <td class="w-30">{{ $data->QA_Final_Review_Comments }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">QAH Primary Approved Completed By</th>
-                        <td class="w-30"></td>
+                        <td class="w-30">{{ $data->Approved_By }}</td>
                         <th class="w-20">QAH Primary Approved Completed On</th>
-                        <td class="w-30"></td>
+                        <td class="w-30">{{ $data->Approved_On }}</td>
                         <th class="w-20">QAH Primary Approved Completed Comments</th>
-                        <td class="w-30"></td>
+                        <td class="w-30">{{ $data->Approved_Comments }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Update By</th>
@@ -3342,7 +3358,7 @@
 
     </div>
 
-  
+
 
 </body>
 

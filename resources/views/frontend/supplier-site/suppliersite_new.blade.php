@@ -48,42 +48,46 @@
     <script>
         $(document).ready(function() {
             let certificateIndex = 1;
+
             $('#certificationData').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        ' <td><input type="text" name="certificationData[' + certificateIndex +
-                        '][type]"></td>' +
-                        ' <td><input type="text"name="certificationData[' + certificateIndex +
-                        '][issuingAgency]"></td>' +
-                        '<td><input type="date" name="certificationData[' + certificateIndex +
-                        '][issueDate]"></td>' +
-                        '<td><input type="date" name="certificationData[' + certificateIndex +
-                        '][expiryDate]"></td>' +
-                        '<td><input type="text" name="certificationData[' + certificateIndex +
-                        '][supportingDoc]"></td>' +
-                        '<td><input type="text" name="certificationData[' + certificateIndex +
-                        '][remarks]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                        '</tr>';
+                e.preventDefault();
 
-
-                    certificateIndex++;
-                    return html;
+                function generateTableRow(index) {
+                    return `
+                    <tr>
+                        <td><input disabled type="text" name="serial[]" value="${index + 1}"></td>
+                        <td><input type="text" name="certificationData[${index}][type]"></td>
+                        <td><input type="text" name="certificationData[${index}][issuingAgency]"></td>
+                        <td><input type="date" name="certificationData[${index}][issueDate]" id="issueDate_${index}" onchange="updateExpiryDateMin(${index})"></td>
+                        <td><input type="date" name="certificationData[${index}][expiryDate]" id="expiryDate_${index}"></td>
+                        <td><input type="text" name="certificationData[${index}][supportingDoc]"></td>
+                        <td><input type="text" name="certificationData[${index}][remarks]"></td>
+                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                    </tr>`;
                 }
+
                 var tableBody = $('#certificationDataTable tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
+                var newRow = generateTableRow(certificateIndex);
                 tableBody.append(newRow);
+                certificateIndex++;
+            });
+
+            $(document).on('click', '.removeRowBtn', function() {
+                $(this).closest('tr').remove();
             });
         });
-    </script>
-    <script>
-        $(document).on('click', '.removeRowBtn', function() {
-            $(this).closest('tr').remove();
-        })
+
+        function updateExpiryDateMin(index) {
+            var issueDateInput = document.getElementById('issueDate_' + index);
+            var expiryDateInput = document.getElementById('expiryDate_' + index);
+
+            if (issueDateInput && expiryDateInput) {
+                var issueDate = new Date(issueDateInput.value);
+                if (issueDate) {
+                    expiryDateInput.min = issueDate.toISOString().split('T')[0];
+                }
+            }
+        }
     </script>
 
     <script>
@@ -296,7 +300,7 @@
                                     <option value="">Select Supplier</option>
                                     @if (!empty($users))
                                         @foreach ($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            <option value="{{ $user->name }}">{{ $user->name }}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -348,7 +352,7 @@
                             <div class="group-input">
                                 <label for="Description">Description</label>
                                 <div class="relative-container">
-                                    <textarea name="description" class="mic-input" id="description" placeholder="" maxlength="255"></textarea>
+                                    <textarea name="description" class="mic-input" id="description" placeholder=""></textarea>
                                     @component('frontend.forms.language-model', ['name' => 'description', 'id' => 'description'])
                                     @endcomponent
                                 </div>
@@ -446,7 +450,7 @@
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Supply from">Supply from</label>
+                                <label for="Supply from">Supply From</label>
                                 <div class="relative-container">
                                     <input type="text" name="supply_from" id="supply_from"
                                         placeholder="Enter Supply From" class="mic-input" maxlength="255">
@@ -458,7 +462,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Supply to">Supply to</label>
+                                <label for="Supply to">Supply To</label>
                                 <div class="relative-container">
                                     <input type="text" name="supply_to" id="supply_to" placeholder="Enter Supply To"
                                         class="mic-input" maxlength="255">
@@ -562,7 +566,7 @@
 
                     <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
                         </button>
@@ -579,7 +583,7 @@
                                 <div class="group-input">
                                     <label for="HOD_feedback">HOD Feedback</label>
                                     <div class="relative-container">
-                                        <textarea name="HOD_feedback" id="HOD_feedback" class="mic-input" placeholder="Enter HOD Feedback" maxlength="255"></textarea>
+                                        <textarea name="HOD_feedback" id="HOD_feedback" class="mic-input" placeholder="Enter HOD Feedback"></textarea>
                                         @component('frontend.forms.language-model', ['name' => 'HOD_feedback', 'id' => 'HOD_feedback'])
                                         @endcomponent
                                     </div>
@@ -590,7 +594,7 @@
                                 <div class="group-input">
                                     <label for="HOD_comment">HOD Comment</label>
                                     <div class="relative-container">
-                                        <textarea name="HOD_comment" id="HOD_comment" class="mic-input" placeholder="Enter HOD Comment" maxlength="255"></textarea>
+                                        <textarea name="HOD_comment" id="HOD_comment" class="mic-input" placeholder="Enter HOD Comment"></textarea>
                                         @component('frontend.forms.language-model', ['name' => 'HOD_comment', 'id' => 'HOD_comment'])
                                         @endcomponent
                                     </div>
@@ -665,16 +669,16 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><input type="text" value="1" name="certificationData[]"
-                                                        readonly>
-                                                </td>
+                                                <td><input disabled type="text" name="serial[]" value="1"></td>
                                                 <td><input type="text" name="certificationData[0][type]"></td>
                                                 <td><input type="text" name="certificationData[0][issuingAgency]"></td>
-                                                <td><input type="date" name="certificationData[0][issueDate]"></td>
-                                                <td><input type="date" name="certificationData[0][expiryDate]"></td>
+                                                <td><input type="date" name="certificationData[0][issueDate]"
+                                                        id="issueDate_0" onchange="updateExpiryDateMin(0)"></td>
+                                                <td><input type="date" name="certificationData[0][expiryDate]"
+                                                        id="expiryDate_0"></td>
                                                 <td><input type="text" name="certificationData[0][supportingDoc]"></td>
                                                 <td><input type="text" name="certificationData[0][remarks]"></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -771,8 +775,7 @@
                                 <div class="group-input">
                                     <label for="Other Contacts">Other Contacts</label>
                                     <div class="relative-container">
-                                        <textarea name="other_contacts" id="other_contacts" class="mic-input" placeholder="Enter Other Contacts"
-                                            maxlength="255"></textarea>
+                                        <textarea name="other_contacts" id="other_contacts" class="mic-input" placeholder="Enter Other Contacts"></textarea>
                                         @component('frontend.forms.language-model', ['name' => 'other_contacts', 'id' => 'other_contacts'])
                                         @endcomponent
                                     </div>
@@ -785,7 +788,7 @@
                                     <label for="Supplier Services">Supplier Services</label>
                                     <div class="relative-container">
                                         <textarea name="supplier_serivce" id="supplier_serivce" class="mic-input" placeholder="Enter Supplier Service"
-                                            cols="30" maxlength="255"></textarea>
+                                            cols="30"></textarea>
                                         @component('frontend.forms.language-model', ['name' => 'supplier_serivce', 'id' => 'supplier_serivce'])
                                         @endcomponent
                                     </div>
@@ -1582,20 +1585,34 @@
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Last Audit Date</label>
-                                    <div class="calenderauditee">
+                                    {{-- <div class="calenderauditee">
                                         <input type="text" id="last_audit_date" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="last_audit_date"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                             oninput="handleDateInput(this, 'last_audit_date')" />
+                                    </div> --}}
+
+                                    <div class="calenderauditee">
+                                        <input type="text" id="last_audit_date" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="last_audit_date"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'last_audit_date'); updateNextAuditDate(this.value)" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Next Audit Date</label>
-                                    <div class="calenderauditee">
+                                    {{-- <div class="calenderauditee">
                                         <input type="text" id="next_audit_date" readonly
                                             placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="next_audit_date"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'next_audit_date')" />
+                                    </div> --}}
+
+                                    <div class="calenderauditee">
+                                        <input type="text" id="next_audit_date" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_audit_date"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                             oninput="handleDateInput(this, 'next_audit_date')" />
@@ -1666,10 +1683,11 @@
                                     <label for="Access to Technical Support">Access to Technical Support</label>
                                     <select id="technical_support" name="technical_support">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Very Limited Access">Very Limited Access to Technical Experts
+                                        <option value="Very Limited Access to Technical Experts ">Very Limited Access to
+                                            Technical Experts
                                         </option>
-                                        <option value="Available When Requested">Available When Requested or Via Beacon
-                                            Center</option>
+                                        <option value="Available When Requested or Via Beacon Center">Available When
+                                            Requested or Via Beacon Center</option>
                                         <option value="Regulatory Schedule Visit by Region Experts">Regulatory Schedule
                                             Visit by Region Experts</option>
                                     </select>
@@ -1939,6 +1957,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="button-block">
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -2010,5 +2034,42 @@
                 currentStep--;
             }
         }
+
+        function handleDateInput(input, targetId) {
+            const date = new Date(input.value);
+            const formattedDate = date.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            }).replace(/ /g, '-');
+            document.getElementById(targetId).value = formattedDate;
+        }
+
+        function updateNextAuditDate(lastAuditDate) {
+            const date = new Date(lastAuditDate);
+
+            // Calculate the next audit date (one day after the last audit date)
+            date.setDate(date.getmonth() + 1);
+
+            // Format the date in the desired format
+            const formattedDate = date.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            }).replace(/ /g, '-');
+
+            // Get the next audit date input fields
+            const nextAuditDateInput = document.querySelector('input[name="next_audit_date"]');
+            const nextAuditDateDisplay = document.getElementById('next_audit_date');
+
+            // Set the value of the input fields
+            nextAuditDateInput.value = date.toISOString().split('T')[0];
+            nextAuditDateDisplay.value = formattedDate;
+
+            // Make the input field editable
+            nextAuditDateInput.readOnly = false;
+        }
+
+      
     </script>
 @endsection

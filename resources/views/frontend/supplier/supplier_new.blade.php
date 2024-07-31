@@ -2063,143 +2063,390 @@
             
                 <!-- Signature content -->
                 <div id="CCForm8" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Submitted By">Need for Sourcing of Starting Material By</label>
-                                    <div class="static"></div>
-                                </div>
+                <div class="inner-block-content">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Submitted By">Need for Sourcing of Starting Material By</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Submitted On">Need for Sourcing of Starting Material On</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Submitted On">Need for Sourcing of Starting Material On</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Submitted Comment">Need for Sourcing of Starting Material Comment</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Submitted Comment">Need for Sourcing of Starting Material Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Submitted By">Approved by Contract Giver By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Submitted On">Approved by Contract Giver On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Submitted Comment">Approved by Contract Giver Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Submitted By">Request Justified By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Submitted On">Request Justified On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Submitted Comment">Request Justified Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Submitted By">Request Not Justified By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Submitted On">Request Not Justified On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Submitted Comment">Request Not Justified Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
 
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review By">Request Justified   By</label>
-                                    <div class="static"></div>
-                                </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review By">Pre-Purchase Sample Required By</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">Request Justified On</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review On">Pre-Purchase Sample Required On</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppplier Review Comment">Request Justified Comment</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Suppplier Review Comment">Pre-Purchase Sample Required Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Score Card By">CQA Review Completed By</label>
-                                    <div class="static"></div>
-                                </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Score Card By">Pre-Purchase Sample Not Required By</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="CQA Review Completed On">CQA Review Completed On</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Review Completed On">Pre-Purchase Sample Not Required On</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="CQA Review Completed Comment">CQA Review Completed Comment</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Review Completed Comment">Pre-Purchase Sample Not Required Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Purchase Sample Request By">Purchase Sample Request Initiated By</label>
-                                    <div class="static"></div>
-                                </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Purchase Sample Request By">Purchase Sample Request Ack. by Dep.</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Purchase Sample Request Initiated On">Purchase Sample Request Initiated On</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Purchase Sample Request Initiated On">Purchase Sample Request Ack. by Dep. On</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Purchase Sample Request Initiated Comment">Purchase Sample Request Initiated Comment</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Purchase Sample Request Initiated Comment">Purchase Sample Request Ack. by Dep. Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Purchase Sample Analysis Satisfactory By">Purchase Sample Analysis Satisfactory By</label>
-                                    <div class="static"></div>
-                                </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Purchase Sample Analysis Satisfactory By">Purchase Sample Analysis Satisfactory By</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Purchase Sample Analysis Satisfactory On">Purchase Sample Analysis Satisfactory On</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Purchase Sample Analysis Satisfactory On">Purchase Sample Analysis Satisfactory On</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Purchase Sample Analysis Satisfactory Comment">Purchase Sample Analysis Satisfactory Comment</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Purchase Sample Analysis Satisfactory Comment">Purchase Sample Analysis Satisfactory Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="F&D Review Completed By">F&D Review Completed By</label>
-                                    <div class="static"></div>
-                                </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="F&D Review Completed By">Purchase Sample Analysis Not Satisfactory</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="F&D Review Completed On">F&D Review Completed On</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="F&D Review Completed On">Purchase Sample Analysis Not Satisfactory On</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="F&D Review Completed Comment">F&D Review Completed Comment</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="F&D Review Completed Comment">Purchase Sample Analysis Not Satisfactory Comment</label>
+                                <div class="static"></div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="CQA Final Review Completed By">CQA Final Review Completed By</label>
-                                    <div class="static"></div>
-                                </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">F&D Review Completed By</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="CQA Final Review Completed On">CQA Final Review Completed On</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">F&D Review Completed On</label>
+                                <div class="static"></div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="CQA Final Review Completed Comment">CQA Final Review Completed Comment</label>
-                                    <div class="static"></div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">F&D Review Completed Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Acknowledgement By Purchase Dept. By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Acknowledgement By Purchase Dept. On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Acknowledgement By Purchase Dept. Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">All Requirements Fulfilled By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">All Requirements Fulfilled On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">All Requirements Fulfilled Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">All Requirements Not Fulfilled By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">All Requirements Not Fulfilled On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">All Requirements Not Fulfilled Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Risk Rating Observed as High By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Risk Rating Observed as High On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Risk Rating Observed as High Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Risk Rating Observed as Low By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Risk Rating Observed as Low On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Risk Rating Observed as Low Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Manufacturer Audit Passed By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Manufacturer Audit Passed On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Manufacturer Audit Passed Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Initiate Periodic Revaluation By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Initiate Periodic Revaluation On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Initiate Periodic Revaluation Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Risk Rating Observed as High/Medium By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Risk Rating Observed as High/Medium On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Risk Rating Observed as High/Medium Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Risk Rating Observed as Low By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Risk Rating Observed as Low On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Risk Rating Observed as Low Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Manufacturer Audit Failed By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Manufacturer Audit Failed On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Manufacturer Audit Failed Comment</label>
+                                <div class="static"></div>
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
 
             </form>

@@ -161,6 +161,10 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('supplier-close-cancelled/{id}', [SupplierController::class, 'cancelDocument'])->name('supplier-close-cancelled');
             Route::post('supplier-approved-to-obselete/{id}', [SupplierController::class, 'supplierApprovedToObselete'])->name('supplier-approved-to-obselete');
             Route::post('sendToPendingSupplierAudit/{id}', [SupplierController::class, 'sendToPendingSupplierAudit'])->name('sendToPendingSupplierAudit');
+
+            Route::post('approvedBy-contract-giver/{id}', [SupplierController::class, 'approvedByContractGiver'])->name('approvedBy-contract-giver');
+            Route::post('link-manufacturer/{id}', [SupplierController::class, 'linkManufacturerToApprovedManufacturer'])->name('link-manufacturer');
+
             Route::post('supplier_child/{id}', [SupplierController::class, 'supplier_child'])->name('supplier_child_1');            
             Route::post('store_audit_review/{id}', [SupplierController::class, 'store_audit_review'])->name('store_audit_review');
 

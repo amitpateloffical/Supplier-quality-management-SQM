@@ -15,7 +15,7 @@
             <div class="login-logo">
               <div class="logo-container">
                     <!-- <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-50 h-50" > -->
-                    <img src="{{ asset('user/images/vidhyagxp.png') }}" alt="..." class="w-100 h-100">
+                    <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-100 h-100" style="scale: 0.7">
              </div>
             <!-- <img style="border-radius: 8% " src=""" height="80" alt=""><br> -->
            

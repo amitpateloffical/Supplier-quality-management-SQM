@@ -156,7 +156,7 @@
                 <div class="bottom-head">
                     <div class="left-block">
                         <div class="link-block">
-                            <a href="{{ url('rcms/qms-dashboard') }}" data-bs-toggle="tooltip" title="Dekstop">
+                            <a  href="{{ url('rcms/qms-dashboard') }}" data-bs-toggle="tooltip" title="Dekstop">
                                 <i class="fa-solid fa-house-user"></i>
                             </a>
                                          {{-- routename----->  log route on the page --}}
@@ -165,10 +165,10 @@
                                 <i class="fa-solid fa-gauge-high"></i>
                             </div> --}}
                             
-                            <div onclick="url('/rcms/qms-dashboard', '_blank', 'width=1200, height=900, top=0, left=0');"
+                            {{-- <div onclick="url('/rcms/qms-dashboard', '_blank', 'width=1200, height=900, top=0, left=0');"
                             data-bs-toggle="tooltip" title="Logs">
                             <i class="fa-solid fa-gauge-high"></i>
-                        </div>
+                        </div> --}}
                             {{-- <a href="/rcms_reports" data-bs-toggle="tooltip" title="Analytics">
                                 <svg width="20" height="20" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">

@@ -142,10 +142,13 @@
                                     <option value="SCAR">SCAR</option>
                                     <option value="Supplier-Audit">Supplier Audit</option>
                                     <option value="Change-Control">Change Control</option>
+                                    <option value="Action Item">Action Item</option>
                                     <option value="Deviation">Deviation</option>
                                     <option value="Capa">CAPA</option>
                                     <option value="Risk Assesment">Risk Assesment</option> 
                                     <option value="Root-Cause-Analysis">Root Cause Analysis</option>
+                                    <option value="Effectivenss Check">Effectivenss Check</option>
+
                                     <!-- <option value="Management Review">Management Review</option> -->
                                     <option value="Document">Document</option>
                                     <option value="Extension">Extension</option>

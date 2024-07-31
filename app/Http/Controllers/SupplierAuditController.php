@@ -381,6 +381,24 @@ if (!empty($internalAudit->others)) {
     $history->save();
 }
 
+if (!empty($internalAudit->external_agencies)) {
+    $history = new ExternalAuditTrailSupplier();
+    $history->supplier_id = $internalAudit->id;
+    $history->activity_type = 'Supplier Agencies';
+    $history->previous = "Null";
+    $history->current = $internalAudit->external_agencies;
+    $history->comment = "NA";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->change_to = 'Opened';
+    $history->change_from = 'Initiation';
+    $history->action_name = "Create";
+    $history->origin_state = $internalAudit->status;
+    $history->save();
+}
+
+
 if (!empty($internalAudit->initiated_through)) {
     $history = new ExternalAuditTrailSupplier();
     $history->supplier_id = $internalAudit->id;
@@ -1395,7 +1413,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
             
@@ -1451,7 +1469,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->origin_state = $lastDocument->status;
         
@@ -1482,7 +1500,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
             $history->origin_state = $lastDocument->status;
@@ -1493,9 +1511,15 @@ if (!empty($internalAudit->Auditee)) {
     } else {
         $history->action_name = "New";
     }
+    
 
             $history->save();
         }
+
+
+        
+
+        
         if ($lastDocument->short_description != $internalAudit->short_description || !empty($request->short_description_comment)) {
 
             $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
@@ -1512,7 +1536,37 @@ if (!empty($internalAudit->Auditee)) {
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = "Update";
+
+            if ($existingHistory) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+
+            $history->save();
+        }
+
+
+        if ($lastDocument->external_agencies != $internalAudit->external_agencies || !empty($request->external_agencies_comment)) {
+
+            $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
+            ->where('activity_type', '  Supplier Agencies')
+            ->exists();
+
+            $history = new ExternalAuditTrailSupplier();
+            $history->supplier_id = $id;
+            $history->activity_type = '  Supplier Agencies';
+            $history->previous = $lastDocument->external_agencies;
+            $history->current = $internalAudit->external_agencies;
+            $history->comment = $request->date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -1542,7 +1596,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
             
@@ -1570,11 +1624,11 @@ if (!empty($internalAudit->Auditee)) {
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->action_name = "Update";
-            // $history->action_name = "Not Applicable";
+            // $history->action_name = "Null";
 
             if ($existingHistory) {
                 $history->action_name = "Update";
@@ -1600,7 +1654,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -1627,7 +1681,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -1656,7 +1710,7 @@ if ((!is_null($lastStartDate) && !is_null($internalStartDate) && $lastStartDate-
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
     $history->change_from = $lastDocument->status;
     $history->action_name = "Update";
 
@@ -1686,7 +1740,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
     $history->change_from = $lastDocument->status;
     $history->action_name = "Update";
 
@@ -1720,7 +1774,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -1748,7 +1802,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -1776,7 +1830,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -1804,7 +1858,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -1840,7 +1894,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = $existingHistory ? "Update" : "New";
         
@@ -1872,7 +1926,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = $existingHistory ? "Update" : "New";
         
@@ -1895,7 +1949,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         // $history->origin_state = $lastDocument->status;
-        // $history->change_to = "Not Applicable";
+        // $history->change_to = "Null";
         // $history->change_from = $lastDocument->status;
         // $history->action_name = $existingHistory ? "Update" : "New";
 
@@ -1917,7 +1971,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -1944,7 +1998,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -1971,7 +2025,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -1998,7 +2052,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -2027,7 +2081,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -2054,7 +2108,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -2065,6 +2119,8 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             }
             $history->save();
         }
+
+        
         if ($lastDocument->file_attachment != $internalAudit->file_attachment || !empty($request->file_attachment_comment)) {
 
 
@@ -2081,7 +2137,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -2106,7 +2162,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -2132,7 +2188,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -2159,7 +2215,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -2186,7 +2242,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to = "Not Applicable";
+        //     $history->change_to = "Null";
         //     $history->change_from = $lastDocument->status;
         //     $history->action_name = "Update";
             
@@ -2217,7 +2273,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
 
@@ -2248,7 +2304,7 @@ if ((!is_null($lastAuditEndDate) && !is_null($requestAuditEndDate) && $lastAudit
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
     $history->change_from = $lastDocument->status;
     $history->action_name = "Update";
 
@@ -2283,7 +2339,7 @@ if ($lastDocument->severity_level != $internalAudit->severity_level) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
     $history->action_name = "Update";
 
     if ($existingHistory) {
@@ -2339,7 +2395,7 @@ if ($lastDocument->if_comments != $internalAudit->if_comments) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
     $history->action_name = "Update";
 
     if ($existingHistory) {
@@ -2367,7 +2423,7 @@ if ($lastDocument->External_Auditing_Agency != $internalAudit->External_Auditing
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
     $history->action_name = "Update";
 
     if ($existingHistory) {
@@ -2395,7 +2451,7 @@ if ($lastDocument->Relevant_Guidelines != $internalAudit->Relevant_Guidelines) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
     $history->action_name = "Update";
 
     if ($existingHistory) {
@@ -2423,7 +2479,7 @@ if ($lastDocument->QA_Comments != $internalAudit->QA_Comments) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
     $history->action_name = "Update";
 
     if ($existingHistory) {
@@ -2459,7 +2515,7 @@ if ($lastDocument->Audit_Category != $internalAudit->Audit_Category) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
 
     if ($existingHistory) {
         $history->action_name = "Update";
@@ -2488,7 +2544,7 @@ if ($lastDocument->file_attachment_guideline != $internalAudit->file_attachment_
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
     $history->action_name = "Update";
 
     if ($existingHistory) {
@@ -2516,7 +2572,7 @@ if ($lastDocument->Supplier_Details != $internalAudit->Supplier_Details) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
     $history->action_name = "Update";
 
     if ($existingHistory) {
@@ -2544,7 +2600,7 @@ if ($lastDocument->Supplier_Site != $internalAudit->Supplier_Site) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
     $history->action_name = "Update";
 
     if ($existingHistory) {
@@ -2572,7 +2628,7 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to = "Not Applicable";
+    $history->change_to = "Null";
     $history->action_name = "Update";
 
     if ($existingHistory) {

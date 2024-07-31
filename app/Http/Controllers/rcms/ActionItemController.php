@@ -1068,24 +1068,24 @@ class ActionItemController extends Controller
                 $history->status = $changeControl->status;
                 $history->save();
                 
-                $list = Helpers::getInitiatorUserList();
-                foreach ($list as $u) {
-                    if ($u->q_m_s_divisions_id == $openState->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        try {
-                            if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $openState],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document is Submitted By " . Auth::user()->name);
-                                    }
-                                );
-                            }
-                        } catch (\Exception $e) {
-                            // Handle the exception
-                        }
+                // $list = Helpers::getInitiatorUserList();
+                // foreach ($list as $u) {
+                //     if ($u->q_m_s_divisions_id == $openState->division_id) {
+                //         $email = Helpers::getInitiatorEmail($u->user_id);
+                //         try {
+                //             if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $openState],
+                //                     function ($message) use ($email) {
+                //                         $message->to($email)
+                //                             ->subject("Document is Submitted By " . Auth::user()->name);
+                //                     }
+                //                 );
+                //             }
+                //         } catch (\Exception $e) {
+                //             // Handle the exception
+                //         }
                         // if ($email !== null) {
 
                         //     Mail::send(
@@ -1097,8 +1097,8 @@ class ActionItemController extends Controller
                         //         }
                         //     );
                         // }
-                    }
-                }
+                //     }
+                // }
                 toastr()->success('Document Sent');
 
                 return back();

@@ -323,17 +323,19 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Need for Sourcing of Starting Material
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Approved By Contract Giver
-                            </button>
-                            @if(!empty($data->approvedBy_contract_giver_by))
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                    Link Manufacturer Code to Material Code through MPN in SAP
-                                </button>
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                    Initiate Periodic Revaluation
-                                </button>
-                            @endif
+                                @if($data->approvedBy_contract_giver_by == null)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#contract-giver-modal">
+                                        Approved By Contract Giver
+                                    </button>
+                                @endif
+                                @if(!empty($data->approvedBy_contract_giver_by))
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#link-manufacturer">
+                                        Link Manufacturer Code to Material Code through MPN in SAP
+                                    </button>
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">
+                                        Initiate Periodic Revaluation
+                                    </button>
+                                @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
@@ -406,6 +408,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Manufacturer Audit Passed 
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
                             </button>
@@ -429,6 +434,9 @@
                         @elseif($data->stage == 14 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Manufacturer Audit Failed
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
                             </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
@@ -491,9 +499,9 @@
                             @endif
 
                             @if ($data->stage >= 9)
-                                <div class="active bg-danger">Manufacturer Rejected</div>
+                                <div class="active bg-danger" @if($data->stage > 9) style="display: none" @endif>Manufacturer Rejected</div>
                             @else
-                                <div class="">Manufacturer Rejected</div>
+                                <div class="" @if($data->stage > 9) style="display: none" @endif>Manufacturer Rejected</div>
                             @endif
 
                             @if ($data->stage >= 10)
@@ -2782,120 +2790,367 @@
                             </div>
                         </div>
 
-
-                        <!-- <div class="col-lg-3">
+                        <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="Suppplier Review By">Request Justified   By</label>
+                                <label for="Submitted By">Approved by Contract Giver By</label>
+                                <div class="static">{{$data->approvedBy_contract_giver_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Submitted On">Approved by Contract Giver On</label>
+                                <div class="static">{{$data->approvedBy_contract_giver_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Submitted Comment">Approved by Contract Giver Comment</label>
+                                <div class="static">{{$data->approvedBy_contract_giver_comment}}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Submitted By">Request Justified By</label>
                                 <div class="static">{{$data->request_justified_by}}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="Suppplier Review On">Request Justified On</label>
+                                <label for="Submitted On">Request Justified On</label>
                                 <div class="static">{{$data->request_justified_on}}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Suppplier Review Comment">Request Justified Comment</label>
+                                <label for="Submitted Comment">Request Justified Comment</label>
                                 <div class="static">{{$data->request_justified_comment}}</div>
                             </div>
                         </div>
 
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="Score Card By">CQA Review Completed By</label>
-                                <div class="static">{{$data->cqa_review_by}}</div>
+                                <label for="Submitted By">Request Not Justified By</label>
+                                <div class="static">{{$data->request_not_justified_by}}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="CQA Review Completed On">CQA Review Completed On</label>
-                                <div class="static">{{$data->cqa_review_on}}</div>
+                                <label for="Submitted On">Request Not Justified On</label>
+                                <div class="static">{{$data->request_not_justified_on}}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="CQA Review Completed Comment">CQA Review Completed Comment</label>
-                                <div class="static">{{$data->cqa_review_comment}}</div>
+                                <label for="Submitted Comment">Request Not Justified Comment</label>
+                                <div class="static">{{$data->request_not_justified_comment}}</div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review By">Pre-Purchase Sample Required By</label>
+                                <div class="static">{{$data->prepurchase_sample_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review On">Pre-Purchase Sample Required On</label>
+                                <div class="static">{{$data->prepurchase_sample_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Suppplier Review Comment">Pre-Purchase Sample Required Comment</label>
+                                <div class="static">{{$data->prepurchase_sample_comment}}</div>
                             </div>
                         </div>
 
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="Purchase Sample Request By">Purchase Sample Request Initiated By</label>
-                                <div class="static">{{$data->purchase_sample_initiated_by}}</div>
+                                <label for="Score Card By">Pre-Purchase Sample Not Required By</label>
+                                <div class="static">{{$data->prepurchase_sample_notRequired_by}}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="Purchase Sample Request Initiated On">Purchase Sample Request Initiated On</label>
-                                <div class="static">{{$data->purchase_sample_initiated_on}}</div>
+                                <label for="CQA Review Completed On">Pre-Purchase Sample Not Required On</label>
+                                <div class="static">{{$data->prepurchase_sample_notRequired_on}}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Purchase Sample Request Initiated Comment">Purchase Sample Request Initiated Comment</label>
-                                <div class="static">{{$data->purchase_sample_initiated_comment}}</div>
+                                <label for="CQA Review Completed Comment">Pre-Purchase Sample Not Required Comment</label>
+                                <div class="static">{{$data->prepurchase_sample_notRequired_comment}}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Purchase Sample Request By">Purchase Sample Request Ack. by Dep.</label>
+                                <div class="static">{{$data->pendigPurchaseSampleRequested_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Purchase Sample Request Initiated On">Purchase Sample Request Ack. by Dep. On</label>
+                                <div class="static">{{$data->pendigPurchaseSampleRequested_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Purchase Sample Request Initiated Comment">Purchase Sample Request Ack. by Dep. Comment</label>
+                                <div class="static">{{$data->pendigPurchaseSampleRequested_comment}}</div>
                             </div>
                         </div>
 
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Purchase Sample Analysis Satisfactory By">Purchase Sample Analysis Satisfactory By</label>
-                                <div class="static">{{$data->purchase_sample_satisfactory_by}}</div>
+                                <div class="static">{{$data->purchaseSampleanalysis_by}}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Purchase Sample Analysis Satisfactory On">Purchase Sample Analysis Satisfactory On</label>
-                                <div class="static">{{$data->purchase_sample_satisfactory_on}}</div>
+                                <div class="static">{{$data->purchaseSampleanalysis_on}}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Purchase Sample Analysis Satisfactory Comment">Purchase Sample Analysis Satisfactory Comment</label>
-                                <div class="static">{{$data->purchase_sample_satisfactory_comment}}</div>
+                                <div class="static">{{$data->purchaseSampleanalysis_comment}}</div>
                             </div>
                         </div>
 
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="F&D Review Completed By">F&D Review Completed By</label>
-                                <div class="static">{{$data->FD_review_by}}</div>
+                                <label for="F&D Review Completed By">Purchase Sample Analysis Not Satisfactory</label>
+                                <div class="static">{{$data->purchaseSampleanalysisNotSatisfactory_by}}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="F&D Review Completed On">F&D Review Completed On</label>
-                                <div class="static">{{$data->FD_review_on}}</div>
+                                <label for="F&D Review Completed On">Purchase Sample Analysis Not Satisfactory On</label>
+                                <div class="static">{{$data->purchaseSampleanalysisNotSatisfactory_on}}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="F&D Review Completed Comment">F&D Review Completed Comment</label>
-                                <div class="static">{{$data->FD_review_comment}}</div>
+                                <label for="F&D Review Completed Comment">Purchase Sample Analysis Not Satisfactory Comment</label>
+                                <div class="static">{{$data->purchaseSampleanalysisNotSatisfactory_comment}}</div>
                             </div>
                         </div>
 
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="CQA Final Review Completed By">CQA Final Review Completed By</label>
-                                <div class="static">{{$data->cqa_final_review_by}}</div>
+                                <label for="CQA Final Review Completed By">F&D Review Completed By</label>
+                                <div class="static">{{$data->FdReviewCompleted_by}}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="CQA Final Review Completed On">CQA Final Review Completed On</label>
-                                <div class="static">{{$data->cqa_final_res22view_on}}</div>
+                                <label for="CQA Final Review Completed On">F&D Review Completed On</label>
+                                <div class="static">{{$data->FdReviewCompleted_on}}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="CQA Final Review Completed Comment">CQA Final Review Completed Comment</label>
-                                <div class="static">{{$data->cqa_final_review_comment}}</div>
+                                <label for="CQA Final Review Completed Comment">F&D Review Completed Comment</label>
+                                <div class="static">{{$data->FdReviewCompleted_comment}}</div>
                             </div>
-                        </div> -->
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Acknowledgement By Purchase Dept. By</label>
+                                <div class="static">{{$data->acknowledgByPD_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Acknowledgement By Purchase Dept. On</label>
+                                <div class="static">{{$data->acknowledgByPD_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Acknowledgement By Purchase Dept. Comment</label>
+                                <div class="static">{{$data->acknowledgByPD_comment}}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">All Requirements Fulfilled By</label>
+                                <div class="static">{{$data->requirementFullfilled_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">All Requirements Fulfilled On</label>
+                                <div class="static">{{$data->requirementFullfilled_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">All Requirements Fulfilled Comment</label>
+                                <div class="static">{{$data->requirementFullfilled_comment}}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">All Requirements Not Fulfilled By</label>
+                                <div class="static">{{$data->requiredNotFulfilled_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">All Requirements Not Fulfilled On</label>
+                                <div class="static">{{$data->requiredNotFulfilled_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">All Requirements Not Fulfilled Comment</label>
+                                <div class="static">{{$data->requiredNotFulfilled_comment}}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Risk Rating Observed as High By</label>
+                                <div class="static">{{$data->riskRatingObservedAsHigh_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Risk Rating Observed as High On</label>
+                                <div class="static">{{$data->riskRatingObservedAsHigh_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Risk Rating Observed as High Comment</label>
+                                <div class="static">{{$data->riskRatingObservedAsHigh_comment}}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Risk Rating Observed as Low By</label>
+                                <div class="static">{{$data->riskRatingObservedAsLow_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Risk Rating Observed as Low On</label>
+                                <div class="static">{{$data->riskRatingObservedAsLow_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Risk Rating Observed as Low Comment</label>
+                                <div class="static">{{$data->riskRatingObservedAsLow_comment}}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Manufacturer Audit Passed By</label>
+                                <div class="static">{{$data->manufacturerAuditPassed_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Manufacturer Audit Passed On</label>
+                                <div class="static">{{$data->manufacturerAuditPassed_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Manufacturer Audit Passed Comment</label>
+                                <div class="static">{{$data->manufacturerAuditPassed_comment}}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Initiate Periodic Revaluation By</label>
+                                <div class="static">{{$data->periodicRevolutionInitiated_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Initiate Periodic Revaluation On</label>
+                                <div class="static">{{$data->periodicRevolutionInitiated_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Initiate Periodic Revaluation Comment</label>
+                                <div class="static">{{$data->periodicRevolutionInitiated_comment}}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Risk Rating Observed as High/Medium By</label>
+                                <div class="static">{{$data->riskRatingObservedAsHighMedium_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Risk Rating Observed as High/Medium On</label>
+                                <div class="static">{{$data->riskRatingObservedAsHighMedium_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Risk Rating Observed as High/Medium Comment</label>
+                                <div class="static">{{$data->riskRatingObservedAsHighMedium_comment}}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Risk Rating Observed as Low By</label>
+                                <div class="static">{{$data->riskRatingObservedLow_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Risk Rating Observed as Low On</label>
+                                <div class="static">{{$data->riskRatingObservedLow_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Risk Rating Observed as Low Comment</label>
+                                <div class="static">{{$data->riskRatingObservedLow_comment}}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed By">Manufacturer Audit Failed By</label>
+                                <div class="static">{{$data->pendingManufacturerAuditFailed_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed On">Manufacturer Audit Failed On</label>
+                                <div class="static">{{$data->pendingManufacturerAuditFailed_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="CQA Final Review Completed Comment">Manufacturer Audit Failed Comment</label>
+                                <div class="static">{{$data->pendingManufacturerAuditFailed_comment}}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2967,6 +3222,82 @@
                                 <div class="group-input">
                                     <label for="comment">Comment</label>
                                     <input type="comment" name="comments">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contract Giver Modal -->
+            <div class="modal fade" id="contract-giver-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ url('rcms/approvedBy-contract-giver', $data->id) }}" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input type="text" name="username" required class="form-control">
+                                </div>
+                                <div class="group-input mt-3">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input type="password" name="password" required class="form-control">
+                                </div>
+                                <div class="group-input mt-3">
+                                    <label for="comment">Comment</label>
+                                    <input type="comment" name="comments" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Link Manufacturer Modal -->
+            <div class="modal fade" id="link-manufacturer">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ url('rcms/link-manufacturer', $data->id) }}" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input type="text" name="username" required class="form-control">
+                                </div>
+                                <div class="group-input mt-3">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input type="password" name="password" required class="form-control">
+                                </div>
+                                <div class="group-input mt-3">
+                                    <label for="comment">Comment</label>
+                                    <input type="comment" name="comments" class="form-control">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -3144,70 +3475,12 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="group-input">
-                                    @if ($data->stage == 2)
-                                        
-                                        <label for="major">
-                                            <input type="radio" name="revision" id="major"
-                                                value="RA">
-                                              Supplier Risk Assessment
-                                        </label>
-                                        <label for="major">
-                                            <input type="radio" name="revision" id="major"
-                                                value="SA">
-                                               Supplier Audit
-                                        </label>
-                                    @endif
-                                    @if ($data->stage == 3)
+                                    @if ($data->stage == 11 || $data->stage == 14)
                                     <label for="major">
                                         <input type="radio" name="revision" id="major"
                                             value="SA">
                                            Supplier Audit
                                     </label>
-                                    @endif
-                                    @if ($data->stage == 5)
-                                        <label for="major">
-                                            <input type="radio" name="revision" id="major"
-                                                value="capa-child">
-                                                CAPA
-                                        </label>
-                                        {{-- <br> --}}
-                                        <label for="major">
-                                            <input type="radio" name="revision" id="major"
-                                                value="deviation">
-                                               Deviation
-                                        </label>
-
-                                        <label for="major">
-                                            <input type="radio" name="revision" id="major"
-                                                value="RCA">
-                                                Root Cause Analysis
-                                        </label>
-                                        <label for="major">
-                                            <input type="radio" name="revision" id="major"
-                                                value="changecontrol">
-                                                Change Control
-                                        </label>
-                                        {{-- <br> --}}
-                                        <label for="major">
-                                            <input type="radio" name="revision" id="major"
-                                                value="Action-Item">
-                                                Action Item
-                                        </label>
-                                        <label for="major">
-                                            <input type="radio" name="revision" id="major"
-                                                value="RA">
-                                              Supplier Risk Assessment
-                                        </label>
-                                        <label for="major">
-                                            <input type="radio" name="revision" id="major"
-                                                value="SA">
-                                               Supplier Audit
-                                        </label>
-                                         <label for="major">
-                                            <input type="radio" name="revision" id="major"
-                                                value="SCAR">
-                                               SCAR
-                                        </label>
                                     @endif
                                 </div>
             

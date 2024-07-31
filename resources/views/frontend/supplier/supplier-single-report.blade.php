@@ -2246,6 +2246,20 @@
                     </td>
                 </tr>
                 <tr>
+                    <th class="w-20">Approved by Contract Giver By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->approvedBy_contract_giver_by }}</div>
+                    </td>
+                    <th class="w-20">Approved by Contract Giver On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->approvedBy_contract_giver_on }}</div>
+                    </td>
+                    <th class="w-20">Approved by Contract Giver Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->approvedBy_contract_giver_comment }}</div>
+                    </td>
+                </tr>
+                <tr>
                     <th class="w-20">Request Justified By</th>
                     <td class="w-30">
                         <div class="static">{{ $data->request_justified_by }}</div>
@@ -2261,79 +2275,243 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="w-20">CQA Review Completed By</th>
+                    <th class="w-20">Request Not Justified By</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->cqa_review_by }}</div>
+                        <div class="static">{{ $data->request_not_justified_by }}</div>
                     </td>
                     <th class="w-20">
-                        CQA Review Completed On</th>
+                        Request Not Justified On</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->cqa_review_on }}</div>
+                        <div class="static">{{ $data->request_not_justified_on }}</div>
                     </td>
-                    <th class="w-20">CQA Review Completed Comment</th>
+                    <th class="w-20">Request Not Justified Comment</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->cqa_review_comment }}</div>
+                        <div class="static">{{ $data->request_not_justified_comment }}</div>
                     </td>
                 </tr>
-
                 <tr>
-                    <th class="w-20">Purchase Sample Request Initiated By</th>
+                    <th class="w-20">Pre-Purchase Sample Required By</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->purchase_sample_initiated_by }}</div>
+                        <div class="static">{{ $data->prepurchase_sample_by }}</div>
                     </td>
-                    <th class="w-20">Purchase Sample Request Initiated On</th>
+                    <th class="w-20">Pre-Purchase Sample Required On</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->purchase_sample_initiated_on }}</div>
+                        <div class="static">{{ $data->prepurchase_sample_on }}</div>
                     </td>
-                    <th class="w-20">Purchase Sample Request Initiated Comment</th>
+                    <th class="w-20">Pre-Purchase Sample Required Comment</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->purchase_sample_initiated_comment }}</div>
+                        <div class="static">{{ $data->prepurchase_sample_comment }}</div>
+                    </td>
+                </tr>                
+                <tr>
+                    <th class="w-20">Pre-Purchase Sample Not Required By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->prepurchase_sample_notRequired_by }}</div>
+                    </td>
+                    <th class="w-20">Pre-Purchase Sample Not Required On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->prepurchase_sample_notRequired_on }}</div>
+                    </td>
+                    <th class="w-20">Pre-Purchase Sample Not Required Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->prepurchase_sample_notRequired_comment }}</div>
+                    </td>
+                </tr>             
+                <tr>
+                    <th class="w-20">>Purchase Sample Request Ack. by Dep. By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->pendigPurchaseSampleRequested_by }}</div>
+                    </td>
+                    <th class="w-20">>Purchase Sample Request Ack. by Dep. On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->pendigPurchaseSampleRequested_on }}</div>
+                    </td>
+                    <th class="w-20">>Purchase Sample Request Ack. by Dep. Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->pendigPurchaseSampleRequested_comment }}</div>
                     </td>
                 </tr>
-
                 <tr>
                     <th class="w-20">Purchase Sample Analysis Satisfactory By</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->purchase_sample_satisfactory_by }}</div>
+                        <div class="static">{{ $data->purchaseSampleanalysis_by }}</div>
                     </td>
                     <th class="w-20">Purchase Sample Analysis Satisfactory On</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->purchase_sample_satisfactory_on }}</div>
+                        <div class="static">{{ $data->purchaseSampleanalysis_on }}</div>
                     </td>
                     <th class="w-20">
                         Purchase Sample Analysis Satisfactory Comment</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->purchase_sample_satisfactory_comment }}</div>
+                        <div class="static">{{ $data->purchaseSampleanalysis_comment }}</div>
                     </td>
                 </tr>
-
+                <tr>
+                    <th class="w-20">Purchase Sample Analysis Not Satisfactory By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->purchaseSampleanalysisNotSatisfactory_by }}</div>
+                    </td>
+                    <th class="w-20">Purchase Sample Analysis Not Satisfactory On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->purchaseSampleanalysisNotSatisfactory_on }}</div>
+                    </td>
+                    <th class="w-20">Purchase Sample Analysis Not Satisfactory Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->purchaseSampleanalysisNotSatisfactory_comment }}</div>
+                    </td>
+                </tr>
                 <tr>
                     <th class="w-20">F&D Review Completed By</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->FD_review_by }}</div>
+                        <div class="static">{{ $data->FdReviewCompleted_by }}</div>
                     </td>
                     <th class="w-20">F&D Review Completed On</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->FD_review_on }}</div>
+                        <div class="static">{{ $data->FdReviewCompleted_on }}</div>
                     </td>
                     <th class="w-20">F&D Review Completed Comment</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->FD_review_comment }}</div>
+                        <div class="static">{{ $data->FdReviewCompleted_comment }}</div>
                     </td>
                 </tr>
-
                 <tr>
-                    <th class="w-20">CQA Final Review Completed By</th>
+                    <th class="w-20">Acknowledgement By Purchase Dept. By</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->cqa_final_review_by }}</div>
+                        <div class="static">{{ $data->acknowledgByPD_by }}</div>
                     </td>
-                    <th class="w-20">CQA Final Review Completed On</th>
+                    <th class="w-20">Acknowledgement By Purchase Dept. On</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->cqa_final_res22view_on }}</div>
+                        <div class="static">{{ $data->acknowledgByPD_on }}</div>
                     </td>
-                    <th class="w-20">CQA Final Review Completed Comment</th>
+                    <th class="w-20">Acknowledgement By Purchase Dept. Comment</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->cqa_final_review_comment }}</div>
+                        <div class="static">{{ $data->acknowledgByPD_comment }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="w-20">All Requirements Fulfilled By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->requirementFullfilled_by }}</div>
+                    </td>
+                    <th class="w-20">All Requirements Fulfilled On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->requirementFullfilled_on }}</div>
+                    </td>
+                    <th class="w-20">All Requirements Fulfilled Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->requirementFullfilled_comment }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="w-20">All Requirements Not Fulfilled By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->requiredNotFulfilled_by }}</div>
+                    </td>
+                    <th class="w-20">All Requirements Not Fulfilled On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->requiredNotFulfilled_on }}</div>
+                    </td>
+                    <th class="w-20">All Requirements Not Fulfilled Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->requiredNotFulfilled_comment }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="w-20">Risk Rating Observed as High By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->riskRatingObservedAsHigh_by }}</div>
+                    </td>
+                    <th class="w-20">Risk Rating Observed as High On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->riskRatingObservedAsHigh_on }}</div>
+                    </td>
+                    <th class="w-20">Risk Rating Observed as High Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->riskRatingObservedAsHigh_comment }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="w-20">Risk Rating Observed as Low By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->riskRatingObservedAsLow_by }}</div>
+                    </td>
+                    <th class="w-20">Risk Rating Observed as Low On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->riskRatingObservedAsLow_on }}</div>
+                    </td>
+                    <th class="w-20">Risk Rating Observed as Low Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->riskRatingObservedAsLow_comment }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="w-20">Manufacturer Audit Passed By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->manufacturerAuditPassed_by }}</div>
+                    </td>
+                    <th class="w-20">Manufacturer Audit Passed On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->manufacturerAuditPassed_on }}</div>
+                    </td>
+                    <th class="w-20">Manufacturer Audit Passed Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->manufacturerAuditPassed_comment }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="w-20">Initiate Periodic Revaluation By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->periodicRevolutionInitiated_by }}</div>
+                    </td>
+                    <th class="w-20">Initiate Periodic Revaluation On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->periodicRevolutionInitiated_on }}</div>
+                    </td>
+                    <th class="w-20">Initiate Periodic Revaluation Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->periodicRevolutionInitiated_comment }}</div>
+                    </td>
+                </tr>                
+                <tr>
+                    <th class="w-20">Risk Rating Observed as High/Medium By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->riskRatingObservedAsHighMedium_by }}</div>
+                    </td>
+                    <th class="w-20">Risk Rating Observed as High/Medium On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->riskRatingObservedAsHighMedium_on }}</div>
+                    </td>
+                    <th class="w-20">Risk Rating Observed as High/Medium Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->riskRatingObservedAsHighMedium_comment }}</div>
+                    </td>
+                </tr>             
+                <tr>
+                    <th class="w-20">Risk Rating Observed as Low By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->riskRatingObservedLow_by }}</div>
+                    </td>
+                    <th class="w-20">Risk Rating Observed as Low On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->riskRatingObservedLow_on }}</div>
+                    </td>
+                    <th class="w-20">Risk Rating Observed as Low Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->riskRatingObservedLow_comment }}</div>
+                    </td>
+                </tr>             
+                <tr>
+                    <th class="w-20">Manufacturer Audit Failed By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->pendingManufacturerAuditFailed_by }}</div>
+                    </td>
+                    <th class="w-20">Manufacturer Audit Failed On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->pendingManufacturerAuditFailed_on }}</div>
+                    </td>
+                    <th class="w-20">Manufacturer Audit Failed Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->pendingManufacturerAuditFailed_comment }}</div>
                     </td>
                 </tr>
             </table>

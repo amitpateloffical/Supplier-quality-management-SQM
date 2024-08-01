@@ -173,7 +173,7 @@ footer td {
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Supplier No.</strong>
+                    <strong>Supplier Site No.</strong>
                 </td>
                 <td class="w-40">
                     {{ Helpers::getDivisionName($data->division_id) }}/SS/{{ date('Y') }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
@@ -1054,7 +1054,7 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Supplier Bussiness Planning</th>
+                        <th class="w-20">Supplier Business Planning</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) &&
                             !empty($supplierData->supplier_bussiness_planning))
@@ -1065,7 +1065,7 @@ footer td {
 
                         </td>
 
-                        <th class="w-20">Supplier Bussiness Planning Weight</th>
+                        <th class="w-20">Supplier Business Planning Weight</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) &&
                             !empty($supplierData->supplier_bussiness_planning_weight))
@@ -1542,17 +1542,17 @@ footer td {
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Submitted By</th>
+                        <th class="w-20">Submit Supplier Details By</th>
                         <td class="w-30">
-                            <div class="static">{{ $supplierData->submit_by ?? 'Not Applicable' }}</div>
+                            <div class="static">{{ $supplierData->submitted_by ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">Submitted On</th>
+                        <th class="w-20">Submit Supplier Details On</th>
                         <td class="w-30">
-                            <div class="static">{{ $supplierData->submit_on ?? 'Not Applicable' }}</div>
+                            <div class="static">{{ $supplierData->submitted_on ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">Submitted Comment</th>
+                        <th class="w-20">Submit Supplier Details Comment</th>
                         <td class="w-30">
-                            <div class="static">{{ $supplierData->submit_comment ?? 'Not Applicable' }}</div>
+                            <div class="static">{{ $supplierData->submitted_comment ?? 'Not Applicable' }}</div>
                         </td>
 
                     </tr>
@@ -1574,15 +1574,15 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Pending Qualification By</th>
+                        <th class="w-20">Qualification Complete By</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->pending_qualification_by ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">Pending Qualification On</th>
+                        <th class="w-20">Qualification Complete on</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->pending_qualification_on ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">Pending Qualification Comment</th>
+                        <th class="w-20">Qualification Complete Comment</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->pending_qualification_comment ?? 'Not Applicable' }}
                             </div>
@@ -1590,15 +1590,15 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Pending Supplier By</th>
+                        <th class="w-20">Audit Failed By</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->pending_supplier_audit_by ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">Pending Supplier On</th>
+                        <th class="w-20">Audit Failed On</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->pending_supplier_audit_on ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">Pending Supplier Comment</th>
+                        <th class="w-20">Audit Failed Comment</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->pending_supplier_audit_comment ?? 'Not Applicable' }}
                             </div>
@@ -1607,15 +1607,15 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Pending Rejection By</th>
+                        <th class="w-20">Supplier Obsolete By</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->pending_rejection_by ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">Pending Rejection On</th>
+                        <th class="w-20">Supplier Obsolete On</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->pending_rejection_on ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">Pending Rejection Comment</th>
+                        <th class="w-20">Supplier Obsolete Comment</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->pending_rejection_comment ?? 'Not Applicable' }}</div>
                         </td>
@@ -1623,15 +1623,31 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Supplier Approved By</th>
+                        <th class="w-20">Audit Passed By</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->supplier_approved_by ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">Supplier Approved On</th>
+                        <th class="w-20">Audit Passed On</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->supplier_approved_on ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">Supplier Approved Comment</th>
+                        <th class="w-20">Audit Passed Comment</th>
+                        <td class="w-30">
+                            <div class="static">{{ $supplierData->supplier_approved_comment ?? 'Not Applicable' }}</div>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Conditionally Approved By</th>
+                        <td class="w-30">
+                            <div class="static">{{ $supplierData->supplier_approved_by ?? 'Not Applicable' }}</div>
+                        </td>
+                        <th class="w-20">Conditionally Approved On</th>
+                        <td class="w-30">
+                            <div class="static">{{ $supplierData->supplier_approved_on ?? 'Not Applicable' }}</div>
+                        </td>
+                        <th class="w-20">Conditionally Approved Comment</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->supplier_approved_comment ?? 'Not Applicable' }}</div>
                         </td>
@@ -1658,15 +1674,15 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">ReAudit By</th>
+                        <th class="w-20">Re-Audit By</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->reAudit_by ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">ReAudit On</th>
+                        <th class="w-20">Re-Audit On</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->reAudit_on ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">ReAudit Comment</th>
+                        <th class="w-20">Re-Audit Comment</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->reAudit_comment ?? 'Not Applicable' }}</div>
                         </td>
@@ -1674,15 +1690,15 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Rejected By</th>
+                        <th class="w-20">Reject Due To Quality Issues By</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->rejectedDueToQuality_by ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">Rejected On</th>
+                        <th class="w-20">Reject Due To Quality Issues On</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->rejectedDueToQuality_on ?? 'Not Applicable' }}</div>
                         </td>
-                        <th class="w-20">Rejected Comment</th>
+                        <th class="w-20">Reject Due To Quality Issues Comment</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->rejectedDueToQuality_comment ?? 'Not Applicable' }}
                             </div>

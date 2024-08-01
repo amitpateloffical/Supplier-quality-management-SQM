@@ -5699,7 +5699,7 @@ class SupplierController extends Controller
     //    $pre = Deviation::all();
         return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre'));
     }
-    if ($request->revision == "RA") {
+    if ($request->revision == "RA") { 
         $supplierA->originator = User::where('id', $supplierA->initiator_id)->value('name');
     //    $pre = Deviation::all();
     $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
@@ -5721,5 +5721,5 @@ class SupplierController extends Controller
         return view('frontend.scar.scar_new', compact('record_number','supplierName','supplierProduct','distributionSites', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
     }
 
-    }
+    } 
 }

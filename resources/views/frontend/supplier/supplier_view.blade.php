@@ -4,6 +4,7 @@
 @php 
     $users = DB::table('users')->select('id', 'name')->get();    
     $requestNUmber = "RV/RP/" . str_pad($data->record, 4, '0', STR_PAD_LEFT) . "/" . date('Y');
+    $formStatus = $data->stage;
 @endphp
 <style>
     textarea.note-codable {
@@ -432,7 +433,7 @@
                                 Risk Rating Observed as Low
                             </button>
                         @elseif($data->stage == 14 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Manufacturer Audit Failed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
@@ -795,7 +796,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Justification for Request</label>
-                                        <textarea type="text" name="request_justification" value="{{ $data->request_justification }}" class="">{{ $data->request_justification }}</textarea>
+                                        <textarea type="text" name="request_justification" value="{{ $data->request_justification }}" class="tiny">{{ $data->request_justification }}</textarea>
                                     </div>
                                 </div>
 
@@ -828,7 +829,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Remark</label>
-                                        <textarea type="text" name="cqa_remark" id="cqa_remark" class="">{{ $data->cqa_remark }}</textarea>
+                                        <textarea type="text" name="cqa_remark" id="cqa_remark" class="tiny">{{ $data->cqa_remark }}</textarea>
                                     </div>
                                 </div>
 
@@ -869,7 +870,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Justification</label>
-                                        <textarea type="text" name="justification" id="justification" class="">{{ $data->justification }}</textarea>
+                                        <textarea type="text" name="justification" id="justification" class="tiny">{{ $data->justification }}</textarea>
                                     </div>
                                 </div>
 
@@ -1043,7 +1044,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Review Comment of CQA</label>
-                                        <textarea type="text" name="cqa_comment" id="cqa_comment" class="">{{ $data->cqa_comment }}</textarea>
+                                        <textarea type="text" name="cqa_comment" id="cqa_comment" class="tiny">{{ $data->cqa_comment }}</textarea>
                                     </div>
                                 </div>
 
@@ -1079,14 +1080,14 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Justification</label>
-                                        <textarea type="text" name="supplierJustification" id="supplierJustification" class="">{{ $data->supplierJustification }}</textarea>
+                                        <textarea type="text" name="supplierJustification" id="supplierJustification" class="tiny">{{ $data->supplierJustification }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Review Comment of Corporate CQA</label>
-                                        <textarea type="text" name="cqa_corporate_comment" id="cqa_corporate_comment" class="">{{ $data->cqa_corporate_comment }}</textarea>
+                                        <textarea type="text" name="cqa_corporate_comment" id="cqa_corporate_comment" class="tiny">{{ $data->cqa_corporate_comment }}</textarea>
                                     </div>
                                 </div>
 
@@ -1149,7 +1150,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Justification</label>
-                                        <textarea type="text" name="sample_order_justification" id="sample_order_justification" class="">{{ $data->sample_order_justification }}</textarea>
+                                        <textarea type="text" name="sample_order_justification" id="sample_order_justification" class="tiny">{{ $data->sample_order_justification }}</textarea>
                                     </div>
                                 </div>
 
@@ -1780,7 +1781,7 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Supplier.">Supplier</label>
+                                    <label for="Supplier.">Supplier Name</label>
                                     <input type="text" name="supplier_name" value="{{ $data->supplier_name }}" id="supplier_name" placeholder="Enter Supplier Name">
                                 </div>
                             </div>
@@ -1792,7 +1793,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="">Manufacturer</label>
+                                    <label for="">Manufacturer Name</label>
                                     <input type="text" name="manufacturer_name" value="{{ $data->manufacturer_name }}" placeholder="Enter Manufacturer ID">
                                 </div>
                             </div>
@@ -1804,7 +1805,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="">Vendor</label>
+                                    <label for="">Vendor Name</label>
                                     <input type="text" name="vendor_name" value="{{ $data->vendor_name }}" placeholder="Enter Vendor Name">
                                 </div>
                             </div>
@@ -3152,6 +3153,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="button-block">
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                    </div>
                 </div>
             </div>
 
@@ -3213,15 +3218,15 @@
                                 </div>
                                 <div class="group-input">
                                     <label for="username">Username <span class="text-danger">*</span></label>
-                                    <input type="text" name="username" required>
+                                    <input type="text" name="username" required class="form-control">
                                 </div>
-                                <div class="group-input">
+                                <div class="group-input mt-3">
                                     <label for="password">Password <span class="text-danger">*</span></label>
-                                    <input type="password" name="password" required>
+                                    <input type="password" name="password" required class="form-control">
                                 </div>
-                                <div class="group-input">
-                                    <label for="comment">Comment</label>
-                                    <input type="comment" name="comments">
+                                <div class="group-input mt-3">
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
+                                    <input type="comment" name="comments" required class="form-control">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -3327,15 +3332,15 @@
                                 </div>
                                 <div class="group-input">
                                     <label for="username">Username <span class="text-danger">*</span></label>
-                                    <input type="text" name="username" required>
+                                    <input type="text" name="username" required class="form-control">
                                 </div>
-                                <div class="group-input">
+                                <div class="group-input mt-3">
                                     <label for="password">Password <span class="text-danger">*</span></label>
-                                    <input type="password" name="password" required>
+                                    <input type="password" name="password" required class="form-control">
                                 </div>
-                                <div class="group-input">
+                                <div class="group-input mt-3">
                                     <label for="comment">Comment <span class="text-danger">*</span></label>
-                                    <input type="comment" name="comments" required>
+                                    <input type="comment" name="comments" required class="form-control">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -3403,15 +3408,15 @@
                                 </div>
                                 <div class="group-input">
                                     <label for="username">Username <span class="text-danger">*</span></label>
-                                    <input type="text" name="username" required>
+                                    <input type="text" name="username" required class="form-control">
                                 </div>
-                                <div class="group-input">
+                                <div class="group-input mt-3">
                                     <label for="password">Password <span class="text-danger">*</span></label>
-                                    <input type="password" name="password" required>
+                                    <input type="password" name="password" required class="form-control">
                                 </div>
-                                <div class="group-input">
+                                <div class="group-input mt-3">
                                     <label for="comment">Comment</label>
-                                    <input type="comment" name="comments">
+                                    <input type="comment" name="comments" class="form-control">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -3441,15 +3446,15 @@
                                 </div>
                                 <div class="group-input">
                                     <label for="username">Username <span class="text-danger">*</span></label>
-                                    <input type="text" name="username" required>
+                                    <input type="text" name="username" required class="form-control">
                                 </div>
-                                <div class="group-input">
+                                <div class="group-input mt-3">
                                     <label for="password">Password <span class="text-danger">*</span></label>
-                                    <input type="password" name="password" required>
+                                    <input type="password" name="password" required class="form-control">
                                 </div>
-                                <div class="group-input">
+                                <div class="group-input mt-3">
                                     <label for="comment">Comment</label>
-                                    <input type="comment" name="comments">
+                                    <input type="comment" name="comments" class="form-control">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -3599,47 +3604,53 @@
         });
     </script>
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        function addRow(type) {
-                            let tbody = document.getElementById(`${type}_rows`);
-                            let newRow = document.createElement('tr');
-                            newRow.innerHTML = `
-                                <td><button type="button" onclick="removeRow(this)">Remove</button></td>
-                                <td><input type="file" name="${type}_attachment[]" class="custom-border"></td>
-                                <td><input type="date" name="certificate_issue_${type}[]" class="custom-border"></td>
-                                <td><input type="date" name="certificate_expiry_${type}[]" class="custom-border"></td>
-                                <td><textarea name="${type}_remarks[]" class="custom-border"></textarea></td>
-                            `;
-                            tbody.appendChild(newRow);
-                        }
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function addRow(type) {
+                let tbody = document.getElementById(`${type}_rows`);
+                let newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+                    <td><input type="file" name="${type}_attachment[]" class="custom-border"></td>
+                    <td><input type="date" name="certificate_issue_${type}[]" class="custom-border"></td>
+                    <td><input type="date" name="certificate_expiry_${type}[]" class="custom-border"></td>
+                    <td><textarea name="${type}_remarks[]" class="custom-border"></textarea></td>
+                `;
+                tbody.appendChild(newRow);
+            }
+            window.addRow = addRow;
+        });
+        function removeRow(button) {
+            let row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+        function removeFile(id) {
+            document.querySelector(`#row-${id} a.btn-info`).style.display = 'none';
+            document.querySelector(`#row-${id} button.btn-danger`).style.display = 'none';
+            document.querySelector(`#row-${id} input[type="file"]`).style.display = 'block
+            let removeInput = document.createElement('input');
+            removeInput.type = 'hidden';
+            removeInput.name = 'remove_files[]';
+            removeInput.value = id;
+            document.getElementById('supplierForm').appendChild(removeInput);
+        }
+        document.getElementById('fileInput').addEventListener('change', function() {
+            var fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+            document.getElementById('fileName').textContent = fileName;
+        });
+    </script>  
 
-                        window.addRow = addRow;
-                    });
-
-                    function removeRow(button) {
-                        let row = button.parentNode.parentNode;
-                        row.parentNode.removeChild(row);
-                    }
-
-                    function removeFile(id) {
-                        document.querySelector(`#row-${id} a.btn-info`).style.display = 'none';
-                        document.querySelector(`#row-${id} button.btn-danger`).style.display = 'none';
-                        document.querySelector(`#row-${id} input[type="file"]`).style.display = 'block';
-
-                        let removeInput = document.createElement('input');
-                        removeInput.type = 'hidden';
-                        removeInput.name = 'remove_files[]';
-                        removeInput.value = id;
-                        document.getElementById('supplierForm').appendChild(removeInput);
-                    }
-
-                    document.getElementById('fileInput').addEventListener('change', function() {
-                        var fileName = this.files[0] ? this.files[0].name : 'No file chosen';
-                        document.getElementById('fileName').textContent = fileName;
-                    });
-
-                </script>              
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var formStatus = @json($formStatus);
+            if (formStatus === 9) {
+                var inputs = document.querySelectorAll('input, textarea, select');
+                inputs.forEach(function(input) {
+                    input.setAttribute('disabled', 'disabled');
+                });
+            }
+        });
+    </script>            
 
     
 @endsection

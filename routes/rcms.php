@@ -163,7 +163,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('sendToPendingSupplierAudit/{id}', [SupplierController::class, 'sendToPendingSupplierAudit'])->name('sendToPendingSupplierAudit');
             Route::post('supplier_child/{id}', [SupplierController::class, 'supplier_child'])->name('supplier_child_1');            
             Route::post('store_audit_review/{id}', [SupplierController::class, 'store_audit_review'])->name('store_audit_review');
-
+            Route::post('approvedBy-contract-giver/{id}', [SupplierController::class, 'approvedByContractGiver'])->name('approvedBy-contract-giver');
+            Route::post('link-manufacturer/{id}', [SupplierController::class, 'linkManufacturerToApprovedManufacturer'])->name('link-manufacturer');
 
             Route::post('supplier-reject-stage/{id}', [SupplierController::class, 'supplierStageReject'])->name('supplier-reject-stage');
             Route::post('sendTo-pendig-CQA/{id}', [SupplierController::class, 'sendToPendingCQAReview'])->name('sendTo-pendig-CQA');

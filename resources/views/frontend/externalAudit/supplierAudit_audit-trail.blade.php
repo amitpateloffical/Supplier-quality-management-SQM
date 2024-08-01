@@ -289,7 +289,7 @@
                                 </div>
 
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at->format('d-M-Y') : 'Not Applicable' }}
+                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at->format('d-M-Y H:i:s') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>

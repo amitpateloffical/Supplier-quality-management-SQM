@@ -285,272 +285,274 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <script>
-                            var maxLength = 255;
-                            $('#docname').keyup(function() {
-                                var textlen = maxLength - $(this).val().length;
-                                $('#rchars').text(textlen);
-                            });
-                        </script>
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Supplier.">Supplier</label>
-                                <select name="supplier_person" id="supplier_person">
-                                    <option value="">Select Supplier</option>
-                                    @if (!empty($users))
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->name }}">{{ $user->name }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
 
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for=" Attachments">Logo</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                        documents</small></div>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="logo_attachment"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="logo_attachment[]"
-                                            oninput="addMultipleFiles(this, 'logo_attachment')" multiple>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Contact Person">Contact Person</label>
-                                <select name="supplier_contact_person" id="supplier_contact_person">
-                                    <option value="">Select Supplier</option>
-                                    @if (!empty($users))
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Suppliers Products">Suppliers Products</label>
-                                <div class="relative-container">
-                                    <input class="mic-input" id="supplier_products" type="text"
-                                        name="supplier_products" maxlength="255">
-                                    @component('frontend.forms.language-model', ['name' => 'supplier_products', 'id' => 'supplier_products'])
-                                    @endcomponent
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="Description">Description</label>
-                                <div class="relative-container">
-                                    <textarea name="description" class="mic-input" id="description" placeholder=""></textarea>
-                                    @component('frontend.forms.language-model', ['name' => 'description', 'id' => 'description'])
-                                    @endcomponent
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Type..">Type</label>
-                                <select name="supplier_type">
-                                    <option value="">Enter Your Selection Here</option>
-                                    <option value="CRO">CRO</option>
-                                    <option value="F&B">F&B</option>
-                                    <option value="Finished Goods">Finished Goods</option>
-                                    <option value="Grower">Grower</option>
-                                    <option value="Legal">Legal</option>
-                                    <option value="Midecinal + Medical Devices">Midecinal + Medical Devices</option>
-                                    <option value="Vendor">Vendor</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <script>
-                            $(document).ready(function() {
-                                $('#suplier_other').hide();
-
-                                $('[name="supplier_type"]').change(function() {
-                                    if ($(this).val() === 'Other') {
-                                        $('#suplier_other').show();
-                                        $('#suplier_other ').show();
-                                    } else {
-                                        $('#suplier_other').hide();
-                                        $('#suplier_other ').hide();
-                                    }
+                            <script>
+                                var maxLength = 255;
+                                $('#docname').keyup(function() {
+                                    var textlen = maxLength - $(this).val().length;
+                                    $('#rchars').text(textlen);
                                 });
-                            });
-                        </script>
-
-                        <div id="suplier_other" class="col-lg-6">
-                            <div class="group-input">
-                                <label for="">Other <span class="text-danger">*</span></label>
-                                <input type="text">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Sub Type.">Sub Type</label>
-                                <select name="supplier_sub_type">
-                                    <option value="">Enter Your Selection Here</option>
-                                    <option value="Other">Other</option>
-                                    <option value="Vendor">Vendor</option>
-                                    <option value="Finished Goods">Finished Goods</option>
-                                    <option value="Legal">Legal</option>
-                                    <option value="Other Fruits">Other Fruits</option>
-                                    <option value="Exotic Fruits">Exotic Fruits</option>
-                                    <option value="Other Vegetables">Other Vegetables</option>
-                                    <option value="Beans & Peas">Beans & Peas</option>
-                                    <option value="Red & Orange Vegetables">Red & Orange Vegetables</option>
-                                    <option value="Starchy Vegetables">Starchy Vegetables</option>
-                                    <option value="Dark Green Vegetables">VendorDark Green Vegetables</option>
-                                    <option value="CRO">CRO</option>
-                                    <option value="Raw Material">Raw Material</option>
-                                    <option value="Interfaction Diesease">Interfaction Diesease</option>
-                                    <option value="Pedriatrics">Pedriatrics</option>
-                                    <option value="Sleep Medicine">Sleep Medicine</option>
-                                    <option value="Nephrology">Nephrology</option>
-                                    <option value="Geriatrics">Geriatrics</option>
-                                    <option value="Critical Care">Critical Care</option>
-                                    <option value="Cardiology">Cardiology</option>
-                                    <option value="Vitamins">Vitamins</option>
-                                    <option value="Meat & Poultry">Meat & Poultry</option>
-                                    <option value="Fruits & Vegetables">Fruits & Vegetables</option>
-                                    <option value="Pastry">Pastry</option>
-                                    <option value="Frozen Fruits">Frozen Fruits</option>
-                                    <option value="Dairy">Dairy</option>
-                                    <option value="Beverages">Beverages</option>
-                                    <option value="Flavour">Flavour</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Other Type">Other Type</label>
-                                <div class="relative-container">
-                                    <input type="text" name="supplier_other_type" id="supplier_other_type"
-                                        placeholder="Enter Other Type" class="mic-input" maxlength="255">
-                                    @component('frontend.forms.language-model', ['name' => 'supplier_other_type', 'id' => 'supplier_other_type'])
-                                    @endcomponent
+                            </script>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Supplier.">Supplier</label>
+                                    <select name="supplier_person" id="supplier_person">
+                                        <option value="">Select Supplier</option>
+                                        @if (!empty($users))
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id  }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
-
                             </div>
-                        </div>
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Supply from">Supply From</label>
-                                <div class="relative-container">
-                                    <input type="text" name="supply_from" id="supply_from"
-                                        placeholder="Enter Supply From" class="mic-input" maxlength="255">
-                                    @component('frontend.forms.language-model', ['name' => 'supply_from', 'id' => 'supply_from'])
-                                    @endcomponent
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Supply to">Supply To</label>
-                                <div class="relative-container">
-                                    <input type="text" name="supply_to" id="supply_to" placeholder="Enter Supply To"
-                                        class="mic-input" maxlength="255">
-                                    @component('frontend.forms.language-model', ['name' => 'supply_to', 'id' => 'supply_to'])
-                                    @endcomponent
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Supplier Web Site">Supplier Web Site</label>
-                                <div class="relative-container">
-                                    <input type="text" name="supplier_website" id="supplier_website"
-                                        placeholder="Enter Supply Website" class="mic-input" maxlength="255">
-                                    @component('frontend.forms.language-model', ['name' => 'supplier_website', 'id' => 'supplier_website'])
-                                    @endcomponent
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Web Search">Web Search</label>
-                                <div class="relative-container">
-                                    <input type="search" name="supplier_web_search" id="supplier_web_search"
-                                        placeholder="Enter Supply Web Search" class="mic-input" maxlength="255">
-                                    @component('frontend.forms.language-model', ['name' => 'supplier_web_search', 'id' => 'supplier_web_search'])
-                                    @endcomponent
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Audit Attachments">File Attachment</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                        documents</small></div>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="supplier_attachment"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="supplier_attachment[]"
-                                            oninput="addMultipleFiles(this, 'supplier_attachment')" multiple>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for=" Attachments">Logo</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="logo_attachment">
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="logo_attachment[]"
+                                                oninput="addMultipleFiles(this, 'logo_attachment')" multiple>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="gi_additional_attachment">Additional Attachment</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                        documents</small></div>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="gi_additional_attachment"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="gi_additional_attachment[]"
-                                            oninput="addMultipleFiles(this, 'gi_additional_attachment')" multiple>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Contact Person">Contact Person</label>
+                                    <select name="supplier_contact_person" id="supplier_contact_person">
+                                        <option value="">Select Supplier</option>
+                                        @if (!empty($users))
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                {{-- </div> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Suppliers Products">Suppliers Products</label>
+                                        <div class="relative-container">
+                                            <input class="mic-input" id="supplier_products" type="text"
+                                                name="supplier_products" maxlength="255">
+                                            @component('frontend.forms.language-model', ['name' => 'supplier_products', 'id' => 'supplier_products'])
+                                            @endcomponent
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Related URLs">Related URLs</label>
-                                <input type="url" name="related_url" placeholder="Enter Related URLs">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Related Quality Events">Related Quality Events</label>
-                                <div class="relative-container">
-                                    <input type="text" name="related_quality_events" id="related_quality_events"
-                                        placeholder="Enter Related Quality Events" class="mic-input" maxlength="255">
-                                    @component('frontend.forms.language-model', [
-                                        'name' => 'related_quality_events',
-                                        'id' => 'related_quality_events',
-                                    ])
-                                    @endcomponent
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Description">Description</label>
+                                    <div class="relative-container">
+                                        <textarea name="description" class="mic-input" id="description" placeholder=""></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'description', 'id' => 'description'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
-
                             </div>
-                        </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Type..">Type</label>
+                                    <select name="supplier_type">
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="CRO">CRO</option>
+                                        <option value="F&B">F&B</option>
+                                        <option value="Finished Goods">Finished Goods</option>
+                                        <option value="Grower">Grower</option>
+                                        <option value="Legal">Legal</option>
+                                        <option value="Midecinal + Medical Devices">Midecinal + Medical Devices</option>
+                                        <option value="Vendor">Vendor</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    $('#suplier_other').hide();
 
-                        {{-- <div class="col-lg-6">
+                                    $('[name="supplier_type"]').change(function() {
+                                        if ($(this).val() === 'Other') {
+                                            $('#suplier_other').show();
+                                            $('#suplier_other ').show();
+                                        } else {
+                                            $('#suplier_other').hide();
+                                            $('#suplier_other ').hide();
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <div id="suplier_other" class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="">Other <span class="text-danger">*</span></label>
+                                    <input type="text">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Sub Type.">Sub Type</label>
+                                    <select name="supplier_sub_type">
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="Other">Other</option>
+                                        <option value="Vendor">Vendor</option>
+                                        <option value="Finished Goods">Finished Goods</option>
+                                        <option value="Legal">Legal</option>
+                                        <option value="Other Fruits">Other Fruits</option>
+                                        <option value="Exotic Fruits">Exotic Fruits</option>
+                                        <option value="Other Vegetables">Other Vegetables</option>
+                                        <option value="Beans & Peas">Beans & Peas</option>
+                                        <option value="Red & Orange Vegetables">Red & Orange Vegetables</option>
+                                        <option value="Starchy Vegetables">Starchy Vegetables</option>
+                                        <option value="Dark Green Vegetables">VendorDark Green Vegetables</option>
+                                        <option value="CRO">CRO</option>
+                                        <option value="Raw Material">Raw Material</option>
+                                        <option value="Interfaction Diesease">Interfaction Diesease</option>
+                                        <option value="Pedriatrics">Pedriatrics</option>
+                                        <option value="Sleep Medicine">Sleep Medicine</option>
+                                        <option value="Nephrology">Nephrology</option>
+                                        <option value="Geriatrics">Geriatrics</option>
+                                        <option value="Critical Care">Critical Care</option>
+                                        <option value="Cardiology">Cardiology</option>
+                                        <option value="Vitamins">Vitamins</option>
+                                        <option value="Meat & Poultry">Meat & Poultry</option>
+                                        <option value="Fruits & Vegetables">Fruits & Vegetables</option>
+                                        <option value="Pastry">Pastry</option>
+                                        <option value="Frozen Fruits">Frozen Fruits</option>
+                                        <option value="Dairy">Dairy</option>
+                                        <option value="Beverages">Beverages</option>
+                                        <option value="Flavour">Flavour</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Other Type">Other Type</label>
+                                    <div class="relative-container">
+                                        <input type="text" name="supplier_other_type" id="supplier_other_type"
+                                            placeholder="Enter Other Type" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supplier_other_type', 'id' => 'supplier_other_type'])
+                                        @endcomponent
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Supply from">Supply From</label>
+                                    <div class="relative-container">
+                                        <input type="text" name="supply_from" id="supply_from"
+                                            placeholder="Enter Supply From" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supply_from', 'id' => 'supply_from'])
+                                        @endcomponent
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Supply to">Supply To</label>
+                                    <div class="relative-container">
+                                        <input type="text" name="supply_to" id="supply_to"
+                                            placeholder="Enter Supply To" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supply_to', 'id' => 'supply_to'])
+                                        @endcomponent
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Supplier Web Site">Supplier Website</label>
+                                    <div class="relative-container">
+                                        <input type="text" name="supplier_website" id="supplier_website"
+                                            placeholder="Enter Supply Website" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supplier_website', 'id' => 'supplier_website'])
+                                        @endcomponent
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Web Search">Web Search</label>
+                                    <div class="relative-container">
+                                        <input type="search" name="supplier_web_search" id="supplier_web_search"
+                                            placeholder="Enter Supply Web Search" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supplier_web_search', 'id' => 'supplier_web_search'])
+                                        @endcomponent
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments">File Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="supplier_attachment"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="supplier_attachment[]"
+                                                oninput="addMultipleFiles(this, 'supplier_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="gi_additional_attachment">Additional Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="gi_additional_attachment"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="gi_additional_attachment[]"
+                                                oninput="addMultipleFiles(this, 'gi_additional_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Related URLs">Related URLs</label>
+                                    <input type="url" name="related_url" placeholder="Enter Related URLs">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Related Quality Events">Related Quality Events</label>
+                                    <div class="relative-container">
+                                        <input type="text" name="related_quality_events" id="related_quality_events"
+                                            placeholder="Enter Related Quality Events" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', [
+                                            'name' => 'related_quality_events',
+                                            'id' => 'related_quality_events',
+                                        ])
+                                        @endcomponent
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Of Complaints/Deviations"># Of Complaints/Deviations</label>
                                     <input type="text" name="">
@@ -562,14 +564,16 @@
                                     <input type="text" name="" id="totalDemeritPoints">
                                 </div>
                             </div> --}}
-                    </div>
+                        </div>
 
-                    <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
-                        </button>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -939,7 +943,7 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Supplier Web Site">Supplier Web Site</label>
+                                    <label for="Supplier Web Site">Supplier Website</label>
                                     <div class="relative-container">
                                         <input type="text" name="suppplier_web_site" id="suppplier_web_site"
                                             class="mic-input" placeholder="Enter Website" maxlength="255">
@@ -1612,7 +1616,8 @@
                                     </div> --}}
 
                                     <div class="calenderauditee">
-                                        <input type="text" id="next_audit_date" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="text" id="next_audit_date" readonly
+                                            placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_audit_date"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                             oninput="handleDateInput(this, 'next_audit_date')" />
@@ -2069,7 +2074,5 @@
             // Make the input field editable
             nextAuditDateInput.readOnly = false;
         }
-
-      
     </script>
 @endsection

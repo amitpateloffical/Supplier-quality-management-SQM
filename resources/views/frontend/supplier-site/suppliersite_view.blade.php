@@ -387,7 +387,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-supplier-approve">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToPendingSupplierAudit">
                                 Conditionally Approved
                             </button>
                         @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -456,10 +456,10 @@
 
                             @if ($data->stage >= 6)
                                 <div class="active bg-danger">
-                                    Obsolete</div>
+                                    Obselete</div>
                             @else
                                 <div class="">
-                                    Obsolete</div>
+                                    Obselete</div>
                             @endif
                         </div>
                     @endif
@@ -621,8 +621,8 @@
                                         <option value="">Select Supplier</option>
                                         @if (!empty($users))
                                             @foreach ($users as $user)
-                                                <option value="{{ $user->name }}"
-                                                    @if ($data->supplier_person == $user->name) selected @endif>{{ $user->name }}
+                                                <option value="{{ $user->id }}"
+                                                    @if ($data->supplier_person == $user->id) selected @endif>{{ $user->name }}
                                                 </option>
                                             @endforeach
                                         @endif
@@ -2677,19 +2677,19 @@
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Submitted By">Submitted By</label>
+                                    <label for="Submitted By">Submit Supplier Details By</label>
                                     <div class="static">{{ $data->submitted_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Submitted On">Submitted On</label>
+                                    <label for="Submitted On">Submit Supplier Details On</label>
                                     <div class="static">{{ $data->submitted_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Submitted Comment">Submitted Comment</label>
+                                    <label for="Submitted Comment">Submit Supplier Details Comment</label>
                                     <div class="static">{{ $data->submitted_comment }}</div>
                                 </div>
                             </div>
@@ -2736,38 +2736,38 @@
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Pending Supplier Audit By</label>
+                                    <label for="Suppplier Review By">Audit Failed By</label>
                                     <div class="static">{{ $data->pending_supplier_audit_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Pending Supplier Audit On</label>
+                                    <label for="Suppplier Review On">Audit Failed On</label>
                                     <div class="static">{{ $data->pending_supplier_audit_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Pending Supplier Audit Comment</label>
+                                    <label for="Suppplier Review Comment">Audit Failed Comment</label>
                                     <div class="static">{{ $data->pending_supplier_audit_comment }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Pending Rejction By</label>
+                                    <label for="Suppplier Review By">Supplier Obsolete By</label>
                                     <div class="static">{{ $data->pending_rejection_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Pending Rejction On</label>
+                                    <label for="Suppplier Review On">Supplier Obsolete On</label>
                                     <div class="static">{{ $data->pending_rejection_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Pending Rejction Comment</label>
+                                    <label for="Suppplier Review Comment">Supplier Obsolete Comment</label>
                                     <div class="static">{{ $data->pending_rejection_comment }}</div>
                                 </div>
                             </div>
@@ -2775,38 +2775,59 @@
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Supplier Approved By</label>
+                                    <label for="Suppplier Review By">Audit Passed By</label>
                                     <div class="static">{{ $data->supplier_approved_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Supplier Approved On</label>
+                                    <label for="Suppplier Review On">Audit Passed On</label>
                                     <div class="static">{{ $data->supplier_approved_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Supplier Approved Comment</label>
+                                    <label for="Suppplier Review Comment">Audit Passed Comment</label>
                                     <div class="static">{{ $data->supplier_approved_comment }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Supplier Approved to Obsolete By</label>
+                                    <label for="Suppplier Review By">Conditionally Approved By</label>
+                                    <div class="static">{{ $data->supplier_approved_by }}</div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review On">Conditionally Approved On</label>
+                                    <div class="static">{{ $data->supplier_approved_on }}</div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppplier Review Comment">Conditionally Approved Comment</label>
+                                    <div class="static">{{ $data->supplier_approved_comment }}</div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By">Supplier Approved to Obsolete By </label>
                                     <div class="static">{{ $data->supplier_approved_to_obselete_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Supplier Approved to Obsolete On</label>
+                                    <label for="Suppplier Review On">Supplier Approved to  Obsolete On</label>
                                     <div class="static">{{ $data->supplier_approved_to_obselete_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Supplier Approved to Obsolete Comment</label>
+                                    <label for="Suppplier Review Comment">Supplier Approved to  Obsolete Comment</label>
                                     <div class="static">{{ $data->supplier_approved_to_obselete_comment }}</div>
                                 </div>
                             </div>
@@ -2832,19 +2853,19 @@
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Rejected By</label>
+                                    <label for="Suppplier Review By">Reject Due To Quality Issues By</label>
                                     <div class="static">{{ $data->rejectedDueToQuality_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Rejected On</label>
+                                    <label for="Suppplier Review On">Reject Due To Quality Issues On</label>
                                     <div class="static">{{ $data->rejectedDueToQuality_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Rejected Comment</label>
+                                    <label for="Suppplier Review Comment">Reject Due To Quality Issues Comment</label>
                                     <div class="static">{{ $data->rejectedDueToQuality_comment }}</div>
                                 </div>
                             </div>

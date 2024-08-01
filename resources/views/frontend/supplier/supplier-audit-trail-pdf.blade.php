@@ -145,13 +145,14 @@
     }
 </style>
 
+<?php use Carbon\Carbon; ?>
 <body>
 
     <header>
         <table>
             <tr>
                 <td class="w-70 head">
-                     Audit Trial Report
+                    Supplier Audit Trial Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -268,8 +269,12 @@
                                 <div><strong> Peformed By
                                         :</strong>{{ $datas->user_name ? $datas->user_name : 'Not Applicable' }}
                                 </div>
+                                @php
+                                    
+                                    $formattedDate = Carbon::parse($datas->created_at)->format('d-M-Y H:i:s');
+                                @endphp
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $datas->created_at ? Helpers::getdateFormat($datas->created_at) : 'Not Applicable' }}
+                                        :</strong>{{ $datas->created_at ? ($formattedDate) : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $datas->comment ? $datas->comment : 'Not Applicable' }}</div>

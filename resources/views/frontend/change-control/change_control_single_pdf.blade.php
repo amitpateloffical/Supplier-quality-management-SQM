@@ -328,40 +328,35 @@
                         </td>
                     </tr>
 
-                    <!-- <tr>
-                        <th class="w-20">CFT</th>
-                        <td class="w-30">{{ $info->Microbiology }}</td>
-                        <th class="w-20">CFT Person</th>
-                        <td class="w-30">{{ $info->Microbiology_Person }}</td>
-                    </tr>
-                     -->
+                    
                 </table>
                 <div class="border-table">
-                    <div class="block-head">
-                        Initial Attachment
+                <div class="block-head">
+                Initial Attachment
                     </div>
-                    <table>
+    <table>
 
-                        <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
-                            <th class="w-60">Attachment</th>
-                        </tr>
-                        @if ($data->in_attachment)
-                            @foreach (json_decode($data->in_attachment) as $key => $file)
-                                <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                            target="_blank"><b>{{ $file }}</b></a> </td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td class="w-20">1</td>
-                                <td class="w-20">Not Applicable</td>
-                            </tr>
-                        @endif
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if ($approcomments->in_attachmenth)
+            @foreach (json_decode($approcomments->in_attachment) as $key => $file)
+                <tr>
+                    <td class="w-20">{{ $key + 1 }}</td>
+                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            target="_blank"><b>{{ $file }}</b></a> </td>
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td class="w-20">1</td>
+                <td class="w-20">Not Applicable</td>
+            </tr>
+        @endif
 
-                    </table>
+    </table>
+
                 </div>
             </div>
             <div class="block">
@@ -599,9 +594,26 @@ Not Applicable
                 </td>
                 </tr>
 
-                <div class="border-table">
+                
+                   
+                <tr>
+                    <th class="w-20">Training Required</th>
+                    <td class="w-80"> {{ $evaluation->training_required }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Training Comments</th>
+                    <td>
+            </div>
+            <div>
+                {{ $evaluation->train_comments }}
+            </div>
+            </td>
+            </tr>
+            </table>
+            <table>
+            <div class="border-table">
                     <div class="block-head">
-                        Initial Attachment
+                    QA Evaluation Attachments
                     </div>
                     <table>
 
@@ -609,8 +621,8 @@ Not Applicable
                             <th class="w-20">S.N.</th>
                             <th class="w-80">Attachment</th>
                         </tr>
-                        @if ($data->in_attachment)
-                            @foreach (json_decode($data->in_attachment) as $key => $file)
+                        @if ($data->qa_evaluation_attachments)
+                            @foreach (json_decode($data->qa_evaluation_attachments) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
                                     <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -626,32 +638,76 @@ Not Applicable
 
                     </table>
                 </div>
-                <tr>
-                    <th class="w-20">Training Required</th>
-                    <td class="w-80"> {{ $evaluation->training_required }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Training Comments</th>
-                    <td>
-            </div>
-            <div>
-                {{ $evaluation->train_comments }}
-            </div>
-            </td>
-            </tr>
             </table>
 
             <div class="block">
                 <div class="head">
                     <div class="block-head">
-                        Comments
+                    Feedback
                     </div>
+                    
                     <table>
                         <tr>
                             <th class="w-20">Comments</th>
                             <td class="w-30">{{ $data->cft_comments }}</td>
                         </tr>
-                        <tr>
+                    </table>
+                </div>
+        </div>
+                        
+        <div class="border-table">
+            <div class="block-head">
+                  Attachments
+                    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if ($comments->group_attachments)
+            @foreach (json_decode($comments->group_attachments) as $key => $file)
+                <tr>
+                    <td class="w-60">{{ $key + 1 }}</td>
+                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                            target="_blank"><b>{{ $file }}</b></a> </td>
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td class="w-20">1</td>
+                <td class="w-20">Not Applicable</td>
+            </tr>
+        @endif
+
+    </table>
+        
+        <!-- <table>
+
+            <tr class="table_bg">
+                <th class="w-20">S.N.</th>
+                <th class="w-80">Attachment</th>
+            </tr>
+            @if ($review->qa_head)
+                @foreach (json_decode($review->qa_head) as $key => $file)
+                    <tr>
+                        <td class="w-20">{{ $key + 1 }}</td>
+                        <td class="w-80"><a href="{{ asset('upload/' . $file) }}"
+                                target="_blank"><b>{{ $file }}</b></a> </td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td class="w-20">1</td>
+                    <td class="w-80">Not Applicable</td>
+                </tr>
+            @endif
+
+        </table> -->
+    </div>
+                <div>
+                    <table>
+                    <tr>
                             <th class="w-20">QA Comments</th>
                             <td class="w-80">
                                 <div>
@@ -662,7 +718,7 @@ Not Applicable
                         <tr>
                             <th class="w-20">QA Head Designee Comments</th>
                             <td class="w-80">
-
+                   
                 </div>
                 <div>
                     {{ $comments->designee_comments }}
@@ -729,11 +785,12 @@ Not Applicable
             </div>
         </td>
     </tr>
+</table>
     <div class="border-table">
         <div class="block-head">
             Attachments
         </div>
-        {{-- <table>
+        <!-- {{-- <table>
             <tr class="table_bg">
                 <th class="w-20">S.N.</th>
                 <th class="w-80">Attachment</th>
@@ -742,19 +799,20 @@ Not Applicable
                 @foreach (json_decode($comments->group_attachments) as $key => $file)
                     <tr>
                         <td class="w-20">{{ $key + 1 }}</td>
-                        <td class="w-80"><a href="{{ asset('upload/' . $file) }}"
+                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
                                 target="_blank"><b>{{ $file }}</b></a> </td>
                     </tr>
                 @endforeach
             @else
                 <tr>
                     <td class="w-20">1</td>
-                    <td class="w-80">Not Applicable</td>
+                    <td class="w-20">Not Applicable</td>
                 </tr>
             @endif
 
-        </table> --}}
-        
+        </table> --}} -->
+
+    
         <table>
 
             <tr class="table_bg">
@@ -765,21 +823,66 @@ Not Applicable
                 @foreach (json_decode($review->qa_head) as $key => $file)
                     <tr>
                         <td class="w-20">{{ $key + 1 }}</td>
-                        <td class="w-80"><a href="{{ asset('upload/' . $file) }}"
+                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
                                 target="_blank"><b>{{ $file }}</b></a> </td>
                     </tr>
                 @endforeach
             @else
                 <tr>
                     <td class="w-20">1</td>
-                    <td class="w-80">Not Applicable</td>
+                    <td class="w-20">Not Applicable</td>
                 </tr>
             @endif
 
         </table>
     </div>
-
+   
     </table>
+    <div class="block">
+        <div class="block-head">
+            Risk Assessment
+        </div>
+        <table>
+            <tr>
+                <th class="w-20">Risk Identification</th>
+                <td class="w-80" colspan="3">
+                    <!-- <div><strong>On {{ Helpers::getDateFormat($assessment->created_at) }} added by
+                            {{ $data->originator }}</strong></div> -->
+                    <div>
+                        {{ $assessment->risk_identification }}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th class="w-20">Severity</th>
+                <td class="w-30"> {{ $assessment->severity }}</td>
+                <th class="w-20">Occurance</th>
+                <td class="w-30"> {{ $assessment->Occurance }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Detection</th>
+                <td class="w-30"> {{ $assessment->Detection }}</td>
+                <th class="w-20">RPN</th>
+                <td class="w-30"> {{ $assessment->RPN }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Risk Evaluation</th>
+                <td class="w-80" colspan="3">
+                    <div>
+                        {{ $assessment->risk_evaluation }}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th class="w-20">Mitigation Action</th>
+                <td class="w-80" colspan="3">
+                    <div>
+                        {{ $assessment->migration_action }}
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
 
     <div class="block">
         <div class="block-head">
@@ -841,11 +944,11 @@ Not Applicable
         <tr>
             <th class="w-20">Affected Documents+</th>
             <td class="w-80">
-                <div><strong>On {{ Helpers::getDateFormat($approcomments->created_at) }} added by
+                <!-- <div><strong>On {{ Helpers::getDateFormat($approcomments->created_at) }} added by
                         {{ $data->originator }}</strong>
-                </div>
+                </div> -->
                 <div>
-                    {{ $approcomments->risk_identification }}
+                    {{ $approcomments->ann }}
                 </div>
             </td>
         </tr>
@@ -853,82 +956,53 @@ Not Applicable
             <th class="w-20">QA Closure Comments</th>
             <td class="w-30"> {{ $data->qa_closure_comments }}</td>
         </tr>
-    </table>
+        </table>
+        <div class="border-table">
+                    <div class="block-head">
+                        Initial Attachment
+                    </div>
+                    <table>
 
-    <!-- <div class="block">
-                <div class="block-head">
-                    Risk Assessment
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Attachment</th>
+                        </tr>
+                        @if ($data->in_attachment)
+                            @foreach (json_decode($data->in_attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
+    </table>
+              
+    
+    </div>
+    </div>
+    <div class="block">
+                 <div class="block-head">
+                 Extension Justification
                 </div>
                 <table>
-                    <tr>
-                        <th class="w-20">Risk Identification</th>
-                        <td class="w-80" colspan="3">
-                            <div><strong>On {{ Helpers::getDateFormat($assessment->created_at) }} added by {{ $data->originator }}</strong></div>
-                            <div>
-                                {{ $assessment->risk_identification }}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Severity</th>
-                        <td class="w-30"> {{ $assessment->severity }}</td>
-                        <th class="w-20">Occurance</th>
-                        <td class="w-30"> {{ $assessment->Occurance }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Detection</th>
-                        <td class="w-30"> {{ $assessment->Detection }}</td>
-                        <th class="w-20">RPN</th>
-                        <td class="w-30"> {{ $assessment->RPN }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Risk Evaluation</th>
-                        <td class="w-80" colspan="3">
-                            <div>
-                                {{ $assessment->risk_evaluation }}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Mitigation Action</th>
-                        <td class="w-80" colspan="3">
-                            <div>
-                                {{ $assessment->migration_action }}
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div> -->
+                <tr>
+            <th class="w-20">Due Date Extension Justification</th>
+            <td class="w-30"> {{ $data->qa_closure_comments }}</td>
+        </tr>
+        </table>
+        </div>
+                    
 
-    <!-- <div class="border-table">
-                        <div class="block-head">
-                            QA Evaluation Attachments
-                        </div>
-                        <table>
-
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Attachment</th>
-                            </tr>
-                            @if ($data->qa_eval_attach)
-@foreach (json_decode($data->qa_eval_attach) as $key => $file)
-<tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                </tr>
-@endforeach
-@else
-<tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
-                                </tr>
-@endif
-
-                        </table>
-                    </div> -->
-    </div>
-    </div>
-    {{-- <div class="block">
+            <!-- <div class="block"> 
                  <div class="block-head">
                     Additional Information
                 </div>
@@ -962,17 +1036,17 @@ Not Applicable
                         <td class="w-30">{{ $info->Bd_Person }}</td>
                     </tr>
 
-                </table> 
-                <div class="border-table">
+                </table>  -->
+             <!-- <div class="border-table">
                     <div class="block-head">
                         Addition Attachments
                     </div>
                     <table>
                     <tr>
-                        <!-- <th class="w-20">CFT Reviewer</th>
-                        <td class="w-30">{{ $info->Microbiology }}</td> -->
-                        <!-- <th class="w-20">CFT Reviewer Person </th>
-                        <td class="w-30">{{ $info->Microbiology_Person }}</td> -->
+                        <!- <th class="w-20">CFT Reviewer</th>
+                        <td class="w-30">{{ $info->Microbiology }}</td> 
+                         <th class="w-20">CFT Reviewer Person </th>
+                        <td class="w-30">{{ $info->Microbiology_Person }}</td> 
                     </tr>
 
                         <tr class="table_bg">
@@ -994,9 +1068,9 @@ Not Applicable
                         @endif
 
                     </table>
-                </div>
-            </div> --}}
-    <div class="border-table">
+                </div> 
+            </div>  -->
+     <!-- <div class="border-table">
         <div class="block-head">
             Attachments
         </div>
@@ -1022,9 +1096,9 @@ Not Applicable
             @endif
 
         </table>
-    </div>
+    </div>  -->
 
-    <div class="border-table">
+    <!-- <div class="border-table">
         <div class="block-head">
             Attachments
         </div>
@@ -1050,10 +1124,10 @@ Not Applicable
             @endif
 
         </table>
-    </div>
-    </div>
-    </div>
-    <div class="block">
+    </div> -->
+    <!-- </div>
+    </div> -->
+    <!-- <div class="block">
         <div class="block-head">
             Risk Assessment
         </div>
@@ -1097,7 +1171,7 @@ Not Applicable
                 </td>
             </tr>
         </table>
-    </div>
+    </div>  -->
     <!-- <div class="block">
                 <div class="block-head">
                     QA Approval Comments
@@ -1148,8 +1222,8 @@ Not Applicable
 
                     </table>
                 </div>
-            </div> -->
-    <!-- <div class="block">
+            </div>  -->
+       <!-- <div class="block">
                 <div class="block-head">
                 Change Closure
                 </div>
@@ -1168,11 +1242,11 @@ Not Applicable
                         <th class="w-20">QA Closure Comments</th>
                         <td class="w-30"> {{ $data->qa_closure_comments }}</td>
                     </tr>
-                </table> -->
-    <!-- <div class="border-table">
-                    <div class="block-head">
+                </table> 
+ <div class="border-table"> -->
+                    <!-- <div class="block-head">
                         Training Attachments
-                    </div> -->
+                    </div>
     <table>
 
         <tr class="table_bg">
@@ -1194,9 +1268,9 @@ Not Applicable
             </tr>
         @endif
 
-    </table>
-    </div>
-    </div>
+    </table> -->
+    <!-- </div>
+    </div> -->
 
 
 

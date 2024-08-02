@@ -407,9 +407,9 @@
                         Request for Creation of New Manufacturer
                     </div>
                     <div class="head">
-                        <div class="block-head"> 
+                        <!-- <div class="block-head"> 
                             Initiating Department
-                        </div>
+                        </div> -->
                         <table>
                             <tr>
                                 <th class="w-20">Initiator</th>
@@ -1074,7 +1074,7 @@
                 <!--  HOD Details -->
                 <div class="block" style="margin-top: 15px;">
                     <div class="block-head">
-                        HOD Details
+                        HOD Review
                     </div>
                     <table>
                         <tr>

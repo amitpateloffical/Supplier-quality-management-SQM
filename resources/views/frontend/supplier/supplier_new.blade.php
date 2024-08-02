@@ -325,7 +325,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Justification for Request</label>
-                                        <textarea type="text" name="request_justification" id="request_justification" class=""></textarea>
+                                        <textarea type="text" name="request_justification" id="request_justification" class="tiny"></textarea>
                                     </div>
                                 </div>
 
@@ -358,7 +358,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Remark</label>
-                                        <textarea type="text" name="cqa_remark" id="cqa_remark" class=""></textarea>
+                                        <textarea type="text" name="cqa_remark" id="cqa_remark" class="tiny"></textarea>
                                     </div>
                                 </div>
 
@@ -399,7 +399,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Justification</label>
-                                        <textarea type="text" name="justification" id="justification" class=""></textarea>
+                                        <textarea type="text" name="justification" id="justification" class="tiny"></textarea>
                                     </div>
                                 </div>
 
@@ -496,7 +496,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Review Comment of CQA</label>
-                                        <textarea type="text" name="cqa_comment" id="cqa_comment" class=""></textarea>
+                                        <textarea type="text" name="cqa_comment" id="cqa_comment" class="tiny"></textarea>
                                     </div>
                                 </div>
 
@@ -532,14 +532,14 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Justification</label>
-                                        <textarea type="text" name="supplierJustification" id="supplierJustification" class=""></textarea>
+                                        <textarea type="text" name="supplierJustification" id="supplierJustification" class="tiny"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Review Comment of Corporate CQA</label>
-                                        <textarea type="text" name="cqa_corporate_comment" id="cqa_corporate_comment" class=""></textarea>
+                                        <textarea type="text" name="cqa_corporate_comment" id="cqa_corporate_comment" class="tiny"></textarea>
                                     </div>
                                 </div>
 
@@ -591,7 +591,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Justification</label>
-                                        <textarea type="text" name="sample_order_justification" id="sample_order_justification" class=""></textarea>
+                                        <textarea type="text" name="sample_order_justification" id="sample_order_justification" class="tiny"></textarea>
                                     </div>
                                 </div>
 
@@ -1008,13 +1008,13 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_feedback">HOD Feedback</label>
-                                    <textarea class="" type="text" name="HOD_feedback" placeholder="Enter HOD Feedback" id="HOD_feedback"></textarea>
+                                    <textarea class="tiny" type="text" name="HOD_feedback" placeholder="Enter HOD Feedback" id="HOD_feedback"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_comment">HOD Comments</label>
-                                    <textarea class="" type="text" name="HOD_comment" placeholder="Enter HOD Comment" id="HOD_comment"></textarea>
+                                    <textarea class="tiny" type="text" name="HOD_comment" placeholder="Enter HOD Comment" id="HOD_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -1143,7 +1143,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Supplier Services">Supplier Services</label>
-                                    <textarea class="" name="supplier_serivce" id="supplier_serivce" cols="30" ></textarea>
+                                    <textarea class="tiny" name="supplier_serivce" id="supplier_serivce" cols="30" ></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -1276,7 +1276,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Address">Address</label>
-                                    <textarea type="text" name="address" id="address"></textarea>
+                                    <textarea type="text" name="address" id="address" class="tiny"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -1344,32 +1344,32 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Quality Management ">Manufacturing Sites </label>
-                                    <textarea class="" name="text" name="manufacturing_sited" id="manufacturing_sited"></textarea>
+                                    <textarea class="tiny" name="text" name="manufacturing_sited" id="manufacturing_sited"></textarea>
                                 </div>
                             </div>  
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Quality Management ">Quality Management </label>
-                                    <textarea class="" name="text" id="quality_management" name="quality_management"></textarea>
+                                    <textarea class="tiny" name="text" id="quality_management" name="quality_management"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Business History">Business History</label>
-                                    <textarea class="" name="text" id="bussiness_history" name="bussiness_history"></textarea>
+                                    <textarea class="tiny" name="text" id="bussiness_history" name="bussiness_history"></textarea>
                                 </div>
                             </div>
                             
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Performance History ">Performance History </label>
-                                    <textarea class="" name="text" id="performance_history" name="performance_history"></textarea>
+                                    <textarea class="tiny" name="text" id="performance_history" name="performance_history"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Compliance Risk">Compliance Risk</label>
-                                    <textarea class="" name="text" id="compliance_risk" name="compliance_risk"></textarea>
+                                    <textarea class="tiny" name="text" id="compliance_risk" name="compliance_risk"></textarea>
                                 </div>
                             </div>
 
@@ -1766,13 +1766,13 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_feedback">QA Reviewer Feedback</label>
-                                    <textarea class="" type="text" name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback" id="QA_reviewer_feedback"></textarea>
+                                    <textarea class="tiny" type="text" name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback" id="QA_reviewer_feedback"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_comment">QA Reviewer Comment</label>
-                                    <textarea class="" type="text" name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment" id="QA_reviewer_comment"></textarea>
+                                    <textarea class="tiny" type="text" name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment" id="QA_reviewer_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -2019,7 +2019,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_head_comment">QA Head Comment</label>
-                                    <textarea class="" type="text" name="QA_head_comment" placeholder="Enter QA Head Comment" id="QA_head_comment"></textarea>
+                                    <textarea class="tiny" type="text" name="QA_head_comment" placeholder="Enter QA Head Comment" id="QA_head_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -2445,6 +2445,10 @@
                                 <div class="static"></div>
                             </div>
                         </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                     </div>
                 </div>
                 </div>

@@ -538,6 +538,8 @@
                                                 <label for="Initiator Group">Initiator Group</label>
                                                 <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                      id="initiator_group">
+                                                    
+                                                   <option value="">-- Select --</option>
                                                     <option value="CQA"
                                                         @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
@@ -1166,7 +1168,7 @@
                                                         @foreach (unserialize($data2->material_name) as $key => $temps)
                                                         <tr>
                                                             <td><input type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                                    value="{{ $key + 1 }}"></td>
+                                                                    value="{{ $key + 1 }}" readonly></td>
                                                             <!-- {{-- <td><input type="text" name="product_name[]"
                                                                     value="{{ unserialize($data2->material_name)[$key] ? unserialize($data2->material_name)[$key] : '' }}">
                                                             </td> --}} -->
@@ -1238,7 +1240,7 @@
                                                                 <option value="quarantine"{{ isset(unserialize($data2->material_batch_status)[$key]) && unserialize($data2->material_batch_status)[$key] == 'quarantine' ? ' selected' : '' }}>Quarantine</option>
                                                             </select>
                                                         </td>
-                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                        <td><button type="text" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>Remove</button></td>
 
                                                         </tr>
                                                     @endforeach
@@ -1273,7 +1275,7 @@
                                                         @foreach (unserialize($data3->equipment) as $key => $temps)
                                                         <tr>
                                                             <td><input type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                                    value="{{ $key + 1 }}"></td>
+                                                                    value="{{ $key + 1 }}" readonly></td>
 
                                                             <td><input type="text" name="equipment[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data3->equipment)[$key] ? unserialize($data3->equipment)[$key] : '' }}">
@@ -1284,7 +1286,7 @@
                                                             <td><input type="text" name="equipment_comments[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data3->equipment_comments)[$key] ? unserialize($data3->equipment_comments)[$key] : '' }}">
                                                             </td>
-                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                        <td><button type="text" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>Remove</button></td>
 
                                                         </tr>
                                                     @endforeach
@@ -2272,12 +2274,15 @@
                                         </div>
 
 
-                                        <div class="col-lg-6">
+
+
+
+                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="QA More Info Required By">QA More Info Required
                                                     By</label>
                                                 <input type="hidden" name="qa_more_info_required_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->qa_more_info_required_by }}</div>
+                                                <div class="static">{{ $data->pending_more_info_review_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -2285,9 +2290,16 @@
                                                 <label for="QA More Info Required On">QA More Info Required
                                                     On</label>
                                                 <input type="hidden" name="qa_more_info_required_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->qa_more_info_required_on }}</div>
+                                                <div class="static">{{ $data->pending_more_info_review_on }}</div>
                                             </div>
                                         </div>
+
+
+
+
+
+
+                                      
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -2304,6 +2316,24 @@
                                             </div>
                                         </div>
 
+
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="QA More Info Required By">QA More Info Required
+                                                    By</label>
+                                                <input type="hidden" name="qa_more_info_required_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->qa_more_info_required_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="QA More Info Required On">QA More Info Required
+                                                    On</label>
+                                                <input type="hidden" name="qa_more_info_required_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->qa_more_info_required_on }}</div>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Completed By">Completed By</label>
@@ -2335,18 +2365,34 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6">
+                                          <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Rejected By">Rejected By</label>
                                                 <input type="hidden" name="rejected_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->rejected_by }}</div>
+                                                <div class="static">{{ $data->reject_more_info_review_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Rejected On">Rejected On</label>
                                                 <input type="hidden" name="rejected_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->rejected_on }}</div>
+                                                <div class="static">{{ $data->reject_more_info_review_on }}</div>
+                                            </div>
+                                        </div>  
+
+
+                                          <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Rejected By">All Actions Completed By</label>
+                                                <input type="hidden" name="rejected_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->all_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Rejected On">All Actions Completed On</label>
+                                                <input type="hidden" name="rejected_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->all_completed_on }}</div>
                                             </div>
                                         </div>
 

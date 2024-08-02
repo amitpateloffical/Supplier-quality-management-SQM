@@ -1086,19 +1086,19 @@ class DeviationController extends Controller
         }
         if ($request->Immediate_Action[0] !== null){
             $history = new DeviationAuditTrail();
-        $history->deviation_id = $deviation->id;
-        $history->activity_type = 'Immediate Action (if any)';
-        $history->previous = "Null";
-        $history->current = $deviation->Immediate_Action;
-        $history->comment = "Not Applicable";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->change_to =   "Opened";
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'Immediate Action (if any)';
+            $history->previous = "Null";
+            $history->current = $deviation->Immediate_Action;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->change_to =   "Opened";
             $history->change_from = "Initiation";
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $deviation->status;
-        $history->action_name = 'Create';
-        $history->save();
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $deviation->status;
+            $history->action_name = 'Create';
+            $history->save();
         }
         if ($request->Preliminary_Impact[0] !== null){
             $history = new DeviationAuditTrail();
@@ -1332,7 +1332,7 @@ class DeviationController extends Controller
      */
     public function update(Request $request, $id)
     {
-//dd($request->all());
+        //dd($request->all());
         $form_progress = null;
         $lastDeviation = deviation::find($id);
         $deviation = deviation::find($id);
@@ -2081,8 +2081,8 @@ class DeviationController extends Controller
                 $Cft->Other5_attachment = json_encode($files);
             }
 
-
         $Cft->save();
+
                 $IsCFTRequired = DeviationCftsResponse::withoutTrashed()->where(['is_required' => 1, 'deviation_id' => $id])->latest()->first();
                 $cftUsers = DB::table('deviationcfts')->where(['deviation_id' => $id])->first();
                 // Define the column names
@@ -3761,15 +3761,15 @@ class DeviationController extends Controller
 
                 $deviation->stage = "6";
                 $deviation->status = "QA Head/Manager Designee Primary Approval";
-                $deviation->QA_Final_Review_Complete_By = Auth::user()->name;
-                $deviation->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                $deviation->QA_Final_Review_Comments = $request->comment;
+                $deviation->QA_Secondary_Review_Complete_By = Auth::user()->name;
+                $deviation->QA_Secondary_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                $deviation->QA_Secondary_Review_Completed_Comments = $request->comment;
 
                 $history = new DeviationAuditTrail();
                 $history->deviation_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current = $deviation->QA_Final_Review_Complete_By;
+                $history->current = $deviation->QA_Secondary_Review_Complete_By;
                 $history->comment = $request->comment;
                 $history->action ='QA Secondary Review Complete';
                 $history->user_id = Auth::user()->id;
@@ -3917,9 +3917,9 @@ class DeviationController extends Controller
 
                 $deviation->stage = "8";
                 $deviation->status = "HOD Final Review";
-                $deviation->Initiator_Update_By = Auth::user()->name;
-                $deviation->Initiator_Update_On = Carbon::now()->format('d-M-Y');
-                $deviation->Initiator_Update_Comments = $request->comment;
+                $deviation->Initiator_Update_Completed_By = Auth::user()->name;
+                $deviation->Initiator_Update_Completed_On = Carbon::now()->format('d-M-Y');
+                $deviation->Initiator_Update_Completed_Comments = $request->comment;
 
 
                 $history = new DeviationAuditTrail();
@@ -4048,7 +4048,7 @@ class DeviationController extends Controller
                 $deviation->status = "QA Final Approval";
                 $deviation->QA_Final_Review_By = Auth::user()->name;
                 $deviation->QA_Final_Review_On = Carbon::now()->format('d-M-Y');
-                $deviation->QA_Final_Approval_Comments = $request->comment;
+                $deviation->QA_Final_Review_Comments = $request->comment;
 
 
 
@@ -4211,16 +4211,16 @@ class DeviationController extends Controller
 
                 $deviation->stage = "5";
                 $deviation->status = "QA Secondary Review";
-                $deviation->QA_Final_Review_Complete_By = Auth::user()->name;
-                $deviation->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                $deviation->QA_Final_Review_Comments = $request->comment;
+                $deviation->CFT_Review_Not_Required_By = Auth::user()->name;
+                $deviation->CFT_Review_Not_Required_On = Carbon::now()->format('d-M-Y');
+                $deviation->CFT_Review_Not_Required_Comments = $request->comment;
 
                 $history = new DeviationAuditTrail();
                 $history->deviation_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action ='CFT Review Not Required';
-                $history->current = $deviation->QA_Final_Review_Complete_By;
+                $history->current = $deviation->CFT_Review_Not_Required_By;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4230,26 +4230,26 @@ class DeviationController extends Controller
                 $history->change_to =   "QA Secondary Review";
                 $history->change_from = $lastDocument->status;
                 $history->save();
-                $list = Helpers::getQAUserList();
-                foreach ($list as $u) {
-                    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                //log error
-                            }
-                        }
-                    }
-                }
+                //$list = Helpers::getQAUserList();
+                //foreach ($list as $u) {
+                //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //        $email = Helpers::getInitiatorEmail($u->user_id);
+                //        if ($email !== null) {
+                //            try {
+                //                Mail::send(
+                //                    'mail.view-mail',
+                //                    ['data' => $deviation],
+                //                    function ($message) use ($email) {
+                //                        $message->to($email)
+                //                            ->subject("Activity Performed By " . Auth::user()->name);
+                //                    }
+                //                );
+                //            } catch (\Exception $e) {
+                //                //log error
+                //            }
+                //        }
+                //    }
+                //}
                 $deviation->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -4265,92 +4265,97 @@ class DeviationController extends Controller
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
 
-if( $deviation->stage == 1){
-    $deviation->stage = "0";
-    $deviation->status = "Closed-Cancelled";
-    $deviation->cancelled_by = Auth::user()->name;
-    $deviation->cancelled_on = Carbon::now()->format('d-M-Y');
-    $history = new DeviationAuditTrail();
-    $history->deviation_id = $id;
-    $history->activity_type = 'Activity Log';
-    $history->previous = "";
-    $history->current = $deviation->cancelled_by;
-    $history->comment = $request->comment;
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $deviation->status;
-    $history->stage = 'Closed-Cancelled';
-    $history->change_to =   "Closed-Cancelled";
-    $history->change_from = $lastDocument->status;
-    $history->action = 'Cancel';
-    $history->save();
-    $deviation->update();
-    $history = new DeviationHistory();
-    $history->type = "Deviation";
-    $history->doc_id = $id;
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->stage_id = $deviation->stage;
-    $history->status = $deviation->status;
-    $history->save();
+            if( $deviation->stage == 1){
+                $deviation->stage = "0";
+                $deviation->status = "Closed-Cancelled";
+                $deviation->cancelled_by = Auth::user()->name;
+                $deviation->cancelled_on = Carbon::now()->format('d-M-Y');
+                $deviation->cancelled_comments = $request->comment;
 
-    $list = Helpers::getInitiatorUserList();
-    foreach ($list as $u) {
-        if ($u->q_m_s_divisions_id == $deviation->division_id) {
-            $email = Helpers::getInitiatorEmail($u->user_id);
-            if ($email !== null) {
+                $history = new DeviationAuditTrail();
+                $history->deviation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->current = $deviation->cancelled_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $deviation->status;
+                $history->stage = 'Closed-Cancelled';
+                $history->change_to =   "Closed-Cancelled";
+                $history->change_from = $lastDocument->status;
+                $history->action = 'Cancel';
+                $history->save();
 
-                try {
-                    Mail::send(
-                        'mail.view-mail',
-                        ['data' => $deviation],
-                        function ($message) use ($email) {
-                            $message->to($email)
-                                ->subject("Activity Performed By " . Auth::user()->name);
+                $history = new DeviationHistory();
+                $history->type = "Deviation";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $deviation->stage;
+                $history->status = $deviation->status;
+                $history->save();
+
+                $deviation->update();
+                //$list = Helpers::getInitiatorUserList();
+                //foreach ($list as $u) {
+                //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //        $email = Helpers::getInitiatorEmail($u->user_id);
+                //        if ($email !== null) {
+
+                //            try {
+                //                Mail::send(
+                //                    'mail.view-mail',
+                //                    ['data' => $deviation],
+                //                    function ($message) use ($email) {
+                //                        $message->to($email)
+                //                            ->subject("Activity Performed By " . Auth::user()->name);
+                //                    }
+                //                );
+                //            } catch (\Exception $e) {
+                //                //log error
+                //            }
+                //        }
+                //    }
+                //}
+
+                toastr()->success('Document Sent');
+                return back();
+
                         }
-                    );
-                } catch (\Exception $e) {
-                    //log error
-                }
-            }
-        }
-    }
 
-    toastr()->success('Document Sent');
-    return back();
+                        if($deviation->stage == 2){
+                            $deviation->stage = "0";
+                            $deviation->status = "Closed-Cancelled";
+                            $deviation->Hod_cancelled_by = Auth::user()->name;
+                            $deviation->Hod_cancelled_on = Carbon::now()->format('d-M-Y');
+                            $deviation->Hod_cancelled_comments = $request->comment;
 
-}
-
-if($deviation->stage == 2){
-    $deviation->stage = "0";
-    $deviation->status = "Closed-Cancelled";
-    $deviation->cancelled_by = Auth::user()->name;
-    $deviation->cancelled_on = Carbon::now()->format('d-M-Y');
-    $history = new DeviationAuditTrail();
-    $history->deviation_id = $id;
-    $history->activity_type = 'Activity Log';
-    $history->previous = "";
-    $history->current = $deviation->cancelled_by;
-    $history->comment = $request->comment;
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $deviation->status;
-    $history->stage = 'Closed-Cancelled';
-    $history->change_to =   "Closed-Cancelled";
-    $history->change_from = $lastDocument->status;
-    $history->action = 'Cancel';
-    $history->save();
-    $deviation->update();
-    toastr()->success('Document Sent');
-    return back();
-}
-        } else {
-            toastr()->error('E-signature Not match');
-            return back();
-        }
-    }
+                            $history = new DeviationAuditTrail();
+                            $history->deviation_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = $deviation->cancelled_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $deviation->status;
+                            $history->stage = 'Closed-Cancelled';
+                            $history->change_to =   "Closed-Cancelled";
+                            $history->change_from = $lastDocument->status;
+                            $history->action = 'Cancel';
+                            $history->save();
+                            $deviation->update();
+                            toastr()->success('Document Sent');
+                            return back();
+                        }
+                                } else {
+                                    toastr()->error('E-signature Not match');
+                                    return back();
+                                }
+                            }
 
     public function deviationIsCFTRequired(Request $request, $id)
     {
@@ -4373,26 +4378,26 @@ if($deviation->stage == 2){
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->stage = 'Send to HOD';
-            foreach ($list as $u) {
-                if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                    $email = Helpers::getInitiatorEmail($u->user_id);
-                    if ($email !== null) {
+            //foreach ($list as $u) {
+            //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+            //        $email = Helpers::getInitiatorEmail($u->user_id);
+            //        if ($email !== null) {
 
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $deviation],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Activity Performed By " . Auth::user()->name);
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            //log error
-                        }
-                    }
-                }
-            }
+            //            try {
+            //                Mail::send(
+            //                    'mail.view-mail',
+            //                    ['data' => $deviation],
+            //                    function ($message) use ($email) {
+            //                        $message->to($email)
+            //                            ->subject("Activity Performed By " . Auth::user()->name);
+            //                    }
+            //                );
+            //            } catch (\Exception $e) {
+            //                //log error
+            //            }
+            //        }
+            //    }
+            //}
             $history->save();
             $deviation->update();
             $history = new DeviationHistory();
@@ -4433,26 +4438,26 @@ if($deviation->stage == 2){
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->stage = 'Send to HOD';
-            foreach ($list as $u) {
-                if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                    $email = Helpers::getInitiatorEmail($u->user_id);
-                    if ($email !== null) {
+            //foreach ($list as $u) {
+            //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+            //        $email = Helpers::getInitiatorEmail($u->user_id);
+            //        if ($email !== null) {
 
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $deviation],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Activity Performed By " . Auth::user()->name);
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            //log error
-                        }
-                    }
-                }
-            }
+            //            try {
+            //                Mail::send(
+            //                    'mail.view-mail',
+            //                    ['data' => $deviation],
+            //                    function ($message) use ($email) {
+            //                        $message->to($email)
+            //                            ->subject("Activity Performed By " . Auth::user()->name);
+            //                    }
+            //                );
+            //            } catch (\Exception $e) {
+            //                //log error
+            //            }
+            //        }
+            //    }
+            //}
             $history->save();
             $deviation->update();
             $history = new DeviationHistory();
@@ -4498,26 +4503,26 @@ if($deviation->stage == 2){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            foreach ($list as $u) {
-                if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                    $email = Helpers::getInitiatorEmail($u->user_id);
-                    if ($email !== null) {
+            //foreach ($list as $u) {
+            //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+            //        $email = Helpers::getInitiatorEmail($u->user_id);
+            //        if ($email !== null) {
 
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $deviation],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Activity Performed By " . Auth::user()->name);
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            //log error
-                        }
-                    }
-                }
-            }
+            //            try {
+            //                Mail::send(
+            //                    'mail.view-mail',
+            //                    ['data' => $deviation],
+            //                    function ($message) use ($email) {
+            //                        $message->to($email)
+            //                            ->subject("Activity Performed By " . Auth::user()->name);
+            //                    }
+            //                );
+            //            } catch (\Exception $e) {
+            //                //log error
+            //            }
+            //        }
+            //    }
+            //}
             $history->save();
             $deviation->update();
             $history = new DeviationHistory();
@@ -4545,15 +4550,17 @@ if($deviation->stage == 2){
             $lastDocument = Deviation::find($id);
 
             if ($deviation->stage == 2) {
-                $deviation->stage = "2";
+                $deviation->stage = "1";
                 $deviation->status = "Opened";
-                $deviation->qa_more_info_required_by = Auth::user()->name;
-                $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $deviation->more_info_required_by = Auth::user()->name;
+                $deviation->more_info_required_on = Carbon::now()->format('d-M-Y');
+                $deviation->more_info_required_comments = $request->comment;
+
                 $history = new DeviationAuditTrail();
                 $history->deviation_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current = $deviation->qa_more_info_required_by;
+                $history->current = $deviation->hod_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4562,6 +4569,7 @@ if($deviation->stage == 2){
                 $history->stage = 'HOD Review';
                 $history->save();
                 $deviation->update();
+
                 $history = new DeviationHistory();
                 $history->type = "Deviation";
                 $history->doc_id = $id;
@@ -4570,26 +4578,26 @@ if($deviation->stage == 2){
                 $history->stage_id = $deviation->stage;
                 $history->status = $deviation->status;
                 $history->save();
-                $list = Helpers::getHodUserList();
-                foreach ($list as $u) {
-                    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                //log error
-                            }
-                        }
-                    }
-                }
+                //$list = Helpers::getHodUserList();
+                //foreach ($list as $u) {
+                //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //        $email = Helpers::getInitiatorEmail($u->user_id);
+                //        if ($email !== null) {
+                //            try {
+                //                Mail::send(
+                //                    'mail.view-mail',
+                //                    ['data' => $deviation],
+                //                    function ($message) use ($email) {
+                //                        $message->to($email)
+                //                            ->subject("Activity Performed By " . Auth::user()->name);
+                //                    }
+                //                );
+                //            } catch (\Exception $e) {
+                //                //log error
+                //            }
+                //        }
+                //    }
+                //}
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -4598,6 +4606,8 @@ if($deviation->stage == 2){
                 $deviation->status = "HOD Review";
                 $deviation->qa_more_info_required_by = Auth::user()->name;
                 $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $deviation->qa_more_info_required_comments = $request->comments;
+
                 $history = new DeviationAuditTrail();
                 $history->deviation_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -4621,25 +4631,25 @@ if($deviation->stage == 2){
                 $history->status = $deviation->status;
                 $history->save();
                 $list = Helpers::getHodUserList();
-                foreach ($list as $u) {
-                    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                //log error
-                            }
-                        }
-                    }
-                }
+                //foreach ($list as $u) {
+                //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //        $email = Helpers::getInitiatorEmail($u->user_id);
+                //        if ($email !== null) {
+                //            try {
+                //                Mail::send(
+                //                    'mail.view-mail',
+                //                    ['data' => $deviation],
+                //                    function ($message) use ($email) {
+                //                        $message->to($email)
+                //                            ->subject("Activity Performed By " . Auth::user()->name);
+                //                    }
+                //                );
+                //            } catch (\Exception $e) {
+                //                //log error
+                //            }
+                //        }
+                //    }
+                //}
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -4647,14 +4657,16 @@ if($deviation->stage == 2){
             if ($deviation->stage == 4) {
                 $deviation->stage = "3";
                 $deviation->status = "QA Initial Review";
-                $deviation->qa_more_info_required_by = Auth::user()->name;
-                $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $deviation->cft_more_info_required_by = Auth::user()->name;
+                $deviation->cft_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $deviation->cft_more_info_required_comments = $request->comment;
+
                 $history = new DeviationAuditTrail();
                 $history->deviation_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $deviation->qa_more_info_required_by;
+                $history->current = $deviation->cft_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4662,7 +4674,7 @@ if($deviation->stage == 2){
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
-                $deviation->update();
+
                 $history = new DeviationHistory();
                 $history->type = "Deviation";
                 $history->doc_id = $id;
@@ -4671,6 +4683,9 @@ if($deviation->stage == 2){
                 $history->stage_id = $deviation->stage;
                 $history->status = $deviation->status;
                 $history->save();
+
+                $deviation->update();
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -4697,13 +4712,15 @@ if($deviation->stage == 2){
        if($deviation->stage == 8){
         $deviation->stage = "7";
         $deviation->status = "Pending Initiator Update";
-        $deviation->qa_more_info_required_by = Auth::user()->name;
-        $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $deviation->HOD_Final_Send_to_Initiator_By = Auth::user()->name;
+        $deviation->HOD_Final_Send_to_Initiator_On = Carbon::now()->format('d-M-Y');
+        $deviation->HOD_Final_Send_to_Initiator_Comments = $request->comment;
+
         $history = new DeviationAuditTrail();
         $history->deviation_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
-        $history->current = $deviation->qa_more_info_required_by;
+        $history->current = $deviation->HOD_Final_Send_to_Initiator_By;
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -4724,26 +4741,26 @@ if($deviation->stage == 2){
         $history->stage_id = $deviation->stage;
         $history->status = "Send to Pending Initiator Update";
         $history->save();
-        foreach ($list as $u) {
-            if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                $email = Helpers::getInitiatorEmail($u->user_id);
-                if ($email !== null) {
+        //foreach ($list as $u) {
+        //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+        //        $email = Helpers::getInitiatorEmail($u->user_id);
+        //        if ($email !== null) {
 
-                    try {
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Activity Performed By " . Auth::user()->name);
-                            }
-                        );
-                    } catch (\Exception $e) {
-                        //log error
-                    }
-                }
-            }
-        }
+        //            try {
+        //                Mail::send(
+        //                    'mail.view-mail',
+        //                    ['data' => $deviation],
+        //                    function ($message) use ($email) {
+        //                        $message->to($email)
+        //                            ->subject("Activity Performed By " . Auth::user()->name);
+        //                    }
+        //                );
+        //            } catch (\Exception $e) {
+        //                //log error
+        //            }
+        //        }
+        //    }
+        //}
         $deviation->update();
         toastr()->success('Document Sent');
         return back();
@@ -4752,13 +4769,15 @@ if($deviation->stage == 2){
         if($deviation->stage == 9){
             $deviation->stage = "7";
             $deviation->status = "Pending Initiator Update";
-            $deviation->qa_more_info_required_by = Auth::user()->name;
-            $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+            $deviation->Send_to_QA_Initiator_By = Auth::user()->name;
+            $deviation->Send_to_QA_Initiator_On = Carbon::now()->format('d-M-Y');
+            $deviation->Send_to_QA_Initiator_Comments = $request->comment;
+
             $history = new DeviationAuditTrail();
             $history->deviation_id = $id;
             $history->activity_type = 'Activity Log';
             $history->previous = "";
-            $history->current = $deviation->qa_more_info_required_by;
+            $history->current = $deviation->Send_to_QA_Initiator_By;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4777,13 +4796,15 @@ if($deviation->stage == 2){
         if($deviation->stage == 10){
             $deviation->stage = "7";
             $deviation->status = "Pending Initiator Update";
-            $deviation->qa_more_info_required_by = Auth::user()->name;
-            $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+            $deviation->Send_to_Pending_Initiator_Updated_By = Auth::user()->name;
+            $deviation->Send_to_Pending_Initiator_Updated_On = Carbon::now()->format('d-M-Y');
+            $deviation->Send_to_Pending_Initiator_Updated_Comments = $request->comment;
+
             $history = new DeviationAuditTrail();
             $history->deviation_id = $id;
             $history->activity_type = 'Activity Log';
             $history->previous = "";
-            $history->current = $deviation->qa_more_info_required_by;
+            $history->current = $deviation->Send_to_Pending_Initiator_Updated_By;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4821,13 +4842,13 @@ if($deviation->stage == 2){
 
 // dd($deviation->stage);
 
-if ($deviation->stage == 5) {
-
-
+    if ($deviation->stage == 5) {
         $deviation->stage = "1";
         $deviation->status = "Opened";
-        $deviation->qa_more_info_required_by = Auth::user()->name;
-        $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $deviation->send_to_opened_by = Auth::user()->name;
+        $deviation->send_to_opened_on = Carbon::now()->format('d-M-Y');
+        $deviation->send_to_opened_comments = $request->comment;
+
         $history = new DeviationAuditTrail();
         $history->deviation_id = $id;
         $history->activity_type = 'Activity Log';
@@ -4843,7 +4864,7 @@ if ($deviation->stage == 5) {
         $history->change_from = $lastDocument->status;
         $history->action = 'Send to Opened';
         $history->save();
-        $deviation->update();
+        //$deviation->update();
         $history = new DeviationHistory();
         $history->type = "Deviation";
         $history->doc_id = $id;
@@ -4852,26 +4873,26 @@ if ($deviation->stage == 5) {
         $history->stage_id = $deviation->stage;
         $history->status = "Send to Opened";
         $history->save();
-        foreach ($list as $u) {
-            if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                $email = Helpers::getInitiatorEmail($u->user_id);
-                if ($email !== null) {
+        //foreach ($list as $u) {
+        //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+        //        $email = Helpers::getInitiatorEmail($u->user_id);
+        //        if ($email !== null) {
 
-                    try {
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Activity Performed By " . Auth::user()->name);
-                            }
-                        );
-                    } catch (\Exception $e) {
-                        //log error
-                    }
-                }
-            }
-        }
+        //            try {
+        //                Mail::send(
+        //                    'mail.view-mail',
+        //                    ['data' => $deviation],
+        //                    function ($message) use ($email) {
+        //                        $message->to($email)
+        //                            ->subject("Activity Performed By " . Auth::user()->name);
+        //                    }
+        //                );
+        //            } catch (\Exception $e) {
+        //                //log error
+        //            }
+        //        }
+        //    }
+        //}
         $deviation->update();
         toastr()->success('Document Sent');
         return back();
@@ -4882,8 +4903,40 @@ if ($deviation->stage == 5) {
 
         $deviation->stage = "1";
         $deviation->status = "Opened";
-        $deviation->qa_more_info_required_by = Auth::user()->name;
-        $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $deviation->Send_to_initialStage_By = Auth::user()->name;
+        $deviation->Send_to_initialStage_On = Carbon::now()->format('d-M-Y');
+        $deviation->Send_to_initialStage_Comments = $request->comment;
+
+        $history = new DeviationAuditTrail();
+        $history->deviation_id = $id;
+        $history->activity_type = 'Activity Log';
+        $history->previous = "";
+        $history->current = $deviation->qa_more_info_required_by;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->stage = 'Opened';
+        $history->change_to =   "Opened";
+        $history->change_from = $lastDocument->status;
+        $history->action = 'Send to Opened';
+        $history->save();
+        $deviation->update();
+
+        toastr()->success('Document Sent');
+        return back();
+    }
+
+
+    if($deviation->stage == 8){
+
+        $deviation->stage = "1";
+        $deviation->status = "Opened";
+        $deviation->HOD_Final_Send_to_Opened_By = Auth::user()->name;
+        $deviation->HOD_Final_Send_to_Opened_On = Carbon::now()->format('d-M-Y');
+        $deviation->HOD_Final_Send_to_Opened_Comments = $request->comment;
+
         $history = new DeviationAuditTrail();
         $history->deviation_id = $id;
         $history->activity_type = 'Activity Log';
@@ -4912,34 +4965,7 @@ if ($deviation->stage == 5) {
         $deviation->status = "Opened";
         $deviation->qa_more_info_required_by = Auth::user()->name;
         $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-        $history = new DeviationAuditTrail();
-        $history->deviation_id = $id;
-        $history->activity_type = 'Activity Log';
-        $history->previous = "";
-        $history->current = $deviation->qa_more_info_required_by;
-        $history->comment = $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->stage = 'Opened';
-        $history->change_to =   "Opened";
-        $history->change_from = $lastDocument->status;
-        $history->action = 'Send to Opened';
-        $history->save();
-        $deviation->update();
 
-        toastr()->success('Document Sent');
-        return back();
-    }
-
-
-    if($deviation->stage == 8){
-
-        $deviation->stage = "1";
-        $deviation->status = "Opened";
-        $deviation->qa_more_info_required_by = Auth::user()->name;
-        $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
         $history = new DeviationAuditTrail();
         $history->deviation_id = $id;
         $history->activity_type = 'Activity Log';
@@ -4966,8 +4992,10 @@ if ($deviation->stage == 5) {
 
         $deviation->stage = "1";
         $deviation->status = "Opened";
-        $deviation->qa_more_info_required_by = Auth::user()->name;
-        $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $deviation->QA_Final_Send_to_Opened_By = Auth::user()->name;
+        $deviation->QA_Final_Send_to_Opened_On = Carbon::now()->format('d-M-Y');
+        $deviation->QA_Final_Send_to_Opened_Comments = $request->comment;
+
         $history = new DeviationAuditTrail();
         $history->deviation_id = $id;
         $history->activity_type = 'Activity Log';
@@ -4994,13 +5022,15 @@ if ($deviation->stage == 5) {
 
         $deviation->stage = "1";
         $deviation->status = "Opened";
-        $deviation->qa_more_info_required_by = Auth::user()->name;
-        $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $deviation->QA_Approval_Send_to_Opened_By = Auth::user()->name;
+        $deviation->QA_Approval_Send_to_Opened_On = Carbon::now()->format('d-M-Y');
+        $deviation->QA_Approval_Send_to_Opened_Comments = $request->comment;
+
         $history = new DeviationAuditTrail();
         $history->deviation_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
-        $history->current = $deviation->qa_more_info_required_by;
+        $history->current = $deviation->QA_Approval_Send_to_Opened_By;
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -5038,8 +5068,10 @@ if ($deviation->stage == 5) {
        if($deviation->stage == 5){
         $deviation->stage = "2";
         $deviation->status = "HOD Review";
-        $deviation->qa_more_info_required_by = Auth::user()->name;
-        $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $deviation->QA_Secondary_Send_to_Hod_By = Auth::user()->name;
+        $deviation->QA_Secondary_Send_to_Hod_On = Carbon::now()->format('d-M-Y');
+        $deviation->QA_Secondary_Send_to_Hod_Comments = $request->comment;
+
         $history = new DeviationAuditTrail();
         $history->deviation_id = $id;
         $history->activity_type = 'Activity Log';
@@ -5064,26 +5096,26 @@ if ($deviation->stage == 5) {
         $history->stage_id = $deviation->stage;
         $history->status = "Send to HOD Review";
         $history->save();
-        foreach ($list as $u) {
-            if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                $email = Helpers::getInitiatorEmail($u->user_id);
-                if ($email !== null) {
+        //foreach ($list as $u) {
+        //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+        //        $email = Helpers::getInitiatorEmail($u->user_id);
+        //        if ($email !== null) {
 
-                    try {
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Activity Performed By " . Auth::user()->name);
-                            }
-                        );
-                    } catch (\Exception $e) {
-                        //log error
-                    }
-                }
-            }
-        }
+        //            try {
+        //                Mail::send(
+        //                    'mail.view-mail',
+        //                    ['data' => $deviation],
+        //                    function ($message) use ($email) {
+        //                        $message->to($email)
+        //                            ->subject("Activity Performed By " . Auth::user()->name);
+        //                    }
+        //                );
+        //            } catch (\Exception $e) {
+        //                //log error
+        //            }
+        //        }
+        //    }
+        //}
         $deviation->update();
         toastr()->success('Document Sent');
         return back();
@@ -5094,8 +5126,10 @@ if ($deviation->stage == 5) {
        if($deviation->stage == 7){
         $deviation->stage = "2";
         $deviation->status = "HOD Review";
-        $deviation->qa_more_info_required_by = Auth::user()->name;
-        $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $deviation->Send_to_Hod_By = Auth::user()->name;
+        $deviation->Send_to_Hod_On = Carbon::now()->format('d-M-Y');
+        $deviation->Send_to_Hod_Comments = $request->comment;
+
         $history = new DeviationAuditTrail();
         $history->deviation_id = $id;
         $history->activity_type = 'Activity Log';
@@ -5119,8 +5153,10 @@ if ($deviation->stage == 5) {
        if($deviation->stage == 9){
         $deviation->stage = "2";
         $deviation->status = "HOD Review";
-        $deviation->qa_more_info_required_by = Auth::user()->name;
-        $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $deviation->QA_Final_Send_to_HOD_By = Auth::user()->name;
+        $deviation->QA_Final_Send_to_HOD_On = Carbon::now()->format('d-M-Y');
+        $deviation->QA_Final_Send_to_HOD_Comments = $request->comment;
+
         $history = new DeviationAuditTrail();
         $history->deviation_id = $id;
         $history->activity_type = 'Activity Log';
@@ -5144,13 +5180,15 @@ if ($deviation->stage == 5) {
        if($deviation->stage == 10){
         $deviation->stage = "2";
         $deviation->status = "HOD Review";
-        $deviation->qa_more_info_required_by = Auth::user()->name;
-        $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $deviation->QA_Approval_Send_to_HOD_By = Auth::user()->name;
+        $deviation->QA_Approval_Send_to_HOD_On = Carbon::now()->format('d-M-Y');
+        $deviation->QA_Approval_Send_to_HOD_Comments = $request->comment;
+
         $history = new DeviationAuditTrail();
         $history->deviation_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
-        $history->current = $deviation->qa_more_info_required_by;
+        $history->current = $deviation->QA_Approval_Send_to_HOD_By;
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -5188,84 +5226,88 @@ if ($deviation->stage == 5) {
         if($deviation->stage == 5){
             $deviation->stage = "3";
             $deviation->status = "QA Initial Review";
-            $deviation->qa_more_info_required_by = Auth::user()->name;
-            $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-        $history = new DeviationAuditTrail();
-        $history->deviation_id = $id;
-        $history->activity_type = 'Activity Log';
-        $history->previous = "";
-        $history->current = $deviation->qa_more_info_required_by;
-        $history->comment = $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        // $history->stage = 'Send to HOD';
-        $history->stage = 'QA Initial Review';
-        $history->change_to =   "QA Initial Review";
-        $history->change_from = $lastDocument->status;
-        $history->action = 'Send to QA Initial Review';
-        $history->save();
-        $deviation->update();
-        $history = new DeviationHistory();
-        $history->type = "Deviation";
-        $history->doc_id = $id;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->stage_id = $deviation->stage;
-        $history->status = "Send to QA Initial Review";
-        $history->save();
-        foreach ($list as $u) {
-            if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                $email = Helpers::getInitiatorEmail($u->user_id);
-                if ($email !== null) {
+            $deviation->Send_to_QA_Initial_Review_By = Auth::user()->name;
+            $deviation->Send_to_QA_Initial_Review_On = Carbon::now()->format('d-M-Y');
+            $deviation->Send_to_QA_Initial_Review_Comments = $request->comment;
 
-                    try {
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Activity Performed By " . Auth::user()->name);
-                            }
-                        );
-                    } catch (\Exception $e) {
-                        //log error
-                    }
-                }
-            }
-        }
-        $deviation->update();
-        toastr()->success('Document Sent');
-        return back();
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->previous = "";
+            $history->current = $deviation->qa_more_info_required_by;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            // $history->stage = 'Send to HOD';
+            $history->stage = 'QA Initial Review';
+            $history->change_to =   "QA Initial Review";
+            $history->change_from = $lastDocument->status;
+            $history->action = 'Send to QA Initial Review';
+            $history->save();
+            $deviation->update();
+            $history = new DeviationHistory();
+            $history->type = "Deviation";
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->stage_id = $deviation->stage;
+            $history->status = "Send to QA Initial Review";
+            $history->save();
+            //foreach ($list as $u) {
+            //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+            //        $email = Helpers::getInitiatorEmail($u->user_id);
+            //        if ($email !== null) {
+
+            //            try {
+            //                Mail::send(
+            //                    'mail.view-mail',
+            //                    ['data' => $deviation],
+            //                    function ($message) use ($email) {
+            //                        $message->to($email)
+            //                            ->subject("Activity Performed By " . Auth::user()->name);
+            //                    }
+            //                );
+            //            } catch (\Exception $e) {
+            //                //log error
+            //            }
+            //        }
+            //    }
+            //}
+            $deviation->update();
+            toastr()->success('Document Sent');
+            return back();
 
         }
 
         if($deviation->stage == 7){
             $deviation->stage = "3";
             $deviation->status = "QA Initial Review";
-            $deviation->qa_more_info_required_by = Auth::user()->name;
-            $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-        $history = new DeviationAuditTrail();
-        $history->deviation_id = $id;
-        $history->activity_type = 'Activity Log';
-        $history->previous = "";
-        $history->current = $deviation->qa_more_info_required_by;
-        $history->comment = $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        // $history->stage = 'Send to HOD';
-        $history->stage = 'QA Initial Review';
-        $history->change_to =   "QA Initial Review";
-        $history->change_from = $lastDocument->status;
-        $history->action = 'Send to QA Initial Review';
-        $history->save();
-        $deviation->update();
+            $deviation->Send_to_QA_Initial_By = Auth::user()->name;
+            $deviation->Send_to_QA_Initial_On = Carbon::now()->format('d-M-Y');
+            $deviation->Send_to_QA_Initial_Comments = $request->comment;
 
-        toastr()->success('Document Sent');
-        return back();
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->previous = "";
+            $history->current = $deviation->Send_to_QA_Initial_By;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            // $history->stage = 'Send to HOD';
+            $history->stage = 'QA Initial Review';
+            $history->change_to =   "QA Initial Review";
+            $history->change_from = $lastDocument->status;
+            $history->action = 'Send to QA Initial Review';
+            $history->save();
+            $deviation->update();
+
+            toastr()->success('Document Sent');
+            return back();
 
         }
 
@@ -5273,28 +5315,30 @@ if ($deviation->stage == 5) {
         if($deviation->stage == 10){
             $deviation->stage = "3";
             $deviation->status = "QA Initial Review";
-            $deviation->qa_more_info_required_by = Auth::user()->name;
-            $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-        $history = new DeviationAuditTrail();
-        $history->deviation_id = $id;
-        $history->activity_type = 'Activity Log';
-        $history->previous = "";
-        $history->current = $deviation->qa_more_info_required_by;
-        $history->comment = $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        // $history->stage = 'Send to HOD';
-        $history->stage = 'QA Initial Review';
-        $history->change_to =   "QA Initial Review";
-        $history->change_from = $lastDocument->status;
-        $history->action = 'Send to QA Initial Review';
-        $history->save();
-        $deviation->update();
+            $deviation->Approval_Send_to_QA_Initial_By = Auth::user()->name;
+            $deviation->Approval_Send_to_QA_Initial_On = Carbon::now()->format('d-M-Y');
+            $deviation->Approval_Send_to_QA_Initial_Comments = $request->comment;
 
-        toastr()->success('Document Sent');
-        return back();
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->previous = "";
+            $history->current = $deviation->Send_to_QA_Initial_By;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            // $history->stage = 'Send to HOD';
+            $history->stage = 'QA Initial Review';
+            $history->change_to =   "QA Initial Review";
+            $history->change_from = $lastDocument->status;
+            $history->action = 'Send to QA Initial Review';
+            $history->save();
+            $deviation->update();
+
+            toastr()->success('Document Sent');
+            return back();
 
         }
 
@@ -5318,8 +5362,10 @@ if ($deviation->stage == 5) {
                 // dd($deviation->stage);
                 $deviation->stage = "1";
                 $deviation->status = "Opened";
-                $deviation->rejected_by = Auth::user()->name;
-                $deviation->rejected_on = Carbon::now()->format('d-M-Y');
+                $deviation->hod_more_info_required_by = Auth::user()->name;
+                $deviation->hod_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $deviation->hod_more_info_required_comments = $request->comment;
+
                 $history = new DeviationAuditTrail();
                 $history->deviation_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -5336,34 +5382,34 @@ if ($deviation->stage == 5) {
                 $history->action = 'More Info Required';
                 $history->save();
                 $deviation->update();
-                $history = new DeviationHistory();
-                $history->type = "Deviation";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $deviation->stage;
-                $history->status = "Opened";
-                foreach ($list as $u) {
-                    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if ($email !== null) {
+                //$history = new DeviationHistory();
+                //$history->type = "Deviation";
+                //$history->doc_id = $id;
+                //$history->user_id = Auth::user()->id;
+                //$history->user_name = Auth::user()->name;
+                //$history->stage_id = $deviation->stage;
+                //$history->status = "Opened";
+                //foreach ($list as $u) {
+                //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //        $email = Helpers::getInitiatorEmail($u->user_id);
+                //        if ($email !== null) {
 
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                //log error
-                            }
-                        }
-                    }
-                }
-                $history->save();
+                //            try {
+                //                Mail::send(
+                //                    'mail.view-mail',
+                //                    ['data' => $deviation],
+                //                    function ($message) use ($email) {
+                //                        $message->to($email)
+                //                            ->subject("Activity Performed By " . Auth::user()->name);
+                //                    }
+                //                );
+                //            } catch (\Exception $e) {
+                //                //log error
+                //            }
+                //        }
+                //    }
+                //}
+                //$history->save();
 
                 toastr()->success('Document Sent');
                 return back();
@@ -5374,6 +5420,8 @@ if ($deviation->stage == 5) {
                 $deviation->form_progress = 'hod';
                 $deviation->qa_more_info_required_by = Auth::user()->name;
                 $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $deviation->qa_more_info_required_comments = $request->comment;
+
                 $history = new DeviationAuditTrail();
                 $history->deviation_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -5390,7 +5438,7 @@ if ($deviation->stage == 5) {
                 $history->change_from = $lastDocument->status;
                 $history->action = 'More Info Required';
                 $history->save();
-                $deviation->update();
+
                 $history = new DeviationHistory();
                 $history->type = "Deviation";
                 $history->doc_id = $id;
@@ -5398,27 +5446,30 @@ if ($deviation->stage == 5) {
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $deviation->stage;
                 $history->status = "More Info Required";
-                foreach ($list as $u) {
-                    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if ($email !== null) {
-
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                //log error
-                            }
-                        }
-                    }
-                }
                 $history->save();
+
+                $deviation->update();
+                //foreach ($list as $u) {
+                //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //        $email = Helpers::getInitiatorEmail($u->user_id);
+                //        if ($email !== null) {
+
+                //            try {
+                //                Mail::send(
+                //                    'mail.view-mail',
+                //                    ['data' => $deviation],
+                //                    function ($message) use ($email) {
+                //                        $message->to($email)
+                //                            ->subject("Activity Performed By " . Auth::user()->name);
+                //                    }
+                //                );
+                //            } catch (\Exception $e) {
+                //                //log error
+                //            }
+                //        }
+                //    }
+                //}
+
 
                 toastr()->success('Document Sent');
                 return back();
@@ -5470,26 +5521,26 @@ if ($deviation->stage == 5) {
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $deviation->stage;
                 $history->status = "More Info Required";
-                foreach ($list as $u) {
-                    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if ($email !== null) {
+                //foreach ($list as $u) {
+                //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //        $email = Helpers::getInitiatorEmail($u->user_id);
+                //        if ($email !== null) {
 
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                //log error
-                            }
-                        }
-                    }
-                }
+                //            try {
+                //                Mail::send(
+                //                    'mail.view-mail',
+                //                    ['data' => $deviation],
+                //                    function ($message) use ($email) {
+                //                        $message->to($email)
+                //                            ->subject("Activity Performed By " . Auth::user()->name);
+                //                    }
+                //                );
+                //            } catch (\Exception $e) {
+                //                //log error
+                //            }
+                //        }
+                //    }
+                //}
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
@@ -5500,14 +5551,16 @@ if ($deviation->stage == 5) {
                 $deviation->status = "QA Secondary Review";
                 $deviation->form_progress = 'capa';
 
-                $deviation->qa_more_info_required_by = Auth::user()->name;
-                $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $deviation->QAH_More_Information_Required_By = Auth::user()->name;
+                $deviation->QAH_More_Information_Required_On = Carbon::now()->format('d-M-Y');
+                $deviation->QAH_More_Information_Required_Comments = $request->comment;
+
                 $history = new DeviationAuditTrail();
                 $history->deviation_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 // $history->action='More Info Required';
-                $history->current = $deviation->qa_more_info_required_by;
+                $history->current = $deviation->QAH_More_Information_Required_By;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -5518,26 +5571,26 @@ if ($deviation->stage == 5) {
                 $history->change_from = $lastDocument->status;
                 $history->action = 'More Info Required';
                 // dd();
-                foreach ($list as $u) {
-                    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if ($email !== null) {
+                //foreach ($list as $u) {
+                //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //        $email = Helpers::getInitiatorEmail($u->user_id);
+                //        if ($email !== null) {
 
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                //log error
-                            }
-                        }
-                    }
-                }
+                //            try {
+                //                Mail::send(
+                //                    'mail.view-mail',
+                //                    ['data' => $deviation],
+                //                    function ($message) use ($email) {
+                //                        $message->to($email)
+                //                            ->subject("Activity Performed By " . Auth::user()->name);
+                //                    }
+                //                );
+                //            } catch (\Exception $e) {
+                //                //log error
+                //            }
+                //        }
+                //    }
+                //}
                 $history->save();
                 $deviation->update();
                 $history = new DeviationHistory();

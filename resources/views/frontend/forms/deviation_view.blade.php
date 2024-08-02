@@ -126,6 +126,14 @@
         }
     </style>
 
+<style>
+    .new_style {
+                width: 100%;
+                border-radius: 5px;
+                margin-bottom: 10px;
+        }
+</style>
+
     {{-- ------------------------------------------------- --}}
 
     <style>
@@ -531,7 +539,7 @@
                         '<td> <select name="rootCause[' + serialNumber +
                             '][Root_Cause_Category]" class="Root_Cause_Category_Select" id=""> <option value="">-- Select --</option> <option value="M-Machine(Equipment)">M-Machine(Equipment)</option><option value="M-Maintenance">M-Maintenance</option><option value="M-Man Power (physical work)">M-Man Power (physical work)</option><option value="M-Management">M-Management</option><option value="M-Material (Raw,Consumables etc.)">M-Material (Raw,Consumables etc.)</option><option value="M-Method (Process/Inspection)">M-Method (Process/Inspection)</option><option value="M-Mother Nature (Environment)">M-Mother Nature (Environment)</option><option value="P-Place/Plant">P-Place/Plant</option><option value="P-Policies">P-Policies</option><option value="P-Price">P-Price </option><option value="P-Procedures">P-Procedures</option><option value="P-Process">P-Process </option><option value="P-Product">P-Product</option><option value="S-Suppliers">S-Suppliers</option><option value="S-Surroundings">S-Surroundings</option><option value="S-Systems">S-Systems</option>  </select></td>' +
                         '<td><select name="rootCause[' + serialNumber +
-                        '][Root_Cause_Sub_Category]" id="" class="Root_Cause_Sub_Category_Select"><option value="">-- Select --</option> <option value="infrequent_audits">Infrequent Audits </option><option value="No_Preventive_Maintenance">No Preventive Maintenance </option><option value="Other">Other</option><option value="Poor_Maintenance_or_Design">Poor Maintenance or Design </option><option value="Maintenance_Needs_Improvement">Maintenance Needs Improvement </option><option value="Scheduling_Problem">Scheduling Problem </option><option value="system_deficiency">System Deficiency </option><option value="technical_error">Technical Error </option><option value="tolerable_failure">Tolerable Failure </option><option value="calibration_issues">Calibration Issues </option><option value="Infrequent_Audits">Infrequent Audits</option><option value="No_Preventive_Maintenance">No Preventive Maintenance </option><option value="Other">Other</option><option value="Maintenance_Needs_Improvement">Maintenance Needs Improvement</option><option value="Scheduling_Problem ">Scheduling Problem </option><option value="System_Deficiency">System Deficiency </option><option value="Technical_Error ">Technical Error </option><option value="Tolerable_Failure">Tolerable Failure </option><option value="Failure_to_Follow_SOP">Failure to Follow SOP</option><option value="Human_Machine_Interface">Human-Machine Interface</option><option value="Misunderstood_Verbal_Communication">Misunderstood Verbal Communication </option><option value="Other">Other</option><option value="Personnel Error">Personnel Error</option><option value="Personnel not Qualified">Personnel not Qualified</option><option value="Practice Needed">Practice Needed</option><option value="Teamwork Needs Improvement">Teamwork Needs Improvement</option><option value="Attention">Attention</option><option value="Understanding">Understanding</option><option value="Procedural">Procedural</option><option value="Behavioral">Behavioral</option><option value="Skill">Skill</option><option value="Inattention to task">Inattention to task</option><option value="Lack of Process">Lack of Process</option><option value="Methods">Methods</option><option value="No or Poor Management Involvement">No or Poor Management Involvement</option><option value="Other">Other</option><option value="Personnel not Qualified">Personnel not Qualified</option><option value="Poor employee involvement">Poor employee involvement</option><option value="Poor recognition of hazard">Poor recognition of hazard</option><option value="Previously identified hazards were not eliminated">Previously identified hazards were not eliminated</option><option value="Stress demands">Stress demands</option><option value="Task hazards not guarded properly">Task hazards not guarded properly</option><option value="Personnel not Qualified">Personnel not Qualified</option>  </select></td>' +
+                        '][Root_Cause_Sub_Category]" id="" class="Root_Cause_Sub_Category_Select"><option value="">-- Select --</option> <option value="infrequent_audits">Infrequent Audits </option><option value="No Preventive Maintenance">No Preventive Maintenance </option><option value="Other">Other</option><option value="Poor_Maintenance_or_Design">Poor Maintenance or Design </option><option value="Maintenance_Needs_Improvement">Maintenance Needs Improvement </option><option value="Scheduling_Problem">Scheduling Problem </option><option value="system_deficiency">System Deficiency </option><option value="technical_error">Technical Error</option><option value="tolerable_failure">Tolerable Failure </option><option value="calibration_issues">Calibration Issues </option><option value="Infrequent_Audits">Infrequent Audits</option><option value="No Preventive Maintenance">No Preventive Maintenance </option><option value="Other">Other</option><option value="Maintenance_Needs_Improvement">Maintenance Needs Improvement</option><option value="Scheduling_Problem ">Scheduling Problem</option><option value="System_Deficiency">System Deficiency </option><option value="Technical_Error ">Technical Error </option><option value="Tolerable_Failure">Tolerable Failure </option><option value="Failure_to_Follow_SOP">Failure to Follow SOP</option><option value="Human_Machine_Interface">Human-Machine Interface</option><option value="Misunderstood_Verbal_Communication">Misunderstood Verbal Communication </option><option value="Other">Other</option><option value="Personnel_Error">Personnel_Error</option><option value="Personnel_not_Qualified">Personnel not Qualified</option><option value="Practice_Needed">Practice Needed</option><option value="Teamwork_Needs_Improvement">Teamwork Needs Improvement</option><option value="Attention">Attention</option><option value="Understanding">Understanding</option><option value="Procedural">Procedural</option><option value="Behavioral">Behavioral</option><option value="Skill">Skill</option><option value="Inattention_to_task">Inattention to task</option><option value="Lack_of_Process">Lack of Process</option><option value="Methods">Methods</option><option value="No_or_Poor_Management_Involvement">No or Poor Management Involvement</option><option value="Other">Other</option><option value="Personnel_not_Qualified">Personnel not Qualified</option><option value="Poor_employee_involvement">Poor employee involvement</option><option value="Poor_recognition_of_hazard">Poor recognition of hazard</option><option value="Previously_identified_hazards_were_not_eliminated">Previously identified hazards were not eliminated</option><option value="Stress_demands">Stress demands</option><option value="Task_hazards_not_guarded_properly">Task hazards not guarded properly</option><option value="Personnel_not_Qualified">Personnel not Qualified</option>  </select></td>' +
                         '<td><input type="text" class="Document_Remarks" name="rootCause[' + serialNumber +
                         '][ifother]"></td>' +
                         '<td><input type="text" class="Document_Remarks" name="rootCause[' + serialNumber +
@@ -8484,13 +8492,9 @@
                                                     <th style="width: 12%">	Root Cause Category</th>
                                                     <th style="width: 16%">Root Cause Sub-Category</th>
                                                     <th style="width: 16%">If Others</th>
-
                                                     <th style="width: 16%">	Probability</th>
                                                     <th style="width: 16%">	Remarks</th>
-
                                                     <th style="width: 8%">Action</th>
-
-
                                                 </tr>
                                             </thead>
 
@@ -8510,7 +8514,7 @@
                                                                 <option value="M-Machine(Equipment)" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'M-Machine(Equipment)' ? 'selected' : '' }}>M-Machine(Equipment)</option>
                                                                 <option value="M-Maintenance" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'M-Maintenance' ? 'selected' : '' }}>M-Maintenance</option>
                                                                 <option value="M-Man Power (physical work)" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'M-Man Power (physical work)' ? 'selected' : '' }}>M-Man Power (physical work)</option>
-                                                                <option value="M-Management" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == '"M-Management' ? 'selected' : '' }}>M-Management</option>
+                                                                <option value="M-Management" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'M-Management' ? 'selected' : '' }}>M-Management</option>
                                                                 <option value="M-Material (Raw,Consumables etc.)" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'M-Material (Raw,Consumables etc.)' ? 'selected' : '' }}>M-Material (Raw,Consumables etc.)</option>
                                                                 <option value="M-Method (Process/Inspection)" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'M-Method (Process/Inspection)' ? 'selected' : '' }}>M-Method (Process/Inspection)</option>
                                                                 <option value="M-Mother Nature (Environment)" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'M-Mother Nature (Environment)' ? 'selected' : '' }}>M-Mother Nature (Environment)</option>
@@ -8530,53 +8534,53 @@
                                                             <select name="rootCause[{{ $loop->index }}][Root_Cause_Sub_Category]" id="Root_Cause_Sub_Category_Select" class="Root_Cause_Sub_Category_Select">
                                                                 <option value="">-- Select --</option>
 
-                                                                <option value="Infrequent_Audits" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Infrequent_Audits' ? 'selected' : '' }}>Infrequent Audits </option>
-                                                                <option value="No_Preventive_Maintenance {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) &&  $root_cause_dat['Root_Cause_Sub_Category'] == 'No_Preventive_Maintenance' ? 'selected' : '' }}">No Preventive Maintenance </option>
+                                                                <option value="infrequent_audits" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'infrequent_audits' ? 'selected' : '' }}>Infrequent Audits</option>
+                                                                <option value="No Preventive Maintenance" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) &&  $root_cause_dat['Root_Cause_Sub_Category'] == 'No Preventive Maintenance' ? 'selected' : '' }}>No Preventive Maintenance </option>
                                                                 <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
                                                                 <option value="Poor_Maintenance_or_Design" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor_Maintenance_or_Design' ? 'selected' : '' }}>Poor Maintenance or Design </option>
-                                                                <option value="Maintenance Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Maintenance Needs Improvement' ? 'selected' : '' }}>Maintenance Needs Improvement </option>
-                                                                <option value="Scheduling Problem" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Scheduling Problem' ? 'selected' : '' }}>Scheduling Problem </option>
-                                                                <option value="System Deficiency" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'System Deficiency' ? 'selected' : '' }}>System Deficiency </option>
-                                                                <option value="Technical Error" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Technical Error' ? 'selected' : '' }}>Technical Error </option>
-                                                                <option value="Tolerable Failure" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Tolerable Failure' ? 'selected' : '' }}>Tolerable Failure </option>
-                                                                <option value="Calibration Issues" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Calibration Issues' ? 'selected' : '' }}>Calibration Issues </option>
+                                                                <option value="Maintenance_Needs_Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Maintenance_Needs_Improvement' ? 'selected' : '' }}>Maintenance Needs Improvement </option>
+                                                                <option value="Scheduling_Problem" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Scheduling_Problem' ? 'selected' : '' }}>Scheduling Problem </option>
+                                                                <option value="system_deficiency" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'system_deficiency' ? 'selected' : '' }}>System Deficiency </option>
+                                                                <option value="technical_error" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'technical_error' ? 'selected' : '' }}>Technical Error </option>
+                                                                <option value="tolerable_failure" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'tolerable_failure' ? 'selected' : '' }}>Tolerable Failure </option>
+                                                                <option value="calibration_issues" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'calibration_issues' ? 'selected' : '' }}>Calibration Issues </option>
 
                                                                 <option value="Infrequent_Audits" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Infrequent_Audits' ? 'selected' : '' }}>Infrequent Audits </option>
-                                                                <option value="No_Preventive_Maintenance {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) &&  $root_cause_dat['Root_Cause_Sub_Category'] == 'No_Preventive_Maintenance' ? 'selected' : '' }}">No Preventive Maintenance </option>
+                                                                <option value="No Preventive Maintenance {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) &&  $root_cause_dat['Root_Cause_Sub_Category'] == 'No Preventive Maintenance' ? 'selected' : '' }}">No Preventive Maintenance </option>
                                                                 <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Maintenance Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Maintenance Needs Improvement' ? 'selected' : '' }}>Maintenance Needs Improvement </option>
-                                                                <option value="Scheduling Problem" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Scheduling Problem' ? 'selected' : '' }}>Scheduling Problem </option>
-                                                                <option value="System Deficiency" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'System Deficiency' ? 'selected' : '' }}>System Deficiency </option>
-                                                                <option value="Technical Error" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Technical Error' ? 'selected' : '' }}>Technical Error </option>
-                                                                <option value="Tolerable Failure" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Tolerable Failure' ? 'selected' : '' }}>Tolerable Failure </option>
+                                                                <option value="Maintenance_Needs_Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Maintenance_Needs_Improvement' ? 'selected' : '' }}>Maintenance Needs Improvement </option>
+                                                                <option value="Scheduling_Problem" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Scheduling_Problem' ? 'selected' : '' }}>Scheduling Problem </option>
+                                                                <option value="System_Deficiency" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'System_Deficiency' ? 'selected' : '' }}>System Deficiency </option>
+                                                                <option value="Technical_Error" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Technical_Error' ? 'selected' : '' }}>Technical Error </option>
+                                                                <option value="Tolerable_Failure" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Tolerable_Failure' ? 'selected' : '' }}>Tolerable Failure </option>
 
 
                                                                 <option value="Failure_to_Follow_SOP" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Failure_to_Follow_SOP' ? 'selected' : '' }}>Failure to Follow SOP</option>
                                                                 <option value="Human_Machine_Interface" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Human_Machine_Interface' ? 'selected' : '' }}>Human-Machine Interface</option>
                                                                 <option value="Misunderstood_Verbal_Communication" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Misunderstood_Verbal_Communication' ? 'selected' : '' }}>Misunderstood Verbal Communication </option>
                                                                 <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) &&$root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Personnel Error" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Personnel Error' ? 'selected' : '' }}>Personnel Error</option>
-                                                                <option value="Personnel not Qualified" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Personnel not Qualified' ? 'selected' : '' }}>Personnel not Qualified</option>
-                                                                <option value="Practice Needed" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Practice Needed' ? 'selected' : '' }}>Practice Needed</option>
-                                                                <option value="Teamwork Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Teamwork Needs Improvement' ? 'selected' : '' }}>Teamwork Needs Improvement</option>
+                                                                <option value="Personnel_Error" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Personnel_Error' ? 'selected' : '' }}>Personnel Error</option>
+                                                                <option value="Personnel_not_Qualified" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Personnel not Qualified' ? 'selected' : '' }}>Personnel not Qualified</option>
+                                                                <option value="Practice_Needed" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Practice_Needed' ? 'selected' : '' }}>Practice Needed</option>
+                                                                <option value="Teamwork_Needs_Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Teamwork_Needs_Improvement' ? 'selected' : '' }}>Teamwork Needs Improvement</option>
                                                                 <option value="Attention" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Attention' ? 'selected' : '' }}>Attention</option>
                                                                 <option value="Understanding" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Understanding' ? 'selected' : '' }}>Understanding</option>
                                                                 <option value="Procedural" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Procedural' ? 'selected' : '' }}>Procedural</option>
                                                                 <option value="Behavioral" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Behavioral' ? 'selected' : '' }}>Behavioral</option>
                                                                 <option value="Skill" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Skill' ? 'selected' : '' }}>Skill</option>
 
-                                                                <option value="Inattention to task" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Inattention to task' ? 'selected' : '' }}>Inattention to task</option>
-                                                                <option value="Lack of Process" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Lack of Process' ? 'selected' : '' }}>Lack of Process</option>
+                                                                <option value="Inattention_to_task" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Inattention_to_task' ? 'selected' : '' }}>Inattention to task</option>
+                                                                <option value="Lack_of_Process" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Lack_of_Process' ? 'selected' : '' }}>Lack of Process</option>
                                                                 <option value="Methods" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Methods' ? 'selected' : '' }}>Methods</option>
-                                                                <option value="No or poor management involvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'No or poor management involvement' ? 'selected' : '' }}>No or Poor Management Involvement</option>
+                                                                <option value="No_or_Poor_Management_Involvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'No_or_Poor_Management_Involvement' ? 'selected' : '' }}>No or Poor Management Involvement</option>
                                                                 <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Personnel not Qualified"  {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Personnel not Qualified' ? 'selected' : '' }}>Personnel not Qualified</option>
-                                                                <option value="Poor employee involvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor employee involvement' ? 'selected' : '' }}>Poor employee involvement</option>
-                                                                <option value="Poor recognition of hazard" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor recognition of hazard' ? 'selected' : '' }}>Poor recognition of hazard</option>
-                                                                <option value="Previously identified hazards were not eliminated" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Previously identified hazards were not eliminated' ? 'selected' : '' }}>Previously identified hazards were not eliminated</option>
-                                                                <option value="Stress demands" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Stress demands' ? 'selected' : '' }}>Stress demands</option>
-                                                                <option value="Task hazards not guarded properly" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Task hazards not guarded properly' ? 'selected' : '' }}>Task hazards not guarded properly</option>
-                                                                <option value="Training or education lacking" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Training or education lacking' ? 'selected' : '' }}>Training or education lacking</option>
+                                                                <option value="Personnel_not_Qualified"  {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Personnel_not_Qualified' ? 'selected' : '' }}>Personnel not Qualified</option>
+                                                                <option value="Poor_employee_involvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor_employee_involvement' ? 'selected' : '' }}>Poor employee involvement</option>
+                                                                <option value="Poor_recognition_of_hazard" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor_recognition_of_hazard' ? 'selected' : '' }}>Poor recognition of hazard</option>
+                                                                <option value="Previously_identified_hazards_were_not_eliminated" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Previously_identified_hazards_were_not_eliminated' ? 'selected' : '' }}>Previously identified hazards were not eliminated</option>
+                                                                <option value="Stress_demands" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Stress_demands' ? 'selected' : '' }}>Stress demands</option>
+                                                                <option value="Task_hazards_not_guarded_properly" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Task_hazards_not_guarded_properly' ? 'selected' : '' }}>Task hazards not guarded properly</option>
+                                                                <option value="Training_or_education_lacking" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Training_or_education_lacking' ? 'selected' : '' }}>Training or education lacking</option>
 
                                                                 <option value="Defective equipment or tool" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Defective equipment or tool' ? 'selected' : '' }}>Defective equipment or tool</option>
                                                                 <option value="Defective raw material" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Defective raw material' ? 'selected' : '' }}>Defective raw material</option>
@@ -11241,42 +11245,74 @@
 
 
         <!-- Activity Log content -->
+
         <div id="CCForm6" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="row">
-                    <div class="sub-head">Submission</div>
+
+                    {{-- stage 1 --}}
+                    <div class="sub-head">Submit</div>
+
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="submit by">Submit By :-</label>
                             <div class="static">{{ $data->submit_by }}</div>
                         </div>
                     </div>
+
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="submit on">Submit On :-</label>
                             <div class="static">{{ $data->submit_on }}</div>
                         </div>
                     </div>
+
                     <div class="col-lg-3">
-                        <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px;">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                             <label for="submit comment">Submit Comments :-</label>
                             <div class="static">{{ $data->submit_comment }}</div>
                         </div>
                     </div>
 
-                    <div class="sub-head">HOD Review Completed</div>
+                    <div class="sub-head">Cancel</div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="submit by">Cancelled By :-</label>
+                            <div class="static">{{ $data->cancelled_by }}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="submit on">Cancelled On :-</label>
+                            <div class="static">{{ $data->cancelled_on }}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
+                            <label for="submit comment">Cancelled Comments :-</label>
+                            <div class="static">{{ $data->cancelled_comments }}</div>
+                        </div>
+                    </div>
+
+                    {{-- stage 2 --}}
+                    <div class="sub-head">HOD Review Complete</div>
+
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="HOD Review Complete By">HOD Review Complete By :-</label>
                             <div class="static">{{ $data->HOD_Review_Complete_By }}</div>
                         </div>
                     </div>
+
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="HOD Review Complete On">HOD Review Complete On :-</label>
                             <div class="static">{{ $data->HOD_Review_Complete_On }}</div>
                         </div>
                     </div>
+
                     <div class="col-lg-3">
                         <div class="group-input" style=" ">
                             <label for="HOD Review Comments">HOD Review Comments :-</label>
@@ -11284,6 +11320,54 @@
                         </div>
                     </div>
 
+                    <div class="sub-head">HOD Cancel</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="HOD Review Complete By">HOD Cancelled By :-</label>
+                            <div class="static">{{ $data->Hod_cancelled_by }}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="HOD Review Complete On">HOD Cancelled On :-</label>
+                            <div class="static">{{ $data->Hod_cancelled_on }}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="group-input" style=" ">
+                            <label for="HOD Review Comments">HOD Cancelled Comments :-</label>
+                            <div class="static">{{ $data->Hod_cancelled_comments }}</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-head">More Information Required</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="HOD Review Complete By">More Information Required By :-</label>
+                            <div class="static">{{ $data->hod_more_info_required_by }}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="HOD Review Complete On">More Information Required On :-</label>
+                            <div class="static">{{ $data->hod_more_info_required_on }}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
+                            <label for="HOD Review Comments">More Information Required Comments :-</label>
+                            <div class="static">{{ $data->hod_more_info_required_comments }}</div>
+                        </div>
+                    </div>
+
+
+                    {{-- stage 3 --}}
 
                     <div class="sub-head">QA Initial Review Completed</div>
                     <div class="col-lg-4">
@@ -11304,26 +11388,183 @@
                             <div class="static">{{ $data->QA_Initial_Review_Comments }}</div>
                         </div>
                     </div>
-                    <div class="sub-head">CFT Review Complete</div>
+
+                    <div class="sub-head">QA More Information Required</div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="QA More Information Required By">QA More Information Required By :-</label>
+                            <div class="static">{{ $data->qa_more_info_required_by }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="QA More Information Required On">QA More Information Required On :-</label>
+                            <div class="static">{{ $data->qa_more_info_required_on }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px;`padding:5px;">
+                            <label for="QA More Information Required Comments">QA More Information Required Comments:-</label>
+                            <div class="static">{{ $data->qa_more_info_required_comments }}</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-head">CFT Review Not Required</div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="QA More Information Required By">CFT Review Not Required By :-</label>
+                            <div class="static">{{ $data->CFT_Review_Not_Required_By }}</div>
+                        </div>
+                    </div>
 
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="CFT Review Complete By">CFT Review Complete By :-</label>
+                            <label for="QA More Information Required On">CFT Review Not Required On :-</label>
+                            <div class="static">{{ $data->CFT_Review_Not_Required_On }}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
+                            <label for="QA More Information Required Comments">CFT Review Not Required Comments:-</label>
+                            <div class="static">{{ $data->CFT_Review_Not_Required_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                    {{-- stage 4 --}}
+
+                    <div class="sub-head">CFT Review Completed</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="CFT Review Complete By">CFT Review Completed By :-</label>
                             <div class="static">{{ $data->CFT_Review_Complete_By }}</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="CFT Review Complete On">CFT Review Complete On :-</label>
+                            <label for="CFT Review Complete On">CFT Review Completed On :-</label>
                             <div class="static">{{ $data->CFT_Review_Complete_On }}</div>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                            <label for="CFT Review Comments">CFT Review Comments :-</label>
+                            <label for="CFT Review Comments">CFT Review Completed Comments :-</label>
                             <div class="static">{{ $data->CFT_Review_Comments }}</div>
                         </div>
                     </div>
+
+                    <div class="sub-head">CFT More Information Required</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="CFT Review Complete By">CFT More Information Required By :-</label>
+                            <div class="static">{{ $data->cft_more_info_required_by }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="CFT Review Complete On">CFT More Information Required On :-</label>
+                            <div class="static">{{ $data->cft_more_info_required_on }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="CFT Review Comments">CFT More Information Required Comments :-</label>
+                            <div class="static">{{ $data->cft_more_info_required_comments }}</div>
+                        </div>
+                    </div>
+
+
+                    {{-- stage 5 --}}
+
+                    <div class="sub-head"> QA Secondary Review Completed</div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete By">QA Secondary Review Completed By :-</label>
+                            <div class="static">{{ $data->QA_Secondary_Review_Complete_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete On">QA Secondary Review Completed On :-</label>
+                            <div class="static">{{ $data->QA_Secondary_Review_Complete_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="QA Final Review Comments">QA Secondary Review Complete Comments :-</label>
+                            <div class="static">{{ $data->QA_Secondary_Review_Completed_Comments }}</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-head">Send to Opened</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="CFT Review Complete By">Send to Opened By :-</label>
+                            <div class="static">{{ $data->send_to_opened_by }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="CFT Review Complete On">Send to Opened On :-</label>
+                            <div class="static">{{ $data->send_to_opened_on }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="CFT Review Comments">Send to Opened Comments :-</label>
+                            <div class="static">{{ $data->send_to_opened_comments }}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="sub-head">Send to HOD</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="CFT Review Complete By">Send to HOD By :-</label>
+                            <div class="static">{{ $data->QA_Secondary_Send_to_Hod_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="CFT Review Complete On">Send to HOD On :-</label>
+                            <div class="static">{{ $data->QA_Secondary_Send_to_Hod_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="CFT Review Comments">Send to HOD Comments :-</label>
+                            <div class="static">{{ $data->QA_Secondary_Send_to_Hod_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                <div class="sub-head">Secondary Send to QA Initial Review</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="CFT Review Complete By"> Secondary Send to QA Initial Review By :-</label>
+                            <div class="static">{{ $data->Send_to_QA_Initial_Review_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="CFT Review Complete On"> Secondary Send to QA Initial Review On :-</label>
+                            <div class="static">{{ $data->Send_to_QA_Initial_Review_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="CFT Review Comments">Secondary Send to QA Initial Review Comments :-</label>
+                            <div class="static">{{ $data->Send_to_QA_Initial_Review_Comments }}</div>
+                        </div>
+                    </div>
+
+
                     {{-- <div class="sub-head">Initiator Update</div>
 
                     <div class="col-lg-6">
@@ -11344,7 +11585,8 @@
                             <div class="static"></div>
                         </div>
                     </div> --}}
-                    <div class="sub-head"> QA Final Review Completed</div>
+
+               {{--<div class="sub-head"> QA Final Review Completed</div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
@@ -11362,49 +11604,144 @@
                             <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
                             <div class="static">{{ $data->QA_Final_Review_Comments }}</div>
                         </div>
-                    </div>
+                    </div>--}}
+
+
+                    {{-- stage 6 --}}
+
                     <div class="sub-head">QAH Primary Approved Completed</div>
 
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="Approved By">Approved By :-</label>
+                            <label for="Approved By">QAH Primary Approved Completed By :-</label>
                             <div class="static">{{ $data->Approved_By }}</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="Approved On">Approved On :-</label>
+                            <label for="Approved On">QAH Primary Approved Completed  On :-</label>
                             <div class="static">{{ $data->Approved_On }}</div>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
-                            <label for="Approved Comments">Approved Comments :-</label>
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">QAH Primary Approved Completed Comments :-</label>
                             <div class="static">{{ $data->Approved_Comments }}</div>
                         </div>
                     </div>
 
 
+                    <div class="sub-head">QAH More Information Required</div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete By">QAH More Information Required By :-</label>
+                            <div class="static">{{ $data->QAH_More_Information_Required_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete On">QAH More Information Required On :-</label>
+                            <div class="static">{{ $data->QAH_More_Information_Required_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="QA Final Review Comments">QAH More Information Required Comments :-</label>
+                            <div class="static">{{ $data->QAH_More_Information_Required_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                    {{-- stage 7 --}}
+
                     <div class="sub-head">Initiator Update Completed</div>
 
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="Approved By">Initiator Update By :-</label>
-                            <div class="static">{{ $data->Initiator_Update_By }}</div>
+                            <label for="Approved By">Initiator Update Completed By :-</label>
+                            <div class="static">{{ $data->Initiator_Update_Completed_By }}</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="Approved On">Initiator Update On :-</label>
-                            <div class="static">{{ $data->Initiator_Update_On }}</div>
+                            <label for="Approved On">Initiator Update Completed On :-</label>
+                            <div class="static">{{ $data->Initiator_Update_Completed_On }}</div>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
-                            <label for="Approved Comments">Initiator Update Comments :-</label>
-                            <div class="static">{{ $data->Initiator_Update_Comments }}</div>
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">Initiator Update Completed Comments :-</label>
+                            <div class="static">{{ $data->Initiator_Update_Completed_Comments }}</div>
                         </div>
                     </div>
+
+
+                    <div class="sub-head">Send to opened</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved By">Send to opened By :-</label>
+                            <div class="static">{{ $data->Send_to_initialStage_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved On">Send to opened On :-</label>
+                            <div class="static">{{ $data->Send_to_initialStage_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">Send to opened Comments :-</label>
+                            <div class="static">{{ $data->Send_to_initialStage_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="sub-head">Send to HOD Review</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved By">Send to HOD Review By :-</label>
+                            <div class="static">{{ $data->Send_to_Hod_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved On">Send to HOD Review On :-</label>
+                            <div class="static">{{ $data->Send_to_Hod_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">Send to HOD Review Comments :-</label>
+                            <div class="static">{{ $data->Send_to_Hod_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="sub-head">Send to QA Initial </div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved By">Send to QA Initial By :-</label>
+                            <div class="static">{{ $data->Send_to_QA_Initial_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved On">Send to QA Initial On :-</label>
+                            <div class="static">{{ $data->Send_to_QA_Initial_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">Send to QA Initial Comments :-</label>
+                            <div class="static">{{ $data->Send_to_QA_Initial_Comments }}</div>
+                        </div>
+                    </div>
+
+                    {{-- stage 8 --}}
 
                     <div class="sub-head">HOD Final Review Completed</div>
 
@@ -11421,11 +11758,58 @@
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                             <label for="Approved Comments">HOD Final Review Comments :-</label>
                             <div class="static">{{ $data->HOD_Final_Review_Comments }}</div>
                         </div>
                     </div>
+
+
+                    <div class="sub-head">Send to Opened</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved By">Send to Opened By :-</label>
+                            <div class="static">{{ $data->HOD_Final_Send_to_Opened_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved On">Send to Opened On :-</label>
+                            <div class="static">{{ $data->HOD_Final_Send_to_Opened_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">Send to Opened Comments :-</label>
+                            <div class="static">{{ $data->HOD_Final_Send_to_Opened_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="sub-head">Send to Pending Initiator Update</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved By">Send to Pending Initiator Update By :-</label>
+                            <div class="static">{{ $data->HOD_Final_Send_to_Initiator_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved On">Send to Pending Initiator Update On :-</label>
+                            <div class="static">{{ $data->HOD_Final_Send_to_Initiator_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">Send to Pending Initiator Update Comments :-</label>
+                            <div class="static">{{ $data->HOD_Final_Send_to_Initiator_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                    {{-- stage 9 --}}
 
                     <div class="sub-head">QA Final Review Completed</div>
 
@@ -11442,12 +11826,80 @@
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                             <label for="Approved Comments">QA Final Review Comments :-</label>
                             <div class="static">{{ $data->QA_Final_Review_Comments }}</div>
                         </div>
                     </div>
 
+
+                    <div class="sub-head">QA Final Send to Opened</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved By">QA Final Send to Opened By :-</label>
+                            <div class="static">{{ $data->QA_Final_Send_to_Opened_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved On">QA Final Send to Opened On :-</label>
+                            <div class="static">{{ $data->QA_Final_Send_to_Opened_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">QA Final Send to Opened Comments :-</label>
+                            <div class="static">{{ $data->QA_Final_Send_to_Opened_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="sub-head">QA Final Send to HOD</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved By">QA Final Send to HOD By :-</label>
+                            <div class="static">{{ $data->QA_Final_Send_to_HOD_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved On">QA Final Send to HOD On :-</label>
+                            <div class="static">{{ $data->QA_Final_Send_to_HOD_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">QA Final Send to HOD Comments :-</label>
+                            <div class="static">{{ $data->QA_Final_Send_to_HOD_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="sub-head">Send to QA Initiator</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved By">Send to QA Initiator By :-</label>
+                            <div class="static">{{ $data->Send_to_QA_Initiator_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved On">Send to QA Initiator On :-</label>
+                            <div class="static">{{ $data->Send_to_QA_Initiator_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">Send to QA Initiator Comments :-</label>
+                            <div class="static">{{ $data->Send_to_QA_Initiator_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                     {{-- stage 10 --}}
 
                     <div class="sub-head">QA Final Approval Completed</div>
 
@@ -11464,9 +11916,97 @@
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="group-input" style="width:1620px; height:100px; line-height:3em;  `padding:5px; ">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                             <label for="Approved Comments">QA Final Approval Comments :-</label>
                             <div class="static">{{ $data->QA_Final_Approval_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="sub-head">Send to Opened</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved By">Send to Opened By :-</label>
+                            <div class="static">{{ $data->QA_Approval_Send_to_Opened_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved On">Send to Opened On :-</label>
+                            <div class="static">{{ $data->QA_Approval_Send_to_Opened_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">Send to Opened Comments :-</label>
+                            <div class="static">{{ $data->QA_Approval_Send_to_Opened_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="sub-head">Send to HOD</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved By">Send to HOD By :-</label>
+                            <div class="static">{{ $data->QA_Approval_Send_to_HOD_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved On">Send to HOD On :-</label>
+                            <div class="static">{{ $data->QA_Approval_Send_to_HOD_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">Send to HOD Comments :-</label>
+                            <div class="static">{{ $data->QA_Approval_Send_to_HOD_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="sub-head">Send to QA Initial Review</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved By">Send to QA Initial Review By :-</label>
+                            <div class="static">{{ $data->Approval_Send_to_QA_Initial_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved On">Send to QA Initial Review On :-</label>
+                            <div class="static">{{ $data->Approval_Send_to_QA_Initial_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">Send to QA Initial Review Comments :-</label>
+                            <div class="static">{{ $data->Approval_Send_to_QA_Initial_Comments }}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="sub-head">Send to Pending Initiator Update</div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved By">Send to Pending Initiator Updated By :-</label>
+                            <div class="static">{{ $data->Send_to_Pending_Initiator_Updated_By }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Approved On">Send to Pending Initiator Updated On :-</label>
+                            <div class="static">{{ $data->Send_to_Pending_Initiator_Updated_On }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="Approved Comments">Send to Pending Initiator Updated :-</label>
+                            <div class="static">{{ $data->Send_to_Pending_Initiator_Updated_Comments }}</div>
                         </div>
                     </div>
 
@@ -12929,9 +13469,9 @@
                             <td><textarea name="Impect_Assessment"></textarea></td>
                             <td><textarea name="Comments"></textarea></td>
                             <td><textarea name="sign&date"></textarea></td>
-                            <td><textarea name="Remarks"></textarea></td>`;
+                            <td><textarea name="Remarks"></textarea></td>
 
-                // Insert the new row after the current row
+                //Insert the new row after the current row
                 const currentRow = this.parentNode.parentNode;
                 currentRow.parentNode.insertBefore(newRow, currentRow.nextSibling);
             });
@@ -13100,10 +13640,10 @@
                     </div>
 
                     <!-- Modal footer -->
-                    <!-- <div class="modal-footer">
+                    {{--  <div class="modal-footer">
                             <button type="submit" data-bs-dismiss="modal">Submit</button>
                             <button>Close</button>
-                        </div> -->
+                        </div> --}}
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -13367,15 +13907,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" name="username" required class="new_style">
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" name="password" required class="new_style">
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" name="comment" required class="new_style">
                         </div>
                     </div>
                     <div class="modal-footer">

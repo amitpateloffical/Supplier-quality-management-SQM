@@ -81,7 +81,7 @@
             container.append(textarea)
         }
     </script>
-    <script>
+    {{-- <script>
         function calculateInitialResult(selectElement) {
             let row = selectElement.closest('tr');
             let R = parseFloat(row.querySelector('.fieldR').value) || 0;
@@ -109,7 +109,7 @@
             // Update the result field within the row
             row.querySelector('.residual-rpn').value = result;
         }
-    </script>
+    </script> --}}
     <script>
         function calculateRiskAnalysis(selectElement) {
             // Get the row containing the changed select element
@@ -1590,227 +1590,196 @@
                                             </div>
                                         </div>
                                         <div class="col-12 sub-head"></div>
-                                        <div class="col-12 mb-4">
-                                            <div class="group-input">
-                                                <label for="agenda">
-                                                    Failure Mode and Effect Analysis<button type="button" name="agenda"
-                                                        onclick="addRiskAssessment('risk-assessment-risk-management')">+</button>
-                                                </label>
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered" style="width: 200%"
-                                                        id="risk-assessment-risk-management">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="width: 4%">Row#</th>
-                                                                <th>Risk Factor</th>
-                                                                <th>Risk element </th>
-                                                                <th>Probable cause of risk element</th>
-                                                                <th>Existing Risk Controls</th>
-                                                                <th>Initial Severity- H(3)/M(2)/L(1)</th>
-                                                                <th>Initial Probability- H(3)/M(2)/L(1)</th>
-                                                                <th>Initial Detectability- H(1)/M(2)/L(3)</th>
-                                                                <th>Initial RPN</th>
-                                                                <th>Risk Acceptance (Y/N)</th>
-                                                                <th>Proposed Additional Risk control measure (Mandatory for
-                                                                    Risk elements having RPN>4)</th>
-                                                                <th>Residual Severity- H(3)/M(2)/L(1)</th>
-                                                                <th>Residual Probability- H(3)/M(2)/L(1)</th>
-                                                                <th>Residual Detectability- H(1)/M(2)/L(3)</th>
-                                                                <th>Residual RPN</th>
-                                                                <th>Risk Acceptance (Y/N)</th>
-                                                                <th>Mitigation proposal (Mention either CAPA reference
-                                                                    number, IQ,
-                                                                    OQ or
-                                                                    PQ)</th>
-                                                                <th>Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @if (!empty($riskEffectAnalysis->risk_factor))
-                                                                @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
-                                                                    <tr>
-                                                                        <td>{{ $key + 1 }}</td>
-                                                                        <td><input name="risk_factor[]" type="text"
-                                                                                value="{{ $riskFactor }}"></td>
-                                                                        <td><input name="risk_element[]" type="text"
-                                                                                value="{{ unserialize($riskEffectAnalysis->risk_element)[$key] ?? null }}">
-                                                                        </td>
-                                                                        <td> <input name="problem_cause[]" type="text"
-                                                                                value="{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}">
-                                                                        </td>
-                                                                        <td><input name="existing_risk_control[]"
-                                                                                type="text"
-                                                                                value="{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}">
-                                                                        </td>
-                                                                        <td><select onchange="calculateInitialResult(this)"
-                                                                                class="fieldR" name="initial_severity[]">
-                                                                                <option value="">-- Select --
-                                                                                </option>
-                                                                                <option value="1"
-                                                                                    {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                    1</option>
-                                                                                <option value="2"
-                                                                                    {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                    2</option>
-                                                                                <option value="3"
-                                                                                    {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                    3</option>
-                                                                            </select>
-                                                                        </td>
-                                                                        <td>
-                                                                            <select onchange="calculateInitialResult(this)"
-                                                                                class="fieldN"
-                                                                                name="initial_probability[]">
-                                                                                <option value="">-- Select --
-                                                                                </option>
-                                                                                <option value="1"
-                                                                                    {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                    1</option>
-                                                                                <option value="2"
-                                                                                    {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                    2</option>
-                                                                                <option value="3"
-                                                                                    {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                    3</option>
-                                                                            </select>
-                                                                        </td>
-                                                                        <td>
-                                                                            <select onchange="calculateInitialResult(this)"
-                                                                                class="fieldP"
-                                                                                name="initial_detectability[]">
-                                                                                <option value="">-- Select --
-                                                                                </option>
-                                                                                <option value="1"
-                                                                                    {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                    1</option>
-                                                                                <option value="2"
-                                                                                    {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                    2</option>
-                                                                                <option value="3"
-                                                                                    {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                    3</option>
-                                                                            </select>
-                                                                        </td>
-                                                                        <td>
-                                                                            <input name="initial_rpn[]" type="text"
-                                                                                class='initial-rpn'
-                                                                                value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}"
-                                                                                disabled>
-                                                                        </td>
-
-
-                                                                        <td>
-                                                                            <select onchange="calculateInitialResult(this)"
-                                                                                class="fieldR" name="risk_acceptance[]">
-                                                                                <option value="">-- Select --
-                                                                                </option>
-                                                                                <option value="Y"
-                                                                                    {{ (unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null) == 'Y' ? 'selected' : '' }}>
-                                                                                    Y</option>
-                                                                                <option value="N"
-                                                                                    {{ (unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null) == 'N' ? 'selected' : '' }}>
-                                                                                    N</option>
-                                                                            </select>
-
-                                                                        </td>
-                                                                        <td>
-                                                                            <input name="risk_control_measure[]"
-                                                                                type="text"
-                                                                                value="{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}">
-
-                                                                        </td>
-                                                                        <td>
-                                                                            <select
-                                                                                onchange="calculateResidualResult(this)"
-                                                                                class="residual-fieldR"
-                                                                                name="residual_severity[]">
-                                                                                <option value="">-- Select --
-                                                                                </option>
-                                                                                <option value="1"
-                                                                                    {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                    1</option>
-                                                                                <option value="2"
-                                                                                    {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                    2</option>
-                                                                                <option value="3"
-                                                                                    {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                    3</option>
-                                                                            </select>
-
-                                                                        </td>
-                                                                        <td>
-                                                                            <select
-                                                                                onchange="calculateResidualResult(this)"
-                                                                                class="residual-fieldP"
-                                                                                name="residual_probability[]">
-                                                                                <option value="">-- Select --
-                                                                                </option>
-                                                                                <option value="1"
-                                                                                    {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                    1</option>
-                                                                                <option value="2"
-                                                                                    {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                    2</option>
-                                                                                <option value="3"
-                                                                                    {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                    3</option>
-                                                                            </select>
-
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <select
-                                                                                onchange="calculateResidualResult(this)"
-                                                                                class="residual-fieldN"
-                                                                                name="residual_detectability[]">
-                                                                                <option value="">-- Select --
-                                                                                </option>
-                                                                                <option value="1"
-                                                                                    {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                    1</option>
-                                                                                <option value="2"
-                                                                                    {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                    2</option>
-                                                                                <option value="3"
-                                                                                    {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                    3</option>
-                                                                            </select>
-                                                                        </td>
-                                                                        <td>
-                                                                            <input name="residual_rpn[]" type="text"
-                                                                                class='residual-rpn'
-                                                                                value="{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}"
-                                                                                disabled>
-                                                                        </td>
-                                                                        <td>
-                                                                            <select onchange="calculateInitialResult(this)"
-                                                                                class="fieldR" name="risk_acceptance2[]">
-                                                                                <option value="">-- Select --
-                                                                                </option>
-                                                                                <option value="Y"
-                                                                                    {{ (unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null) == 'Y' ? 'selected' : '' }}>
-                                                                                    Y</option>
-                                                                                <option value="N"
-                                                                                    {{ (unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null) == 'N' ? 'selected' : '' }}>
-                                                                                    N</option>
-                                                                            </select>
-                                                                        </td>
-                                                                        <td>
-                                                                            <input name="mitigation_proposal[]"
-                                                                                type="text"
-                                                                                value="{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}">
-                                                                        </td>
-                                                                        <td><button type="text"
-                                                                                class="removeBtnaddRiskAssessment">Remove</button>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                        <div class="group-input">
+                                            <label for="agenda">
+                                                Failure Mode and Effect Analysis
+                                                <button type="button" name="agenda"
+                                                    onclick="addRiskAssessment('risk-assessment-risk-management')">+</button>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" style="width: 200%"
+                                                    id="risk-assessment-risk-management">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 4%">Row#</th>
+                                                            <th>Risk Factor</th>
+                                                            <th>Risk element</th>
+                                                            <th>Probable cause of risk element</th>
+                                                            <th>Existing Risk Controls</th>
+                                                            <th>Initial Severity- H(3)/M(2)/L(1)</th>
+                                                            <th>Initial Probability- H(3)/M(2)/L(1)</th>
+                                                            <th>Initial Detectability- H(1)/M(2)/L(3)</th>
+                                                            <th>Initial RPN</th>
+                                                            <th>Risk Acceptance (Y/N)</th>
+                                                            <th>Proposed Additional Risk control measure (Mandatory for Risk
+                                                                elements having RPN>4)</th>
+                                                            <th>Residual Severity- H(3)/M(2)/L(1)</th>
+                                                            <th>Residual Probability- H(3)/M(2)/L(1)</th>
+                                                            <th>Residual Detectability- H(1)/M(2)/L(3)</th>
+                                                            <th>Residual RPN</th>
+                                                            <th>Risk Acceptance (Y/N)</th>
+                                                            <th>Mitigation proposal (Mention either CAPA reference number,
+                                                                IQ, OQ, or PQ)</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (!empty($riskEffectAnalysis->risk_factor))
+                                                            @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
+                                                                <tr>
+                                                                    <td>{{ $key + 1 }}</td>
+                                                                    <td><input name="risk_factor[]" type="text"
+                                                                            value="{{ $riskFactor }}"></td>
+                                                                    <td><input name="risk_element[]" type="text"
+                                                                            value="{{ unserialize($riskEffectAnalysis->risk_element)[$key] ?? '' }}">
+                                                                    </td>
+                                                                    <td><input name="problem_cause[]" type="text"
+                                                                            value="{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? '' }}">
+                                                                    </td>
+                                                                    <td><input name="existing_risk_control[]"
+                                                                            type="text"
+                                                                            value="{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? '' }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <select onchange="calculateInitialResult(this)"
+                                                                            class="fieldR" name="initial_severity[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="1"
+                                                                                {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                                1</option>
+                                                                            <option value="2"
+                                                                                {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                                2</option>
+                                                                            <option value="3"
+                                                                                {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                                3</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select onchange="calculateInitialResult(this)"
+                                                                            class="fieldP" name="initial_probability[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="1"
+                                                                                {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                                1</option>
+                                                                            <option value="2"
+                                                                                {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                                2</option>
+                                                                            <option value="3"
+                                                                                {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                                3</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select onchange="calculateInitialResult(this)"
+                                                                            class="fieldN" name="initial_detectability[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="1"
+                                                                                {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                                1</option>
+                                                                            <option value="2"
+                                                                                {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                                2</option>
+                                                                            <option value="3"
+                                                                                {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                                3</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td><input name="initial_rpn[]" type="text"
+                                                                            class="initial-rpn"
+                                                                            value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? '' }}"
+                                                                            readonly></td>
+                                                                    <td>
+                                                                        <select name="risk_acceptance[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="Y"
+                                                                                {{ (unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null) == 'Y' ? 'selected' : '' }}>
+                                                                                Y</option>
+                                                                            <option value="N"
+                                                                                {{ (unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null) == 'N' ? 'selected' : '' }}>
+                                                                                N</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td><input name="risk_control_measure[]"
+                                                                            type="text"
+                                                                            value="{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? '' }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <select onchange="calculateResidualResult(this)"
+                                                                            class="residual-fieldR"
+                                                                            name="residual_severity[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="1"
+                                                                                {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                                1</option>
+                                                                            <option value="2"
+                                                                                {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                                2</option>
+                                                                            <option value="3"
+                                                                                {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                                3</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select onchange="calculateResidualResult(this)"
+                                                                            class="residual-fieldP"
+                                                                            name="residual_probability[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="1"
+                                                                                {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                                1</option>
+                                                                            <option value="2"
+                                                                                {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                                2</option>
+                                                                            <option value="3"
+                                                                                {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                                3</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select onchange="calculateResidualResult(this)"
+                                                                            class="residual-fieldN"
+                                                                            name="residual_detectability[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="1"
+                                                                                {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
+                                                                                1</option>
+                                                                            <option value="2"
+                                                                                {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
+                                                                                2</option>
+                                                                            <option value="3"
+                                                                                {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
+                                                                                3</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td><input name="residual_rpn[]" type="text"
+                                                                            class="residual-rpn"
+                                                                            value="{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? '' }}"
+                                                                            readonly></td>
+                                                                    <td>
+                                                                        <select name="risk_acceptance2[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="Y"
+                                                                                {{ (unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null) == 'Y' ? 'selected' : '' }}>
+                                                                                Y</option>
+                                                                            <option value="N"
+                                                                                {{ (unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null) == 'N' ? 'selected' : '' }}>
+                                                                                N</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td><input name="mitigation_proposal[]" type="text"
+                                                                            value="{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? '' }}">
+                                                                    </td>
+                                                                    <td><button type="button"
+                                                                            onclick="removeRow(this)">Remove</button></td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
+
                                         <div class="col-12 sub-head"></div>
                                         <div class="col-12">
                                             <div class="group-input">
@@ -2881,12 +2850,11 @@
                                         </div>
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
+                                        {{-- <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button> --}}
                                         <button type="button" class="backButton"
                                             onclick="previousStep()">Back</button>
-                                        <button type="submit"
-                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Submit</button>
+                                        {{-- <button type="submit"
+                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Submit</button> --}}
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -2933,9 +2901,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                            <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2980,9 +2948,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                            <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3027,9 +2995,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                            <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>

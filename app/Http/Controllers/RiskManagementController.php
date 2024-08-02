@@ -158,9 +158,9 @@ class RiskManagementController extends Controller
         $data->refrence_record =  implode(',', $request->refrence_record);
         $data->due_date_extension = $request->due_date_extension;
 
-        $data->analysisN2 = $request->analysisN2;
-        $data->analysisRPN2 = $request->analysisRPN2;
-        $data->initial_rpn = $request->initial_rpn;
+        // $data->analysisN2 = $request->analysisN2;
+        // $data->analysisRPN2 = $request->analysisRPN2;
+        // $data->initial_rpn = $request->initial_rpn;
         //$data->severity = $request->severity;
         //$data->occurance = $request->occurance;
 

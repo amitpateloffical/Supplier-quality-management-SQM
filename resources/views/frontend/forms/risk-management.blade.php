@@ -80,7 +80,7 @@
                 container.append(textarea)
             }
         </script>
-        <script>
+        {{-- <script>
             function calculateInitialResult(selectElement) {
                 let row = selectElement.closest('tr');
                 let R = parseFloat(row.querySelector('.fieldR').value) || 0;
@@ -101,7 +101,7 @@
                 let result = R * P * N;
                 row.querySelector('.residual-rpn').value = result;
             }
-        </script>
+        </script> --}}
         <script>
             function calculateRiskAnalysis(selectElement) {
                 // Get the row containing the changed select element
@@ -1981,9 +1981,9 @@
                                 </div>
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    {{-- <button type="submit" class="saveButton">Save</button> --}}
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="submit">Submit</button>
+                                    {{-- <button type="submit">Submit</button> --}}
                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                             class="text-white"> Exit </a> </button>
                                 </div>

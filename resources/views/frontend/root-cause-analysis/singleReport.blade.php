@@ -243,7 +243,7 @@
 
                     <tr>
                         <th class="w-20">Others</th>
-                        <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
                     </tr>
                      
                     <tr>
@@ -259,17 +259,17 @@
                     </tr>
                     <tr>
                         <th class="w-20">Description</th>
-                        <td class="w-30">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
                       
                     </tr>  
                     <tr>
                         <th class="w-20">Comments</th>
-                        <td class="w-30">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
                     </tr>                     
                     <tr>
 
                         <th class="w-20">Related URL</th>
-                        <td class="w-30">@if($data->related_url){{ $data->related_url }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->related_url){{ $data->related_url }}@else Not Applicable @endif</td>
                     </tr>
                     
                 </table>
@@ -324,11 +324,11 @@
                             <th class="w-20">Attachments</th>
                             <td class="w-80">@if($data->attachments)<a href="{{ asset('upload/document/',$data->attachments) }}">{{ $data->attachments }}@else Not Applicable @endif</td>
                         </tr> -->
-                        <tr>
+                        {{-- <tr>
                             <th class="w-20">Comments</th>
                             <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
                         </tr>
-                     
+                      --}}
                     </table>
                     <div class="block-head">
                         Fishbone or Ishikawa Diagram 

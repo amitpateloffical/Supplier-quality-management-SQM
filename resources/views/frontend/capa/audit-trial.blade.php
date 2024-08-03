@@ -323,9 +323,9 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong>{{ Helpers::divisionNameForQMS($document->division_id) }}/CAPA/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }} </div>
+                            <div> <strong>Record ID :</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }} </div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->originator ? $document->originator : '' }}
+                                : {{ $document->originator ? $document->originator : '' }}
                             </div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
@@ -357,60 +357,64 @@
                         @endphp
 
                         @foreach ($audit as $audits => $dataDemo)
-                            <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
+                            <td> {{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
                             </td>
 
                             <td>
-                                <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
+                                <div><strong>Changed From :</strong> {{ $dataDemo->change_from }}</div>
                             </td>
 
                             <td>
-                                <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
+                                <div><strong>Changed To :</strong> {{ $dataDemo->change_to }}</div>
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong>{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
+                                    <strong> Data Field Name :</strong> {{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change From
-                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
+                                            :</strong> {{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
                                     @else
                                         <strong>Change From
-                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                            :</strong> {{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
                                     @endif
                                 </div>
                                 <br>
                                 <div>
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change To
-                                            :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
+                                            :</strong> {{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
                                     @else
                                         <strong>Change To
-                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
+                                            :</strong> {{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">
                                     <strong>Change Type
-                                        :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
+                                        :</strong> {{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
                                 </div>
+                                {{-- <div style="margin-top: 5px;">
+                                    <strong>Record Number
+                                        :</strong> {{ Helpers::divisionNameForQMS($document->division_id) }}/CAPA/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }} 
+                                </div> --}}
                             </td>
                             <td>
                                 <div>
                                     <strong> Action Name
-                                        :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
+                                        :</strong> {{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
 
                                 </div>
                             </td>
                             <td>
                                 <div><strong> Peformed By
-                                        :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
+                                        :</strong> {{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::Parse($dataDemo->created_at)->format('d-M-Y H:i:s')   : 'Not Applicable' }}
+                                        :</strong> {{ $dataDemo->created_at ? \Carbon\Carbon::Parse($dataDemo->created_at)->format('d-M-Y H:i:s')   : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
-                                        :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
+                                        :</strong> {{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
 
                             </td>
                     </tr>

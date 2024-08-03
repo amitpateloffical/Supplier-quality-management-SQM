@@ -303,14 +303,7 @@
                             @endif
                         </td>
                     </tr>
-                </table>
-
-
-                <div class="block-head">
-                    Supplier Response
-                </div>
-                <table>
-
+                   
                     <tr>
                         <th class="w-20">Recommended Action</th>
                         <td class="w-80" colspan="3">
@@ -321,6 +314,24 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+
+
+                <div class="block-head">
+                    Supplier Response
+                </div>
+                <table>
+
+                    <!-- <tr>
+                        <th class="w-20">Recommended Action</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->recommended_action)
+                                {{ $data->recommended_action }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr> -->
 
                     <tr>
                         <th class="w-20">Non Conformance</th>

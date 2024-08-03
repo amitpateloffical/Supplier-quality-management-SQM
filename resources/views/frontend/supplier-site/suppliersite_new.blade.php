@@ -1924,65 +1924,29 @@
                                 </div>
                             </div>
 
+
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Score Card By">Qualification Complete By</label>
+                                    <label for="Suppplier Review By"> Qualification Complete By</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Score Card On">Qualification Complete on</label>
+                                    <label for="Suppplier Review On">Qualification Complete on</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Score Card Comment">Qualification Complete Comment</label>
+                                    <label for="Suppplier Review Comment">Qualification Complete Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Risk Assessment By">Audit Failed By</label>
-                                    <div class="static"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Risk Assessment On">Audit Failed On</label>
-                                    <div class="static"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Risk Assessment Comment">Audit Failed Comment</label>
-                                    <div class="static"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Risk Assessment Comment">Supplier Obsolete By</label>
-                                    <div class="static"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Risk Assessment Comment">Supplier Obsolete On</label>
-                                    <div class="static"></div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Risk Assessment Comment">Supplier Obsolete Comment</label>
-                                    <div class="static"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Risk Assessment Comment">Audit Passed By</label>
+                                    <label for="Suppplier Review By">Audit Passed By</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -1994,28 +1958,51 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Audit Passed Comment</label>
+                                    <label for="Suppplier Review Comment">Audit Passed Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By">Audit Failed By</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Conditionally Approved By</label>
+                                    <label for="Suppplier Review On">Audit Failed On</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppplier Review Comment">Audit Failed Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By">Conditionally Approved By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Suppplier Review On">Conditionally Approved On</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Suppplier Review Comment">Conditionally Approved Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
+
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Suppplier Review By">Supplier Approved to Obsolete By </label>
@@ -2030,28 +2017,11 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Supplier Approved to Obsolete Comment</label>
+                                    <label for="Suppplier Review Comment">Supplier Approved to Obsolete Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">Re-Audit By</label>
-                                    <div class="static"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">Re-Audit On</label>
-                                    <div class="static"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppplier Review Comment">Re-Audit Comment</label>
-                                    <div class="static"></div>
-                                </div>
-                            </div>
+
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Suppplier Review By">Reject Due To Quality Issues By</label>
@@ -2071,6 +2041,45 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review By">Supplier Obsolete By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review On">Supplier Obsolete On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Suppplier Review Comment">Supplier Obsolete Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review By">Re-Audit By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review On">Re-Audit On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Suppplier Review Comment">Re-Audit Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
                         <div class="button-block">
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">

@@ -451,12 +451,12 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'Logo';
             $history->previous = "Null";
-            $history->current = $supplierSite->logo_attachment;
+            $history->current = json_encode($supplierSite->logo_attachment);
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-             $history->change_to= "Opened";
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
@@ -632,12 +632,12 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'File Attachment';
             $history->previous = "Null";
-            $history->current = $supplierSite->supplier_attachment;
+            $history->current = json_encode($supplierSite->supplier_attachment);
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-             $history->change_to= "Opened";
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
@@ -648,7 +648,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'Additional Attachment';
             $history->previous = "Null";
-            $history->current = $supplierSite->gi_additional_attachment;
+            $history->current = json_encode($supplierSite->gi_additional_attachment);
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -729,7 +729,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'HOD Attachments';
             $history->previous = "Null";
-            $history->current = $supplierSite->HOD_attachment;
+            $history->current = json_encode($supplierSite->HOD_attachment);
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -745,7 +745,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'HOD Additional Attachments';
             $history->previous = "Null";
-            $history->current = $supplierSite->hod_additional_attachment;
+            $history->current = json_encode($supplierSite->hod_additional_attachment);
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1019,7 +1019,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'Certificate Attachment';
             $history->previous = "Null";
-            $history->current = $supplierSite->iso_certificate_attachment;
+            $history->current = json_encode($supplierSite->iso_certificate_attachment);
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1196,7 +1196,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'Supplier detail additional attachment';
             $history->previous = "Null";
-            $history->current = $supplierSite->supplier_detail_additional_attachment;
+            $history->current = json_encode($supplierSite->supplier_detail_additional_attachment);
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1533,7 +1533,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'Score card additional attachment';
             $history->previous = "Null";
-            $history->current = $supplierSite->score_card_additional_attachment;
+            $history->current = json_encode($supplierSite->score_card_additional_attachment);
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1581,7 +1581,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'QA Reviewer Attachment';
             $history->previous = "Null";
-            $history->current = $supplierSite->QA_reviewer_attachment;
+            $history->current = json_encode($supplierSite->QA_reviewer_attachment);
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1597,7 +1597,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'QA Reviewer Additional Attachment';
             $history->previous = "Null";
-            $history->current = $supplierSite->qa_reviewer_additional_attachment;
+            $history->current = json_encode($supplierSite->qa_reviewer_additional_attachment);
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1805,7 +1805,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'Risk Assessment Additional Attachment';
             $history->previous = "Null";
-            $history->current = $supplierSite->risk_assessment_additional_attachment;
+            $history->current = json_encode($supplierSite->risk_assessment_additional_attachment);
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1837,7 +1837,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'QA Head Attachment';
             $history->previous = "Null";
-            $history->current = $supplierSite->QA_head_attachment;
+            $history->current = json_encode($supplierSite->QA_head_attachment);
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1853,7 +1853,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'QA Head Additional Attachment';
             $history->previous = "Null";
-            $history->current = $supplierSite->qa_head_additional_attachment;
+            $history->current =  json_encode($supplierSite->qa_head_additional_attachment);
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2219,8 +2219,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Logo';
-            $history->previous = $lastDocument->logo_attachment;
-            $history->current = $request->logo_attachment;
+            $history->previous = json_encode($lastDocument->logo_attachment);
+            $history->current = json_encode($request->logo_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2443,8 +2443,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'File Attachment';
-            $history->previous = $lastDocument->supplier_attachment;
-            $history->current = $request->supplier_attachment;
+            $history->previous = json_encode($lastDocument->supplier_attachment);
+            $history->current = json_encode($request->supplier_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2464,8 +2464,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Additional Attachment';
-            $history->previous = $lastDocument->gi_additional_attachment;
-            $history->current = $request->gi_additional_attachment;
+            $history->previous = json_encode($lastDocument->gi_additional_attachment);
+            $history->current = json_encode($request->gi_additional_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2567,8 +2567,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'HOD Attachments';
-            $history->previous = $lastDocument->HOD_attachment;
-            $history->current = $request->HOD_attachment;
+            $history->previous = json_encode($lastDocument->HOD_attachment);
+            $history->current = json_encode($request->HOD_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2588,8 +2588,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'HOD Additional Attachments';
-            $history->previous = $lastDocument->hod_additional_attachment;
-            $history->current = $request->hod_additional_attachment;
+            $history->previous = json_encode($lastDocument->hod_additional_attachment);
+            $history->current = json_encode($request->hod_additional_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2930,8 +2930,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Certificate Attachment';
-            $history->previous = $lastDocument->iso_certificate_attachment;
-            $history->current = $request->iso_certificate_attachment;
+            $history->previous = json_encode($lastDocument->iso_certificate_attachment);
+            $history->current = json_encode($request->iso_certificate_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3156,8 +3156,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Supplier Detail Additional Attachment';
-            $history->previous = $lastDocument->supplier_detail_additional_attachment;
-            $history->current = $request->supplier_detail_additional_attachment;
+            $history->previous = json_encode($lastDocument->supplier_detail_additional_attachment);
+            $history->current = json_encode($request->supplier_detail_additional_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3580,8 +3580,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Score Card Additional Attachment';
-            $history->previous = $lastDocument->score_card_additional_attachment;
-            $history->current = $request->score_card_additional_attachment;
+            $history->previous = json_encode($lastDocument->score_card_additional_attachment);
+            $history->current = json_encode($request->score_card_additional_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3641,8 +3641,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'QA Reviewer Attachment';
-            $history->previous = $lastDocument->QA_reviewer_attachment;
-            $history->current = $request->QA_reviewer_attachment;
+            $history->previous = json_encode($lastDocument->QA_reviewer_attachment);
+            $history->current = json_encode($request->QA_reviewer_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3662,8 +3662,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'QA Reviewer Additional Attachment';
-            $history->previous = $lastDocument->qa_reviewer_additional_attachment;
-            $history->current = $request->qa_reviewer_additional_attachment;
+            $history->previous = json_encode($lastDocument->qa_reviewer_additional_attachment);
+            $history->current = json_encode($request->qa_reviewer_additional_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3924,8 +3924,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Risk Additional Attachment';
-            $history->previous = $lastDocument->risk_assessment_additional_attachment;
-            $history->current = $request->risk_assessment_additional_attachment;
+            $history->previous = json_encode($lastDocument->risk_assessment_additional_attachment);
+            $history->current = json_encode($request->risk_assessment_additional_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3966,8 +3966,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'QA Head Attachment';
-            $history->previous = $lastDocument->QA_head_attachment;
-            $history->current = $request->QA_head_attachment;
+            $history->previous = json_encode($lastDocument->QA_head_attachment);
+            $history->current = json_encode($request->QA_head_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3988,8 +3988,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'QA Head Additional Attachment';
-            $history->previous = $lastDocument->qa_head_additional_attachment;
-            $history->current = $request->qa_head_additional_attachment;
+            $history->previous = json_encode($lastDocument->qa_head_additional_attachment);
+            $history->current = json_encode($request->qa_head_additional_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4110,15 +4110,26 @@ class SupplierSiteController extends Controller
                     $supplierSite->stage = "2";
                     $supplierSite->status = "Pending Qualification";
                     $supplierSite->submitted_by = Auth::user()->name;
-                    $supplierSite->submitted_on = Carbon::now()->format('d-M-Y');
+                    $supplierSite->submitted_on = Carbon::now()->format('d-M-Y H:i A');
                     $supplierSite->submitted_comment = $request->comments;
 
                     $history = new SupplierSiteAuditTrail();
                     $history->supplier_site_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
+                    // $history->activity_type = 'Activity Log';
+
+                    $history->activity_type = 'Submit Supplier Details By, Submit Supplier Details On';
+                    if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                           $history->previous = "";
+                        } else {
+                           $history->previous = $lastDocument->submitted_by . ' , ' . $lastDocument->submitted_on;
+                      }
+                    
+                    $history->current = $supplierSite->submitted_by . ' , ' . $supplierSite->submitted_on;
+
+                    
+                    // $history->previous = "";
                     $history->action = 'Submit Supplier Details';
-                    $history->current = "Not Applicable";
+                    // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4127,6 +4138,14 @@ class SupplierSiteController extends Controller
                     $history->change_to =   "Pending Qualification";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+
+                    if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '')
+                    {
+                         $history->action_name = 'Create';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    
                     $history->save();
                     //  $list = Helpers::getHodUserList();
                     //     foreach ($list as $u) {
@@ -4158,10 +4177,19 @@ class SupplierSiteController extends Controller
 
                     $history = new SupplierSiteAuditTrail();
                     $history->supplier_site_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = "";
+                    $history->activity_type = 'Qualification Complete By, Qualification Complete On';
+                    if (is_null($lastDocument->pending_qualification_by) || $lastDocument->pending_qualification_by === '') {
+                           $history->previous = "";
+                        } else {
+                           $history->previous = $lastDocument->pending_qualification_by . ' , ' . $lastDocument->pending_qualification_on;
+                      }
+                    
+                    $history->current = $supplierSite->pending_qualification_by . ' , ' . $supplierSite->pending_qualification_on;
+
                     $history->action = 'Qualification Complete';
-                    $history->current = "Not Applicable";
+                    // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4170,6 +4198,15 @@ class SupplierSiteController extends Controller
                     $history->change_to =   "Pending Supplier Audit";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    
+                    if (is_null($lastDocument->pending_qualification_by) || $lastDocument->pending_qualification_by === '')
+                    {
+                         $history->action_name = 'Create';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+
+                    
                     $history->save();
                     //  $list = Helpers::getHodUserList();
                     //     foreach ($list as $u) {
@@ -4201,10 +4238,21 @@ class SupplierSiteController extends Controller
 
                 $history = new SupplierSiteAuditTrail();
                     $history->supplier_site_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = "";
+                    
+                    $history->activity_type = 'Audit Failed By, Audit Failed On';
+                    if (is_null($lastDocument->pending_supplier_audit_by) || $lastDocument->pending_supplier_audit_by === '') {
+                           $history->previous = "";
+                        } else {
+                           $history->previous = $lastDocument->pending_supplier_audit_by . ' , ' . $lastDocument->pending_supplier_audit_on;
+                      }
+                    
+                    $history->current = $supplierSite->pending_supplier_audit_by . ' , ' . $supplierSite->pending_supplier_audit_on;
+
+                    
                     $history->action = 'Audit Failed';
-                    $history->current = "Not Applicable";
+                    // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4213,6 +4261,14 @@ class SupplierSiteController extends Controller
                     $history->change_to =   "Pending Rejction";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+
+                    if (is_null($lastDocument->pending_supplier_audit_by) || $lastDocument->pending_supplier_audit_by === '')
+                    {
+                         $history->action_name = 'Create';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+
                     $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {

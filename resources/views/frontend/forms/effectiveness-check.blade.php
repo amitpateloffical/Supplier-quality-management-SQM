@@ -9,134 +9,12 @@
             display: none;
         }
     </style>
-    {{-- <style>
-        .mic-btn {
-            background: none;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            position: absolute;
-            right: 10px; /* Position the button at the right corner */
-            top: 50%; /* Center the button vertically */
-            transform: translateY(-50%); /* Adjust for the button's height */
-            box-shadow: none; /* Remove shadow */
-        }
-        .mic-btn i {
-            color: black; /* Set the color of the icon */
-            box-shadow: none; /* Remove shadow */
-        }
-        .mic-btn:focus,
-        .mic-btn:hover,
-        .mic-btn:active {
-            box-shadow: none; /* Remove shadow on hover/focus/active */
-        }
-    
-        .relative-container {
-            position: relative;
-        }
-    
-        .relative-container textarea {
-            width: 100%;
-            padding-right: 40px; /* Ensure the text does not overlap the button */
-        }
-    </style> --}}
-
-    {{-- voice Command --}}
-    
-    <style>
-        .mic-btn {
-            background: none;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            box-shadow: none;
-            color: black;
-            display: none;
-            /* Hide the button initially */
-        }
-
-        .relative-container textarea {
-            width: 100%;
-            padding-right: 40px;
-        }
-
-        .relative-container input:focus+.mic-btn {
-            display: inline-block;
-            /* Show the button when input is focused */
-        }
-
-        .mic-btn:focus,
-        .mic-btn:hover,
-        .mic-btn:active {
-            box-shadow: none;
-        }
-    </style>
-
-    <script>
-        < link rel = "stylesheet"
-        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.lang = 'en-US';
-
-            function startRecognition(targetElement) {
-                recognition.start();
-                recognition.onresult = function(event) {
-                    const transcript = event.results[0][0].transcript;
-                    targetElement.value += transcript;
-                };
-                recognition.onerror = function(event) {
-                    console.error(event.error);
-                };
-            }
-
-            document.addEventListener('click', function(event) {
-                if (event.target.closest('.mic-btn')) {
-                    const button = event.target.closest('.mic-btn');
-                    const inputField = button.previousElementSibling;
-                    if (inputField && inputField.classList.contains('mic-input')) {
-                        startRecognition(inputField);
-                    }
-                }
-            });
-
-            document.querySelectorAll('.mic-input').forEach(input => {
-                input.addEventListener('focus', function() {
-                    const micBtn = this.nextElementSibling;
-                    if (micBtn && micBtn.classList.contains('mic-btn')) {
-                        micBtn.style.display = 'inline-block';
-                    }
-                });
-
-                input.addEventListener('blur', function() {
-                    const micBtn = this.nextElementSibling;
-                    if (micBtn && micBtn.classList.contains('mic-btn')) {
-                        setTimeout(() => {
-                            micBtn.style.display = 'none';
-                        }, 200); // Delay to prevent button from hiding immediately when clicked
-                    }
-                });
-            });
-        });
-    </script>
-
-
-
 
     <div class="form-field-head">
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check
+            {{ Helpers::getDivisionName($divisionId) }} / Effectiveness-Check
         </div>
 
     </div>
@@ -157,14 +35,14 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Effectiveness check Results</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Reference Info/Comments</button>
-                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button> 
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
             </div>
-    
+
             <form action="{{ route('effectiveness.store') }}" method="post" , enctype="multipart/form-data">
                 @csrf
-                @if (!empty($parent_id))
-                <input type="hidden" name="parent_id" value="{{ $parent_id }}">
-                <input type="hidden" name="parent_type" value="{{ $parent_type }}">
+                @if (!empty($parentId))
+                    <input type="hidden" id="parent_id" name="parent_id" value="{{ $parentId }}">
+                    <input type="hidden" id="parent_type" name="parent_type" value="{{ $parentType }}">
                 @endif
                 <div id="step-form">
                     <div id="CCForm1" class="inner-block cctabcontent">
@@ -177,17 +55,20 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/EC/{{ date('Y') }}/{{ $record_number }}">
+                                            value="{{ Helpers::getDivisionName($divisionId) }}/EC/{{ date('Y') }}/{{ $record_number }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
-                                        <input disabled type="text" name="division_code"
+                                        {{-- <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}"> --}}
                                         {{-- <div class="static">QMS-North America</div> --}}
+                                        <input readonly type="text" name="division_id"
+                                            value="{{ Helpers::getDivisionName($divisionId) }}">
+                                        <input type="hidden" name="division_id" value="{{ $divisionId }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -223,77 +104,65 @@
                                     </div>
                                 </div>
                                 @php
-                                $initiationDate = date('Y-m-d');
-                                $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
-                            @endphp
-                        
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="Date Due"> Due Date</label>
-                                     {{-- <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div> --}}
-                                    <div class="calenderauditee">
-                                        <input type="text" name="due_date" id="due_date" readonly
-                                            placeholder="DD-MMM-YYYY" />
-                                        <input disabled type="date" name="due_date_n" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'due_date')" />
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <script>
-                                // Format the due date to DD-MM-YYYY
-                                // Your input date
-                                var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+                                    $initiationDate = date('Y-m-d');
+                                    $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
+                                @endphp
 
-                                // Create a Date object
-                                var date = new Date(dueDate);
-
-                                // Array of month names
-                                var monthNames = [
-                                    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                                ];
-
-                                // Extracting day, month, and year from the date
-                                var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                                var monthIndex = date.getMonth();
-                                var year = date.getFullYear();
-
-                                // Formatting the date in "dd-MMM-yyyy" format
-                                var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
-
-                                // Set the formatted due date value to the input field
-                                document.getElementById('due_date').value = dueDateFormatted;
-                            </script>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
-                                        <select id="select-state" placeholder="Select..." name="Quality_Reviewer">
-                                            <option value="">Select a value</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> --}}
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255</span>
-                                        characters remaining
-                                        <div style="position:relative;">
-                                        <input id="docname" type="text" name="short_description" class="mic-input" maxlength="255" required>
-                                        <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
-                                        </button>
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due"> Due Date</label>
+                                        {{-- <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div> --}}
+                                        <div class="calenderauditee">
+                                            <input type="text" name="due_date" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input disabled type="date" name="due_date_n"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
-                                </div>  
-                                {{-- <div class="col-lg-6">
+                                </div>
+
+                                <script>
+                                    // Format the due date to DD-MM-YYYY
+                                    // Your input date
+                                    var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+
+                                    // Create a Date object
+                                    var date = new Date(dueDate);
+
+                                    // Array of month names
+                                    var monthNames = [
+                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                    ];
+
+                                    // Extracting day, month, and year from the date
+                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                                    var monthIndex = date.getMonth();
+                                    var year = date.getFullYear();
+
+                                    // Formatting the date in "dd-MMM-yyyy" format
+                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+
+                                    // Set the formatted due date value to the input field
+                                    document.getElementById('due_date').value = dueDateFormatted;
+                                </script>
+
+                                <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Original Date Due"><b>Original Date Due</b></label>
-                                        <div class="static">17-04-2023 11:12PM</div>
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <div class="relative-container">
+                                            <input id="docname" type="text" name="short_description" class="mic-input"
+                                                maxlength="255" required>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
                                     </div>
-                                </div> --}}
+                                </div>
+
                             </div>
                             <div class="sub-head">
                                 Effectiveness Planning Information
@@ -302,30 +171,29 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
-                                        <div style="position:relative;">
-                                        <input type="text" name="Effectiveness_check_Plan" class="mic-input">
-                                        <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
-                                        </button>
+                                        <div class="relative-container">
+                                            <input type="text" name="Effectiveness_check_Plan" class="mic-input">
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="group-input">
-                                        <label for="Attachments">Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Attachments"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachments[]"
-                                                    oninput="addMultipleFiles(this, 'Attachments')" multiple>
-                                            </div>
-                                        </div>
-
+                                <label for="Attachments">Attachment</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                        documents</small></div>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="Attachments"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="Attachments[]"
+                                            oninput="addMultipleFiles(this, 'Attachments')" multiple>
                                     </div>
+                                </div>
+
+                            </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
@@ -345,12 +213,11 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <div style="position:relative;">
-                                        <textarea type="text" name="effect_summary" class="mic-input"></textarea>
-                                        <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
-                                        </button>
-                                    </div>
+                                        <div class="relative-container">
+                                            <textarea type="text" name="effect_summary" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
@@ -359,31 +226,27 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
-                                        <div style="position:relative;">
-                                        <textarea type="text" name="Effectiveness_Results" class="mic-input"></textarea>
-                                        <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
-                                        </button>
+                                        <div class="relative-container">
+                                            <textarea type="text" name="Effectiveness_Results" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Effectiveness check Attachments"><b>Effectiveness check
-                                                Attachment</b></label>
-                                        <input type="file" id="myfile" name="Effectiveness_check_Attachment">
-                                    </div>
-                                </div> -->
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Effectiveness_check_Attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="Effectiveness_check_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Effectiveness_check_Attachment')" multiple>
+                                                <input type="file" id="myfile"
+                                                    name="Effectiveness_check_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Effectiveness_check_Attachment')"
+                                                    multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -394,20 +257,14 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Comments"><b>Addendum Comments</b></label>
-                                        <div style="position:relative;">
-                                        <textarea type="text" name="Addendum_Comments" class="mic-input"></textarea>
-                                        <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
-                                        </button>
+                                        <div class="relative-container">
+                                            <textarea type="text" name="Addendum_Comments" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
-                                        <input type="file" id="myfile" name="Addendum_Attachment">
-                                    </div>
-                                </div> -->
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Attachments">Addendum Attachment</label>
@@ -444,20 +301,14 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments"><b>Comments</b></label>
-                                        <div style="position:relative;">
-                                        <textarea name="Comments" class="mic-input" ></textarea>
-                                        <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
-                                        </button>
+                                        <div class="relative-container">
+                                            <textarea name="Comments" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Attachments"><b>Attachment</b></label>
-                                        <input type="file" id="myfile" name="Attachment">
-                                    </div>
-                                </div> -->
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Attachments">Attachment</label>
@@ -474,17 +325,12 @@
 
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reference Records"><b>Reference Records</b></label>
-                                          <div class="static"></div>  
-                                        <input type="file" id="myfile" name="refer_record">
-                                    </div>
-                                </div> -->
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Records</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="refer_record"></div>
                                             <div class="add-btn">
@@ -508,33 +354,19 @@
 
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="row"> 
+                            <div class="row">
                                 <!-- Activity History -->
-                                 <!-- <div class="col-12 sub-head">
-                                    Data History
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Actual Closure Date"><b>Actual Closure Date</b></label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Original Date Due"><b>Original Date Due</b></label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>  -->
+
                                 <div class="col-12 sub-head">
                                     Record Signature
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Submit by"><b>Submit by</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Submit On"><b>Submit On</b></label>
                                         <div class="static"></div>
@@ -542,11 +374,17 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Submit Comment"><b>Submit Comment</b></label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
                                         <label for="Not Effective By"><b>Not Effective By</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Not Effective On"><b>Not Effective On</b></label>
                                         <div class="static"></div>
@@ -554,11 +392,38 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Effective by"><b>Effective by</b></label>
+                                        <label for="Not Effective Comment"><b>Not Effective Comment</b></label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="More_Information_Required_By"> More Information Required By(Not
+                                            Effective)</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="More_Information_Required_On">More Information Required On(Not
+                                            Effective)</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="More_Information_Required_Comment">More Information Required
+                                            Comment(Not Effective)</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Effective by"><b>Effective by</b></label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Effective On"><b>Effective On</b></label>
                                         <div class="static"></div>
@@ -566,92 +431,83 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Not Effective Approval Complete By"><b>Not Effective Approval Complete By</b></label>
+                                        <label for="Effective Comment"><b>Effective Comment</b></label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="More_Information_Required_By_Effective"> More Information Required
+                                            By(Effective)</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="More_Information_Required_On_Effective">More Information Required
+                                            On(Effective)</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Not Effective Approval Complete On"><b>Not Effective Approval Complete On</b></label>
+                                        <label for="More_Information_Required_Comment_Effective">More Information Required
+                                            Comment(Effective)</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Not Effective Approval Complete By"><b>Not Effective Approval Complete
+                                                By</b></label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Not Effective Approval Complete On"><b>Not Effective Approval Complete
+                                                On</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Effective Approval Complete By"><b>Effective Approval Complete By</b></label>
+                                        <label for="Not Effective Approval Complete Comment"><b>Not Effective Approval
+                                                Complete Comment</b></label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Effective Approval Complete By"><b>Effective Approval Complete
+                                                By</b></label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Effective Approval Complete On"><b>Effective Approval Complete
+                                                On</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Effective Approval Complete On"><b>Effective Approval Complete On</b></label>
+                                        <label for="Effective Approval Complete Comment"><b>Effective Approval Complete
+                                                Comment</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Re Open For Addendum By"><b>Re Open For Addendum By</b></label>
-                                        <div class="static"></div>
-                                    </div>
+
+                                <div class="button-block">
+                                    {{-- <button type="submit" class="saveButton">Save</button> --}}
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    {{-- <button type="submit">Submit</button> --}}
+                                    <button type="button"> <a class="text-white" href="#"> Exit </a> </button>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Re Open For Addendum On"><b>Re Open For Addendum On</b></label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancellation Approve By"><b>Cancellation Approve By</b></label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancellation Approve On"><b>Cancellation Approve On</b></label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-12 sub-head">
-                                    Cancellation Details
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancellation Category"><b>Cancellation Category</b></label>
-                                        <select>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="Duplicate Entry">Duplicate Entry</option>
-                                            <option value="Entered in Error">Entered in Error</option>
-                                            <option value="No Longer Necessary">No Longer Necessary</option>
-                                            <option value="Parent Record Closed">Parent Record Closed</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="TrackWise Record Type"><b>TrackWise Record Type</b></label>
-                                        <select>
-                                            <option >Enter Your Selection Here</option>
-                                            <option value="Effectiveness Check">Effectiveness Check</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Cancellation Justification">Cancellation Justification</label>
-                                        <textarea name="cancel_justification"></textarea>
-                                    </div>
-                                </div>
-                            </div>  -->
-                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit">Submit</button>
-                                <button type="button"> <a class="text-white" href="#"> Exit </a> </button>
-                            </div> 
+                            </div>
                         </div>
                     </div>
-                </div>
             </form>
 
             <!-- General Information -->
@@ -749,51 +605,7 @@
         var maxLength = 255;
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
-            $('#rchars').text(textlen);});
-    </script>
-    {{-- ========================================= --}}
-
-    {{-- <script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    
-        </script>
-    
-    
-    
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize speech recognition
-            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.lang = 'en-US';
-    
-            // Function to start speech recognition and append result to the target element
-            function startRecognition(targetElement) {
-                recognition.start();
-                recognition.onresult = function(event) {
-                    const transcript = event.results[0][0].transcript;
-                    targetElement.value += transcript;
-                };
-                recognition.onerror = function(event) {
-                    console.error(event.error);
-                };
-            }
-    
-            // Event delegation for all mic buttons
-            document.addEventListener('click', function(event) {
-                if (event.target.closest('.mic-btn')) {
-                    const button = event.target.closest('.mic-btn');
-                    const inputField = button.previousElementSibling;
-                    if (inputField && inputField.classList.contains('mic-input')) {
-                        startRecognition(inputField);
-                    }
-                }
-            });
+            $('#rchars').text(textlen);
         });
-    </script> --}}
-
-    
-
-
+    </script>
 @endsection

@@ -538,8 +538,7 @@
                                                 <label for="Initiator Group">Initiator Group</label>
                                                 <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                      id="initiator_group">
-                                                    
-                                                   <option value="">-- Select --</option>
+                                                     <option  value="0">-- Select --</option>
                                                     <option value="CQA"
                                                         @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
@@ -549,8 +548,8 @@
                                                     <option value="CQC"
                                                         @if ($data->initiator_Group== 'CQC') selected @endif>Central
                                                         Quality Control</option>
-                                                    <option value="CQC"
-                                                        @if ($data->initiator_Group== 'CQC') selected @endif>Manufacturing
+                                                    <option value="MANU"
+                                                        @if ($data->initiator_Group== 'MANU') selected @endif>Manufacturing
                                                     </option>
                                                     <option value="PSG"
                                                         @if ($data->initiator_Group== 'PSG') selected @endif>Plasma
@@ -616,48 +615,12 @@
                                             <div class="group-input" id="short_description_group">
                                                 <label for="short_description">Short Description<span class="text-danger">*</span></label>
                                                 <span id="rchars">255</span> characters remaining
-                                                <div class="relative-container">
-                                                    <textarea name="short_description" id="short_description_textarea" class="mic-input" maxlength="255" required {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
+                                               <div class="relative-container">
+                                                        <textarea name="short_description" class="mic-input"  id="docname" type="text"    maxlength="255" required  {{$data->stage == 0 || $data->stage == 4 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                    
                                                     </div>
-                                                </div>
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
                                         </div>
@@ -1168,7 +1131,7 @@
                                                         @foreach (unserialize($data2->material_name) as $key => $temps)
                                                         <tr>
                                                             <td><input type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                                    value="{{ $key + 1 }}" readonly></td>
+                                                                    value="{{ $key + 1 }}"></td>
                                                             <!-- {{-- <td><input type="text" name="product_name[]"
                                                                     value="{{ unserialize($data2->material_name)[$key] ? unserialize($data2->material_name)[$key] : '' }}">
                                                             </td> --}} -->
@@ -1240,7 +1203,7 @@
                                                                 <option value="quarantine"{{ isset(unserialize($data2->material_batch_status)[$key]) && unserialize($data2->material_batch_status)[$key] == 'quarantine' ? ' selected' : '' }}>Quarantine</option>
                                                             </select>
                                                         </td>
-                                                        <td><button type="text" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>Remove</button></td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
 
                                                         </tr>
                                                     @endforeach
@@ -1275,7 +1238,7 @@
                                                         @foreach (unserialize($data3->equipment) as $key => $temps)
                                                         <tr>
                                                             <td><input type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                                    value="{{ $key + 1 }}" readonly></td>
+                                                                    value="{{ $key + 1 }}"></td>
 
                                                             <td><input type="text" name="equipment[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data3->equipment)[$key] ? unserialize($data3->equipment)[$key] : '' }}">
@@ -1286,7 +1249,7 @@
                                                             <td><input type="text" name="equipment_comments[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data3->equipment_comments)[$key] ? unserialize($data3->equipment_comments)[$key] : '' }}">
                                                             </td>
-                                                        <td><button type="text" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>Remove</button></td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
 
                                                         </tr>
                                                     @endforeach
@@ -2274,50 +2237,6 @@
                                         </div>
 
 
-
-
-
-                                         <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="QA More Info Required By">QA More Info Required
-                                                    By</label>
-                                                <input type="hidden" name="qa_more_info_required_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->pending_more_info_review_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="QA More Info Required On">QA More Info Required
-                                                    On</label>
-                                                <input type="hidden" name="qa_more_info_required_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->pending_more_info_review_on }}</div>
-                                            </div>
-                                        </div>
-
-
-
-
-
-
-                                      
-
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Cancelled By">Cancelled By</label>
-                                                <input type="hidden" name="cancelled_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->cancelled_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Cancelled On">Cancelled On</label>
-                                                <input type="hidden" name="cancelled_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->cancelled_on }}</div>
-                                            </div>
-                                        </div>
-
-
-
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="QA More Info Required By">QA More Info Required
@@ -2334,6 +2253,22 @@
                                                 <div class="static">{{ $data->qa_more_info_required_on }}</div>
                                             </div>
                                         </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Cancelled By">Cancelled By</label>
+                                                <input type="hidden" name="cancelled_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->cancelled_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Cancelled On">Cancelled On</label>
+                                                <input type="hidden" name="cancelled_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->cancelled_on }}</div>
+                                            </div>
+                                        </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Completed By">Completed By</label>
@@ -2365,34 +2300,18 @@
                                             </div>
                                         </div>
 
-                                          <div class="col-lg-6">
+                                        <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Rejected By">Rejected By</label>
                                                 <input type="hidden" name="rejected_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->reject_more_info_review_by }}</div>
+                                                <div class="static">{{ $data->rejected_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Rejected On">Rejected On</label>
                                                 <input type="hidden" name="rejected_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->reject_more_info_review_on }}</div>
-                                            </div>
-                                        </div>  
-
-
-                                          <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Rejected By">All Actions Completed By</label>
-                                                <input type="hidden" name="rejected_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->all_completed_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Rejected On">All Actions Completed On</label>
-                                                <input type="hidden" name="rejected_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->all_completed_on }}</div>
+                                                <div class="static">{{ $data->rejected_on }}</div>
                                             </div>
                                         </div>
 

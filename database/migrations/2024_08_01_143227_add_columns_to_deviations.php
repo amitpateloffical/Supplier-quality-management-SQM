@@ -38,9 +38,9 @@ return new class extends Migration
             $table->longText('hod_more_info_required_comments')->nullable();
 
             //stage 3
-            $table->text('QA_Initial_Review_Complete_By')->nullable();
-            $table->text('QA_Initial_Review_Complete_On')->nullable();
-            $table->longText('QA_Initial_Review_Comments')->nullable();
+            // $table->text('QA_Initial_Review_Complete_By')->nullable();
+            // $table->text('QA_Initial_Review_Complete_On')->nullable();
+            // $table->longText('QA_Initial_Review_Comments')->nullable();
 
             //$table->text('qa_more_info_required_by')->nullable();
             //$table->text('qa_more_info_required_on')->nullable();
@@ -114,7 +114,7 @@ return new class extends Migration
             $table->longText('HOD_Final_Send_to_Initiator_Comments')->nullable();
 
             //stage9
-            $table->longText('QA_Final_Review_Comments')->nullable();
+            // $table->longText('QA_Final_Review_Comments')->nullable();
 
             $table->text('QA_Final_Send_to_Opened_By')->nullable();
             $table->text('QA_Final_Send_to_Opened_On')->nullable();

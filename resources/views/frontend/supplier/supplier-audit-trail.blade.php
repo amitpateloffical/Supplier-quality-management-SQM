@@ -361,11 +361,11 @@
                             </td>
 
                             <td>
-                                <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
+                                <div><strong>Changed From :</strong>{!! $dataDemo->change_from !!}</div>
                             </td>
 
                             <td>
-                                <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
+                                <div><strong>Changed To :</strong>{!! $dataDemo->change_to !!}</div>
                             </td>
                             <td>
                                 <div>
@@ -385,10 +385,10 @@
                                 <div>
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change To
-                                            :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
+                                            :</strong>{!! $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' !!}
                                     @else
                                         <strong>Change To
-                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
+                                            :</strong>{!! $dataDemo->current ? $dataDemo->current : 'Not Applicable' !!}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">
@@ -408,7 +408,7 @@
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? Helpers::getdateFormat($dataDemo->created_at) : 'Not Applicable' }}
+                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>

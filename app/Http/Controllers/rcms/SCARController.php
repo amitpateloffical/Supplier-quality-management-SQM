@@ -83,7 +83,7 @@ class SCARController extends Controller
         $history->scar_id = $scar->id;
         $history->activity_type = 'Record Number';
         $history->previous = "Null";
-        $history->current = str_pad($scar->record, 4, '0', STR_PAD_LEFT);
+        $history->current =  Helpers::getDivisionName($request->division_id).'/SCAR/'. date('Y') .'/'. str_pad( $request->record, 4, '0', STR_PAD_LEFT);
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -209,7 +209,7 @@ class SCARController extends Controller
         if(!empty($request->owner_name)){
             $history = new ScarAuditTrail;
             $history->scar_id = $scar->id;
-            $history->activity_type = 'Owner';
+            $history->activity_type = 'Owner Name ';
             $history->previous = "Null";
             $history->current = $request->owner_name;
             $history->comment = "Not Applicable";
@@ -420,6 +420,23 @@ class SCARController extends Controller
             $history->activity_type = 'CAPA Plan';
             $history->previous = "Null";
             $history->current = $request->capa_plan;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $scar->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if(!empty($request->record_number)){
+            $history = new ScarAuditTrail;
+            $history->scar_id = $scar->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = $request->record_number;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -872,11 +889,11 @@ class SCARController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
             $canvas->page_text(
-                $width / 3,
+                $width / 2.5,
                 $height / 2,
                 $doc->status,
                 null,
-                60,
+                25,
                 [0, 0, 0],
                 2,
                 6,

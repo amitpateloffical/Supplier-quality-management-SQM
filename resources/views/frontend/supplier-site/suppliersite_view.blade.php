@@ -70,16 +70,16 @@
             margin-bottom: 7px;
         }
 
-        /* .sub-head { 
-        margin-left: 280px;
-        margin-right: 280px;
-        color: #4274da;
-        border-bottom: 2px solid #4274da;
-        padding-bottom: 5px;
-        margin-bottom: 20px;
-        font-weight: bold;
-        font-size: 1.2rem;
-         } */
+        /* .sub-head {
+                margin-left: 280px;
+                margin-right: 280px;
+                color: #4274da;
+                border-bottom: 2px solid #4274da;
+                padding-bottom: 5px;
+                margin-bottom: 20px;
+                font-weight: bold;
+                font-size: 1.2rem;
+                 } */
 
         .launch_extension {
             background: #4274da;
@@ -130,12 +130,12 @@
         }
 
         /* .saveButton:disabled
-        {
-           background: black!important;
-           border:  black!important;
-         }  
-           
-        */
+                {
+                   background: black!important;
+                   border:  black!important;
+                 }
+                   
+                */
 
         .main-danger-block {
             display: flex;
@@ -387,7 +387,8 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToPendingSupplierAudit">
+                            <button class="button_theme1" data-bs-toggle="modal"
+                                data-bs-target="#sendToPendingSupplierAudit">
                                 Conditionally Approved
                             </button>
                         @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -868,7 +869,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Supplier Web Site">Supplier Web Site</label>
+                                    <label for="Supplier Web Site">Supplier Website</label>
                                     <div class="relative-container">
                                         <input id="supplier_website" type="text" name="supplier_website"
                                             maxlength="255" value="{{ $data->supplier_website }}"
@@ -1006,7 +1007,7 @@
 
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
-                          {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
+                            {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
                                 </a>
@@ -1317,8 +1318,7 @@
                                 <div class="group-input">
                                     <label for="Other Contacts">Other Contacts</label>
                                     <div class="relative-container">
-                                        <textarea id="other_contacts" name="other_contacts" placeholder="Enter Other Contacts"
-                                            class="mic-input">{{ $data->other_contacts }}</textarea>
+                                        <textarea id="other_contacts" name="other_contacts" placeholder="Enter Other Contacts" class="mic-input">{{ $data->other_contacts }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'other_contacts', 'id' => 'other_contacts'])
                                             @endcomponent
@@ -1332,8 +1332,8 @@
                                 <div class="group-input">
                                     <label for="Supplier Services">Supplier Services</label>
                                     <div class="relative-container">
-                                        <textarea id="supplier_serivce" name="supplier_serivce" cols="30" 
-                                            placeholder="Enter Supplier Service" class="mic-input">{{ $data->supplier_serivce }}</textarea>
+                                        <textarea id="supplier_serivce" name="supplier_serivce" cols="30" placeholder="Enter Supplier Service"
+                                            class="mic-input">{{ $data->supplier_serivce }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'supplier_serivce', 'id' => 'supplier_serivce'])
                                             @endcomponent
@@ -1498,7 +1498,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Supplier Web Site">Supplier Web Site</label>
+                                    <label for="Supplier Web Site">Supplier Website</label>
                                     <div class="relative-container">
                                         <input id="supplier_website" type="text" name="supplier_website"
                                             maxlength="255" value="{{ $data->supplier_website }}"
@@ -1673,8 +1673,7 @@
                                 <div class="group-input">
                                     <label for="Business History">Business History</label>
                                     <div class="relative-container">
-                                        <textarea id="bussiness_history" name="bussiness_history" placeholder="Enter Business History"
-                                            class="mic-input">{{ $data->bussiness_history }}</textarea>
+                                        <textarea id="bussiness_history" name="bussiness_history" placeholder="Enter Business History" class="mic-input">{{ $data->bussiness_history }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'bussiness_history', 'id' => 'bussiness_history'])
                                             @endcomponent
@@ -1689,8 +1688,8 @@
                                 <div class="group-input">
                                     <label for="Performance History ">Performance History </label>
                                     <div class="relative-container">
-                                        <textarea id="performance_history" name="performance_history"
-                                            placeholder="Enter Performance History" class="mic-input">{{ $data->performance_history }}</textarea>
+                                        <textarea id="performance_history" name="performance_history" placeholder="Enter Performance History"
+                                            class="mic-input">{{ $data->performance_history }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'performance_history', 'id' => 'performance_history'])
                                             @endcomponent
@@ -1704,8 +1703,7 @@
                                 <div class="group-input">
                                     <label for="Compliance Risk">Compliance Risk</label>
                                     <div class="relative-container">
-                                        <textarea id="compliance_risk" name="compliance_risk" placeholder="Enter Compliance Risk"
-                                            class="mic-input">{{ $data->compliance_risk }}</textarea>
+                                        <textarea id="compliance_risk" name="compliance_risk" placeholder="Enter Compliance Risk" class="mic-input">{{ $data->compliance_risk }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'compliance_risk', 'id' => 'compliance_risk'])
                                             @endcomponent
@@ -2168,8 +2166,8 @@
                                 <div class="group-input">
                                     <label for="QA_reviewer_feedback">QA Reviewer Feedback</label>
                                     <div class="relative-container">
-                                        <textarea id="QA_reviewer_feedback" name="QA_reviewer_feedback" 
-                                            placeholder="Enter QA Reviewer Feedback" class="mic-input">{{ $data->QA_reviewer_feedback }}</textarea>
+                                        <textarea id="QA_reviewer_feedback" name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback"
+                                            class="mic-input">{{ $data->QA_reviewer_feedback }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'QA_reviewer_feedback', 'id' => 'QA_reviewer_feedback'])
                                             @endcomponent
@@ -2183,8 +2181,8 @@
                                 <div class="group-input">
                                     <label for="QA_reviewer_comment">QA Reviewer Comment</label>
                                     <div class="relative-container">
-                                        <textarea id="QA_reviewer_comment" name="QA_reviewer_comment" 
-                                            placeholder="Enter QA Reviewer Comment" class="mic-input">{{ $data->QA_reviewer_comment }}</textarea>
+                                        <textarea id="QA_reviewer_comment" name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment"
+                                            class="mic-input">{{ $data->QA_reviewer_comment }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'QA_reviewer_comment', 'id' => 'QA_reviewer_comment'])
                                             @endcomponent
@@ -2583,8 +2581,7 @@
                                 <div class="group-input">
                                     <label for="QA_head_comment">QA Head Comment</label>
                                     <div class="relative-container">
-                                        <textarea id="QA_head_comment" name="QA_head_comment" placeholder="Enter QA Head Comment"
-                                            class="mic-input">{{ $data->QA_head_comment }}</textarea>
+                                        <textarea id="QA_head_comment" name="QA_head_comment" placeholder="Enter QA Head Comment" class="mic-input">{{ $data->QA_head_comment }}</textarea>
                                         <button class="mic-btn" type="button">
                                             @component('frontend.forms.language-model', ['name' => 'QA_head_comment', 'id' => 'QA_head_comment'])
                                             @endcomponent
@@ -2821,13 +2818,13 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Supplier Approved to  Obsolete On</label>
+                                    <label for="Suppplier Review On">Supplier Approved to Obsolete On</label>
                                     <div class="static">{{ $data->supplier_approved_to_obselete_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Supplier Approved to  Obsolete Comment</label>
+                                    <label for="Suppplier Review Comment">Supplier Approved to Obsolete Comment</label>
                                     <div class="static">{{ $data->supplier_approved_to_obselete_comment }}</div>
                                 </div>
                             </div>
@@ -2874,7 +2871,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                     Exit </a>
-                            </button>  
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -3251,7 +3248,7 @@
             const formattedDate = date.toLocaleDateString('en-US', options).replace(/ /g, '-');
             target.value = formattedDate;
         }
-        
+
         function updateNextAuditDate(lastAuditDate) {
             const date = new Date(lastAuditDate);
 

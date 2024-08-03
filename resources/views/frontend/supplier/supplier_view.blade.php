@@ -296,6 +296,49 @@
 
 
     </script>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+    const issuedates = document.querySelectorAll('.issuedate');
+    const expirydates = document.querySelectorAll('.expirydate');
+
+    issuedates.forEach(function (issuedate) {
+        issuedate.addEventListener('change', function () {
+            const type = issuedate.dataset.type;
+            const index = issuedate.dataset.index;
+            const correspondingExpiryDate = document.getElementById(`expirydate_${index}_${type}`);
+
+            if (issuedate.value) {
+                correspondingExpiryDate.min = issuedate.value;
+                if (correspondingExpiryDate.value && correspondingExpiryDate.value < issuedate.value) {
+                    correspondingExpiryDate.value = '';
+                }
+            } else {
+                correspondingExpiryDate.removeAttribute('min');
+            }
+        });
+    });
+
+    expirydates.forEach(function (expirydate) {
+        expirydate.addEventListener('change', function () {
+            const type = expirydate.dataset.type;
+            const index = expirydate.dataset.index;
+            const correspondingIssueDate = document.getElementById(`issuedate_${index}_${type}`);
+
+            if (expirydate.value) {
+                correspondingIssueDate.max = expirydate.value;
+                if (correspondingIssueDate.value && correspondingIssueDate.value > expirydate.value) {
+                    correspondingIssueDate.value = '';
+                }
+            } else {
+                correspondingIssueDate.removeAttribute('max');
+            }
+        });
+    });
+});
+
+</script>
+
     <script>
         $(document).on('click', '.removeRowBtn', function() {
             $(this).closest('tr').remove();
@@ -953,64 +996,65 @@
 
                                 <input type="hidden" name="supplier_id" value="{{ $data->id }}">
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <div class="why-why-chart">
-                                            @php
-                                                $types = ['tse', 'residual_solvent', 'melamine', 'gmo', 'gluten', 'manufacturer_evaluation', 'who', 'gmp', 'ISO', 'manufacturing_license', 'CEP', 'risk_assessment', 'elemental_impurity', 'azido_impurities'];
-                                            @endphp
+    <div class="group-input">
+        <div class="why-why-chart">
+            @php
+                $types = ['tse', 'residual_solvent', 'melamine', 'gmo', 'gluten', 'manufacturer_evaluation', 'who', 'gmp', 'ISO', 'manufacturing_license', 'CEP', 'risk_assessment', 'elemental_impurity', 'azido_impurities'];
+            @endphp
 
-                                            @foreach ($types as $type)
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width: 15%">Certificate Name</th>
-                                                            <th style="width: 25%">Attachment</th>
-                                                            <th style="width: 15%">Issue Date</th>
-                                                            <th style="width: 15%">Expiry Date</th>
-                                                            <th>Remark</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="{{ $type }}_rows">
-                                                        @foreach ($supplierChecklist->where('doc_type', $type) as $grid)
-                                                            @php
-                                                                $filePath = $grid->attachment;
-                                                                $fileName = str_replace('upload\\', '', $filePath);
-                                                            @endphp
-                                                            <tr>
-                                                                <td>
-                                                                    {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
-                                                                    <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
-                                                                    <button type="button" onclick="removeRow(this)">Remove</button>
-                                                                </td>
-                                                                <td>
-                                                                    @if ($grid->attachment)
-                                                                        <input type="file" name="{{ $type }}_attachment[]" class="custom-border" style="color: white;">
-                                                                        <span type="button" class="file-container text-dark mt-2" style="background-color: rgb(243, 242, 240);">
-                                                                            <b>{{ $fileName }}</b>
-                                                                            <a href="{{ asset('upload/' . $fileName) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                            <a type="button" class="remove-file" data-file-name="{{ $fileName }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                        </span>
-                                                                    @else
-                                                                        <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
-                                                                    @endif
-                                                                </td>
-                                                                <td>
-                                                                    <input type="date" name="certificate_issue_{{ $type }}[]" value="{{ $grid->issue_date }}" class="custom-border">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="date" name="certificate_expiry_{{ $type }}[]" value="{{ $grid->expiry_date }}" class="custom-border">
-                                                                </td>
-                                                                <td>
-                                                                    <textarea name="{{ $type }}_remarks[]" class="custom-border">{{ $grid->remarks }}</textarea>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
+            @foreach ($types as $type)
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%">Certificate Name</th>
+                            <th style="width: 25%">Attachment</th>
+                            <th style="width: 15%">Issue Date</th>
+                            <th style="width: 15%">Expiry Date</th>
+                            <th>Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody id="{{ $type }}_rows">
+                        @foreach ($supplierChecklist->where('doc_type', $type) as $grid)
+                            @php
+                                $filePath = $grid->attachment;
+                                $fileName = str_replace('upload\\', '', $filePath);
+                            @endphp
+                            <tr>
+                                <td>
+                                    {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
+                                    <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
+                                    <button type="button" onclick="removeRow(this)">Remove</button>
+                                </td>
+                                <td>
+                                    @if ($grid->attachment)
+                                        <input type="file" name="{{ $type }}_attachment[]" class="custom-border" style="color: white;">
+                                        <span type="button" class="file-container text-dark mt-2" style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $fileName }}</b>
+                                            <a href="{{ asset('upload/' . $fileName) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $fileName }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </span>
+                                    @else
+                                        <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
+                                    @endif
+                                </td>
+                                <td>
+                                    <input type="date" id="issuedate_{{ $loop->index }}_{{ $type }}" name="certificate_issue_{{ $type }}[]" value="{{ $grid->issue_date }}" class="custom-border issuedate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
+                                </td>
+                                <td>
+                                    <input type="date" id="expirydate_{{ $loop->index }}_{{ $type }}" name="certificate_expiry_{{ $type }}[]" value="{{ $grid->expiry_date }}" class="custom-border expirydate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
+                                </td>
+                                <td>
+                                    <textarea name="{{ $type }}_remarks[]" class="custom-border">{{ $grid->remarks }}</textarea>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endforeach
+        </div>
+    </div>
+</div>
+
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -1051,8 +1095,8 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">If Analysis found satisfactory of Pre-purchase samples send intimation</label>
-                                        <div><small class="text-primary">To: Formulation and Development / MS&T Department.</small></div>
-                                        <div><small class="text-primary">From: Corporate Quality Assurance</small></div>
+                                        <!-- <div><small class="text-primary">To: Formulation and Development / MS&T Department.</small></div>
+                                        <div><small class="text-primary">From: Corporate Quality Assurance</small></div> -->
                                     </div>
                                 </div>
 
@@ -1149,7 +1193,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Justification</label>
+                                        <label for="Initiator Group Code">Sample Justification</label>
                                         <textarea type="text" name="sample_order_justification" id="sample_order_justification" class="tiny">{{ $data->sample_order_justification }}</textarea>
                                     </div>
                                 </div>

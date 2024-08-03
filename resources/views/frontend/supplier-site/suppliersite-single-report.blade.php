@@ -196,7 +196,7 @@ footer td {
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
 
-                        <th class="w-20">Date Initiation</th>
+                        <th class="w-20">Initiation Date</th>
                         <td class="w-30">{{ Helpers::getDateFormat($data->intiation_date) }}</td>
                     </tr>
                     <tr>
@@ -225,7 +225,7 @@ footer td {
                         <th class="w-20">Supplier</th>
                         <td class="w-30">
                             @if ($data->supplier_person)
-                            {{ $data->supplier_person }}
+                            {{Helpers::getInitiatorName($data->supplier_person)}}
                             @else
                             Not Applicable
                             @endif
@@ -233,7 +233,7 @@ footer td {
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">
                             @if ($data->assign_to)
-                            {{ $data->assign_to }}
+                            {{Helpers::getInitiatorName($data->assign_to)}}
                             @else
                             Not Applicable
                             @endif
@@ -244,13 +244,13 @@ footer td {
                         <th class="w-20">Contact Person</th>
                         <td class="w-30">
                             @if ($data->supplier_contact_person)
-                            {{ Helpers::getInitiatorName($data->supplier_contact_person) }}
+                            {{Helpers::getInitiatorName($data->supplier_contact_person)}}
                             @else
                             Not Applicable
                             @endif
                         </td>
 
-                        <th class="w-20">Supplier Product</th>
+                        <th class="w-20">Suppliers Products</th>
                         <td class="w-30">
                             @if ($data->supplier_products)
                             {{ $data->supplier_products }}
@@ -281,7 +281,7 @@ footer td {
                             @endif
                         </td>
 
-                        <th class="w-20">Supplier Sub Type</th>
+                        <th class="w-20">Sub Type</th>
                         <td class="w-30">
                             @if ($data->supplier_sub_type)
                             {{ $data->supplier_sub_type }}
@@ -292,7 +292,7 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Supplier Other Type</th>
+                        <th class="w-20">Other Type</th>
                         <td class="w-30">
                             @if ($data->supplier_other_type)
                             {{ $data->supplier_other_type }}
@@ -332,16 +332,7 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Supply To</th>
-                        <td class="w-30">
-                            @if ($data->supply_to)
-                            {{ $data->supply_to }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Supplier Web Search</th>
+                        <th class="w-20">Web Search</th>
                         <td class="w-30">
                             @if ($data->supplier_web_search)
                             {{ $data->supplier_web_search }}
@@ -349,22 +340,7 @@ footer td {
                             Not Applicable
                             @endif
                         </td>
-                    </tr>
 
-
-
-                    <tr>
-                        <th class="w-20">Related Quality Event</th>
-                        <td class="w-30">
-                            @if ($data->related_quality_events)
-                            {{ $data->related_quality_events }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </td>
-
-                    </tr>
-                    <tr>
                         <th class="w-20">Related URLs</th>
                         <td class="w-30">
                             @if ($data->related_url)
@@ -374,6 +350,19 @@ footer td {
                             @endif
                         </td>
                     </tr>
+                    
+                    <tr>
+                        <th class="w-20">Related Quality Events</th>
+                        <td class="w-30">
+                            @if ($data->related_quality_events)
+                            {{ $data->related_quality_events }}
+                            @else
+                            Not Applicable
+                            @endif
+                        </td>
+
+                    </tr>
+                   
 
                     <!-- <th class="w-20">Initiator Date</th>
                         <td class="w-30">
@@ -616,7 +605,7 @@ footer td {
 
                 <table>
                     <tr>
-                        <th class="w-20">Supplier Name</th>
+                        <th class="w-20">Supplier</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData))
                             {{ isset($supplierData->supplier_name) && $supplierData->supplier_name ? $supplierData->supplier_name : 'Not Applicable' }}
@@ -775,7 +764,7 @@ footer td {
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">ISO Certified Date</th>
+                        <th class="w-20">ISO Certification Date</th>
                         <td class="w-30">
                             @if (is_object($supplierData) && !empty($supplierData->iso_certified_date))
                             {{ \Carbon\Carbon::parse($supplierData->iso_certified_date)->format('d-M-Y') }}
@@ -796,7 +785,7 @@ footer td {
                             @endif
                         </td>
 
-                        <th class="w-20">Related Non Conformance</th>
+                        <th class="w-20">Related Non Conformances</th>
                         <td class="w-30">
                             @if (is_object($supplierData) && !empty($supplierData->related_non_conformance))
                             {{ $supplierData->related_non_conformance }}
@@ -986,7 +975,7 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Payment Term</th>
+                        <th class="w-20">Payment Terms</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) && !empty($supplierData->payment_term))
                             {{ $supplierData->payment_term }}
@@ -996,7 +985,7 @@ footer td {
 
                         </td>
 
-                        <th class="w-20">Payment Term Weight</th>
+                        <th class="w-20">Payment Terms Weight</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) &&
                             !empty($supplierData->payment_term_weight))
@@ -1065,7 +1054,7 @@ footer td {
 
                         </td>
 
-                        <th class="w-20">Supplier Business Planning Weight</th>
+                        <th class="w-20">Supplier Business Weight</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) &&
                             !empty($supplierData->supplier_bussiness_planning_weight))
@@ -1075,6 +1064,32 @@ footer td {
                             @endif
 
                         </td>
+                    </tr>
+
+                    <tr>
+
+                        <th class="w-20">Rejection in PPM</th>
+                        <td class="w-30">
+                            @if ($supplierData && is_object($supplierData) &&
+                            !empty($supplierData->rejection_ppm))
+                            {{ $supplierData->rejection_ppm }}
+                            @else
+                            Not Applicable
+                            @endif
+
+                        </td>
+
+                        <th class="w-20">Rejection in PPM Weight</th>
+                        <td class="w-30">
+                            @if ($supplierData && is_object($supplierData) &&
+                            !empty($supplierData->rejection_ppm_weight))
+                            {{ $supplierData->rejection_ppm_weight }}
+                            @else
+                            Not Applicable
+                            @endif
+
+                        </td>
+
                     </tr>
 
                     <tr>
@@ -1088,7 +1103,7 @@ footer td {
 
                         </td>
 
-                        <th class="w-20">Quality System Ranking</th>
+                        <th class="w-20">Quality System  Weight</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) &&
                             !empty($supplierData->quality_system_ranking))
@@ -1101,7 +1116,7 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">CAR Generated</th>
+                        <th class="w-20">CAR's Generated</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) && !empty($supplierData->car_generated))
                             {{ $supplierData->car_generated }}
@@ -1111,7 +1126,7 @@ footer td {
 
                         </td>
 
-                        <th class="w-20">CAR Generated Weight</th>
+                        <th class="w-20"> CAR's Generated Weight</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) &&
                             !empty($supplierData->car_generated_weight))
@@ -1123,7 +1138,7 @@ footer td {
                     </tr>
 
                     <tr>
-                        <th class="w-20">Closure Time</th>
+                        <th class="w-20">CAR Closure Time</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) && !empty($supplierData->closure_time))
                             {{ $supplierData->closure_time }}
@@ -1133,7 +1148,7 @@ footer td {
 
                         </td>
 
-                        <th class="w-20">Closure Time Weight</th>
+                        <th class="w-20">CAR Closure Time Weight</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) &&
                             !empty($supplierData->closure_time_weight))
@@ -1419,8 +1434,6 @@ footer td {
                             @endif
 
                         </td>
-                    </tr>
-                    <tr>
                         <th class="w-20">Previous Audit Results</th>
                         <td class="w-30">
                             @if (!empty($supplierData->previous_audit_result))

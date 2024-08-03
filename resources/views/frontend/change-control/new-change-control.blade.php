@@ -60,9 +60,7 @@
             </div>
         </div>
     </div>
-    {{-- ======================================
-                    DATA FIELDS
-    ======================================= --}}
+
     @php
         $users = DB::table('users')->get();
     @endphp
@@ -75,7 +73,6 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button>
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional Information</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Comments</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Risk Assessment</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Approval Comments</button>
@@ -125,7 +122,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Assigned To <span class="text-danger">*</span>
+                                            Assigned To
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
@@ -144,8 +141,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Microbiology">CFT Reviewer</label>
-                                        <select name="Microbiology">
-                                            <option value="0" selected>-- Select --</option>
+                                        <select name="cft_reviewer">
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -154,9 +151,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Microbiology-Person">CFT Reviewer Person</label>
-                                        <select multiple name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
+                                        <select multiple name="cft_reviewer_person[]" placeholder="Select CFT Reviewers"
                                             data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
-                                            
                                             @if (!empty($cft))
                                                 @foreach ($cft as $data)
                                                     <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -181,7 +177,7 @@
                                             <input type="text" name="due_date" readonly
                                                 value="{{ $dueDate }}" />
                                             <!-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'due_date')" /> -->
+                                                        oninput="handleDateInput(this, 'due_date')" /> -->
                                         </div>
                                     </div>
                                 </div>
@@ -214,46 +210,47 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Initiator Group <span
-                                                class="text-danger">*</span></label>
+                                        <label for="initiator-group">Initiator Group
+                                            <!-- > -->
+                                        </label>
                                         <select name="Initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
+                                            <option value="CQA">
                                                 Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>
+                                            <option value="QAB">
                                                 Quality
                                                 Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('Initiator_Group') == 'CQA') selected @endif>
+                                            <option value="CQC">
                                                 Central
                                                 Quality Control</option>
-                                            <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
+                                            <option value="MANU">
                                                 Manufacturing</option>
-                                            <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
+                                            <option value="PSG">Plasma
                                                 Sourcing Group</option>
-                                            <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>
+                                            <option value="CS">
                                                 Central
                                                 Stores</option>
-                                            <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
+                                            <option value="ITG">
                                                 Information Technology Group</option>
-                                            <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
+                                            <option value="MM">
                                                 Molecular Medicine</option>
-                                            <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>
+                                            <option value="CL">
                                                 Central Laboratory</option>
-                                            <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
+                                            <option value="TT">Tech
                                                 team</option>
-                                            <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
+                                            <option value="QA">
                                                 Quality Assurance</option>
-                                            <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
+                                            <option value="QM">
                                                 Quality Management</option>
-                                            <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
+                                            <option value="IA">IT
                                                 Administration</option>
-                                            <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
+                                            <option value="ACC">
                                                 Accounting</option>
-                                            <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
+                                            <option value="LOG">
                                                 Logistics</option>
-                                            <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
+                                            <option value="SM">
                                                 Senior Management</option>
-                                            <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
+                                            <option value="BA">
                                                 Business Administration</option>
                                         </select>
                                         {{-- @error('Initiator_Group')
@@ -268,22 +265,20 @@
                                             value="" readonly>
                                     </div>
                                 </div>
-                                               
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="short_description">Short Description<span
                                                 class="text-danger">*</span></label>
-                                                <span id="rchars" class="text-primary">255</span><span class="text-primary">
-                                                characters remaining</span>
-                                       
+                                        <span id="rchars" class="text-primary">255</span><span class="text-primary">
+                                            characters remaining</span>
+
                                         <div class="relative-container">
-                                        <input id="short_description" class="mic-input" type="text"
-                                        name="short_description" maxlength="255" required>
+                                            <input id="docname" class="mic-input" type="text"
+                                                name="short_description" maxlength="255" required>
                                             @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
-
-                                      
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -307,13 +302,14 @@
                                             guiding priority for corrective actions. Ranging from low to high, they ensure
                                             quality standards and mitigate critical risks.</span>
                                         <select name="severity_level1">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="minor">Minor</option>
                                             <option value="major">Major</option>
                                             <option value="critical">Critical</option>
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -337,12 +333,11 @@
                                         <label for="initiated_through">Others<span
                                                 class="text-danger d-none">*</span></label>
                                         <div class="relative-container">
-                                            <textarea name="initiated_through_req" 
-                                              class="mic-input"></textarea>
-                                              @component('frontend.forms.language-model')
-                                              @endcomponent
+                                            <textarea name="initiated_through_req" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
-                                     
+
                                     </div>
                                 </div>
 
@@ -364,7 +359,7 @@
                                     <div class="group-input" id="repeat_nature">
                                         <label for="repeat-nature">Repeat Nature<span
                                                 class="text-danger d-none">*</span></label>
-                                        <div  class="relative-container">
+                                        <div class="relative-container">
                                             <textarea name="repeat_nature" id="" class="mic-input"></textarea>
                                             @component('frontend.forms.language-model')
                                             @endcomponent
@@ -372,23 +367,23 @@
                                     </div>
 
                                 </div>
-                                {{-- <div class="col-lg-6">
+                                <!-- {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="risk_level">Risk Level</label>
                                         <select name="risk_level" id="risk_level" class="mb-0">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="critical">Critical</option>
                                             <option value="minor">Minor</option>
                                             <option value="major">Major</option>
                                         </select>
                                         <div class="ai_text">AI Suggested option</div>
                                     </div>
-                                </div> --}}
+                                </div> --}} -->
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="nature-Change">Nature Of Change</label>
-                                        <select name="doc_change">
+                                        <select name="nature_Change">
                                             <option value="">-- Select --</option>
                                             <option value="Temporary">Temporary</option>
                                             <option value="Permanent">Permanent</option>
@@ -409,8 +404,8 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="div_code">Division Code</label>
-                                        <select name="div_code">
-                                            <option value="0">-- Select --</option>
+                                        <select name="Division_Code">
+                                            <option value="">-- Select --</option>
                                             <option value="Instrumental Lab">Instrumental Lab</option>
                                             <option value="Microbiology Lab">Microbiology Lab</option>
                                             <option value="Molecular lab">Molecular lab</option>
@@ -496,9 +491,9 @@
                                     <div class="group-input">
                                         <label for="current_practice">Current Practice</label>
                                         <div class="relative-container">
-                                            <textarea name="current_practice" class="mic-input" id="current_practice" ></textarea>
-                                               @component('frontend.forms.language-model')
-                                              @endcomponent
+                                            <textarea name="current_practice" class="mic-input" id="current_practice"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
 
                                     </div>
@@ -507,9 +502,9 @@
                                     <div class="group-input">
                                         <label for="proposed_change">Proposed Change</label>
                                         <div class="relative-container">
-                                            <textarea name="proposed_change" id="proposed_change"   class="mic-input"></textarea>
+                                            <textarea name="proposed_change" id="proposed_change" class="mic-input"></textarea>
                                             @component('frontend.forms.language-model')
-                                              @endcomponent
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
@@ -517,7 +512,7 @@
                                     <div class="group-input">
                                         <label for="reason_change">Reason for Change</label>
                                         <div class="relative-container">
-                                            <textarea name="reason_change" id="reason_change"   class="mic-input"></textarea>
+                                            <textarea name="reason_change" id="reason_change" class="mic-input"></textarea>
                                             @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
@@ -531,7 +526,7 @@
                                         <div class="relative-container">
                                             <textarea name="other_comment" id="other_comment" class="mic-input"></textarea>
                                             @component('frontend.forms.language-model')
-                                              @endcomponent
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
@@ -551,8 +546,7 @@
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                        Exit </a> </button>
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit</a></button>
 
                             </div>
                         </div>
@@ -572,7 +566,7 @@
                                             </span>
                                         </label>
                                         <select name="type_chnage">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="major">Major</option>
                                             <option value="minor">Minor</option>
                                             <option value="critical">Critical</option>
@@ -580,11 +574,11 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="qa_comments">QA Comments</label>
+                                        <label for="qa_review_comments">QA Review Comments</label>
                                         <div class="relative-container">
-                                            <textarea name="qa_comments" id="qa_comments" class="mic-input"></textarea>
+                                            <textarea name="qa_review_comments" id="qa_review_comments" class="mic-input"></textarea>
                                             @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
@@ -596,7 +590,6 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="related_records">Related Records</label>
-
                                     <select multiple name="related_records[]" placeholder="Select Reference Records"
                                         data-search="false" data-silent-initial-value-set="true" id="related_records">
                                         @foreach ($pre as $prix)
@@ -666,39 +659,39 @@
                             </div>
                         </div>
                         <div class="row">
-                    <div class="sub-head">
-                        Training Information
-                    </div>
-                    <div class="group-input">
-                        <label for="nature-change">Training Required</label>
-                        <select name="training_required">
-                            <option value="0">-- Select --</option>
-                            <option value="no">No</option>
-                            <option value="yes">Yes</option>
-                        </select>
-                    </div>
-                    <div class="group-input">
-                        <label for="train-comments">Training Comments</label>
-                        <div class="relative-container">
-                            <textarea name="train_comments" id="train-comments" class="mic-input"></textarea>
-                            @component('frontend.forms.language-model')
-                                @endcomponent
+                            <div class="sub-head">
+                                Training Information
+                            </div>
+                            <div class="group-input">
+                                <label for="nature-change">Training Required</label>
+                                <select name="training_required">
+                                    <option value="">-- Select --</option>
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="group-input">
+                                <label for="train-comments">Training Comments</label>
+                                <div class="relative-container">
+                                    <textarea name="train_comments" id="train-comments" class="mic-input"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
+                                </div>
+                            </div>
+
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                        Exit </a> </button>
+
+                            </div>
                         </div>
                     </div>
-
-                    <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                Exit </a> </button>
-
-                    </div>
                 </div>
-                </div>
-        </div>
 
-        {{-- <div id="CCForm5" class="inner-block cctabcontent">
+                <!-- {{-- <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 CFT Information
@@ -709,7 +702,7 @@
                                     <div class="group-input">
                                         <label for="Microbiology">CFT Reviewer</label>
                                         <select name="Microbiology">
-                                            <option value="0" selected>-- Select --</option>
+                                            <option value="" selected>-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -740,7 +733,7 @@
                                     <div class="group-input">
                                         <label for="group_review">Is Concerned Group Review Required?</label>
                                         <select name="goup_review">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -750,7 +743,7 @@
                                     <div class="group-input">
                                         <label for="Production">Production</label>
                                         <select name="Production">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -760,7 +753,7 @@
                                     <div class="group-input">
                                         <label for="Production-Person">Production Person</label>
                                         <select name="Production_Person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -771,7 +764,7 @@
                                     <div class="group-input">
                                         <label for="Quality-Approver">Quality Approver</label>
                                         <select name="Quality_Approver">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -781,7 +774,7 @@
                                     <div class="group-input">
                                         <label for="Quality-Approver-Person">Quality Approver Person</label>
                                         <select name="Quality_Approver_Person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -793,7 +786,7 @@
                                     <div class="group-input">
                                         <label for="bd_domestic">Others</label>
                                         <select name="bd_domestic">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -803,7 +796,7 @@
                                     <div class="group-input">
                                         <label for="bd_domestic-Person">Others Person</label>
                                         <select name="Bd_Person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -835,385 +828,388 @@
 
                             </div>
                         </div>
-                    </div> --}}
+                    </div> --}} -->
 
-        <div id="CCForm6" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Feedback
+                <div id="CCForm6" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="sub-head">
+                            Feedback
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="comments">Comments</label>
+                                    <div class="relative-container">
+                                        <textarea name="cft_comments" id="comments" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="comments">Attachment</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                        documents</small></div>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="cft_attchament"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="cft_attchament[]"
+                                            oninput="addMultipleFiles(this, 'cft_attchament')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="sub-head">
+                                Concerned Feedback
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="qa_comments">QA Comments</label>
+                                    <div class="relative-container">
+                                        <textarea name="qa_comments" id="qa_comments" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="designee_comments">QA Head Designee Comments</label>
+                                    <div class="relative-container">
+                                        <textarea name="designee_comments" id="designee_comments" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Warehouse_comments">Warehouse Comments</label>
+                                    <div class="relative-container">
+                                        <textarea name="Warehouse_comments" id="Warehouse_comments" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Engineering_comments">Engineering Comments</label>
+                                    <div class="relative-container">
+                                        <textarea name="Engineering_comments" id="Engineering_comments" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Instrumentation_comments">Instrumentation Comments</label>
+                                    <div class="relative-container">
+                                        <textarea name="Instrumentation_comments" id="Instrumentation_comments" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="validation-comments">Validation Comments</label>
+                                    <div class="relative-container">
+                                        <textarea name="Validation_comments" id="validation-comments" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="others-comments">Others Comments</label>
+                                    <div class="relative-container">
+                                        <textarea name="Others_comments" id="others-comments" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="group-comments">Comments</label>
+                                    <div class="relative-container">
+                                        <textarea name="Group_comments" id="group-comments" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="group-attachments">Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="group_attachments"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="group_attachments[]"
+                                                oninput="addMultipleFiles(this, 'group_attachments')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
+                    </div>
                 </div>
-                <div class="row">
+                <!-- </div>
+        </div> -->
 
-                    <div class="col-lg-12">
+                <div id="CCForm7" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="sub-head">
+                            Risk Assessment
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="risk-identification">Risk Identification</label>
+                                    <div class="relative-container">
+                                        <textarea name="risk_identification" id="risk-identification" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Severity Rate">Severity Rate</label>
+                                    <select name="severity" id="analysisR" onchange='calculateRiskAnalysis(this)'>
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="1">Negligible</option>
+                                        <option value="2">Moderate</option>
+                                        <option value="3">Major</option>
+                                        <option value="4">Fatal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Occurrence">Occurrence</label>
+                                    <select name="Occurance" id="analysisP" onchange='calculateRiskAnalysis(this)'>
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="1">Extremely Unlikely</option>
+                                        <option value="2">Rare</option>
+                                        <option value="3">Unlikely</option>
+                                        <option value="4">Likely</option>
+                                        <option value="5">Very Likely</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Detection">Detection</label>
+                                    <select name="Detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="1">Impossible</option>
+                                        <option value="2">Rare</option>
+                                        <option value="3">Unlikely</option>
+                                        <option value="4">Likely</option>
+                                        <option value="5">Very Likely</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="RPN">RPN</label>
+                                    <div><small class="text-primary">Auto - Calculated</small></div>
+                                    <input type="text" name="RPN" id="analysisRPN" readonly>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="risk-evaluation">Risk Evaluation</label>
+                                    <div class="relative-container">
+                                        <textarea name="risk_evaluation" id="risk-evaluation" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="migration-action">Migration Action</label>
+                                    <div class="relative-container">
+                                        <textarea name="migration_action" id="migration-action" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm8" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
                         <div class="group-input">
-                            <label for="comments">Comments</label>
-                            <div  class="relative-container">
-                                <textarea name="cft_comments" id="comments" class="mic-input"></textarea>
+                            <label for="qa_appro_comments">QA Approval Comments</label>
+                            <div class="relative-container">
+                                <textarea name="qa_appro_comments" id="qa_appro_comments" class="mic-input"></textarea>
                                 @component('frontend.forms.language-model')
                                 @endcomponent
                             </div>
                         </div>
-                    </div>
 
-                </div>
-                <div class="col-lg-12">
-                    <div class="group-input">
-                        <label for="comments">Attachment</label>
-                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                documents</small></div>
-                        <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="cft_attchament"></div>
-                            <div class="add-btn">
-                                <div>Add</div>
-                                <input type="file" id="myfile" name="cft_attchament[]"
-                                    oninput="addMultipleFiles(this, 'cft_attchament')" multiple>
+                        <div class="group-input">
+                            <label for="feedback">Training Feedback</label>
+                            <div class="relative-container">
+                                <textarea name="feedback" id="feedback" class="mic-input"></textarea>
+                                @component('frontend.forms.language-model')
+                                @endcomponent
                             </div>
                         </div>
-                    </div>
-                </div>
-            
-            
-            <div class="row">
-                <div class="sub-head">
-                    Concerned Feedback
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="qa_comments">QA Comments</label>
-                        <div class="relative-container">
-                            <textarea name="qa_comments" id="qa_comments" class="mic-input"></textarea>
-                            @component('frontend.forms.language-model')
-                            @endcomponent
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="designee_comments">QA Head Designee Comments</label>
-                        <div class="relative-container">
-                            <textarea name="designee_comments" id="designee_comments" class="mic-input"></textarea>
-                            @component('frontend.forms.language-model')
-                            @endcomponent
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="Warehouse_comments">Warehouse Comments</label>
-                        <div class="relative-container">
-                            <textarea name="Warehouse_comments" id="Warehouse_comments" class="mic-input"></textarea>
-                            @component('frontend.forms.language-model')
-                            @endcomponent
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="Engineering_comments">Engineering Comments</label>
-                        <div class="relative-container">
-                            <textarea name="Engineering_comments" id="Engineering_comments" class="mic-input"></textarea>
-                            @component('frontend.forms.language-model')
-                            @endcomponent
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="Instrumentation_comments">Instrumentation Comments</label>
-                        <div class="relative-container">
-                            <textarea name="Instrumentation_comments" id="Instrumentation_comments" class="mic-input"></textarea>
-                            @component('frontend.forms.language-model')
-                            @endcomponent
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="validation-comments">Validation Comments</label>
-                        <div class="relative-container">
-                            <textarea name="Validation_comments" id="validation-comments" class="mic-input"></textarea>
-                            @component('frontend.forms.language-model')
-                            @endcomponent
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="others-comments">Others Comments</label>
-                        <div class="relative-container">
-                            <textarea name="Others_comments" id="others-comments" class="mic-input"></textarea>
-                            @component('frontend.forms.language-model')
-                            @endcomponent
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="group-comments">Comments</label>
-                        <div class="relative-container">
-                            <textarea name="Group_comments" id="group-comments" class="mic-input"></textarea>
-                            @component('frontend.forms.language-model')
-                            @endcomponent
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-12">
-                    <div class="group-input">
-                        <label for="group-attachments">Attachments</label>
-                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                documents</small></div>
-                        <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="group_attachments"></div>
-                            <div class="add-btn">
-                                <div>Add</div>
-                                <input type="file" id="myfile" name="group_attachments[]"
-                                    oninput="addMultipleFiles(this, 'group_attachments')" multiple>
+                        <div class="group-input">
+                            <label for="tran-attach">Training Attachments</label>
+                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="button-block">
-                <button type="submit" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                        Exit </a> </button>
-
-            </div>
-        </div>
-        </div>
-    <!-- </div>
-    </div> -->
-
-    <div id="CCForm7" class="inner-block cctabcontent">
-        <div class="inner-block-content">
-            <div class="sub-head">
-                Risk Assessment
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="group-input">
-                        <label for="risk-identification">Risk Identification</label>
-                        <div class="relative-container">
-                            <textarea name="risk_identification" id="risk-identification" class="mic-input"></textarea>
-                            @component('frontend.forms.language-model')
-                            @endcomponent
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="Severity Rate">Severity Rate</label>
-                        <select name="severity" id="analysisR" onchange='calculateRiskAnalysis(this)'>
-                            <option value="">Enter Your Selection Here</option>
-                            <option value="1">Negligible</option>
-                            <option value="2">Moderate</option>
-                            <option value="3">Major</option>
-                            <option value="4">Fatal</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="Occurrence">Occurrence</label>
-                        <select name="Occurance" id="analysisP" onchange='calculateRiskAnalysis(this)'>
-                            <option value="">Enter Your Selection Here</option>
-                            <option value="5">Extremely Unlikely</option>
-                            <option value="4">Rare</option>
-                            <option value="3">Unlikely</option>
-                            <option value="2">Likely</option>
-                            <option value="1">Very Likely</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="Detection">Detection</label>
-                        <select name="Detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
-                            <option value="">Enter Your Selection Here</option>
-                            <option value="5">Impossible</option>
-                            <option value="4">Rare</option>
-                            <option value="3">Unlikely</option>
-                            <option value="2">Likely</option>
-                            <option value="1">Very Likely</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="RPN">RPN</label>
-                        <div><small class="text-primary">Auto - Calculated</small></div>
-                        <input type="text" name="RPN" id="analysisRPN" readonly>
-                    </div>
-                </div>
-
-
-
-                <div class="col-12">
-                    <div class="group-input">
-                        <label for="risk-evaluation">Risk Evaluation</label>
-                        <div  class="relative-container">
-                            <textarea name="risk_evaluation" id="risk-evaluation" class="mic-input"></textarea>
-                            @component('frontend.forms.language-model')
-                            @endcomponent
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <div class="group-input">
-                        <label for="migration-action">Migration Action</label>
-                        <div class="relative-container">
-                            <textarea name="migration_action" id="migration-action" class="mic-input"></textarea>
-                            @component('frontend.forms.language-model')
-                            @endcomponent
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="button-block">
-                <button type="submit" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                        Exit </a> </button>
-
-            </div>
-        </div>
-    </div>
-
-    <div id="CCForm8" class="inner-block cctabcontent">
-        <div class="inner-block-content">
-            <div class="group-input">
-                <label for="qa_appro_comments">QA Approval Comments</label>
-                <div  class="relative-container">
-                    <textarea name="qa_appro_comments" id="qa_appro_comments" class="mic-input"></textarea>
-                    @component('frontend.forms.language-model')
-                            @endcomponent
-                </div>
-            </div>
-
-            <div class="group-input">
-                <label for="feedback">Training Feedback</label>
-                <div  class="relative-container">
-                    <textarea name="feedback" id="feedback" class="mic-input"></textarea>
-                    @component('frontend.forms.language-model')
-                    @endcomponent
-                </div>
-            </div>
-
-            <div class="group-input">
-                <label for="tran-attach">Training Attachments</label>
-                <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
-                </div>
-                <div class="file-attachment-field">
-                    <div class="file-attachment-list" id="tran_attach"></div>
-                    <div class="add-btn">
-                        <div>Add</div>
-                        <input type="file" id="myfile" name="tran_attach[]"
-                            oninput="addMultipleFiles(this, 'tran_attach')" multiple>
-                    </div>
-                </div>
-
-            </div>
-            <div class="button-block">
-                <button type="submit" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                        Exit </a> </button>
-
-            </div>
-        </div>
-    </div>
-
-    <div id="CCForm9" class="inner-block cctabcontent">
-        <div class="inner-block-content">
-            <div class="group-input">
-                <label for="risk-assessment">
-                    Affected Documents<button type="button" name="ann" id="addAffectedDocumentsbtn">+</button>
-                </label>
-                <table class="table table-bordered" id="affected-documents">
-                    <thead>
-                        <tr>
-                            <th style='width:3%'>Sr. No.</th>
-                            <th>Affected Documents</th>
-                            <th>Document Name</th>
-                            <th>Document No.</th>
-                            <th>Version No.</th>
-                            <th>Implementation Date</th>
-                            <th>New Document No.</th>
-                            <th>New Version No.</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><input type="text" Value="1" name="serial_number[]" readonly>
-                            </td>
-
-                            <td><input type="text" name="affected_documents[]">
-                            </td>
-                            <td><input type="text" name="document_name[]">
-                            </td>
-                            <td><input type="number" name="document_no[]">
-                            </td>
-                            <td><input type="text" name="version_no[]">
-                            </td>
-                            {{-- <td><input type="date" name="implementation_date[]">
-                                            </td> --}}
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div class="calenderauditee">
-                                            <input type="text" id="implementation_date' + serialNumber +'" readonly
-                                                placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="implementation_date[]" class="hide-input"
-                                                oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" />
-                                        </div>
-                                    </div>
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="tran_attach"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="tran_attach[]"
+                                        oninput="addMultipleFiles(this, 'tran_attach')" multiple>
                                 </div>
-                            </td>
-                            <td><input type="text" name="new_document_no[]">
-                            </td>
-                            <td><input type="text" name="new_version_no[]">
-                            </td>
-                            <td><button type="text" class="removeaddAffectedDocumentsbtn">Remove</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="group-input">
-                <label for="qa_closure_comments">QA Closure Comments</label>
-                <div  class="relative-container">
-                    <textarea name="qa_closure_comments" id="qa_closure_comments" class="mic-input"></textarea>
-                    @component('frontend.forms.language-model')
-                    @endcomponent
-                </div>
-            </div>
-            <div class="group-input">
-                <label for="attach-list">List Of Attachments</label>
-                <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
-                </div>
-                <div class="file-attachment-field">
-                    <div class="file-attachment-list" id="attach_list"></div>
-                    <div class="add-btn">
-                        <div>Add</div>
-                        <input type="file" id="myfile" name="attach_list[]"
-                            oninput="addMultipleFiles(this, 'attach_list')" multiple>
+                            </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
                     </div>
                 </div>
-            </div>
-            {{-- <div class="col-12 sub-head">
+
+                <div id="CCForm9" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="group-input">
+                            <label for="risk-assessment">
+                                Affected Documents<button type="button" name="ann"
+                                    id="addAffectedDocumentsbtn">+</button>
+                            </label>
+                            <table class="table table-bordered" id="affected-documents">
+                                <thead>
+                                    <tr>
+                                        <th style='width:3%'>Sr. No.</th>
+                                        <th>Affected Documents</th>
+                                        <th>Document Name</th>
+                                        <th>Document No.</th>
+                                        <th>Version No.</th>
+                                        <th>Implementation Date</th>
+                                        <th>New Document No.</th>
+                                        <th>New Version No.</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" Value="1" name="serial_number[]" readonly>
+                                        </td>
+
+                                        <td><input type="text" name="affected_documents[]">
+                                        </td>
+                                        <td><input type="text" name="document_name[]">
+                                        </td>
+                                        <td><input type="number" name="document_no[]">
+                                        </td>
+                                        <td><input type="text" name="version_no[]">
+                                        </td>
+                                        {{-- <td><input type="date" name="implementation_date[]">
+                                            </td> --}}
+                                        <td>
+                                            <div class="group-input new-date-data-field mb-0">
+                                                <div class="input-date ">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="implementation_date' + serialNumber +'"
+                                                            readonly placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="implementation_date[]"
+                                                            class="hide-input"
+                                                            oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><input type="text" name="new_document_no[]">
+                                        </td>
+                                        <td><input type="text" name="new_version_no[]">
+                                        </td>
+                                        <td><button type="text" class="removeaddAffectedDocumentsbtn">Remove</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="group-input">
+                            <label for="qa_closure_comments">QA Closure Comments</label>
+                            <div class="relative-container">
+                                <textarea name="qa_closure_comments" id="qa_closure_comments" class="mic-input"></textarea>
+                                @component('frontend.forms.language-model')
+                                @endcomponent
+                            </div>
+                        </div>
+                        <div class="group-input">
+                            <label for="attach-list">List Of Attachments</label>
+                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
+                            </div>
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="attach_list"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="attach_list[]"
+                                        oninput="addMultipleFiles(this, 'attach_list')" multiple>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="col-12 sub-head">
                                 Effectiveness Check Details
                             </div>
                             <div class="row">
@@ -1221,7 +1217,7 @@
                                     <div class="group-input">
                                         <label for="effective-check">Effectivess Check Required?</label>
                                         <select name="effective_check">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -1256,134 +1252,135 @@
                                         <textarea name="effective_check_plan"></textarea>
                                     </div>
                                 </div> --}}
-            <div class="col-12 sub-head">
-                Extension Justification
-            </div>
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="due_date_extension">Due Date Extension Justification</label>
-                    <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                    <div class="relative-container">
-                        <textarea name="due_date_extension" id="due_date_extension" class="mic-input"></textarea>
-                        @component('frontend.forms.language-model')
-                        @endcomponent
+                        <div class="col-12 sub-head">
+                            Extension Justification
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="due_date_extension">Due Date Extension Justification</label>
+                                <div><small class="text-primary">Please Mention justification if due date is
+                                        crossed</small></div>
+                                <div class="relative-container">
+                                    <textarea name="due_date_extension" id="due_date_extension" class="mic-input"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="button-block">
-                <button type="submit" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                        Exit </a> </button>
+                @php
+                    $product = DB::table('products')->get();
+                    $material = DB::table('materials')->get();
+                @endphp
 
-            </div>
+                <div id="CCForm10" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="sub-head">
+                            Electronic Signatures
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Acknowledge_By">Submitted By</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Acknowledge_On">Submitted On</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Acknowledge_On">Submitted Comment</label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Submit_By">HOD Review Completed By</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Submit_On">HOD Review Completed On</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Submit_On">HOD Review Completed Comment</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="QA_Review_Complete_By">Pending CFT Review Completed By</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="QA_Review_Complete_On">Pending CFT Review Completed On</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA_Review_Complete_On">Pending CFT Review Completed Comment</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="QA_Review_Complete_By">Review Completed By</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="QA_Review_Complete_On">Review Completed On</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA_Review_Complete_On">Review Completed Comment</label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Cancelled By">Implemented By</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Cancelled On">Implemented On</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Cancelled On">Implemented Comment</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <!-- <button type="submit" value="save" name="submit" class="saveButton">Save</button> -->
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+                            <!-- <button type="submit">Submit</button> -->
+                        </div>
+                    </div>
+                </div>
         </div>
-    </div>
-    @php
-        $product = DB::table('products')->get();
-        $material = DB::table('materials')->get();
-    @endphp
-
-    <div id="CCForm10" class="inner-block cctabcontent">
-        <div class="inner-block-content">
-            <div class="sub-head">
-                Electronic Signatures
-            </div>
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="group-input">
-                        <label for="Acknowledge_By">Submitted By</label>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="group-input">
-                        <label for="Acknowledge_On">Submitted On</label>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="Acknowledge_On">Submitted Comment</label>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-3">
-                    <div class="group-input">
-                        <label for="Submit_By">HOD Review Completed By</label>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="group-input">
-                        <label for="Submit_On">HOD Review Completed On</label>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="Submit_On">HOD Review Completed Comment</label>
-                    </div>
-                </div>
-
-                <div class="col-lg-3">
-                    <div class="group-input">
-                        <label for="QA_Review_Complete_By">Pending CFT Review Completed By</label>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="group-input">
-                        <label for="QA_Review_Complete_On">Pending CFT Review Completed On</label>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="QA_Review_Complete_On">Pending CFT Review Completed Comment</label>
-                    </div>
-                </div>
-
-                <div class="col-lg-3">
-                    <div class="group-input">
-                        <label for="QA_Review_Complete_By">Review Completed By</label>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="group-input">
-                        <label for="QA_Review_Complete_On">Review Completed On</label>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="QA_Review_Complete_On">Review Completed Comment</label>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-3">
-                    <div class="group-input">
-                        <label for="Cancelled By">Implemented By</label>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="group-input">
-                        <label for="Cancelled On">Implemented On</label>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="Cancelled On">Implemented Comment</label>
-                    </div>
-                </div>
-            </div>
-            <div class="button-block">
-                <!-- <button type="submit" value="save" name="submit" class="saveButton">Save</button> -->
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                        Exit </a> </button>
-                <!-- <button type="submit">Submit</button> -->
-            </div>
-        </div>
-    </div>
-    </div>
-    </form>
+        </form>
 
     </div>
     </div>
@@ -1656,8 +1653,8 @@
             $('#rchars').text(textlen);
         });
     </script>
-   
 
 
-   
+
+
 @endsection

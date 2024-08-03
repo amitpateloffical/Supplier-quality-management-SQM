@@ -286,6 +286,7 @@
                                         <label for="HOD Persons">HOD Persons</label>
                                         <select name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
                                             data-silent-initial-value-set="true" id="hod">
+                                            <option value="">select</option>
                                             @foreach ($users as $value)
                                                 <option value="{{ ' ' . $value->name }}">{{ $value->name }}</option>
                                             @endforeach

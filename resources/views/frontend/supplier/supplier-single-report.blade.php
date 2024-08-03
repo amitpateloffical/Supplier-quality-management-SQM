@@ -153,6 +153,11 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .Summer {
+        font-weight: bold;
+        font-size: 14px;
+    }
 </style>
 
 <body>
@@ -187,6 +192,20 @@
             </tr>
         </table>
     </header>
+
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -524,18 +543,20 @@
                                 </td>                                
                             </tr>
 
-                            <tr>
-                                <th class="w-20">Justification for Request</th>
-                                <td class="w-80" colspan="3">
-                                    @if ($data->request_justification)
-                                        {{ $data->request_justification }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                            </tr> 
                         </table>
 
+                                
+                      
+                        <label class="Summer" for="">Justification for Request</label>
+                        <div>
+                        @if ($data->request_justification)
+                            {!! $data->request_justification !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
+
+                   
                         <div class="border-table">
                             <div class="block-head">
                                 CEP Attachment

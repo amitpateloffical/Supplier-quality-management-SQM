@@ -3268,6 +3268,7 @@
                     Activity Log
                 </div>
                 <table>
+                    {{--stage 3--}}
                     <tr>
                         <th class="w-20">Submit By</th>
                         <td class="w-30">{{ $data->submit_by }}</td>
@@ -3276,6 +3277,17 @@
                         <th class="w-20">Submit Comments</th>
                         <td class="w-30">{{ $data->submit_comment }}</td>
                     </tr>
+
+                    <tr>
+                        <th class="w-20">Cancel By</th>
+                        <td class="w-30">{{ $data->cancelled_by }}</td>
+                        <th class="w-20">Cancel On</th>
+                        <td class="w-30"> {{ \Carbon\Carbon::parse($data->cancelled_on)->format('d-m-Y') }}</td>
+                        <th class="w-20">Cancel Comments</th>
+                        <td class="w-30">{{ $data->cancelled_comments }}</td>
+                    </tr>
+
+                    {{--stage 2--}}
                     <tr>
                         <th class="w-20">HOD Review Complete By</th>
                         <td class="w-30">{{ $data->HOD_Review_Complete_By }}</td>
@@ -3284,6 +3296,26 @@
                         <th class="w-20">HOD Review Comments</th>
                         <td class="w-30">{{ $data->HOD_Review_Comments }}</td>
                     </tr>
+
+                    <tr>
+                        <th class="w-20">HOD Cancel By</th>
+                        <td class="w-30">{{ $data->Hod_cancelled_by }}</td>
+                        <th class="w-20">HOD Cancel On</th>
+                        <td class="w-30">{{ $data->Hod_cancelled_on }}</td>
+                        <th class="w-20">HOD Cancel Comments</th>
+                        <td class="w-30">{{ $data->Hod_cancelled_comments }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">HOD More Information Required By</th>
+                        <td class="w-30">{{ $data->hod_more_info_required_by }}</td>
+                        <th class="w-20">HOD More Information Required On</th>
+                        <td class="w-30">{{ $data->hod_more_info_required_on }}</td>
+                        <th class="w-20">HOD More Information Required Comments</th>
+                        <td class="w-30">{{ $data->hod_more_info_required_comments }}</td>
+                    </tr>
+
+                    {{--stage 3--}}
                     <tr>
                         <th class="w-20">QA Initial Review Complete by</th>
                         <td class="w-30">{{ $data->QA_Initial_Review_Complete_By }}</td>
@@ -3292,6 +3324,26 @@
                         <th class="w-20">QA Initial Review Comments</th>
                         <td class="w-30">{{ $data->QA_Initial_Review_Comments }}</td>
                     </tr>
+
+                    <tr>
+                        <th class="w-20">QA More Information Required By</th>
+                        <td class="w-30">{{ $data->qa_more_info_required_by }}</td>
+                        <th class="w-20">QA More Information Required On</th>
+                        <td class="w-30">{{ $data->qa_more_info_required_on }}</td>
+                        <th class="w-20">QA More Information Required Comments</th>
+                        <td class="w-30">{{ $data->qa_more_info_required_comments }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">CFT Review Not Required By</th>
+                        <td class="w-30">{{ $data->CFT_Review_Not_Required_By }}</td>
+                        <th class="w-20">CFT Review Not Required On</th>
+                        <td class="w-30">{{ $data->CFT_Review_Not_Required_On }}</td>
+                        <th class="w-20">CFT Review Not Required Comments</th>
+                        <td class="w-30">{{ $data->CFT_Review_Not_Required_Comments }}</td>
+                    </tr>
+
+                   {{--stage 4--}}
                     <tr>
                         <th class="w-20">CFT Review Complete By</th>
                         <td class="w-30">{{ $data->CFT_Review_Complete_By }}</td>
@@ -3300,6 +3352,19 @@
                         <th class="w-20">CFT Review Comments</th>
                         <td class="w-30">{{ $data->CFT_Review_Comments }}</td>
                     </tr>
+
+                    <tr>
+                        <th class="w-20">CFT More Information Required By</th>
+                        <td class="w-30">{{ $data->cft_more_info_required_by }}</td>
+                        <th class="w-20">CFT More Information Required On</th>
+                        <td class="w-30">{{ $data->cft_more_info_required_on }}</td>
+                        <th class="w-20">CFT More Information Required Comments</th>
+                        <td class="w-30">{{ $data->cft_more_info_required_comments }}</td>
+                    </tr>
+
+
+                   {{--stage 5--}}
+
                     <tr>
                         <th class="w-20">QA Secondary Review Complete By</th>
                         <td class="w-30">{{ $data->QA_Final_Review_Complete_By }}</td>
@@ -3308,6 +3373,36 @@
                         <th class="w-20">QA Secondary Review Complete Comments</th>
                         <td class="w-30">{{ $data->QA_Final_Review_Comments }}</td>
                     </tr>
+
+                    <tr>
+                        <th class="w-20">QA Secondary Send to Opened By</th>
+                        <td class="w-30">{{ $data->send_to_opened_by }}</td>
+                        <th class="w-20">QA Secondary Send to Opened On</th>
+                        <td class="w-30">{{ $data->send_to_opened_on }}</td>
+                        <th class="w-20">QA Secondary Send to Opened Comments</th>
+                        <td class="w-30">{{ $data->send_to_opened_comments }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">QA Secondary Send to HOD By</th>
+                        <td class="w-30">{{ $data->QA_Secondary_Send_to_Hod_By }}</td>
+                        <th class="w-20">QA Secondary Send to HOD On</th>
+                        <td class="w-30">{{ $data->QA_Secondary_Send_to_Hod_On }}</td>
+                        <th class="w-20">QA Secondary Send to HOD Comments</th>
+                        <td class="w-30">{{ $data->QA_Secondary_Send_to_Hod_Comments }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">QA Secondary Send to QA Initial Review By</th>
+                        <td class="w-30">{{ $data->Send_to_QA_Initial_Review_By }}</td>
+                        <th class="w-20">QA Secondary Send to QA Initial Review On</th>
+                        <td class="w-30">{{ $data->Send_to_QA_Initial_Review_On }}</td>
+                        <th class="w-20">QA Secondary Send to QA Initial Review Comments</th>
+                        <td class="w-30">{{ $data->Send_to_QA_Initial_Review_Comments }}</td>
+                    </tr>
+
+                   {{--stage 6--}}
+
                     <tr>
                         <th class="w-20">QAH Primary Approved Completed By</th>
                         <td class="w-30">{{ $data->Approved_By }}</td>
@@ -3316,41 +3411,167 @@
                         <th class="w-20">QAH Primary Approved Completed Comments</th>
                         <td class="w-30">{{ $data->Approved_Comments }}</td>
                     </tr>
+
+                    <tr>
+                        <th class="w-20">QAH More Information Required By</th>
+                        <td class="w-30">{{ $data->QAH_More_Information_Required_By }}</td>
+                        <th class="w-20">QAH More Information Required On</th>
+                        <td class="w-30">{{ $data->QAH_More_Information_Required_On }}</td>
+                        <th class="w-20">QAH More Information Required Comments</th>
+                        <td class="w-30">{{ $data->QAH_More_Information_Required_Comments }}</td>
+                    </tr>
+
+
+                   {{--stage 7--}}
+
                     <tr>
                         <th class="w-20">Initiator Update By</th>
-                        <td class="w-30">{{ $data->CFT_Review_Complete_By }}</td>
+                        <td class="w-30">{{ $data->Initiator_Update_Completed_By }}</td>
                         <th class="w-20">Initiator Update On </th>
-                        <td class="w-30">{{ $data->CFT_Review_Complete_On }}</td>
+                        <td class="w-30">{{ $data->Initiator_Update_Completed_On }}</td>
                         <th class="w-20">Initiator Update Comments</th>
-                        <td class="w-30">{{ $data->CFT_Review_Comments }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">HOD Final Review By </th>
-                        <td class="w-30">{{ $data->CFT_Review_Complete_By }}</td>
-                        <th class="w-20">HOD Final Review On </th>
-                        <td class="w-30">{{ $data->CFT_Review_Complete_On }}</td>
-                        <th class="w-20">HOD Final Review Comments</th>
-                        <td class="w-30">{{ $data->CFT_Review_Comments }}</td>
+                        <td class="w-30">{{ $data->Initiator_Update_Completed_Comments }}</td>
                     </tr>
 
                     <tr>
+                        <th class="w-20">Initiator Send to opened By</th>
+                        <td class="w-30">{{ $data->Send_to_initialStage_By }}</td>
+                        <th class="w-20">Initiator Send to opened On </th>
+                        <td class="w-30">{{ $data->Send_to_initialStage_On }}</td>
+                        <th class="w-20">Initiator Send to opened Comments</th>
+                        <td class="w-30">{{ $data->Send_to_initialStage_Comments }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Initiator Send to HOD Review By</th>
+                        <td class="w-30">{{ $data->Send_to_Hod_By }}</td>
+                        <th class="w-20">Initiator Send to HOD Review On </th>
+                        <td class="w-30">{{ $data->Send_to_Hod_On }}</td>
+                        <th class="w-20">Initiator Send to HOD Review Comments</th>
+                        <td class="w-30">{{ $data->Send_to_Hod_Comments }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Initiator Send to QA Initial By</th>
+                        <td class="w-30">{{ $data->Send_to_QA_Initial_By }}</td>
+                        <th class="w-20">Initiator Send to QA Initial On </th>
+                        <td class="w-30">{{ $data->Send_to_QA_Initial_On }}</td>
+                        <th class="w-20">Initiator Send to QA Initial Comments</th>
+                        <td class="w-30">{{ $data->Send_to_QA_Initial_Comments }}</td>
+                    </tr>
+
+
+                   {{--stage 8--}}
+                    <tr>
+                        <th class="w-20">HOD Final Review By </th>
+                        <td class="w-30">{{ $data->HOD_Final_Review_By }}</td>
+                        <th class="w-20">HOD Final Review On </th>
+                        <td class="w-30">{{ $data->HOD_Final_Review_On }}</td>
+                        <th class="w-20">HOD Final Review Comments</th>
+                        <td class="w-30">{{ $data->HOD_Final_Review_Comments }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">HOD Send to Opened By </th>
+                        <td class="w-30">{{ $data->HOD_Final_Send_to_Opened_By }}</td>
+                        <th class="w-20">HOD Send to Opened On </th>
+                        <td class="w-30">{{ $data->HOD_Final_Send_to_Opened_On }}</td>
+                        <th class="w-20">HOD Send to Opened Comments</th>
+                        <td class="w-30">{{ $data->HOD_Final_Send_to_Opened_Comments }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">HOD Send to Pending Initiator By </th>
+                        <td class="w-30">{{ $data->HOD_Final_Send_to_Initiator_By }}</td>
+                        <th class="w-20">HOD Send to Pending Initiator On </th>
+                        <td class="w-30">{{ $data->HOD_Final_Send_to_Initiator_On }}</td>
+                        <th class="w-20">HOD Send to Pending Initiator Comments</th>
+                        <td class="w-30">{{ $data->HOD_Final_Send_to_Initiator_Comments }}</td>
+                    </tr>
+
+                    {{--stage 9--}}
+                    <tr>
                         <th class="w-20">QA Final Review Complete By</th>
-                        <td class="w-30">{{ $data->QA_Final_Review_Complete_By }}</td>
+                        <td class="w-30">{{ $data->QA_Final_Review_By }}</td>
                         <th class="w-20">QA Final Review Complete On</th>
-                        <td class="w-30">{{ $data->QA_Final_Review_Complete_On }}</td>
+                        <td class="w-30">{{ $data->QA_Final_Review_On }}</td>
                         <th class="w-20">QA Final Review Comments</th>
                         <td class="w-30">{{ $data->QA_Final_Review_Comments }}</td>
                     </tr>
 
                     <tr>
-                        <th class="w-20">Approved By</th>
-                        <td class="w-30">{{ $data->Approved_By }}</td>
-                        <th class="w-20">Approved ON</th>
-                        <td class="w-30">{{ $data->Approved_On }}</td>
-                        <th class="w-20">Approved Comments</th>
-                        <td class="w-30">{{ $data->Approved_Comments }}</td>
+                        <th class="w-20">QA Final Send to Opened By</th>
+                        <td class="w-30">{{ $data->QA_Final_Send_to_Opened_By }}</td>
+                        <th class="w-20">QA Final Send to Opened On</th>
+                        <td class="w-30">{{ $data->QA_Final_Send_to_Opened_On }}</td>
+                        <th class="w-20">QA Final Send to Opened Comments</th>
+                        <td class="w-30">{{ $data->QA_Final_Send_to_Opened_Comments }}</td>
+                    </tr>
 
+                    <tr>
+                        <th class="w-20">QA Final Send to HOD By</th>
+                        <td class="w-30">{{ $data->QA_Final_Send_to_HOD_By }}</td>
+                        <th class="w-20">QA Final Send to HOD On</th>
+                        <td class="w-30">{{ $data->QA_Final_Send_to_HOD_On }}</td>
+                        <th class="w-20">QA Final Send to HOD Comments</th>
+                        <td class="w-30">{{ $data->QA_Final_Send_to_HOD_Comments }}</td>
+                    </tr>
 
+                    <tr>
+                        <th class="w-20">QA Final Send to QA Initiator By</th>
+                        <td class="w-30">{{ $data->Send_to_QA_Initiator_By }}</td>
+                        <th class="w-20">QA Final Send to QA Initiator On</th>
+                        <td class="w-30">{{ $data->Send_to_QA_Initiator_On }}</td>
+                        <th class="w-20">QA Final Send to QA Initiator Comments</th>
+                        <td class="w-30">{{ $data->Send_to_QA_Initiator_Comments }}</td>
+                    </tr>
+
+                    {{--stage 10--}}
+
+                    <tr>
+                        <th class="w-20">QA Final Approval Complete By</th>
+                        <td class="w-30">{{ $data->QA_Final_Approval_By }}</td>
+                        <th class="w-20">QA Final Approval Complete ON</th>
+                        <td class="w-30">{{ $data->QA_Final_Approval_On }}</td>
+                        <th class="w-20">QA Final Approval Complete Comments</th>
+                        <td class="w-30">{{ $data->QA_Final_Approval_Comments }}</td>
+                   </tr>
+
+                    <tr>
+                        <th class="w-20">Send to Opened By</th>
+                        <td class="w-30">{{ $data->QA_Approval_Send_to_Opened_By }}</td>
+                        <th class="w-20">Send to Opened ON</th>
+                        <td class="w-30">{{ $data->QA_Approval_Send_to_Opened_On }}</td>
+                        <th class="w-20">Send to Opened Comments</th>
+                        <td class="w-30">{{ $data->QA_Approval_Send_to_Opened_Comments }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Send to HOD By</th>
+                        <td class="w-30">{{ $data->QA_Approval_Send_to_HOD_By }}</td>
+                        <th class="w-20">Send to HOD ON</th>
+                        <td class="w-30">{{ $data->QA_Approval_Send_to_HOD_On }}</td>
+                        <th class="w-20">Send to HOD Comments</th>
+                        <td class="w-30">{{ $data->QA_Approval_Send_to_HOD_Comments }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Send to QA Initial Review By</th>
+                        <td class="w-30">{{ $data->Approval_Send_to_QA_Initial_By }}</td>
+                        <th class="w-20">Send to QA Initial Review ON</th>
+                        <td class="w-30">{{ $data->Approval_Send_to_QA_Initial_On }}</td>
+                        <th class="w-20">Send to QA Initial Review Comments</th>
+                        <td class="w-30">{{ $data->Approval_Send_to_QA_Initial_Comments }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Send to Pending Initiator Update By</th>
+                        <td class="w-30">{{ $data->Send_to_Pending_Initiator_Updated_By }}</td>
+                        <th class="w-20">Send to Pending Initiator Update ON</th>
+                        <td class="w-30">{{ $data->Send_to_Pending_Initiator_Updated_On }}</td>
+                        <th class="w-20">Send to Pending Initiator Update Comments</th>
+                        <td class="w-30">{{ $data->Send_to_Pending_Initiator_Updated_Comments }}</td>
+                    </tr>
 
                 </table>
             </div>

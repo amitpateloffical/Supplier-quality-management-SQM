@@ -425,6 +425,24 @@ class SupplierController extends Controller
         $certificationData->save();
 
         /******************* Audit Trail Code ***********************/
+
+        
+            // $history = new SupplierAuditTrail();
+            // $history->supplier_id = $record->id;
+            // $history->activity_type = 'Record Number';
+            // $history->previous = "Null";
+            // $history->current = Helpers::getDivisionName($record->division_id) . 'RV/RP/' . Helpers::year($record->created_at) . '/' . str_pad($record->record, 4, '0', STR_PAD_LEFT);
+            // $history->comment = "NA";
+            // $history->user_id = Auth::user()->id;
+            // $history->user_name = Auth::user()->name;
+            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            // $history->origin_state = $record->status;
+            // $history->change_from = "Initiation";
+            // $history->change_to = "Opened";
+            // $history->action_name = "Create";
+            // $history->save(); // Save the new instance
+        
+
         $history = new SupplierAuditTrail;
         $history->supplier_id = $supplier->id;
         $history->activity_type = 'Inititator';
@@ -454,6 +472,23 @@ class SupplierController extends Controller
         $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
+
+
+        $history = new SupplierAuditTrail;
+        $history->supplier_id = $supplier->id;
+        $history->activity_type = 'Request Number';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName($supplier->division_id) . '/RV/RP/' . Helpers::year($supplier->created_at) . '/' . str_pad($supplier->record, 4, '0', STR_PAD_LEFT);
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $record->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+
 
         $history = new SupplierAuditTrail;
         $history->supplier_id = $supplier->id;
@@ -3125,12 +3160,12 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        if($lastDocument->pre_purchase_sample != $request->supplier_name){
+        if($lastDocument->HOD_feedback != $request->HOD_feedback){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Pre Purchase Sample Required?';
-            $history->previous = $lastDocument->supplier_name;
-            $history->current = $request->supplier_name;
+            $history->activity_type = 'HOD Feedback';
+            $history->previous = $lastDocument->HOD_feedback;
+            $history->current = $request->HOD_feedback;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3141,6 +3176,23 @@ class SupplierController extends Controller
             $history->action_name = 'Update';
             $history->save();
         }
+
+        // if($lastDocument->pre_purchase_sample != $request->supplier_name){
+        //     $history = new SupplierAuditTrail;
+        //     $history->supplier_id = $lastDocument->id;
+        //     $history->activity_type = 'Pre Purchase Sample Required?';
+        //     $history->previous = $lastDocument->supplier_name;
+        //     $history->current = $request->supplier_name;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+        //     $history->save();
+        // }
         if($lastDocument->supplier_id != $request->supplier_id){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;

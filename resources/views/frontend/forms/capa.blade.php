@@ -281,6 +281,7 @@
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code">Site/Location Code</label>
@@ -290,6 +291,7 @@
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator">Initiator</label>
@@ -298,6 +300,7 @@
                                             value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due">Date of Initiation</label>
@@ -305,6 +308,7 @@
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -377,6 +381,7 @@
                                     // Set the formatted due date value to the input field
                                     document.getElementById('due_date').value = dueDateFormatted;
                                 </script>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiator Group</label>
@@ -388,7 +393,7 @@
                                                 Assurance Biopharma</option>
                                             <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>Central
                                                 Quality Control</option>
-                                            <option value="CQC" @if (old('initiator_Group') == 'CQC') selected @endif>
+                                            <option value="MANU" @if (old('initiator_Group') == 'MANU') selected @endif>
                                                 Manufacturing</option>
                                             <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
                                                 Sourcing Group</option>
@@ -421,6 +426,7 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
@@ -439,6 +445,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="short_description">Short Description<span class="text-danger">*</span></label>
+                                        <span id="rchars">255</span> characters remaining
                                         <div class="relative-container">
                                             <input id="short_description" type="text" class="mic-input" name="short_description" maxlength="255" required>
                                             <button class="mic-btn" type="button" style="display: none;">
@@ -483,6 +490,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -496,6 +504,7 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -516,6 +525,7 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input" id="initiated_through_req">
                                         <label for="initiated_through_req">Others<span class="text-danger d-none">*</span></label>
@@ -580,6 +590,7 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input" id="repeat_nature_group">
                                         <label for="repeat_nature">Repeat Nature<span class="text-danger d-none">*</span></label>
@@ -718,13 +729,13 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Records</label>
-                               <select multiple id="capa_related_record" name="capa_related_record[]" id="">
-                             <option value="">--Select---</option>
-                                            @foreach ($old_record as $new)
+                                        <select multiple id="capa_related_record" name="capa_related_record[]" id="">
+                                             <option value="">--Select---</option>
+                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                 </option>
-                                            @endforeach
+                                             @endforeach
                                         </select>
                                         {{-- <div class="related-record-block">
                                             <input type="text" name="capa_related_record">
@@ -734,6 +745,7 @@
                                         </div> --}}
                                     </div>
                                 </div>
+
                                 <div class="col-12">
                                     <div class="group-input" id="initial_observation_group">
                                         <label for="initial_observation">Initial Observation</label>
@@ -793,6 +805,7 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input" id="containment_comments_group">
                                         <label for="containment_comments">Containment Comments <span class="text-danger d-none">*</span></label>
@@ -858,6 +871,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
                                     <div class="group-input" id="capa_qa_comments_group">
                                         <label for="capa_qa_comments">CAPA QA Comments</label>
@@ -905,29 +919,29 @@
                                         </div>
                                     </div>
                                 </div>
-
+                            </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
 
                             </div>
+
                         </div>
                     </div>
-                    </div>
+                   
 
                     <!-- Product Information content -->
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                {{-- <div class="col-12 sub-head">
+                                <div class="col-12 sub-head">
                                     Product Details
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Product Details">
-                                            Product Details<button type="button" name="ann"
-                                                id="product">+</button>
+                                            Product Details<button type="button" name="ann" id="product">+</button>
                                         </label>
                                         <table class="table table-bordered" id="product_details">
                                             <thead>
@@ -943,87 +957,21 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                <!-- Add your rows here -->
                                             </tbody>
-                                            {{-- <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td> <select name="product_name[]" id="product_name">
-                                                        <option value="">-- Select value --</option>
-                                                        <option value="PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/">
-                                                            PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/
-                                                        </option>
-                                                        <option value="BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION">
-                                                            BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION
-                                                        </option>
-                                                        <option value="CAFFEINECITRATEORALSOLUTION USP 60MG/3ML">
-                                                            CAFFEINECITRATEORALSOLUTION USP 60MG/3ML
-                                                        </option>
-                                                        <option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)">BRIMONIDINE
-                                                            TART. OPH SOL 0.1%W/V (CB)
-                                                        </option>
-                                                        <option value="DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO">
-                                                            DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO
-                                                        </option>
-                                                    </select></td>
-                                                <td>
-                                                    <select name="product_batch_no[]" id="batch_no">
-                                                        <option value="">select value</option>
-                                                        <option value="DCAU0030">DCAU0030</option>
-                                                        <option value="BDZH0007">BDZH0007</option>
-                                                        <option value="BDZH0006">BDZH0006</option>
-                                                        <option value="BJJH0004A">BJJH0004A</option>
-                                                        <option value="DCAU0036">DCAU0036</option>
-                                                    </select>
-                                                </td>
-                                                <!-- <td><input type="date" name="product_mfg_date[]"></td>
-                                                <td><input type="date" name="product_expiry_date[]"></td> -->
-                                                <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div class="calenderauditee">
-                                                                <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input"
-                                                                oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div  class="calenderauditee">
-                                                                <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                 oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><input type="text" name="product_batch_desposition[]"></td>
-                                                <td><input type="text" name="product_remark[]"></td>
-                                                <td>
-                                                    <select name="product_batch_status[]" id="">
-                                                        <option value="">-- Select value --</option>
-                                                        <option value="Hold">Hold</option>
-                                                        <option value="Release">Release</option>
-                                                        <option value="Quarantine">Quarantine</option>
-                                                    </select>
-                                                </td>
-                                            </tbody> --}}
                                         </table>
                                     </div>
-                                {{-- </div> --}}
+                                </div>
+                    
                                 <div class="col-12 sub-head">
                                     Material Details
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Material Details">
-                                            Material Details<button type="button" name="ann"
-                                                id="material">+</button>
+                                            Material Details<button type="button" name="ann" id="material">+</button>
                                         </label>
-                                        <table class="table table-bordered" id="material_details" >
+                                        <table class="table table-bordered" id="material_details">
                                             <thead>
                                                 <tr>
                                                     <th>Row #</th>
@@ -1034,91 +982,22 @@
                                                     <th>Batch Disposition Decision</th>
                                                     <th>Remark</th>
                                                     <th>Batch Status</th>
-                                                    <th>Action</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                <!-- Add your rows here -->
                                             </tbody>
-                                            {{-- <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td> <select name="material_name[]" id="material_name">
-                                                        <option value="">-- Select value --</option>
-                                                        <option value="PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/">
-                                                            PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/
-                                                        </option>
-                                                        <option value="BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION">
-                                                            BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION
-                                                        </option>
-                                                        <option value="CAFFEINECITRATEORALSOLUTION USP 60MG/3ML">
-                                                            CAFFEINECITRATEORALSOLUTION USP 60MG/3ML
-                                                        </option>
-                                                        <option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)">BRIMONIDINE
-                                                            TART. OPH SOL 0.1%W/V (CB)
-                                                        </option>
-                                                        <option value="DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO">
-                                                            DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO
-                                                        </option>
-                                                    </select></td>
-                                                <td>
-                                                    <select name="material_batch_no[]" id="batch_no">
-                                                        <option value="">select value</option>
-                                                        <option value="DCAU0030">DCAU0030</option>
-                                                        <option value="BDZH0007">BDZH0007</option>
-                                                        <option value="BDZH0006">BDZH0006</option>
-                                                        <option value="BJJH0004A">BJJH0004A</option>
-                                                        <option value="DCAU0036">DCAU0036</option>
-                                                    </select>
-                                                </td>
-                                                <!-- <td><input type="date" name="material_mfg_date[]"></td>
-                                                <td><input type="date" name="material_expiry_date[]"></td> -->
-                                                <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div class="calenderauditee">
-                                                                <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input"
-                                                                oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div  class="calenderauditee">
-                                                                <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                 oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td><input type="text" name="material_batch_desposition[]"></td>
-                                                <td><input type="text" name="material_remark[]"></td>
-                                                <td>
-                                                    <select name="material_batch_status[]" id="batch_status">
-                                                        <option value="">-- Select value --</option>
-                                                        <option value="Hold">Hold</option>
-                                                        <option value="Release">Release</option>
-                                                        <option value="quarantine">Quarantine</option>
-                                                    </select>
-                                                </td>
-                                            </tbody> --}}
                                         </table>
                                     </div>
                                 </div>
+                    
                                 <div class="col-12 sub-head">
                                     Equipment/Instruments Details
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Material Details">
-                                            Equipment/Instruments Details<button type="button" name="ann"
-                                                id="equipment">+</button>
+                                        <label for="Equipment Details">
+                                            Equipment/Instruments Details<button type="button" name="ann" id="equipment">+</button>
                                         </label>
                                         <table class="table table-bordered" id="equipment_details">
                                             <thead>
@@ -1130,20 +1009,19 @@
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
-
-
-
-                                         <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td><input type="text" name="equipment[]"></td>
-                                                <td><input type="text" name="equipment_instruments[]"></td>
-                                                <td><input type="text" name="equipment_comments[]"></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input disabled type="text" name="serial_number[]" value="1"></td>
+                                                    <td><input type="text" name="equipment[]"></td>
+                                                    <td><input type="text" name="equipment_instruments[]"></td>
+                                                    <td><input type="text" name="equipment_comments[]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
+                    
                                 <div class="col-12 sub-head">
                                     Other type CAPA Details
                                 </div>
@@ -1151,7 +1029,7 @@
                                     <div class="group-input" id="details_new_group">
                                         <label for="details_new">Details</label>
                                         <div class="relative-container">
-                                            <input type="text" name="details_new" id="details_new_input" class="mic-input"  >
+                                            <input type="text" name="details_new" id="details_new_input" class="mic-input">
                                             <button class="mic-btn" type="button" style="display:none;">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
@@ -1163,30 +1041,7 @@
                                                     <span class="close">&times;</span>
                                                     <h2>Select Language</h2>
                                                     <select id="language-select">
-                                                        <option value="en-us">English</option>
-                                                        <option value="hi-in">Hindi</option>
-                                                        <option value="te-in">Telugu</option>
-                                                        <option value="fr-fr">French</option>
-                                                        <option value="es-es">Spanish</option>
-                                                        <option value="zh-cn">Chinese (Mandarin)</option>
-                                                        <option value="ja-jp">Japanese</option>
-                                                        <option value="de-de">German</option>
-                                                        <option value="ru-ru">Russian</option>
-                                                        <option value="ko-kr">Korean</option>
-                                                        <option value="it-it">Italian</option>
-                                                        <option value="pt-br">Portuguese (Brazil)</option>
-                                                        <option value="ar-sa">Arabic</option>
-                                                        <option value="bn-in">Bengali</option>
-                                                        <option value="pa-in">Punjabi</option>
-                                                        <option value="mr-in">Marathi</option>
-                                                        <option value="gu-in">Gujarati</option>
-                                                        <option value="ur-pk">Urdu</option>
-                                                        <option value="ta-in">Tamil</option>
-                                                        <option value="kn-in">Kannada</option>
-                                                        <option value="ml-in">Malayalam</option>
-                                                        <option value="or-in">Odia</option>
-                                                        <option value="as-in">Assamese</option>
-                                                        <!-- Add more languages as needed -->
+                                                        <!-- Add language options here -->
                                                     </select>
                                                     <button id="select-language-btn">Select</button>
                                                 </div>
@@ -1194,12 +1049,12 @@
                                         </div>
                                     </div>
                                 </div>
-
+                    
                                 <div class="col-12">
                                     <div class="group-input" id="capa_qa_comments2_group">
                                         <label for="capa_qa_comments2">CAPA QA Comments</label>
                                         <div class="relative-container">
-                                            <textarea name="capa_qa_comments2" id="capa_qa_comments2_textarea" class="mic-input" ></textarea>
+                                            <textarea name="capa_qa_comments2" id="capa_qa_comments2_textarea" class="mic-input"></textarea>
                                             <button class="mic-btn" type="button" style="display:none;">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
@@ -1211,30 +1066,7 @@
                                                     <span class="close">&times;</span>
                                                     <h2>Select Language</h2>
                                                     <select id="language-select">
-                                                        <option value="en-us">English</option>
-                                                        <option value="hi-in">Hindi</option>
-                                                        <option value="te-in">Telugu</option>
-                                                        <option value="fr-fr">French</option>
-                                                        <option value="es-es">Spanish</option>
-                                                        <option value="zh-cn">Chinese (Mandarin)</option>
-                                                        <option value="ja-jp">Japanese</option>
-                                                        <option value="de-de">German</option>
-                                                        <option value="ru-ru">Russian</option>
-                                                        <option value="ko-kr">Korean</option>
-                                                        <option value="it-it">Italian</option>
-                                                        <option value="pt-br">Portuguese (Brazil)</option>
-                                                        <option value="ar-sa">Arabic</option>
-                                                        <option value="bn-in">Bengali</option>
-                                                        <option value="pa-in">Punjabi</option>
-                                                        <option value="mr-in">Marathi</option>
-                                                        <option value="gu-in">Gujarati</option>
-                                                        <option value="ur-pk">Urdu</option>
-                                                        <option value="ta-in">Tamil</option>
-                                                        <option value="kn-in">Kannada</option>
-                                                        <option value="ml-in">Malayalam</option>
-                                                        <option value="or-in">Odia</option>
-                                                        <option value="as-in">Assamese</option>
-                                                        <!-- Add more languages as needed -->
+                                                        <!-- Add language options here -->
                                                     </select>
                                                     <button id="select-language-btn">Select</button>
                                                 </div>
@@ -1242,23 +1074,26 @@
                                         </div>
                                     </div>
                                 </div>
-
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                    
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button">
+                                        <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-
+                    
                     <!-- Project Study content****************************** -->
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Project Datails Application">Project Datails Application</label>
+                                        <label for="Project Details Application">Project Details Application</label>
                                         <select name="project_details_application">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="yes">Yes</option>
@@ -1266,7 +1101,7 @@
                                         </select>
                                     </div>
                                 </div>
-
+                    
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Protocol/Study Number">Initiator Group</label>
@@ -1277,37 +1112,43 @@
                                         </select>
                                     </div>
                                 </div>
+                    
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Site Number">Site Number</label>
                                         <input type="text" name="site_number">
                                     </div>
                                 </div>
+                    
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Subject Number">Subject Number</label>
                                         <input type="text" name="subject_number">
                                     </div>
                                 </div>
+                    
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Subject Initials">Subject Initials</label>
                                         <input type="text" name="subject_initials">
                                     </div>
                                 </div>
+                    
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Sponsor">Sponsor</label>
                                         <input type="text" name="sponsor">
                                     </div>
                                 </div>
-                                 <div class="col-12">
+                    
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="General Deviation">General Deviation</label>
                                         <textarea name="general_deviation"></textarea>
                                     </div>
                                 </div>
                             </div>
+                    
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1316,33 +1157,34 @@
                             </div>
                         </div>
                     </div>
+                    
 
                     <!-- CAPA Details content ****************************-->
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                                <!-- CAPA Type Selection -->
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="search">
-                                            CAPA Type<span class="text-danger"></span>
-                                        </label>
+                                        <label for="select-state">CAPA Type<span class="text-danger"></span></label>
                                         <select id="select-state" placeholder="Select..." name="capa_type">
                                             <option value="">Select a value</option>
                                             <option value="Corrective Action">Corrective Action</option>
                                             <option value="Preventive Action">Preventive Action</option>
-                                            <option value="Corrective & Preventive Action">Corrective & Preventive Action
-                                            </option>
+                                            <option value="Corrective & Preventive Action">Corrective & Preventive Action</option>
                                         </select>
                                         @error('assign_to')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="group-input" id="corrective_action_group">
+                    
+                                <!-- Corrective Action -->
+                                <div class="col-12" id="corrective_action_group">
+                                    <div class="group-input">
                                         <label for="corrective_action">Corrective Action</label>
                                         <div class="relative-container">
-                                            <textarea name="corrective_action" id="corrective_action_textarea" class="mic-input" ></textarea>
+                                            <textarea name="corrective_action" id="corrective_action_textarea" class="mic-input"></textarea>
                                             <button class="mic-btn" type="button" style="display:none;">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
@@ -1355,28 +1197,6 @@
                                                     <h2>Select Language</h2>
                                                     <select id="language-select">
                                                         <option value="en-us">English</option>
-                                                        <option value="hi-in">Hindi</option>
-                                                        <option value="te-in">Telugu</option>
-                                                        <option value="fr-fr">French</option>
-                                                        <option value="es-es">Spanish</option>
-                                                        <option value="zh-cn">Chinese (Mandarin)</option>
-                                                        <option value="ja-jp">Japanese</option>
-                                                        <option value="de-de">German</option>
-                                                        <option value="ru-ru">Russian</option>
-                                                        <option value="ko-kr">Korean</option>
-                                                        <option value="it-it">Italian</option>
-                                                        <option value="pt-br">Portuguese (Brazil)</option>
-                                                        <option value="ar-sa">Arabic</option>
-                                                        <option value="bn-in">Bengali</option>
-                                                        <option value="pa-in">Punjabi</option>
-                                                        <option value="mr-in">Marathi</option>
-                                                        <option value="gu-in">Gujarati</option>
-                                                        <option value="ur-pk">Urdu</option>
-                                                        <option value="ta-in">Tamil</option>
-                                                        <option value="kn-in">Kannada</option>
-                                                        <option value="ml-in">Malayalam</option>
-                                                        <option value="or-in">Odia</option>
-                                                        <option value="as-in">Assamese</option>
                                                         <!-- Add more languages as needed -->
                                                     </select>
                                                     <button id="select-language-btn">Select</button>
@@ -1385,16 +1205,16 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-12">
-                                    <div class="group-input" id="preventive_action_group">
+                    
+                                <!-- Preventive Action -->
+                                <div class="col-12" id="preventive_action_group">
+                                    <div class="group-input">
                                         <label for="preventive_action">Preventive Action</label>
                                         <div class="relative-container">
-                                            <textarea name="preventive_action" id="preventive_action_textarea" class="mic-input" ></textarea>
+                                            <textarea name="preventive_action" id="preventive_action_textarea" class="mic-input"></textarea>
                                             <button class="mic-btn" type="button" style="display:none;">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
-
                                             <button class="speak-btn" type="button">
                                                 <i class="fas fa-volume-up"></i>
                                             </button>
@@ -1404,28 +1224,6 @@
                                                     <h2>Select Language</h2>
                                                     <select id="language-select">
                                                         <option value="en-us">English</option>
-                                                        <option value="hi-in">Hindi</option>
-                                                        <option value="te-in">Telugu</option>
-                                                        <option value="fr-fr">French</option>
-                                                        <option value="es-es">Spanish</option>
-                                                        <option value="zh-cn">Chinese (Mandarin)</option>
-                                                        <option value="ja-jp">Japanese</option>
-                                                        <option value="de-de">German</option>
-                                                        <option value="ru-ru">Russian</option>
-                                                        <option value="ko-kr">Korean</option>
-                                                        <option value="it-it">Italian</option>
-                                                        <option value="pt-br">Portuguese (Brazil)</option>
-                                                        <option value="ar-sa">Arabic</option>
-                                                        <option value="bn-in">Bengali</option>
-                                                        <option value="pa-in">Punjabi</option>
-                                                        <option value="mr-in">Marathi</option>
-                                                        <option value="gu-in">Gujarati</option>
-                                                        <option value="ur-pk">Urdu</option>
-                                                        <option value="ta-in">Tamil</option>
-                                                        <option value="kn-in">Kannada</option>
-                                                        <option value="ml-in">Malayalam</option>
-                                                        <option value="or-in">Odia</option>
-                                                        <option value="as-in">Assamese</option>
                                                         <!-- Add more languages as needed -->
                                                     </select>
                                                     <button id="select-language-btn">Select</button>
@@ -1434,9 +1232,10 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-12">
-                                    <div class="group-input" id="supervisor_review_comments_group">
+                    
+                                <!-- Supervisor Review Comments -->
+                                <div class="col-12" id="supervisor_review_comments_group">
+                                    <div class="group-input">
                                         <label for="supervisor_review_comments">Supervisor Review Comments</label>
                                         <div class="relative-container">
                                             <textarea name="supervisor_review_comments" id="supervisor_review_comments_textarea" class="mic-input"></textarea>
@@ -1452,28 +1251,6 @@
                                                     <h2>Select Language</h2>
                                                     <select id="language-select">
                                                         <option value="en-us">English</option>
-                                                        <option value="hi-in">Hindi</option>
-                                                        <option value="te-in">Telugu</option>
-                                                        <option value="fr-fr">French</option>
-                                                        <option value="es-es">Spanish</option>
-                                                        <option value="zh-cn">Chinese (Mandarin)</option>
-                                                        <option value="ja-jp">Japanese</option>
-                                                        <option value="de-de">German</option>
-                                                        <option value="ru-ru">Russian</option>
-                                                        <option value="ko-kr">Korean</option>
-                                                        <option value="it-it">Italian</option>
-                                                        <option value="pt-br">Portuguese (Brazil)</option>
-                                                        <option value="ar-sa">Arabic</option>
-                                                        <option value="bn-in">Bengali</option>
-                                                        <option value="pa-in">Punjabi</option>
-                                                        <option value="mr-in">Marathi</option>
-                                                        <option value="gu-in">Gujarati</option>
-                                                        <option value="ur-pk">Urdu</option>
-                                                        <option value="ta-in">Tamil</option>
-                                                        <option value="kn-in">Kannada</option>
-                                                        <option value="ml-in">Malayalam</option>
-                                                        <option value="or-in">Odia</option>
-                                                        <option value="as-in">Assamese</option>
                                                         <!-- Add more languages as needed -->
                                                     </select>
                                                     <button id="select-language-btn">Select</button>
@@ -1482,7 +1259,9 @@
                                         </div>
                                     </div>
                                 </div>
-
+                    
+                            </div>
+                    
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1491,8 +1270,8 @@
                             </div>
                         </div>
                     </div>
-                    </div>
-                      <div id="CCForm5" class="inner-block cctabcontent">
+                    
+                      {{-- <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 CFT Information
@@ -1625,168 +1404,19 @@
 
                             </div>
                         </div>
-                    </div>
-                    <div id="CCForm6" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="sub-head">
-                                CFT Feedback
-                            </div>
-                            <div class="row">
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="comments">CFT Comments</label>
-                                        <textarea name="cft_comments_form"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="comments">CFT Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="cft_attchament_new"> </div>
-
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="cft_attchament_new[]"
-                                                    oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="sub-head">
-                                    Concerned Group Feedback
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">QA Comments</label>
-                                        <textarea name="qa_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">QA Head Designee Comments</label>
-                                        <textarea name="designee_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Warehouse Comments</label>
-                                        <textarea name="Warehouse_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Engineering Comments</label>
-                                        <textarea name="Engineering_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Instrumentation Comments</label>
-                                        <textarea name="Instrumentation_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Validation Comments</label>
-                                        <textarea name="Validation_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Others Comments</label>
-                                        <textarea name="Others_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Group Comments</label>
-                                        <textarea name="Group_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="group-attachments">Group Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="group_attachments_new"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="group_attachments_new[]"
-                                                    oninput="addMultipleFiles(this, 'group_attachments_new')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                        Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
+                    </div> --}}
+                    
                     <!-- CAPA Closure content -->
+                    
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="group-input" id="qa_review_group">
-                                        <label for="qa_review_textarea">QA Review & Closure</label>
-                                        <div class="relative-container">
-                                            <textarea name="qa_review" id="qa_review_textarea" class="mic-input"></textarea>
-                                            <button class="mic-btn" type="button" style="display:none;">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
-                                            <button class="speak-btn" type="button">
-                                                <i class="fas fa-volume-up"></i>
-                                            </button>
-                                            <div class="mini-modal" style="display:none;">
-                                                <div class="mini-modal-content">
-                                                    <span class="close">&times;</span>
-                                                    <h2>Select Language</h2>
-                                                    <select id="language-select">
-                                                        <option value="en-us">English</option>
-                                                        <option value="hi-in">Hindi</option>
-                                                        <option value="te-in">Telugu</option>
-                                                        <option value="fr-fr">French</option>
-                                                        <option value="es-es">Spanish</option>
-                                                        <option value="zh-cn">Chinese (Mandarin)</option>
-                                                        <option value="ja-jp">Japanese</option>
-                                                        <option value="de-de">German</option>
-                                                        <option value="ru-ru">Russian</option>
-                                                        <option value="ko-kr">Korean</option>
-                                                        <option value="it-it">Italian</option>
-                                                        <option value="pt-br">Portuguese (Brazil)</option>
-                                                        <option value="ar-sa">Arabic</option>
-                                                        <option value="bn-in">Bengali</option>
-                                                        <option value="pa-in">Punjabi</option>
-                                                        <option value="mr-in">Marathi</option>
-                                                        <option value="gu-in">Gujarati</option>
-                                                        <option value="ur-pk">Urdu</option>
-                                                        <option value="ta-in">Tamil</option>
-                                                        <option value="kn-in">Kannada</option>
-                                                        <option value="ml-in">Malayalam</option>
-                                                        <option value="or-in">Odia</option>
-                                                        <option value="as-in">Assamese</option>
-                                                        <!-- Add more languages as needed -->
-                                                    </select>
-                                                    <button id="select-language-btn">Select</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="group-input">
+                                        <label for="QA Review & Closure">QA Review & Closure</label>
+                                        <textarea name="qa_review"></textarea>
                                     </div>
                                 </div>
-
-
-
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Closure Attachments">Closure Attachment</label>
@@ -1850,65 +1480,22 @@
                                     Extension Justification
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input" id="due_date_extension_group">
-                                        <label for="due_date_extension_textarea">Due Date Extension Justification</label>
-                                        <div>
-                                            <small class="text-primary">Please Mention justification if due date is crossed</small>
-                                        </div>
-                                        <div class="relative-container">
-                                            <textarea name="due_date_extension" id="due_date_extension_textarea" class="mic-input"></textarea>
-                                            <button class="mic-btn" type="button" style="display:none;">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
-                                            <button class="speak-btn" type="button">
-                                                <i class="fas fa-volume-up"></i>
-                                            </button>
-                                            <div class="mini-modal">
-                                                <div class="mini-modal-content">
-                                                    <span class="close">&times;</span>
-                                                    <h2>Select Language</h2>
-                                                    <select id="language-select">
-                                                        <option value="en-us">English</option>
-                                                        <option value="hi-in">Hindi</option>
-                                                        <option value="te-in">Telugu</option>
-                                                        <option value="fr-fr">French</option>
-                                                        <option value="es-es">Spanish</option>
-                                                        <option value="zh-cn">Chinese (Mandarin)</option>
-                                                        <option value="ja-jp">Japanese</option>
-                                                        <option value="de-de">German</option>
-                                                        <option value="ru-ru">Russian</option>
-                                                        <option value="ko-kr">Korean</option>
-                                                        <option value="it-it">Italian</option>
-                                                        <option value="pt-br">Portuguese (Brazil)</option>
-                                                        <option value="ar-sa">Arabic</option>
-                                                        <option value="bn-in">Bengali</option>
-                                                        <option value="pa-in">Punjabi</option>
-                                                        <option value="mr-in">Marathi</option>
-                                                        <option value="gu-in">Gujarati</option>
-                                                        <option value="ur-pk">Urdu</option>
-                                                        <option value="ta-in">Tamil</option>
-                                                        <option value="kn-in">Kannada</option>
-                                                        <option value="ml-in">Malayalam</option>
-                                                        <option value="or-in">Odia</option>
-                                                        <option value="as-in">Assamese</option>
-                                                        <!-- Add more languages as needed -->
-                                                    </select>
-                                                    <button id="select-language-btn">Select</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="group-input">
+                                        <label for="due_date_extension">Due Date Extension Justification</label>
+                                        <div><small class="text-primary">Please Mention justification if due date is
+                                                crossed</small></div>
+                                        <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>
-
+                            </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> -->
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
                     </div>
-                </div>
                     <!-- Activity Log content -->
                     <div id="CCForm8" class="inner-block cctabcontent">
                         <div class="inner-block-content">

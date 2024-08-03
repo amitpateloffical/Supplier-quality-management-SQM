@@ -67,6 +67,48 @@
             $(this).closest('tr').remove();
         })
     </script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const issuedates = document.querySelectorAll('.issuedate');
+        const expirydates = document.querySelectorAll('.expirydate');
+
+        issuedates.forEach(function (issuedate) {
+            issuedate.addEventListener('change', function () {
+                const type = issuedate.dataset.type;
+                const index = issuedate.dataset.index;
+                const correspondingExpiryDate = document.getElementById(`expirydate_${index}_${type}`);
+
+                if (issuedate.value) {
+                    correspondingExpiryDate.min = issuedate.value;
+                    if (correspondingExpiryDate.value && correspondingExpiryDate.value < issuedate.value) {
+                        correspondingExpiryDate.value = '';
+                    }
+                } else {
+                    correspondingExpiryDate.removeAttribute('min');
+                }
+            });
+        });
+
+        expirydates.forEach(function (expirydate) {
+            expirydate.addEventListener('change', function () {
+                const type = expirydate.dataset.type;
+                const index = expirydate.dataset.index;
+                const correspondingIssueDate = document.getElementById(`issuedate_${index}_${type}`);
+
+                if (expirydate.value) {
+                    correspondingIssueDate.max = expirydate.value;
+                    if (correspondingIssueDate.value && correspondingIssueDate.value > expirydate.value) {
+                        correspondingIssueDate.value = '';
+                    }
+                } else {
+                    correspondingIssueDate.removeAttribute('max');
+                }
+            });
+        });
+    });
+</script>
+
 
     <div class="form-field-head">
     
@@ -426,40 +468,40 @@
                                             $types = ['tse', 'residual_solvent','melamine','gmo','gluten','manufacturer_evaluation','who','gmp','ISO','manufacturing_license','CEP','risk_assessment','elemental_impurity','azido_impurities'];
                                         @endphp
 
-                                        @foreach ($types as $type)
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 15%">Certificate Name</th>
-                                                    <th style="width: 20%">Attachment</th>
-                                                    <th style="width: 15%">Issue Date</th>
-                                                    <th style="width: 15%">Expiry Date</th>
-                                                    <th>Remark</th>
-                                                </tr>
-                                            </thead>
-                                                <tbody id="{{ $type }}_rows">
-                                                    <tr>
-                                                        <td>
-                                                            {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
-                                                            <!-- <span style="font-size: 16px;" onclick="addRow('{{ $type }}')">+</span> -->
-                                                            <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
-                                                        </td>
-                                                        <td>
-                                                            <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
-                                                        </td>
-                                                        <td>
-                                                            <input type="date" name="certificate_issue_{{ $type }}[]" class="custom-border">
-                                                        </td>
-                                                        <td>
-                                                            <input type="date" name="certificate_expiry_{{ $type }}[]" class="custom-border">
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="{{ $type }}_remarks[]" class="custom-border"></textarea>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            @endforeach
+@foreach ($types as $type)
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="width: 15%">Certificate Name</th>
+                <th style="width: 20%">Attachment</th>
+                <th style="width: 15%">Issue Date</th>
+                <th style="width: 15%">Expiry Date</th>
+                <th>Remark</th>
+            </tr>
+        </thead>
+        <tbody id="{{ $type }}_rows">
+            <tr>
+                <td>
+                    {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
+                    <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
+                </td>
+                <td>
+                    <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
+                </td>
+                <td>
+                    <input type="date" id="issuedate_{{ $loop->index }}_{{ $type }}" name="certificate_issue_{{ $type }}[]" class="custom-border issuedate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
+                </td>
+                <td>
+                    <input type="date" id="expirydate_{{ $loop->index }}_{{ $type }}" name="certificate_expiry_{{ $type }}[]" class="custom-border expirydate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
+                </td>
+                <td>
+                    <textarea name="{{ $type }}_remarks[]" class="custom-border"></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+@endforeach
+
                                         </div>
                                     </div>
                                 </div>
@@ -503,8 +545,8 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">If Analysis found satisfactory of Pre-purchase samples send intimation</label>
-                                        <div><small class="text-primary">To: Formulation and Development / MS&T Department.</small></div>
-                                        <div><small class="text-primary">From: Corporate Quality Assurance</small></div>
+                                        <!-- <div><small class="text-primary">To: Formulation and Development / MS&T Department.</small></div>
+                                        <div><small class="text-primary">From: Corporate Quality Assurance</small></div> -->
                                     </div>
                                 </div>
 
@@ -590,7 +632,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Justification</label>
+                                        <label for="Initiator Group Code">Sample Justification</label>
                                         <textarea type="text" name="sample_order_justification" id="sample_order_justification" class="tiny"></textarea>
                                     </div>
                                 </div>
@@ -622,7 +664,7 @@
 
                                 <!-- To be filled by CQA Department -->
 
-                                <div class="col-lg-6"></div>
+                                <!-- <div class="col-lg-6"></div> -->
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Sample Stand Approved?</label>

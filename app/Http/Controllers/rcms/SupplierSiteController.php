@@ -332,6 +332,26 @@ class SupplierSiteController extends Controller
         
 
         /******************* Audit Trail Code ***********************/
+        
+        $history = new SupplierSiteAuditTrail;
+        $history->supplier_site_id = $supplierSite->id;
+        $history->activity_type = 'Record Number';
+        $history->previous = "Null";
+       // $history->current = $supplierSite->record;
+    //    $history->current = Helpers::getDivisionName(session()->get('division')) }}/SS/{{ Helpers::year($supplierSite->created_at) }}/{{ str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT); 
+
+        $history->current = Helpers::getDivisionName(session()->get('division')) . "/SS/" . Helpers::year($supplierSite->created_at) . "/" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT);
+
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $supplierSite->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+        
         $history = new SupplierSiteAuditTrail;
         $history->supplier_site_id = $supplierSite->id;
         $history->activity_type = 'Initiator';
@@ -351,7 +371,7 @@ class SupplierSiteController extends Controller
         $history->supplier_site_id = $supplierSite->id;
         $history->activity_type = 'Short Description';
         $history->previous = "Null";
-        $history->current = $request->short_description;
+        $history->current = $supplierSite->short_description;
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -447,7 +467,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'Contact Person';
             $history->previous = "Null";
-            $history->current = Helpers::getInitiatorName($supplierSite->supplier_contact_person);
+            $history->current =Helpers::getInitiatorName($supplierSite->supplier_contact_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2157,8 +2177,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Assigned To';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $request->assign_to;
+            $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);
+            $history->current =  Helpers::getInitiatorName($request->assign_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2178,8 +2198,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Supplier';
-            $history->previous = $lastDocument->supplier_person;
-            $history->current = $request->supplier_person;
+            $history->previous = Helpers::getInitiatorName($lastDocument->supplier_person);
+            $history->current =  Helpers::getInitiatorName($request->supplier_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2221,8 +2241,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Supplier Contact Person';
-            $history->previous = $lastDocument->supplier_contact_person;
-            $history->current = $request->supplier_contact_person;
+            $history->previous = Helpers::getInitiatorName($lastDocument->supplier_contact_person);
+            $history->current = Helpers::getInitiatorName($request->supplier_contact_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4021,7 +4041,7 @@ class SupplierSiteController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
             $canvas->page_text(
-                $width / 4,
+                $width / 2.5,
                 $height / 2,
                 $data->status,
                 null,
@@ -4067,11 +4087,11 @@ class SupplierSiteController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
     
             $canvas->page_text(
-                $width / 3,
+                $width / 2.5,
                 $height / 2,
                 $doc->status,
                 null,
-                60,
+                25,
                 [0, 0, 0],
                 2,
                 6,

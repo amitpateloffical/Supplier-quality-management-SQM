@@ -137,7 +137,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Owner">Owner</label>
+                                        <label for="Owner">Owner Name </label>
                                         <div class="relative-container">
                                             <input type="text" name="owner_name"
                                                 placeholder="Enter Owner Name"class="mic-input">

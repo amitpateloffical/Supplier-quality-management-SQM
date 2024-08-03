@@ -71,15 +71,15 @@
         }
 
         /* .sub-head {
-                margin-left: 280px;
-                margin-right: 280px;
-                color: #4274da;
-                border-bottom: 2px solid #4274da;
-                padding-bottom: 5px;
-                margin-bottom: 20px;
-                font-weight: bold;
-                font-size: 1.2rem;
-                 } */
+                    margin-left: 280px;
+                    margin-right: 280px;
+                    color: #4274da;
+                    border-bottom: 2px solid #4274da;
+                    padding-bottom: 5px;
+                    margin-bottom: 20px;
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                     } */
 
         .launch_extension {
             background: #4274da;
@@ -130,12 +130,12 @@
         }
 
         /* .saveButton:disabled
-                {
-                   background: black!important;
-                   border:  black!important;
-                 }
-                   
-                */
+                    {
+                       background: black!important;
+                       border:  black!important;
+                     }
+                       
+                    */
 
         .main-danger-block {
             display: flex;
@@ -2733,45 +2733,6 @@
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Audit Failed By</label>
-                                    <div class="static">{{ $data->pending_supplier_audit_by }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">Audit Failed On</label>
-                                    <div class="static">{{ $data->pending_supplier_audit_on }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppplier Review Comment">Audit Failed Comment</label>
-                                    <div class="static">{{ $data->pending_supplier_audit_comment }}</div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review By">Supplier Obsolete By</label>
-                                    <div class="static">{{ $data->pending_rejection_by }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">Supplier Obsolete On</label>
-                                    <div class="static">{{ $data->pending_rejection_on }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppplier Review Comment">Supplier Obsolete Comment</label>
-                                    <div class="static">{{ $data->pending_rejection_comment }}</div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-3">
-                                <div class="group-input">
                                     <label for="Suppplier Review By">Audit Passed By</label>
                                     <div class="static">{{ $data->supplier_approved_by }}</div>
                                 </div>
@@ -2786,6 +2747,25 @@
                                 <div class="group-input">
                                     <label for="Suppplier Review Comment">Audit Passed Comment</label>
                                     <div class="static">{{ $data->supplier_approved_comment }}</div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By">Audit Failed By</label>
+                                    <div class="static">{{ $data->pending_supplier_audit_by }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review On">Audit Failed On</label>
+                                    <div class="static">{{ $data->pending_supplier_audit_on }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppplier Review Comment">Audit Failed Comment</label>
+                                    <div class="static">{{ $data->pending_supplier_audit_comment }}</div>
                                 </div>
                             </div>
 
@@ -2831,25 +2811,6 @@
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Re-Audit By</label>
-                                    <div class="static">{{ $data->reAudit_by }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Suppplier Review On">Re-Audit On</label>
-                                    <div class="static">{{ $data->reAudit_on }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Suppplier Review Comment">Re-Audit Comment</label>
-                                    <div class="static">{{ $data->reAudit_comment }}</div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="group-input">
                                     <label for="Suppplier Review By">Reject Due To Quality Issues By</label>
                                     <div class="static">{{ $data->rejectedDueToQuality_by }}</div>
                                 </div>
@@ -2867,6 +2828,45 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review By">Supplier Obsolete By</label>
+                                <div class="static">{{ $data->pending_rejection_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review On">Supplier Obsolete On</label>
+                                <div class="static">{{ $data->pending_rejection_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Suppplier Review Comment">Supplier Obsolete Comment</label>
+                                <div class="static">{{ $data->pending_rejection_comment }}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review By">Re-Audit By</label>
+                                <div class="static">{{ $data->reAudit_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Suppplier Review On">Re-Audit On</label>
+                                <div class="static">{{ $data->reAudit_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Suppplier Review Comment">Re-Audit Comment</label>
+                                <div class="static">{{ $data->reAudit_comment }}</div>
+                            </div>
+                        </div>
+
                         <div class="button-block">
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">

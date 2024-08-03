@@ -117,7 +117,7 @@
         <div class="container-fluid">
             <div class="division-bar">
                 <!-- <strong>Site Division/Project</strong> :
-                                                QMS-North America / Effectiveness-Check -->
+                                                    QMS-North America / Effectiveness-Check -->
                 <strong>Site Division/Project :</strong>
                 {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check
             </div>
@@ -340,8 +340,11 @@
                                             characters remaining
                                             <div style="position:relative;">
                                                 <div class="relative-container">
-                                                    <textarea name="short_description" id="docname" type="text" class="mic-input" maxlength="255" required
-                                                        {{ $data->stage == 0 || $data->stage == 6 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                    <input id="docname" type="text" name="short_description"
+                                                        class="mic-input" maxlength="255" required
+                                                        value="{{ $data->short_description }}"
+                                                        {{ $data->stage == 0 || $data->stage == 6 || $data->stage == 4 ? 'disabled' : '' }}>
+
                                                     <button class="mic-btn" type="button">
                                                         <i class="fas fa-microphone"></i>
                                                     </button>
@@ -354,11 +357,11 @@
                                     </div>
 
                                     <!-- <div class="col-12">
-                                                                <div class="group-input">
-                                                                    <label for="Short Description">Short Description</label>
-                                                                    <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                                </div>
-                                                            </div> -->
+                                                                    <div class="group-input">
+                                                                        <label for="Short Description">Short Description</label>
+                                                                        <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                                    </div>
+                                                                </div> -->
 
 
                                     {{-- <div class="col-lg-6">
@@ -477,11 +480,11 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-12">
-                                                                <div class="group-input">
-                                                                    <label for="Short Description">Short Description</label>
-                                                                    <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                                </div>
-                                                            </div> -->
+                                                                    <div class="group-input">
+                                                                        <label for="Short Description">Short Description</label>
+                                                                        <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                                    </div>
+                                                                </div> -->
                                 <div class="col-12 sub-head">
                                     Effectiveness Check Results
                                 </div>
@@ -502,13 +505,13 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
-                                                                <div class="group-input">
-                                                                    <label for="Effectiveness check Attachments"><b>Effectiveness check
-                                                                            Attachment</b></label>
-                                                                    <input type="file" id="myfile" name="Effectiveness_check_Attachment"
-                                                                        value="{{ $data->Effectiveness_check_Attachment }}">
-                                                                </div>
-                                                            </div> -->
+                                                                    <div class="group-input">
+                                                                        <label for="Effectiveness check Attachments"><b>Effectiveness check
+                                                                                Attachment</b></label>
+                                                                        <input type="file" id="myfile" name="Effectiveness_check_Attachment"
+                                                                            value="{{ $data->Effectiveness_check_Attachment }}">
+                                                                    </div>
+                                                                </div> -->
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
@@ -565,12 +568,12 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
-                                                                <div class="group-input">
-                                                                    <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
-                                                                    <input type="file" id="myfile" name="Addendum_Attachment"
-                                                                        value="{{ $data->Addendum_Attachment }}">
-                                                                </div>
-                                                            </div> -->
+                                                                    <div class="group-input">
+                                                                        <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
+                                                                        <input type="file" id="myfile" name="Addendum_Attachment"
+                                                                            value="{{ $data->Addendum_Attachment }}">
+                                                                    </div>
+                                                                </div> -->
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="Addendum Attachments">Addendum Attachment</label>
@@ -642,11 +645,11 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
-                                                                <div class="group-input">
-                                                                    <label for="Attachments"><b>Attachment</b></label>
-                                                                    <input type="file" id="myfile" name="Attachment">
-                                                                </div>
-                                                            </div> -->
+                                                                    <div class="group-input">
+                                                                        <label for="Attachments"><b>Attachment</b></label>
+                                                                        <input type="file" id="myfile" name="Attachment">
+                                                                    </div>
+                                                                </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Attachments">Attachment</label>
@@ -683,12 +686,12 @@
                                 </div>
                             </div>
                             <!-- <div class="col-lg-6">
-                                                                <div class="group-input">
-                                                                    <label for="Reference Records"><b>Reference Records</b></label>
-                                                                    <input type="file" id="myfile" name="refer_record">
-                                                                     <div class="static">Ref.Record</div>
-                                                                </div>
-                                                            </div> -->
+                                                                    <div class="group-input">
+                                                                        <label for="Reference Records"><b>Reference Records</b></label>
+                                                                        <input type="file" id="myfile" name="refer_record">
+                                                                         <div class="static">Ref.Record</div>
+                                                                    </div>
+                                                                </div> -->
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Reference Records">Reference Records</label>
@@ -888,118 +891,118 @@
                                 </div>
                             </div>
                             <!--   Data History
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="group-input">
-                                                                    <label for="Actual Closure Date"><b>Actual Closure Date</b></label>
-                                                                    <div class="static">{{ $data->due_date }}</div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="group-input">
-                                                                    <label for="Original Date Due"><b>Original Date Due</b></label>
-                                                                    <div class="static">{{ $data->due_date }}</div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="group-input">
+                                                                        <label for="Actual Closure Date"><b>Actual Closure Date</b></label>
+                                                                        <div class="static">{{ $data->due_date }}</div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-12 sub-head">
-                                                                Record Signature
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="group-input">
+                                                                <div class="col-lg-6">
+                                                                    <div class="group-input">
+                                                                        <label for="Original Date Due"><b>Original Date Due</b></label>
+                                                                        <div class="static">{{ $data->due_date }}</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 sub-head">
+                                                                    Record Signature
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="group-input">
 
-                                                                    @php
-                                                                        $submit = DB::table('c_c_stage_histories')
-                                                                            ->where('type', 'Effectiveness-Check')
-                                                                            ->where('doc_id', $data->id)
-                                                                            ->where('stage_id', 2)
-                                                                            ->get();
-                                                                    @endphp
-                                                                    <label for="Original Due Date">Submitted By</label>
-                                                                    @foreach ($submit as $temp)
+                                                                        @php
+                                                                            $submit = DB::table('c_c_stage_histories')
+                                                                                ->where('type', 'Effectiveness-Check')
+                                                                                ->where('doc_id', $data->id)
+                                                                                ->where('stage_id', 2)
+                                                                                ->get();
+                                                                        @endphp
+                                                                        <label for="Original Due Date">Submitted By</label>
+                                                                        @foreach ($submit as $temp)
     <div class="static">{{ $temp->user_name }}</div>
     @endforeach
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="group-input">
+                                                                <div class="col-lg-6">
+                                                                    <div class="group-input">
 
-                                                                    @php
-                                                                        $submit = DB::table('c_c_stage_histories')
-                                                                            ->where('type', 'Effectiveness-Check')
-                                                                            ->where('doc_id', $data->id)
-                                                                            ->where('stage_id', 2)
-                                                                            ->get();
-                                                                    @endphp
-                                                                    <label for="Original Due Date">Submitted ON</label>
-                                                                    @foreach ($submit as $temp)
+                                                                        @php
+                                                                            $submit = DB::table('c_c_stage_histories')
+                                                                                ->where('type', 'Effectiveness-Check')
+                                                                                ->where('doc_id', $data->id)
+                                                                                ->where('stage_id', 2)
+                                                                                ->get();
+                                                                        @endphp
+                                                                        <label for="Original Due Date">Submitted ON</label>
+                                                                        @foreach ($submit as $temp)
     <div class="static">{{ $temp->created_at }}</div>
     @endforeach
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="group-input">
+                                                                <div class="col-lg-6">
+                                                                    <div class="group-input">
 
-                                                                    @php
-                                                                        $submit = DB::table('c_c_stage_histories')
-                                                                            ->where('type', 'Effectiveness-Check')
-                                                                            ->where('doc_id', $data->id)
-                                                                            ->where('stage_id', 3)
-                                                                            ->get();
-                                                                    @endphp
-                                                                    <label for="Original Due Date">Complete By</label>
-                                                                    @foreach ($submit as $temp)
+                                                                        @php
+                                                                            $submit = DB::table('c_c_stage_histories')
+                                                                                ->where('type', 'Effectiveness-Check')
+                                                                                ->where('doc_id', $data->id)
+                                                                                ->where('stage_id', 3)
+                                                                                ->get();
+                                                                        @endphp
+                                                                        <label for="Original Due Date">Complete By</label>
+                                                                        @foreach ($submit as $temp)
     <div class="static">{{ $temp->user_name }}</div>
     @endforeach
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="group-input">
+                                                                <div class="col-lg-6">
+                                                                    <div class="group-input">
 
-                                                                    @php
-                                                                        $submit = DB::table('c_c_stage_histories')
-                                                                            ->where('type', 'Effectiveness-Check')
-                                                                            ->where('doc_id', $data->id)
-                                                                            ->where('stage_id', 3)
-                                                                            ->get();
-                                                                    @endphp
-                                                                    <label for="Complete On"><b>Complete On</b></label>
-                                                                    @foreach ($submit as $temp)
+                                                                        @php
+                                                                            $submit = DB::table('c_c_stage_histories')
+                                                                                ->where('type', 'Effectiveness-Check')
+                                                                                ->where('doc_id', $data->id)
+                                                                                ->where('stage_id', 3)
+                                                                                ->get();
+                                                                        @endphp
+                                                                        <label for="Complete On"><b>Complete On</b></label>
+                                                                        @foreach ($submit as $temp)
     <div class="static">{{ $temp->created_at }}</div>
     @endforeach
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="group-input">
+                                                                <div class="col-lg-6">
+                                                                    <div class="group-input">
 
-                                                                    @php
-                                                                        $submit = DB::table('c_c_stage_histories')
-                                                                            ->where('type', 'Effectiveness-Check')
-                                                                            ->where('doc_id', $data->id)
-                                                                            ->where('stage_id', 4)
-                                                                            ->get();
-                                                                    @endphp
-                                                                    <label for="Quality Approal On"><b>Quality Approal On</b></label>
-                                                                    @foreach ($submit as $temp)
+                                                                        @php
+                                                                            $submit = DB::table('c_c_stage_histories')
+                                                                                ->where('type', 'Effectiveness-Check')
+                                                                                ->where('doc_id', $data->id)
+                                                                                ->where('stage_id', 4)
+                                                                                ->get();
+                                                                        @endphp
+                                                                        <label for="Quality Approal On"><b>Quality Approal On</b></label>
+                                                                        @foreach ($submit as $temp)
     <div class="static">{{ $temp->user_name }}</div>
     @endforeach
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="group-input">
-                                                                    @php
-                                                                        $submit = DB::table('c_c_stage_histories')
-                                                                            ->where('type', 'Effectiveness-Check')
-                                                                            ->where('doc_id', $data->id)
-                                                                            ->where('stage_id', 4)
-                                                                            ->get();
-                                                                    @endphp
-                                                                    <label for="Quality Approal On"><b>Quality Approal On</b></label>
-                                                                    @foreach ($submit as $temp)
+                                                                <div class="col-lg-6">
+                                                                    <div class="group-input">
+                                                                        @php
+                                                                            $submit = DB::table('c_c_stage_histories')
+                                                                                ->where('type', 'Effectiveness-Check')
+                                                                                ->where('doc_id', $data->id)
+                                                                                ->where('stage_id', 4)
+                                                                                ->get();
+                                                                        @endphp
+                                                                        <label for="Quality Approal On"><b>Quality Approal On</b></label>
+                                                                        @foreach ($submit as $temp)
     <div class="static">{{ $temp->created_at }}</div>
     @endforeach
-                                                                </div>
-                                                            </div> --}}
-                                                            {{--  <div class="col-lg-6">
+                                                                    </div>
+                                                                </div> --}}
+                                                                {{--  <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Complete By"><b>Addendum Complete By</b></label>
                                         <div class="static">Shaleen Mishra</div>
@@ -1011,7 +1014,7 @@
                                         <div class="static">17-04-2023 11:12PM</div>
                                     </div>
                                 </div>  --}}
-                                                            {{-- <div class="col-lg-6">
+                                                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         @php
                                             $submit = DB::table('c_c_stage_histories')
@@ -1034,7 +1037,7 @@
                                         @endforeach
                                     </div>
                                 </div> --}}
-                                                            {{--  <div class="col-lg-6">
+                                                                {{--  <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Re Open For Addendum By"><b>Re Open For Addendum By</b></label>
                                         <div class="static">Shaleen Mishra</div>
@@ -1058,7 +1061,7 @@
                                         <div class="static">17-04-2023 11:12PM</div>
                                     </div>
                                 </div>  --}}
-                                                            {{-- <div class="col-12 sub-head">
+                                                                {{-- <div class="col-12 sub-head">
                                     Cancellation Details
                                 </div>
                                 <div class="col-lg-6">
@@ -1145,9 +1148,9 @@
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                    <button>Close</button>
-                                                </div> -->
+                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                        <button>Close</button>
+                                                    </div> -->
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1253,9 +1256,9 @@
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                    <button>Close</button>
-                                                </div> -->
+                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                        <button>Close</button>
+                                                    </div> -->
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1300,9 +1303,9 @@
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                    <button>Close</button>
-                                                </div> -->
+                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                        <button>Close</button>
+                                                    </div> -->
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1392,9 +1395,9 @@
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                    <button type="button" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit">Submit</button>
-                                                </div> -->
+                                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit">Submit</button>
+                                                    </div> -->
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>

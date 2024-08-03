@@ -87,7 +87,7 @@ class RiskManagementController extends Controller
         $data->regulatory_climate = $request->regulatory_climate;
         $data->Number_of_employees = $request->Number_of_employees;
         $data->risk_management_strategy = $request->risk_management_strategy;
-        
+
         $data->schedule_start_date1 = $request->schedule_start_date1;
         $data->schedule_end_date1 = $request->schedule_end_date1;
         $data->estimated_man_hours = $request->estimated_man_hours;
@@ -102,7 +102,7 @@ class RiskManagementController extends Controller
         $data->occurrence = $request->occurrence;
         $data->detection = $request->detection;
         $data->rpn = $request->rpn;
-        
+
         // $data->measurement = json_encode($request->measurement);
         // $data->materials = json_encode($request->materials);
         // $data->methods = json_encode($request->methods);
@@ -265,11 +265,11 @@ class RiskManagementController extends Controller
         if (!empty($request->manpower)) {
             $data2->manpower = serialize($request->manpower);
         }
-        
+
         if (!empty($request->machine)) {
             $data2->machine = serialize($request->machine);
         }
-        
+
         if (!empty($request->problem_statement)) {
             $data2->problem_statement = $request->problem_statement;
         }
@@ -294,7 +294,7 @@ class RiskManagementController extends Controller
         if (!empty($request->why_4)) {
             $data3->why_4 = serialize($request->why_4);
         }
-       
+
         if (!empty($request->why_5)) {
             $data3->why_5 = serialize($request->why_5);
         }
@@ -451,7 +451,7 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
-            $history->current = str_pad($data->record, 4, '0', STR_PAD_LEFT) ;
+            $history->current = Helpers::getDivisionName($data->division_id) . '/RA/' . Helpers::year($data->created_at) . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -462,6 +462,7 @@ class RiskManagementController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
+
         if (!empty($data->assign_to)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
@@ -529,7 +530,7 @@ class RiskManagementController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        
+
         if (!empty($data->short_description)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
@@ -1623,7 +1624,7 @@ class RiskManagementController extends Controller
         // $data->country = $request->country;
         // $data->state = $request->state;
         // $data->city = $request->city;
-        
+
         $data->departments2 = implode(',', $request->departments2);
         $data->source_of_risk2 = $request->source_of_risk2;
         $data->site_name = $request->site_name;
@@ -1637,7 +1638,7 @@ class RiskManagementController extends Controller
         $data->regulatory_climate = $request->regulatory_climate;
         $data->Number_of_employees = $request->Number_of_employees;
         $data->risk_management_strategy = $request->risk_management_strategy;
-        
+
         $data->schedule_start_date1 = $request->schedule_start_date1;
         $data->schedule_end_date1 = $request->schedule_end_date1;
         $data->estimated_man_hours = $request->estimated_man_hours;
@@ -1652,7 +1653,7 @@ class RiskManagementController extends Controller
         $data->occurrence = $request->occurrence;
         $data->detection = $request->detection;
         $data->rpn = $request->rpn;
-        
+
         //$data->training_require = $request->training_require;
         // $data->cost_of_risk = $request->cost_of_risk;
         // $data->environmental_impact = $request->environmental_impact;
@@ -1665,7 +1666,7 @@ class RiskManagementController extends Controller
         $data->detection2 = $request->detection2;
         $data->rpn2 = $request->rpn2;
         $data->comments2 = $request->comments2;
-        
+
         $data->mitigation_required = $request->mitigation_required;
         $data->mitigation_plan = $request->mitigation_plan;
         $data->mitigation_due_date = $request->mitigation_due_date;
@@ -1703,9 +1704,9 @@ class RiskManagementController extends Controller
             //  $data1 = new RiskAssesmentGrid();
             //  $data1->risk_id = $data->id;
             //  $data1->type = "effect_analysis";
-        
+
              $data1 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','effect_analysis')->first();
-            
+
              if (!empty($request->risk_factor)) {
                  $data1->risk_factor = serialize($request->risk_factor);
              }
@@ -1754,15 +1755,15 @@ class RiskManagementController extends Controller
              if (!empty($request->mitigation_proposal)) {
                  $data1->mitigation_proposal = serialize($request->mitigation_proposal);
              }
-     
+
              $data1->save();
-     
+
              // ---------------------------------------
             //  $data2 = new RiskAssesmentGrid();
             //  $data2->risk_id = $data->id;
             //  $data2->type = "fishbone";
                  $data2 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','fishbone')->first();
-                
+
              if (!empty($request->measurement)) {
                  $data2->measurement = serialize($request->measurement);
              }
@@ -1790,7 +1791,7 @@ class RiskManagementController extends Controller
             //  $data3 = new RiskAssesmentGrid();
             //  $data3->risk_id = $data->id;
             //  $data3->type = "why_chart";
-            
+
              if (!empty($request->why_problem_statement)) {
                  $data3->why_problem_statement = $request->why_problem_statement;
              }
@@ -1813,13 +1814,13 @@ class RiskManagementController extends Controller
                  $data3->why_root_cause = $request->why_root_cause;
              }
              $data3->save();
-     
+
              // --------------------------------------------
             //  $data4 = new RiskAssesmentGrid();
             //  $data4->risk_id = $data->id;
             //  $data4->type = "what_who_where";
               $data4 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','what_who_where')->first();
-              
+
              if (!empty($request->what_will_be)) {
                  $data4->what_will_be = $request->what_will_be;
              }
@@ -1865,12 +1866,12 @@ class RiskManagementController extends Controller
                  $data4->when_rationable = $request->when_rationable;
              }
              $data4->save();
-     
+
       $data5 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','Action_Plan')->first();
             //  $data5 = new RiskAssesmentGrid();
             //  $data5->risk_id = $data->id;
             //  $data5->type = "Action_Plan";
-                   
+
              if (!empty($request->action)) {
                  $data5->action = serialize($request->action);
              }
@@ -1883,9 +1884,9 @@ class RiskManagementController extends Controller
              if (!empty($request->item_static)) {
                  $data5->item_static = serialize($request->item_static);
              }
-     
+
              $data5->save();
-     
+
             //  $data6 = new RiskAssesmentGrid();
             //  $data6->risk_id = $data->id;
             //  $data6->type = "Mitigation_Plan_Details";
@@ -1905,7 +1906,7 @@ class RiskManagementController extends Controller
              if (!empty($request->remark)) {
                  $data6->remark = serialize($request->remark);
              }
-     
+
              $data6->save();
 
             //  if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
@@ -2027,7 +2028,7 @@ class RiskManagementController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        
+
 
         if ($lastDocument->departments != $data->departments || !empty($request->departments_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
@@ -2199,7 +2200,7 @@ class RiskManagementController extends Controller
         //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
         //     $history->save();
         // }
-       
+
 
         if ($lastDocument->comments != $data->comments || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
@@ -3256,10 +3257,10 @@ class RiskManagementController extends Controller
             //                       }
             //                     );
             //                 } catch (\Exception $e) {
-            //                     // 
+            //                     //
             //                 }
             //             }
-            //      } 
+            //      }
             //   }
                 $changeControl->update();
 
@@ -3304,10 +3305,10 @@ class RiskManagementController extends Controller
             //                       }
             //                     );
             //                 } catch (\Exception $e) {
-            //                     // 
+            //                     //
             //                 }
             //             }
-            //      } 
+            //      }
             //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -3357,7 +3358,7 @@ class RiskManagementController extends Controller
                 toastr()->success('document send');
                 return back();
         }
-         
+
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "5";
                 $changeControl->status = 'Actions Items in Progress';
@@ -3375,7 +3376,7 @@ class RiskManagementController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;       
+                $history->origin_state = $lastDocument->status;
                 $history->stage = 'Action Plan Approved';
                 $history->change_to = "Actions Items in Progress";
                 $history->change_from = $lastDocument->status;
@@ -3396,10 +3397,10 @@ class RiskManagementController extends Controller
             //                       }
             //                     );
             //                 } catch (\Exception $e) {
-            //                     // 
+            //                     //
             //                 }
             //             }
-            //      } 
+            //      }
             //   }
                 $changeControl->update();
 
@@ -3423,7 +3424,7 @@ class RiskManagementController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;       
+                $history->origin_state = $lastDocument->status;
                 $history->stage = 'All Actions Completed';
                 $history->change_to = "Residual Risk Evaluation";
                 $history->change_from = $lastDocument->status;
@@ -3434,7 +3435,7 @@ class RiskManagementController extends Controller
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-                      
+
             //                 try {
             //                     Mail::send(
             //                         'mail.view-mail',
@@ -3445,10 +3446,10 @@ class RiskManagementController extends Controller
             //                       }
             //                     );
             //                 } catch (\Exception $e) {
-            //                     // 
+            //                     //
             //                 }
             //             }
-            //      } 
+            //      }
             //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -3518,7 +3519,7 @@ class RiskManagementController extends Controller
                 $history->change_from = 'Opened';
                 $history->action_name = 'Not Applicable';
                 $history->save();
-                
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3550,13 +3551,13 @@ class RiskManagementController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
         }
     }
-     
+
     public function MoreInfoCAPA(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -3587,7 +3588,7 @@ class RiskManagementController extends Controller
                 $history->change_from = 'Risk Analysis & Work Group Assignment';
                 $history->action_name = 'Not Applicable';
                 $history->save();
-                
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3700,7 +3701,7 @@ class RiskManagementController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -3735,15 +3736,16 @@ class RiskManagementController extends Controller
         if (!empty($data)) {
 
             $riskgrdfishbone = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','fishbone')->first();
-            
+
             $riskgrdwhy_chart = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','why_chart')->first();
             $riskgrdwhat_who_where = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','what_who_where')->first();
-
+            $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','effect_analysis')->first();
+            $data5 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','Action_Plan')->first();
              //dd($riskgrd);
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','riskgrdfishbone','riskgrdwhy_chart','riskgrdwhat_who_where'))
+            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','riskgrdfishbone','riskgrdwhy_chart','riskgrdwhat_who_where','riskEffectAnalysis', 'data5'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -3756,7 +3758,7 @@ class RiskManagementController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 2.5, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Risk-assesment' . $id . '.pdf');
         }
     }

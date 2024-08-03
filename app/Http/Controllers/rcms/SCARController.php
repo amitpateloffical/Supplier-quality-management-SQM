@@ -83,7 +83,7 @@ class SCARController extends Controller
         $history->scar_id = $scar->id;
         $history->activity_type = 'Record Number';
         $history->previous = "Null";
-        $history->current =  Helpers::getDivisionName($request->division_id).'/SCAR/'. date('Y') .'/'. str_pad( $request->record, 4, '0', STR_PAD_LEFT);
+        $history->current =  Helpers::getDivisionName($request->division_id).'/SCAR/'. date('Y') .'/'. str_pad( $scar->record, 4, '0', STR_PAD_LEFT);
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -431,22 +431,22 @@ class SCARController extends Controller
             $history->save();
         }
 
-        if(!empty($request->record_number)){
-            $history = new ScarAuditTrail;
-            $history->scar_id = $scar->id;
-            $history->activity_type = 'Record Number';
-            $history->previous = "Null";
-            $history->current = $request->record_number;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $scar->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+        // if(!empty($request->record_number)){
+        //     $history = new ScarAuditTrail;
+        //     $history->scar_id = $scar->id;
+        //     $history->activity_type = 'Record Number';
+        //     $history->previous = "Null";
+        //     $history->current = $request->record_number;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $scar->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
 
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
@@ -916,10 +916,15 @@ class SCARController extends Controller
                     $scar->submitted_comment = $request->comments;
                     $history = new ScarAuditTrail();
                     $history->scar_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
+                    $history->activity_type = 'Submited By, Submited On';
+                    if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->submitted_by . ' , ' . $lastDocument->submitted_on;
+                    }
+                    $history->current = $scar->submitted_by . ' , ' . $scar->submitted_on;
                     $history->action = 'Submit';
-                    $history->current = "Not Applicable";
+                   
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -928,6 +933,11 @@ class SCARController extends Controller
                     $history->change_to =   "Submitted to Supplier";
                     $history->change_from = $lastDocument->status;
                     $history->stage = '';
+                    if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                        $history->action_name = 'Create';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                     //  $list = Helpers::getHodUserList();
                     //     foreach ($list as $u) {
@@ -959,10 +969,15 @@ class SCARController extends Controller
 
                     $history = new ScarAuditTrail();
                     $history->scar_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
+                    $history->activity_type = 'Submited By, Submited On';
+                    if (is_null($lastDocument->acknowledge_by) || $lastDocument->acknowledge_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->acknowledge_by . ' , ' . $lastDocument->acknowledge_on;
+                    }
+                    $history->current =  $scar->acknowledge_by . ' , ' .  $scar->acknowledge_on;
                     $history->action = 'Acknowledge';
-                    $history->current = "Not Applicable";
+                   // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -971,6 +986,11 @@ class SCARController extends Controller
                     $history->change_to =   "Acknowleged by Supplier";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->acknowledge_by) || $lastDocument->acknowledge_by === '') {
+                        $history->action_name = 'Create';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                     //  $list = Helpers::getHodUserList();
                     //     foreach ($list as $u) {
@@ -1003,9 +1023,14 @@ class SCARController extends Controller
                 $history = new ScarAuditTrail();
                     $history->scar_id = $id;
                     $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action = 'Work in Progress';
-                    $history->current = "Not Applicable";
+                    $history->activity_type = 'Submited By, Submited On';
+                    if (is_null($lastDocument->workin_progress_by) || $lastDocument->workin_progress_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->workin_progress_by . ' , ' . $lastDocument->workin_progress_on;
+                    }
+                    $history->current = $scar->workin_progress_by . ' , ' .  $scar->workin_progress_on;
+                   // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -1014,6 +1039,11 @@ class SCARController extends Controller
                     $history->change_to =   "Work in Progress";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->workin_progress_by) || $lastDocument->workin_progress_by === '') {
+                        $history->action_name = 'Create';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
@@ -1045,11 +1075,17 @@ class SCARController extends Controller
 
                 $history = new ScarAuditTrail();
                     $history->scar_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action = 'Submit Response';
-                    $history->current = $scar->submit_by;
+                   // $history->activity_type = 'Activity Log';
+                    if (is_null($lastDocument->response_submitted_by) || $lastDocument->response_submitted_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->response_submitted_by . ' , ' . $lastDocument->response_submitted_on;
+                    }
+                    $history->current =  $scar->response_submitted_by . ' , ' .  $scar->response_submitted_on;
+                   // $history->action = 'Approve';
+                   // $history->current = $scar->response_submitted_by;
                     $history->comment = $request->comments;
+                    
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1057,6 +1093,11 @@ class SCARController extends Controller
                     $history->change_to = "Response Received";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->response_submitted_by) || $lastDocument->response_submitted_by === '') {
+                        $history->action_name = 'Create';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
@@ -1087,10 +1128,15 @@ class SCARController extends Controller
 
                 $history = new ScarAuditTrail();
                     $history->scar_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
+                  
+                    if (is_null($lastDocument->approved_by) || $lastDocument->approved_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->approved_by . ' , ' . $lastDocument->approved_on;
+                    }
+                    $history->current =  $scar->approved_by . ' , ' .  $scar->approved_on;
                     $history->action = 'Approve';
-                    $history->current = $scar->submit_by;
+                   // $history->current = $scar->approved_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -1099,6 +1145,12 @@ class SCARController extends Controller
                     $history->change_to = "Closed - Approved";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->approved_by) || $lastDocument->approved_by === '') {
+                        $history->action_name = 'Create';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+    
                     $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {

@@ -69,6 +69,7 @@ class SupplierController extends Controller
         $supplier->pharmacopoeial_claim = $request->pharmacopoeial_claim;
         $supplier->cep_grade = $request->cep_grade;
         $supplier->request_for = implode(',',$request->request_for);
+        // dd($request->request_for);
         $supplier->attach_batch = $request->attach_batch;
         $supplier->request_justification = $request->request_justification;
         $supplier->manufacturer_availability = $request->manufacturer_availability;
@@ -651,22 +652,22 @@ class SupplierController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->request_for)){
-            $history = new SupplierAuditTrail;
-            $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Request For';
-            $history->previous = "Null";
-            $history->current = $supplier->request_for;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $supplier->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+        // if(!empty($request->request_for)){
+        //     $history = new SupplierAuditTrail;
+        //     $history->supplier_id = $supplier->id;
+        //     $history->activity_type = 'Request For';
+        //     $history->previous = "Null";
+        //     $history->current = $supplier->request_for;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $supplier->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
         if(!empty($request->attach_batch)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -2663,6 +2664,24 @@ class SupplierController extends Controller
             $history->action_name = 'Update';
             $history->save();
         }
+
+        // if($lastDocument->cep_attachment != $request->cep_attachment){
+        //     $history = new SupplierAuditTrail;
+        //     $history->supplier_id = $lastDocument->id;
+        //     $history->activity_type = 'CEP Attachment';
+        //     $history->previous = $lastDocument->cep_attachment;
+        //     $history->current = $request->cep_attachment;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+        //     $history->save();
+        // }
+
         if($lastDocument->attach_batch != $request->attach_batch){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
@@ -2986,7 +3005,7 @@ class SupplierController extends Controller
         if($lastDocument->sample_order_justification != $request->sample_order_justification){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Sample Order Justification';
+            $history->activity_type = 'Sample Justification';
             $history->previous = $lastDocument->sample_order_justification;
             $history->current = $request->sample_order_justification;
             $history->comment = "Not Applicable";
@@ -3114,7 +3133,7 @@ class SupplierController extends Controller
         if($lastDocument->manufacturer_audit_planned != $request->manufacturer_audit_planned){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Quality Management';
+            $history->activity_type = 'Manufacturer Audit planned';
             $history->previous = $lastDocument->manufacturer_audit_planned;
             $history->current = $request->manufacturer_audit_planned;
             $history->comment = "Not Applicable";
@@ -3130,7 +3149,7 @@ class SupplierController extends Controller
         if($lastDocument->manufacturer_audit_conducted != $request->manufacturer_audit_conducted){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Business History';
+            $history->activity_type = 'Maufacturer Audit Conducted On';
             $history->previous = $lastDocument->manufacturer_audit_conducted;
             $history->current = $request->manufacturer_audit_conducted;
             $history->comment = "Not Applicable";
@@ -3177,22 +3196,40 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        // if($lastDocument->pre_purchase_sample != $request->supplier_name){
-        //     $history = new SupplierAuditTrail;
-        //     $history->supplier_id = $lastDocument->id;
-        //     $history->activity_type = 'Pre Purchase Sample Required?';
-        //     $history->previous = $lastDocument->supplier_name;
-        //     $history->current = $request->supplier_name;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     $history->action_name = 'Update';
-        //     $history->save();
-        // }
+        if($lastDocument->HOD_comment != $request->HOD_comment){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'HOD Comments';
+            $history->previous = $lastDocument->HOD_comment;
+            $history->current = $request->HOD_comment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+
+
+        if($lastDocument->supplier_name != $request->supplier_name){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Supplier Name';
+            $history->previous = $lastDocument->supplier_name;
+            $history->current = $request->supplier_name;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
         if($lastDocument->supplier_id != $request->supplier_id){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
@@ -4126,7 +4163,7 @@ class SupplierController extends Controller
         if($lastDocument->QA_head_comment != $request->QA_head_comment){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'QA Head Comment';
+            $history->activity_type = ' ';
             $history->previous = strip_tags($lastDocument->QA_head_comment);
             $history->current = strip_tags($request->QA_head_comment);
             $history->comment = "Not Applicable";
@@ -4374,10 +4411,14 @@ class SupplierController extends Controller
 
                     $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action = 'Need for Sourcing of Starting Material';
-                    $history->current = "Not Applicable";
+                    $history->activity_type = 'Need for Sourcing of Starting Material By, Need for Sourcing of Starting Material By';
+                    if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->submitted_by . ' , ' . $lastDocument->submitted_on;
+                    }
+                    $history->current = $supplier->submitted_by . ' , ' . $supplier->submitted_on;
+                    $history->action='Need for Sourcing of Starting Material';
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4386,7 +4427,29 @@ class SupplierController extends Controller
                     $history->change_to =   "Pending Initiating Department Update";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                        $history->action_name = 'Create';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
+
+                    // $history = new SupplierAuditTrail();
+                    // $history->supplier_id = $id;
+                    // $history->activity_type = 'Need for Sourcing of Starting Material On';
+                    // $history->previous = "";
+                    // $history->action = 'Need for Sourcing of Starting Material';
+                    // $history->current = "Not Applicable";
+                    // $history->comment = $request->comments;
+                    // $history->user_id = Auth::user()->id;
+                    // $history->user_name = Auth::user()->name;
+                    // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    // $history->origin_state = $lastDocument->status;
+                    // $history->change_to =   "Pending Initiating Department Update";
+                    // $history->change_from = $lastDocument->status;
+                    // $history->stage = 'Plan Proposed';
+                    // $history->save();
+
                     //  $list = Helpers::getHodUserList();
                     //     foreach ($list as $u) {
                     //         if($u->q_m_s_divisions_id == $supplier->division_id){
@@ -4417,10 +4480,15 @@ class SupplierController extends Controller
 
                     $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
+                    $history->activity_type = 'Request Justified By, Request Justified On';
+                    if (is_null($lastDocument->request_justified_by) || $lastDocument->request_justified_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->request_justified_by . ' , ' . $lastDocument->request_justified_on;
+                    }
+                    $history->current = $supplier->request_justified_by . ' , ' . $supplier->request_justified_on;
                     $history->action = 'Request Justified';
-                    $history->current = "Not Applicable";
+                    // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4429,6 +4497,11 @@ class SupplierController extends Controller
                     $history->change_to =   "Pending Update FROM CQA";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->request_justified_by) || $lastDocument->request_justified_by === '') {
+                        $history->action_name = 'Create';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                     //  $list = Helpers::getHodUserList();
                     //     foreach ($list as $u) {
@@ -4460,10 +4533,14 @@ class SupplierController extends Controller
 
                 $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
+                    $history->activity_type = 'Pre-Purchase Sample Required By, Pre-Purchase Sample Required On';
+                    if (is_null($lastDocument->prepurchase_sample_by) || $lastDocument->prepurchase_sample_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->prepurchase_sample_by . ' , ' . $lastDocument->prepurchase_sample_on;
+                    }
+                    $history->current = $supplier->prepurchase_sample_by . ' , ' . $supplier->prepurchase_sample_on;
                     $history->action = 'Pre-Purchase Sample Required';
-                    $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4472,6 +4549,11 @@ class SupplierController extends Controller
                     $history->change_to =  "Pending Purchase Sample Request";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->prepurchase_sample_by) || $lastDocument->prepurchase_sample_by === '') {
+                        $history->action_name = 'Create';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
@@ -4503,10 +4585,15 @@ class SupplierController extends Controller
 
                 $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
+                    $history->activity_type = 'Purchase Sample Request Ack. by Dep. By , Purchase Sample Request Ack. by Dep. On';
+                    if (is_null($lastDocument->pendigPurchaseSampleRequested_by) || $lastDocument->pendigPurchaseSampleRequested_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->pendigPurchaseSampleRequested_by . ' , ' . $lastDocument->pendigPurchaseSampleRequested_on;
+                    }
+                    $history->current = $supplier->pendigPurchaseSampleRequested_by . ' , ' . $supplier->pendigPurchaseSampleRequested_on;
                     $history->action = 'Purchase Sample Request Initiated & Acknowledgement By PD';
-                    $history->current = $supplier->submit_by;
+                    
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4515,6 +4602,11 @@ class SupplierController extends Controller
                     $history->change_to = "Pending CQA Review After Purchase Sample Request";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->pendigPurchaseSampleRequested_by) || $lastDocument->pendigPurchaseSampleRequested_by === '') {
+                        $history->action_name = 'Create';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {

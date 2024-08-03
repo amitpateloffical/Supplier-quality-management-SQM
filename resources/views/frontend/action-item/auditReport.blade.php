@@ -192,8 +192,6 @@
     </footer>
 
     <div class="inner-block">
-
-
         <div class="second-table">
             <table>
                 <thead>
@@ -260,22 +258,13 @@
                                     @endif
                                 </div>
                                 <br>
-
-                                <div class="imageContainer">
+                                <div>
                                     @if ($dataDemo->activity_type == 'Activity Log')
-                                        <strong>Change To :</strong>
-                                        @if (strtotime($dataDemo->change_to))
-                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
-                                        @else
-                                            {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
-                                        @endif
+                                        <strong>Change To
+                                            :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
                                     @else
-                                        <strong>Change To :</strong>
-                                        @if (strtotime($dataDemo->current))
-                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
-                                        @else
-                                            {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
-                                        @endif
+                                        <strong>Change To
+                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">
@@ -300,7 +289,6 @@
                     @endforeach
                 </tbody>
             </table>
-
             </table>
         </div>
 

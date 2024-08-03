@@ -385,13 +385,13 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Activated By">Initiated By</label>
+                                <label for="Activated By">Submited By</label>
                                 <div class="static"></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Activated On">Initiated On</label>
+                                <label for="Activated On">Submited On</label>
                                 <div class="static"></div>
                             </div>
                         </div>
@@ -409,6 +409,18 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
+                                <label for=" Rejected By">More Info Required By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Rejected On">More Info Required  On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
                                 <label for=" Rejected By">Approved By</label>
                                 <div class="static"></div>
                             </div>
@@ -416,6 +428,18 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Rejected On">Approved On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for=" Rejected By">More Info Required By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Rejected On">More Info Required  On</label>
                                 <div class="static"></div>
                             </div>
                         </div>

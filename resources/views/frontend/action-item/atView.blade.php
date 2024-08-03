@@ -321,13 +321,26 @@
                                             placeholder="Select Reference Records">
 
                                             @if (!empty($old_record))
-                                                @foreach ($old_record as $new)
-                                                    <option value="{{ $new->id }}"
-                                                        {{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
-                                                        {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
-                                                    </option>
-                                                @endforeach
-                                            @endif
+                                            @foreach ($old_record as $new)
+                                            @php
+                                                $recordValue =
+                                                    Helpers::getDivisionName($new->division_id) .
+                                                    '/AI/' .
+                                                    date('Y') .
+                                                    '/' .
+                                                    Helpers::recordFormat($new->record);
+                                                $selected = in_array(
+                                                    $recordValue,
+                                                    explode(',', $data->related_records),
+                                                )
+                                                    ? 'selected'
+                                                    : '';
+                                            @endphp
+                                            <option value="{{ $recordValue }}" {{ $selected }}>
+                                                {{ $recordValue }}
+                                            </option>
+                                        @endforeach
+                                        @endif
                                         </select>
 
                                     </div>
@@ -613,11 +626,8 @@
                                             @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
-
                                     </div>
                                 </div>
-
-
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Actual Start Date</label>

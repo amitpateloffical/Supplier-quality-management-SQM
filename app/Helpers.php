@@ -462,4 +462,35 @@ public static function getInitiatorGroupFullName($shortName)
             // 
         }
     }
+
+    public static function getHODDropdown() {
+        $hodUserList = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->where('user_roles.q_m_s_roles_id', '4')
+            ->select('users.id', 'users.name')
+            ->distinct()
+            ->get();
+    
+        $dropdown = [];
+        foreach ($hodUserList as $hodUser) {
+            $dropdown[] = ['id' => $hodUser->id, 'name' => $hodUser->name];
+        }
+    
+        return $dropdown;
+    }
+    public static function getQADropdown() {
+        $QAUserList = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->where('user_roles.q_m_s_roles_id', '7')
+            ->select('users.id', 'users.name')
+            ->distinct()
+            ->get();
+    
+        $dropdown = [];
+        foreach ($QAUserList as $QAUser) {
+            $dropdown[] = ['id' => $QAUser->id, 'name' => $QAUser->name];
+        }
+    
+        return $dropdown;
+    }
 }

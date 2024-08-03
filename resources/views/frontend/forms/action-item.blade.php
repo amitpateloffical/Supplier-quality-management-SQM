@@ -274,8 +274,9 @@
                                             placeholder="Select Reference Records">
 
                                             @foreach ($old_record as $new)
-                                                <option value="{{ $new->id }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                                <option value=" {{ Helpers::getDivisionName($new->division_id) . '/AI/' . date('Y') .'/' .  Helpers::recordFormat($new->record) }}">
+                                                   
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/AI/' . date('Y') .'/' .  Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
                                         </select>

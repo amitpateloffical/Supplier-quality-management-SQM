@@ -56,10 +56,10 @@
             border-radius: 20px 0px 0px 20px;
         }
 
-        /* #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(4) {
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(4) {
             border-radius: 0px 20px 20px 0px;
 
-        } */
+        }
         .new-moreinfo{
             width: 100%;
             border-radius: 5px;
@@ -109,13 +109,13 @@
                            
                         @elseif($extensionNew->stage == 3 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) ))
 
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                Approved
-                            </button> --}}
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
+                            </button>
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
                                 Approved
-                             </button>
-                                @if($extensionNew->parent_type == 'Deviation' || $extensionNew->parent_type == 'CAPA')
+                             </button> --}}
+                                {{-- @if($extensionNew->parent_type == 'Deviation' || $extensionNew->parent_type == 'CAPA')
                                     @if($count == 3)
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                             Send for CQA
@@ -126,18 +126,18 @@
                                             Send for CQA
                                         </button>
                                     @endif
-                                @endif
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                @endif --}}
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Reject
-                            </button>
+                            </button> --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
-                        @elseif($extensionNew->stage == 5 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
+                        {{-- @elseif($extensionNew->stage == 5 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds))) --}}
 
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                              CQA Approval Complete
-                            </button>
+                            </button> --}}
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button> --}}
@@ -173,12 +173,20 @@
                             @else
                                 <div class="">In Approved</div>
                             @endif
-                            <div style="display: none" class=""> In CQA Approval</div>
-
+                            @if ($extensionNew->stage >= 4)
+                            <div class="bg-danger">Close Done</div>
+                            
+                        @else
+                            <div class="">Close Done</div>
+                        @endif
+                            {{-- <div style="display: none" class=""> In CQA Approval</div> --}}
+                           {{-- 
                             @if ($extensionNew->stage == 4)
                                 <div class="bg-danger">Closed - Reject</div>
                                 <div style="display: none" class="">Closed - Done</div>
-                                <div style="display: none" class=""> In CQA Approval</div>
+                                @if ($count == 3)
+                                    <div style="display: none" class=""> In CQA Approval</div>
+                                @endif 
                             @elseif($extensionNew->stage == 1 || $extensionNew->stage == 2 || $extensionNew->stage == 3)
                                 <div class=""> Closed - Reject</div>
                             @else
@@ -190,13 +198,13 @@
                             @endif
                             @if ($extensionNew->stage >= 6)
                             <div class="bg-danger" style="display: none">Closed - Reject</div>
-                                @if($count >= 2)
+                                @if($count == 3)
                                     <div  class="active" > In CQA Approval</div>
                                 @else
                                     <div  class="active" style="display: none"> In CQA Approval</div>
                                 @endif
                                 <div class="bg-danger">Closed - Done</div>
-                            @endif
+                            @endif --}}
                         </div>
                     @endif
                 </div>
@@ -290,31 +298,28 @@
                                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                         name="reviewers" placeholder="Select Reviewers" >
                                         <option value="">-- Select --</option>
-                                        @if (!empty($users))
-                                            @foreach ($users as $lan)
-                                                {{-- @if(Helpers::checkUserRolesreviewer($lan)) --}}
-                                                    <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->users) selected @endif>
-                                                        {{ $lan->name }}
-                                                    </option>
-                                                {{-- @endif --}}
+                                        @if (!empty(Helpers::getHODDropdown()))
+                                            @foreach (Helpers::getHODDropdown() as $listHod)
+                                                <option value="{{ $listHod['id'] }}" @if ($listHod['id'] == $extensionNew->reviewers) selected @endif>
+                                                    {{ $listHod['name'] }}
+                                                </option>
                                             @endforeach
                                         @endif
                                     </select>
                                 </div>
                             </div>
+                            
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">QA approval </label>
                                     <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
                                         name="approvers" placeholder="Select Approvers" >
                                         <option value="">-- Select --</option>
-                                        @if (!empty($users))
-                                            @foreach ($users as $lan)
-                                                {{-- @if(Helpers::checkUserRolesApprovers($lan)) --}}
-                                                    <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->users) selected @endif>
-                                                        {{ $lan->name }}
-                                                    </option>
-                                                {{-- @endif --}}
+                                        @if (!empty(Helpers::getQADropdown()))
+                                            @foreach (Helpers::getQADropdown() as $lan)
+                                            <option value="{{ $lan['id'] }}" @if ($lan['id'] == $extensionNew->approvers) selected @endif>
+                                                {{ $lan['name'] }}
+                                            </option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -552,13 +557,13 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Activated By">Initiated By</label>
+                                <label for="Activated By">Submited By</label>
                                 <div class="static">{{ $extensionNew->submit_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Activated On">Initiated On</label>
+                                <label for="Activated On">Submited On</label>
                                 <div class="static">{{ $extensionNew->submit_on }}</div>
                             </div>
                         </div>
@@ -576,6 +581,18 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
+                                <label for=" Rejected By">More Info Required By</label>
+                                <div class="static">{{ $extensionNew->more_info_review_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Rejected On">More Info Required On</label>
+                                <div class="static">{{ $extensionNew->more_info_review_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
                                 <label for=" Rejected By">Approved By</label>
                                 <div class="static">{{ $extensionNew->submit_by_approved }}</div>
                             </div>
@@ -584,6 +601,18 @@
                             <div class="group-input">
                                 <label for="Rejected On">Approved On</label>
                                 <div class="static">{{ $extensionNew->submit_on_approved }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for=" Rejected By">More Info Required By</label>
+                                <div class="static">{{ $extensionNew->more_info_inapproved_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Rejected On">More Info Required On</label>
+                                <div class="static">{{ $extensionNew->more_info_inapproved_on }}</div>
                             </div>
                         </div>
 

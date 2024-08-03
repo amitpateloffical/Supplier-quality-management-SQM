@@ -87,9 +87,9 @@ class ExtensionNewController extends Controller
         $extensionNew->proposed_due_date = $request->proposed_due_date;
         $extensionNew->description = $request->description;
         $extensionNew->justification_reason = $request->justification_reason;
-        $extensionNew->file_attachment_extension = $request->file_attachment_extension;
+        // $extensionNew->file_attachment_extension = $request->file_attachment_extension;
         $extensionNew->reviewer_remarks = $request->reviewer_remarks;
-        $extensionNew->file_attachment_reviewer = $request->file_attachment_reviewer;
+        // $extensionNew->file_attachment_reviewer = $request->file_attachment_reviewer;
         $extensionNew->approver_remarks = $request->approver_remarks;
         $extensionNew->file_attachment_approver = $request->file_attachment_approver;
     
@@ -388,25 +388,23 @@ class ExtensionNewController extends Controller
 
     public function show(Request $request,$id){
         $extensionNew = extension_new::find($id);
-        $count = extension_new::where('parent_type' , 'Deviation')->get()->count();
-        $capaCount = extension_new::where('parent_type' , 'CAPA')->get()->count();
-
+        // $count = extension_new::where('parent_type' , 'Deviation')->get()->count();
+        // $capaCount = extension_new::where('parent_type' , 'CAPA')->get()->count();
          
-        $reviewers = DB::table('user_roles')
+        $hod = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', 89)
-                ->where('user_roles.q_m_s_roles_id', 2)
+                ->where('user_roles.q_m_s_roles_id', 4)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-                ->get();
-        $approvers = DB::table('user_roles')
+                ->distinct()->get();
+        $qa = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', 89)
-                ->where('user_roles.q_m_s_roles_id', 1)
+                ->where('user_roles.q_m_s_roles_id', 7)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-                ->get();
-        return view('frontend.extension.extension_view', compact('extensionNew','reviewers','capaCount','approvers','count'));
+                ->distinct()->get();
+
+        return view('frontend.extension.extension_view', compact('extensionNew','hod','qa'));
 
     }
 
@@ -426,9 +424,9 @@ class ExtensionNewController extends Controller
         $extensionNew->proposed_due_date = $request->proposed_due_date;
         $extensionNew->description = $request->description;
         $extensionNew->justification_reason = $request->justification_reason;
-        $extensionNew->file_attachment_extension = $request->file_attachment_extension;
+        // $extensionNew->file_attachment_extension = $request->file_attachment_extension;
         $extensionNew->reviewer_remarks = $request->reviewer_remarks;
-        $extensionNew->file_attachment_reviewer = $request->file_attachment_reviewer;
+        // $extensionNew->file_attachment_reviewer = $request->file_attachment_reviewer;
         $extensionNew->approver_remarks = $request->approver_remarks;
         $extensionNew->file_attachment_approver = $request->file_attachment_approver;
         
@@ -960,11 +958,11 @@ class ExtensionNewController extends Controller
                 if ($extensionNew->stage == 3) {
 
                     $extensionNew->stage = "4";
-                    $extensionNew->status = "Closed - Reject";
+                    $extensionNew->status = "Closed - done";
 
 
-                    $extensionNew->submit_by_inapproved = Auth::user()->name;
-                    $extensionNew->submit_on_inapproved = Carbon::now()->format('d-M-Y');
+                    $extensionNew->submit_by_approved = Auth::user()->name;
+                    $extensionNew->submit_on_approved = Carbon::now()->format('d-M-Y');
                     $extensionNew->submit_commen_inapproved = $request->comment;
 
                     $history = new ExtensionNewAuditTrail();
@@ -1135,39 +1133,39 @@ public function sendCQA(Request $request,$id)
         ], 500);
     }
 }
-public static function sendApproved(Request $request,$id)
-{
-    try {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $extensionNew = extension_new::find($id);
-            $lastDocument = extension_new::find($id);
+// public static function sendApproved(Request $request,$id)
+// {
+//     try {
+//         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+//             $extensionNew = extension_new::find($id);
+//             $lastDocument = extension_new::find($id);
 
-            if ($extensionNew->stage == 3) {
+//             if ($extensionNew->stage == 3) {
 
-                    $extensionNew->stage = "6";
-                    $extensionNew->status = "Closed - Done";
+//                     $extensionNew->stage = "6";
+//                     $extensionNew->status = "Closed - Done";
 
 
-                    $extensionNew->submit_by_approved = Auth::user()->name;
-                    $extensionNew->submit_on_approved = Carbon::now()->format('d-M-Y');
-                    $extensionNew->submit_comment_approved = $request->comment;
+//                     $extensionNew->submit_by_approved = Auth::user()->name;
+//                     $extensionNew->submit_on_approved = Carbon::now()->format('d-M-Y');
+//                     $extensionNew->submit_comment_approved = $request->comment;
 
                     
-                    $extensionNew->update();
-                    toastr()->success('Document Sent');
-                    return back();
-                }
-        } else {
-            toastr()->error('E-signature Not match');
-            return back();
-        }
-    } catch (\Throwable $th) {
-        return response()->json([
-            'success' => false,
-            'message' => $th->getMessage()
-        ], 500);
-    }
-}
+//                     $extensionNew->update();
+//                     toastr()->success('Document Sent');
+//                     return back();
+//                 }
+//         } else {
+//             toastr()->error('E-signature Not match');
+//             return back();
+//         }
+//     } catch (\Throwable $th) {
+//         return response()->json([
+//             'success' => false,
+//             'message' => $th->getMessage()
+//         ], 500);
+//     }
+// }
     
     public static function singleReport($id)
     {

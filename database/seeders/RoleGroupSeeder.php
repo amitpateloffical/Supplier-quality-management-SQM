@@ -23,16 +23,16 @@ class RoleGroupSeeder extends Seeder
         ];
 
         $processes_roles = [
-            'Supplier' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer', 'View Only', 'FP'],
-            'Supplier Audit' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer', 'View Only', 'FP'],
-            'Risk Assessment' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer', 'View Only', 'FP'],
-            'Change Control' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer', 'View Only', 'FP'],
-            'Action Item' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer', 'View Only', 'FP'],
-            'Root Cause Analysis' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer', 'View Only', 'FP'],
-            'CAPA' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer', 'View Only', 'FP'],
-            'SCAR' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer', 'View Only', 'FP'],
-            'Supplier Site' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer', 'View Only', 'FP'],
-            'Deviation' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer', 'View Only', 'FP']
+            'Supplier' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
+            'Supplier Audit' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
+            'Risk Assessment' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
+            'Change Control' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
+            'Action Item' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
+            'Root Cause Analysis' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
+            'CAPA' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
+            'SCAR' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
+            'Supplier Site' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
+            'Deviation' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP']
         ];
 
         $start_from_id = 1; // Initialize your starting ID

@@ -212,9 +212,9 @@
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">
                             @if ($data->assign_to)
-                            {{ $data->assign_to }}
+                            {{--{{ Helpers::getUserList($data->assign_to) }}--}}
 
-                                {{-- {{ Helpers::getInitiatorName($data->assign_to) }} --}}
+                            {{ Helpers::getInitiatorName($data->assign_to) }}
                             @else
                                 Not Applicable
                             @endif
@@ -304,11 +304,13 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+
 
                     <div class="block-head">
                         Supplier Response
                     </div>
+                    <table>
+
                     <tr>
                         <th class="w-20">Recommended Action</th>
                         <td class="w-80" colspan="3">

@@ -56,7 +56,7 @@ return new class extends Migration
             $table->string('customers')->nullable();
             $table->tinyText('deviation_id')->nullable();
             $table->longText('QAInitialRemark')->nullable();
-           
+
             $table->longText('Investigation_Summary')->nullable();
             $table->longText('Impact_assessment')->nullable();
             $table->longText('Root_cause')->nullable();
@@ -91,7 +91,7 @@ return new class extends Migration
             $table->string('CFT_Review_Complete_By')->nullable();
             $table->string('CFT_Review_Complete_On')->nullable();
             $table->longText('CFT_Review_Comments')->nullable();
-             
+
             $table->string('qa_more_info_required_by')->nullable();
             $table->string('qa_more_info_required_on')->nullable();
             $table->string('Approved_By')->nullable();

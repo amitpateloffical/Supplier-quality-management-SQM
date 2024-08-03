@@ -381,14 +381,19 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="Supplier Site">Supplier Site</label>
                                     <select name="supplier_site" @if($data->stage >= 6) disabled @endif>
-                                        <option value="">Select Supplier Site</option>
-                                        @if(!empty($distributionSites))
+                                        <option value="">Enter your selection</option>
+                                        <option value="supplier-site-1" @if($data->supplier_site == 'supplier-site-1') selected @endif>Supplier Site-1</option>
+                                        <option value="supplier-site-2" @if($data->supplier_site == 'supplier-site-2') selected @endif>Supplier Site-2</option>
+                                        <option value="supplier-site-3" @if($data->supplier_site == 'supplier-site-3') selected @endif>Supplier Site-3</option>
+                                        <option value="supplier-site-4" @if($data->supplier_site == 'supplier-site-4') selected @endif>Supplier Site-4</option>
+                                        <option value="supplier-site-5" @if($data->supplier_site == 'supplier-site-5') selected @endif>Supplier Site-5</option>
+                                        {{--@if(!empty($distributionSites))
                                             @foreach($distributionSites as $supplier)
                                                 <option value="{{ $supplier->distribution_sites }}" @if($data->supplier_site == $supplier->distribution_sites) selected @endif>{{ $supplier->distribution_sites }}</option>
                                             @endforeach
                                         @else
                                             <option value="">N/A</option>
-                                        @endif
+                                        @endif--}}
                                     </select>
                                 </div>
                             </div>
@@ -397,14 +402,19 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="Supplier Product">Supplier Product</label>
                                     <select name="supplier_product" @if($data->stage >= 6) disabled @endif>
-                                        <option value="">Select Supplier Product</option>
-                                        @if(!empty($supplierProduct))
+                                        <option value="">Enter your selection</option>
+                                        <option value="supplier-product-1" @if($data->supplier_product == 'supplier-product-1') selected @endif>Supplier Product-1</option>
+                                        <option value="supplier-product-2" @if($data->supplier_product == 'supplier-product-2') selected @endif>Supplier Product-2</option>
+                                        <option value="supplier-product-3" @if($data->supplier_product == 'supplier-product-3') selected @endif>Supplier Product-3</option>
+                                        <option value="supplier-product-4" @if($data->supplier_product == 'supplier-product-4') selected @endif>Supplier Product-4</option>
+                                        <option value="supplier-product-5" @if($data->supplier_product == 'supplier-product-5') selected @endif>Supplier Product-5</option>
+                                        {{--@if(!empty($supplierProduct))
                                             @foreach($supplierProduct as $supplier)
                                                 <option value="{{ $supplier->supplier_products }}" @if($data->supplier_product == $supplier->supplier_products) selected @endif>{{ $supplier->supplier_products }}</option>
                                             @endforeach
                                         @else
                                             <option value="">N/A</option>
-                                        @endif
+                                        @endif--}}
                                     </select>
                                 </div>
                             </div>
@@ -668,6 +678,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <div class="static">{{ $data->approved_comment }}</div>
                                 </div>
                             </div>
+
+                            <div class="button-block">
+                                {{--<button type="submit" class="saveButton">Save</button>--}}
+                                <button type="button" class="nextButton" onclick="previousStep()">Back</button>
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit</a></button>
+                            </div>
+
                         </div>
                     </div>
                 </div>

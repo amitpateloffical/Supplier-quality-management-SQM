@@ -295,7 +295,7 @@
                                     {{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}</div>
                                 <div style="margin-top: 5px;">
                                     <strong>Performed On :</strong>
-                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d/M/Y') : 'Not Applicable' }}
+                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d/M/Y H:i:s') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     <strong>Comments :</strong>

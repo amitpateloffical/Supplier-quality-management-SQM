@@ -142,7 +142,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Signatures</button>
             </div>
 
-            <form action="{{ route('observationstore') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ url('rcms/observationstore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
                     @if (!empty($parent_id))
@@ -165,8 +165,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
-                                        <input readonly type="text" name="division_id"
-                                            value="{{ Helpers::getDivisionName($divisionId) }}">
+                                        <input readonly type="text" name="division_id" value="{{ Helpers::getDivisionName($divisionId) }}">
                                         <input type="hidden" name="division_id" value="{{ $divisionId }}">
                                     </div>
                                 </div>
@@ -184,17 +183,25 @@
                                     </div>
                                 </div>
 
+
+
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="assign_to1">Assigned To</label>
-                                        <select name="assign_to">
+                                        <label for="assign_to">Assigned To <span class="text-danger"></span></label>
+                                         <select id="assign_to" name="assign_to">
                                             <option value="">-- Select --</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endforeach
+                                             @if (!empty($users))
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                @endforeach
+                                            @endif
+
                                         </select>
                                     </div>
                                 </div>
+
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date_due">Date Due</label>
@@ -268,14 +275,16 @@
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
-                                        characters remaining
-                                        <div style="position: relative;">
-                                            <input class="mic-input" id="docname" type="text" name="short_description"
-                                                maxlength="255" required>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                                  character
+
+                                                  <div class="relative-container">
+                                            <textarea name="short_description" id="short_description" cols="30" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
+                                    </div>
+
+
 
                                     </div>
                                 </div>
@@ -454,22 +463,24 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="non_compliance">Non Compliance</label>
-                                        <div style="position: relative;">
-                                            <textarea class="mic-input" name="non_compliance"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+
+                                        <div class="relative-container">
+                                            <input id="docname" class="mic-input" type="text" name="non_compliance"
+                                                maxlength="255">
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="recommend_action">Recommended Action</label>
-                                        <div style="position: relative;">
-                                            <textarea class="mic-input" name="recommend_action"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+
+                                        <div class="relative-container">
+                                            <textarea name="recommend_action" id="recommend_action" cols="30" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
@@ -527,35 +538,42 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="date_due"> Due Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="capa_date_due" id="date_due" readonly
-                                                placeholder="DD-MM-YYYY" />
+                                            <input type="text" name="capa_date_due" id="date_due" readonly placeholder="DD-MM-YYYY" />
                                             <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 id="date_due_checkdate" class="hide-input"
                                                 oninput="handleDateInput(this, 'date_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date_due">Date Due</label>
                                         <input type="date" name="capa_date_due">
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6">
+
+                                <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="assign_to2">Assigned To</label>
-                                        <select name="assign_to2">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endforeach
+                                        <label for="Assign To">Assigned To <span class="text-danger"></span>
+                                        </label>
+                                        <select id="assign_to2" name="assign_to2">
+                                            <option value="">Select a value</option>
+                                            @if (!empty($users))
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
+
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="cro_vendor">CRO/Vendor</label>
@@ -649,11 +667,11 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="comments">Comments</label>
-                                        <div style="position: relative;">
-                                            <textarea class="mic-input" name="comments"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+
+                                        <div class="relative-container">
+                                            <textarea name="comments" id="comments" cols="30" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
@@ -672,6 +690,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="sub-head">Impact Analysis</div>
+
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -683,16 +702,17 @@
                                             <option value="Low">Low</option>
                                             <option value="None">None</option>
                                         </select>
+
+
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="impact_analysis">Impact Analysis</label>
-                                        <div style="position: relative;">
-                                            <textarea class="mic-input" name="impact_analysis"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                        <div class="relative-container">
+                                            <textarea name="impact_analysis" id="impact_analysis" cols="30" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
@@ -794,11 +814,10 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>
-                                        <div style="position: relative;">
-                                            <textarea class="mic-input" name="action_taken"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                        <div class="relative-container">
+                                            <textarea name="action_taken" id="action_taken" cols="30" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
@@ -836,9 +855,8 @@
                                 </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="attach_files">Attached Files</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
+                                        <label for="attach_files">Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="attach_files2"></div>
                                             <div class="add-btn">
@@ -858,11 +876,10 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="response_summary">Response Summary</label>
-                                        <div style="position: relative;">
-                                            <textarea class="mic-input" name="response_summary"></textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                        <div class="relative-container">
+                                            <textarea name="response_summary" id="response_summary" cols="30" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>

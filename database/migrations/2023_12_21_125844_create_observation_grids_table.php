@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('action');
             $table->string('responsible');
             $table->string('deadline');
-            $table->string('item_status');
+            $table->longText('item_status');
             $table->timestamps();
         });
     }

@@ -230,23 +230,19 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Division Code"><b>Division Code</b></label>
-                                                    <input disabled type="text" name="division_code"
-                                                        value=" {{ Helpers::getDivisionName($data->division_id) }}">
-                                                
+                                                    <input disabled type="text" name="division_code" value=" {{ Helpers::getDivisionName($data->division_id) }}">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator">Initiator</label>
-                                                    <div class="static"><input disabled type="text"
-                                                            value="{{ Helpers::getInitiatorName($data->initiator_id) }}"></div>
+                                                    <div class="static"><input disabled type="text" value="{{ Helpers::getInitiatorName($data->initiator_id) }}"></div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="date_initiation">Date of Initiation</label>
-                                                    <div class="static"><input disabled type="text"
-                                                            value="{{ Helpers::getdateFormat($data->intiation_date) }}"></div>
+                                                    <div class="static"><input disabled type="text" value="{{ Helpers::getdateFormat($data->intiation_date) }}"></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

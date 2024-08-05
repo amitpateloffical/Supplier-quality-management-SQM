@@ -1643,19 +1643,19 @@
                                             <div class="col-lg-3">
                                                 <div class="group-input">
                                                     <label for="QA_Review_Complete_By">Pending CFT Review Completed By</label>
-                                                    <div class="static"> {{  $data->cft_review_by }}</div>
+                                                    <div class="static"> {{  $data->cftNot_required_by }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="group-input">
                                                     <label for="QA_Review_Complete_On">Pending CFT Review Completed On</label>
-                                                    <div class="static">{{  $data->cft_review_on }}</div>
+                                                    <div class="static">{{  $data->cftNot_required_on }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="QA_Review_Complete_On">Pending CFT Review Completed Comment</label>
-                                                    <div class="static">{{  $data->cft_review_comment }}</div>
+                                                    <div class="static">{{  $data->cftNot_required_comment }}</div>
                                                 </div>
                                             </div>
 
@@ -1702,7 +1702,7 @@
                                             <!-- <button type="submit" class="saveButton">Save</button> -->
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
-                                            <button type="submit">Submit</button>
+                                            <!-- <button type="submit">Submit</button> -->
                                             <button type="button"> <a class="text-white"
                                             href="{{ url('rcms/qms-dashboard') }}">Exit</a> </button>
                                         </div>

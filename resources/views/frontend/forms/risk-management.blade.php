@@ -1848,6 +1848,25 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="group-input">
+                                            <label for="More Information Required By">More Information Required By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="More Information Required On">More Information Required On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="More Information Required Comment">More Information Required
+                                                Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
                                             <label for="Evaluation Complete By">Evaluation Complete By</label>
                                             <div class="static"></div>
                                         </div>
@@ -1866,6 +1885,26 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="group-input">
+                                            <label for="Request More Info By">Request More Info By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Request More Info On">Request More Info On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Request More Info Comment">Request More Info
+                                                Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
                                             <label for="Action Plan Completed By">Action Plan Completed By</label>
                                             <div class="static"></div>
                                         </div>
@@ -1879,6 +1918,25 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Action Plan Completed Comment">Action Plan Completed
+                                                Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Reject Action Plan By">Reject Action Plan By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Reject Action Plan On">Reject Action Plan On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Reject Action Plan Comment">Reject Action Plan
                                                 Comment</label>
                                             <div class="static"></div>
                                         </div>
@@ -1935,6 +1993,43 @@
                                         <div class="group-input">
                                             <label for="All Actions Completed Comment">All Actions Completed
                                                 Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Request More Info By">Request More Info By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Request More Info On">Request More Info On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Request More Info Comment">Request More Info
+                                                Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="More Actions Needed By">More Actions Needed By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="More Actions Needed On">More Actions Needed On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="More Actions Needed Comment">More Actions Needed Comment</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
@@ -2169,7 +2264,7 @@
                             '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
                             '"></td>' +
                             '<td><input type="text" name="mitigation_steps[]"></td>' +
-                            // '<td><input type="date" name="deadline2[]"></td>' 
+                            // '<td><input type="date" name="deadline2[]"></td>'
                             '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' +
                             serialNumber +
                             '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' +

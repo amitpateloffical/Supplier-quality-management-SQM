@@ -2174,8 +2174,8 @@
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option
-                                                        {{ $data->occurrence == 'Extremely Unlikely' ? 'selected' : '' }}
-                                                        value="Extremely Unlikely">Extremely Unlikely</option>
+                                                        {{ $data->occurrence == '5' ? 'selected' : '' }}
+                                                        value="5">Extremely Unlikely</option>
                                                     <option {{ $data->occurrence == '4' ? 'selected' : '' }}
                                                         value="4">Rare</option>
                                                     <option {{ $data->occurrence == '3' ? 'selected' : '' }}
@@ -2700,6 +2700,27 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="group-input">
+                                                <label for="More Information Required By">More Information Required
+                                                    By</label>
+                                                <div class="static">{{ $data->analysis_more_info_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="More Information Required On">More Information Required
+                                                    On</label>
+                                                <div class="static">{{ $data->analysis_more_info_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="More Information Required Comment">More Information Required
+                                                    Comment</label>
+                                                <div class="static">{{ $data->analysis_more_info_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
                                                 <label for="Evaluation Complete By">Evaluation Complete By</label>
                                                 <div class="static">{{ $data->evaluated_by }}</div>
                                             </div>
@@ -2719,6 +2740,26 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="group-input">
+                                                <label for="Request More Info By">Request More Info By</label>
+                                                <div class="static">{{ $data->request_more_info_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Request More Info On">Request More Info On</label>
+                                                <div class="static">{{ $data->request_more_info_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Request More Info Comment">Request More Info
+                                                    Comment</label>
+                                                <div class="static">{{ $data->request_more_info_comment }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
                                                 <label for="Action Plan Completed By">Action Plan Completed By</label>
                                                 <div class="static">{{ $data->plan_approved_by }}</div>
                                             </div>
@@ -2734,6 +2775,25 @@
                                                 <label for="Action Plan Completed Comment">Action Plan Completed
                                                     Comment</label>
                                                 <div class="static">{{ $data->plan_approved_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Reject Action Plan By">Reject Action Plan By</label>
+                                                <div class="static">{{ $data->reject_action_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Reject Action Plan On">Reject Action Plan On</label>
+                                                <div class="static">{{ $data->reject_action_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Reject Action Plan Comment">Reject Action Plan
+                                                    Comment</label>
+                                                <div class="static">{{ $data->reject_action_comment }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -2797,6 +2857,43 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="group-input">
+                                                <label for="Request More Info By">Request More Info By</label>
+                                                <div class="static">{{ $data->action_request_action_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Request More Info On">Request More Info On</label>
+                                                <div class="static">{{ $data->action_request_action_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Request More Info Comment">Request More Info
+                                                    Comment</label>
+                                                <div class="static">{{ $data->action_request_action_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="More Actions Needed By">More Actions Needed By</label>
+                                                <div class="static">{{ $data->more_action_needed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="More Actions Needed On">More Actions Needed On</label>
+                                                <div class="static">{{ $data->more_action_needed_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="More Actions Needed Comment">More Actions Needed Comment</label>
+                                                <div class="static">{{ $data->more_action_needed_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
                                                 <label for="Residual Risk Evaluation Completed By">Residual Risk
                                                     Evaluation Completed By</label>
                                                 <div class="static">{{ $data->residual_risk_completed_by }}</div>
@@ -2829,6 +2926,8 @@
                                                 <div class="static">{{ $data->risk_analysis_completed_on }}</div>
                                             </div>
                                         </div> --}}
+
+
 
                                         <div class="col-lg-3">
                                             <div class="group-input">
@@ -2901,9 +3000,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                    <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2948,9 +3047,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2995,9 +3094,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>

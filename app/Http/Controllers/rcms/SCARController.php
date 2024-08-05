@@ -916,7 +916,7 @@ class SCARController extends Controller
                     $scar->submitted_comment = $request->comments;
                     $history = new ScarAuditTrail();
                     $history->scar_id = $id;
-                    $history->activity_type = 'Submited By, Submited On';
+                    $history->activity_type = 'Submitted By, Submitted On';
                     if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
                         $history->previous = "";
                     } else {
@@ -934,7 +934,7 @@ class SCARController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = '';
                     if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
-                        $history->action_name = 'Create';
+                        $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
                     }
@@ -969,7 +969,7 @@ class SCARController extends Controller
 
                     $history = new ScarAuditTrail();
                     $history->scar_id = $id;
-                    $history->activity_type = 'Submited By, Submited On';
+                    $history->activity_type = 'Acknowledge By, Acknowledge On';
                     if (is_null($lastDocument->acknowledge_by) || $lastDocument->acknowledge_by === '') {
                         $history->previous = "";
                     } else {
@@ -987,7 +987,7 @@ class SCARController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     if (is_null($lastDocument->acknowledge_by) || $lastDocument->acknowledge_by === '') {
-                        $history->action_name = 'Create';
+                        $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
                     }
@@ -1022,15 +1022,16 @@ class SCARController extends Controller
 
                 $history = new ScarAuditTrail();
                     $history->scar_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->activity_type = 'Submited By, Submited On';
-                    if (is_null($lastDocument->workin_progress_by) || $lastDocument->workin_progress_by === '') {
+                    // $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'Work in Progress By, Work in Progress On';
+                    if (is_null($lastDocument->audit_schedule_by) || $lastDocument->audit_schedule_by === '') {
                         $history->previous = "";
                     } else {
-                        $history->previous = $lastDocument->workin_progress_by . ' , ' . $lastDocument->workin_progress_on;
+                        $history->previous = $lastDocument->audit_schedule_by . ' , ' . $lastDocument->workin_progress_on;
                     }
-                    $history->current = $scar->workin_progress_by . ' , ' .  $scar->workin_progress_on;
-                   // $history->current = "Not Applicable";
+                    $history->current = $scar->audit_schedule_by . ' , ' .  $scar->workin_progress_on;
+                   // $history->current = "Not Applicable";  
+                   $history->action = 'Work in Progress';
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -1040,7 +1041,7 @@ class SCARController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     if (is_null($lastDocument->workin_progress_by) || $lastDocument->workin_progress_by === '') {
-                        $history->action_name = 'Create';
+                        $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
                     }
@@ -1075,14 +1076,14 @@ class SCARController extends Controller
 
                 $history = new ScarAuditTrail();
                     $history->scar_id = $id;
-                   // $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'response_by,response_on';
                     if (is_null($lastDocument->response_submitted_by) || $lastDocument->response_submitted_by === '') {
                         $history->previous = "";
                     } else {
                         $history->previous = $lastDocument->response_submitted_by . ' , ' . $lastDocument->response_submitted_on;
                     }
                     $history->current =  $scar->response_submitted_by . ' , ' .  $scar->response_submitted_on;
-                   // $history->action = 'Approve';
+                    $history->action = 'Approve';
                    // $history->current = $scar->response_submitted_by;
                     $history->comment = $request->comments;
                     
@@ -1094,7 +1095,7 @@ class SCARController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     if (is_null($lastDocument->response_submitted_by) || $lastDocument->response_submitted_by === '') {
-                        $history->action_name = 'Create';
+                        $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
                     }
@@ -1125,10 +1126,9 @@ class SCARController extends Controller
                 $scar->approved_by = Auth::user()->name;
                 $scar->approved_on = Carbon::now()->format('d-M-Y');
                 $scar->approved_comment = $request->comments;
-
                 $history = new ScarAuditTrail();
-                    $history->scar_id = $id;
-                  
+                $history->scar_id = $id;
+                $history->activity_type = 'Approve By, Approve On';
                     if (is_null($lastDocument->approved_by) || $lastDocument->approved_by === '') {
                         $history->previous = "";
                     } else {
@@ -1146,7 +1146,7 @@ class SCARController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     if (is_null($lastDocument->approved_by) || $lastDocument->approved_by === '') {
-                        $history->action_name = 'Create';
+                        $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
                     }

@@ -178,18 +178,29 @@
                         </tr>
                     </table>
 
+                    @php
+                        $userRoles = DB::table('user_roles')
+                            ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])
+                            ->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                        $auditCollect = DB::table('audit_reviewers_details')
+                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
+                            ->latest()
+                            ->first();
+                    @endphp
+                    
                  
                     <div class="d-fle justify-content-between align-items-center">
-                        @if ($document)
+                        @if ($auditCollect)
                             <div style="color: green; font-weight: 600">The Audit Trail has been reviewed.</div>
                         @else
                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                         @endif
                         <div class="buttons-new">
                             @if ($document->stage < 6)
-                                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                     Review
-                                </button> --}}
+                                </button>
                             @endif
 
                             <button class="button_theme1"><a class="text-white"
@@ -199,6 +210,106 @@
                             <button class="button_theme1" onclick="window.print();">
                                 Print
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
+                                View
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="auditViewers">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <style>
+                                    .validationClass {
+                                        margin-left: 100px
+                                    }
+                                </style>
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Audit Reviewers Details</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                @php
+                                    $reviewer = DB::table('audit_reviewers_details')
+                                        ->where(['doc_id' => $document->id, 'type' => 'Supplier-Audit'])
+                                        ->get();
+                                @endphp
+                                <div class="table-responsive" style="padding: 20px;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Review By</th>
+                                                <th>Review On</th>
+                                                <th>Comment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if ($reviewer && count($reviewer) > 0)
+                                                @foreach ($reviewer as $review)
+                                                    <tr>
+                                                        <td>{{ $review->reviewer_comment_by }}</td>
+                                                        <td>{{ Helpers::getdateFormat($review->reviewer_comment_on) }}</td>
+                                                        <td>{{ $review->reviewer_comment }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="9">No results available</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="auditReviewer">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <style>
+                                    .validationClass {
+                                        margin-left: 100px
+                                    }
+                                </style>
+
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Audit Reviewers</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                    <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div class="group-input">
+                                                <label for="Reviewer commnet">Reviewer Comment <span id=""
+                                                        class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
+                                            </div>
+                                            <div class="group-input">
+                                                <label for="Reviewer Completed By">Reviewer Completed By</label>
+                                                <input disabled type="text" class="form-control"
+                                                    name="reviewer_completed_by" id="reviewer_completed_by"
+                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
+                                            </div>
+                                            <div class="group-input">
+                                                <label for="Reviewer Completed on">Reviewer Completed On</label>
+                                                <input disabled type="text" class="form-control"
+                                                    name="reviewer_completed_on" id="reviewer_completed_on"
+                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                            </div>
+                                            <input type="hidden" id="type" name="type" value="Supplier-Audit">
+                                        </div>
+                                        <div class="modal-footer">
+                                            {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
+                                            <button type="button" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+
+                            </div>
                         </div>
                     </div>
 
@@ -209,7 +320,7 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong>{{ Helpers::divisionNameForQMS($document->division_id) }}/SA/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
+                            <div> <strong>Record ID.</strong>{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
 
                                                <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                     :{{ $document->initiator ? $document->initiator : '' }}</div>

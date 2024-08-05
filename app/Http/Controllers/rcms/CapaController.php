@@ -306,6 +306,39 @@ class CapaController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+        if (!empty($capa->initiator_Group)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Initiator Group';
+            $history->previous = "Null";
+            $history->current = $capa->initiator_Group;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($capa->initiator_group_code)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Initiator Group Code';
+            $history->previous = "Null";
+            $history->current = $capa->initiator_group_code;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
         if (!empty($capa->intiation_date)) {
             $history = new CapaAuditTrial();
@@ -748,6 +781,7 @@ class CapaController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+        
 
         if (!empty($capa->site_number)) {
             $history = new CapaAuditTrial();
@@ -823,6 +857,23 @@ class CapaController extends Controller
             $history->activity_type = 'General Deviation';
             $history->previous = "Null";
             $history->current = $capa->general_deviation;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($capa->capa_type)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'CAPA Type';
+            $history->previous = "Null";
+            $history->current = $capa->capa_type;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1197,7 +1248,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1219,7 +1270,12 @@ class CapaController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->change_to =   "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+        //$history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+        if (is_null($history->initiated_through_req) || $history->initiated_through_req === '') {
+            $history->action_name = 'Update';
+        } else {
+            $history->action_name = 'New';
+        }
         $history->save();
     }
 
@@ -1241,9 +1297,51 @@ class CapaController extends Controller
     $history->origin_state = $lastDocument->status;
     $history->change_to =   "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+    $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
     $history->save();
 }
+
+            if ($lastDocument->initiator_Group !=  $capa->initiator_Group || ! empty($request->initiator_Group_comment)) {
+                $lastDataAudittrail  = CapaAuditTrial::where('capa_id', $capa->id)
+                    ->where('activity_type', 'Initiator Group')
+                    ->exists();
+
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id;
+            $history->activity_type = 'Initiator Group';
+            $history->previous = $lastDocument->initiator_Group;
+            $history->current = $capa->initiator_Group;
+            $history->comment = $request->initiator_Group_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
+            $history->save();
+            }
+
+            if ($lastDocument->initiator_group_code !=  $capa->initiator_group_code || ! empty($request->initiator_group_code_comment)) {
+                $lastDataAudittrail  = CapaAuditTrial::where('capa_id', $capa->id)
+                    ->where('activity_type', 'Initiator Group Code')
+                    ->exists();
+
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id;
+            $history->activity_type = 'Initiator Group Code';
+            $history->previous = $lastDocument->initiator_group_code;
+            $history->current = $capa->initiator_group_code;
+            $history->comment = $request->initiator_group_code_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
+            $history->save();
+            }
 
 
               if ($lastDocument->short_description !=  $capa->short_description || ! empty($request->short_description_comment)) {
@@ -1263,7 +1361,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1285,7 +1383,7 @@ class CapaController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->change_to =   "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+        $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
         $history->save();
     }
 
@@ -1306,7 +1404,7 @@ class CapaController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->change_to =   "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+        $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
         $history->save();
         }
         if ($lastDocument->initiated_through !=  $capa->initiated_through || ! empty($request->initiated_through_comment)) {
@@ -1326,7 +1424,7 @@ class CapaController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->change_to =   "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+        $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
         $history->save();
     }
 
@@ -1350,7 +1448,7 @@ class CapaController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->change_to =   "Not Applicable";
         $history->change_from = $lastDocument->status;
-        $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+        $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
         $history->save();
     }
 
@@ -1372,7 +1470,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1397,7 +1495,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1422,7 +1520,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1459,7 +1557,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1480,7 +1578,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1501,7 +1599,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
 
             $history->save();
         }
@@ -1528,7 +1626,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1550,7 +1648,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1600,7 +1698,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1621,7 +1719,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1642,7 +1740,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1663,7 +1761,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1685,7 +1783,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1706,7 +1804,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1729,7 +1827,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1750,9 +1848,32 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
+
+        if ($lastDocument->capa_type !=  $capa->capa_type || ! empty($request->capa_type_comment)) {
+            $lastDataAudittrail  = CapaAuditTrial::where('capa_id', $capa->id)
+                  ->where('activity_type', '  Corrective Action')
+                  ->exists();
+
+
+        $history = new CapaAuditTrial();
+        $history->capa_id = $id;
+        $history->activity_type = 'CAPA Type';
+        $history->previous = $lastDocument->capa_type;
+        $history->current = $capa->capa_type;
+        $history->comment = $request->capa_type_comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+        $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
+        $history->save();
+    }
+
 
             if ($lastDocument->corrective_action !=  $capa->corrective_action || ! empty($request->corrective_action_comment)) {
                 $lastDataAudittrail  = CapaAuditTrial::where('capa_id', $capa->id)
@@ -1772,7 +1893,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1794,7 +1915,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1816,7 +1937,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1838,7 +1959,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1860,7 +1981,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1881,7 +2002,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
 
@@ -1893,7 +2014,7 @@ class CapaController extends Controller
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = '  Closure Attachment';
+            $history->activity_type = 'Closure Attachment';
             $history->previous = $lastDocument->closure_attachment;
             $history->current = $capa->closure_attachment;
             $history->comment = $request->closure_attachment_comment;
@@ -1903,7 +2024,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
+            $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             $history->save();
         }
         toastr()->success("Record is updated Successfully");
@@ -2487,7 +2608,22 @@ class CapaController extends Controller
             $parent_name = "CAPA";
 
             return view('frontend.forms.action-item', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
-        } else {
+        }
+        
+        if ($request->child_type == "RCA") {
+            $parent_due_date = "";
+            $parent_id = $id;
+            $parent_name = $request->parent_name;
+            if ($request->due_date) {
+                $due_date = $request->due_date;
+            }
+            $parentDivisionId = Capa::where('id', $id)->value('division_id');
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            return view('frontend.forms.root-cause-analysis', compact('parent_id','parent_record','parentDivisionId', 'parent_name','parent_type', 'record_number', 'parent_due_date','due_date'));
+        }
+
+        else {
             return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
     }

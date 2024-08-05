@@ -254,11 +254,11 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Project/Study</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">CAPA Details</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional Information</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CAPA Closure</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Closure</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
             </div>
 
             <form action="{{ route('capastore') }}" method="post" enctype="multipart/form-data">
@@ -1088,79 +1088,10 @@
                     </div>
                     
                     <!-- Project Study content****************************** -->
-                    <div id="CCForm3" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Project Details Application">Project Details Application</label>
-                                        <select name="project_details_application">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-                    
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Protocol/Study Number">Initiator Group</label>
-                                        <select name="project_initiator_group">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-                    
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Site Number">Site Number</label>
-                                        <input type="text" name="site_number">
-                                    </div>
-                                </div>
-                    
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Subject Number">Subject Number</label>
-                                        <input type="text" name="subject_number">
-                                    </div>
-                                </div>
-                    
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Subject Initials">Subject Initials</label>
-                                        <input type="text" name="subject_initials">
-                                    </div>
-                                </div>
-                    
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Sponsor">Sponsor</label>
-                                        <input type="text" name="sponsor">
-                                    </div>
-                                </div>
-                    
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="General Deviation">General Deviation</label>
-                                        <textarea name="general_deviation"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                    
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
-                    
+                  
 
                     <!-- CAPA Details content ****************************-->
-                    <div id="CCForm4" class="inner-block cctabcontent">
+                    <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- CAPA Type Selection -->
@@ -1408,7 +1339,7 @@
                     
                     <!-- CAPA Closure content -->
                     
-                    <div id="CCForm7" class="inner-block cctabcontent">
+                    <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12">
@@ -1490,14 +1421,14 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> -->
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
                     </div>
                     <!-- Activity Log content -->
-                    <div id="CCForm8" class="inner-block cctabcontent">
+                    <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-6">

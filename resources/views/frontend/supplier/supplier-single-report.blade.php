@@ -17,6 +17,10 @@
         min-height: 100vh;
     }
 
+    .imageContainer p img{
+                    width: 600px !important;
+                    height: 300px;
+    }
     .w-10 {
         width: 10%;
     }
@@ -547,7 +551,7 @@
 
                                 
                       
-                        <label class="Summer" for="">Justification for Request</label>
+                        <label class="Summer imageContainer" for="">Justification for Request</label>
                         <div>
                         @if ($data->request_justification)
                             {!! $data->request_justification !!}
@@ -617,7 +621,7 @@
 
                     <tr>
                         <th class="w-20">Remark</th>
-                        <td class="w-80" colspan="3">
+                        <td class="w-80 imageContainer" colspan="3">
                             @if ($data->cqa_remark)
                                 {{ $data->cqa_remark }}
                             @else
@@ -647,7 +651,7 @@
                     </tr>                    
                     
                     <tr>
-                        <th class="w-20">Justification</th>
+                        <th class="w-20 imageContainer">Justification</th>
                         <td class="w-80" colspan="3">
                             @if ($data->justification)
                                 {{ $data->justification }}
@@ -740,7 +744,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Justification</th>
+                        <th class="w-20 Justification">Justification</th>
                         <td class="w-80" colspan="3">
                             @if ($data->justification)
                                 {{ $data->justification }}
@@ -751,7 +755,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Review Comment of Corporate CQA</th>
+                        <th class="w-20 imageContainer">Review Comment of Corporate CQA</th>
                         <td class="w-80" colspan="3"> 
                             @if ($data->cqa_corporate_comment)
                                 {{ $data->cqa_corporate_comment }}
@@ -893,7 +897,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Justification</th>
+                        <th class="w-20 imageContainer">Justification</th>
                         <td class="w-80" colspan="3">
                             @if ($data->sample_order_justification)
                                 {{ $data->sample_order_justification }}
@@ -1099,7 +1103,7 @@
                     </div>
                     <table>
                         <tr>
-                            <th class="w-20">HOD Feedback</th>
+                            <th class="w-20 imageContainer">HOD Feedback</th>
                             <td class="w-80" colspan="3">
                                 @if ($data->HOD_feedback)
                                     {{ $data->HOD_feedback }}
@@ -1110,7 +1114,7 @@
                         </tr>
 
                         <tr>
-                            <th class="w-20">HOD Comment</th>
+                            <th class="w-20 imageContainer">HOD Comment</th>
                             <td class="w-80" colspan="3">
                                 @if ($data->HOD_comment)
                                     {{ $data->HOD_comment }}
@@ -1259,7 +1263,7 @@
                         </tr>
 
                         <tr>
-                            <th class="w-20">Supplier Services</th>
+                            <th class="w-20 imageContainer">Supplier Services</th>
                             <td class="w-80" colspan="3">
                                 @if ($data->supplier_serivce)
                                     {{ $data->supplier_serivce }}
@@ -1392,7 +1396,7 @@
                 </tr>
                 
                 <tr>
-                    <th class="w-20">Manufacturing Sites</th>
+                    <th class="w-20 imageContainer">Manufacturing Sites</th>
                     <td class="w-80" colspan="3">
                         @if ($data->manufacturing_sited)
                             {{ $data->manufacturing_sited }}
@@ -1403,7 +1407,7 @@
                 </tr>
 
                 <tr>
-                    <th class="w-20">Quality Management</th>
+                    <th class="w-20 imageContainer">Quality Management</th>
                     <td class="w-80" colspan="3">
                         @if ($data->quality_management)
                             {{ $data->quality_management }}
@@ -1414,7 +1418,7 @@
                 </tr>
 
                 <tr>
-                    <th class="w-20">Business History</th>
+                    <th class="w-20 imageContainer">Business History</th>
                     <td class="w-80" colspan="3">
                         @if ($data->bussiness_history)
                             {{ $data->bussiness_history }}
@@ -1425,7 +1429,7 @@
                 </tr>
 
                 <tr>
-                    <th class="w-20">Performance History</th>
+                    <th class="w-20 imageContainer">Performance History</th>
                     <td class="w-80" colspan="3">
                         @if ($data->performance_history)
                             {{ $data->performance_history }}
@@ -1436,7 +1440,7 @@
                 </tr>
 
                 <tr>
-                    <th class="w-20">Compliance Risk</th>
+                    <th class="w-20 imageContainer">Compliance Risk</th>
                     <td class="w-80" colspan="3">
                         @if ($data->compliance_risk)
                             {{ $data->compliance_risk }}
@@ -1726,7 +1730,7 @@
             </div>
             <table>
                 <tr>
-                    <th class="w-20">QA Reviewer Feedback</th>
+                    <th class="w-20 imageContainer">QA Reviewer Feedback</th>
                     <td class="w-80" colspan="3">
                         @if ($data->QA_reviewer_feedback)
                             {{ $data->QA_reviewer_feedback }}
@@ -1737,7 +1741,7 @@
                 </tr>
 
                 <tr>
-                    <th class="w-20">QA Reviewer Comment</th>
+                    <th class="w-20 imageContainer">QA Reviewer Comment</th>
                     <td class="w-80" colspan="3">
                         @if ($data->QA_reviewer_comment)
                             {{ $data->QA_reviewer_comment }}
@@ -2180,7 +2184,7 @@
             </div>
             <table>
                 <tr>
-                    <th class="w-20">QA Head Comment</th>
+                    <th class="w-20 imageContainer">QA Head Comment</th>
                     <td class="w-80" colspan="3">
                         @if ($data->QA_head_comment)
                             {{ $data->QA_head_comment }}

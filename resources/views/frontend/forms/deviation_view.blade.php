@@ -1307,7 +1307,7 @@
                                             <input type="text"
                                                 name="deviation_time"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                 id="deviation_time"
-                                                value="{{ old('deviation_time') ? old('deviation_time') : $data->deviation_time }}">
+                                                value="{{ old('deviation_time') ? old('deviation_time') : $data->deviation_time }}" placeholder="Enter Deviation Observed On Time">
                                             @error('deviation_time')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -2055,7 +2055,7 @@
                                                     <input
                                                         {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                         type="file" id="HOD_Attachments"
-                                                        name="initial_file[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                                        name="initial_file[]" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'initial_file')" multiple>
                                                 </div>
                                             </div>
@@ -2154,7 +2154,7 @@
                                                         <input
                                                             {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                             type="file" id="Audit_file"
-                                                            name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                                            name="Audit_file[]" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                             oninput="addMultipleFiles(this, 'Audit_file')" multiple>
                                                     </div>
                                                 </div>

@@ -822,7 +822,7 @@
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time">
                                         <label for="deviation_time">Deviation Observed On (Time)</label>
-                                        <input type="text" name="deviation_time" id="deviation_time">
+                                        <input type="text" name="deviation_time" id="deviation_time" placeholder="Enter Deviation Observed On Time">
                                     </div>
                                     @error('Deviation_date')
                                         <div class="text-danger">{{ $message }}</div>

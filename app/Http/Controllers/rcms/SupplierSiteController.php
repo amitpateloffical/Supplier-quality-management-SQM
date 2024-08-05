@@ -73,6 +73,18 @@ class SupplierSiteController extends Controller
         $supplierSite->related_url = $request->related_url;
         $supplierSite->related_quality_events = $request->related_quality_events;
 
+        // if (!empty($request->logo_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('logo_attachment')) {
+        //         foreach ($request->file('logo_attachment') as $file) {
+        //             $name = "Supplier-Site" . '-logo_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $supplierSite->logo_attachment = json_encode($files);
+        // }
+
         if (!empty($request->logo_attachment)) {
             $files = [];
             if ($request->hasfile('logo_attachment')) {
@@ -83,7 +95,9 @@ class SupplierSiteController extends Controller
                 }
             }
             $supplierSite->logo_attachment = json_encode($files);
+            // dd($openState->in_attachment);
         }
+
 
         if (!empty($request->supplier_attachment)) {
             $files = [];
@@ -351,6 +365,21 @@ class SupplierSiteController extends Controller
         $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
+
+        $history = new SupplierSiteAuditTrail;
+        $history->supplier_site_id = $supplierSite->id;
+        $history->activity_type = 'Division';
+        $history->previous = "Null";
+        $history->current =  Helpers::getDivisionName(session()->get('division'));
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $supplierSite->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
         
         $history = new SupplierSiteAuditTrail;
         $history->supplier_site_id = $supplierSite->id;
@@ -446,21 +475,41 @@ class SupplierSiteController extends Controller
             $history->save();
         }
 
-        if (!empty($request->logo_attachment)) {
-            $history = new SupplierSiteAuditTrail();
+        // if (!empty($request->logo_attachment)) {
+        //     $history = new SupplierSiteAuditTrail();
+        //     $history->supplier_site_id = $supplierSite->id;
+        //     $history->activity_type = 'Logo';
+        //     $history->previous = "Null";
+        //     $history->current = json_encode($supplierSite->logo_attachment);
+        //     $history->comment ="Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->change_to= "Opened";
+        //     $history->change_from= "Initiation";
+        //     $history->action_name="Create";
+        //     $history->save();
+        // }
+
+        if(!empty($supplierSite->logo_attachment)){
+            $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'Logo';
+            $history->activity_type = 'Logo Attachment';
             $history->previous = "Null";
-            $history->current = json_encode($supplierSite->logo_attachment);
-            $history->comment ="Not Applicable";
+            $history->current = $supplierSite->logo_attachment;
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
+            $history->origin_state = $supplierSite->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
+
+
+
 
         if(!empty($request->supplier_contact_person)){
             $history = new SupplierSiteAuditTrail;
@@ -1903,17 +1952,34 @@ class SupplierSiteController extends Controller
         $supplierSite->related_url = $request->related_url;
         $supplierSite->related_quality_events = $request->related_quality_events;
 
+        // if (!empty($request->logo_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('logo_attachment')) {
+        //         foreach ($request->file('logo_attachment') as $file) {
+        //             $name = "Supplier-Site" . '-logo_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $supplierSite->logo_attachment = json_encode($files);
+        // }        
+        // $previousAttachments = $lastDocument->logo_attachment;
+        // $areIniAttachmentsSame = $previousAttachments == $supplierSite->logo_attachment;
+
         if (!empty($request->logo_attachment)) {
             $files = [];
             if ($request->hasfile('logo_attachment')) {
                 foreach ($request->file('logo_attachment') as $file) {
-                    $name = "Supplier-Site" . '-logo_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "CC" . '-logo_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
             $supplierSite->logo_attachment = json_encode($files);
         }
+          $previousAttachments = $lastDocument->logo_attachment;
+          $areIniAttachmentsSame = $previousAttachments == $supplierSite->logo_attachment;
+
 
         if (!empty($request->supplier_attachment)) {
             $files = [];
@@ -2215,11 +2281,60 @@ class SupplierSiteController extends Controller
             $history->save();
         }
 
-        if($lastDocument->logo_attachment != $request->logo_attachment){
+        // if($lastDocument->logo_attachment != $request->logo_attachment)
+        // {
+        //     if(is_array($request->logo_attachment) && count($request->logo_attachment) > 0)
+        //     {
+        //        $history = new SupplierSiteAuditTrail;
+        //        $history->supplier_site_id = $lastDocument->id;
+        //        $history->activity_type = 'Logo';
+        //        $history->previous = json_encode($lastDocument->logo_attachment);
+        //        $history->current =json_encode($request->logo_attachment);
+        //        $history->comment = "Not Applicable";
+        //        $history->user_id = Auth::user()->id;
+        //        $history->user_name = Auth::user()->name;
+        //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //        $history->origin_state = $lastDocument->status;
+        //        $history->change_to =   "Not Applicable";
+        //        $history->change_from = $lastDocument->status;
+        //        if (is_null(json_encode($lastDocument->logo_attachment)) || json_encode($lastDocument->logo_attachment) === '') 
+        //        {
+        //          $history->action_name = 'New';
+        //        } 
+        //        else 
+        //        {
+        //          $history->action_name = 'Update';
+        //        }
+        //       $history->save();
+        //     } 
+        // }
+
+        // if ($areIniAttachmentsSame != true) {
+        //     $history = new SupplierSiteAuditTrail;
+        //     $history->supplier_site_id =  $lastDocument->$id;
+        //     $history->activity_type = 'Logo Attachment';
+        //     $history->previous = $previousAttachments;
+        //     $history->current = $supplierSite->logo_attachment;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->action_name = "Update";
+        //     $history->change_from = $lastDocument->status;
+        //     // if ($previousAttachments) {
+        //     // } else {
+        //     //     $history->action_name = "New";
+        //     // }
+        //     $history->save();
+        // }
+
+        if ($areIniAttachmentsSame != true) {
             $history = new SupplierSiteAuditTrail;
-            $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = 'Logo';
-            $history->previous = json_encode($lastDocument->logo_attachment);
+            $history->supplier_site_id = $lastDocument->$id;
+            $history->activity_type = 'Logo Attachment';
+            $history->previous = $previousAttachments;
             $history->current = json_encode($request->logo_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2228,13 +2343,14 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->logo_attachment) || $lastDocument->logo_attachment === '') {
-                $history->action_name = 'New';
+            if ($previousAttachments) {
+                $history->action_name = "Update";
             } else {
-                $history->action_name = 'Update';
+                $history->action_name = "New";
             }
             $history->save();
         }
+
 
         
         if($lastDocument->supplier_contact_person != $request->supplier_contact_person){
@@ -4006,7 +4122,7 @@ class SupplierSiteController extends Controller
         }
         
         toastr()->success("Record is updated Successfully");
-        return redirect(url('rcms/qms-dashboard'));
+        return redirect()->back();
     }
 
     public function singleReport(Request $request, $id){
@@ -4141,7 +4257,7 @@ class SupplierSiteController extends Controller
 
                     if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '')
                     {
-                         $history->action_name = 'Create';
+                         $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
                     }
@@ -4165,14 +4281,14 @@ class SupplierSiteController extends Controller
                     //   }
                     $supplierSite->update();
 
-                    toastr()->success('Sent to Pending Qualification');
+                    toastr()->success('Document Sent');
                     return back();
             }
             if ($supplierSite->stage == 2) {
                     $supplierSite->stage = "3";
                     $supplierSite->status = "Pending Supplier Audit";
                     $supplierSite->pending_qualification_by = Auth::user()->name;
-                    $supplierSite->pending_qualification_on = Carbon::now()->format('d-M-Y');
+                    $supplierSite->pending_qualification_on = Carbon::now()->format('d-M-Y H:i A');
                     $supplierSite->pending_qualification_comment = $request->comments;
 
                     $history = new SupplierSiteAuditTrail();
@@ -4201,7 +4317,7 @@ class SupplierSiteController extends Controller
                     
                     if (is_null($lastDocument->pending_qualification_by) || $lastDocument->pending_qualification_by === '')
                     {
-                         $history->action_name = 'Create';
+                         $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
                     }
@@ -4226,14 +4342,14 @@ class SupplierSiteController extends Controller
                     //   }
                     $supplierSite->update();
                     
-                    toastr()->success('Sent to Pending Supplier Audit');
+                    toastr()->success('Document Sent');
                     return back();
             }
             if ($supplierSite->stage == 3) {
                 $supplierSite->stage = "4";
                 $supplierSite->status = "Pending Rejction";
                 $supplierSite->pending_supplier_audit_by = Auth::user()->name;
-                $supplierSite->pending_supplier_audit_on = Carbon::now()->format('d-M-Y');
+                $supplierSite->pending_supplier_audit_on = Carbon::now()->format('d-M-Y H:i A');
                 $supplierSite->pending_supplier_audit_comment = $request->comments;
 
                 $history = new SupplierSiteAuditTrail();
@@ -4264,7 +4380,7 @@ class SupplierSiteController extends Controller
 
                     if (is_null($lastDocument->pending_supplier_audit_by) || $lastDocument->pending_supplier_audit_by === '')
                     {
-                         $history->action_name = 'Create';
+                         $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
                     }
@@ -4288,22 +4404,31 @@ class SupplierSiteController extends Controller
                 //   }
                 $supplierSite->update();
 
-                toastr()->success('Sent to Pending Rejction');
+                toastr()->success('Document Sent');
                 return back();
             }
             if ($supplierSite->stage == 4) {
                 $supplierSite->stage = "6";
                 $supplierSite->status = "Obselete";
                 $supplierSite->pending_rejection_by = Auth::user()->name;
-                $supplierSite->pending_rejection_on = Carbon::now()->format('d-M-Y');
+                $supplierSite->pending_rejection_on = Carbon::now()->format('d-M-Y H:i A');
                 $supplierSite->pending_rejection_comment = $request->comments;
 
                 $history = new SupplierSiteAuditTrail();
                     $history->supplier_site_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = "";
+
+                    $history->activity_type = 'Supplier Obsolete By, Supplier Obsolete On';
+                    if (is_null($lastDocument->pending_rejection_by) || $lastDocument->pending_rejection_by === '') {
+                           $history->previous = "";
+                        } else {
+                           $history->previous = $lastDocument->pending_rejection_by . ' , ' . $lastDocument->pending_rejection_on;
+                      }
+                    
+                    $history->current = $supplierSite->pending_rejection_by . ' , ' . $supplierSite->pending_rejection_on;
                     $history->action = 'Supplier Obsolete';
-                    $history->current = $supplierSite->submit_by;
+                    // $history->current = $supplierSite->submit_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4312,6 +4437,14 @@ class SupplierSiteController extends Controller
                     $history->change_to = "Obselete";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+
+                    if (is_null($lastDocument->pending_rejection_by) || $lastDocument->pending_rejection_by === '')
+                    {
+                         $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    
                     $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
@@ -4330,7 +4463,7 @@ class SupplierSiteController extends Controller
                 //      }
                 //   }
                 $supplierSite->update();
-                toastr()->success('Pending CFT Review');
+                toastr()->success('Document Sent');
                 return back();
             }
         } else {
@@ -4347,24 +4480,42 @@ class SupplierSiteController extends Controller
             $supplierSite->stage = "5";
             $supplierSite->status = "Supplier Approved";
             $supplierSite->supplier_approved_by = Auth::user()->name;
-            $supplierSite->supplier_approved_on = Carbon::now()->format('d-M-Y');
+            $supplierSite->supplier_approved_on = Carbon::now()->format('d-M-Y H:i A');
             $supplierSite->supplier_approved_comment = $request->comments;
         
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = "";
+            // $history->activity_type = 'Activity Log';
+            // $history->previous = "";
+
+            $history->activity_type = 'Audit Passed By, Audit Passed On';
+                    if (is_null($lastDocument->supplier_approved_by) || $lastDocument->supplier_approved_by === '') {
+                           $history->previous = "";
+                        } else {
+                           $history->previous = $lastDocument->supplier_approved_by . ' , ' . $lastDocument->supplier_approved_on;
+                      }
+                    
+            $history->current = $supplierSite->supplier_approved_by . ' , ' . $supplierSite->supplier_approved_on;
+            
             $history->action = 'Audit Passed';
-            $history->current = "";
+            // $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Supplier Approved";
-            $history->change_from = $lastDocument->status;        
+            $history->change_from = $lastDocument->status;
+            $history->stage = 'Plan Proposed';
+            if (is_null($lastDocument->supplier_approved_by) || $lastDocument->supplier_approved_by === '')
+            {
+                 $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+                            
             $history->save();
-            $supplierSite->update();
+            // $supplierSite->update();
 
             // foreach ($list as $u) {
             //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
@@ -4405,24 +4556,42 @@ class SupplierSiteController extends Controller
             $supplierSite->stage = "6";
             $supplierSite->status = "Obselete";
             $supplierSite->supplier_approved_to_obselete_by = Auth::user()->name;
-            $supplierSite->supplier_approved_to_obselete_on = Carbon::now()->format('d-M-Y');
+            $supplierSite->supplier_approved_to_obselete_on = Carbon::now()->format('d-M-Y H:i A');
             $supplierSite->supplier_approved_to_obselete_comment = $request->comments;
         
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = "";
+            // $history->activity_type = 'Activity Log';
+            // $history->previous = "";
+
+            $history->activity_type = 'Supplier Obsolete By, Supplier Obsolete On';
+                    if (is_null($lastDocument->supplier_approved_to_obselete_by) || $lastDocument->supplier_approved_to_obselete_by === '') {
+                           $history->previous = "";
+                        } else {
+                           $history->previous = $lastDocument->supplier_approved_to_obselete_by . ' , ' . $lastDocument->supplier_approved_to_obselete_on;
+                      }
+                    
+            $history->current = $supplierSite->supplier_approved_to_obselete_by . ' , ' . $supplierSite->supplier_approved_to_obselete_on;
+            
             $history->action = 'Supplier Obsolete';
-            $history->current = "";
+            // $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Obselete";
-            $history->change_from = $lastDocument->status;        
+            $history->change_from = $lastDocument->status;
+            $history->stage = 'Plan Proposed'; 
+            
+            if (is_null($lastDocument->supplier_approved_to_obselete_by) || $lastDocument->supplier_approved_to_obselete_by === '')
+            {
+                 $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
-            $supplierSite->update();
+            // $supplierSite->update();
 
             // foreach ($list as $u) {
             //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
@@ -4462,24 +4631,42 @@ class SupplierSiteController extends Controller
             $supplierSite->stage = "0";
             $supplierSite->status = "Close - Cancelled";
             $supplierSite->cancelled_by = Auth::user()->name;
-            $supplierSite->cancelled_on = Carbon::now()->format('d-M-Y');
+            $supplierSite->cancelled_on = Carbon::now()->format('d-M-Y H:i A');
             $supplierSite->cancelled_comment = $request->comments;
         
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = "";
+            // $history->activity_type = 'Activity Log';
+            // $history->previous = "";
+
+            $history->activity_type = 'Cancel By, Cancel On';
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                           $history->previous = "";
+                        } else {
+                           $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                      }
+                    
+            $history->current = $supplierSite->cancelled_by . ' , ' . $supplierSite->cancelled_on;
+            
             $history->action = 'Cancel';
-            $history->current = "";
+            // $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to =  "Close - Cancelled";
-            $history->change_from = $lastDocument->status;        
+            $history->change_from = $lastDocument->status; 
+            
+            if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '')
+            {
+                 $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            
             $history->save();
-            $supplierSite->update();
+            // $supplierSite->update();
 
             // foreach ($list as $u) {
             //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
@@ -4519,15 +4706,25 @@ class SupplierSiteController extends Controller
                     $supplierSite->stage = "3";
                     $supplierSite->status = "Pending Supplier Audit";
                     $supplierSite->reAudit_by = Auth::user()->name;
-                    $supplierSite->reAudit_on = Carbon::now()->format('d-M-Y');
+                    $supplierSite->reAudit_on = Carbon::now()->format('d-M-Y H:i A');
                     $supplierSite->reAudit_comment = $request->comments;
 
                     $history = new SupplierSiteAuditTrail();
                     $history->supplier_site_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = "";
+
+                    $history->activity_type = 'Re-Audit By, Re-Audit On';
+                    if (is_null($lastDocument->reAudit_by) || $lastDocument->reAudit_by === '') {
+                           $history->previous = "";
+                        } else {
+                           $history->previous = $lastDocument->reAudit_by . ' , ' . $lastDocument->reAudit_on;
+                      }
+                    
+                    $history->current = $supplierSite->reAudit_by . ' , ' . $supplierSite->reAudit_on;
+                    
                     $history->action = 'Re-Audit';
-                    $history->current = "Not Applicable";
+                    // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4536,6 +4733,13 @@ class SupplierSiteController extends Controller
                     $history->change_to =   "Pending Supplier Audit";
                     $history->change_from = $lastDocument->status;
                     // $history->stage = 'Plan Proposed';
+
+                    if (is_null($lastDocument->reAudit_by) || $lastDocument->reAudit_by === '')
+                    {
+                      $history->action_name = 'New';
+                    } else {
+                      $history->action_name = 'Update';
+                    }
                     $history->save();
                     //  $list = Helpers::getHodUserList();
                     //     foreach ($list as $u) {
@@ -4555,22 +4759,31 @@ class SupplierSiteController extends Controller
                     //   }
                     $supplierSite->update();
 
-                    toastr()->success('Sent to HOD Review');
+                    toastr()->success('Document Sent');
                     return back();
             }
             if ($supplierSite->stage == 5) {
                     $supplierSite->stage = "3";
                     $supplierSite->status = "Pending Supplier Audit";
                     $supplierSite->rejectedDueToQuality_by = Auth::user()->name;
-                    $supplierSite->rejectedDueToQuality_on = Carbon::now()->format('d-M-Y');
+                    $supplierSite->rejectedDueToQuality_on = Carbon::now()->format('d-M-Y H:i A');
                     $supplierSite->rejectedDueToQuality_comment = $request->comments;
 
                     $history = new SupplierSiteAuditTrail();
                     $history->supplier_site_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = "";
+                    $history->activity_type = 'Reject Due To Quality Issues By, Reject Due To Quality Issues On';
+                    if (is_null($lastDocument->rejectedDueToQuality_by) || $lastDocument->rejectedDueToQuality_by === '') {
+                           $history->previous = "";
+                        } else {
+                           $history->previous = $lastDocument->rejectedDueToQuality_by . ' , ' . $lastDocument->rejectedDueToQuality_on;
+                      }
+                    
+                    $history->current = $supplierSite->rejectedDueToQuality_by . ' , ' . $supplierSite->rejectedDueToQuality_on;
+                    
                     $history->action = 'Reject Due To Quality Issues';
-                    $history->current = "Not Applicable";
+                    // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4579,6 +4792,14 @@ class SupplierSiteController extends Controller
                     $history->change_to =   "Pending Supplier Audit";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    
+                    if (is_null($lastDocument->rejectedDueToQuality_by) || $lastDocument->rejectedDueToQuality_by === '')
+                    {
+                      $history->action_name = 'New';
+                    } else {
+                      $history->action_name = 'Update';
+                    }
+                    
                     $history->save();
                     //  $list = Helpers::getHodUserList();
                     //     foreach ($list as $u) {
@@ -4598,7 +4819,7 @@ class SupplierSiteController extends Controller
                     //   }
                     $supplierSite->update();
                     
-                    toastr()->success('Sent to Pending Supplier Audit');
+                    toastr()->success('Document Sent');
                     return back();
             }
 
@@ -4607,15 +4828,26 @@ class SupplierSiteController extends Controller
                     $supplierSite->status = "Supplier Approved";
 
                     $supplierSite->supplier_approved_by = Auth::user()->name;
-                    $supplierSite->supplier_approved_on = Carbon::now()->format('d-M-Y');
+                    $supplierSite->supplier_approved_on = Carbon::now()->format('d-M-Y H:i A');
                     $supplierSite->supplier_approved_comment = $request->comments;
 
                     $history = new SupplierSiteAuditTrail();
                     $history->supplier_site_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = "";
+
+                    $history->activity_type = 'Conditionally Approved By, Conditionally Approved On';
+                    if (is_null($lastDocument->supplier_approved_by) || $lastDocument->supplier_approved_by === '') {
+                           $history->previous = "";
+                        } else {
+                           $history->previous = $lastDocument->supplier_approved_by . ' , ' . $lastDocument->supplier_approved_on;
+                      }
+                    
+                    $history->current = $supplierSite->supplier_approved_by . ' , ' . $supplierSite->supplier_approved_on;
+
+                    
                     $history->action = 'Conditionally Approved';
-                    $history->current = "Not Applicable";
+                    // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4624,6 +4856,14 @@ class SupplierSiteController extends Controller
                     $history->change_to =   "Supplier Approved";
                     $history->change_from = $lastDocument->status;
                     // $history->stage = 'Plan Proposed';
+
+                    if (is_null($lastDocument->supplier_approved_by) || $lastDocument->supplier_approved_by === '')
+                    {
+                      $history->action_name = 'New';
+                    } else {
+                      $history->action_name = 'Update';
+                    }
+                    
                     $history->save();
                     //  $list = Helpers::getHodUserList();
                     //     foreach ($list as $u) {
@@ -4643,7 +4883,7 @@ class SupplierSiteController extends Controller
                     //   }
                     $supplierSite->update();
                     
-                    toastr()->success('Sent to Pending Supplier Audit');
+                    toastr()->success('Document Sent');
                     return back();
             }
         } else {

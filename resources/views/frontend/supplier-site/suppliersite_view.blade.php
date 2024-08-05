@@ -71,15 +71,15 @@
         }
 
         /* .sub-head {
-                    margin-left: 280px;
-                    margin-right: 280px;
-                    color: #4274da;
-                    border-bottom: 2px solid #4274da;
-                    padding-bottom: 5px;
-                    margin-bottom: 20px;
-                    font-weight: bold;
-                    font-size: 1.2rem;
-                     } */
+                                                margin-left: 280px;
+                                                margin-right: 280px;
+                                                color: #4274da;
+                                                border-bottom: 2px solid #4274da;
+                                                padding-bottom: 5px;
+                                                margin-bottom: 20px;
+                                                font-weight: bold;
+                                                font-size: 1.2rem;
+                                                 } */
 
         .launch_extension {
             background: #4274da;
@@ -130,12 +130,12 @@
         }
 
         /* .saveButton:disabled
-                    {
-                       background: black!important;
-                       border:  black!important;
-                     }
-                       
-                    */
+                                                {
+                                                   background: black!important;
+                                                   border:  black!important;
+                                                 }
+                                                   
+                                                */
 
         .main-danger-block {
             display: flex;
@@ -564,31 +564,6 @@
                                 </div>
                             </div>
 
-                            <script>
-                                // Format the due date to DD-MM-YYYY
-                                // Your input date
-                                var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
-
-                                // Create a Date object
-                                var date = new Date(dueDate);
-
-                                // Array of month names
-                                var monthNames = [
-                                    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                                ];
-
-                                // Extracting day, month, and year from the date
-                                var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                                var monthIndex = date.getMonth();
-                                var year = date.getFullYear();
-
-                                // Formatting the date in "dd-MMM-yyyy" format
-                                var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
-
-                                // Set the formatted due date value to the input field
-                                document.getElementById('due_date').value = dueDateFormatted;
-                            </script>
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -679,21 +654,22 @@
                                         @endif
                                     </select>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Suppliers Products">Suppliers Products</label>
-                                        <div class="relative-container">
-                                            <input id="supplier_products" type="text" name="supplier_products"
-                                                maxlength="255" value="{{ $data->supplier_products }}"
-                                                class="mic-input">
-                                            <button class="mic-btn" type="button">
-                                                @component('frontend.forms.language-model', ['name' => 'supplier_products', 'id' => 'supplier_products'])
-                                                @endcomponent
-                                            </button>
-                                        </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppliers Products">Suppliers Products</label>
+                                    <div class="relative-container">
+                                        <input id="supplier_products" type="text" name="supplier_products"
+                                            maxlength="255" value="{{ $data->supplier_products }}" class="mic-input">
+                                        <button class="mic-btn" type="button">
+                                            @component('frontend.forms.language-model', ['name' => 'supplier_products', 'id' => 'supplier_products'])
+                                            @endcomponent
+                                        </button>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Description">Description</label>
@@ -717,16 +693,20 @@
                                         </option>
                                         <option value="Finished Goods" @if ($data->supplier_type == 'Finished Goods') selected @endif>
                                             Finished Goods</option>
-                                        <option value="Grower" @if ($data->supplier_type == 'Grower') selected @endif>Grower
+                                        <option value="Grower" @if ($data->supplier_type == 'Grower') selected @endif>
+                                            Grower
                                         </option>
                                         <option value="Legal" @if ($data->supplier_type == 'Legal') selected @endif>Legal
                                         </option>
                                         <option value="Midecinal + Medical Devices"
-                                            @if ($data->supplier_type == 'Midecinal + Medical Devices') selected @endif>Midecinal + Medical Devices
+                                            @if ($data->supplier_type == 'Midecinal + Medical Devices') selected @endif>Midecinal + Medical
+                                            Devices
                                         </option>
-                                        <option value="Vendor" @if ($data->supplier_type == 'Vendor') selected @endif>Vendor
+                                        <option value="Vendor" @if ($data->supplier_type == 'Vendor') selected @endif>
+                                            Vendor
                                         </option>
-                                        <option value="Other" @if ($data->supplier_type == 'Other') selected @endif>Other
+                                        <option value="Other" @if ($data->supplier_type == 'Other') selected @endif>
+                                            Other
                                         </option>
                                     </select>
                                 </div>
@@ -757,29 +737,35 @@
                                     <label for="Sub Type.">Sub Type</label>
                                     <select name="supplier_sub_type">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Other" @if ($data->supplier_sub_type == 'Other') selected @endif>Other
+                                        <option value="Other" @if ($data->supplier_sub_type == 'Other') selected @endif>
+                                            Other
                                         </option>
-                                        <option value="Vendor" @if ($data->supplier_sub_type == 'Vendor') selected @endif>Vendor
+                                        <option value="Vendor" @if ($data->supplier_sub_type == 'Vendor') selected @endif>
+                                            Vendor
                                         </option>
                                         <option value="Finished Goods" @if ($data->supplier_sub_type == 'Finished Goods') selected @endif>
                                             Finished Goods</option>
-                                        <option value="Legal" @if ($data->supplier_sub_type == 'Legal') selected @endif>Legal
+                                        <option value="Legal" @if ($data->supplier_sub_type == 'Legal') selected @endif>
+                                            Legal
                                         </option>
                                         <option value="Other Fruits" @if ($data->supplier_sub_type == 'Other Fruits') selected @endif>
                                             Other Fruits</option>
                                         <option value="Exotic Fruits" @if ($data->supplier_sub_type == 'Exotic Fruits') selected @endif>
                                             Exotic Fruits</option>
                                         <option value="Other Vegetables"
-                                            @if ($data->supplier_sub_type == 'Other Vegetables') selected @endif>Other Vegetables</option>
+                                            @if ($data->supplier_sub_type == 'Other Vegetables') selected @endif>Other Vegetables
+                                        </option>
                                         <option value="Beans & Peas" @if ($data->supplier_sub_type == 'Beans & Peas') selected @endif>
                                             Beans & Peas</option>
                                         <option value="Red & Orange Vegetables"
                                             @if ($data->supplier_sub_type == 'Red & Orange Vegetables') selected @endif>Red & Orange Vegetables
                                         </option>
                                         <option value="Starchy Vegetables"
-                                            @if ($data->supplier_sub_type == 'Starchy Vegetables') selected @endif>Starchy Vegetables</option>
+                                            @if ($data->supplier_sub_type == 'Starchy Vegetables') selected @endif>Starchy Vegetables
+                                        </option>
                                         <option value="Dark Green Vegetables"
-                                            @if ($data->supplier_sub_type == 'Dark Green Vegetables') selected @endif>VendorDark Green Vegetables
+                                            @if ($data->supplier_sub_type == 'Dark Green Vegetables') selected @endif>VendorDark Green
+                                            Vegetables
                                         </option>
                                         <option value="CRO" @if ($data->supplier_sub_type == 'CRO') selected @endif>CRO
                                         </option>
@@ -805,16 +791,20 @@
                                         <option value="Meat & Poultry" @if ($data->supplier_sub_type == 'Meat & Poultry') selected @endif>
                                             Meat & Poultry</option>
                                         <option value="Fruits & Vegetables"
-                                            @if ($data->supplier_sub_type == 'Fruits & Vegetables') selected @endif>Fruits & Vegetables</option>
-                                        <option value="Pastry" @if ($data->supplier_sub_type == 'Pastry') selected @endif>Pastry
+                                            @if ($data->supplier_sub_type == 'Fruits & Vegetables') selected @endif>Fruits & Vegetables
+                                        </option>
+                                        <option value="Pastry" @if ($data->supplier_sub_type == 'Pastry') selected @endif>
+                                            Pastry
                                         </option>
                                         <option value="Frozen Fruits" @if ($data->supplier_sub_type == 'Frozen Fruits') selected @endif>
                                             Frozen Fruits</option>
-                                        <option value="Dairy" @if ($data->supplier_sub_type == 'Dairy') selected @endif>Dairy
+                                        <option value="Dairy" @if ($data->supplier_sub_type == 'Dairy') selected @endif>
+                                            Dairy
                                         </option>
                                         <option value="Beverages" @if ($data->supplier_sub_type == 'Beverages') selected @endif>
                                             Beverages</option>
-                                        <option value="Flavour" @if ($data->supplier_sub_type == 'Flavour') selected @endif>Flavour
+                                        <option value="Flavour" @if ($data->supplier_sub_type == 'Flavour') selected @endif>
+                                            Flavour
                                         </option>
                                     </select>
                                 </div>
@@ -831,8 +821,6 @@
                                             @endcomponent
                                         </button>
                                     </div>
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -847,8 +835,6 @@
                                             @endcomponent
                                         </button>
                                     </div>
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -863,8 +849,6 @@
                                             @endcomponent
                                         </button>
                                     </div>
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -879,8 +863,6 @@
                                             @endcomponent
                                         </button>
                                     </div>
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -990,31 +972,19 @@
                                 </div>
                             </div>
                         </div>
-
-                        {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Of Complaints/Deviations"># Of Complaints/Deviations</label>
-                                    <input type="text" name="">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="total demerit points">Total Demerit Points</label>
-                                    <input type="text" name="" id="totalDemeritPoints">
-                                </div>
-                            </div> --}}
-
-
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit
                                 </a>
                             </button>
                         </div>
                     </div>
                 </div>
+
+
 
 
                 <!-- HOD Review content -->
@@ -1117,7 +1087,8 @@
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit
                                 </a>
                             </button>
                         </div>
@@ -1166,7 +1137,8 @@
                                                                 name="certificationData[{{ $loop->index }}][issueDate]"
                                                                 value="{{ isset($gridData['issueDate']) ? $gridData['issueDate'] : '' }}"
                                                                 id="issueDate_{{ $loop->index }}"
-                                                                onchange="updateExpiryDateMin({{ $loop->index }})"></td>
+                                                                onchange="updateExpiryDateMin({{ $loop->index }})">
+                                                        </td>
                                                         <td><input type="date"
                                                                 name="certificationData[{{ $loop->index }}][expiryDate]"
                                                                 value="{{ isset($gridData['expiryDate']) ? $gridData['expiryDate'] : '' }}"
@@ -1196,8 +1168,10 @@
                                                             id="expiryDate_0"></td>
                                                     <td><input type="text" name="certificationData[0][supportingDoc]">
                                                     </td>
-                                                    <td><input type="text" name="certificationData[0][remarks]"></td>
-                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    <td><input type="text" name="certificationData[0][remarks]">
+                                                    </td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button>
+                                                    </td>
                                                 </tr>
                                             @endif
                                         </tbody>
@@ -1753,7 +1727,8 @@
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit
                                 </a>
                             </button>
                         </div>
@@ -1772,12 +1747,16 @@
                                         <option value="Unacceptable" @if ($data->cost_reduction == 'Unacceptable') selected @endif>
                                             Unacceptable</option>
                                         <option value="Does Not Meet Expectation"
-                                            @if ($data->cost_reduction == 'Does Not Meet Expectation') selected @endif>Does Not Meet Expectation
+                                            @if ($data->cost_reduction == 'Does Not Meet Expectation') selected @endif>Does Not Meet
+                                            Expectation
                                         </option>
                                         <option value="Meets Expectations"
-                                            @if ($data->cost_reduction == 'Meets Expectations') selected @endif>Meets Expectations</option>
+                                            @if ($data->cost_reduction == 'Meets Expectations') selected @endif>
+                                            Meets Expectations
+                                        </option>
                                         <option value="Exceeds Expectations"
-                                            @if ($data->cost_reduction == 'Exceeds Expectations') selected @endif>Exceeds Expectations
+                                            @if ($data->cost_reduction == 'Exceeds Expectations') selected @endif>
+                                            Exceeds Expectations
                                         </option>
                                     </select>
                                 </div>
@@ -1789,7 +1768,8 @@
                                         <option value="">Enter Your Selection Here</option>
                                         @for ($i = 1; $i <= 10; $i++)
                                             <option value="{{ $i }}"
-                                                @if ($data->cost_reduction_weight == $i) selected @endif>{{ $i }}
+                                                @if ($data->cost_reduction_weight == $i) selected @endif>
+                                                {{ $i }}
                                             </option>
                                         @endfor
                                     </select>
@@ -1822,7 +1802,8 @@
                                         <option value="">Enter Your Selection Here</option>
                                         @for ($i = 1; $i <= 10; $i++)
                                             <option value="{{ $i }}"
-                                                @if ($data->payment_term_weight == $i) selected @endif>{{ $i }}
+                                                @if ($data->payment_term_weight == $i) selected @endif>
+                                                {{ $i }}
                                             </option>
                                         @endfor
                                     </select>
@@ -1837,12 +1818,15 @@
                                             selected
                                             @endif>
                                             > 11 Days</option>
-                                        <option value="6 - 10" @if ($data->lead_time_days == '6 - 10') selected @endif>6 - 10
+                                        <option value="6 - 10" @if ($data->lead_time_days == '6 - 10') selected @endif>6 -
+                                            10
                                         </option>
-                                        <option value="3 -5" @if ($data->lead_time_days == '3 -5') selected @endif>3 -5
+                                        <option value="3 -5" @if ($data->lead_time_days == '3 -5') selected @endif>3
+                                            -5
                                         </option>
                                         <option value="1 Day or Consignment"
-                                            @if ($data->lead_time_days == '1 Day or Consignment') selected @endif>1 Day or Consignment
+                                            @if ($data->lead_time_days == '1 Day or Consignment') selected @endif>1
+                                            Day or Consignment
                                         </option>
                                     </select>
                                 </div>
@@ -1854,7 +1838,8 @@
                                         <option value="">Enter Your Selection Here</option>
                                         @for ($i = 1; $i <= 10; $i++)
                                             <option value="{{ $i }}"
-                                                @if ($data->lead_time_days_weight == $i) selected @endif>{{ $i }}
+                                                @if ($data->lead_time_days_weight == $i) selected @endif>
+                                                {{ $i }}
                                             </option>
                                         @endfor
                                     </select>
@@ -1865,11 +1850,14 @@
                                     <label for="On-Time Delivery">On-Time Delivery</label>
                                     <select id="ontime_delivery" name="ontime_delivery">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="100%" @if ($data->ontime_delivery == '100%') selected @endif>100%
+                                        <option value="100%" @if ($data->ontime_delivery == '100%') selected @endif>
+                                            100%
                                         </option>
-                                        <option value="98-99%" @if ($data->ontime_delivery == '98-99%') selected @endif>98-99%
+                                        <option value="98-99%" @if ($data->ontime_delivery == '98-99%') selected @endif>
+                                            98-99%
                                         </option>
-                                        <option value="96-97%" @if ($data->ontime_delivery == '96-97%') selected @endif>96-97%
+                                        <option value="96-97%" @if ($data->ontime_delivery == '96-97%') selected @endif>
+                                            96-97%
                                         </option>
                                         <option value="< 95%" @if ($data->ontime_delivery == '< 95%') selected @endif>
                                             < 95%</option>
@@ -1883,7 +1871,8 @@
                                         <option value="">Enter Your Selection Here</option>
                                         @for ($i = 1; $i <= 10; $i++)
                                             <option value="{{ $i }}"
-                                                @if ($data->ontime_delivery_weight == $i) selected @endif>{{ $i }}
+                                                @if ($data->ontime_delivery_weight == $i) selected @endif>
+                                                {{ $i }}
                                             </option>
                                         @endfor
                                     </select>
@@ -1898,7 +1887,8 @@
                                             @if ($data->supplier_bussiness_planning == 'Not Information at All') selected @endif>Not Information at All
                                         </option>
                                         <option value="No Formal Information About"
-                                            @if ($data->supplier_bussiness_planning == 'No Formal Information About') selected @endif>No Formal Information About
+                                            @if ($data->supplier_bussiness_planning == 'No Formal Information About') selected @endif>No Formal Information
+                                            About
                                         </option>
                                         <option value="Yes - Partially Aligned With"
                                             @if ($data->supplier_bussiness_planning == 'Yes - Partially Aligned With') selected @endif></option>
@@ -1915,7 +1905,8 @@
                                         <option value="">Enter Your Selection Here</option>
                                         @for ($i = 1; $i <= 10; $i++)
                                             <option value="{{ $i }}"
-                                                @if ($data->supplier_bussiness_planning_weight == $i) selected @endif>{{ $i }}
+                                                @if ($data->supplier_bussiness_planning_weight == $i) selected @endif>
+                                                {{ $i }}
                                             </option>
                                         @endfor
                                     </select>
@@ -1930,13 +1921,15 @@
                                             selected
                                             @endif>> 500001 Defects PPM</option>
                                         <option value="5001 - 50000 Defects PPM"
-                                            @if ($data->rejection_ppm == '5001 - 50000 Defects PPM') selected @endif>5001 - 50000 Defects PPM
+                                            @if ($data->rejection_ppm == '5001 - 50000 Defects PPM') selected @endif>5001 - 50000 Defects
+                                            PPM
                                         </option>
                                         <option value="501 - 500 Defects PPM"
                                             @if ($data->rejection_ppm == '501 - 500 Defects PPM') selected @endif>501 - 5000 Defects PPM
                                         </option>
                                         <option value="Upto 500 Defects PPM"
-                                            @if ($data->rejection_ppm == 'Upto 500 Defects PPM') selected @endif>Upto 500 Defects PPM
+                                            @if ($data->rejection_ppm == 'Upto 500 Defects PPM') selected @endif>
+                                            Upto 500 Defects PPM
                                         </option>
                                     </select>
                                 </div>
@@ -1949,7 +1942,8 @@
                                         <option value="">Enter Your Selection Here</option>
                                         @for ($i = 1; $i <= 10; $i++)
                                             <option value="{{ $i }}"
-                                                @if ($data->rejection_ppm_weight == $i) selected @endif>{{ $i }}
+                                                @if ($data->rejection_ppm_weight == $i) selected @endif>
+                                                {{ $i }}
                                             </option>
                                         @endfor
                                     </select>
@@ -1962,15 +1956,19 @@
                                     <select id="quality_system" name="quality_system">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="No System/No Team"
-                                            @if ($data->quality_system == 'No System/No Team') selected @endif>No System/No Team</option>
+                                            @if ($data->quality_system == 'No System/No Team') selected @endif>No
+                                            System/No Team
+                                        </option>
                                         <option value="System Not Certified"
-                                            @if ($data->quality_system == 'System Not Certified') selected @endif>System Not Certified
+                                            @if ($data->quality_system == 'System Not Certified') selected @endif>
+                                            System Not Certified
                                         </option>
                                         <option value="ISO 9000 Cert"
                                             @if ($data->quality_system == 'ISO 9000 Cert') selected @endif>
                                             ISO 9000 Cert</option>
                                         <option value="ISO 9000 & 1400 Cert"
-                                            @if ($data->quality_system == 'ISO 9000 & 1400 Cert') selected @endif>ISO 9000 & 1400 Cert
+                                            @if ($data->quality_system == 'ISO 9000 & 1400 Cert') selected @endif>
+                                            ISO 9000 & 1400 Cert
                                         </option>
                                     </select>
                                 </div>
@@ -1983,7 +1981,8 @@
                                         <option value="">Enter Your Selection Here</option>
                                         @for ($i = 1; $i <= 10; $i++)
                                             <option value="{{ $i }}"
-                                                @if ($data->quality_system_ranking == $i) selected @endif>{{ $i }}
+                                                @if ($data->quality_system_ranking == $i) selected @endif>
+                                                {{ $i }}
                                             </option>
                                         @endfor
                                     </select>
@@ -1999,9 +1998,11 @@
                                         <option value="> 8" @if ($data->car_generated == '> 8')
                                             selected
                                             @endif>> 8</option>
-                                        <option value="2-7" @if ($data->car_generated == '2-7') selected @endif>2-7
+                                        <option value="2-7" @if ($data->car_generated == '2-7') selected @endif>
+                                            2-7
                                         </option>
-                                        <option value="0-1" @if ($data->car_generated == '0-1') selected @endif>0-1
+                                        <option value="0-1" @if ($data->car_generated == '0-1') selected @endif>
+                                            0-1
                                         </option>
                                     </select>
                                 </div>
@@ -2013,7 +2014,8 @@
                                         <option value="">Enter Your Selection Here</option>
                                         @for ($i = 1; $i <= 10; $i++)
                                             <option value="{{ $i }}"
-                                                @if ($data->car_generated_weight == $i) selected @endif>{{ $i }}
+                                                @if ($data->car_generated_weight == $i) selected @endif>
+                                                {{ $i }}
                                             </option>
                                         @endfor
                                     </select>
@@ -2029,11 +2031,14 @@
                                             selected
                                             @endif>> 60
                                         </option>
-                                        <option value="30-60" @if ($data->closure_time == '30-60') selected @endif>30-60
+                                        <option value="30-60" @if ($data->closure_time == '30-60') selected @endif>
+                                            30-60
                                         </option>
-                                        <option value="15-30" @if ($data->closure_time == '15-30') selected @endif>15-30
+                                        <option value="15-30" @if ($data->closure_time == '15-30') selected @endif>
+                                            15-30
                                         </option>
-                                        <option value="0-15" @if ($data->closure_time == '0-15') selected @endif>0-15
+                                        <option value="0-15" @if ($data->closure_time == '0-15') selected @endif>
+                                            0-15
                                         </option>
                                     </select>
                                 </div>
@@ -2045,7 +2050,8 @@
                                         <option value="">Enter Your Selection Here</option>
                                         @for ($i = 1; $i <= 10; $i++)
                                             <option value="{{ $i }}"
-                                                @if ($data->closure_time_weight == $i) selected @endif>{{ $i }}
+                                                @if ($data->closure_time_weight == $i) selected @endif>
+                                                {{ $i }}
                                             </option>
                                         @endfor
                                     </select>
@@ -2057,14 +2063,18 @@
                                     <select id="end_user_satisfaction" name="end_user_satisfaction">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="Information Lacks"
-                                            @if ($data->end_user_satisfaction == 'Information Lacks') selected @endif>Information Lacks</option>
+                                            @if ($data->end_user_satisfaction == 'Information Lacks') selected @endif>
+                                            Information Lacks
+                                        </option>
                                         <option value="Not Reactive Enough"
-                                            @if ($data->end_user_satisfaction == 'Not Reactive Enough') selected @endif>Not Reactive Enough
+                                            @if ($data->end_user_satisfaction == 'Not Reactive Enough') selected @endif>
+                                            Not Reactive Enough
                                         </option>
                                         <option value="Required" @if ($data->end_user_satisfaction == 'Required') selected @endif>
                                             Required</option>
                                         <option value="Active Participation"
-                                            @if ($data->end_user_satisfaction == 'Active Participation') selected @endif>Active Participation
+                                            @if ($data->end_user_satisfaction == 'Active Participation') selected @endif>
+                                            Active Participation
                                         </option>
                                     </select>
                                 </div>
@@ -2077,7 +2087,8 @@
                                         <option value="">Enter Your Selection Here</option>
                                         @for ($i = 1; $i <= 10; $i++)
                                             <option value="{{ $i }}"
-                                                @if ($data->end_user_satisfaction_weight == $i) selected @endif>{{ $i }}
+                                                @if ($data->end_user_satisfaction_weight == $i) selected @endif>
+                                                {{ $i }}
                                             </option>
                                         @endfor
                                     </select>
@@ -2283,7 +2294,7 @@
                                         <input type="date" name="last_audit_date"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                             {{-- value="{{ $data->last_audit_date }}" --}} {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" --}}
-                                            oninput="handleDateInput(this, 'last_audit_date'); updateNextAuditDate(this.value)" />
+                                            oninput="handleDateInput(this, 'last_audit_date');updateNextAuditDateMin(this.value);" />
                                     </div>
                                 </div>
                             </div>
@@ -2306,23 +2317,32 @@
                                     <select id="audit_frequency" name="audit_frequency">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="Every 10 Years"
-                                            @if ($data->audit_frequency == 'Every 10 Years') selected @endif>Every 10 Years</option>
+                                            @if ($data->audit_frequency == 'Every 10 Years') selected @endif>Every
+                                            10 Years</option>
                                         <option value="Every 9 Years"
-                                            @if ($data->audit_frequency == 'Every 9 Years') selected @endif>Every 9 Years</option>
+                                            @if ($data->audit_frequency == 'Every 9 Years') selected @endif>Every 9
+                                            Years</option>
                                         <option value="Every 8 Years"
-                                            @if ($data->audit_frequency == 'Every 8 Years') selected @endif>Every 8 Years</option>
+                                            @if ($data->audit_frequency == 'Every 8 Years') selected @endif>Every 8
+                                            Years</option>
                                         <option value="Every 7 Years"
-                                            @if ($data->audit_frequency == 'Every 7 Years') selected @endif>Every 7 Years</option>
+                                            @if ($data->audit_frequency == 'Every 7 Years') selected @endif>Every 7
+                                            Years</option>
                                         <option value="Every 6 Years"
-                                            @if ($data->audit_frequency == 'Every 6 Years') selected @endif>Every 6 Years</option>
+                                            @if ($data->audit_frequency == 'Every 6 Years') selected @endif>Every 6
+                                            Years</option>
                                         <option value="Every 5 Years"
-                                            @if ($data->audit_frequency == 'Every 5 Years') selected @endif>Every 5 Years</option>
+                                            @if ($data->audit_frequency == 'Every 5 Years') selected @endif>Every 5
+                                            Years</option>
                                         <option value="Every 4 Years"
-                                            @if ($data->audit_frequency == 'Every 4 Years') selected @endif>Every 4 Years</option>
+                                            @if ($data->audit_frequency == 'Every 4 Years') selected @endif>Every 4
+                                            Years</option>
                                         <option value="Every 3 Years"
-                                            @if ($data->audit_frequency == 'Every 3 Years') selected @endif>Every 3 Years</option>
+                                            @if ($data->audit_frequency == 'Every 3 Years') selected @endif>Every 3
+                                            Years</option>
                                         <option value="Every 2 Years"
-                                            @if ($data->audit_frequency == 'Every 2 Years') selected @endif>Every 2 Years</option>
+                                            @if ($data->audit_frequency == 'Every 2 Years') selected @endif>Every 2
+                                            Years</option>
                                         <option value="Annual" @if ($data->audit_frequency == 'Annual') selected @endif>
                                             Annual
                                         </option>
@@ -2359,11 +2379,13 @@
                                         <option value="">Enter Your Selection Here</option>
 
                                         <option value="Operation, R&M - Level 3"
-                                            @if ($data->facility_type == 'Operation, R&M - Level 3') selected @endif> Operation, R&M - Level 3
+                                            @if ($data->facility_type == 'Operation, R&M - Level 3') selected @endif> Operation, R&M -
+                                            Level 3
                                         </option>
 
                                         <option value="Operation, R&M - Level 2"
-                                            @if ($data->facility_type == 'Operation, R&M - Level 2') selected @endif>Operation, R&M - Level 2
+                                            @if ($data->facility_type == 'Operation, R&M - Level 2') selected @endif>Operation, R&M - Level
+                                            2
                                         </option>
 
                                         <option value="Operation Only, Stock Point Only"
@@ -2396,12 +2418,15 @@
                                         <option value="">Enter Your Selection Here</option>
 
                                         <option value="Very Limited Access"
-                                            @if ($data->technical_support == 'Very Limited Access') selected @endif> Very Limited Access to
+                                            @if ($data->technical_support == 'Very Limited Access') selected @endif>
+                                            Very Limited Access
+                                            to
                                             Technical Experts
                                         </option>
 
                                         <option value="Available When Requested"
-                                            @if ($data->technical_support == 'Available When Requested') selected @endif> Available When Requested
+                                            @if ($data->technical_support == 'Available When Requested') selected @endif> Available When
+                                            Requested
                                             or Via Beacon Center
                                         </option>
 
@@ -2419,14 +2444,17 @@
                                     <select name="survice_supported" id="survice_supported">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="Integrated, Multi-Combo Jobs"
-                                            @if ($data->survice_supported == 'Integrated, Multi-Combo Jobs') selected @endif>Integrated, Multi-Combo
+                                            @if ($data->survice_supported == 'Integrated, Multi-Combo Jobs') selected @endif>Integrated,
+                                            Multi-Combo
                                             Jobs
                                         </option>
                                         <option value="Basic D&E Services"
-                                            @if ($data->survice_supported == 'Basic D&E Services') selected @endif>Basic D&E Services
+                                            @if ($data->survice_supported == 'Basic D&E Services') selected @endif>
+                                            Basic D&E Services
                                         </option>
                                         <option value="Motors or Standalone MWD"
-                                            @if ($data->survice_supported == 'Motors or Standalone MWD') selected @endif>Motors or Standalone MWD
+                                            @if ($data->survice_supported == 'Motors or Standalone MWD') selected @endif>Motors or Standalone
+                                            MWD
                                         </option>
                                     </select>
                                 </div>
@@ -2443,7 +2471,8 @@
                                             @if ($data->reliability == 'Marginally Below Expectations') selected @endif>Marginally Below
                                             Expectations</option>
                                         <option value="Meets Expectations"
-                                            @if ($data->reliability == 'Meets Expectations') selected @endif>Meets Expectations
+                                            @if ($data->reliability == 'Meets Expectations') selected @endif>
+                                            Meets Expectations
                                         </option>
                                     </select>
                                 </div>
@@ -2474,9 +2503,13 @@
                                             Disproportionally Skewed
                                         </option>
                                         <option value="Multiple Clients"
-                                            @if ($data->client_base == 'Multiple Clients') selected @endif>Multiple Clients</option>
+                                            @if ($data->client_base == 'Multiple Clients') selected @endif>
+                                            Multiple Clients
+                                        </option>
                                         <option value="Well Diversified"
-                                            @if ($data->client_base == 'Well Diversified') selected @endif>Well Diversified</option>
+                                            @if ($data->client_base == 'Well Diversified') selected @endif>
+                                            Well Diversified
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -2487,7 +2520,8 @@
                                     <select id="previous_audit_result" name="previous_audit_result">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="Below Requirement Major NCN's or No Audit History"
-                                            @if ($data->previous_audit_result == "Below Requirement Major NCN's or No Audit History") selected @endif>Below Requirement Major
+                                            @if ($data->previous_audit_result == "Below Requirement Major NCN's or No Audit History") selected @endif>Below Requirement
+                                            Major
                                             NCN's or No Audit History</option>
                                         <option value="Marginally Below Requirement With Minor NCN's"
                                             @if ($data->previous_audit_result == "Marginally Below Requirement With Minor NCN's") selected @endif>Marginally Below
@@ -2804,7 +2838,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Supplier Approved to Obsolete Comment</label>
+                                    <label for="Suppplier Review Comment">Supplier Approved to Obsolete
+                                        Comment</label>
                                     <div class="static">{{ $data->supplier_approved_to_obselete_comment }}</div>
                                 </div>
                             </div>
@@ -2827,43 +2862,45 @@
                                     <div class="static">{{ $data->rejectedDueToQuality_comment }}</div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Suppplier Review By">Supplier Obsolete By</label>
-                                <div class="static">{{ $data->pending_rejection_by }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Suppplier Review On">Supplier Obsolete On</label>
-                                <div class="static">{{ $data->pending_rejection_on }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Suppplier Review Comment">Supplier Obsolete Comment</label>
-                                <div class="static">{{ $data->pending_rejection_comment }}</div>
-                            </div>
-                        </div>
 
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Suppplier Review By">Re-Audit By</label>
-                                <div class="static">{{ $data->reAudit_by }}</div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By">Pending Rejction to Supplier Obsolete By</label>
+                                    <div class="static">{{ $data->pending_rejection_by }}</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Suppplier Review On">Re-Audit On</label>
-                                <div class="static">{{ $data->reAudit_on }}</div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review On">Pending Rejction to Supplier Obsolete On</label>
+                                    <div class="static">{{ $data->pending_rejection_on }}</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Suppplier Review Comment">Re-Audit Comment</label>
-                                <div class="static">{{ $data->reAudit_comment }}</div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppplier Review Comment">Pending Rejction to Supplier Obsolete
+                                        Comment</label>
+                                    <div class="static">{{ $data->pending_rejection_comment }}</div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By">Re-Audit By</label>
+                                    <div class="static">{{ $data->reAudit_by }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review On">Re-Audit On</label>
+                                    <div class="static">{{ $data->reAudit_on }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppplier Review Comment">Re-Audit Comment</label>
+                                    <div class="static">{{ $data->reAudit_comment }}</div>
+                                </div>
                             </div>
                         </div>
 
@@ -3249,7 +3286,7 @@
             target.value = formattedDate;
         }
 
-        function updateNextAuditDate(lastAuditDate) {
+        {{-- function updateNextAuditDate(lastAuditDate) {
             const date = new Date(lastAuditDate);
 
             // Calculate the next audit date (one day after the last audit date)
@@ -3272,6 +3309,11 @@
 
             // Make the input field editable
             nextAuditDateInput.readOnly = false;
+        } --}}
+
+        function updateNextAuditDateMin(lastAuditDate) {
+            const nextAuditDateInput = document.querySelector('input[name="next_audit_date"]');
+            nextAuditDateInput.min = lastAuditDate;
         }
     </script>
 @endsection

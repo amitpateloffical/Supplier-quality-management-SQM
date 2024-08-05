@@ -3226,16 +3226,26 @@ class RiskManagementController extends Controller
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Submited By, Submited On';
+                if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->submitted_by . ' , ' . $lastDocument->submitted_on;
+                }
                 $history->action = 'Submit';
                 $history->previous = $lastDocument->submitted_by;
-                $history->current = $changeControl->submitted_by;
+                $history->current = $changeControl->submitted_by . ' , ' . $changeControl->submitted_on;
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Submit';
+                if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                    $history->action_name = 'Create';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->change_to =   "Risk Analysis & Work Group Assignment";
                 $history->change_from = 'Opened';
                 $history->action_name = 'Not Applicable';

@@ -43,7 +43,7 @@ class ObservationController extends Controller
             //return redirect()->back();
         }
         $data = new Observation();
-        
+
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
         $data->parent_id = $request->parent_id;
@@ -59,7 +59,7 @@ class ObservationController extends Controller
         // $data->reference_guideline = $request->reference_guideline;
         // $data->description = $request->description;
 
-        // if ($request->hasfile('attach_files1')) {
+        // if ($request->hasfile('gned1')) {
         //     $image = $request->file('attach_files1');
         //     $ext = $image->getClientOriginalExtension();
         //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
@@ -99,7 +99,7 @@ class ObservationController extends Controller
         // $data->date_response_due1= $request->date_response_due1;
 
         // $data->response_date = $request->response_date;
-        // $data->attach_files2 = $request->attach_files2;
+        $data->attach_files2 = $request->attach_files2;
         $data->related_url = $request->related_url;
         $data->response_summary = $request->response_summary;
 
@@ -122,7 +122,7 @@ class ObservationController extends Controller
 
             $data->related_observations = json_encode($files);
         }
-       
+
 
         if (!empty($request->attach_files2)) {
             $files = [];
@@ -159,7 +159,7 @@ class ObservationController extends Controller
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
-    
+
     if (! empty($data->parent_id)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -244,13 +244,13 @@ class ObservationController extends Controller
         $history->action_name = "Create";
         $history->save();
     }
-    
+
     if (! empty($data->assign_to)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Assigned To';
         $history->previous = "Null";
-        $history->current = Helpers::getInitiatorName($data->assign_to);
+        $history->current = $data->assign_to;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -348,7 +348,7 @@ class ObservationController extends Controller
     //     $history->save();
     // }
 
-    
+
     if (! empty($data->short_description)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -366,22 +366,22 @@ class ObservationController extends Controller
         $history->save();
     }
 
-    // if (! empty($data->attach_files1)) {
-    //     $history = new AuditTrialObservation();
-    //     $history->Observation_id = $data->id;
-    //     $history->activity_type = 'Attach Files1';
-    //     $history->previous = "Null";
-    //     $history->current = $data->attach_files1;
-    //     $history->comment = "NA";
-    //     $history->user_id = Auth::user()->id;
-    //     $history->user_name = Auth::user()->name;
-    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    //     $history->origin_state = $data->status;
-    //     $history->change_from = "Initiation";
-    //     $history->change_to = "Opened";
-    //     $history->action_name = "Create";
-    //     $history->save();
-    // }
+    if (! empty($data->attach_files1)) {
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Attach Files';
+        $history->previous = "Null";
+        $history->current = json_encode($data->attach_files1);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->change_from = "Initiation";
+        $history->change_to = "Opened";
+        $history->action_name = "Create";
+        $history->save();
+    }
     if (! empty($data->recomendation_capa_date_due)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -430,7 +430,23 @@ class ObservationController extends Controller
         $history->action_name = "Create";
         $history->save();
     }
-    
+
+    if (! empty($data->related_observations)) {
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Related Observations';
+        $history->previous = "Null";
+        $history->current = json_encode($data->related_observations);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->change_from = "Initiation";
+        $history->change_to = "Opened";
+        $history->action_name = "Create";
+        $history->save();
+
     if (! empty($data->date_Response_due2)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -468,7 +484,7 @@ class ObservationController extends Controller
         $history->Observation_id = $data->id;
         $history->activity_type = 'Assigned To';
         $history->previous = "Null";
-        $history->current = Helpers::getInitiatorName($data->assign_to2);;
+        $history->current =$data->assign_to2;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -692,12 +708,12 @@ class ObservationController extends Controller
     //     $history->save();
     // }
 
-    // if (! empty($data->attach_files2)) {
+    // if (! empty($data->assign_to2)) {
     //     $history = new AuditTrialObservation();
     //     $history->Observation_id = $data->id;
     //     $history->activity_type = 'Attach Files2 ';
     //     $history->previous = "Null";
-    //     $history->current = $data->attach_files2;
+    //     $history->current = json_encode($data->assign_to2);
     //     $history->comment = "NA";
     //     $history->user_id = Auth::user()->id;
     //     $history->user_name = Auth::user()->name;
@@ -708,6 +724,22 @@ class ObservationController extends Controller
     //     $history->action_name = "Create";
     //     $history->save();
     // }
+
+    if (! empty($data->attach_files2)) {
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Attachment';
+        $history->previous = "Null";
+        $history->current = json_encode($data->attach_files2);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->change_from = "Initiation";
+        $history->change_to = "Opened";
+        $history->action_name = "Create";
+        $history->save();
 
     if (! empty($data->related_url)) {
         $history = new AuditTrialObservation();
@@ -761,9 +793,9 @@ class ObservationController extends Controller
 
         // $history = new AuditTrialObservation();
         // $history->Observation_id = $data->id;
-        // $history->activity_type = 'Attachm Files2 ';
+        // $history->activity_type = 'Attach Files2 ';
         // $history->previous = "Null";
-        // $history->current = $data->attach_files2;
+        // $history->current = json_encode($data->attach_files2);
         // $history->comment = "NA";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
@@ -773,12 +805,12 @@ class ObservationController extends Controller
         // $history->change_to = "Opened";
         // $history->action_name = "Create";
         // $history->save();
-
-        toastr()->success("Record is created Successfully");
-        return redirect(url('rcms/qms-dashboard'));
     }
 
-
+    }
+    toastr()->success("Record is created Successfully");
+    return redirect(url('rcms/qms-dashboard'));
+    }
     public function observationupdate(Request $request, $id)
     {
         $lastDocument = Observation::find($id);
@@ -1027,6 +1059,25 @@ class ObservationController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+        if ($lastDocument->attach_files1 != $data->attach_files1 || !empty($request->attach_files1_comment)) {
+            $lastDocumentAuditTrail = AuditTrialObservation::where('Observation_id', $data->id)
+                ->where('activity_type', ' Attached Files')
+                ->exists();
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $id;
+        $history->activity_type = ' Attached Files ';
+        $history->previous = $lastDocument->attach_files1;
+        $history->current = $data->attach_files2;
+        $history->comment = $request->attach_files1_comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to = 'Not Applicable';
+        $history->change_from = $lastDocument->status;
+        $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        $history->save();
+    }
 
         if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
                 $lastDocumentAuditTrail = AuditTrialObservation::where('Observation_id', $data->id)
@@ -1036,7 +1087,7 @@ class ObservationController extends Controller
             $history->Observation_id = $id;
             $history->activity_type = 'Assigned To';
             $history->previous = $lastDocument->assign_to;
-            $history->current = Helpers::getInitiatorName($data->assign_to);
+            $history->current = $data->assign_to;
             $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1194,7 +1245,26 @@ class ObservationController extends Controller
             $history->change_from = $lastDocument->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
-        }
+
+        }   if ($lastDocument->related_observations != $data->related_observations || !empty($request->related_observations_comment)) {
+            $lastDocumentAuditTrail = AuditTrialObservation::where('Observation_id', $data->id)
+                ->where('activity_type', 'Observations')
+                ->exists();
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $id;
+        $history->activity_type = 'Related Observations ';
+        $history->previous = $lastDocument->related_observations;
+        $history->current = $data->attach_files4;
+        $history->comment = $request->related_observations_comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to = 'Not Applicable';
+        $history->change_from = $lastDocument->status;
+        $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        $history->save();
+    }
 
         if ($lastDocument->date_Response_due2 != $data->date_Response_due2 || !empty($request->date_Response_due2_comment)) {
                 $lastDocumentAuditTrail = AuditTrialObservation::where('Observation_id', $data->id)
@@ -1232,7 +1302,7 @@ class ObservationController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to = 'Not Applicable';
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            // $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
@@ -1244,7 +1314,7 @@ class ObservationController extends Controller
             $history->Observation_id = $id;
             $history->activity_type = 'Assigned To';
             $history->previous = $lastDocument->assign_to2;
-            $history->current = Helpers::getInitiatorName($data->assign_to2);
+            $history->current = $data->assign_to2;
             $history->comment = $request->assign_to2_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1507,25 +1577,25 @@ class ObservationController extends Controller
         //     $history->save();
         // }
 
-        // if ($lastDocument->attach_files2 != $data->attach_files2 || !empty($request->attach_files2_comment)) {
-        //         $lastDocumentAuditTrail = AuditTrialObservation::where('Observation_id', $data->id)
-        //             ->where('activity_type', 'Attach Files2')
-        //             ->exists();
-        //     $history = new AuditTrialObservation();
-        //     $history->Observation_id = $id;
-        //     $history->activity_type = 'Attach Files2 ';
-        //     $history->previous = $lastDocument->attach_files2;
-        //     $history->current = $data->attach_files2;
-        //     $history->comment = $request->attach_files2_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to = 'Not Applicable';
-        //     $history->change_from = $lastDocument->status;
-        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-        //     $history->save();
-        // }
+        if ($lastDocument->attach_files2 != $data->attach_files2 || !empty($request->attach_files2_comment)) {
+                $lastDocumentAuditTrail = AuditTrialObservation::where('Observation_id', $data->id)
+                    ->where('activity_type', 'Attach Files2')
+                    ->exists();
+            $history = new AuditTrialObservation();
+            $history->Observation_id = $id;
+            $history->activity_type = 'Attachment ';
+            $history->previous = $lastDocument->attach_files3;
+            $history->current = $data->attach_files2;
+            $history->comment = $request->attach_files2_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = 'Not Applicable';
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
 
         if ($lastDocument->related_url != $data->related_url || !empty($request->related_url_comment)) {
                 $lastDocumentAuditTrail = AuditTrialObservation::where('Observation_id', $data->id)
@@ -1584,13 +1654,13 @@ class ObservationController extends Controller
         //     $history->save();
         // }
 
-        // if ($lastDocument->attach_files2 != $data->attach_files2 || !empty($request->attach_files2_comment)) {
+        // if ($lastDocument->assign_to2 != $data->assign_to2 || !empty($request->assign_to2_comment)) {
         //     $history = new AuditTrialObservation();
         //     $history->Observation_id = $id;
         //     $history->activity_type = 'Attachm Files2 ';
-        //     $history->previous = $lastDocument->attach_files2;
-        //     $history->current = $data->attach_files2;
-        //     $history->comment = $request->attach_files2_comment;
+        //     $history->previous = $lastDocument->assign_to2;
+        //     $history->current = $data->assign_to2;
+        //     $history->comment = $request->assign_to2_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1630,7 +1700,7 @@ class ObservationController extends Controller
                 $changestage->Report_Issued_On = Carbon::now()->format('d-M-Y');
                 $changestage->Report_Issued_Comment = $request->comment;
 
-                
+
                                 $history = new AuditTrialObservation();
                                 $history->Observation_id = $id;
                                 $history->activity_type = 'Activity Log';
@@ -1651,7 +1721,7 @@ class ObservationController extends Controller
                                     if($u->q_m_s_divisions_id == $changestage->division_id){
                                         $email = Helpers::getInitiatorEmail($u->user_id);
                                          if ($email !== null) {
-                                      
+
                                       try {
                                           Mail::send(
                                               'mail.view-mail',
@@ -1662,10 +1732,10 @@ class ObservationController extends Controller
                                             }
                                           );
                                         } catch (\Exception $e) {
-                                            // 
+                                            //
                                         }
                                     }
-                                 } 
+                                 }
                               }
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1699,7 +1769,7 @@ class ObservationController extends Controller
                     if($u->q_m_s_divisions_id == $changestage->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
                          if ($email !== null) {
-                      
+
                           Mail::send(
                               'mail.view-mail',
                                ['data' => $changestage],
@@ -1709,7 +1779,7 @@ class ObservationController extends Controller
                             }
                           );
                         }
-                 } 
+                 }
               }
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1741,7 +1811,7 @@ class ObservationController extends Controller
                                 if($u->q_m_s_divisions_id == $changestage->division_id){
                                     $email = Helpers::getInitiatorEmail($u->user_id);
                                      if ($email !== null) {
-                                  
+
                                       Mail::send(
                                           'mail.view-mail',
                                            ['data' => $changestage],
@@ -1751,7 +1821,7 @@ class ObservationController extends Controller
                                         }
                                       );
                                     }
-                             } 
+                             }
                           }
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1784,7 +1854,7 @@ class ObservationController extends Controller
                     if($u->q_m_s_divisions_id == $changestage->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
                          if ($email !== null) {
-                      
+
                           Mail::send(
                               'mail.view-mail',
                                ['data' => $changestage],
@@ -1794,7 +1864,7 @@ class ObservationController extends Controller
                             }
                           );
                         }
-                 } 
+                 }
               }
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1827,7 +1897,7 @@ class ObservationController extends Controller
                     if($u->q_m_s_divisions_id == $changestage->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
                          if ($email !== null) {
-                      
+
                           Mail::send(
                               'mail.view-mail',
                                ['data' => $changestage],
@@ -1837,7 +1907,7 @@ class ObservationController extends Controller
                             }
                           );
                         }
-                 } 
+                 }
               }
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1896,7 +1966,7 @@ class ObservationController extends Controller
 
 
 
-            
+
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
@@ -1922,7 +1992,7 @@ class ObservationController extends Controller
                     if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
                          if ($email !== null) {
-                      
+
                           Mail::send(
                               'mail.view-mail',
                                ['data' => $changeControl],
@@ -1932,7 +2002,7 @@ class ObservationController extends Controller
                             }
                           );
                         }
-                 } 
+                 }
               }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1967,7 +2037,7 @@ class ObservationController extends Controller
                     if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
                          if ($email !== null) {
-                      
+
                           Mail::send(
                               'mail.view-mail',
                                ['data' => $changeControl],
@@ -1977,7 +2047,7 @@ class ObservationController extends Controller
                             }
                           );
                         }
-                 } 
+                 }
               }
                 toastr()->success('Document Sent');
                 return back();
@@ -2004,13 +2074,13 @@ class ObservationController extends Controller
                 $history->change_from = 'Pending Final Approval';
                 $history->action_name = 'Not Applicable';
                                 $history->save();
-                
+
                 $list = Helpers::getLeadAuditeeUserList();
                 foreach ($list as $u) {
                     if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
                          if ($email !== null) {
-                      
+
                           Mail::send(
                               'mail.view-mail',
                                ['data' => $changeControl],
@@ -2020,7 +2090,7 @@ class ObservationController extends Controller
                             }
                           );
                         }
-                 } 
+                 }
               }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2062,13 +2132,13 @@ class ObservationController extends Controller
                 $history->change_from = 'Pending Approval';
                 $history->action_name = 'Not Applicable';
                 $history->save();
-                
+
                 $list = Helpers::getLeadAuditeeUserList();
                 foreach ($list as $u) {
                     if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
                          if ($email !== null) {
-                      
+
                           Mail::send(
                               'mail.view-mail',
                                ['data' => $changeControl],
@@ -2078,7 +2148,7 @@ class ObservationController extends Controller
                             }
                           );
                         }
-                 } 
+                 }
               }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2119,7 +2189,7 @@ class ObservationController extends Controller
 
     public function ObservationAuditTrialDetails($id)
     {
-       
+
 
         $doc = Observation::find($id);
         $audit = AuditTrialObservation::where('Observation_id', $id)->orderByDesc('id')->get();
@@ -2156,9 +2226,9 @@ class ObservationController extends Controller
 
         return $pdf->stream('Observation-AuditTrial'.$id.'.pdf');
 
-        
+
     }
-    
+
 
     public function ObservationSingleReportshow($id)
     {
@@ -2171,7 +2241,7 @@ class ObservationController extends Controller
             $time = Carbon::now();
 
             // $Observation_id = $data->id;
-            // $griddata = ObservationGrid::where(['_id' => $Observation_id, 'identifier' => 'action-plan-grid'])->firstOrCreate();            
+            // $griddata = ObservationGrid::where(['_id' => $Observation_id, 'identifier' => 'action-plan-grid'])->firstOrCreate();
             $pdf = PDF::loadview('frontend.observation.observation_single_report', compact('data','griddata'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',

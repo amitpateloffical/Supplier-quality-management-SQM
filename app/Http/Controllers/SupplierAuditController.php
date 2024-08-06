@@ -614,7 +614,7 @@ if (!empty($internalAudit->due_date_extension)) {
     $history->save();
 }
 
-// new added supplieer audit trail code
+2// new added supplieer audit trail code
         if (!empty($internalAudit->date)) {
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $internalAudit->id;
@@ -1146,7 +1146,7 @@ if (!empty($internalAudit->Auditee)) {
         // foreach($sgrid as $s)
         // return $sgrid;
         // dd($data);
-        return view('frontend.New_forms.ar', compact('data', 'old_record','sgrid','grid_data1'));
+        return view('frontend.New_forms.supplierView', compact('data', 'old_record','sgrid','grid_data1'));
     }
 
     public function update(Request $request, $id)

@@ -71,15 +71,15 @@
         }
 
         /* .sub-head {
-                                                margin-left: 280px;
-                                                margin-right: 280px;
-                                                color: #4274da;
-                                                border-bottom: 2px solid #4274da;
-                                                padding-bottom: 5px;
-                                                margin-bottom: 20px;
-                                                font-weight: bold;
-                                                font-size: 1.2rem;
-                                                 } */
+                                                    margin-left: 280px;
+                                                    margin-right: 280px;
+                                                    color: #4274da;
+                                                    border-bottom: 2px solid #4274da;
+                                                    padding-bottom: 5px;
+                                                    margin-bottom: 20px;
+                                                    font-weight: bold;
+                                                    font-size: 1.2rem;
+                                                     } */
 
         .launch_extension {
             background: #4274da;
@@ -130,12 +130,12 @@
         }
 
         /* .saveButton:disabled
-                                                {
-                                                   background: black!important;
-                                                   border:  black!important;
-                                                 }
-                                                   
-                                                */
+                                                    {
+                                                       background: black!important;
+                                                       border:  black!important;
+                                                     }
+                                                       
+                                                    */
 
         .main-danger-block {
             display: flex;
@@ -1474,11 +1474,11 @@
                                 <div class="group-input">
                                     <label for="Supplier Web Site">Supplier Website</label>
                                     <div class="relative-container">
-                                        <input id="supplier_website" type="text" name="supplier_website"
-                                            maxlength="255" value="{{ $data->supplier_website }}"
+                                        <input id="suppplier_web_site" type="text" name="suppplier_web_site"
+                                            maxlength="255" value="{{ $data->suppplier_web_site }}"
                                             placeholder="Enter Website" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'supplier_website', 'id' => 'supplier_website'])
+                                            @component('frontend.forms.language-model', ['name' => 'suppplier_web_site', 'id' => 'suppplier_web_site'])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -2418,15 +2418,12 @@
                                         <option value="">Enter Your Selection Here</option>
 
                                         <option value="Very Limited Access"
-                                            @if ($data->technical_support == 'Very Limited Access') selected @endif>
-                                            Very Limited Access
-                                            to
-                                            Technical Experts
+                                            @if ($data->technical_support == 'Very Limited Access to Technical Experts ') selected @endif>
+                                            Very Limited Access to Technical Experts
                                         </option>
 
                                         <option value="Available When Requested"
-                                            @if ($data->technical_support == 'Available When Requested') selected @endif> Available When
-                                            Requested
+                                            @if ($data->technical_support == 'Available When Requested or Via Beacon Center') selected @endif> Available When Requested
                                             or Via Beacon Center
                                         </option>
 
@@ -3213,67 +3210,91 @@
             ele: '#supplier-product, #ppap-elements, #supplier-services, #other-products, #manufacture-sites'
         });
 
+        
         function openCity(evt, cityName) {
-            var i, cctabcontent, cctablinks;
-            cctabcontent = document.getElementsByClassName("cctabcontent");
-            for (i = 0; i < cctabcontent.length; i++) {
-                cctabcontent[i].style.display = "none";
-            }
-            cctablinks = document.getElementsByClassName("cctablinks");
-            for (i = 0; i < cctablinks.length; i++) {
-                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
+                    var i, cctabcontent, cctablinks;
+                    cctabcontent = document.getElementsByClassName("cctabcontent");
+                    for (i = 0; i < cctabcontent.length; i++) {
+                        cctabcontent[i].style.display = "none";
+                    }
+                    cctablinks = document.getElementsByClassName("cctablinks");
+                    for (i = 0; i < cctablinks.length; i++) {
+                        cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
 
-        const saveButtons = document.querySelectorAll(".saveButton");
-        const nextButtons = document.querySelectorAll(".nextButton");
-        const form = document.getElementById("step-form");
-        const stepButtons = document.querySelectorAll(".cctablinks");
-        const steps = document.querySelectorAll(".cctabcontent");
-        let currentStep = 0;
 
-        function nextStep() {
-            // Check if there is a next step
-            if (currentStep < steps.length - 1) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
 
-                // Show next step
-                steps[currentStep + 1].style.display = "block";
+                function openCity(evt, cityName) {
+                    var i, cctabcontent, cctablinks;
+                    cctabcontent = document.getElementsByClassName("cctabcontent");
+                    for (i = 0; i < cctabcontent.length; i++) {
+                        cctabcontent[i].style.display = "none";
+                    }
+                    cctablinks = document.getElementsByClassName("cctablinks");
+                    for (i = 0; i < cctablinks.length; i++) {
+                        cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
 
-                // Add active class to next button
-                stepButtons[currentStep + 1].classList.add("active");
+                    // Find the index of the clicked tab button
+                    const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
 
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
+                    // Update the currentStep to the index of the clicked tab
+                    currentStep = index;
+                }
 
-                // Update current step
-                currentStep++;
-            }
-        }
+                const saveButtons = document.querySelectorAll(".saveButton");
+                const nextButtons = document.querySelectorAll(".nextButton");
+                const form = document.getElementById("step-form");
+                const stepButtons = document.querySelectorAll(".cctablinks");
+                const steps = document.querySelectorAll(".cctabcontent");
+                let currentStep = 0;
 
-        function previousStep() {
-            // Check if there is a previous step
-            if (currentStep > 0) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
+                function nextStep() {
+                    // Check if there is a next step
+                    if (currentStep < steps.length - 1) {
+                        // Hide current step
+                        steps[currentStep].style.display = "none";
 
-                // Show previous step
-                steps[currentStep - 1].style.display = "block";
+                        // Show next step
+                        steps[currentStep + 1].style.display = "block";
 
-                // Add active class to previous button
-                stepButtons[currentStep - 1].classList.add("active");
+                        // Add active class to next button
+                        stepButtons[currentStep + 1].classList.add("active");
 
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
+                        // Remove active class from current button
+                        stepButtons[currentStep].classList.remove("active");
 
-                // Update current step
-                currentStep--;
-            }
-        }
+                        // Update current step
+                        currentStep++;
+                    }
+                }
 
+                function previousStep() {
+                    // Check if there is a previous step
+                    if (currentStep > 0) {
+                        // Hide current step
+                        steps[currentStep].style.display = "none";
+
+                        // Show previous step
+                        steps[currentStep - 1].style.display = "block";
+
+                        // Add active class to previous button
+                        stepButtons[currentStep - 1].classList.add("active");
+
+                        // Remove active class from current button
+                        stepButtons[currentStep].classList.remove("active");
+
+                        // Update current step
+                        currentStep--;
+                    }
+                }
+    </script>
+    <script>
         function handleDateInput(input, targetId) {
             const target = document.getElementById(targetId);
             const date = new Date(input.value);
@@ -3285,31 +3306,6 @@
             const formattedDate = date.toLocaleDateString('en-US', options).replace(/ /g, '-');
             target.value = formattedDate;
         }
-
-        {{-- function updateNextAuditDate(lastAuditDate) {
-            const date = new Date(lastAuditDate);
-
-            // Calculate the next audit date (one day after the last audit date)
-            date.setDate(date.getmonth() + 1);
-
-            // Format the date in the desired format
-            const formattedDate = date.toLocaleDateString('en-GB', {
-                day: '2-digit',
-                month: 'short',
-                year: 'numeric'
-            }).replace(/ /g, '-');
-
-            // Get the next audit date input fields
-            const nextAuditDateInput = document.querySelector('input[name="next_audit_date"]');
-            const nextAuditDateDisplay = document.getElementById('next_audit_date');
-
-            // Set the value of the input fields
-            nextAuditDateInput.value = date.toISOString().split('T')[0];
-            nextAuditDateDisplay.value = formattedDate;
-
-            // Make the input field editable
-            nextAuditDateInput.readOnly = false;
-        } --}}
 
         function updateNextAuditDateMin(lastAuditDate) {
             const nextAuditDateInput = document.querySelector('input[name="next_audit_date"]');

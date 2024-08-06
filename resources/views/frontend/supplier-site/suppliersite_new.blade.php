@@ -525,7 +525,7 @@
                                 </div>
                             </div>
 
-                         
+
                         </div>
 
                         <div class="button-block">
@@ -2075,6 +2075,27 @@
             evt.currentTarget.className += " active";
         }
 
+
+
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
         const saveButtons = document.querySelectorAll(".saveButton");
         const nextButtons = document.querySelectorAll(".nextButton");
         const form = document.getElementById("step-form");
@@ -2121,7 +2142,8 @@
                 currentStep--;
             }
         }
-
+    </script>
+    <script>
         function handleDateInput(input, targetId) {
             const date = new Date(input.value);
             const formattedDate = date.toLocaleDateString('en-GB', {
@@ -2131,31 +2153,6 @@
             }).replace(/ /g, '-');
             document.getElementById(targetId).value = formattedDate;
         }
-
-        {{-- function updateNextAuditDate(lastAuditDate) {
-            const date = new Date(lastAuditDate);
-
-            // Calculate the next audit date (one day after the last audit date)
-            date.setDate(date.getmonth() + 1);
-
-            // Format the date in the desired format
-            const formattedDate = date.toLocaleDateString('en-GB', {
-                day: '2-digit',
-                month: 'short',
-                year: 'numeric'
-            }).replace(/ /g, '-');
-
-            // Get the next audit date input fields
-            const nextAuditDateInput = document.querySelector('input[name="next_audit_date"]');
-            const nextAuditDateDisplay = document.getElementById('next_audit_date');
-
-            // Set the value of the input fields
-            nextAuditDateInput.value = date.toISOString().split('T')[0];
-            nextAuditDateDisplay.value = formattedDate;
-
-            // Make the input field editable
-            nextAuditDateInput.readOnly = false;
-        } --}}
 
         function updateNextAuditDateMin(lastAuditDate) {
             const nextAuditDateInput = document.querySelector('input[name="next_audit_date"]');

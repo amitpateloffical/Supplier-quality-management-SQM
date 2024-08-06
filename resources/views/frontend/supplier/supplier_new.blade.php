@@ -1009,7 +1009,7 @@
                                         <select id="manufacturer_audit_planned" name="manufacturer_audit_planned">
                                             <option value="">---- Select ----</option>
                                             <option value="Yes">Yes</option>
-                                            <option value="Not Required">Not Required</option>
+                                            <option value="No">No</option>
                                         </select>
                                     </div>
                                 </div>

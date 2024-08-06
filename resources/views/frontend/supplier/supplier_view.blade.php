@@ -364,25 +364,26 @@
                         @endphp
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/supplier-audit-trail', $data->id) }}"> Audit Trail </a> </button>
                         @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Need for Sourcing of Starting Material
-                            </button>
-                                @if($data->approvedBy_contract_giver_by == null)
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#contract-giver-modal">
-                                        Approved By Contract Giver
-                                    </button>
-                                @endif
-                                @if(!empty($data->approvedBy_contract_giver_by))
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#link-manufacturer">
-                                        Link Manufacturer Code to Material Code through MPN in SAP
-                                    </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">
-                                        Initiate Periodic Revaluation
-                                    </button>
-                                @endif
+                            
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
+                            @if($data->approvedBy_contract_giver_by == null)
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#contract-giver-modal">
+                                    Approved By Contract Giver
+                                </button>
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Need for Sourcing of Starting Material
+                                </button> 
+                            @endif
+                            @if(!empty($data->approvedBy_contract_giver_by))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#link-manufacturer">
+                                    Link Manufacturer Code to Material Code through MPN in SAP
+                                </button>
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">
+                                    Initiate Periodic Revaluation
+                                </button>
+                            @endif                            
                         @elseif($data->stage == 2 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Request Justified
@@ -1570,7 +1571,7 @@
                                         <select id="manufacturer_audit_planned" name="manufacturer_audit_planned">
                                             <option value="">---- Select ----</option>
                                             <option value="Yes" @if($data->manufacturer_audit_planned == "Yes") selected @endif>Yes</option>
-                                            <option value="Not Required" @if($data->manufacturer_audit_planned == "Not Required") selected @endif>Not Required</option>
+                                            <option value="No" @if($data->manufacturer_audit_planned == "No") selected @endif>No</option>
                                         </select>
                                     </div>
                                 </div>

@@ -350,7 +350,7 @@ use Illuminate\Support\Facades\Hash;
             $history->root_id = $root->id;
             $history->activity_type = 'Initiator Group Code';
             $history->previous = "Null";
-            $history->current = Helpers::getFullDepartmentName($root->initiator_group_code);
+            $history->current = $root->initiator_group_code;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -778,7 +778,6 @@ $history->save();
         }
         $lastDocument =  RootCauseAnalysis::find($id);
         $root =  RootCauseAnalysis::find($id);
-        $root->initiator_Group = $request->initiator_Group;
         $root->initiated_through = $request->initiated_through;
         $root->initiated_if_other = ($request->initiated_if_other);
         $root->short_description = $request->short_description;
@@ -792,6 +791,9 @@ $history->save();
         $root->investigation_summary = ($request->investigation_summary);
         $root->root_cause_description = $request->root_cause_description;
         $root->cft_comments_new = ($request->cft_comments_new);
+
+        $root->initiator_group_code = $request->initiator_group_code;
+        $root->initiator_Group = Helpers::getFullDepartmentName($request->initiator_Group);
        
          $root->investigators = ($request->investigators);
         $root->related_url = ($request->related_url);
@@ -1073,16 +1075,16 @@ $history->save();
         //     $history->action_name = 'Update';
         //     $history->save();
         // }
-        if ($lastDocument->initiator_Group != $root->initiator_Group || !empty($request->initiator_Group_comment)) {
+        if ($lastDocument->initiator_Group != $root->initiator_Group) {
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'initiator_Group')
+            ->where('activity_type', 'Initiator Group')
             ->exists();
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Initiator Group';
             $history->previous = $lastDocument->initiator_Group;
-            $history->current = $root->initiator_Group;
-            $history->comment = $request->initiator_Group_comment;
+            $history->current =  $root->initiator_Group;
+            $history->comment =  "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1092,16 +1094,16 @@ $history->save();
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if ($lastDocument->initiator_Group != $root->initiator_group_code || !empty($request->initiator_group_code)) {
+        if ($lastDocument->initiator_group_code != $root->initiator_group_code) {
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'initiator_Group')
+            ->where('activity_type', 'Initiator Group Code')
             ->exists();
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Initiator Group';
+            $history->activity_type = 'Initiator Group Code';
             $history->previous = $lastDocument->initiator_group_code;
             $history->current = $root->initiator_group_code;
-            $history->comment = $request->initiator_group_code_comment;
+            $history->comment = "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1114,7 +1116,7 @@ $history->save();
 
         if ($lastDocument->assign_to != $root->assign_to || !empty($request->assign_to_comment)) {
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'assign_to')
+            ->where('activity_type', 'Assign To')
             ->exists();
             $history = new RootAuditTrial();
             $history->root_id = $id;
@@ -1133,7 +1135,7 @@ $history->save();
         }
         if ($lastDocument->due_date != $root->due_date || !empty($request->due_date_comment)) {
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'due_date')
+            ->where('activity_type', 'Due Date')
             ->exists();
             $history = new RootAuditTrial();
             $history->root_id = $id;
@@ -1153,7 +1155,7 @@ $history->save();
 
         if ($lastDocument->short_description != $root->short_description || !empty($request->short_description_comment)) {
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'short_description')
+            ->where('activity_type', 'Short Description')
             ->exists();
             $history = new RootAuditTrial();
             $history->root_id = $id;
@@ -1173,7 +1175,7 @@ $history->save();
      
         if ($lastDocument->severity_level != $root->severity_level || !empty($request->division_code_comment)) {
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'severity_level')
+            ->where('activity_type', 'Severity Level')
             ->exists();
             $history = new RootAuditTrial();
             $history->root_id = $id;
@@ -1193,14 +1195,14 @@ $history->save();
         
         if ($lastDocument->initiated_through != $root->initiated_through|| !empty($request->initiated_through_comment)){
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'initiated_through')
+            ->where('activity_type', 'Initiated Through')
             ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Initiated Through';
-        $history->previous = "Null";
+        $history->previous =$lastDocument->initiated_through;
         $history->current =$root->initiated_through;
-        $history->comment = "NA";
+        $history->comment = $request->initiated_through_comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1212,14 +1214,14 @@ $history->save();
         }
         if ($lastDocument->initiated_if_other != $root->initiated_if_other || !empty($request->initiated_if_other_comment)){
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'initiated_if_other')
+            ->where('activity_type', 'Other')
             ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Other';
-        $history->previous = "Null";
+        $history->previous = $lastDocument->initiated_if_other;
         $history->current =$root->initiated_if_other;
-        $history->comment = "NA";
+        $history->comment = $request->initiated_if_other_comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1269,14 +1271,14 @@ $history->save();
 
         if ($lastDocument->priority_level != $root->priority_level || !empty($request->priority_level_comment)){
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'priority_level')
+            ->where('activity_type', 'Priority Level')
             ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Priority Level';
         $history->previous = $lastDocument->priority_level;
         $history->current =$root->priority_level;
-        $history->comment = "NA";
+        $history->comment = $request->priority_level_comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1288,7 +1290,7 @@ $history->save();
         }
         if ($lastDocument->department != $root->department || !empty($request->department_comment)){
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'department')
+            ->where('activity_type', 'Department')
             ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
@@ -1296,7 +1298,7 @@ $history->save();
         $history->previous = $lastDocument->department;
         $history->current = $root->department;
         // $history->action =  "Not Applicable";
-        $history->comment = "NA";
+        $history->comment = $request->department_comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1308,14 +1310,14 @@ $history->save();
         }
         if ($lastDocument->description != $root->description || !empty($request->description_comment)){
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'description')
+            ->where('activity_type', 'Description')
             ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Description';
         $history->previous = $lastDocument->description;
         $history->current =$root->description;
-        $history->comment = "NA";
+        $history->comment = $request->description_comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1327,7 +1329,7 @@ $history->save();
         }
         if ($lastDocument->comments != $root->comments || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'comments')
+            ->where('activity_type', 'Comments')
             ->exists();
 
             $history = new RootAuditTrial();
@@ -1355,7 +1357,7 @@ $history->save();
                     $history->activity_type = 'Initial Attachment';
                     $history->previous = $previousAttachments;
                     $history->current = $root->root_cause_initial_attachment;
-                    $history->comment = "Not Applicable";
+                    $history->comment =$request->root_cause_initial_attachment_comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1378,14 +1380,14 @@ $history->save();
 
         if ($lastDocument->related_url != $root->related_url || !empty($request->related_url_comment)){
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'related_url')
+            ->where('activity_type', 'Related Url')
             ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Related Url';
         $history->previous = $lastDocument->related_url;
         $history->current =$root->related_url;
-        $history->comment = "NA";
+        $history->comment = $request->root_cause_initial_attachment_comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1398,14 +1400,14 @@ $history->save();
      
         if ($lastDocument->root_cause_methodology != $root->root_cause_methodology || !empty($request->root_cause_methodology_comment)){
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'root_cause_methodology')
+            ->where('activity_type', 'Root Cause Methodology')
             ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Root Cause Methodology';
         $history->previous = $lastDocument->root_cause_methodology;
         $history->current =$root->root_cause_methodology;
-        $history->comment = "NA";
+        $history->comment = $request->root_cause_methodology_comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1418,7 +1420,7 @@ $history->save();
 
         if ($lastDocument->root_cause_description != $root->root_cause_description || !empty($request->root_cause_description_comment)){
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'root_cause_description')
+            ->where('activity_type', 'Root Cause Description')
             ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
@@ -1437,7 +1439,7 @@ $history->save();
         }
         if ($lastDocument->investigation_summary != $root->investigation_summary || !empty($request->investigation_summary_comment)){
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'investigation_summary')
+            ->where('activity_type', 'Investigation Summary')
             ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
@@ -1457,11 +1459,11 @@ $history->save();
 
         if ($lastDocument->cft_comments_new != $root->cft_comments_new|| !empty($request->cft_comments_new_comment)){
             $lastDocumentAuditTrail = RootAuditTrial::where('root_id', $root->id)
-            ->where('activity_type', 'Final oomments')
+            ->where('activity_type', 'Final Comments')
             ->exists();
             $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'CFT Comments New';
+        $history->activity_type = 'Final Comments';
         $history->previous = $lastDocument->cft_comments_new ;
         $history->current =$root->cft_comments_new;
         $history->comment = "NA";

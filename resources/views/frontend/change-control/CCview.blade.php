@@ -263,12 +263,12 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Microbiology">CFT Reviewer</label>
-                                                    <select name="cft_reviewer" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                        <option value="">-- Select --</option>
-                                                        <option value="yes" selected>Yes</option>
-                                                        <option value="no">No</option>
-                                                    </select>
-                                                </div>
+                                                        <select name="cft_reviewer" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                            <option value="">-- Select --</option>
+                                                            <option value="yes" {{ $data->cft_reviewer == 'yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="no" {{ $data->cft_reviewer == 'no' ? 'selected' : '' }}>No</option>
+                                                        </select>
+                                                    </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
@@ -1640,7 +1640,45 @@
                                                 </div>
                                             </div>
 
+                                             <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="cft_review_by"> CFT Review Completed By</label>
+                                                    <div class="static"> {{  $data->cft_review_by }}</div>
+                                                </div>
+                                            </div>
                                             <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="cft_review_on"> CFT Review Completed On</label>
+                                                    <div class="static">{{  $data->cft_review_on }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="cft_review_comment">CFT Review Completed Comment</label>
+                                                    <div class="static">{{  $data->cft_review_comment }}</div>
+                                                </div>
+                                            </div> 
+
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="cftNot_required_by"> CFT Review Not Required By</label>
+                                                    <div class="static"> {{  $data->cftNot_required_by }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="cftNot_required_on"> CFT Review Not Required On</label>
+                                                    <div class="static">{{  $data->cftNot_required_on }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="cftNot_required_comment">CFT Review Not Required Comment</label>
+                                                    <div class="static">{{  $data->cftNot_required_comment }}</div>
+                                                </div>
+                                            </div> 
+
+                                            {{-- <div class="col-lg-3">
                                                 <div class="group-input">
                                                     <label for="QA_Review_Complete_By">Pending CFT Review Completed By</label>
                                                     <div class="static"> {{  $data->cftNot_required_by }}</div>
@@ -1657,7 +1695,7 @@
                                                     <label for="QA_Review_Complete_On">Pending CFT Review Completed Comment</label>
                                                     <div class="static">{{  $data->cftNot_required_comment }}</div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="col-lg-3">
                                                 <div class="group-input">

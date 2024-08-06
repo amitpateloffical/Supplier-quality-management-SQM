@@ -1075,7 +1075,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="hod_additional_attachment">Additional Attachment</label>
+                                    <label for="hod_additional_attachment">HOD Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="hod_additional_attachment"></div>
@@ -1417,7 +1417,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="supplier_detail_additional_attachment">Additional Attachment</label>
+                                    <label for="supplier_detail_additional_attachment">Supplier Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="supplier_detail_additional_attachment"></div>
@@ -1751,7 +1751,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="score_card_additional_attachment">Additional Attachment</label>
+                                    <label for="score_card_additional_attachment">Score Card Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="score_card_additional_attachment"></div>
@@ -1834,7 +1834,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa_reviewer_additional_attachment">Additional Attachment</label>
+                                    <label for="qa_reviewer_additional_attachment">QA Reviewer Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="qa_reviewer_additional_attachment"></div>
@@ -2004,7 +2004,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="risk_assessment_additional_attachment">Additional Attachment</label>
+                                    <label for="risk_assessment_additional_attachment">Risk Assesment Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="risk_assessment_additional_attachment"></div>
@@ -2081,7 +2081,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa_head_additional_attachment">Additional Attachment</label>
+                                    <label for="qa_head_additional_attachment">QA Head Reviewer Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="qa_head_additional_attachment"></div>

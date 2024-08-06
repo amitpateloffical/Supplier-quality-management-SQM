@@ -624,7 +624,7 @@
                     <!-- <tr>
                         <th class="w-20"></th>
                         <td class="w-80 imageContainer" colspan="3">
-                            @if ($data->)
+                            @if ($data->cqa_remark)
                                 {{ $data->cqa_remark }}
                             @else
                                 Not Applicable
@@ -1210,7 +1210,7 @@
                 </div>
                 <div class="border-table">
                     <div class="block-head">
-                        Additional Attachments
+                    HOD Additional Attachments
                     </div>
                     <table>
                         <tr class="table_bg">
@@ -1593,7 +1593,7 @@
 
         <div class="border-table">
             <div class="block-head">
-                Additional Attachments
+            Supplier Additional Attachments
             </div>
             <table>
                 <tr class="table_bg">
@@ -1809,7 +1809,7 @@
         </div>
         <div class="border-table">
             <div class="block-head">
-                Additional Attachments
+            Score Card Additional Attachments
             </div>
             <table>
                 <tr class="table_bg">
@@ -1910,7 +1910,7 @@
 
         <div class="border-table">
             <div class="block-head">
-                Additional Attachments
+            QA Reviewer Additional Attachments
             </div>
             <table>
                 <tr class="table_bg">
@@ -2124,7 +2124,7 @@
                 </tr>
             </table>
         </div>
-        <div class="border-table">
+        <!-- <div class="border-table">
             <div class="block-head">
                 Additional Attachments
             </div>
@@ -2148,7 +2148,7 @@
                     </tr>
                 @endif
             </table>
-        </div>
+        </div> -->
 
         <!--  Risk Assessment -->
         <div class="block" style="margin-top: 15px;">
@@ -2282,7 +2282,7 @@
 
         <div class="border-table">
             <div class="block-head">
-                Additional Attachments
+            Risk Assesment Additional Attachments
             </div>
             <table>
                 <tr class="table_bg">
@@ -2362,7 +2362,7 @@
 
         <div class="border-table">
             <div class="block-head">
-                Additional Attachments
+            QA Head Reviewer Additional Attachments
             </div>
             <table>
                 <tr class="table_bg">

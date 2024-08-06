@@ -446,6 +446,21 @@ class SupplierController extends Controller
 
         $history = new SupplierAuditTrail;
         $history->supplier_id = $supplier->id;
+        $history->activity_type = 'Site/Location';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName($request->division_id);
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $supplier->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+
+        $history = new SupplierAuditTrail;
+        $history->supplier_id = $supplier->id;
         $history->activity_type = 'Inititator';
         $history->previous = "Null";
         $history->current = Auth::user()->name;

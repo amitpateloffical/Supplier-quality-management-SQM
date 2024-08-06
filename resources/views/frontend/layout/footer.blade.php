@@ -1213,11 +1213,11 @@
                     '"></td>' +
                     '<td><select name="product_name[]" id="product_name">' +
                     '<option value="">-- Select value --</option>' +
-                    '<option value="PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/">PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/</option>' +
-                    '<option value="BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION">BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION</option>' +
-                    '<option value="CAFFEINECITRATEORALSOLUTION USP 60MG/3ML">CAFFEINECITRATEORALSOLUTION USP 60MG/3ML</option>' +
+                    '<option value="PLACE BEFORE BIMATOPROST OPH.SOLO.01%W/">PLACE BEFORE BIMATOPROST OPH.SOLO.01%W/</option>' +
+                    '<option value="BIMATOPROST AND TIMOLOL MALEATEED SOLUTION">BIMATOPROST AND TIMOLOL MALEATEED SOLUTION</option>' +
+                    '<option value="CAFFEINE CITRATE ORAL SOLUTION USP 60MG/3ML">CAFFEINE CITRATE ORAL SOLUTION USP 60MG/3ML</option>' +
                     '<option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)">BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)</option>' +
-                    '<option value="DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO">DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO</option>' +
+                    '<option value="DORZOLAMIDE PFREE 20MG/ML EDSOLSINGLEDOSECO">DORZOLAMIDE PFREE 20MG/ML EDSOLSINGLEDOSECO</option>' +
                     '</select></td>' +
                     '<td><select name="product_batch_no[]" id="batch_no">' +
                     '<option value="">select value</option>' +
@@ -1227,13 +1227,13 @@
                     '<option value="BJJH0004A">BJJH0004A</option>' +
                     '<option value="DCAU0036">DCAU0036</option>' +
                     '</select></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="product_mfg_date' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="mfg_date' +
                     serialNumber +
-                    '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="product_mfg_date[]" class="hide-input" oninput="handleDateInput(this, `product_mfg_date' +
+                    '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="mfg_date[]" class="hide-input" oninput="handleDateInput(this, `mfg_date' +
                     serialNumber + '`)" /></div></div></div></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="product_expiry_date' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="expiry_date' +
                     serialNumber +
-                    '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="product_expiry_date[]" class="hide-input" oninput="handleDateInput(this, `product_expiry_date' +
+                    '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="expiry_date[]" class="hide-input" oninput="handleDateInput(this, `expiry_date' +
                     serialNumber + '`)" /></div></div></div></td>' +
                     '<td><input type="text" name="product_batch_desposition[]"></td>' +
                     '<td><input type="text" name="product_remark[]"></td>' +
@@ -1243,6 +1243,7 @@
                     '<option value="Release">Release</option>' +
                     '<option value="quarantine">Quarantine</option>' +
                     '</select></td>' +
+                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                     '</tr>';
 
                 return html;

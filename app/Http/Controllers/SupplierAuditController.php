@@ -63,6 +63,7 @@ class SupplierAuditController extends Controller
         $internalAudit->due_date = $request->due_date;
         $internalAudit->Initiator_Group = $request->Initiator_Group;
         $internalAudit->initiator_group_code= $request->initiator_group_code;
+        $internalAudit->recordNumber = $request->recordNumber;
         
         $internalAudit->short_description = $request->short_description;
         $internalAudit->audit_type = $request->audit_type;
@@ -187,9 +188,6 @@ class SupplierAuditController extends Controller
             }
             $internalAudit->myfile = json_encode($files);
         }
-
-        dd($request->record_number1);
-     
         $internalAudit->save();
         // dd($internalAudit);
 
@@ -331,12 +329,11 @@ if (!empty($internalAudit->intiation_date)) {
     $history->origin_state = $internalAudit->status;
     $history->save();
 }
-if (!empty($internalAudit->record)) {
     $history = new ExternalAuditTrailSupplier();
     $history->supplier_id = $internalAudit->id;
     $history->activity_type = 'Record Number';
     $history->previous = "Null";
-    $history->current = $request->record_number;
+    $history->current = $internalAudit->recordNumber;
     $history->comment = "NA";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -346,21 +343,6 @@ if (!empty($internalAudit->record)) {
     $history->action_name = "Create";
     $history->origin_state = $internalAudit->status;
     $history->save();
-}
-    // $history = new ExternalAuditTrailSupplier();
-    // $history->supplier_id = $internalAudit->id;
-    // $history->activity_type = 'Record Number';
-    // $history->previous = "Null";
-    // $history->current =  Helpers::getDivisionName($request->division_id).'/SA/'. date('Y') .'/'. str_pad($internalAudit->record, 4, '0', STR_PAD_LEFT);
-    // $history->comment = "NA";
-    // $history->user_id = Auth::user()->id;
-    // $history->user_name = Auth::user()->name;
-    // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    // $history->change_to = 'Opened';
-    // $history->change_from = 'Initiation';
-    // $history->action_name = "Create";
-    // $history->origin_state = $internalAudit->status;
-    // $history->save();
 
 if (!empty($internalAudit->severity_level)) {
     $history = new ExternalAuditTrailSupplier();
@@ -1164,7 +1146,7 @@ if (!empty($internalAudit->Auditee)) {
         // foreach($sgrid as $s)
         // return $sgrid;
         // dd($data);
-        return view('frontend.New_forms.supplierView', compact('data', 'old_record','sgrid','grid_data1'));
+        return view('frontend.New_forms.ar', compact('data', 'old_record','sgrid','grid_data1'));
     }
 
     public function update(Request $request, $id)

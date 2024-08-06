@@ -234,8 +234,8 @@
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="#">{{ $datas->activity_type ? $datas->activity_type : 'Not Applicable' }}</a>
+                                    <strong> Data Field Name :</strong>
+                                        {{ $datas->activity_type ? $datas->activity_type : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if ($datas->activity_type == 'Activity Log')

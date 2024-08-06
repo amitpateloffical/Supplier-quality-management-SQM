@@ -413,11 +413,14 @@ function addMultipleFiles(input, block_id) {
                                                     name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                             </div>
                                         </div>
+                                        @php
+                                            $disabled = ($data->stage == 0 || $data->stage == 6) ? 'disabled' : '';
+                                        @endphp
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
-                                                <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                     id="initiator_group">
+                                                <select name="Initiator_Group"
+                                                     id="initiator_group" >
                                                     <option value="CQA"
                                                         @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>

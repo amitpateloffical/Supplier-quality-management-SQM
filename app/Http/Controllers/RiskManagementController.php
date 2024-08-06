@@ -3852,11 +3852,12 @@ class RiskManagementController extends Controller
             $riskgrdwhat_who_where = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','what_who_where')->first();
             $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','effect_analysis')->first();
             $data5 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','Action_Plan')->first();
+            $data6 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','Mitigation_Plan_Details')->first();
              //dd($riskgrd);
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','riskgrdfishbone','riskgrdwhy_chart','riskgrdwhat_who_where','riskEffectAnalysis', 'data5'))
+            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','riskgrdfishbone','riskgrdwhy_chart','riskgrdwhat_who_where','riskEffectAnalysis', 'data5', 'data6'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

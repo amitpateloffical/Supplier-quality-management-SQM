@@ -274,8 +274,7 @@
                                             placeholder="Select Reference Records">
 
                                             @foreach ($old_record as $new)
-                                                <option value=" {{ Helpers::getDivisionName($new->division_id) . '/AI/' . date('Y') .'/' .  Helpers::recordFormat($new->record) }}">
-                                                   
+                                                <option value=" {{ Helpers::getDivisionName($new->division_id) . '/AI/' . date('Y') .'/' .  Helpers::recordFormat($new->record) }}">                                                   
                                                     {{ Helpers::getDivisionName($new->division_id) . '/AI/' . date('Y') .'/' .  Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
@@ -284,7 +283,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="HOD Persons">HOD Persons</label>
+                                        <label for="HOD Persons">HOD Person</label>
                                         <select name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
                                             data-silent-initial-value-set="true" id="hod">
                                             <option value="">select</option>

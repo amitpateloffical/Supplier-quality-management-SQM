@@ -827,7 +827,7 @@
                                 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Attach Three Batch COAs</label>
+                                        <label for="Initiator Group Code">Attach Three Batch COA's</label>
                                         <select id="attach_batch" name="attach_batch">
                                             <option value="">---- Select ----</option>
                                             <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
@@ -849,7 +849,7 @@
                                 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Availability of Manufacturer COAs</label>
+                                        <label for="Initiator Group Code">Availability of Manufacturer COA's</label>
                                         <select id="manufacturer_availability" name="manufacturer_availability">
                                             <option value="">---- Select ----</option>
                                             <option value="Yes" @if($data->manufacturer_availability == "Yes") selected @endif>Yes</option>
@@ -1069,7 +1069,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Availability of COAS After Analysis</label>
+                                        <label for="Initiator Group Code">Availability of COA's After Analysis</label>
                                         <select id="availability_od_coa" name="availability_od_coa">
                                             <option value="">---- Select ----</option>
                                             <option value="Yes" @if($data->availability_od_coa == "Yes") selected @endif>Yes</option>

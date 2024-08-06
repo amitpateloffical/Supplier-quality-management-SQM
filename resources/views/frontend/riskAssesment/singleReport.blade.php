@@ -615,7 +615,15 @@
                         <th class="w-20">Severity Rate</th>
                         <td class="w-80">
                             @if ($data->severity_rate)
-                                {{ $data->severity_rate }}
+                                @if ($data->severity_rate == 1)
+                                    Negligible
+                                @elseif($data->severity_rate == 2)
+                                    Moderate
+                                @elseif($data->severity_rate == 3)
+                                    Major
+                                @else
+                                    Fatal
+                                @endif
                             @else
                                 Not Applicable
                             @endif
@@ -624,7 +632,17 @@
                         <th class="w-20">Occurrence</th>
                         <td class="w-80">
                             @if ($data->occurrence)
-                                {{ $data->occurrence }}
+                                @if ($data->occurrence == 1)
+                                    Very Likely
+                                @elseif($data->occurrence == 2)
+                                    Likely
+                                @elseif($data->occurrence == 3)
+                                    Unlikely
+                                @elseif($data->occurrence == 4)
+                                    Rare
+                                @else
+                                    Extremely Unlikely
+                                @endif
                             @else
                                 Not Applicable
                             @endif
@@ -634,7 +652,17 @@
                         <th class="w-20">Detection</th>
                         <td class="w-80">
                             @if ($data->detection)
-                                {{ $data->detection }}
+                                @if ($data->detection == 1)
+                                    Very Likely
+                                @elseif($data->detection == 2)
+                                    Likely
+                                @elseif($data->detection == 3)
+                                    Unlikely
+                                @elseif($data->detection == 4)
+                                    Rare
+                                @else
+                                    Impossible
+                                @endif
                             @else
                                 Not Applicable
                             @endif

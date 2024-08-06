@@ -1064,7 +1064,7 @@
                                                             <th>Batch Disposition Decision</th>
                                                             <th>Remark</th>
                                                             <th>Batch Status</th>
-                                                            <th>Action</th>
+                                                            <th>Action</th> 
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1145,7 +1145,7 @@
                                                             <td><input type="text" name="batch_status[]"
                                                                     value="{{ unserialize($data1->batch_status)[$key] ? unserialize($data1->batch_status)[$key] : '' }}">
                                                             </td>
-                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                             <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                         </tr>
                                                         @endforeach
                                                         @endif

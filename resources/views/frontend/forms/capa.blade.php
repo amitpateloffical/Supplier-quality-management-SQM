@@ -954,6 +954,7 @@
                                                     <th>Batch Disposition Decision</th>
                                                     <th>Remark</th>
                                                     <th>Batch Status</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -982,6 +983,7 @@
                                                     <th>Batch Disposition Decision</th>
                                                     <th>Remark</th>
                                                     <th>Batch Status</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

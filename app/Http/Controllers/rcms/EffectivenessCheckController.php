@@ -1020,8 +1020,15 @@ class EffectivenessCheckController extends Controller
 
                     $history = new EffectivenessCheckAuditTrail();
                     $history->effectiveness_check_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->current = $changeControl->submit_by;
+                    $history->activity_type = 'Submit By, Submit On';
+                    if (is_null($lastopenState->submit_by ) || $lastopenState->submit_by  === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastopenState->submit_by  . ' , ' . $lastopenState->submit_on;
+                    }
+                    $history->current = $changeControl->submit_by  . ' , ' . $changeControl->submit_on;
+                    // $history->activity_type = 'Activity Log';
+                    // $history->current = $changeControl->submit_by;
                     $history->comment = $request->comment;
                     $history->action = 'Submit';
                     $history->user_id = Auth::user()->id;
@@ -1032,6 +1039,11 @@ class EffectivenessCheckController extends Controller
                     $history->change_to = 'Pending Effectiveness Check';
                     $history->change_from = 'Opened';
                     $history->action_name = 'Not Applicable';
+                    if (is_null($lastopenState->submit_by ) || $lastopenState->submit_by  === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
 
 
@@ -1091,8 +1103,15 @@ class EffectivenessCheckController extends Controller
 
                     $history = new EffectivenessCheckAuditTrail();
                     $history->effectiveness_check_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->current = $changeControl->effective_by;
+                    $history->activity_type = 'Effective By, Effective On';
+                    if (is_null($lastopenState->effective_by) || $lastopenState->effective_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastopenState->effective_by . ' , ' . $lastopenState->effective_on;
+                    }
+                    $history->current = $changeControl->effective_by . ' , ' . $changeControl->effective_on;
+                    // $history->activity_type = 'Activity Log';
+                    // $history->current = $changeControl->effective_by;
                     $history->comment = $request->comment;
                     $history->action = 'Effective';
                     $history->user_id = Auth::user()->id;
@@ -1103,6 +1122,11 @@ class EffectivenessCheckController extends Controller
                     $history->change_to = 'QA Approval-Effective';
                     $history->change_from = 'Pending Effectiveness Check';
                     $history->action_name = 'Not Applicable';
+                    if (is_null($lastopenState->effective_by) || $lastopenState->effective_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
 
                     $list = Helpers:: getQAUserList();
@@ -1139,15 +1163,22 @@ class EffectivenessCheckController extends Controller
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = '4';
-                $changeControl->status = 'Closed – Effective';
+                $changeControl->status = 'Closed  Effective';
                 $changeControl->effective_approval_complete_by =  Auth::user()->name;
                 $changeControl->effective_approval_complete_on = Carbon::now()->format('d-M-Y');
                 $changeControl->effective_approval_complete_comment = $request->comment;
 
                 $history = new EffectivenessCheckAuditTrail();
                 $history->effectiveness_check_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->effective_approval_complete_by;
+                $history->activity_type = 'not_effective_by, Effective Approval Completed On';
+                if (is_null($lastopenState->effective_approval_complete_by) || $lastopenState->effective_approval_complete_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastopenState->effective_approval_complete_by . ' , ' . $lastopenState->effective_approval_complete_on;
+                }
+                $history->current = $changeControl->effective_approval_complete_by . ' , ' . $changeControl->effective_approval_complete_on;
+                // $history->activity_type = 'Activity Log';
+                // $history->current = $changeControl->effective_approval_complete_by;
                 $history->comment = $request->comment;
                 $history->action = 'Effective Approval Completed';
                 $history->user_id = Auth::user()->id;
@@ -1158,6 +1189,11 @@ class EffectivenessCheckController extends Controller
                 $history->change_to = 'Closed – Effective';
                 $history->change_from = 'QA Approval-Effective';
                 $history->action_name = 'Not Applicable';
+                if (is_null($lastopenState->effective_approval_complete_by) || $lastopenState->effective_approval_complete_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
 
                 $changeControl->update();
@@ -1195,9 +1231,16 @@ class EffectivenessCheckController extends Controller
 
                 $history = new EffectivenessCheckAuditTrail();
                 $history->effectiveness_check_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->action = 'Not Effective';
-                $history->current = $changeControl->not_effective_by;
+                $history->activity_type = 'Not Effective By, Not Effective On';
+                if (is_null($lastopenState->not_effective_by) || $lastopenState->not_effective_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastopenState->not_effective_by . ' , ' . $lastopenState->not_effective_on;
+                }
+                $history->current = $changeControl->not_effective_by . ' , ' . $changeControl->not_effective_on;
+                // $history->activity_type = 'Activity Log';
+                 $history->action = 'Not Effective';
+                // $history->current = $changeControl->not_effective_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1207,6 +1250,11 @@ class EffectivenessCheckController extends Controller
                 $history->change_to = 'QA Approval-Not Effective';
                 $history->change_from = 'Pending Effectiveness Check';
                 $history->action_name = 'Not Applicable';
+                if (is_null($lastopenState->not_effective_by) || $lastopenState->not_effective_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
 
                     $list = Helpers:: getQAUserList();
@@ -1250,18 +1298,30 @@ class EffectivenessCheckController extends Controller
 
                 $history = new EffectivenessCheckAuditTrail();
                 $history->effectiveness_check_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Not Effective Approval Complete By ,Not Effective Approval Complete On';
+                if (is_null($lastopenState->not_effective_approval_complete_by) || $lastopenState->not_effective_approval_complete_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastopenState->not_effective_approval_complete_by . ' , ' . $lastopenState->not_effective_approval_complete_on;
+                }
+                $history->current = $changeControl->not_effective_approval_complete_by . ' , ' . $changeControl->not_effective_approval_complete_on;
+               // $history->activity_type = 'Activity Log';
                 $history->action = 'Not Effective Approval Complete';
-                $history->current = $changeControl->not_effective_approval_complete_by;
+                //$history->current = $changeControl->not_effective_approval_complete_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastopenState->status;
                 $history->stage = 'Not Effective Approval Complete';
-                $history->change_to = 'Closed – Not Effective';
+                $history->change_to = 'Closed  Not Effective';
                 $history->change_from = 'QA Approval-Not Effective';
                 $history->action_name = 'Not Applicable';
+                if (is_null($lastopenState->not_effective_approval_complete_by) || $lastopenState->not_effective_approval_complete_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
 
                 $changeControl->update();
@@ -1298,9 +1358,16 @@ class EffectivenessCheckController extends Controller
 
                 $history = new EffectivenessCheckAuditTrail();
                 $history->effectiveness_check_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'More Information Required By ,More Information Required On';
+                if (is_null($lastopenState->more_effective_by) || $lastopenState->more_effective_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastopenState->more_effective_by . ' , ' . $lastopenState->more_effective_on;
+                }
+                $history->current = $changeControl->more_effective_by . ' , ' . $changeControl->more_effective_on;
+                // $history->activity_type = 'Activity Log';
                 $history->action = 'More Information Required';
-                $history->current = $changeControl->more_effective_by;
+                // $history->current = $changeControl->more_effective_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1310,6 +1377,11 @@ class EffectivenessCheckController extends Controller
                 $history->change_to = 'Pending Effectiveness Check';
                 $history->change_from = 'QA Approval-Effective';
                 $history->action_name = 'Not Applicable';
+                if (is_null($lastopenState->more_effective_by) || $lastopenState->more_effective_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
 
                 $changeControl->update();
@@ -1336,7 +1408,14 @@ class EffectivenessCheckController extends Controller
 
                 $history = new EffectivenessCheckAuditTrail();
                 $history->effectiveness_check_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'More Information Required By ,More Information Required On';
+                if (is_null($lastopenState->more_not_effective_by) || $lastopenState->more_not_effective_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastopenState->more_not_effective_by . ' , ' . $lastopenState->more_not_effective_on ;
+                }
+                $history->current = $changeControl->more_not_effective_by . ' , ' . $changeControl->more_not_effective_on ;
+                
                 $history->action = 'More Information Required';
                 $history->current = $changeControl->more_not_effective_by;
                 $history->comment = $request->comment;
@@ -1348,6 +1427,11 @@ class EffectivenessCheckController extends Controller
                 $history->change_to = 'Pending Effectiveness Check';
                 $history->change_from = 'QA Approval-Not Effective';
                 $history->action_name = 'Not Applicable';
+                if (is_null($lastopenState->more_not_effective_by) || $lastopenState->more_not_effective_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
 
                 $changeControl->update();

@@ -4658,43 +4658,47 @@
         });
     </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            function addRow(type) {
-                let tbody = document.getElementById(`${type}_rows`);
-                let newRow = document.createElement('tr');
-                newRow.innerHTML = `
-                    <td><button type="button" onclick="removeRow(this)">Remove</button></td>
-                    <td><input type="file" name="${type}_attachment[]" class="custom-border"></td>
-                    <td><input type="date" name="certificate_issue_${type}[]" class="custom-border"></td>
-                    <td><input type="date" name="certificate_expiry_${type}[]" class="custom-border"></td>
-                    <td><textarea name="${type}_remarks[]" class="custom-border"></textarea></td>
-                `;
-                tbody.appendChild(newRow);
-            }
-            window.addRow = addRow;
-        });
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+    function addRow(type) {
+        let tbody = document.getElementById(`${type}_rows`);
+        let newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td>
+                <button type="button" onclick="removeRow(this)">Remove</button>
+            </td>
+            <td>
+                <input type="file" name="${type}_attachment[]" class="custom-border">
+            </td>
+            <td>
+                <input type="date" name="certificate_issue_${type}[]" class="custom-border">
+            </td>
+            <td>
+                <input type="date" name="certificate_expiry_${type}[]" class="custom-border">
+            </td>
+            <td>
+                <textarea name="${type}_remarks[]" class="custom-border"></textarea>
+            </td>
+        `;
+        tbody.appendChild(newRow);
+    }
 
-        function removeRow(button) {
-            let row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-        }
+    window.addRow = addRow;
 
-        function removeFile(id) {
-            document.querySelector(`#row-${id} a.btn-info`).style.display = 'none';
-            document.querySelector(`#row-${id} button.btn-danger`).style.display = 'none';
-            document.querySelector(`#row-${id} input[type="file"]`).style.display = 'block
-            let removeInput = document.createElement('input');
-            removeInput.type = 'hidden';
-            removeInput.name = 'remove_files[]';
-            removeInput.value = id;
-            document.getElementById('supplierForm').appendChild(removeInput);
-        }
-        document.getElementById('fileInput').addEventListener('change', function() {
-            var fileName = this.files[0] ? this.files[0].name : 'No file chosen';
-            document.getElementById('fileName').textContent = fileName;
-        });
-    </script>
+    function removeRow(button) {
+        let row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+
+    window.removeRow = removeRow;
+
+    document.getElementById('fileInput').addEventListener('change', function() {
+        var fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+        document.getElementById('fileName').textContent = fileName;
+    });
+});
+
+   </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {

@@ -324,7 +324,8 @@
                             </div>
 
                             <div> <strong>Record ID.</strong>
-                                {{ Helpers::getDivisionName($document->division_id) }}/OBS/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
+                                {{-- {{ Helpers::getDivisionName($document->division_id) }}/OBS/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }} --}}
+                                {{str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
                             </div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ Auth::user()->name }}

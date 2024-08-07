@@ -183,9 +183,6 @@
                                     </div>
                                 </div>
 
-
-
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="assign_to">Assigned To <span class="text-danger"></span></label>
@@ -196,6 +193,7 @@
                                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                 @endforeach
                                             @endif
+
 
                                         </select>
                                     </div>
@@ -271,23 +269,13 @@
                                     document.getElementById('due_date').value = dueDateFormatted;
                                 </script>
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars">255</span>
-                                                  character
-
-                                                  <div class="relative-container">
-                                            <textarea name="short_description" id="short_description" cols="30" class="mic-input"></textarea>
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
-                                        </div>
-                                    </div>
-
-
-
-                                    </div>
+                                <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Short Description">Short Description  <span
+                                        class="text-danger">*</span></b></label>
+                                    <input type="text" name="short_description" id="short_description" maxlength="255" required>
                                 </div>
+                            </div>
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description"><b>Short Description <span
@@ -494,8 +482,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="related_observations">Related Obsevations</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="related_observations"></div>
                                         <div class="add-btn">
@@ -560,7 +547,7 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="Assign To">Assigned To <span class="text-danger"></span>
+                                        <label for="assign_to2">Assigned To <span class="text-danger"></span>
                                         </label>
                                         <select id="assign_to2" name="assign_to2">
                                             <option value="">Select a value</option>
@@ -855,7 +842,7 @@
                                 </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="attach_files">Attachment</label>
+                                        <label for="attach_files2">Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="attach_files2"></div>

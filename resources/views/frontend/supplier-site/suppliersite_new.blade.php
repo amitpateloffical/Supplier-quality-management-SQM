@@ -235,10 +235,12 @@
                                     </div>
                                     <div class="calenderauditee">
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="due_date"
+                                            <input disabled type="text" value="{{ Helpers::getdateFormat( $dueDate ) }}" id="due_date" name="due_date" />
+                                            {{--<input type="date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                                oninput="handleDateInput(this, 'due_date')" /> --}}
+
+
                                         </div>
                                     </div>
                                 </div>

@@ -74,6 +74,46 @@
             border-radius: 0px 20px 20px 0px;
         }
     </style>
+
+<style>
+    .collapsible-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding: 10px;
+        /* background-color: #f8f9fa; */
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+
+    .collapsible-header .title {
+        font-weight: bold;
+        color: #007bff;
+        text-decoration: none;
+        flex-grow: 1;
+        font-size: 18px;
+    }
+
+    .collapsible-header .icon {
+        font-size: 20px;
+        transition: transform 0.3s;
+    }
+
+    .collapsible-header.collapsed .icon {
+        transform: rotate(180deg);
+    }
+
+    .collapsible-content {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+    }
+</style>
+
+
     <style>
         textarea.note-codable {
             display: none !important;
@@ -700,946 +740,982 @@
                                     $('#rchars').text(textlen);});
                             </script>
 
-                                  <div class="sub-head">
-                                    Purchase Department
-                                </div>
+                                <div class="container">
+                                    <div class="collapsible-section">
+                                        <div class="collapsible-header" data-toggle="collapse" data-target="#collapsePurchase" aria-expanded="false" aria-controls="collapsePurchase">
+                                            <span class="title">Purchase Department</span>
+                                            <span class="icon">&#x25B2;</span>
+                                        </div>
+                                        <div class="collapse" id="collapsePurchase">
+                                            <div class="collapsible-content">
+                                                <div class="row">
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group">Initiation Department</label>
-                                        <select name="initiation_group" id="initiation_group">
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if($data->initiator_group_code == 'CQA') selected @endif> Corpo Assurance Biopharma</option>
-                                            <option value="CQC" @if($data->initiator_group_code == 'CQC') selected @endif> Central Quality Control</option>
-                                            <option value="MANU" @if($data->initiator_group_code == 'MANU') selected @endif> Manufacturing</option>
-                                            <option value="PSG" @if($data->initiator_group_code == 'PSG') selected @endif> Plasma Sourcing Group</option>
-                                            <option value="CS" @if($data->initiator_group_code == 'CS') selected @endif> Central Stores</option>
-                                            <option value="ITG" @if($data->initiator_group_code == 'ITG') selected @endif> Information Technology Group</option>
-                                            <option value="MM" @if($data->initiator_group_code == 'MM') selected @endif> Molecular Medicine</option>
-                                            <option value="CL" @if($data->initiator_group_code == 'CL') selected @endif> Central Laboratory</option>
-                                            <option value="TT" @if($data->initiator_group_code == 'TT') selected @endif> Tech Team</option>
-                                            <option value="QA" @if($data->initiator_group_code == 'QA') selected @endif> Quality Assurance</option>
-                                            <option value="QM" @if($data->initiator_group_code == 'QM') selected @endif> Quality Management</option>
-                                            <option value="IA" @if($data->initiator_group_code == 'IA') selected @endif> Administration</option>
-                                            <option value="ACC" @if($data->initiator_group_code == 'ACC') selected @endif> Accounting</option>
-                                            <option value="LOG" @if($data->initiator_group_code == 'LOG') selected @endif> Logistics</option>
-                                            <option value="SM" @if($data->initiator_group_code == 'SM') selected @endif> Senior Management</option>
-                                            <option value="BA" @if($data->initiator_group_code == 'BA') selected @endif> Business Administration</option>
-                                        </select>
-                                        @error('initiator_group_code')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group">Initiation Department</label>
+                                                            <select name="initiation_group" id="initiation_group">
+                                                                <option value="">-- Select --</option>
+                                                                <option value="CQA" @if($data->initiator_group_code == 'CQA') selected @endif> Corpo Assurance Biopharma</option>
+                                                                <option value="CQC" @if($data->initiator_group_code == 'CQC') selected @endif> Central Quality Control</option>
+                                                                <option value="MANU" @if($data->initiator_group_code == 'MANU') selected @endif> Manufacturing</option>
+                                                                <option value="PSG" @if($data->initiator_group_code == 'PSG') selected @endif> Plasma Sourcing Group</option>
+                                                                <option value="CS" @if($data->initiator_group_code == 'CS') selected @endif> Central Stores</option>
+                                                                <option value="ITG" @if($data->initiator_group_code == 'ITG') selected @endif> Information Technology Group</option>
+                                                                <option value="MM" @if($data->initiator_group_code == 'MM') selected @endif> Molecular Medicine</option>
+                                                                <option value="CL" @if($data->initiator_group_code == 'CL') selected @endif> Central Laboratory</option>
+                                                                <option value="TT" @if($data->initiator_group_code == 'TT') selected @endif> Tech Team</option>
+                                                                <option value="QA" @if($data->initiator_group_code == 'QA') selected @endif> Quality Assurance</option>
+                                                                <option value="QM" @if($data->initiator_group_code == 'QM') selected @endif> Quality Management</option>
+                                                                <option value="IA" @if($data->initiator_group_code == 'IA') selected @endif> Administration</option>
+                                                                <option value="ACC" @if($data->initiator_group_code == 'ACC') selected @endif> Accounting</option>
+                                                                <option value="LOG" @if($data->initiator_group_code == 'LOG') selected @endif> Logistics</option>
+                                                                <option value="SM" @if($data->initiator_group_code == 'SM') selected @endif> Senior Management</option>
+                                                                <option value="BA" @if($data->initiator_group_code == 'BA') selected @endif> Business Administration</option>
+                                                            </select>
+                                                            @error('initiator_group_code')
+                                                                <div class="text-danger">{{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Department Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="{{ $data->initiator_group_code }}" readonly>
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Initiator Department Code</label>
+                                                            <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                                                value="{{ $data->initiator_group_code }}" readonly>
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Name of Manufacturer</label>
-                                        <input type="text" name="manufacturerName" value="{{ $data->manufacturerName }}" id="manufacturerName" placeholder="Name of Manufacturer">
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Name of Manufacturer</label>
+                                                            <input type="text" name="manufacturerName" value="{{ $data->manufacturerName }}" id="manufacturerName" placeholder="Name of Manufacturer">
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Name of Starting Material</label>
-                                        <input type="text" value="{{ $data->starting_material }}" name="starting_material" id="starting_material">
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Name of Starting Material</label>
+                                                            <input type="text" value="{{ $data->starting_material }}" name="starting_material" id="starting_material">
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Material Code</label>
-                                        <input type="text" name="material_code" id="material_code" value="{{ $data->material_code }}">
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Material Code</label>
+                                                            <input type="text" name="material_code" id="material_code" value="{{ $data->material_code }}">
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Pharmacopoeial Claim</label>
-                                        <input type="text" name="pharmacopoeial_claim" id="pharmacopoeial_claim" value="{{ $data->pharmacopoeial_claim }}">
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Pharmacopoeial Claim</label>
+                                                            <input type="text" name="pharmacopoeial_claim" id="pharmacopoeial_claim" value="{{ $data->pharmacopoeial_claim }}">
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">CEP Grade Material</label>
-                                        <select id="cep_grade" name="cep_grade">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->cep_grade == 'Yes') selected @endif>Yes</option>
-                                            <option value="No" @if($data->cep_grade == 'No') selected @endif>No</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">CEP Grade Material</label>
+                                                            <select id="cep_grade" name="cep_grade">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->cep_grade == 'Yes') selected @endif>Yes</option>
+                                                                <option value="No" @if($data->cep_grade == 'No') selected @endif>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for=" Attachments">CEP Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div disabled class="file-attachment-list" id="cep_attachment">
-                                                @if ($data->cep_attachment)
-                                                    @foreach (json_decode($data->cep_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="cep_attachment[]" oninput="addMultipleFiles(this, 'cep_attachment')" multiple>
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input">
+                                                            <label for=" Attachments">CEP Attachment</label>
+                                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                            <div class="file-attachment-field">
+                                                                <div disabled class="file-attachment-list" id="cep_attachment">
+                                                                    @if ($data->cep_attachment)
+                                                                        @foreach (json_decode($data->cep_attachment) as $file)
+                                                                            <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                                <b>{{ $file }}</b>
+                                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
+                                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                                        class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                            </h6>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </div>
+                                                                <div class="add-btn">
+                                                                    <div>Add</div>
+                                                                    <input type="file" id="myfile" name="cep_attachment[]" oninput="addMultipleFiles(this, 'cep_attachment')" multiple>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="request_for">Request For</label>
+                                                            <select id="request_for" name="request_for[]" multiple>
+                                                                <option value="API" {{ strpos($data->request_for, 'API') !== false ? 'selected' : '' }}>API</option>
+                                                                <option value="Excipient" {{ strpos($data->request_for, 'Excipient') !== false ? 'selected' : '' }}>Excipient</option>
+                                                                <option value="New Manufacturer" {{ strpos($data->request_for, 'New Manufacturer') !== false ? 'selected' : '' }}>New Manufacturer</option>
+                                                                <option value="Existing Manufacturer" {{ strpos($data->request_for, 'Existing Manufacturer') !== false ? 'selected' : '' }}>Existing Manufacturer</option>
+                                                                <option value="Additional Site of Existing Manufacturer" {{ strpos($data->request_for, 'Additional Site of Existing Manufacturer') !== false ? 'selected' : '' }}>Additional Site of Existing Manufacturer</option>
+                                                                <option value="Brand New API" {{ strpos($data->request_for, 'Brand New API') !== false ? 'selected' : '' }}>Brand New API</option>
+                                                                <option value="Existing API" {{ strpos($data->request_for, 'Existing API') !== false ? 'selected' : '' }}>Existing API</option>
+                                                                <option value="Brand New Excipient" {{ strpos($data->request_for, 'Brand New Excipient') !== false ? 'selected' : '' }}>Brand New Excipient</option>
+                                                                <option value="Existing Excipient" {{ strpos($data->request_for, 'Existing Excipient') !== false ? 'selected' : '' }}>Existing Excipient</option>
+                                                                <option value="R&D development" {{ strpos($data->request_for, 'R&D development') !== false ? 'selected' : '' }}>R&D development</option>
+                                                                <option value="Site Transfer" {{ strpos($data->request_for, 'Site Transfer') !== false ? 'selected' : '' }}>Site Transfer</option>
+                                                                <option value="Alternate manufacturer" {{ strpos($data->request_for, 'Alternate manufacturer') !== false ? 'selected' : '' }}>Alternate manufacturer</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Attach Three Batch COAs</label>
+                                                            <select id="attach_batch" name="attach_batch">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                <option value="No" @if($data->attach_batch == "No") selected @endif>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Justification for Request</label>
+                                                            <textarea type="text" name="request_justification" value="{{ $data->request_justification }}" class="tiny">{{ $data->request_justification }}</textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="request_for">Request For</label>
-                                        <select id="request_for" name="request_for[]" multiple>
-                                            <option value="API" {{ strpos($data->request_for, 'API') !== false ? 'selected' : '' }}>API</option>
-                                            <option value="Excipient" {{ strpos($data->request_for, 'Excipient') !== false ? 'selected' : '' }}>Excipient</option>
-                                            <option value="New Manufacturer" {{ strpos($data->request_for, 'New Manufacturer') !== false ? 'selected' : '' }}>New Manufacturer</option>
-                                            <option value="Existing Manufacturer" {{ strpos($data->request_for, 'Existing Manufacturer') !== false ? 'selected' : '' }}>Existing Manufacturer</option>
-                                            <option value="Additional Site of Existing Manufacturer" {{ strpos($data->request_for, 'Additional Site of Existing Manufacturer') !== false ? 'selected' : '' }}>Additional Site of Existing Manufacturer</option>
-                                            <option value="Brand New API" {{ strpos($data->request_for, 'Brand New API') !== false ? 'selected' : '' }}>Brand New API</option>
-                                            <option value="Existing API" {{ strpos($data->request_for, 'Existing API') !== false ? 'selected' : '' }}>Existing API</option>
-                                            <option value="Brand New Excipient" {{ strpos($data->request_for, 'Brand New Excipient') !== false ? 'selected' : '' }}>Brand New Excipient</option>
-                                            <option value="Existing Excipient" {{ strpos($data->request_for, 'Existing Excipient') !== false ? 'selected' : '' }}>Existing Excipient</option>
-                                            <option value="R&D development" {{ strpos($data->request_for, 'R&D development') !== false ? 'selected' : '' }}>R&D development</option>
-                                            <option value="Site Transfer" {{ strpos($data->request_for, 'Site Transfer') !== false ? 'selected' : '' }}>Site Transfer</option>
-                                            <option value="Alternate manufacturer" {{ strpos($data->request_for, 'Alternate manufacturer') !== false ? 'selected' : '' }}>Alternate manufacturer</option>
-                                        </select>
-                                    </div>
-                                </div>
                                 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Attach Three Batch COA's</label>
-                                        <select id="attach_batch" name="attach_batch">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
-                                            <option value="No" @if($data->attach_batch == "No") selected @endif>No</option>
-                                        </select>
-                                    </div>
-                                </div>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Justification for Request</label>
-                                        <textarea type="text" name="request_justification" value="{{ $data->request_justification }}" class="tiny">{{ $data->request_justification }}</textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                </div>
 
-                                <div class="sub-head">
-                                    CQA Department
-                                </div>
                                 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Availability of Manufacturer COA's</label>
-                                        <select id="manufacturer_availability" name="manufacturer_availability">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->manufacturer_availability == "Yes") selected @endif>Yes</option>
-                                            <option value="No" @if($data->manufacturer_availability == "No") selected @endif>No</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <div class="container">
+                                    <div class="collapsible-section">
+                                        <!-- CQA Department Section -->
+                                        <div class="collapsible-header" data-toggle="collapse" data-target="#collapseCQA" aria-expanded="false" aria-controls="collapseCQA">
+                                            <span class="title">CQA Department</span>
+                                            <span class="icon">&#x25B2;</span>
+                                        </div>
+                                        <div class="collapse" id="collapseCQA">
+                                            <div class="collapsible-content">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Availability of Manufacturer COAs</label>
+                                                            <select id="manufacturer_availability" name="manufacturer_availability">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->manufacturer_availability == "Yes") selected @endif>Yes</option>
+                                                                <option value="No" @if($data->manufacturer_availability == "No") selected @endif>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Request Accepted</label>
-                                        <select id="request_accepted" name="request_accepted">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->request_accepted == "Yes") selected @endif>Yes</option>
-                                            <option value="No" @if($data->request_accepted == "No") selected @endif>No</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Request Accepted</label>
+                                                            <select id="request_accepted" name="request_accepted">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->request_accepted == "Yes") selected @endif>Yes</option>
+                                                                <option value="No" @if($data->request_accepted == "No") selected @endif>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Remark</label>
-                                        <textarea type="text" name="cqa_remark" id="cqa_remark" class="tiny">{{ $data->cqa_remark }}</textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Remark</label>
+                                                            <textarea type="text" name="cqa_remark" id="cqa_remark" class="tiny">{{ $data->cqa_remark }}</textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Accepted By</label>
-                                        <select type="hidden" name="accepted_by" id="accepted_by">
-                                            <option value="">---- Select ----</option>
-                                            @if(!empty($users))
-                                                @foreach($users as $user)
-                                                    <option value="{{ $user->id }}" @if($data->accepted_by == $user->id) selected @endif>{{ $user->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <!-- <label for="Initiator Group Code">Accepted On</label> -->
-                                        <input type="hidden" name="accepted_on" id="accepted_on">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Pre Purchase Sample Required?</label>
-                                        <div><small class="text-primary">If Yes inform purchase department to initiate pre-purchase sample intimation sheet</small></div>
-                                        <div><small class="text-primary">If No then provide Justification proceed to section 16</small></div>
-                                        <select id="pre_purchase_sample" name="pre_purchase_sample">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->pre_purchase_sample == "Yes") selected @endif>Yes</option>
-                                            <option value="No" @if($data->pre_purchase_sample == "No") selected @endif>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Justification</label>
-                                        <textarea type="text" name="justification" id="justification" class="tiny">{{ $data->justification }}</textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">CQA Coordinator</label>
-                                        <select type="hidden" name="cqa_coordinator" id="cqa_coordinator">
-                                            <option value="">---- Select ----</option>
-                                            @if(!empty($users))
-                                                @foreach($users as $user)
-                                                    <option value="{{ $user->id }}" @if($data->cqa_coordinator == $user->id) selected @endif>{{ $user->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- Certificate Checklist Data -->
-
-                                <!-- <div class="col-12">
-                                    <div class="group-input">
-                                        <div class="why-why-chart">
-                                        @php
-                                            $types = ['tse', 'residual_solvent','melamine','gmo','gluten','manufacturer_evaluation','who','gmp','ISO','manufacturing_license','CEP','risk_assessment','elemental_impurity','azido_impurities'];
-                                        @endphp
-
-                                        @foreach ($types as $type)
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 15%">Certificate Name</th>
-                                                        <th style="width: 25%">Attachment</th>
-                                                        <th style="width: 15%">Issue Date</th>
-                                                        <th style="width: 15%">Expiry Date</th>
-                                                        <th>Remark</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="{{ $type }}_rows">
-                                                    @foreach ($supplierChecklist->where('doc_type', $type) as $grid)
-                                                    @php
-                                                        $filePath = $grid->attachment;
-                                                        $fileName = str_replace('upload\\', '', $filePath);
-                                                    @endphp
-                                                        <tr>
-                                                            <td>
-                                                                {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
-                                                                <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
-                                                                <button type="button" onclick="removeRow(this)">Remove</button>
-                                                            </td>
-                                                            <td>
-                                                                @if ($grid->attachment)
-                                                                    <input type="file" name="{{ $type }}_attachment[]" class="custom-border" style="color: white;">
-                                                                    <span type="button" class="file-container text-dark mt-2" style="background-color: rgb(243, 242, 240);">
-                                                                        <b>{{ $fileName }}</b>
-                                                                        <a href="{{ asset('upload/' . $fileName) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $fileName }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                    </span>
-                                                                @else
-                                                                    <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Accepted By</label>
+                                                            <select type="hidden" name="accepted_by" id="accepted_by">
+                                                                <option value="">---- Select ----</option>
+                                                                @if(!empty($users))
+                                                                    @foreach($users as $user)
+                                                                        <option value="{{ $user->id }}" @if($data->accepted_by == $user->id) selected @endif>{{ $user->name }}</option>
+                                                                    @endforeach
                                                                 @endif
-                                                            </td>
-                                                            <td>
-                                                                <input type="date" name="certificate_issue_{{ $type }}[]" value="{{ $grid->issue_date }}" class="custom-border">
-                                                            </td>
-                                                            <td>
-                                                                <input type="date" name="certificate_expiry_{{ $type }}[]" value="{{ $grid->expiry_date }}" class="custom-border">
-                                                            </td>
-                                                            <td>
-                                                                <textarea name="{{ $type }}_remarks[]" class="custom-border">{{ $grid->remarks }}</textarea>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                            
-                                        @endforeach
-                                        </div>
-                                    </div>
-                                </div> -->
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
-                                <input type="hidden" name="supplier_id" value="{{ $data->id }}">
-                                <div class="col-12">
-    <div class="group-input">
-        <div class="why-why-chart">
-            @php
-                $types = ['tse', 'residual_solvent', 'melamine', 'gmo', 'gluten', 'manufacturer_evaluation', 'who', 'gmp', 'ISO', 'manufacturing_license', 'CEP', 'risk_assessment', 'elemental_impurity', 'azido_impurities'];
-            @endphp
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <!-- <label for="Initiator Group Code">Accepted On</label> -->
+                                                            <input type="hidden" name="accepted_on" id="accepted_on">
+                                                        </div>
+                                                    </div>
 
-            @foreach ($types as $type)
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th style="width: 15%">Certificate Name</th>
-                            <th style="width: 25%">Attachment</th>
-                            <th style="width: 15%">Issue Date</th>
-                            <th style="width: 15%">Expiry Date</th>
-                            <th>Remark</th>
-                        </tr>
-                    </thead>
-                    <tbody id="{{ $type }}_rows">
-                        @foreach ($supplierChecklist->where('doc_type', $type) as $grid)
-                            @php
-                                $filePath = $grid->attachment;
-                                $fileName = str_replace('upload\\', '', $filePath);
-                            @endphp
-                            <tr>
-                                <td>
-                                    {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
-                                    <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
-                                    <button type="button" onclick="removeRow(this)">Remove</button>
-                                </td>
-                                <td>
-                                    @if ($grid->attachment)
-                                        <input type="file" name="{{ $type }}_attachment[]" class="custom-border" style="color: white;">
-                                        <span type="button" class="file-container text-dark mt-2" style="background-color: rgb(243, 242, 240);">
-                                            <b>{{ $fileName }}</b>
-                                            <a href="{{ asset('upload/' . $fileName) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $fileName }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                        </span>
-                                    @else
-                                        <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
-                                    @endif
-                                </td>
-                                <td>
-                                    <input type="date" id="issuedate_{{ $loop->index }}_{{ $type }}" name="certificate_issue_{{ $type }}[]" value="{{ $grid->issue_date }}" class="custom-border issuedate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
-                                </td>
-                                <td>
-                                    <input type="date" id="expirydate_{{ $loop->index }}_{{ $type }}" name="certificate_expiry_{{ $type }}[]" value="{{ $grid->expiry_date }}" class="custom-border expirydate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
-                                </td>
-                                <td class="relative-container">
-                                    <textarea name="{{ $type }}_remarks[]" class="custom-border">{{ $grid->remarks }}</textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @endforeach
-        </div>
-    </div>
-</div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Pre Purchase Sample Required?</label>
+                                                            <div><small class="text-primary">If Yes inform purchase department to initiate pre-purchase sample intimation sheet</small></div>
+                                                            <div><small class="text-primary">If No then provide Justification proceed to section 16</small></div>
+                                                            <select id="pre_purchase_sample" name="pre_purchase_sample">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->pre_purchase_sample == "Yes") selected @endif>Yes</option>
+                                                                <option value="No" @if($data->pre_purchase_sample == "No") selected @endif>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Justification</label>
+                                                            <textarea type="text" name="justification" id="justification" class="tiny">{{ $data->justification }}</textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">CQA Coordinator</label>
+                                                            <select type="hidden" name="cqa_coordinator" id="cqa_coordinator">
+                                                                <option value="">---- Select ----</option>
+                                                                @if(!empty($users))
+                                                                    @foreach($users as $user)
+                                                                        <option value="{{ $user->id }}" @if($data->cqa_coordinator == $user->id) selected @endif>{{ $user->name }}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Certificate Checklist Data -->
+
+                                                    <!-- <div class="col-12">
+                                                        <div class="group-input">
+                                                            <div class="why-why-chart">
+                                                            @php
+                                                                $types = ['tse', 'residual_solvent','melamine','gmo','gluten','manufacturer_evaluation','who','gmp','ISO','manufacturing_license','CEP','risk_assessment','elemental_impurity','azido_impurities'];
+                                                            @endphp
+
+                                                            @foreach ($types as $type)
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="width: 15%">Certificate Name</th>
+                                                                            <th style="width: 25%">Attachment</th>
+                                                                            <th style="width: 15%">Issue Date</th>
+                                                                            <th style="width: 15%">Expiry Date</th>
+                                                                            <th>Remark</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody id="{{ $type }}_rows">
+                                                                        @foreach ($supplierChecklist->where('doc_type', $type) as $grid)
+                                                                        @php
+                                                                            $filePath = $grid->attachment;
+                                                                            $fileName = str_replace('upload\\', '', $filePath);
+                                                                        @endphp
+                                                                            <tr>
+                                                                                <td>
+                                                                                    {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
+                                                                                    <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
+                                                                                    <button type="button" onclick="removeRow(this)">Remove</button>
+                                                                                </td>
+                                                                                <td>
+                                                                                    @if ($grid->attachment)
+                                                                                        <input type="file" name="{{ $type }}_attachment[]" class="custom-border" style="color: white;">
+                                                                                        <span type="button" class="file-container text-dark mt-2" style="background-color: rgb(243, 242, 240);">
+                                                                                            <b>{{ $fileName }}</b>
+                                                                                            <a href="{{ asset('upload/' . $fileName) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                                            <a type="button" class="remove-file" data-file-name="{{ $fileName }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                                        </span>
+                                                                                    @else
+                                                                                        <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
+                                                                                    @endif
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="date" name="certificate_issue_{{ $type }}[]" value="{{ $grid->issue_date }}" class="custom-border">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="date" name="certificate_expiry_{{ $type }}[]" value="{{ $grid->expiry_date }}" class="custom-border">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <textarea name="{{ $type }}_remarks[]" class="custom-border">{{ $grid->remarks }}</textarea>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                                
+                                                            @endforeach
+                                                            </div>
+                                                        </div>
+                                                    </div> -->
+
+                                                    <input type="hidden" name="supplier_id" value="{{ $data->id }}">
+                                                    <div class="col-12">
+                                                        <div class="group-input">
+                                                            <div class="why-why-chart">
+                                                                @php
+                                                                    $types = ['tse', 'residual_solvent', 'melamine', 'gmo', 'gluten', 'manufacturer_evaluation', 'who', 'gmp', 'ISO', 'manufacturing_license', 'CEP', 'risk_assessment', 'elemental_impurity', 'azido_impurities'];
+                                                                @endphp
+
+                                                                @foreach ($types as $type)
+                                                                    <table class="table table-bordered">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th style="width: 15%">Certificate Name</th>
+                                                                                <th style="width: 25%">Attachment</th>
+                                                                                <th style="width: 15%">Issue Date</th>
+                                                                                <th style="width: 15%">Expiry Date</th>
+                                                                                <th>Remark</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="{{ $type }}_rows">
+                                                                            @foreach ($supplierChecklist->where('doc_type', $type) as $grid)
+                                                                                @php
+                                                                                    $filePath = $grid->attachment;
+                                                                                    $fileName = str_replace('upload\\', '', $filePath);
+                                                                                @endphp
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
+                                                                                        <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
+                                                                                        <button type="button" onclick="removeRow(this)">Remove</button>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        @if ($grid->attachment)
+                                                                                            <input type="file" name="{{ $type }}_attachment[]" class="custom-border" style="color: white;">
+                                                                                            <span type="button" class="file-container text-dark mt-2" style="background-color: rgb(243, 242, 240);">
+                                                                                                <b>{{ $fileName }}</b>
+                                                                                                <a href="{{ asset('upload/' . $fileName) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                                                <a type="button" class="remove-file" data-file-name="{{ $fileName }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                                            </span>
+                                                                                        @else
+                                                                                            <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
+                                                                                        @endif
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input type="date" id="issuedate_{{ $loop->index }}_{{ $type }}" name="certificate_issue_{{ $type }}[]" value="{{ $grid->issue_date }}" class="custom-border issuedate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input type="date" id="expirydate_{{ $loop->index }}_{{ $type }}" name="certificate_expiry_{{ $type }}[]" value="{{ $grid->expiry_date }}" class="custom-border expirydate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
+                                                                                    </td>
+                                                                                    <td class="relative-container">
+                                                                                        <textarea name="{{ $type }}_remarks[]" class="custom-border">{{ $grid->remarks }}</textarea>
+                                                                                        @component('frontend.forms.language-model')
+                                                                                        @endcomponent
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                        </tbody>
+                                                                    </table>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Pre Purchase Sample Analysis Completed?</label>
-                                        <select id="pre_purchase_sample_analysis" name="pre_purchase_sample_analysis">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->pre_purchase_sample_analysis == "Yes") selected @endif>Yes</option>
-                                            <option value="No" @if($data->pre_purchase_sample_analysis == "No") selected @endif>No</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Pre Purchase Sample Analysis Completed?</label>
+                                                            <select id="pre_purchase_sample_analysis" name="pre_purchase_sample_analysis">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->pre_purchase_sample_analysis == "Yes") selected @endif>Yes</option>
+                                                                <option value="No" @if($data->pre_purchase_sample_analysis == "No") selected @endif>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Availability of COA's After Analysis</label>
-                                        <select id="availability_od_coa" name="availability_od_coa">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->availability_od_coa == "Yes") selected @endif>Yes</option>
-                                            <option value="No" @if($data->availability_od_coa == "No") selected @endif>No</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Availability of COAs After Analysis</label>
+                                                            <select id="availability_od_coa" name="availability_od_coa">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->availability_od_coa == "Yes") selected @endif>Yes</option>
+                                                                <option value="No" @if($data->availability_od_coa == "No") selected @endif>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Analyzed on Location</label>
-                                        <input type="text" name="analyzed_location" id="analyzed_location" value="{{ $data->analyzed_location }}">
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Analyzed on Location</label>
+                                                            <input type="text" name="analyzed_location" id="analyzed_location" value="{{ $data->analyzed_location }}">
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Review Comment of CQA</label>
-                                        <textarea type="text" name="cqa_comment" id="cqa_comment" class="tiny">{{ $data->cqa_comment }}</textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Review Comment of CQA</label>
+                                                            <textarea type="text" name="cqa_comment" id="cqa_comment" class="tiny">{{ $data->cqa_comment }}</textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">If Analysis found satisfactory of Pre-purchase samples send intimation</label>
-                                        <!-- <div><small class="text-primary">To: Formulation and Development / MS&T Department.</small></div>
-                                        <div><small class="text-primary">From: Corporate Quality Assurance</small></div> -->
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">If Analysis found satisfactory of Pre-purchase samples send intimation</label>
+                                                            <!-- <div><small class="text-primary">To: Formulation and Development / MS&T Department.</small></div>
+                                                            <div><small class="text-primary">From: Corporate Quality Assurance</small></div> -->
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Material Name</label>
-                                        <input type="text" name="materialName" id="materialName" value="{{ $data->materialName }}">
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Material Name</label>
+                                                            <input type="text" name="materialName" id="materialName" value="{{ $data->materialName }}">
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Name of the Manufacturer</label>
-                                        <input type="text" name="manufacturerNameNew" id="manufacturerNameNew" value="{{ $data->manufacturerNameNew }}">
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Name of the Manufacturer</label>
+                                                            <input type="text" name="manufacturerNameNew" id="manufacturerNameNew" value="{{ $data->manufacturerNameNew }}">
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Analyzed on Location</label>
-                                        <input type="text" name="analyzedLocation" id="analyzedLocation" value="{{ $data->analyzedLocation }}">
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Analyzed on Location</label>
+                                                            <input type="text" name="analyzedLocation" id="analyzedLocation" value="{{ $data->analyzedLocation }}">
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Justification</label>
-                                        <textarea type="text" name="supplierJustification" id="supplierJustification" class="tiny">{{ $data->supplierJustification }}</textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Justification</label>
+                                                            <textarea type="text" name="supplierJustification" id="supplierJustification" class="tiny">{{ $data->supplierJustification }}</textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Review Comment of Corporate CQA</label>
-                                        <textarea type="text" name="cqa_corporate_comment" id="cqa_corporate_comment" class="tiny">{{ $data->cqa_corporate_comment }}</textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Review Comment of Corporate CQA</label>
+                                                            <textarea type="text" name="cqa_corporate_comment" id="cqa_corporate_comment" class="tiny">{{ $data->cqa_corporate_comment }}</textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">COA's Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div disabled class="file-attachment-list" id="coa_attachment">
-                                                @if ($data->coa_attachment)
-                                                    @foreach (json_decode($data->coa_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">COAs Attachment</label>
+                                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                            <div class="file-attachment-field">
+                                                                <div disabled class="file-attachment-list" id="coa_attachment">
+                                                                    @if ($data->coa_attachment)
+                                                                        @foreach (json_decode($data->coa_attachment) as $file)
+                                                                            <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                                <b>{{ $file }}</b>
+                                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
+                                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                                        class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                            </h6>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </div>
+                                                                <div class="add-btn">
+                                                                    <div>Add</div>
+                                                                    <input type="file" id="myfile" name="coa_attachment[]" oninput="addMultipleFiles(this, 'coa_attachment')" multiple>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">CQA Designee</label>
+                                                            <select type="hidden" name="cqa_designee" id="cqa_designee">
+                                                                <option value="">---- Select ----</option>
+                                                                @if(!empty($users))
+                                                                    @foreach($users as $user)
+                                                                        <option value="{{ $user->id }}" @if($data->cqa_designee == $user->id) selected @endif>{{ $user->name }}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="coa_attachment[]" oninput="addMultipleFiles(this, 'coa_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                                <!-- to be filled by CQA Department -->
+                                <div class="container">
+                                    <div class="collapsible-section">
+                                        <!-- CQA Department Section -->
+                                        <div class="collapsible-header" data-toggle="collapse" data-target="#collapseCQA" aria-expanded="false" aria-controls="collapseCQA">
+                                            <span class="title">CQA Department</span>
+                                            <span class="icon">&#x25B2;</span>
+                                        </div>
+                                        <div class="collapse" id="collapseCQA">
+                                            <div class="collapsible-content">
+                                                <div class="row">
+
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Samples Ordered for Suitability Trail at R&D/MS & T</label>
+                                                            <div><small class="text-primary">If no provide Justification.</small></div>
+                                                            <select id="sample_ordered" name="sample_ordered">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->sample_ordered == "Yes") selected @endif>Yes</option>
+                                                                <option value="No" @if($data->sample_ordered == "No") selected @endif>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Sample Justification</label>
+                                                            <textarea type="text" name="sample_order_justification" id="sample_order_justification" class="tiny">{{ $data->sample_order_justification }}</textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Acknowledge By</label>
+                                                            <select type="hidden" name="acknowledge_by" id="acknowledge_by">
+                                                                <option value="">---- Select ----</option>
+                                                                @if(!empty($users))
+                                                                    @foreach($users as $user)
+                                                                        <option value="{{ $user->id }}" @if($data->acknowledge_by == $user->id) selected @endif>{{ $user->name }}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Feedback on Trail Status Completed</label>
+                                                            <select id="trail_status_feedback" name="trail_status_feedback">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->trail_status_feedback == "Yes") selected @endif>Yes</option>
+                                                                <option value="No" @if($data->trail_status_feedback == "No") selected @endif>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- To be filled by CQA Department -->
+
+                                                    <!-- <div class="col-lg-6"></div> -->
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Sample Stand Approved?</label>
+                                                            <select id="sample_stand_approved" name="sample_stand_approved">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->sample_stand_approved == "Yes") selected @endif>Yes</option>
+                                                                <option value="No" @if($data->sample_stand_approved == "No") selected @endif>No</option>
+                                                                <option value="N/A" @if($data->sample_stand_approved == "N/A") selected @endif>N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Checklist -->
+
+                                                    <div class="col-12">
+                                                        <div class="group-input">
+                                                            <div class="why-why-chart">
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="width: 5%;">Sr. No.</th>
+                                                                            <th style="width: 30%;">Document Received</th>
+                                                                            <th style="width: 15%;">Selection</th>
+                                                                            <th>Remark</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.1</td>
+                                                                            <td>TSE/BSE</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="tse_bse" name="tse_bse">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->tse_bse == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->tse_bse == "No") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="tse_bse_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.2</td>
+                                                                            <td>Residual Solvent</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="residual_solvent" name="residual_solvent">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->residual_solvent == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->residual_solvent == "No") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="residual_solvent_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->residual_solvent_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.3</td>
+                                                                            <td>GMO</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="gmo" name="gmo">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->gmo == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->gmo == "No") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="gmo_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->gmo_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.4</td>
+                                                                            <td>Melamine</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="melamine" name="melamine">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->melamine == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->melamine == "No") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="melamine_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->melamine_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.5</td>
+                                                                            <td>Gluten</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="gluten" name="gluten">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->gluten == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->gluten == "No") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="gluten_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->gluten_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.6</td>
+                                                                            <td>Nitrosamine</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select  class="custom-select" id="nitrosamine" name="nitrosamine">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->nitrosamine == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->nitrosamine == "No") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="nitrosamine_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->nitrosamine_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.7</td>
+                                                                            <td>WHO</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="who" name="who">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->who == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->who == "No") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="who_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->who_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.8</td>
+                                                                            <td>GMP</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="gmp" name="gmp">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->gmp == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->gmp == "No") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="gmp_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->gmp_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.9</td>
+                                                                            <td>ISO Cerificates</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="iso_certificate" name="iso_certificate">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->iso_certificate == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->iso_certificate == "No") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="iso_certificate_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->iso_certificate_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.10</td>
+                                                                            <td>Manufacturing License</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="manufacturing_license" name="manufacturing_license">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->manufacturing_license == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->manufacturing_license == "No") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="manufacturing_license_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->manufacturing_license_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.11</td>
+                                                                            <td>CEP</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="cep" name="cep">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->cep == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->cep == "No") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="cep_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->cep_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.12</td>
+                                                                            <td>MSDS</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="msds" name="msds">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="msds_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.13</td>
+                                                                            <td>Elemental Impurities</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="elemental_impurities" name="elemental_impurities">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->elemental_impurities == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->elemental_impurities == "No") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="elemental_impurities_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->elemental_impurities_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1.14</td>
+                                                                            <td>Assessment/Declaration of Azido Impurities as Applicable</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="declaration" name="declaration">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes" @if($data->declaration == "Yes") selected @endif>Yes</option>
+                                                                                        <option value="No" @if($data->declaration == "No") selected @endif>No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="declaration_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->declaration_remark }}</textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Availability of Supply Chain?</label>
+                                                            <select id="supply_chain_availability" name="supply_chain_availability">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->supply_chain_availability == "Yes") selected @endif>Yes</option>
+                                                                <option value="No" @if($data->supply_chain_availability == "No") selected @endif>No</option>
+                                                                <option value="N/A" @if($data->supply_chain_availability == "N/A") selected @endif>N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Availability of Quality Agreement?</label>
+                                                            <select id="quality_agreement_availability" name="quality_agreement_availability">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->quality_agreement_availability == "Yes") selected @endif>Yes</option>
+                                                                <option value="No" @if($data->quality_agreement_availability == "No") selected @endif>No</option>
+                                                                <option value="N/A" @if($data->quality_agreement_availability == "N/A") selected @endif>N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Risk Assessment Done?</label>
+                                                            <select id="risk_assessment_done" name="risk_assessment_done">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->risk_assessment_done == "Yes") selected @endif>Yes</option>
+                                                                <option value="No" @if($data->risk_assessment_done == "No") selected @endif>No</option>
+                                                                <option value="N/A" @if($data->risk_assessment_done == "N/A") selected @endif>N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Risk Rating</label>
+                                                            <select id="risk_rating" name="risk_rating">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="High" @if($data->risk_rating == "High") selected @endif>High</option>
+                                                                <option value="Medium" @if($data->risk_rating == "Medium") selected @endif>Medium</option>
+                                                                <option value="Low" @if($data->risk_rating == "Low") selected @endif>Low</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Manufacturer Audit planned</label>
+                                                            <select id="manufacturer_audit_planned" name="manufacturer_audit_planned">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes" @if($data->manufacturer_audit_planned == "Yes") selected @endif>Yes</option>
+                                                                <option value="No" @if($data->manufacturer_audit_planned == "No") selected @endif>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Maufacturer Audit Conducted On</label>
+                                                            <input type="text" id="manufacturer_audit_conducted" name="manufacturer_audit_conducted" value="{{ $data->manufacturer_audit_conducted }}">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Manufacturer Can be? </label>
+                                                            <select id="manufacturer_can_be" name="manufacturer_can_be">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Approved" @if($data->manufacturer_can_be == "Approved") selected @endif>Approved</option>
+                                                                <option value="Not Approved" @if($data->manufacturer_can_be == "Not Approved") selected @endif>Not Approved</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">CQA Designee</label>
-                                        <select type="hidden" name="cqa_designee" id="cqa_designee">
-                                            <option value="">---- Select ----</option>
-                                            @if(!empty($users))
-                                                @foreach($users as $user)
-                                                    <option value="{{ $user->id }}" @if($data->cqa_designee == $user->id) selected @endif>{{ $user->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="sub-head">
-                                    Formulation & Development Department/CQA/MS&T
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Samples Ordered for Suitability Trail at R&D/MS & T</label>
-                                        <div><small class="text-primary">If no provide Justification.</small></div>
-                                        <select id="sample_ordered" name="sample_ordered">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->sample_ordered == "Yes") selected @endif>Yes</option>
-                                            <option value="No" @if($data->sample_ordered == "No") selected @endif>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Sample Justification</label>
-                                        <textarea type="text" name="sample_order_justification" id="sample_order_justification" class="tiny">{{ $data->sample_order_justification }}</textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Acknowledge By</label>
-                                        <select type="hidden" name="acknowledge_by" id="acknowledge_by">
-                                            <option value="">---- Select ----</option>
-                                            @if(!empty($users))
-                                                @foreach($users as $user)
-                                                    <option value="{{ $user->id }}" @if($data->acknowledge_by == $user->id) selected @endif>{{ $user->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Feedback on Trail Status Completed</label>
-                                        <select id="trail_status_feedback" name="trail_status_feedback">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->trail_status_feedback == "Yes") selected @endif>Yes</option>
-                                            <option value="No" @if($data->trail_status_feedback == "No") selected @endif>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- To be filled by CQA Department -->
-
-                                <!-- <div class="col-lg-6"></div> -->
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Sample Stand Approved?</label>
-                                        <select id="sample_stand_approved" name="sample_stand_approved">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->sample_stand_approved == "Yes") selected @endif>Yes</option>
-                                            <option value="No" @if($data->sample_stand_approved == "No") selected @endif>No</option>
-                                            <option value="N/A" @if($data->sample_stand_approved == "N/A") selected @endif>N/A</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
-
-                                <!-- Checklist -->
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <div class="why-why-chart">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 5%;">Sr. No.</th>
-                                                        <th style="width: 30%;">Document Received</th>
-                                                        <th style="width: 15%;">Selection</th>
-                                                        <th>Remark</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="flex text-center">1.1</td>
-                                                        <td>TSE/BSE</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="tse_bse" name="tse_bse">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->tse_bse == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->tse_bse == "No") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="tse_bse_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.2</td>
-                                                        <td>Residual Solvent</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="residual_solvent" name="residual_solvent">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->residual_solvent == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->residual_solvent == "No") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="residual_solvent_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->residual_solvent_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.3</td>
-                                                        <td>GMO</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="gmo" name="gmo">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->gmo == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->gmo == "No") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="gmo_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->gmo_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.4</td>
-                                                        <td>Melamine</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="melamine" name="melamine">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->melamine == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->melamine == "No") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="melamine_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->melamine_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.5</td>
-                                                        <td>Gluten</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="gluten" name="gluten">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->gluten == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->gluten == "No") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="gluten_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->gluten_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.6</td>
-                                                        <td>Nitrosamine</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select  class="custom-select" id="nitrosamine" name="nitrosamine">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->nitrosamine == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->nitrosamine == "No") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="nitrosamine_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->nitrosamine_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.7</td>
-                                                        <td>WHO</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="who" name="who">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->who == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->who == "No") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="who_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->who_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.8</td>
-                                                        <td>GMP</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="gmp" name="gmp">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->gmp == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->gmp == "No") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="gmp_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->gmp_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.9</td>
-                                                        <td>ISO Cerificates</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="iso_certificate" name="iso_certificate">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->iso_certificate == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->iso_certificate == "No") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="iso_certificate_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->iso_certificate_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.10</td>
-                                                        <td>Manufacturing License</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="manufacturing_license" name="manufacturing_license">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->manufacturing_license == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->manufacturing_license == "No") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="manufacturing_license_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->manufacturing_license_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.11</td>
-                                                        <td>CEP</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="cep" name="cep">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->cep == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->cep == "No") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="cep_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->cep_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.12</td>
-                                                        <td>MSDS</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="msds" name="msds">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->attach_batch == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->attach_batch == "Yes") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="msds_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.13</td>
-                                                        <td>Elemental Impurities</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="elemental_impurities" name="elemental_impurities">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->elemental_impurities == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->elemental_impurities == "No") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="elemental_impurities_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->elemental_impurities_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.14</td>
-                                                        <td>Assessment/Declaration of Azido Impurities as Applicable</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="declaration" name="declaration">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes" @if($data->declaration == "Yes") selected @endif>Yes</option>
-                                                                    <option value="No" @if($data->declaration == "No") selected @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="declaration_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->declaration_remark }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Availability of Supply Chain?</label>
-                                        <select id="supply_chain_availability" name="supply_chain_availability">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->supply_chain_availability == "Yes") selected @endif>Yes</option>
-                                            <option value="No" @if($data->supply_chain_availability == "No") selected @endif>No</option>
-                                            <option value="N/A" @if($data->supply_chain_availability == "N/A") selected @endif>N/A</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Availability of Quality Agreement?</label>
-                                        <select id="quality_agreement_availability" name="quality_agreement_availability">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->quality_agreement_availability == "Yes") selected @endif>Yes</option>
-                                            <option value="No" @if($data->quality_agreement_availability == "No") selected @endif>No</option>
-                                            <option value="N/A" @if($data->quality_agreement_availability == "N/A") selected @endif>N/A</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Risk Assessment Done?</label>
-                                        <select id="risk_assessment_done" name="risk_assessment_done">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->risk_assessment_done == "Yes") selected @endif>Yes</option>
-                                            <option value="No" @if($data->risk_assessment_done == "No") selected @endif>No</option>
-                                            <option value="N/A" @if($data->risk_assessment_done == "N/A") selected @endif>N/A</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Risk Rating</label>
-                                        <select id="risk_rating" name="risk_rating">
-                                            <option value="">---- Select ----</option>
-                                            <option value="High" @if($data->risk_rating == "High") selected @endif>High</option>
-                                            <option value="Medium" @if($data->risk_rating == "Medium") selected @endif>Medium</option>
-                                            <option value="Low" @if($data->risk_rating == "Low") selected @endif>Low</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Manufacturer Audit planned</label>
-                                        <select id="manufacturer_audit_planned" name="manufacturer_audit_planned">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes" @if($data->manufacturer_audit_planned == "Yes") selected @endif>Yes</option>
-                                            <option value="No" @if($data->manufacturer_audit_planned == "No") selected @endif>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Maufacturer Audit Conducted On</label>
-                                        <input type="text" id="manufacturer_audit_conducted" name="manufacturer_audit_conducted" value="{{ $data->manufacturer_audit_conducted }}">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Manufacturer Can be? </label>
-                                        <select id="manufacturer_can_be" name="manufacturer_can_be">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Approved" @if($data->manufacturer_can_be == "Approved") selected @endif>Approved</option>
-                                            <option value="Not Approved" @if($data->manufacturer_can_be == "Not Approved") selected @endif>Not Approved</option>
-                                        </select>
                                     </div>
                                 </div>
                         </div>
 
-                        <div class="button-block">
+                        <div class="button-block mt-4">
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -3764,7 +3840,20 @@
                 });
             }
         });
-    </script>            
+    </script> 
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.collapsible-header').click(function() {
+                $(this).toggleClass('collapsed');
+                $(this).find('.icon').html($(this).hasClass('collapsed') ? '&#x25BC;' : '&#x25B2;');
+            });
+        });
+    </script>
 
     
 @endsection

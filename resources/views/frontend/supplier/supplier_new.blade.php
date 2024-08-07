@@ -32,6 +32,45 @@
         margin-bottom: 10px;
         margin-top: 10px; */
     }
+    
+</style>
+
+<style>
+    .collapsible-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding: 10px;
+        /* background-color: #f8f9fa; */
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+
+    .collapsible-header .title {
+        font-weight: bold;
+        color: #007bff;
+        text-decoration: none;
+        flex-grow: 1;
+        font-size: 18px;
+    }
+
+    .collapsible-header .icon {
+        font-size: 20px;
+        transition: transform 0.3s;
+    }
+
+    .collapsible-header.collapsed .icon {
+        transform: rotate(180deg);
+    }
+
+    .collapsible-content {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+    }
 </style>
 
 <script>
@@ -142,10 +181,9 @@
                         <div class="row">
 
                             <div class="col-md-6">
-                                <div class="group-input ">
+                                <div class="group-input">
                                     <label for="Short Description">Request Number</label>
                                     <input id="request_number" type="text" name="request_number" value="{{ $requestNUmber }}" disabled>
-                                   
                                 </div>
                             </div>
 
@@ -228,12 +266,10 @@
                                 </script>
 
                             <div class="col-12">
-                                <div class="group-input relative-container"">
+                                <div class="group-input">
                                     <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255</span>
                                     characters remaining
                                     <input id="docname" type="text" name="short_description" maxlength="255" required>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
                                 </div>
                             </div>
                             <script>
@@ -243,849 +279,889 @@
                                     $('#rchars').text(textlen);});
                             </script>
 
-                                <div class="sub-head">
-                                    Purchase Department
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group">Initiation Department</label>
-                                        <select name="initiation_group" id="initiation_group">
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA"> Corpo  Assurance Biopharma</option>
-                                            <option value="CQC"> Central Quality Control</option>
-                                            <option value="MANU"> Manufacturing</option>
-                                            <option value="PSG"> Plasma Sourcing Group</option>
-                                            <option value="CS"> Central Stores</option>
-                                            <option value="ITG"> Information Technology Group</option>
-                                            <option value="MM"> Molecular Medicine</option>
-                                            <option value="CL"> Central Laboratory</option>
-                                            <option value="TT"> Tech Team</option>
-                                            <option value="QA"> Quality Assurance</option>
-                                            <option value="QM">Quality Management</option>
-                                            <option value="IA">Administration</option>
-                                            <option value="ACC"> Accounting</option>
-                                            <option value="LOG">Logistics</option>
-                                            <option value="SM"> Senior Management</option>
-                                            <option value="BA">Business Administration</option>
-                                        </select>
-                                        @error('initiation_group')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Department Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholer="Enter Initiator Department Code" readonly>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Name of Manufacturer</label>
-                                        <input type="text" name="manufacturerName" id="manufacturerName" placeholder="Name of Manufacturer">
-                                        @component('frontend.forms.language-model')
-                                            @endcomponent
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Name of Starting Material</label>
-                                        <input type="text" name="starting_material" id="starting_material" placeholder="Enter Name of Starting Material">
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Material Code</label>
-                                        <input type="text" name="material_code" id="material_code" placeholder="Enter Material Code">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Pharmacopoeial Claim</label>
-                                        <input type="text" name="pharmacopoeial_claim" id="pharmacopoeial_claim" placeholder="Enter Pharmacopoeial Claim">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">CEP Grade Material</label>
-                                        <select id="cep_grade" name="cep_grade">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for=" Attachments">CEP Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="cep_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="cep_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'cep_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Request For</label>
-                                        <select id="request_for" name="request_for[]" multiple >
-                                            <option value="API">API</option>
-                                            <option value="Excipient">Excipient</option>
-                                            <option value="New Manufacturer">New Manufacturer</option>
-                                            <option value="Existing Manufacturer">Existing Manufacturer</option>
-                                            <option value="Additional Site of Existing Manufacturer">Additional Site of Existing Manufacturer</option>
-                                            <option value="Brand New API">Brand New API</option>
-                                            <option value="Existing API">Existing API</option>
-                                            <option value="Brand New Excipient">Brand New Excipient</option>
-                                            <option value="Existing Excipient">Existing Excipient</option>
-                                            <option value="R&D development">R&D development</option>
-                                            <option value="Site Transfer">Site Transfer</option>
-                                            <option value="Alternate manufacturer">Alternate manufacturer</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Attach Three Batch COA's</label>
-                                        <select id="attach_batch" name="attach_batch">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Justification for Request</label>
-                                        <textarea type="text" name="request_justification" id="request_justification" class="tiny"></textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                </div>
-
-                                <div class="sub-head">
-                                    CQA Department
-                                </div>
+                                 
                                 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Availability of Manufacturer COA's</label>
-                                        <select id="manufacturer_availability" name="manufacturer_availability">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Request Accepted</label>
-                                        <select id="request_accepted" name="request_accepted">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input  relative-container">
-                                        <label for="Initiator Group Code">Remark</label>
-                                        <textarea type="text" name="cqa_remark" id="cqa_remark" class="tiny"></textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Accepted By</label>
-                                        <select type="hidden" name="accepted_by" id="accepted_by">
-                                            <option value="">---- Select ----</option>
-                                            @if(!empty($users))
-                                                @foreach($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <!-- <label for="Initiator Group Code">Accepted On</label> -->
-                                        <input type="hidden" name="accepted_on" id="accepted_on">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Pre Purchase Sample Required?</label>
-                                        <div><small class="text-primary">If Yes inform purchase department to initiate pre-purchase sample intimation sheet</small></div>
-                                        <div><small class="text-primary">If No then provide Justification proceed to section 16</small></div>
-                                        <select id="pre_purchase_sample" name="pre_purchase_sample">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Justification</label>
-                                        <textarea type="text" name="justification" id="justification" class="tiny"></textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">CQA Coordinator</label>
-                                        <select type="hidden" name="cqa_coordinator" id="cqa_coordinator">
-                                            <option value="">---- Select ----</option>
-                                            @if(!empty($users))
-                                                @foreach($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- To be filled by Purchase Department -->
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <div class="why-why-chart">
-                                        @php
-                                            $types = ['tse', 'residual_solvent','melamine','gmo','gluten','manufacturer_evaluation','who','gmp','ISO','manufacturing_license','CEP','risk_assessment','elemental_impurity','azido_impurities'];
-                                        @endphp
-
-@foreach ($types as $type)
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th style="width: 15%">Certificate Name</th>
-                <th style="width: 20%">Attachment</th>
-                <th style="width: 15%">Issue Date</th>
-                <th style="width: 15%">Expiry Date</th>
-                <th>Remark</th>
-            </tr>
-        </thead>
-        <tbody id="{{ $type }}_rows">
-            <tr>
-                <td>
-                    {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
-                    <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
-                </td>
-                <td>
-                    <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
-                </td>
-                <td>
-                    <input type="date" id="issuedate_{{ $loop->index }}_{{ $type }}" name="certificate_issue_{{ $type }}[]" class="custom-border issuedate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
-                </td>
-                <td>
-                    <input type="date" id="expirydate_{{ $loop->index }}_{{ $type }}" name="certificate_expiry_{{ $type }}[]" class="custom-border expirydate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
-                </td>
-                <td class="relative-container">
-                    <textarea name="{{ $type }}_remarks[]" class="custom-border"></textarea>
-                    @component('frontend.forms.language-model')
-                                            @endcomponent
+                                <!-- To be filled by PD -->
+                                <div class="container">
+                                    <div class="collapsible-section">
+                                        <div class="collapsible-header" data-toggle="collapse" data-target="#collapsePurchase" aria-expanded="false" aria-controls="collapsePurchase">
+                                            <span class="title">Purchase Department</span>
+                                            <span class="icon">&#x25B2;</span>
+                                        </div>
+                                        <div class="collapse" id="collapsePurchase">
+                                            <div class="collapsible-content">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group">Initiation Department</label>
+                                                            <select name="initiation_group" id="initiation_group">
+                                                                <option value="">-- Select --</option>
+                                                                <option value="CQA"> Corpo  Assurance Biopharma</option>
+                                                                <option value="CQC"> Central Quality Control</option>
+                                                                <option value="MANU"> Manufacturing</option>
+                                                                <option value="PSG"> Plasma Sourcing Group</option>
+                                                                <option value="CS"> Central Stores</option>
+                                                                <option value="ITG"> Information Technology Group</option>
+                                                                <option value="MM"> Molecular Medicine</option>
+                                                                <option value="CL"> Central Laboratory</option>
+                                                                <option value="TT"> Tech Team</option>
+                                                                <option value="QA"> Quality Assurance</option>
+                                                                <option value="QM">Quality Management</option>
+                                                                <option value="IA">Administration</option>
+                                                                <option value="ACC"> Accounting</option>
+                                                                <option value="LOG">Logistics</option>
+                                                                <option value="SM"> Senior Management</option>
+                                                                <option value="BA">Business Administration</option>
+                                                            </select>
+                                                            @error('initiation_group')
+                                                                <div class="text-danger">{{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
                     
-                </td>
-            </tr>
-        </tbody>
-    </table>
-@endforeach
-
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Initiator Department Code</label>
+                                                            <input type="text" name="initiator_group_code" id="initiator_group_code" placeholer="Enter Initiator Department Code" readonly>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Name of Manufacturer</label>
+                                                            <input type="text" name="manufacturerName" id="manufacturerName" placeholder="Name of Manufacturer">
+                                                            @component('frontend.forms.language-model')
+                                                                @endcomponent
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Name of Starting Material</label>
+                                                            <input type="text" name="starting_material" id="starting_material" placeholder="Enter Name of Starting Material">
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Material Code</label>
+                                                            <input type="text" name="material_code" id="material_code" placeholder="Enter Material Code">
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Pharmacopoeial Claim</label>
+                                                            <input type="text" name="pharmacopoeial_claim" id="pharmacopoeial_claim" placeholder="Enter Pharmacopoeial Claim">
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">CEP Grade Material</label>
+                                                            <select id="cep_grade" name="cep_grade">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input">
+                                                            <label for=" Attachments">CEP Attachment</label>
+                                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                            <div class="file-attachment-field">
+                                                                <div class="file-attachment-list" id="cep_attachment"></div>
+                                                                <div class="add-btn">
+                                                                    <div>Add</div>
+                                                                    <input type="file" id="myfile" name="cep_attachment[]"
+                                                                        oninput="addMultipleFiles(this, 'cep_attachment')" multiple>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Request For</label>
+                                                            <select id="request_for" name="request_for[]" multiple >
+                                                                <option value="API">API</option>
+                                                                <option value="Excipient">Excipient</option>
+                                                                <option value="New Manufacturer">New Manufacturer</option>
+                                                                <option value="Existing Manufacturer">Existing Manufacturer</option>
+                                                                <option value="Additional Site of Existing Manufacturer">Additional Site of Existing Manufacturer</option>
+                                                                <option value="Brand New API">Brand New API</option>
+                                                                <option value="Existing API">Existing API</option>
+                                                                <option value="Brand New Excipient">Brand New Excipient</option>
+                                                                <option value="Existing Excipient">Existing Excipient</option>
+                                                                <option value="R&D development">R&D development</option>
+                                                                <option value="Site Transfer">Site Transfer</option>
+                                                                <option value="Alternate manufacturer">Alternate manufacturer</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Attach Three Batch COAs</label>
+                                                            <select id="attach_batch" name="attach_batch">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Justification for Request</label>
+                                                            <textarea type="text" name="request_justification" id="request_justification" class="tiny"></textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>                                
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Pre Purchase Sample Analysis Completed?</label>
-                                        <select id="pre_purchase_sample_analysis" name="pre_purchase_sample_analysis">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Availability of COA's After Analysis</label>
-                                        <select id="availability_od_coa" name="availability_od_coa">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Analyzed on Location</label>
-                                        <input type="text" name="analyzed_location" id="analyzed_location">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Review Comment of CQA</label>
-                                        <textarea type="text" name="cqa_comment" id="cqa_comment" class="tiny"></textarea>
-                                        @component('frontend.forms.language-model')
-                                            @endcomponent
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">If Analysis found satisfactory of Pre-purchase samples send intimation</label>
-                                        <!-- <div><small class="text-primary">To: Formulation and Development / MS&T Department.</small></div>
-                                        <div><small class="text-primary">From: Corporate Quality Assurance</small></div> -->
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Material Name</label>
-                                        <input type="text" name="materialName" id="materialName" placeholder="Enter Material Name">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Name of the Manufacturer</label>
-                                        <input type="text" name="manufacturerNameNew" id="manufacturerNameNew" placeholder="Enter Name of the Manufacturer">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Analyzed at Location</label>
-                                        <input type="text" name="analyzedLocation" id="analyzedLocation" placeholder="Enter Analyzed on Location">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Justification</label>
-                                        <textarea type="text" name="supplierJustification" id="supplierJustification" class="tiny"></textarea>
-                                        @component('frontend.forms.language-model')
-                                            @endcomponent
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Review Comment of Corporate CQA</label>
-                                        <textarea type="text" name="cqa_corporate_comment" id="cqa_corporate_comment" class="tiny"></textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">COA's Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="coa_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="coa_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'coa_attachment')" multiple>
+                                <!-- to be filled by CQA Department -->
+                                <div class="container">
+                                    <div class="collapsible-section">
+                                        <!-- CQA Department Section -->
+                                        <div class="collapsible-header" data-toggle="collapse" data-target="#collapseCQA" aria-expanded="false" aria-controls="collapseCQA">
+                                            <span class="title">CQA Department</span>
+                                            <span class="icon">&#x25B2;</span>
+                                        </div>
+                                        <div class="collapse" id="collapseCQA">
+                                            <div class="collapsible-content">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Availability of Manufacturer COAs</label>
+                                                            <select id="manufacturer_availability" name="manufacturer_availability">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Request Accepted</label>
+                                                            <select id="request_accepted" name="request_accepted">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input  relative-container">
+                                                            <label for="Initiator Group Code">Remark</label>
+                                                            <textarea type="text" name="cqa_remark" id="cqa_remark" class="tiny"></textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Accepted By</label>
+                                                            <select type="hidden" name="accepted_by" id="accepted_by">
+                                                                <option value="">---- Select ----</option>
+                                                                @if(!empty($users))
+                                                                    @foreach($users as $user)
+                                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <!-- <label for="Initiator Group Code">Accepted On</label> -->
+                                                            <input type="hidden" name="accepted_on" id="accepted_on">
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Pre Purchase Sample Required?</label>
+                                                            <div><small class="text-primary">If Yes inform purchase department to initiate pre-purchase sample intimation sheet</small></div>
+                                                            <div><small class="text-primary">If No then provide Justification proceed to section 16</small></div>
+                                                            <select id="pre_purchase_sample" name="pre_purchase_sample">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Justification</label>
+                                                            <textarea type="text" name="justification" id="justification" class="tiny"></textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">CQA Coordinator</label>
+                                                            <select type="hidden" name="cqa_coordinator" id="cqa_coordinator">
+                                                                <option value="">---- Select ----</option>
+                                                                @if(!empty($users))
+                                                                    @foreach($users as $user)
+                                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <!-- To be filled by Purchase Department -->
+                    
+                                                    <div class="col-12">
+                                                        <div class="group-input">
+                                                            <div class="why-why-chart">
+                                                            @php
+                                                                $types = ['tse', 'residual_solvent','melamine','gmo','gluten','manufacturer_evaluation','who','gmp','ISO','manufacturing_license','CEP','risk_assessment','elemental_impurity','azido_impurities'];
+                                                            @endphp
+                    
+                                                            @foreach ($types as $type)
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="width: 15%">Certificate Name</th>
+                                                                            <th style="width: 20%">Attachment</th>
+                                                                            <th style="width: 15%">Issue Date</th>
+                                                                            <th style="width: 15%">Expiry Date</th>
+                                                                            <th>Remark</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody id="{{ $type }}_rows">
+                                                                        <tr>
+                                                                            <td>
+                                                                                {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
+                                                                                <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="date" id="issuedate_{{ $loop->index }}_{{ $type }}" name="certificate_issue_{{ $type }}[]" class="custom-border issuedate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="date" id="expirydate_{{ $loop->index }}_{{ $type }}" name="certificate_expiry_{{ $type }}[]" class="custom-border expirydate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
+                                                                            </td>
+                                                                            <td class="relative-container">
+                                                                                <textarea name="{{ $type }}_remarks[]" class="custom-border"></textarea>
+                                                                                @component('frontend.forms.language-model')
+                                                                                                        @endcomponent
+                                                                                
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            @endforeach
+                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Pre Purchase Sample Analysis Completed?</label>
+                                                            <select id="pre_purchase_sample_analysis" name="pre_purchase_sample_analysis">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Availability of COAs After Analysis</label>
+                                                            <select id="availability_od_coa" name="availability_od_coa">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Analyzed on Location</label>
+                                                            <input type="text" name="analyzed_location" id="analyzed_location">
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Review Comment of CQA</label>
+                                                            <textarea type="text" name="cqa_comment" id="cqa_comment" class="tiny"></textarea>
+                                                            @component('frontend.forms.language-model')
+                                                                @endcomponent
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">If Analysis found satisfactory of Pre-purchase samples send intimation</label>
+                                                            <!-- <div><small class="text-primary">To: Formulation and Development / MS&T Department.</small></div>
+                                                            <div><small class="text-primary">From: Corporate Quality Assurance</small></div> -->
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Material Name</label>
+                                                            <input type="text" name="materialName" id="materialName" placeholder="Enter Material Name">
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Name of the Manufacturer</label>
+                                                            <input type="text" name="manufacturerNameNew" id="manufacturerNameNew" placeholder="Enter Name of the Manufacturer">
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Analyzed at Location</label>
+                                                            <input type="text" name="analyzedLocation" id="analyzedLocation" placeholder="Enter Analyzed on Location">
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Justification</label>
+                                                            <textarea type="text" name="supplierJustification" id="supplierJustification" class="tiny"></textarea>
+                                                            @component('frontend.forms.language-model')
+                                                                @endcomponent
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Review Comment of Corporate CQA</label>
+                                                            <textarea type="text" name="cqa_corporate_comment" id="cqa_corporate_comment" class="tiny"></textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">COAs Attachment</label>
+                                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                            <div class="file-attachment-field">
+                                                                <div class="file-attachment-list" id="coa_attachment"></div>
+                                                                <div class="add-btn">
+                                                                    <div>Add</div>
+                                                                    <input type="file" id="myfile" name="coa_attachment[]"
+                                                                        oninput="addMultipleFiles(this, 'coa_attachment')" multiple>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">CQA Designee</label>
+                                                            <select type="hidden" name="cqa_designee" id="cqa_designee">
+                                                                <option value="">---- Select ----</option>
+                                                                @if(!empty($users))
+                                                                    @foreach($users as $user)
+                                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">CQA Designee</label>
-                                        <select type="hidden" name="cqa_designee" id="cqa_designee">
-                                            <option value="">---- Select ----</option>
-                                            @if(!empty($users))
-                                                @foreach($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
 
-                                <div class="sub-head">
-                                    Formulation & Development Department/CQA/MS&T
-                                </div>
+                                <!-- to be filed by Formulation -->
+                                <div class="container">
+                                    <div class="collapsible-section">
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Samples Ordered for Suitability Trail at R&D/MS & T</label>
-                                        <div><small class="text-primary">If no provide Justification.</small></div>
-                                        <select id="sample_ordered" name="sample_ordered">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input relative-container">
-                                        <label for="Initiator Group Code">Sample Justification</label>
-                                        <textarea type="text" name="sample_order_justification" id="sample_order_justification" class="tiny"></textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Acknowledge By</label>
-                                        <select type="hidden" name="acknowledge_by" id="acknowledge_by">
-                                            <option value="">---- Select ----</option>
-                                            @if(!empty($users))
-                                                @foreach($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Feedback on Trail Status Completed</label>
-                                        <select id="trail_status_feedback" name="trail_status_feedback">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- To be filled by CQA Department -->
-
-                                <!-- <div class="col-lg-6"></div> -->
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Sample Stand Approved?</label>
-                                        <select id="sample_stand_approved" name="sample_stand_approved">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            <option value="N/A">N/A</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
-
-                                <!-- Checklist -->
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <div class="why-why-chart">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 5%;">Sr. No.</th>
-                                                        <th style="width: 30%;">Document Received</th>
-                                                        <th style="width: 20%;">Selection</th>
-                                                        <th>Remark</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="flex text-center">1</td>
-                                                        <td>TSE/BSE</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="tse_bse" name="tse_bse">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="tse_bse_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
+                                        <!-- Formulation & Development Department/CQA/MS&T Section -->
+                                        <div class="collapsible-header" data-toggle="collapse" data-target="#collapseFormulation" aria-expanded="false"
+                                            aria-controls="collapseFormulation">
+                                            <span class="title">Formulation & Development Department/CQA/MS&T</span>
+                                            <span class="icon">&#x25B2;</span>
+                                        </div>
+                                        <div class="collapse" id="collapseFormulation">
+                                            <div class="collapsible-content">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Samples Ordered for Suitability Trail at R&D/MS & T</label>
+                                                            <div><small class="text-primary">If no provide Justification.</small></div>
+                                                            <select id="sample_ordered" name="sample_ordered">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-12">
+                                                        <div class="group-input relative-container">
+                                                            <label for="Initiator Group Code">Sample Justification</label>
+                                                            <textarea type="text" name="sample_order_justification" id="sample_order_justification" class="tiny"></textarea>
+                                                            @component('frontend.forms.language-model')
+                                                            @endcomponent
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Acknowledge By</label>
+                                                            <select type="hidden" name="acknowledge_by" id="acknowledge_by">
+                                                                <option value="">---- Select ----</option>
+                                                                @if(!empty($users))
+                                                                    @foreach($users as $user)
+                                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Feedback on Trail Status Completed</label>
+                                                            <select id="trail_status_feedback" name="trail_status_feedback">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <!-- To be filled by CQA Department -->
+                    
+                                                    <!-- <div class="col-lg-6"></div> -->
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Sample Stand Approved?</label>
+                                                            <select id="sample_stand_approved" name="sample_stand_approved">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                    
+                    
+                                                    <!-- Checklist -->
+                    
+                                                    <div class="col-12">
+                                                        <div class="group-input">
+                                                            <div class="why-why-chart">
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="width: 5%;">Sr. No.</th>
+                                                                            <th style="width: 30%;">Document Received</th>
+                                                                            <th style="width: 20%;">Selection</th>
+                                                                            <th>Remark</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td class="flex text-center">1</td>
+                                                                            <td>TSE/BSE</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="tse_bse" name="tse_bse">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="tse_bse_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">2</td>
+                                                                            <td>Residual Solvent</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="residual_solvent" name="residual_solvent">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="residual_solvent_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">3</td>
+                                                                            <td>GMO</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="gmo" name="gmo">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="gmo_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
                                                                 @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">2</td>
-                                                        <td>Residual Solvent</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="residual_solvent" name="residual_solvent">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="residual_solvent_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">4</td>
+                                                                            <td>Melamine</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="melamine" name="melamine">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="melamine_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
                                                                 @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">5</td>
+                                                                            <td>Gluten</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="gluten" name="gluten">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="gluten_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">6</td>
+                                                                            <td>Nitrosamine</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="nitrosamine" name="nitrosamine">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container" >
+                                                                                    <textarea name="nitrosamine_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">7</td>
+                                                                            <td>WHO</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="who" name="who">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="who_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">8</td>
+                                                                            <td>GMP</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="gmp" name="gmp">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="gmp_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">9</td>
+                                                                            <td>ISO Cerificates</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="iso_certificate" name="iso_certificate">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="iso_certificate_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">10</td>
+                                                                            <td>Manufacturing License</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="manufacturing_license" name="manufacturing_license">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="manufacturing_license_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">11</td>
+                                                                            <td>CEP</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="cep" name="cep">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="cep_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">12</td>
+                                                                            <td>MSDS</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="msds" name="msds">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="msds_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">13</td>
+                                                                            <td>Elemental Impurities</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="elemental_impurities" name="elemental_impurities">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="elemental_impurities_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="flex text-center">14</td>
+                                                                            <td>Assessment/Declaration of Azido Impurities as Applicable</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                    <select class="custom-select" id="declaration" name="declaration">
+                                                                                        <option value="">---- Select ----</option>
+                                                                                        <option value="Yes">Yes</option>
+                                                                                        <option value="No">No</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin: auto; display: flex; justify-content: center; relative-container">
+                                                                                    <textarea name="declaration_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                    @component('frontend.forms.language-model')
+                                                                                    @endcomponent
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                    
                                                             </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">3</td>
-                                                        <td>GMO</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="gmo" name="gmo">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="gmo_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
-                                            @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">4</td>
-                                                        <td>Melamine</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="melamine" name="melamine">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="melamine_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
-                                            @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">5</td>
-                                                        <td>Gluten</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="gluten" name="gluten">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="gluten_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">6</td>
-                                                        <td>Nitrosamine</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="nitrosamine" name="nitrosamine">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container" >
-                                                                <textarea name="nitrosamine_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">7</td>
-                                                        <td>WHO</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="who" name="who">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="who_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">8</td>
-                                                        <td>GMP</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="gmp" name="gmp">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="gmp_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">9</td>
-                                                        <td>ISO Cerificates</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="iso_certificate" name="iso_certificate">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="iso_certificate_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">10</td>
-                                                        <td>Manufacturing License</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="manufacturing_license" name="manufacturing_license">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="manufacturing_license_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">11</td>
-                                                        <td>CEP</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="cep" name="cep">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="cep_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">12</td>
-                                                        <td>MSDS</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="msds" name="msds">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="msds_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">13</td>
-                                                        <td>Elemental Impurities</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="elemental_impurities" name="elemental_impurities">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="elemental_impurities_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">14</td>
-                                                        <td>Assessment/Declaration of Azido Impurities as Applicable</td>
-                                                        <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select class="custom-select" id="declaration" name="declaration">
-                                                                    <option value="">---- Select ----</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
-                                                                <textarea name="declaration_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                @component('frontend.forms.language-model')
-                                                                @endcomponent
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-
+                                                        </div>
+                                                    </div>
+                    
+                    
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Availability of Supply Chain?</label>
+                                                            <select id="supply_chain_availability" name="supply_chain_availability">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Availability of Quality Agreement?</label>
+                                                            <select id="quality_agreement_availability" name="quality_agreement_availability">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Risk Assessment Done?</label>
+                                                            <select id="risk_assessment_done" name="risk_assessment_done">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Risk Rating</label>
+                                                            <select id="risk_rating" name="risk_rating">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="High">High</option>
+                                                                <option value="Medium">Medium</option>
+                                                                <option value="Low">Low</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Manufacturer Audit planned</label>
+                                                            <select id="manufacturer_audit_planned" name="manufacturer_audit_planned">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Maufacturer Audit Conducted On</label>
+                                                            <input type="text" id="manufacturer_audit_conducted" name="manufacturer_audit_conducted">
+                                                        </div>
+                                                    </div>
+                    
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="Initiator Group Code">Manufacturer Can be? </label>
+                                                            <select id="manufacturer_can_be" name="manufacturer_can_be">
+                                                                <option value="">---- Select ----</option>
+                                                                <option value="Approved">Approved</option>
+                                                                <option value="Not Approved">Not Approved</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>    
+                        <!-- </div> -->
 
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Availability of Supply Chain?</label>
-                                        <select id="supply_chain_availability" name="supply_chain_availability">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            <option value="N/A">N/A</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Availability of Quality Agreement?</label>
-                                        <select id="quality_agreement_availability" name="quality_agreement_availability">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            <option value="N/A">N/A</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Risk Assessment Done?</label>
-                                        <select id="risk_assessment_done" name="risk_assessment_done">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            <option value="N/A">N/A</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Risk Rating</label>
-                                        <select id="risk_rating" name="risk_rating">
-                                            <option value="">---- Select ----</option>
-                                            <option value="High">High</option>
-                                            <option value="Medium">Medium</option>
-                                            <option value="Low">Low</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Manufacturer Audit planned</label>
-                                        <select id="manufacturer_audit_planned" name="manufacturer_audit_planned">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Maufacturer Audit Conducted On</label>
-                                        <input type="text" id="manufacturer_audit_conducted" name="manufacturer_audit_conducted">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Manufacturer Can be? </label>
-                                        <select id="manufacturer_can_be" name="manufacturer_can_be">
-                                            <option value="">---- Select ----</option>
-                                            <option value="Approved">Approved</option>
-                                            <option value="Not Approved">Not Approved</option>
-                                        </select>
-                                    </div>
-                                </div>
-                        </div>
-
-                        <div class="button-block">
+                        <div class="button-block mt-4">
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1100,19 +1176,15 @@
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="group-input relative-container">
+                                <div class="group-input">
                                     <label for="HOD_feedback">HOD Feedback</label>
                                     <textarea class="tiny" type="text" name="HOD_feedback" placeholder="Enter HOD Feedback" id="HOD_feedback"></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="group-input relative-container">
+                                <div class="group-input">
                                     <label for="HOD_comment">HOD Comments</label>
                                     <textarea class="tiny" type="text" name="HOD_comment" placeholder="Enter HOD Comment" id="HOD_comment"></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -1144,7 +1216,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="button-block">
+                        <div class="button-block mt-4">
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1239,11 +1311,9 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="group-input relative-container">
+                                <div class="group-input">
                                     <label for="Supplier Services">Supplier Services</label>
                                     <textarea class="tiny" name="supplier_serivce" id="supplier_serivce" cols="30" ></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -1374,11 +1444,9 @@
 
 
                             <div class="col-lg-6">
-                                <div class="group-input relative-container">
+                                <div class="group-input">
                                     <label for="Address">Address</label>
                                     <textarea type="text" name="address" id="address" class="tiny"></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -1444,44 +1512,34 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="group-input relative-container">
+                                <div class="group-input">
                                     <label for="Quality Management ">Manufacturing Sites </label>
                                     <textarea class="tiny" name="text" name="manufacturing_sited" id="manufacturing_sited"></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
                                 </div>
                             </div>  
                             <div class="col-12">
-                                <div class="group-input relative-container">
+                                <div class="group-input">
                                     <label for="Quality Management ">Quality Management </label>
                                     <textarea class="tiny" name="text" id="quality_management" name="quality_management"></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="group-input relative-container">
+                                <div class="group-input">
                                     <label for="Business History">Business History</label>
                                     <textarea class="tiny" name="text" id="bussiness_history" name="bussiness_history"></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
                                 </div>
                             </div>
                             
                             <div class="col-12">
-                                <div class="group-input relative-container">
+                                <div class="group-input">
                                     <label for="Performance History ">Performance History </label>
                                     <textarea class="tiny" name="text" id="performance_history" name="performance_history"></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="group-input relative-container">
+                                <div class="group-input">
                                     <label for="Compliance Risk">Compliance Risk</label>
                                     <textarea class="tiny" name="text" id="compliance_risk" name="compliance_risk"></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
                                 </div>
                             </div>
 
@@ -1876,19 +1934,15 @@
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="group-input relative-container">
+                                <div class="group-input">
                                     <label for="QA_reviewer_feedback">QA Reviewer Feedback</label>
                                     <textarea class="tiny" type="text" name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback" id="QA_reviewer_feedback"></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="group-input relative-container">
+                                <div class="group-input">
                                     <label for="QA_reviewer_comment">QA Reviewer Comment</label>
                                     <textarea class="tiny" type="text" name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment" id="QA_reviewer_comment"></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -2133,11 +2187,9 @@
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="group-input relative-container">
+                                <div class="group-input">
                                     <label for="QA_head_comment">QA Head Comment</label>
                                     <textarea class="tiny" type="text" name="QA_head_comment" placeholder="Enter QA Head Comment" id="QA_head_comment"></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -2686,6 +2738,20 @@
             row.parentNode.removeChild(row);
         }
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.collapsible-header').click(function() {
+                $(this).toggleClass('collapsed');
+                $(this).find('.icon').html($(this).hasClass('collapsed') ? '&#x25BC;' : '&#x25B2;');
+            });
+        });
+    </script>
+
 
 
 @endsection

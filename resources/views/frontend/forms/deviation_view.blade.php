@@ -1254,17 +1254,19 @@
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255 </span>
                                         characters remaining
-                                        <div style="position:relative;">
+                                        <div class="relative-container">
                                             <input name="short_description" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="docname"
-                                                type="text" maxlength="255" required value="{{ $data->short_description }}" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}/>
-                                            <button id="start-record-btn" type="button" style="position: absolute; right: 35px; top: 50%; transform: translateY(-50%);">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+                                            type="text" maxlength="255" required value="{{ $data->short_description }}" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
+
                                     @error('short_description')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
+
                                 </div>
 
                                     <script>
@@ -1318,12 +1320,21 @@
     <div class="col-lg-6 new-time-data-field">
     <div class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
         <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
-        <div style="position:relative;">
-            <textarea id="Delay_Justification" name="Delay_Justification" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Delay_Justification }}</textarea>
-            <button class="mic-btn" type="button">
-                <i class="fas fa-microphone"></i>
-            </button>
+        <div class="relative-container">
+                <textarea id="docname" type="text" name="Delay_Justification" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Delay_Justification }}</textarea>
+
+                @component('frontend.forms.language-model')
+                @endcomponent
         </div>
+
+            {{--
+           <div style="position:relative;">
+                <textarea id="Delay_Justification" name="Delay_Justification" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Delay_Justification }}</textarea>
+                <button class="mic-btn" type="button">
+                    <i class="fas fa-microphone"></i>
+                </button>
+           </div>
+            --}}
     </div>
     @error('Delay_Justification')
         <div class="text-danger">{{ $message }}</div>
@@ -1348,12 +1359,19 @@
                                             @endphp
 
                                             <label for="If Other">Deviation Observed By<span class="text-danger">*</span></label>
-                                            <div style="position:relative;">
+                                            <div class="relative-container">
+                                                    <input id="docname" type="text" name="Facility" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} value="{{ $data->Delay_Justification }}" placeholder="Select Facility Name">
+                                                    @component('frontend.forms.language-model')
+                                                    @endcomponent
+                                            </div>
+
+                                       {{-- <div style="position:relative;">
                                                 <input type="text" name="Facility" placeholder="Select Facility Name" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} value="{{ $data->Facility }}" class="mic-input">
                                                 <button class="mic-btn" type="button">
                                                     <i class="fas fa-microphone"></i>
                                                 </button>
-                                            </div>
+                                            </div> --}}
+
                                             @error('Facility')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -1935,21 +1953,30 @@
                                 </div> --}}
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="Description Deviation">Description of Deviation <span class="text-danger">*</span></label>
+                                        <label for="Description Deviation">Description of Deviation<span class="text-danger">*</span></label>
                                         <div>
                                             <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                         </div>
-                                        <div style="position:relative;">
+                                        <div class="relative-container">
+                                            <textarea id="summernote-1" name="Description_Deviation[]" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} placeholder="Enter Description of Deviation">{{ $data->Description_Deviation }}</textarea>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                       {{-- <div style="position:relative;">
                                             <textarea name="Description_Deviation[]" id="summernote-1" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Description_Deviation }}</textarea>
                                             <button class="mic-btn" type="button">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
-                                        </div>
+                                        </div> --}}
+
                                     </div>
                                     @error('Description_Deviation')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                     <!-- <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="Production feedback">Production Feedback <span class="text-danger">*</span></label>
@@ -1958,24 +1985,29 @@
                                     </textarea>
                                         </div>
                                     </div> -->
-                                    {{-- <div class="col-6">
-                                <div class="group-input">
-                                        <label for="Initial Comments">Immediate Action (if any)</label>
-                                        <textarea class="tiny" name="Immediate_Action[]" value="{{$data->Immediate_Action}}"></textarea>
-                                    </div>
-                                </div> --}}
+
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="Immediate Action">Immediate Action (if any) <span class="text-danger">*</span></label>
                                         <div>
                                             <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                         </div>
-                                        <div style="position:relative;">
+
+                                        <div class="relative-container">
+                                            <textarea id="summernote-2" name="Immediate_Action[]" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} placeholder="Enter Immediate Action">{{ $data->Description_Deviation }}</textarea>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                       {{-- <div style="position:relative;">
                                             <textarea name="Immediate_Action[]" id="summernote-2" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Immediate_Action }}</textarea>
                                             <button class="mic-btn" type="button">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
-                                        </div>
+                                        </div> --}}
+
                                     </div>
                                     @error('Immediate_Action')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1990,22 +2022,30 @@
                                 </div> --}}
 
                                 <div class="col-md-12">
-    <div class="group-input">
-        <label for="Preliminary Impact">Preliminary Impact of Deviation <span class="text-danger">*</span></label>
-        <div>
-            <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
-        </div>
-        <div style="position:relative;">
-            <textarea name="Preliminary_Impact[]" id="summernote-3" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Preliminary_Impact }}</textarea>
-            <button class="mic-btn" type="button">
-                <i class="fas fa-microphone"></i>
-            </button>
-        </div>
-    </div>
-    @error('Preliminary_Impact')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-</div>
+                                    <div class="group-input">
+                                        <label for="Preliminary Impact">Preliminary Impact of Deviation <span class="text-danger">*</span></label>
+                                        <div>
+                                            <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                        </div>
+                                        <div class="relative-container">
+                                            <textarea id="summernote-3" name="Preliminary_Impact[]" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} placeholder="Enter Preliminary Impact of Deviation">{{ $data->Description_Deviation }}</textarea>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                        {{-- <div style="position:relative;">
+                                            <textarea name="Preliminary_Impact[]" id="summernote-3" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Preliminary_Impact }}</textarea>
+                                            <button class="mic-btn" type="button">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div> --}}
+
+                                    </div>
+                                    @error('Preliminary_Impact')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
                                     {{-- EXISTING ATTACHMENTS START --}}
                                     @if ($data->initial_file)
@@ -2106,12 +2146,22 @@
                                             <div>
                                                 <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                             </div>
-                                            <div style="position:relative;">
+
+                                            <div class="relative-container">
+                                                <textarea id="summernote-4" name="HOD_Remarks" class="mic-input" {{ $data->stage == 2 ? '' : 'disabled' }} required placeholder="Enter HOD Remarks">{{ $data->HOD_Remarks }}</textarea>
+
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
+
+                                            {{-- <div style="position:relative;">
                                                 <textarea name="HOD_Remarks" id="summernote-4" class="mic-input" {{ $data->stage == 2 ? '' : 'disabled' }} required>{{ $data->HOD_Remarks }}</textarea>
                                                 <button class="mic-btn" type="button">
                                                     <i class="fas fa-microphone"></i>
                                                 </button>
-                                            </div>
+                                            </div> --}}
+
+
                                         </div>
                                         @error('HOD_Remarks')
                                             <div class="text-danger">{{ $message }}</div>
@@ -2220,9 +2270,11 @@
                                         </div>
                                         Save
                                     </button>
-                                    <!-- {{-- <a href="/rcms/qms-dashboard">
+                                    <button type="button" class="nextButton" onclick="previousStep()" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>Back</button>
+
+                                    {{-- <a href="/rcms/qms-dashboard">
                                         <button type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} class="backButton">Back</button>
-                                    </a> --}} -->
+                                    </a> --}}
                                     <button style=" justify-content: center; width: 4rem; " type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                         class="nextButton" onclick="nextStep()">Next</button>
                                     <button style=" justify-content: center; width: 4rem; " type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
@@ -2615,10 +2667,17 @@
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                        <textarea class="nature_of_repeat"
-                                            name="nature_of_repeat"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="nature_of_repeat"
-                                            class="nature_of_repeat">{{ $data->nature_of_repeat }}</textarea>
-                                    </div>
+
+                                                <div class="relative-container">
+                                                    <textarea class="nature_of_repeat mic-input"
+                                                    name="nature_of_repeat"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="nature_of_repeat"
+                                                    class="nature_of_repeat">{{ $data->nature_of_repeat }}</textarea>
+
+                                                    @component('frontend.forms.language-model')
+                                                    @endcomponent
+                                                </div>
+
+                                            </div>
                                     @error('nature_of_repeat')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -2805,13 +2864,16 @@
                                     <div class="group-input">
                                         <label for="QAInitialRemark">QA Initial Remarks <span class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <div style="position:relative;">
+
+                                        <div class="relative-container">
                                             <textarea @if ($data->stage == 3) required @endif
                                                 name="QAInitialRemark" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-6" class="mic-input">{{ $data->QAInitialRemark }}</textarea>
-                                            <button class="mic-btn" type="button">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
+
+                                                    @component('frontend.forms.language-model')
+                                                    @endcomponent
                                         </div>
+
+
                                     </div>
                                     @error('QAInitialRemark')
                                         <div class="text-danger">{{ $message }}</div>
@@ -3150,6 +3212,7 @@
                                     </div>
                                     Save
                                 </button>
+                                <button type="button" class="nextButton" onclick="previousStep()" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>Back</button>
                                 {{-- <a href="/rcms/qms-dashboard">
                                         <button type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} class="backButton">Back</button>
                                     </a> --}}
@@ -3292,8 +3355,16 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea @if ($data1->Production_Review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Production_person || $data->stage == 11 ? 'tiny Production_assessment' : 'tiny-disable' }}
-                                                @if ($data->stage == 3 || Auth::user()->id != $data1->Production_person) readonly @endif name="Production_assessment" id="summernote-17">{{ $data1->Production_assessment }}</textarea>
+
+                                                    <div class="relative-container">
+                                                        <textarea @if ($data1->Production_Review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Production_person || $data->stage == 11 ? 'tiny Production_assessment' : 'tiny-disable' }}
+                                                            @if ($data->stage == 3 || Auth::user()->id != $data1->Production_person) readonly @endif name="Production_assessment" id="summernote-17" class="mic-input">{{ $data1->Production_assessment }}</textarea>
+
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                    </div>
+
+
                                         </div>
                                     </div>
 
@@ -3302,9 +3373,15 @@
                                             <label for="Production Review Completed By">Production Review Completed
                                                 By</label>
                                             {{-- <input disabled type="text" name="production_by" id="production_by" placeholder="Production Review Completed By" value={{ $data1->Production_by }}> --}}
-                                            <input readonly type="text" value="{{ $data1->Production_by }}"
+
+                                            <div class="relative-container">
+                                                <input readonly type="text" value="{{ $data1->Production_by }}"
                                                 name="production_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
-                                                id="production_by">
+                                                id="production_by" class="mic-input">
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
 
 
                                         </div>
@@ -3562,8 +3639,16 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea @if ($data1->Warehouse_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Warehouse_assessment || $data->stage == 11 ? 'tiny Warehouse_assessment' : 'tiny-disable' }}
-                                                name="Warehouse_assessment" id="summernote-19" @if ($data->stage == 3 || Auth::user()->id != $data1->Warehouse_notification) readonly @endif>{{ $data1->Warehouse_assessment }}</textarea>
+
+                                                    <div class="relative-container">
+                                                        <textarea @if ($data1->Warehouse_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Warehouse_assessment || $data->stage == 11 ? 'tiny Warehouse_assessment' : 'tiny-disable' }}
+                                                            name="Warehouse_assessment" id="summernote-19" @if ($data->stage == 3 || Auth::user()->id != $data1->Warehouse_notification) readonly @endif class="mic-input">{{ $data1->Warehouse_assessment }}</textarea>
+
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                    </div>
+
+
                                         </div>
                                     </div>
 
@@ -3648,8 +3733,14 @@
                                         <div class="group-input">
                                             <label for="Warehouse Review Completed By">Warehouse Review Completed
                                                 By</label>
-                                            <input readonly type="text" value="{{ $data1->Warehouse_by }}"
-                                                name="Warehouse_by" id="Warehouse_by">
+                                                <div class="relative-container">
+                                                    <input readonly type="text" value="{{ $data1->Warehouse_by }}"
+                                                    name="Warehouse_by" id="Warehouse_by">
+
+                                                    @component('frontend.forms.language-model')
+                                                    @endcomponent
+                                                </div>
+
                                             {{-- <input disabled   type="text" value={{ $data1->Warehouse_by }} name="Warehouse_by" placeholder="Warehouse Review Completed By" id="Warehouse_by" > --}}
 
                                         </div>
@@ -3867,8 +3958,16 @@
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea @if ($data1->Quality_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Quality_Control_Person || $data->stage == 11 ? 'tiny Quality_Control_assessment' : 'tiny-disable' }}
-                                            name="Quality_Control_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Quality_Control_Person) readonly @endif id="summernote-21">{{ $data1->Quality_Control_assessment }}</textarea>
+
+                                            <div class="relative-container">
+                                                <textarea @if ($data1->Quality_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Quality_Control_Person || $data->stage == 11 ? 'tiny Quality_Control_assessment' : 'tiny-disable' }}
+                                                    name="Quality_Control_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Quality_Control_Person) readonly @endif id="summernote-21">{{ $data1->Quality_Control_assessment }}</textarea>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 quality_control">
@@ -3945,8 +4044,14 @@
                                         <label for="Quality Control Review Completed By">Quality Control Review Completed
                                             By</label>
                                         {{-- <input type="text" name="Quality_Control_by" id="Quality_Control_by" value="{{ $data1->Quality_Control_by }}" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Quality_Control_by }}"
+
+                                        <div class="relative-container">
+                                            <input disabled type="text" value="{{ $data1->Quality_Control_by }}"
                                             name="Quality_Control_by" id="Quality_Control_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 quality_control">
@@ -4030,8 +4135,16 @@
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->QualityAssurance_person || $data->stage == 11 ? 'tiny QualityAssurance_assessment' : 'tiny-disable' }}
-                                            name="QualityAssurance_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->QualityAssurance_person) readonly @endif id="summernote-23">{{ $data1->QualityAssurance_assessment }}</textarea>
+
+                                        <div class="relative-container">
+                                            <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->QualityAssurance_person || $data->stage == 11 ? 'tiny QualityAssurance_assessment' : 'tiny-disable' }}
+                                                name="QualityAssurance_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->QualityAssurance_person) readonly @endif id="summernote-23">{{ $data1->QualityAssurance_assessment }}</textarea>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 quality_assurance">
@@ -4110,8 +4223,15 @@
                                     <div class="group-input">
                                         <label for="Quality Assurance Review Completed By">Quality Assurance Review
                                             Completed By</label>
-                                        <input type="text" name="QualityAssurance_by" id="QualityAssurance_by"
-                                            value="{{ $data1->QualityAssurance_by }}" disabled>
+
+                                            <div class="relative-container">
+                                                <input type="text" name="QualityAssurance_by" id="QualityAssurance_by"
+                                                 value="{{ $data1->QualityAssurance_by }}" disabled>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6 quality_assurance">
@@ -4197,8 +4317,16 @@
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Engineering_person || $data->stage == 11 ? 'tiny Engineering_assessment' : 'tiny-disable' }}
-                                            name="Engineering_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Engineering_person) readonly @endif id="summernote-25">{{ $data1->Engineering_assessment }}</textarea>
+
+                                        <div class="relative-container">
+                                            <textarea @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Engineering_person || $data->stage == 11 ? 'tiny Engineering_assessment' : 'tiny-disable' }}
+                                                name="Engineering_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Engineering_person) readonly @endif id="summernote-25">{{ $data1->Engineering_assessment }}</textarea>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 engineering">
@@ -4273,8 +4401,14 @@
                                         <label for="Engineering Review Completed By">Engineering Review Completed
                                             By</label>
                                         {{-- <input type="text" name="Engineering_by" id="Engineering_by" value="Engineering_by" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Engineering_by }}"
+
+                                        <div class="relative-container">
+                                            <input disabled type="text" value="{{ $data1->Engineering_by }}"
                                             name="Engineering_by" id="Engineering_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
 
                                     </div>
                                 </div>
@@ -4363,9 +4497,17 @@
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                        <textarea @if ($data1->Analytical_Development_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Analytical_Development_person || $data->stage == 11? 'tiny Analytical_Development_assessment' : 'tiny-disable' }}
+
+                                        <div class="relative-container">
+                                            <textarea @if ($data1->Analytical_Development_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Analytical_Development_person || $data->stage == 11? 'tiny Analytical_Development_assessment' : 'tiny-disable' }}
                                             name="Analytical_Development_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Analytical_Development_person) readonly @endif
                                             id="summernote-27">{{ $data1->Analytical_Development_assessment }}</textarea>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 analytical_development">
@@ -4443,8 +4585,14 @@
                                         <label for="Analytical Development Laboratory Review Completed By">Analytical
                                             Development Laboratory Review Completed By</label>
                                         {{-- <input type="text" name="Analytical_Development_by" id="Analytical_Development_by" value="Analytical_Development_by" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Analytical_Development_by }}"
+                                        <div class="relative-container">
+                                            <input disabled type="text" value="{{ $data1->Analytical_Development_by }}"
                                             name="Analytical_Development_by" id="Analytical_Development_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6 analytical_development">
@@ -4529,8 +4677,16 @@
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                        <textarea @if ($data1->Kilo_Lab_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Kilo_Lab_person || $data->stage == 11 ? 'tiny Analytical_Development_assessment' : 'tiny-disable' }}
-                                            name="Kilo_Lab_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Kilo_Lab_person) readonly @endif id="summernote-29">{{ $data1->Kilo_Lab_assessment }}</textarea>
+
+                                        <div class="relative-container">
+                                            <textarea @if ($data1->Kilo_Lab_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Kilo_Lab_person || $data->stage == 11 ? 'tiny Analytical_Development_assessment' : 'tiny-disable' }}
+                                                name="Kilo_Lab_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Kilo_Lab_person) readonly @endif id="summernote-29">{{ $data1->Kilo_Lab_assessment }}</textarea>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 kilo_lab">
@@ -4604,9 +4760,15 @@
                                     <div class="group-input">
                                         <label for="Kilo Lab Review Completed By">Process Development Laboratory / Kilo
                                             Lab Review Completed By</label>
-                                        {{-- <input type="text" name="Kilo_Lab_attachment_by" id="Kilo_Lab_attachment_by" value="Kilo_Lab_attachment_by" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Kilo_Lab_attachment_by }}"
+                                            <div class="relative-container">
+                                                <input disabled type="text" value="{{ $data1->Kilo_Lab_attachment_by }}"
                                             name="Kilo_Lab_attachment_by" id="Kilo_Lab_attachment_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                        {{-- <input type="text" name="Kilo_Lab_attachment_by" id="Kilo_Lab_attachment_by" value="Kilo_Lab_attachment_by" disabled> --}}
+
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3 kilo_lab">
@@ -4695,8 +4857,15 @@
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                        <textarea @if ($data1->Technology_transfer_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Technology_transfer_person || $data->stage == 11 ? 'tiny Technology_transfer_assessment' : 'tiny-disable' }}
-                                            name="Technology_transfer_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Technology_transfer_person) readonly @endif id="summernote-31">{{ $data1->Technology_transfer_assessment }}</textarea>
+
+                                            <div class="relative-container">
+                                                        <textarea @if ($data1->Technology_transfer_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Technology_transfer_person || $data->stage == 11 ? 'tiny Technology_transfer_assessment' : 'tiny-disable' }}
+                                                            name="Technology_transfer_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Technology_transfer_person) readonly @endif id="summernote-31">{{ $data1->Technology_transfer_assessment }}</textarea>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 technology_transfer">
@@ -4772,9 +4941,15 @@
                                     <div class="group-input">
                                         <label for="productionfeedback">Technology Transfer / Design Review Completed
                                             By</label>
+                                            <div class="relative-container">
+                                                <input disabled type="text" value="{{ $data1->Technology_transfer_by }}"
+                                                name="Technology_transfer_by" id="Technology_transfer_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
                                         {{-- <input type="text" name="Technology_transfer_by" id="Technology_transfer_by" value="Technology_transfer_by" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Technology_transfer_by }}"
-                                            name="Technology_transfer_by" id="Technology_transfer_by">
+
 
 
                                     </div>
@@ -4864,8 +5039,16 @@
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                        <textarea @if ($data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Environment_Health_Safety_person || $data->stage == 11 ? 'tiny' : 'tiny-disable' }} name="Health_Safety_assessment"
-                                            @if ($data->stage == 3 || Auth::user()->id != $data1->Environment_Health_Safety_person) readonly @endif id="summernote-33">{{ $data1->Health_Safety_assessment }}</textarea>
+
+                                                <div class="relative-container">
+                                                        <textarea @if ($data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Environment_Health_Safety_person || $data->stage == 11 ? 'tiny' : 'tiny-disable' }} name="Health_Safety_assessment"
+                                                            @if ($data->stage == 3 || Auth::user()->id != $data1->Environment_Health_Safety_person) readonly @endif id="summernote-33">{{ $data1->Health_Safety_assessment }}</textarea>
+
+                                                    @component('frontend.forms.language-model')
+                                                    @endcomponent
+                                                </div>
+
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 environmental_health">
@@ -4941,10 +5124,17 @@
                                     <div class="group-input">
                                         <label for="Safety Review Completed By">Environment, Health & Safety Review
                                             Completed By</label>
-                                        {{-- <input type="text" name="Environment_Health_Safety_by" id="Environment_Health_Safety_by" value="Environment_Health_Safety_by" disabled>                                         --}}
-                                        <input disabled type="text"
+
+                                            <div class="relative-container">
+                                                <input disabled type="text"
                                             value="{{ $data1->Environment_Health_Safety_by }}"
                                             name="Environment_Health_Safety_by" id="Environment_Health_Safety_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                        {{-- <input type="text" name="Environment_Health_Safety_by" id="Environment_Health_Safety_by" value="Environment_Health_Safety_by" disabled>                                         --}}
+
 
 
                                     </div>
@@ -5032,8 +5222,16 @@
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                        <textarea @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Human_Resource_person || $data->stage == 11 ? 'tiny Human_Resource_assessment' : 'tiny-disable' }}
-                                            name="Human_Resource_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Human_Resource_person) readonly @endif id="summernote-35">{{ $data1->Human_Resource_assessment }}</textarea>
+
+                                                    <div class="relative-container">
+                                                        <textarea @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Human_Resource_person || $data->stage == 11 ? 'tiny Human_Resource_assessment' : 'tiny-disable' }}
+                                                            name="Human_Resource_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Human_Resource_person) readonly @endif id="summernote-35">{{ $data1->Human_Resource_assessment }}</textarea>
+
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                    </div>
+
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 human_resources">
@@ -5107,9 +5305,15 @@
                                     <div class="group-input">
                                         <label for="Administration Review Completed By"> Human Resource & Administration
                                             Review Completed By</label>
-                                        {{-- <input type="text" name="Human_Resource_by" id="Human_Resource_by" value="Human_Resource_by" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Human_Resource_by }}"
+                                            <div class="relative-container">
+                                                <input disabled type="text" value="{{ $data1->Human_Resource_by }}"
                                             name="Human_Resource_by" id="Human_Resource_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                        {{-- <input type="text" name="Human_Resource_by" id="Human_Resource_by" value="Human_Resource_by" disabled> --}}
+
 
 
                                     </div>
@@ -5199,9 +5403,17 @@
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                        <textarea @if ($data1->Information_Technology_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Information_Technology_person || $data->stage == 11 ? 'tiny Information_Technology_assessment' : 'tiny-disable' }}
-                                            name="Information_Technology_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Information_Technology_person) readonly @endif
-                                            id="summernote-37">{{ $data1->Information_Technology_assessment }}</textarea>
+
+                                                    <div class="relative-container">
+                                                        <textarea @if ($data1->Information_Technology_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Information_Technology_person || $data->stage == 11 ? 'tiny Information_Technology_assessment' : 'tiny-disable' }}
+                                                        name="Information_Technology_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Information_Technology_person) readonly @endif
+                                                        id="summernote-37">{{ $data1->Information_Technology_assessment }}</textarea>
+
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                    </div>
+
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 information_technology">
@@ -5276,9 +5488,13 @@
                                     <div class="group-input">
                                         <label for="Information Technology Review Completed By"> Information Technology
                                             Review Completed By</label>
+                                            <div class="relative-container">
+                                                <input disabled type="text" value="{{ $data1->Information_Technology_by }}"
+                                                  name="Information_Technology_by" id="Information_Technology_by">
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
                                         {{-- <input type="text" name="Information_Technology_by" id="Information_Technology_by" value="Information_Tec/hnology_by" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Information_Technology_by }}"
-                                            name="Information_Technology_by" id="Information_Technology_by">
 
                                     </div>
                                 </div>
@@ -5363,10 +5579,17 @@
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                        <textarea @if ($data1->Project_management_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Project_management_person || $data->stage == 11 ? 'tiny Project_management_assessment' : 'tiny-disable' }}
-                                            name="Project_management_assessment" id="summernote-39" @if ($data->stage == 3 || Auth::user()->id != $data1->Project_management_person) readonly @endif>{{ $data1->Project_management_assessment }}</textarea>
-                                    </div>
-                                </div>
+
+                                                    <div class="relative-container">
+                                                        <textarea @if ($data1->Project_management_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Project_management_person || $data->stage == 11 ? 'tiny Project_management_assessment' : 'tiny-disable' }}
+                                                            name="Project_management_assessment" id="summernote-39" @if ($data->stage == 3 || Auth::user()->id != $data1->Project_management_person) readonly @endif>{{ $data1->Project_management_assessment }}</textarea>
+
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                    </div>
+
+                                                </div>
+                                        </div>
                                 {{-- <div class="col-md-12 mb-3 project_management">
                                     <div class="group-input">
                                         <label for="Project management Feedback"> Project management Feedback <span
@@ -5440,9 +5663,15 @@
                                     <div class="group-input">
                                         <label for="Project management Review Completed By"> Project management Review
                                             Completed By</label>
+                                            <div class="relative-container">
+                                                <input disabled type="text" value="{{ $data1->Project_management_by }}"
+                                                 name="Project_management_by" id="Project_management_by">
+
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         {{-- <input type="text" name="Project_management_by" id="Project_management_by" value="Project_management_by" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Project_management_by }}"
-                                            name="Project_management_by" id="Project_management_by">
+
 
                                     </div>
                                 </div>
@@ -5557,9 +5786,15 @@
                                     <div class="group-input">
                                         <label for="Quality Control Review Completed By">Quality Control Review Completed
                                             By</label>
-                                        {{-- <input type="text" name="Quality_Control_by" id="Quality_Control_by" value="{{ $data1->Quality_Control_by }}" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Quality_Control_by }}"
+                                            <div class="relative-container">
+                                                <input disabled type="text" value="{{ $data1->Quality_Control_by }}"
                                             name="Quality_Control_by" id="Quality_Control_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                        {{-- <input type="text" name="Quality_Control_by" id="Quality_Control_by" value="{{ $data1->Quality_Control_by }}" disabled> --}}
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -5667,9 +5902,15 @@
                                     <div class="group-input">
                                         <label for="Quality Assurance Review Completed By">Quality Assurance Review
                                             Completed By</label>
+                                            <div class="relative-container">
+                                                <input disabled type="text" value="{{ $data1->QualityAssurance_by }}"
+                                                name="QualityAssurance_by" id="QualityAssurance_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
                                         {{-- <input type="text" name="QualityAssurance_by" id="QualityAssurance_by" value="{{$data1->QualityAssurance_by}}" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->QualityAssurance_by }}"
-                                            name="QualityAssurance_by" id="QualityAssurance_by">
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -5773,9 +6014,14 @@
                                     <div class="group-input">
                                         <label for="Engineering Review Completed By">Engineering Review Completed
                                             By</label>
+                                            <div class="relative-container">
+                                                <input disabled type="text" value="{{ $data1->Engineering_by }}"
+                                                name="Engineering_by" id="Engineering_by">
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
                                         {{-- <input type="text" name="Engineering_by" id="Engineering_by" value="Engineering_by" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Engineering_by }}"
-                                            name="Engineering_by" id="Engineering_by">
+
 
                                     </div>
                                 </div>
@@ -5891,9 +6137,15 @@
                                     <div class="group-input">
                                         <label for="Analytical Development Laboratory Review Completed By">Analytical
                                             Development Laboratory Review Completed By</label>
+                                            <div class="relative-container">
+                                                <input disabled type="text" value="{{ $data1->Analytical_Development_by }}"
+                                                name="Analytical_Development_by" id="Analytical_Development_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
                                         {{-- <input type="text" name="Analytical_Development_by" id="Analytical_Development_by" value="Analytical_Development_by" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Analytical_Development_by }}"
-                                            name="Analytical_Development_by" id="Analytical_Development_by">
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -6000,9 +6252,15 @@
                                     <div class="group-input">
                                         <label for="Kilo Lab Review Completed By">Process Development Laboratory / Kilo
                                             Lab Review Completed By</label>
+                                            <div class="relative-container">
+                                                <input disabled type="text" value="{{ $data1->Kilo_Lab_attachment_by }}"
+                                                name="Kilo_Lab_attachment_by" id="Kilo_Lab_attachment_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
                                         {{-- <input type="text" name="Kilo_Lab_attachment_by" id="Kilo_Lab_attachment_by" value="Kilo_Lab_attachment_by" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Kilo_Lab_attachment_by }}"
-                                            name="Kilo_Lab_attachment_by" id="Kilo_Lab_attachment_by">
+
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -6116,9 +6374,15 @@
                                     <div class="group-input">
                                         <label for="productionfeedback">Technology Transfer / Design Review Completed
                                             By</label>
-                                        {{-- <input type="text" name="Technology_transfer_by" id="Technology_transfer_by" value="Technology_transfer_by" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Technology_transfer_by }}"
+
+                                            <div class="relative-container">
+                                                <input disabled type="text" value="{{ $data1->Technology_transfer_by }}"
                                             name="Technology_transfer_by" id="Technology_transfer_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                        {{-- <input type="text" name="Technology_transfer_by" id="Technology_transfer_by" value="Technology_transfer_by" disabled> --}}
 
                                     </div>
                                 </div>
@@ -6232,10 +6496,16 @@
                                     <div class="group-input">
                                         <label for="Safety Review Completed By">Environment, Health & Safety Review
                                             Completed By</label>
+                                            <div class="relative-container">
+                                                <input disabled type="text"
+                                                    value="{{ $data1->Environment_Health_Safety_by }}"
+                                                    name="Environment_Health_Safety_by" id="Environment_Health_Safety_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
                                         {{-- <input type="text" name="Environment_Health_Safety_by" id="Environment_Health_Safety_by" value="Environment_Health_Safety_by" disabled>                                         --}}
-                                        <input disabled type="text"
-                                            value="{{ $data1->Environment_Health_Safety_by }}"
-                                            name="Environment_Health_Safety_by" id="Environment_Health_Safety_by">
+
 
 
                                     </div>
@@ -6346,9 +6616,14 @@
                                     <div class="group-input">
                                         <label for="Administration Review Completed By"> Human Resource & Administration
                                             Review Completed By</label>
-                                        {{-- <input type="text" name="Human_Resource_by" id="Human_Resource_by" value="Human_Resource_by" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Human_Resource_by }}"
+                                            <div class="relative-container">
+                                                <input disabled type="text" value="{{ $data1->Human_Resource_by }}"
                                             name="Human_Resource_by" id="Human_Resource_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                        {{-- <input type="text" name="Human_Resource_by" id="Human_Resource_by" value="Human_Resource_by" disabled> --}}
 
 
                                     </div>
@@ -6466,9 +6741,15 @@
                                     <div class="group-input">
                                         <label for="Information Technology Review Completed By"> Information Technology
                                             Review Completed By</label>
+                                            <div class="relative-container">
+                                                <input disabled type="text" value="{{ $data1->Information_Technology_by }}"
+                                                name="Information_Technology_by" id="Information_Technology_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
                                         {{-- <input type="text" name="Information_Technology_by" id="Information_Technology_by" value="Information_Tec/hnology_by" disabled> --}}
-                                        <input disabled type="text" value="{{ $data1->Information_Technology_by }}"
-                                            name="Information_Technology_by" id="Information_Technology_by">
+
 
                                     </div>
                                 </div>
@@ -6580,9 +6861,11 @@
                                     <div class="group-input">
                                         <label for="Project management Review Completed By"> Project management Review
                                             Completed By</label>
-                                        {{-- <input type="text" name="Project_management_by" id="Project_management_by" value="Project_management_by" disabled> --}}
+
                                         <input disabled type="text" value="{{ $data1->Project_management_by }}"
                                             name="Project_management_by" id="Project_management_by">
+                                        {{-- <input type="text" name="Project_management_by" id="Project_management_by" value="Project_management_by" disabled> --}}
+
 
                                     </div>
                                 </div>
@@ -6714,8 +6997,16 @@
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                        <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other1_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other1_assessment"
-                                            @if ($data->stage == 3 || Auth::user()->id != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
+
+                                                    <div class="relative-container">
+                                                        <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other1_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other1_assessment"
+                                                            @if ($data->stage == 3 || Auth::user()->id != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
+
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                    </div>
+
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 other1_reviews ">
@@ -6792,8 +7083,14 @@
                                 <div class="col-md-6 mb-3 other1_reviews">
                                     <div class="group-input">
                                         <label for="Review Completed By1"> Other's 1 Review Completed By</label>
-                                        <input disabled type="text" value="{{ $data1->Other1_by }}"
+                                        <div class="relative-container">
+                                            <input disabled type="text" value="{{ $data1->Other1_by }}"
                                             name="Other1_by" id="Other1_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
 
                                     </div>
                                 </div>
@@ -6947,8 +7244,16 @@
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                        <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other2_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other2_person || $data->stage == 11? 'tiny ' : 'tiny-disable' }} name="Other2_Assessment"
-                                            @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
+
+                                                    <div class="relative-container">
+                                                        <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other2_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other2_person || $data->stage == 11? 'tiny ' : 'tiny-disable' }} name="Other2_Assessment"
+                                                            @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
+
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                    </div>
+
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 Other2_reviews">
@@ -6995,8 +7300,14 @@
                                 <div class="col-md-6 mb-3 Other2_reviews">
                                     <div class="group-input">
                                         <label for="Review Completed By2"> Other's 2 Review Completed By</label>
-                                        <input type="text" name="Other2_by" id="Other2_by"
+                                        <div class="relative-container">
+                                            <input type="text" name="Other2_by" id="Other2_by"
                                             value="{{ $data1->Other2_by }}" disabled>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
 
                                     </div>
                                 </div>
@@ -7151,8 +7462,16 @@
                                                 style="display: {{ $data1->Other3_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label><div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                        <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other3_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other3_person || Auth::user()->id == $data1->Other3_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other3_Assessment"
-                                            @if ($data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
+
+                                                    <div class="relative-container">
+                                                        <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other3_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other3_person || Auth::user()->id == $data1->Other3_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other3_Assessment"
+                                                            @if ($data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
+
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                    </div>
+
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 Other3_reviews">
@@ -7199,8 +7518,14 @@
                                 <div class="col-md-6 mb-3 Other3_reviews">
                                     <div class="group-input">
                                         <label for="productionfeedback"> Other's 3 Review Completed By</label>
-                                        <input type="text" name="Other3_by" id="Other3_by"
+                                        <div class="relative-container">
+                                            <input type="text" name="Other3_by" id="Other3_by"
                                             value="{{ $data1->Other3_by }}" disabled>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
 
                                     </div>
                                 </div>
@@ -7352,8 +7677,16 @@
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                        <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other4_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other4_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other4_Assessment"
-                                            @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
+
+                                                <div class="relative-container">
+                                                    <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other4_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other4_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other4_Assessment"
+                                                        @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
+
+                                                    @component('frontend.forms.language-model')
+                                                    @endcomponent
+                                                </div>
+
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 Other4_reviews">
@@ -7400,8 +7733,13 @@
                                 <div class="col-md-6 mb-3 Other4_reviews">
                                     <div class="group-input">
                                         <label for="Review Completed By4"> Other's 4 Review Completed By</label>
-                                        <input type="text" name="Other4_by" id="Other4_by"
+                                        <div class="relative-container">
+                                            <input type="text" name="Other4_by" id="Other4_by"
                                             value="{{ $data1->Other4_by }}" disabled>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
 
                                     </div>
                                 </div>
@@ -7555,8 +7893,16 @@
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                        <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other5_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other5_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }}
-                                            name="Other5_Assessment"@if ($data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
+
+                                                    <div class="relative-container">
+                                                        <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other5_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other5_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }}
+                                                            name="Other5_Assessment"@if ($data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
+
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                    </div>
+
+
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12 mb-3 Other5_reviews">
@@ -7573,8 +7919,14 @@
                                 <div class="col-md-6 mb-3 Other5_reviews">
                                     <div class="group-input">
                                         <label for="Review Completed By5"> Other's 5 Review Completed By</label>
-                                        <input type="text" name="Other5_by" id="Other5_by"
+                                        <div class="relative-container">
+                                            <input type="text" name="Other5_by" id="Other5_by"
                                             value="{{ $data1->Other5_by }}" disabled>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
 
                                     </div>
                                 </div>
@@ -7754,8 +8106,14 @@
                                 <div class="col-md-6 mb-3">
                                     <div class="group-input">
                                         <label for="Review Completed By1"> Other's 1 Review Completed By</label>
-                                        <input disabled type="text" value="{{ $data1->Other1_by }}"
+                                        <div class="relative-container">
+                                            <input disabled type="text" value="{{ $data1->Other1_by }}"
                                             name="Other1_by" id="Other1_by">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
 
                                     </div>
                                 </div>
@@ -8198,8 +8556,14 @@
                                 <div class="col-md-6 mb-3">
                                     <div class="group-input">
                                         <label for="Review Completed By4"> Other's 4 Review Completed By</label>
-                                        <input type="text" name="Other4_by" id="Other4_by"
+                                        <div class="relative-container">
+                                            <input type="text" name="Other4_by" id="Other4_by"
                                             value="{{ $data1->Other4_by }}" disabled>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
 
                                     </div>
                                 </div>
@@ -8317,8 +8681,14 @@
                                 <div class="col-md-6 mb-3">
                                     <div class="group-input">
                                         <label for="Review Completed By5"> Other's 5 Review Completed By</label>
-                                        <input type="text" name="Other5_by" id="Other5_by"
+                                        <div class="relative-container">
+                                            <input type="text" name="Other5_by" id="Other5_by"
                                             value="{{ $data1->Other5_by }}" disabled>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
 
                                     </div>
                                 </div>
@@ -8366,11 +8736,6 @@
 
 
 
-
-
-
-
-
                         </div>
                         <div class="button-block">
                             <button style=" justify-content: center; width: 4rem; " type="submit"{{ $data->stage == 0 ||  $data->stage == 11 ? 'disabled' : '' }}
@@ -8382,8 +8747,11 @@
                                 </div>
                                 Save
                             </button>
+                            <button type="button" class="nextButton" onclick="previousStep()" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>Back</button>
+
                             <button style=" justify-content: center; width: 4rem; " type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                id="ChangeNextButton" class="nextButton">Next</button>
+                                class="nextButton" onclick="nextStep()">Next</button>
+
                             <button style=" justify-content: center; width: 4rem; " type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                     Exit </a> </button>
                                     {{-- @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
@@ -8993,18 +9361,14 @@
                 </div>
 
                 <div class="button-block">
-                    <button  type="submit" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                        id="" class="saveButton saveAuditFormBtn d-flex"
-                                        style="align-items: center;">
-                                        <div class="spinner-border spinner-border-sm auditFormSpinner"
-                                            style="display: none" role="status">
-                                            <span class="sr-only">Loading...</span>
-                                        </div>
-                                        Save
-                                    </button>
+                    <button  type="submit" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="" class="saveButton saveAuditFormBtn d-flex" style="align-items: center;">
+                    <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>Save</button>
+
+                    <button type="button" class="backButton" onclick="previousStep()" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>Back</button>
                     <button style=" justify-content: center; width: 4rem; " type="button" class="nextButton" onclick="nextStep()">Next</button>
-                    <button style=" justify-content: center; width: 4rem; " type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                            Exit </a> </button>
+                    <button style=" justify-content: center; width: 4rem; " type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit </a> </button>
                 </div>
             </div>
         </div>
@@ -9018,12 +9382,13 @@
                         <span style="display: {{ $data->stage == 8 ? 'inline' : 'none' }}" class="text-danger">*</span>
                     </label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                    <div style="position:relative;">
+
+                    <div class="relative-container">
                         <textarea {{ $data->stage == 8 ? 'required' : 'disabled' }} name="hod_final_remarks" id="summernote-14" class="mic-input">{{ $data->hod_final_remarks }}</textarea>
-                        <button class="mic-btn" type="button">
-                            <i class="fas fa-microphone"></i>
-                        </button>
+                        @component('frontend.forms.language-model')
+                        @endcomponent
                     </div>
+
                 </div>
                 @error('hod_final_remarks')
                     <div class="text-danger">{{ $message }}</div>
@@ -9084,12 +9449,12 @@
                                         Save
                                     </button>
 
-            <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; ">
-                <button type="button"  class="backButton">Back</button>
-            </a>
-            {{-- <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button> --}}
-            <button type="button" style=" justify-content: center; width: 4rem; "> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                    Exit </a> </button>
+                                    <button type="button" class="backButton" onclick="previousStep()" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>Back</button>
+                                    <button style=" justify-content: center; width: 4rem; " type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                        class="nextButton" onclick="nextStep()">Next</button>
+                                    {{-- <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                    <button type="button" style=" justify-content: center; width: 4rem; "> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                            Exit </a> </button>
 
         </div>
     </div>
@@ -9105,12 +9470,13 @@
                         <span style="display: {{ $data->stage == 9 ? 'inline' : 'none' }}" class="text-danger">*</span>
                     </label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                    <div style="position:relative;">
+
+                    <div class="relative-container">
                         <textarea {{ $data->stage == 9 ? 'required' : 'disabled' }} name="qa_final_remarks" id="qa_final_remarks" class="mic-input">{{ $data->qa_final_remarks }}</textarea>
-                        <button class="mic-btn" type="button">
-                            <i class="fas fa-microphone"></i>
-                        </button>
+                    @component('frontend.forms.language-model')
+                    @endcomponent
                     </div>
+
                 </div>
                 @error('qa_final_remarks')
                     <div class="text-danger">{{ $message }}</div>
@@ -9170,9 +9536,10 @@
                                         </div>
                                         Save
                                     </button>
-            <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; ">
-                <button type="button"  class="backButton">Back</button>
-            </a>
+            <button style=" justify-content: center; width: 4rem; " type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                            class="nextButton" onclick="nextStep()">Next</button>
+            <button type="button" class="nextButton" onclick="previousStep()" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>Back</button>
+
             {{-- <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button> --}}
             <button type="button" style=" justify-content: center; width: 4rem; "> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                     Exit </a> </button>
@@ -10016,6 +10383,7 @@
         </div>
     </div>
     </div>
+
         <div id="CCForm4" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="row">
@@ -10043,16 +10411,16 @@
                         <div class="group-input">
                             <label for="Justification_for_categorization">Justification for categorization</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                            <div style="position:relative;">
+
+                            <div class="relative-container">
                                 <textarea
                                     name="Justification_for_categorization"
                                     id="summernote-5"
                                     class="mic-input"
                                     {{ $data->stage == 0 || $data->stage == 11 || $data->stage != 5 ? 'disabled' : '' }}
                                 >{{ $data->Justification_for_categorization }}</textarea>
-                                <button class="mic-btn" type="button">
-                                    <i class="fas fa-microphone"></i>
-                                </button>
+                                @component('frontend.forms.language-model')
+                                @endcomponent
                             </div>
                         </div>
                         @error('Justification_for_categorization')
@@ -10106,23 +10474,35 @@
                                     document.getElementById("QRM_button").style.display = "none";
                                 }
                         }
-                        </script>
+                    </script>
+
                     <div class="col-md-12">
                         @if ($data->stage == 5)
                             <div class="group-input">
                                 <label for="QA Feedbacks">QA Feedbacks <span class="text-danger">*</span></label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                         require completion</small></div>
-                                <textarea name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                    id="summernote-14" required>{{ $data->QA_Feedbacks }}</textarea>
+                                        <div class="relative-container">
+                                            <textarea name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                                id="summernote-14" required>{{ $data->QA_Feedbacks }}</textarea>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
                             </div>
                         @else
                             <div class="group-input">
                                 <label for="QA Feedbacks">QA Feedbacks</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                         require completion</small></div>
-                                <textarea readonly class={{$data->stage == 5 || $data->stage == 11? 'tiny' : 'tiny-disable' }}
-                                    name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-14">{{ $data->QA_Feedbacks }}</textarea>
+                                        <div class="relative-container">
+                                            <textarea readonly class={{$data->stage == 5 || $data->stage == 11? 'tiny' : 'tiny-disable' }}
+                                                name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-14">{{ $data->QA_Feedbacks }}</textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
                             </div>
                         @endif
                         @error('QA_Feedbacks')
@@ -10171,6 +10551,7 @@
                     </div>
 
                 </div>
+
                 <div class="button-block">
                     <button style=" justify-content: center; width: 4rem; " type="submit"{{ $data->stage == 0 ||  $data->stage == 11 ? 'disabled' : '' }}
                         id="ChangesaveButton05" class="saveAuditFormBtn d-flex" style="align-items: center;">
@@ -10180,6 +10561,7 @@
                         </div>
                         Save
                     </button>
+                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
                     {{-- <a href="/rcms/qms-dashboard">
                                         <button type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} class="backButton">Back</button>
                                     </a> --}}
@@ -10217,12 +10599,13 @@
                             <div>
                                 <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                             </div>
-                            <div style="position:relative;">
+                            <div class="relative-container">
                                 <textarea name="initiator_final_remarks" id="summernote-14" class="mic-input" {{ $data->stage == 7 ? 'required' : 'disabled' }}>{{ $data->initiator_final_remarks }}</textarea>
-                                <button class="mic-btn" type="button">
-                                    <i class="fas fa-microphone"></i>
-                                </button>
+
+                                @component('frontend.forms.language-model')
+                                @endcomponent
                             </div>
+
                         </div>
                         @error('initiator_final_remarks')
                             <div class="text-danger">{{ $message }}</div>
@@ -10271,7 +10654,8 @@
                             </div>
                         </div>
                     </div>
-                                <div class="button-block">
+
+                    <div class="button-block">
 
                                     <button style=" justify-content: center; width: 4rem; " type="submit"{{ $data->stage == 0 ||  $data->stage == 11 ? 'disabled' : '' }}
                                         class="saveButton saveAuditFormBtn d-flex" style="align-items: center;"
@@ -10282,6 +10666,8 @@
                                         </div>
                                         Save
                                     </button>
+                                    <button type="button" class="nextButton" onclick="previousStep()" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>Back</button>
+
                                     <button style=" justify-content: center; width: 4rem; " type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                         class="nextButton" onclick="nextStep()">Next</button>
                                     <button style=" justify-content: center; width: 4rem; " type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
@@ -10320,17 +10706,19 @@
                         <div class="group-input">
                             <label for="Investigation_Of_Review">Justification for Revised Category</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                            <div style="position:relative;">
+
+                            <div class="relative-container">
                                 <textarea
                                     name="Investigation_Of_Review"
                                     {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                     id="Investigation_Of_Review"
                                     class="mic-input"
                                 >{{ $data->Investigation_Of_Review }}</textarea>
-                                <button class="mic-btn" type="button">
-                                    <i class="fas fa-microphone"></i>
-                                </button>
-                            </div>
+
+                             @component('frontend.forms.language-model')
+                            @endcomponent
+                                        </div>
+
                         </div>
                         {{-- @error('Investigation_Of_Review')
                             <div class="text-danger">{{ $message }}</div>
@@ -10346,7 +10734,8 @@
                                 @endif
                             </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                            <div style="position:relative;">
+
+                            <div class="relative-container">
                                 <textarea
                                     name="Closure_Comments"
                                     @if ($data->stage != 10) readonly @endif
@@ -10355,10 +10744,11 @@
                                     id="Closure_Comments"
                                     class="mic-input"
                                 >{{ $data->Closure_Comments }}</textarea>
-                                <button class="mic-btn" type="button">
-                                    <i class="fas fa-microphone"></i>
-                                </button>
+
+                                @component('frontend.forms.language-model')
+                                @endcomponent
                             </div>
+
                         </div>
                         @error('Closure_Comments')
                             <div class="text-danger">{{ $message }}</div>
@@ -10374,7 +10764,8 @@
                                 @endif
                             </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                            <div style="position:relative;">
+
+                            <div class="relative-container">
                                 <textarea
                                     name="Disposition_Batch"
                                     @if ($data->stage != 10) readonly @endif
@@ -10383,10 +10774,11 @@
                                     id="Disposition_Batch"
                                     class="mic-input"
                                 >{{ $data->Disposition_Batch }}</textarea>
-                                <button class="mic-btn" type="button">
-                                    <i class="fas fa-microphone"></i>
-                                </button>
+
+                                @component('frontend.forms.language-model')
+                                @endcomponent
                             </div>
+
                         </div>
                         @error('Disposition_Batch')
                             <div class="text-danger">{{ $message }}</div>

@@ -437,11 +437,7 @@ class DeviationController extends Controller
                 }
             }
 
-            if (!empty($files)) {
-                $deviation->QA_attachments = json_encode($files);
-            } else {
-                $deviation->QA_attachments = null;
-            }
+
             $deviation->QA_attachments = json_encode($files);
         }
 
@@ -2171,6 +2167,7 @@ class DeviationController extends Controller
             } else {
                 $deviation->Audit_file = null;
             }
+
             $deviation->Audit_file = json_encode($files);
         }
 
@@ -2255,18 +2252,16 @@ class DeviationController extends Controller
 
             $deviation->Capa_attachment = json_encode($files);
         }
-
-        //$files = is_array($request->existing_QA_attachments) ? $request->existing_QA_attachments : [];
-        //if (!empty ($request->QA_attachments)) {
-            //if ($deviation->QA_attachments) {
-            //    $existingFiles = json_decode($deviation->QA_attachments, true); // Convert to associative array
-            //    if (is_array($existingFiles)) {
-            //        $files = $existingFiles;
-            //    }
+        $files = is_array($request->existing_QA_attachments) ? $request->existing_QA_attachments : [];
+        if (!empty ($request->QA_attachments)) {
+            if ($deviation->QA_attachments) {
+                $existingFiles = json_decode($deviation->QA_attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
                 // $files = is_array(json_decode($deviation->QA_attachments)) ? $deviation->QA_attachments : [];
-            //}
-            if (!empty ($request->QA_attachments)) {
-                  $files = [];
+            }
+
             if ($request->hasfile('QA_attachments')) {
                 foreach ($request->file('QA_attachments') as $file) {
                     $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -2274,16 +2269,8 @@ class DeviationController extends Controller
                     $files[] = $name;
                 }
             }
-
-            if (!empty($files)) {
-                $deviation->QA_attachments = json_encode($files);
-            } else {
-                $deviation->QA_attachments = null;
-            }
-
-            $deviation->QA_attachments = json_encode($files);
         }
-
+        $deviation->QA_attachments = json_encode($files);
 
 
             if($deviation->stage >= 5){
@@ -3210,29 +3197,58 @@ class DeviationController extends Controller
             $history->save();
         }
 
-        if ($lastDeviation->QA_attachments != $deviation->QA_attachments || !empty ($request->comment)) {
-            // return 'history';
-            if(is_array($deviation->QA_attachments) && count($deviation->QA_attachments) > 0){
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'QA Attachments';
-            $history->previous = $lastDeviation->QA_attachments;
-            $history->current = $deviation->QA_attachments;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-            if (is_null($lastDeviation->QA_attachments) || $lastDeviation->QA_attachments === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->save();
-          }
-        }
+        $previousQAattachments = $lastDeviation->QA_attachments;
+        $areQAAttachmentsSame = $previousQAattachments == $deviation->QA_attachments;
+
+        if ($areQAAttachmentsSame != true) {
+
+            $existingHistory = DeviationAuditTrail::where('deviation_id', $id)
+            ->where('activity_type', 'QA Attachments')
+            ->exists();
+
+                    $history = new DeviationAuditTrail;
+                    $history->deviation_id = $id;
+                    $history->activity_type = 'QA Attachments';
+                    $history->previous = $previousQAattachments;
+                    $history->current = $deviation->QA_attachments;
+                    $history->comment = "Not Applicable";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDeviation->status;
+                    $history->change_to =   "Not Applicable";
+                    $history->change_from = $lastDeviation->status;
+                    if ($existingHistory) {
+                        $history->action_name = "Update";
+                    } else {
+                        $history->action_name = "New";
+                    }
+                    $history->save();
+                }
+
+        //if ($lastDeviation->QA_attachments != $deviation->QA_attachments || !empty ($request->comment)) {
+        //    // return 'history';
+        //    if(is_array($deviation->QA_attachments) && count($deviation->QA_attachments) > 0){
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'QA Attachments';
+        //    $history->previous = $lastDeviation->QA_attachments;
+        //    $history->current = $deviation->QA_attachments;
+        //    $history->comment = $request->comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDeviation->status;
+        //    $history->change_to =   "Not Applicable";
+        //    $history->change_from = $lastDeviation->status;
+        //    if (is_null($lastDeviation->QA_attachments) || $lastDeviation->QA_attachments === '') {
+        //        $history->action_name = 'New';
+        //    } else {
+        //        $history->action_name = 'Update';
+        //    }
+        //    $history->save();
+        //  }
+        //}
 
         if ($lastDeviation->Closure_Comments != $deviation->Closure_Comments || !empty ($request->comment)) {
             // return 'history';

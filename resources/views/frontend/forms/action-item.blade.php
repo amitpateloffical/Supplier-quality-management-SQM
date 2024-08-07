@@ -220,7 +220,7 @@
                                             <div class="calenderauditee">
                                                 <input type="text" name="due_date" id="due_date" readonly
                                                     placeholder="DD-MM-YYYY" />
-                                                <input type="date" name="due_date_n"
+                                                <input type="hidden" name="due_date_n"
                                                     min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'due_date')" />
                                             </div>
@@ -642,7 +642,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit" class="saveButton">Save</button>
+                                {{-- <button type="submit" class="saveButton">Save</button> --}}
                                 <button type="button"> <a class="text-white"
                                         href="{{ url('rcms/qms-dashboard') }}">Exit
                                     </a> </button>

@@ -1155,7 +1155,7 @@ class RiskManagementController extends Controller
         //     $history->save();
         // }
 
-        if (!empty($request->root_cause_methodology)) {
+        if (!empty($data->root_cause_methodology)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
             $history->activity_type = 'Root Cause Methodology';
@@ -1245,7 +1245,16 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Severity Rate';
             $history->previous = "Null";
-            $history->current = $data->severity_rate;
+            // $history->current = $data->severity_rate;
+            if($request->severity_rate == 1){
+                $history->current = "Negligible";
+            } elseif($request->severity_rate == 2){
+                $history->current = "Moderate";
+            } elseif($request->severity_rate == 3){
+                $history->current = "Major";
+            }else{
+                $history->current = "Fatal";
+            }
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1262,7 +1271,18 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Occurrence';
             $history->previous = "Null";
-            $history->current = $data->occurrence;
+            // $history->current = $data->occurrence;
+            if($request->occurrence == 1){
+                $history->current = "Very Likely";
+            } elseif($request->occurrence == 2){
+                $history->current = "Likely";
+            } elseif($request->occurrence == 3){
+                $history->current = "Unlikely";
+            }elseif($request->occurrence == 4){
+                $history->current = "Rare";
+            }else{
+                $history->current = "Extremely Unlikely";
+            }
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1279,7 +1299,17 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Detection';
             $history->previous = "Null";
-            $history->current = $data->detection;
+            if($request->detection == 1){
+                $history->current = "Very Likely";
+            } elseif($request->detection == 2){
+                $history->current = "Likely";
+            } elseif($request->detection == 3){
+                $history->current = "Unlikely";
+            }elseif($request->detection == 4){
+                $history->current = "Rare";
+            }else{
+                $history->current = "Impossible";
+            }
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1330,7 +1360,16 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Residual Risk Impact';
             $history->previous = "Null";
-            $history->current = $data->residual_risk_impact;
+            // $history->current = $data->residual_risk_impact;
+            if($request->residual_risk_impact == 1){
+                $history->current = "High";
+            } elseif($request->residual_risk_impact == 2){
+                $history->current = "Low";
+            } elseif($request->residual_risk_impact == 3){
+                $history->current = "Medium";
+            }else{
+                $history->current = "None";
+            }
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1347,7 +1386,14 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Residual Risk Probability';
             $history->previous = "Null";
-            $history->current = $data->residual_risk_probability;
+            // $history->current = $data->residual_risk_probability;
+            if($request->residual_risk_probability == 1){
+                $history->current = "High";
+            } elseif($request->residual_risk_probability == 2){
+                $history->current = "Medium";
+            }else{
+                $history->current = "Low";
+            }
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1364,7 +1410,18 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Residual Detection';
             $history->previous = "Null";
-            $history->current = $data->detection2;
+            // $history->current = $data->detection2;
+            if($request->detection2 == 1){
+                $history->current = "Very Likely";
+            } elseif($request->detection2 == 2){
+                $history->current = "Likely";
+            } elseif($request->detection2 == 3){
+                $history->current = "Unlikely";
+            }elseif($request->detection2 == 4){
+                $history->current = "Rare";
+            }else{
+                $history->current = "Impossible";
+            }
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2782,8 +2839,26 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Severity Rate';
-            $history->previous = $lastDocument->severity_rate;
-            $history->current = $data->severity_rate;
+            // $history->previous = $lastDocument->severity_rate;
+            if($lastDocument->severity_rate == 1){
+                $history->previous = "Negligible";
+            } elseif($lastDocument->severity_rate == 2){
+                $history->previous = "Moderate";
+            } elseif($lastDocument->severity_rate == 3){
+                $history->previous = "Major";
+            }else{
+                $history->previous = "Fatal";
+            }
+            // $history->current = $data->severity_rate;
+            if($request->severity_rate == 1){
+                $history->current = "Negligible";
+            } elseif($request->severity_rate == 2){
+                $history->current = "Moderate";
+            } elseif($request->severity_rate == 3){
+                $history->current = "Major";
+            }else{
+                $history->current = "Fatal";
+            }
             $history->comment = $request->severity_rate_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2801,8 +2876,30 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Occurrence';
-            $history->previous = $lastDocument->occurrence;
-            $history->current = $data->occurrence;
+            // $history->previous = $lastDocument->occurrence;
+            if($lastDocument->occurrence == 1){
+                $history->previous = "Very Likely";
+            } elseif($lastDocument->occurrence == 2){
+                $history->previous = "Likely";
+            } elseif($lastDocument->occurrence == 3){
+                $history->previous = "Unlikely";
+            }elseif($lastDocument->occurrence == 4){
+                $history->previous = "Rare";
+            }else{
+                $history->previous = "Extremely Unlikely";
+            }
+            // $history->current = $data->occurrence;
+            if($request->occurrence == 1){
+                $history->current = "Very Likely";
+            } elseif($request->occurrence == 2){
+                $history->current = "Likely";
+            } elseif($request->occurrence == 3){
+                $history->current = "Unlikely";
+            }elseif($request->occurrence == 4){
+                $history->current = "Rare";
+            }else{
+                $history->current = "Extremely Unlikely";
+            }
             $history->comment = $request->occurrence_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2820,8 +2917,30 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Detection';
-            $history->previous = $lastDocument->detection;
-            $history->current = $data->detection;
+            // $history->previous = $lastDocument->detection;
+            if($lastDocument->detection == 1){
+                $history->previous = "Very Likely";
+            } elseif($lastDocument->detection == 2){
+                $history->previous = "Likely";
+            } elseif($lastDocument->detection == 3){
+                $history->previous = "Unlikely";
+            }elseif($lastDocument->detection == 4){
+                $history->previous = "Rare";
+            }else{
+                $history->previous = "Impossible";
+            }
+            // $history->current = $data->detection;
+            if($request->detection == 1){
+                $history->current = "Very Likely";
+            } elseif($request->detection == 2){
+                $history->current = "Likely";
+            } elseif($request->detection == 3){
+                $history->current = "Unlikely";
+            }elseif($request->detection == 4){
+                $history->current = "Rare";
+            }else{
+                $history->current = "Impossible";
+            }
             $history->comment = $request->detection_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2879,8 +2998,26 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Residual Risk Impact';
-            $history->previous = $lastDocument->residual_risk_impact;
-            $history->current = $data->residual_risk_impact;
+            // $history->previous = $lastDocument->residual_risk_impact;
+            if($lastDocument->residual_risk_impact == 1){
+                $history->previous = "High";
+            } elseif($lastDocument->residual_risk_impact == 2){
+                $history->previous = "Low";
+            } elseif($lastDocument->residual_risk_impact == 3){
+                $history->previous = "Medium";
+            }else{
+                $history->previous = "None";
+            }
+            // $history->current = $data->residual_risk_impact;
+            if($request->residual_risk_impact == 1){
+                $history->current = "High";
+            } elseif($request->residual_risk_impact == 2){
+                $history->current = "Low";
+            } elseif($request->residual_risk_impact == 3){
+                $history->current = "Medium";
+            }else{
+                $history->current = "None";
+            }
             $history->comment = $request->residual_risk_impact_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2899,8 +3036,23 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Residual Risk Probability';
-            $history->previous = $lastDocument->residual_risk_probability;
-            $history->current = $data->residual_risk_probability;
+            // $history->previous = $lastDocument->residual_risk_probability;
+            if($lastDocument->residual_risk_probability == 1){
+                $history->previous = "High";
+            } elseif($lastDocument->residual_risk_probability == 2){
+                $history->previous = "Medium";
+            }else{
+                $history->previous = "Low";
+            }
+
+            // $history->current = $data->residual_risk_probability;
+            if($request->residual_risk_probability == 1){
+                $history->current = "High";
+            } elseif($request->residual_risk_probability == 2){
+                $history->current = "Medium";
+            }else{
+                $history->current = "Low";
+            }
             $history->comment = $request->residual_risk_probability_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2919,8 +3071,30 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Residual Detection';
-            $history->previous = $lastDocument->detection2;
-            $history->current = $data->detection2;
+            // $history->previous = $lastDocument->detection2;
+            if($lastDocument->detection2 == 1){
+                $history->previous = "Very Likely";
+            } elseif($lastDocument->detection2 == 2){
+                $history->previous = "Likely";
+            } elseif($lastDocument->detection2 == 3){
+                $history->previous = "Unlikely";
+            }elseif($lastDocument->detection2 == 4){
+                $history->previous = "Rare";
+            }else{
+                $history->previous = "Impossible";
+            }
+            // $history->current = $data->detection2;
+            if($request->detection2 == 1){
+                $history->current = "Very Likely";
+            } elseif($request->detection2 == 2){
+                $history->current = "Likely";
+            } elseif($request->detection2 == 3){
+                $history->current = "Unlikely";
+            }elseif($request->detection2 == 4){
+                $history->current = "Rare";
+            }else{
+                $history->current = "Impossible";
+            }
             $history->comment = $request->detection2_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

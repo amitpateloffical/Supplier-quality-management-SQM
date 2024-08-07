@@ -1594,7 +1594,8 @@
                                             <label for="agenda">
                                                 Failure Mode and Effect Analysis
                                                 <button type="button" name="agenda"
-                                                    onclick="addRiskAssessment('risk-assessment-risk-management')">+</button>
+                                                    onclick="addRiskAssessment('risk-assessment-risk-management')"
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>+</button>
                                             </label>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered" style="width: 200%"
@@ -1786,8 +1787,10 @@
                                                 <label for="fishbone">
                                                     Fishbone or Ishikawa Diagram
                                                     <button type="button" name="agenda"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
                                                     <button type="button" name="agenda" class="fishbone-del-btn"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
                                                         <i class="fa-solid fa-trash-can"></i>
                                                     </button>
@@ -1810,13 +1813,13 @@
                                                                     @foreach (unserialize($fishbone->measurement) as $key => $measure)
                                                                         <div><input type="text"
                                                                                 value="{{ $measure }}"
-                                                                                name="measurement[]"></div>
+                                                                                name="measurement[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
                                                                         <div><input type="text"
                                                                                 value="{{ unserialize($fishbone->materials)[$key] ? unserialize($fishbone->materials)[$key] : '' }}"
-                                                                                name="materials[]"></div>
+                                                                                name="materials[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
                                                                         <div><input type="text"
                                                                                 value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}"
-                                                                                name="methods[]"></div>
+                                                                                name="methods[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
                                                                     @endforeach
                                                                 @endif
                                                             </div>
@@ -1828,13 +1831,13 @@
                                                                     @foreach (unserialize($fishbone->environment) as $key => $measure)
                                                                         <div><input type="text"
                                                                                 value="{{ $measure }}"
-                                                                                name="environment[]"></div>
+                                                                                name="environment[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
                                                                         <div><input type="text"
                                                                                 value="{{ unserialize($fishbone->manpower)[$key] ? unserialize($fishbone->manpower)[$key] : '' }}"
-                                                                                name="manpower[]"></div>
+                                                                                name="manpower[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
                                                                         <div><input type="text"
                                                                                 value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}"
-                                                                                name="machine[]"></div>
+                                                                                name="machine[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
                                                                     @endforeach
                                                                 @endif
 
@@ -1852,7 +1855,7 @@
                                                         </div>
                                                         <div class="field">
 
-                                                            <textarea name="problem_statement">{{ $fishbone->problem_statement }}</textarea>
+                                                            <textarea name="problem_statement" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $fishbone->problem_statement }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1876,7 +1879,8 @@
                                                                 <th style="width:150px;">Problem Statement :</th>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="why_problem_statement">{{ $whyChart->why_problem_statement }}</textarea>
+                                                                        <textarea class="mic-input" name="why_problem_statement"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $whyChart->why_problem_statement }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
@@ -1884,14 +1888,15 @@
                                                             </tr>
                                                             <tr class="why-row">
                                                                 <th style="width:150px; color: #393cd4;">
-                                                                    Why 1 <span
-                                                                        onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
+                                                                    Why 1 <span id="addWhyButton1" class="addWhyButton"
+                                                                        onclick="addWhyField('why_1_block', 'why_1[]')"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>+</span>
                                                                 </th>
                                                                 <td>
                                                                     <div class="why_1_block">
                                                                         @if (!empty($whyChart->why_1))
                                                                             @foreach (unserialize($whyChart->why_1) as $key => $measure)
-                                                                                <textarea name="why_1[]">{{ $measure }}</textarea>
+                                                                                <textarea name="why_1[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                             @endforeach
                                                                         @endif
 
@@ -1900,14 +1905,15 @@
                                                             </tr>
                                                             <tr class="why-row">
                                                                 <th style="width:150px; color: #393cd4;">
-                                                                    Why 2 <span
-                                                                        onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
+                                                                    Why 2 <span id="addWhyButton2" class="addWhyButton"
+                                                                        onclick="addWhyField('why_2_block', 'why_2[]')"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>+</span>
                                                                 </th>
                                                                 <td>
                                                                     <div class="why_2_block">
                                                                         @if (!empty($whyChart->why_2))
                                                                             @foreach (unserialize($whyChart->why_2) as $key => $measure)
-                                                                                <textarea name="why_2[]">{{ $measure }}</textarea>
+                                                                                <textarea name="why_2[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                             @endforeach
                                                                         @endif
                                                                     </div>
@@ -1915,14 +1921,15 @@
                                                             </tr>
                                                             <tr class="why-row">
                                                                 <th style="width:150px; color: #393cd4;">
-                                                                    Why 3 <span
-                                                                        onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
+                                                                    Why 3 <span id="addWhyButton3" class="addWhyButton"
+                                                                        onclick="addWhyField('why_3_block', 'why_3[]')"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>+</span>
                                                                 </th>
                                                                 <td>
                                                                     <div class="why_3_block">
                                                                         @if (!empty($whyChart->why_3))
                                                                             @foreach (unserialize($whyChart->why_3) as $key => $measure)
-                                                                                <textarea name="why_3[]">{{ $measure }}</textarea>
+                                                                                <textarea name="why_3[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                             @endforeach
                                                                         @endif
                                                                     </div>
@@ -1930,14 +1937,15 @@
                                                             </tr>
                                                             <tr class="why-row">
                                                                 <th style="width:150px; color: #393cd4;">
-                                                                    Why 4 <span
-                                                                        onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
+                                                                    Why 4 <span id="addWhyButton4" class="addWhyButton"
+                                                                        onclick="addWhyField('why_4_block', 'why_4[]')"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>+</span>
                                                                 </th>
                                                                 <td>
                                                                     <div class="why_4_block">
                                                                         @if (!empty($whyChart->why_4))
                                                                             @foreach (unserialize($whyChart->why_4) as $key => $measure)
-                                                                                <textarea name="why_4[]">{{ $measure }}</textarea>
+                                                                                <textarea name="why_4[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                             @endforeach
                                                                         @endif
                                                                     </div>
@@ -1945,14 +1953,15 @@
                                                             </tr>
                                                             <tr class="why-row">
                                                                 <th style="width:150px; color: #393cd4;">
-                                                                    Why 5 <span
-                                                                        onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
+                                                                    Why 5 <span id="addWhyButton5" class="addWhyButton"
+                                                                        onclick="addWhyField('why_5_block', 'why_5[]')"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>+</span>
                                                                 </th>
                                                                 <td>
                                                                     <div class="why_5_block">
                                                                         @if (!empty($whyChart->why_5))
                                                                             @foreach (unserialize($whyChart->why_5) as $key => $measure)
-                                                                                <textarea name="why_5[]">{{ $measure }}</textarea>
+                                                                                <textarea name="why_5[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                             @endforeach
                                                                         @endif
                                                                     </div>
@@ -1962,7 +1971,7 @@
                                                                 <th style="width:150px;">Root Cause :</th>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="why_root_cause">{{ $whyChart->why_root_cause }}</textarea>
+                                                                        <textarea class="mic-input" name="why_root_cause" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $whyChart->why_root_cause }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
@@ -1999,21 +2008,21 @@
                                                                 <th style="background: #0039bd85">What</th>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="what_will_be">{{ $what_who_where->what_will_be }}</textarea>
+                                                                        <textarea class="mic-input" name="what_will_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->what_will_be }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="what_will_not_be">{{ $what_who_where->what_will_not_be }}</textarea>
+                                                                        <textarea class="mic-input" name="what_will_not_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->what_will_not_be }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="what_rationable">{{ $what_who_where->what_rationable }}</textarea>
+                                                                        <textarea class="mic-input" name="what_rationable" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->what_rationable }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
@@ -2023,21 +2032,21 @@
                                                                 <th style="background: #0039bd85">Where</th>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="where_will_be">{{ $what_who_where->where_will_be }}</textarea>
+                                                                        <textarea class="mic-input" name="where_will_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->where_will_be }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="where_will_not_be">{{ $what_who_where->where_will_not_be }}</textarea>
+                                                                        <textarea class="mic-input" name="where_will_not_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->where_will_not_be }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="where_rationable">{{ $what_who_where->where_rationable }}</textarea>
+                                                                        <textarea class="mic-input" name="where_rationable" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->where_rationable }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
@@ -2047,21 +2056,21 @@
                                                                 <th style="background: #0039bd85">When</th>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="when_will_be">{{ $what_who_where->when_will_be }}</textarea>
+                                                                        <textarea class="mic-input" name="when_will_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->when_will_be }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="when_will_not_be">{{ $what_who_where->when_will_not_be }}</textarea>
+                                                                        <textarea class="mic-input" name="when_will_not_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->when_will_not_be }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="when_rationable">{{ $what_who_where->when_rationable }}</textarea>
+                                                                        <textarea class="mic-input" name="when_rationable" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->when_rationable }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
@@ -2071,21 +2080,23 @@
                                                                 <th style="background: #0039bd85">Coverage</th>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="coverage_will_be">{{ $what_who_where->coverage_will_be }}</textarea>
+                                                                        <textarea class="mic-input" name="coverage_will_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->coverage_will_be }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="coverage_will_not_be">{{ $what_who_where->coverage_will_not_be }}</textarea>
+                                                                        <textarea class="mic-input" name="coverage_will_not_be"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->coverage_will_not_be }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="coverage_rationable">{{ $what_who_where->coverage_rationable }}</textarea>
+                                                                        <textarea class="mic-input" name="coverage_rationable"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->coverage_rationable }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
@@ -2095,22 +2106,22 @@
                                                                 <th style="background: #0039bd85">Who</th>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="who_will_be">{{ $what_who_where->who_will_be }}</textarea>
+                                                                        <textarea class="mic-input" name="who_will_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->who_will_be }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="who_will_not_be">{{ $what_who_where->who_will_not_be }}</textarea>
+                                                                        <textarea class="mic-input" name="who_will_not_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->who_will_not_be }}</textarea>
                                                                         @component('frontend.forms.language-model')
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
-                                                                        <textarea class="mic-input" name="who_rationable">{{ $what_who_where->who_rationable }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        <textarea class="mic-input" name="who_rationable" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->who_rationable }}</textarea>
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
@@ -2173,8 +2184,7 @@
                                                     onchange='calculateRiskAnalysis(this)'
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option
-                                                        {{ $data->occurrence == '5' ? 'selected' : '' }}
+                                                    <option {{ $data->occurrence == '5' ? 'selected' : '' }}
                                                         value="5">Extremely Unlikely</option>
                                                     <option {{ $data->occurrence == '4' ? 'selected' : '' }}
                                                         value="4">Rare</option>
@@ -2888,7 +2898,8 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="More Actions Needed Comment">More Actions Needed Comment</label>
+                                                <label for="More Actions Needed Comment">More Actions Needed
+                                                    Comment</label>
                                                 <div class="static">{{ $data->more_action_needed_comment }}</div>
                                             </div>
                                         </div>
@@ -3000,9 +3011,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                    <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3047,9 +3058,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3094,9 +3105,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3403,4 +3414,40 @@
                     });
                 });
             </script>
+            {{-- <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Assuming $data->stage is available as a global variable or you can pass it from server-side code
+                    const stage = {{ $data->stage }};
+
+                    // Get all elements with the class 'mic-input'
+                    const micInputs = document.querySelectorAll('.mic-input');
+
+                    // Check the condition and set the disabled attribute accordingly
+                    if (stage === 0 || stage === 7) {
+                        micInputs.forEach(input => {
+                            input.disabled = true;
+                        });
+                    }
+                });
+            </script> --}}
+            <script>
+                function disableButtonsIfNeeded(stage) {
+                    if (stage == 0 || stage == 7) {
+                        document.querySelectorAll('.addWhyButton').forEach(button => {
+                            button.style.pointerEvents = 'none'; // Disable click
+                            button.style.opacity = '0.5'; // Optional: make it look disabled
+                            button.title = 'Button is disabled'; // Optional: show a tooltip
+                        });
+                    }
+                }
+
+                // Assuming $data->stage is passed into the script
+                // Replace the following line with the actual way of retrieving $data->stage value in your environment
+                const stage =
+                    {{ $data->stage }}; // You may need to adjust this based on how you're passing the data to the script
+
+                // Call the function to disable buttons if needed
+                disableButtonsIfNeeded(stage);
+            </script>
+
         @endsection

@@ -1067,8 +1067,15 @@ class ActionItemController extends Controller
 
                 $history = new ActionItemHistory;
                 $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->submitted_by;
+                // $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Submitted By, Submitted On';
+                if (is_null($lastopenState->submitted_by) || $lastopenState->submitted_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastopenState->submitted_by . ' , ' . $lastopenState->submitted_on;
+                }
+                // $history->current = $changeControl->submitted_by;
+                $history->current = $changeControl->submitted_by . ' , ' . $changeControl->submitted_on;
                 $history->comment = $request->comment;
                 $history->action = 'Submit';
                 $history->user_id = Auth::user()->id;
@@ -1077,8 +1084,13 @@ class ActionItemController extends Controller
                 $history->origin_state = $lastopenState->status;
                 $history->change_to = 'Work In Progress';
                 $history->change_from = 'Opened';
-                $history->action_name = 'Not Applicable';
+                // $history->action_name = 'Not Applicable';
                 $history->stage = "Submit";
+                if (is_null($lastopenState->submitted_by) || $lastopenState->submitted_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                 $changeControl->update();
 
@@ -1121,9 +1133,16 @@ class ActionItemController extends Controller
 
                 $history = new ActionItemHistory;
                 $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = $lastopenState->completed_by;
-                $history->current = $changeControl->completed_by;
+                // $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Completed By, Completed On';
+                if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastopenState->completed_by . ' , ' . $lastopenState->completed_on;
+                }
+                // $history->previous = $lastopenState->completed_by;
+                // $history->current = $changeControl->completed_by;
+                $history->current = $changeControl->completed_by . ' , ' . $changeControl->completed_on;
                 $history->comment = $request->comment;
                 $history->action = 'Complete';
                 $history->user_id = Auth::user()->id;
@@ -1132,7 +1151,12 @@ class ActionItemController extends Controller
                 $history->origin_state = $lastopenState->status;
                 $history->change_to = 'Closed-Done';
                 $history->change_from = 'Work In Progress';
-                $history->action_name = 'Not Applicable';
+                // $history->action_name = 'Not Applicable';
+                if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->stage = "Complete";
                 $history->save();
                 $changeControl->update();
@@ -1230,8 +1254,15 @@ class ActionItemController extends Controller
 
                 $history = new ActionItemHistory;
                 $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->cancelled_by;
+                // $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Cancelled By, Cancelled On';
+                if (is_null($lastopenState->cancelled_by) || $lastopenState->cancelled_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastopenState->cancelled_by . ' , ' . $lastopenState->cancelled_on;
+                }
+                // $history->current = $changeControl->cancelled_by;
+                $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
                 $history->comment = $request->comment;
                 $history->action = 'Cancel';
                 $history->user_id = Auth::user()->id;
@@ -1240,7 +1271,12 @@ class ActionItemController extends Controller
                 $history->origin_state = $lastopenState->status;
                 $history->change_to = 'Closed-Cancelled';
                 $history->change_from = 'Opened';
-                $history->action_name = 'Not Applicable';
+                // $history->action_name = 'Not Applicable';
+                if (is_null($lastopenState->cancelled_by) || $lastopenState->cancelled_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->stage = "Cancel";
                 $history->save();
                 $changeControl->update();
@@ -1295,8 +1331,15 @@ class ActionItemController extends Controller
                 $history = new ActionItemHistory;
 
                 $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->more_information_required_by;
+                // $history->activity_type = 'Activity Log';
+                $history->activity_type = 'More Information Required By, More Information Required On';
+                if (is_null($lastopenState->more_information_required_by) || $lastopenState->more_information_required_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastopenState->more_information_required_by . ' , ' . $lastopenState->more_information_required_on;
+                }
+                // $history->current = $changeControl->more_information_required_by;
+                $history->current = $changeControl->more_information_required_by . ' , ' . $changeControl->more_information_required_on;
                 $history->comment = $request->comment;
                 $history->action = 'More Information Required';
                 $history->user_id = Auth::user()->id;
@@ -1305,7 +1348,12 @@ class ActionItemController extends Controller
                 $history->origin_state = $lastopenState->status;
                 $history->change_to = "Opened";
                 $history->change_from = 'Work In Progress';
-                $history->action_name = 'Not Applicable';
+                // $history->action_name = 'Not Applicable';
+                if (is_null($lastopenState->more_information_required_by) || $lastopenState->more_information_required_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->stage = "More Information Required";
                 $history->save();
                 $changeControl->update();

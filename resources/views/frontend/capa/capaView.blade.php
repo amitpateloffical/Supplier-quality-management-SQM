@@ -1067,24 +1067,33 @@
                                                             <th>Action</th> 
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-
-                                                    </tbody>
+                                              
                                                         @if ($data1->product_name)
                                                         @foreach (unserialize($data1->product_name) as $key => $temps)
                                                         <tr>
                                                             <td><input type="text" name="serial_number[]"
                                                                     value="{{ $key + 1 }}"></td>
-                                                            <td><input type="text" name="product_name[]"
-                                                                    value="{{ unserialize($data1->product_name)[$key] ? unserialize($data1->product_name)[$key] : '' }}">
-                                                            </td>
-                                                            <td><input type="text" name="batch_no[]"
-                                                                    value="{{ unserialize($data1->batch_no)[$key] ? unserialize($data1->batch_no)[$key] : '' }}">
-                                                            </td>
-                                                            {{-- <td><input type="text" name="mfg_date[]"
-                                                                    value="{{ unserialize($data1->mfg_date)[$key] ? unserialize($data1->mfg_date)[$key] : '' }}">
-                                                            </td> --}}
-                                                            <td>
+                                                            <td>                                                                   
+                                                            <select name="product_name[]" id="product_name" {{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>
+                                                                <option value="">-- Select value --</option>
+                                                                <option value="PLACE BEFORE BIMATOPROST OPH.SOLO.01%W/"{{ isset(unserialize($data1->product_name)[$key]) && unserialize($data1->product_name)[$key] == 'PLACE BEFORE BIMATOPROST OPH.SOLO.01%W/' ? ' selected' : '' }}>PLACE BEFORE BIMATOPROST OPH.SOLO.01%W/</option>
+                                                                <option value="BIMATOPROST AND TIMOLOL MALEATEED SOLUTION"{{ isset(unserialize($data1->product_name)[$key]) && unserialize($data1->product_name)[$key] == 'BIMATOPROST AND TIMOLOL MALEATEED SOLUTION' ? ' selected' : '' }}>BIMATOPROST AND TIMOLOL MALEATEED SOLUTION</option>
+                                                                <option value="CAFFEINE CITRATE ORAL SOLUTION USP 60MG/3ML"{{ isset(unserialize($data1->product_name)[$key]) && unserialize($data1->product_name)[$key] == 'CAFFEINE CITRATE ORAL SOLUTION USP 60MG/3ML' ? ' selected' : '' }}>CAFFEINE CITRATE ORAL SOLUTION USP 60MG/3ML</option>
+                                                                <option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)"{{ isset(unserialize($data1->product_name)[$key]) && unserialize($data1->product_name)[$key] == 'BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)' ? ' selected' : '' }}>BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)</option>
+                                                                <option value="DORZOLAMIDE PFREE 20MG/ML EDSOLSINGLEDOSECO"{{ isset(unserialize($data1->product_name)[$key]) && unserialize($data1->product_name)[$key] == 'DORZOLAMIDE PFREE 20MG/ML EDSOLSINGLEDOSECO' ? ' selected' : '' }}>DORZOLAMIDE PFREE 20MG/ML EDSOLSINGLEDOSECO</option>
+                                                            </select> 
+                                                                <td>
+                                                                   
+                                                                   <select id="batch_no" name="batch_no[]"{{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>
+                                                                    <option value="">-- Select value --</option>
+                                                                    <option value="DCAU0030"{{ isset(unserialize($data1->batch_no)[$key]) && unserialize($data1->batch_no)[$key] == 'DCAU0030' ? ' selected' : '' }}>DCAU0030</option>
+                                                                    <option value="BDZH0007"{{ isset(unserialize($data1->batch_no)[$key]) && unserialize($data1->batch_no)[$key] == 'BDZH0007' ? ' selected' : '' }}>BDZH0007</option>
+                                                                    <option value="BDZH0006"{{ isset(unserialize($data1->batch_no)[$key]) && unserialize($data1->batch_no)[$key] == 'BDZH0006' ? ' selected' : '' }}>BDZH0006</option>                                                                    <option value="BDZH0006"{{ isset(unserialize($data1->batch_no)[$key]) && unserialize($data1->batch_no)[$key] == 'BDZH0006' ? ' selected' : '' }}>BDZH0006</option>
+                                                                    <option value="BJJH0004A"{{ isset(unserialize($data1->batch_no)[$key]) && unserialize($data1->batch_no)[$key] == 'BJJH0004A' ? ' selected' : '' }}>BJJH0004A</option>
+                                                                    <option value="DCAU0036"{{ isset(unserialize($data1->batch_no)[$key]) && unserialize($data1->batch_no)[$key] == 'DCAU0036' ? ' selected' : '' }}>DCAU0036</option>
+                                                                </select>                                                          
+                                                                    </td>
+                                                                <td>
                                                                 @php
                                                                     $mfg_date_array = @unserialize($data1->mfg_date);
                                                                     if (!is_array($mfg_date_array)) {
@@ -1094,22 +1103,15 @@
                                                                 <div class="group-input new-date-data-field mb-0">
                                                                    <div class="input-date ">
                                                                     <div class="calenderauditee">
-                                                                        <input type="text" id="mfg_date{{$key}}" readonly placeholder="DD-MMM-YYYY"
-                                                                            value="{{ Helpers::getdateFormat($mfg_date_array[$key] ?? '') }}" />
-                                                                        
-                                                                        <input type="date" id="mfg_date{{$key}}_checkdate"
-                                                                            value="{{ $mfg_date_array[$key] ?? '' }}" name="mfg_date[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                            class="hide-input"
-                                                                            oninput="handleDateInput(this, 'mfg_date{{$key}}'); checkDate('mfg_date{{$key}}_checkdate', 'expiry_date{{$key}}_checkdate')" />
+                                                                        <input type="text" id="mfg_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($mfg_date_array[$key] ?? '') }}" />
+                                                                        <input type="date" id="mfg_date{{$key}}_checkdate" value="{{ $mfg_date_array[$key] ?? '' }}" name="mfg_date[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
+                                                                        oninput="handleDateInput(this, 'mfg_date{{$key}}'); checkDate('mfg_date{{$key}}_checkdate', 'expiry_date{{$key}}_checkdate')" />
                                                                     </div>
                                                                   </div>
                                                                 </div>
                                                                  
                                                             </td>
-                                                            {{-- <td><input type="text" name="expiry_date[]"
-                                                                    value="{{ unserialize($data1->expiry_date)[$key] ? unserialize($data1->expiry_date)[$key] : '' }}">
-                                                            </td> --}}
+                                                           
                                                             <td>
                                                                 @php
                                                                     $expiry_date_array = @unserialize($data1->expiry_date);
@@ -1117,33 +1119,50 @@
                                                                         $expiry_date_array = []; // Fallback to an empty array if unserialization fails
                                                                     }
 
-                                                                    // Set values from unserialized arrays or use defaults if not set
-                                                                    // $mfg_date_value = $mfg_date_array[$key] ?? '';
+                                                                    
                                                                     $expiry_date_value = $expiry_date_array[$key] ?? '';
                                                                 @endphp                                                 
                                                                 <div class="group-input new-date-data-field mb-0">
                                                                     <div class="input-date">
                                                                         <div class="calenderauditee">
-                                                                            <input type="text" id="expiry_date{{$key}}" readonly placeholder="DD-MMM-YYYY"
-                                                                                value="{{ Helpers::getdateFormat($expiry_date_value) }}" />
-                                                                                
-                                                                            <input type="date" id="expiry_date{{$key}}_checkdate" value="{{ $expiry_date_value }}" name="expiry_date[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                                class="hide-input"
-                                                                                oninput="handleDateInput(this, 'expiry_date{{$key}}'); checkDate('mfg_date{{$key}}_checkdate', 'expiry_date{{$key}}_checkdate')" />
+                                                                            <input type="text" id="expiry_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($expiry_date_value) }}" />
+                                                                            <input type="date" id="expiry_date{{$key}}_checkdate" value="{{ $expiry_date_value }}" name="expiry_date[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
+                                                                            oninput="handleDateInput(this, 'expiry_date{{$key}}'); checkDate('mfg_date{{$key}}_checkdate', 'expiry_date{{$key}}_checkdate')" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                  
                                                             </td>
+                                                            <td>
+                                                                <?php
+                                                                $batchdespositionArray = @unserialize($data1->batch_desposition);
+                                                                if ($batchdespositionArray === false) {
+                                                                    $batchdespositionArray = [];
+                                                                }
+                                                                $value = isset($batchdespositionArray[$key]) ? $batchdespositionArray[$key] : '';
+                                                                ?>
+                                                                <input type="text" name="batch_desposition[]" value="<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); ?>">
+                                                            </td>
 
-                                                            <td><input type="text" name="batch_desposition[]"
-                                                                    value="{{ unserialize($data1->batch_desposition)[$key] ? unserialize($data1->batch_desposition)[$key] : '' }}">
+                                                            <td>
+                                                                <?php
+                                                                $remarkArray = @unserialize($data1->remark);
+                                                                if ($remarkArray === false) {
+                                                                    $remarkArray = [];
+                                                                }
+                                                                $value = isset($remarkArray[$key]) ? $remarkArray[$key] : '';
+                                                                ?>
+                                                                <input type="text" name="remark[]" value="<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); ?>">
                                                             </td>
-                                                            <td><input type="text" name="remark[]"
-                                                                    value="{{ unserialize($data1->remark)[$key] ? unserialize($data1->remark)[$key] : '' }}">
-                                                            </td>
-                                                            <td><input type="text" name="batch_status[]"
-                                                                    value="{{ unserialize($data1->batch_status)[$key] ? unserialize($data1->batch_status)[$key] : '' }}">
+
+                                                            <td>
+                                                                
+                                                                    <select id="batch_status" name="batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>
+                                                                        <option value="">-- Select value --</option>
+                                                                        <option value="Hold"{{ isset(unserialize($data1->batch_status)[$key]) && unserialize($data1->batch_status)[$key] == 'Hold' ? ' selected' : '' }}>Hold</option>
+                                                                        <option value="Release"{{ isset(unserialize($data1->batch_status)[$key]) && unserialize($data1->batch_status)[$key] == 'Release' ? ' selected' : '' }}>Release</option>
+                                                                        <option value="quarantine"{{ isset(unserialize($data1->batch_status)[$key]) && unserialize($data1->batch_status)[$key] == 'quarantine' ? ' selected' : '' }}>Quarantine</option>
+                                                                    </select>                                                               
                                                             </td>
                                                              <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                         </tr>

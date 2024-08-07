@@ -298,6 +298,7 @@
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiator Group</label>
                                                     <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} >
+                                                       <option >--select--</option>
                                                         <option value="CQA"
                                                             @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
                                                             Quality Assurance</option>
@@ -1488,7 +1489,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="others">Initial attachment</label>
+                                                <label for="others">Change Clouser attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="attach_list">

@@ -614,7 +614,6 @@ if (!empty($internalAudit->due_date_extension)) {
     $history->save();
 }
 
-2// new added supplieer audit trail code
         if (!empty($internalAudit->date)) {
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $internalAudit->id;

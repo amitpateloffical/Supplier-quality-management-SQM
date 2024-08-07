@@ -1219,7 +1219,7 @@
                     '<option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)">BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)</option>' +
                     '<option value="DORZOLAMIDE PFREE 20MG/ML EDSOLSINGLEDOSECO">DORZOLAMIDE PFREE 20MG/ML EDSOLSINGLEDOSECO</option>' +
                     '</select></td>' +
-                    '<td><select name="product_batch_no[]" id="batch_no">' +
+                    '<td><select name="batch_no[]" id="batch_no">' +
                     '<option value="">select value</option>' +
                     '<option value="DCAU0030">DCAU0030</option>' +
                     '<option value="BDZH0007">BDZH0007</option>' +
@@ -1235,9 +1235,9 @@
                     serialNumber +
                     '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="expiry_date[]" class="hide-input" oninput="handleDateInput(this, `expiry_date' +
                     serialNumber + '`)" /></div></div></div></td>' +
-                    '<td><input type="text" name="product_batch_desposition[]"></td>' +
-                    '<td><input type="text" name="product_remark[]"></td>' +
-                    '<td><select name="product_batch_status[]" id="batch_status">' +
+                    '<td><input type="text" name="batch_desposition[]"></td>' +
+                    '<td><input type="text" name="remark[]"></td>' +
+                    '<td><select name="batch_status[]" id="batch_status">' +
                     '<option value="">-- Select value --</option>' +
                     '<option value="Hold">Hold</option>' +
                     '<option value="Release">Release</option>' +

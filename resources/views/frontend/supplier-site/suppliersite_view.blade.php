@@ -482,7 +482,7 @@
 
             <script>
                 $(document).ready(function() {
-                    <?php if ($data->stage == 6) { ?>
+                    <?php if ($data->stage == 6 || $data->stage == 0 ) { ?>
                     $("#target :input").prop("disabled", true);
                     <?php } ?>
                 });

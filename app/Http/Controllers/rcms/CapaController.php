@@ -206,25 +206,27 @@ class CapaController extends Controller
         if (!empty($request->product_name)) {
             $data1->product_name = serialize($request->product_name);
         }
-        if (!empty($request->product_batch_no)) {
-            $data1->batch_no = serialize($request->product_batch_no);
+        if (!empty($request->batch_no)) {
+            $data1->batch_no = serialize($request->batch_no);
         }
         if (!empty($request->mfg_date)) {
             $data1->mfg_date = serialize($request->mfg_date);
         }
-        if (!empty($request->product_batch_desposition)) {
-            $data1->batch_desposition = serialize($request->product_batch_desposition);
+        if (!empty($request->batch_desposition)) {
+            $data1->batch_desposition = serialize($request->batch_desposition);
         }
         if (!empty($request->expiry_date)) {
             $data1->expiry_date = serialize($request->expiry_date);
         }
-        if (!empty($request->product_remark)) {
-            $data1->remark = serialize($request->product_remark);
+        if (!empty($request->remark)) {
+            $data1->remark = serialize($request->remark);
         }
-        if (!empty($request->product_batch_status)) {
-            $data1->batch_status = serialize($request->product_batch_status);
+        if (!empty($request->batch_status)) {
+            $data1->batch_status = serialize($request->batch_status);
         }
+        
         $data1->save();
+    
 
         $data2 = new CapaGrid();
         $data2->capa_id = $capa->id;
@@ -1122,8 +1124,8 @@ class CapaController extends Controller
             if (!empty($request->product_name)) {
                 $data1->product_name = serialize($request->product_name);
             }
-            if (!empty($request->product_batch_no)) {
-                $data1->batch_no = serialize($request->product_batch_no);
+            if (!empty($request->batch_no)) {
+                $data1->batch_no = serialize($request->batch_no);
             }
             if (!empty($request->mfg_date)) {
                 $data1->mfg_date = serialize($request->mfg_date);
@@ -1131,16 +1133,17 @@ class CapaController extends Controller
             if (!empty($request->expiry_date)) {
                 $data1->expiry_date = serialize($request->expiry_date);
             }
-            if (!empty($request->product_batch_desposition)) {
-                $data1->batch_desposition = serialize($request->product_batch_desposition);
+            if (!empty($request->batch_desposition)) {
+                $data1->batch_desposition = serialize($request->batch_desposition);
             }
 
-            if (!empty($request->product_remark)) {
-                $data1->remark = serialize($request->product_remark);
+            if (!empty($request->remark)) {
+                $data1->remark = serialize($request->remark);
             }
-            if (!empty($request->product_batch_status)) {
-                $data1->batch_status = serialize($request->product_batch_status);
+            if (!empty($request->batch_status)) {
+                $data1->batch_status = serialize($request->batch_status);
             }
+            
           $data1->update();
         }
 
@@ -2874,7 +2877,7 @@ class CapaController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 2.5, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('CAPA-Audit' . $id . '.pdf');
         }
     }

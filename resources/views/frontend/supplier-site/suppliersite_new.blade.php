@@ -235,8 +235,9 @@
                                     </div>
                                     <div class="calenderauditee">
                                         <div class="calenderauditee">
-                                            <input disabled type="text" value="{{ Helpers::getdateFormat( $dueDate ) }}" id="due_date" name="due_date" />
-                                            {{--<input type="date" name="due_date"
+                                            <input disabled type="text" value="{{ Helpers::getdateFormat($dueDate) }}"
+                                                id="due_date" name="due_date" />
+                                            {{-- <input type="date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" /> --}}
 
@@ -311,19 +312,19 @@
                                         @endif
                                     </select>
                                 </div>
-                                {{-- </div> --}}
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Suppliers Products">Suppliers Products</label>
-                                        <div class="relative-container">
-                                            <input class="mic-input" id="supplier_products" type="text"
-                                                name="supplier_products" maxlength="255">
-                                            @component('frontend.forms.language-model', ['name' => 'supplier_products', 'id' => 'supplier_products'])
-                                            @endcomponent
-                                        </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppliers Products">Suppliers Products</label>
+                                    <div class="relative-container">
+                                        <input class="mic-input" id="supplier_products" type="text"
+                                            name="supplier_products" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supplier_products', 'id' => 'supplier_products'])
+                                        @endcomponent
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="col-12">
                                 <div class="group-input">

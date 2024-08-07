@@ -142,9 +142,10 @@
                         <div class="row">
 
                             <div class="col-md-6">
-                                <div class="group-input">
+                                <div class="group-input ">
                                     <label for="Short Description">Request Number</label>
                                     <input id="request_number" type="text" name="request_number" value="{{ $requestNUmber }}" disabled>
+                                   
                                 </div>
                             </div>
 
@@ -227,10 +228,12 @@
                                 </script>
 
                             <div class="col-12">
-                                <div class="group-input">
+                                <div class="group-input relative-container"">
                                     <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255</span>
                                     characters remaining
                                     <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
                                 </div>
                             </div>
                             <script>
@@ -280,16 +283,20 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <div class="group-input">
+                                    <div class="group-input relative-container">
                                         <label for="Initiator Group Code">Name of Manufacturer</label>
                                         <input type="text" name="manufacturerName" id="manufacturerName" placeholder="Name of Manufacturer">
+                                        @component('frontend.forms.language-model')
+                                            @endcomponent
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <div class="group-input">
+                                    <div class="group-input relative-container">
                                         <label for="Initiator Group Code">Name of Starting Material</label>
                                         <input type="text" name="starting_material" id="starting_material" placeholder="Enter Name of Starting Material">
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
                                     </div>
                                 </div>
 
@@ -365,9 +372,11 @@
                                 </div>
 
                                 <div class="col-lg-12">
-                                    <div class="group-input">
+                                    <div class="group-input relative-container">
                                         <label for="Initiator Group Code">Justification for Request</label>
                                         <textarea type="text" name="request_justification" id="request_justification" class="tiny"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
                                     </div>
                                 </div>
 
@@ -398,9 +407,11 @@
                                 </div>
 
                                 <div class="col-lg-12">
-                                    <div class="group-input">
+                                    <div class="group-input  relative-container">
                                         <label for="Initiator Group Code">Remark</label>
                                         <textarea type="text" name="cqa_remark" id="cqa_remark" class="tiny"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
                                     </div>
                                 </div>
 
@@ -439,9 +450,11 @@
                                 </div>
 
                                 <div class="col-lg-12">
-                                    <div class="group-input">
+                                    <div class="group-input relative-container">
                                         <label for="Initiator Group Code">Justification</label>
                                         <textarea type="text" name="justification" id="justification" class="tiny"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
                                     </div>
                                 </div>
 
@@ -494,8 +507,11 @@
                 <td>
                     <input type="date" id="expirydate_{{ $loop->index }}_{{ $type }}" name="certificate_expiry_{{ $type }}[]" class="custom-border expirydate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
                 </td>
-                <td>
+                <td class="relative-container">
                     <textarea name="{{ $type }}_remarks[]" class="custom-border"></textarea>
+                    @component('frontend.forms.language-model')
+                                            @endcomponent
+                    
                 </td>
             </tr>
         </tbody>
@@ -536,9 +552,11 @@
                                 </div>
 
                                 <div class="col-lg-12">
-                                    <div class="group-input">
+                                    <div class="group-input relative-container">
                                         <label for="Initiator Group Code">Review Comment of CQA</label>
                                         <textarea type="text" name="cqa_comment" id="cqa_comment" class="tiny"></textarea>
+                                        @component('frontend.forms.language-model')
+                                            @endcomponent
                                     </div>
                                 </div>
 
@@ -572,16 +590,20 @@
                                 </div>
 
                                 <div class="col-lg-12">
-                                    <div class="group-input">
+                                    <div class="group-input relative-container">
                                         <label for="Initiator Group Code">Justification</label>
                                         <textarea type="text" name="supplierJustification" id="supplierJustification" class="tiny"></textarea>
+                                        @component('frontend.forms.language-model')
+                                            @endcomponent
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
-                                    <div class="group-input">
+                                    <div class="group-input relative-container">
                                         <label for="Initiator Group Code">Review Comment of Corporate CQA</label>
                                         <textarea type="text" name="cqa_corporate_comment" id="cqa_corporate_comment" class="tiny"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
                                     </div>
                                 </div>
 
@@ -631,9 +653,11 @@
                                 </div>
 
                                 <div class="col-lg-12">
-                                    <div class="group-input">
+                                    <div class="group-input relative-container">
                                         <label for="Initiator Group Code">Sample Justification</label>
                                         <textarea type="text" name="sample_order_justification" id="sample_order_justification" class="tiny"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
                                     </div>
                                 </div>
 
@@ -707,8 +731,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
                                                                 <textarea name="tse_bse_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -725,8 +751,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
                                                                 <textarea name="residual_solvent_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -743,8 +771,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
                                                                 <textarea name="gmo_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                            @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -761,8 +791,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
                                                                 <textarea name="melamine_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                            @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -779,8 +811,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
                                                                 <textarea name="gluten_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -797,8 +831,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container" >
                                                                 <textarea name="nitrosamine_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -815,8 +851,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
                                                                 <textarea name="who_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -833,8 +871,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
                                                                 <textarea name="gmp_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -851,8 +891,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
                                                                 <textarea name="iso_certificate_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -869,8 +911,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
                                                                 <textarea name="manufacturing_license_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -887,8 +931,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
                                                                 <textarea name="cep_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -905,8 +951,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
                                                                 <textarea name="msds_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -923,8 +971,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
                                                                 <textarea name="elemental_impurities_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -941,8 +991,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <div style="margin: auto; display: flex; justify-content: center; relative-container">
                                                                 <textarea name="declaration_remark" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                @component('frontend.forms.language-model')
+                                                                @endcomponent
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1048,15 +1100,19 @@
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="group-input">
+                                <div class="group-input relative-container">
                                     <label for="HOD_feedback">HOD Feedback</label>
                                     <textarea class="tiny" type="text" name="HOD_feedback" placeholder="Enter HOD Feedback" id="HOD_feedback"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="group-input">
+                                <div class="group-input relative-container">
                                     <label for="HOD_comment">HOD Comments</label>
                                     <textarea class="tiny" type="text" name="HOD_comment" placeholder="Enter HOD Comment" id="HOD_comment"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -1183,9 +1239,11 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="group-input">
+                                <div class="group-input relative-container">
                                     <label for="Supplier Services">Supplier Services</label>
                                     <textarea class="tiny" name="supplier_serivce" id="supplier_serivce" cols="30" ></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -1316,9 +1374,11 @@
 
 
                             <div class="col-lg-6">
-                                <div class="group-input">
+                                <div class="group-input relative-container">
                                     <label for="Address">Address</label>
                                     <textarea type="text" name="address" id="address" class="tiny"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -1384,34 +1444,44 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="group-input">
+                                <div class="group-input relative-container">
                                     <label for="Quality Management ">Manufacturing Sites </label>
                                     <textarea class="tiny" name="text" name="manufacturing_sited" id="manufacturing_sited"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
                                 </div>
                             </div>  
                             <div class="col-12">
-                                <div class="group-input">
+                                <div class="group-input relative-container">
                                     <label for="Quality Management ">Quality Management </label>
                                     <textarea class="tiny" name="text" id="quality_management" name="quality_management"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="group-input">
+                                <div class="group-input relative-container">
                                     <label for="Business History">Business History</label>
                                     <textarea class="tiny" name="text" id="bussiness_history" name="bussiness_history"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
                                 </div>
                             </div>
                             
                             <div class="col-12">
-                                <div class="group-input">
+                                <div class="group-input relative-container">
                                     <label for="Performance History ">Performance History </label>
                                     <textarea class="tiny" name="text" id="performance_history" name="performance_history"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="group-input">
+                                <div class="group-input relative-container">
                                     <label for="Compliance Risk">Compliance Risk</label>
                                     <textarea class="tiny" name="text" id="compliance_risk" name="compliance_risk"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
                                 </div>
                             </div>
 
@@ -1806,15 +1876,19 @@
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="group-input">
+                                <div class="group-input relative-container">
                                     <label for="QA_reviewer_feedback">QA Reviewer Feedback</label>
                                     <textarea class="tiny" type="text" name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback" id="QA_reviewer_feedback"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="group-input">
+                                <div class="group-input relative-container">
                                     <label for="QA_reviewer_comment">QA Reviewer Comment</label>
                                     <textarea class="tiny" type="text" name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment" id="QA_reviewer_comment"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -2059,9 +2133,11 @@
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="group-input">
+                                <div class="group-input relative-container">
                                     <label for="QA_head_comment">QA Head Comment</label>
                                     <textarea class="tiny" type="text" name="QA_head_comment" placeholder="Enter QA Head Comment" id="QA_head_comment"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
                                 </div>
                             </div>
                             <div class="col-lg-12">

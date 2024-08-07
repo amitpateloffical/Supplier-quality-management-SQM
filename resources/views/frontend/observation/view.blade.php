@@ -393,28 +393,20 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="assign_to1">Assigned To</label>
+                                                <label for="assign_to">Assigned To</label>
                                                 <select name="assign_to"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $value)
                                                         <option {{ $data->assign_to == $value->name ? 'selected' : '' }}
-                                                            value="{{ $value->name }}">{{ $value->name }}</option>
+                                                            value="{{ $value->id }}">{{ $value->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                         <!-- <div class="col-lg-6">
                                                                                                                                                                                                                                                                                                                             <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                <label for="date_due">Date Due</label>
-                                                                                                                                                                                                                                                                                                                                <div class="calenderauditee">
-                                                                                                                                                                                                                                                                                                                                    <input type="text" name="due_date" id="due_date" readonly
-                                                                                                                                                                                                                                                                                                                                        placeholder="DD-MMM-YYYY" />
-                                                                                                                                                                                                                                                                                                                                    <!-- <input type="date"  class="hide-input"
-                                                                                                                                                                                                                                                                                                                                        oninput="handleDateInput(this, 'due_date')" />
-                                                                                                                                                                                                                                                                                                                                <input disabled type="text"  value="{{ Helpers::getdateFormat($data->due_date) }}">
-                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                      </div>
                                                                                                                                                                                                                                                                                                                         </div>  -->
                                         {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -620,9 +612,9 @@
                                                         <div>Add</div>
                                                         <input
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            value="{{ $data->attach_files3 }}" type="file"
-                                                            id="myfile" name="attach_files3[]"
-                                                            oninput="addMultipleFiles(this, 'attach_files3')" multiple>
+                                                            value="{{ $data->attach_files1 }}" type="file"
+                                                            id="myfile" name="attach_files1[]"
+                                                            oninput="addMultipleFiles(this, 'attach_files1')" multiple>
                                                     </div>
                                                 </div>
                                             </div>
@@ -806,7 +798,7 @@
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $value)
                                                         <option {{ $data->assign_to2 == $value->name ? 'selected' : '' }}
-                                                            value="{{ $value->name }}">{{ $value->name }}</option>
+                                                            value="{{ $value->id }}">{{ $value->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

@@ -614,7 +614,7 @@ if (!empty($internalAudit->due_date_extension)) {
     $history->save();
 }
 
-2// new added supplieer audit trail code
+// new added supplieer audit trail code
         if (!empty($internalAudit->date)) {
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $internalAudit->id;
@@ -2679,7 +2679,7 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
 
                         $history = new ExternalAuditTrailSupplier();
                         $history->supplier_id = $id;
-                        $history->activity_type = 'Activity Log';
+                       // $history->activity_type = 'Activity Log';
                         $history->activity_type = 'Submit by,Submit on ';
                         if (is_null($lastDocument->audit_schedule_by) || $lastDocument->audit_schedule_by === '') {
                             $history->previous = "";

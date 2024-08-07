@@ -397,9 +397,8 @@
                                                 <select name="assign_to"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
-                                                    @foreach ($users as $value)
-                                                        <option {{ $data->assign_to == $value->name ? 'selected' : '' }}
-                                                            value="{{ $value->id }}">{{ $value->name }}</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}" {{ $user->id == $data->assign_to ? 'selected' : '' }}>{{ $user->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -796,9 +795,8 @@
                                                 <select name="assign_to2"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
-                                                    @foreach ($users as $value)
-                                                        <option {{ $data->assign_to2 == $value->name ? 'selected' : '' }}
-                                                            value="{{ $value->id }}">{{ $value->name }}</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}" {{ $user->id == $data->assign_to2 ? 'selected' : '' }}>{{ $user->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

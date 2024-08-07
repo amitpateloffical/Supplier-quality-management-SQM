@@ -966,7 +966,7 @@ class DeviationController extends Controller
         if (!empty ($request->Deviation_date)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
-            $history->activity_type = 'Deviation Observed';
+            $history->activity_type = 'Deviation Observed On';
             $history->previous = "Null";
             $history->current = Helpers::getdateFormat($deviation->Deviation_date);
             $history->comment = "Not Applicable";
@@ -979,6 +979,58 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+
+        if (!empty ($request->deviation_time)){
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'Deviation Observed On (Time)';
+            $history->previous = "Null";
+            $history->current = $deviation->deviation_time;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $deviation->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty ($request->Delay_Justification)){
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'Delay Justification';
+            $history->previous = "Null";
+            $history->current = $deviation->Delay_Justification;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $deviation->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty ($request->Facility)){
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'Deviation Observed By';
+            $history->previous = "Null";
+            $history->current = $deviation->Facility;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $deviation->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
         if (is_array($request->Facility) && $request->Facility[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
@@ -2074,6 +2126,7 @@ class DeviationController extends Controller
 
                 $Cft->Other4_attachment = json_encode($files);
             }
+
             if (!empty ($request->Other5_attachment)) {
                 $files = [];
                 if ($request->hasfile('Other5_attachment')) {
@@ -2084,9 +2137,29 @@ class DeviationController extends Controller
                     }
                 }
 
+                if (!empty($files)) {
+                    $Cft->Other5_attachment = json_encode($files);
+                } else {
+                    $Cft->Other5_attachment = null;
+                }
 
                 $Cft->Other5_attachment = json_encode($files);
             }
+
+
+            //if (!empty ($request->Other5_attachment)) {
+            //    $files = [];
+            //    if ($request->hasfile('Other5_attachment')) {
+            //        foreach ($request->file('Other5_attachment') as $file) {
+            //            $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //            $file->move('upload/', $name);
+            //            $files[] = $name;
+            //        }
+            //    }
+
+
+            //    $Cft->Other5_attachment = json_encode($files);
+            //}
 
         $Cft->save();
 
@@ -2129,27 +2202,46 @@ class DeviationController extends Controller
                     }
                 }
 
-                $files = is_array($request->existing_Initial_attachment) ? $request->existing_Initial_attachment : [];
-                if (!empty ($request->Initial_attachment)) {
-                    if ($deviation->Initial_attachment) {
-                        $existingFiles = json_decode($deviation->Initial_attachment, true); // Convert to associative array
-                        if (is_array($existingFiles)) {
-                            $files = $existingFiles;
-                        }
-                        // $files = is_array(json_decode($deviation->Initial_attachment)) ? $deviation->Initial_attachment : [];
-                    }
+                //$files = is_array($request->existing_Initial_attachment) ? $request->existing_Initial_attachment : [];
 
-                    if ($request->hasfile('Initial_attachment')) {
-                        foreach ($request->file('Initial_attachment') as $file) {
-                            $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                }
-                $deviation->Initial_attachment = json_encode($files);
+                //if (!empty ($request->Initial_attachment)) {
+                //    if ($deviation->Initial_attachment) {
+                //        $existingFiles = json_decode($deviation->Initial_attachment, true); // Convert to associative array
+                //        if (is_array($existingFiles)) {
+                //            $files = $existingFiles;
+                //        }
+                //        // $files = is_array(json_decode($deviation->Initial_attachment)) ? $deviation->Initial_attachment : [];
+                //    }
+
+                //    if ($request->hasfile('Initial_attachment')) {
+                //        foreach ($request->file('Initial_attachment') as $file) {
+                //            $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                //            $file->move('upload/', $name);
+                //            $files[] = $name;
+                //        }
+                //    }
+                //}
+                //$deviation->Initial_attachment = json_encode($files);
         }
 
+        if (!empty ($request->Initial_attachment)) {
+            $files = [];
+            if ($request->hasfile('Initial_attachment')) {
+                foreach ($request->file('Initial_attachment') as $file) {
+                    $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            if (!empty($files)) {
+                $deviation->Initial_attachment = json_encode($files);
+            } else {
+                $deviation->Initial_attachment = null;
+            }
+
+            $deviation->Initial_attachment = json_encode($files);
+        }
 
 
         if (!empty ($request->Audit_file)) {
@@ -2171,31 +2263,8 @@ class DeviationController extends Controller
             $deviation->Audit_file = json_encode($files);
         }
 
-
-        $files = is_array($request->existing_initial_file) ? $request->existing_initial_file : [];
-
-        if (!empty($request->initial_file)) {
+        if (!empty ($request->initial_file)) {
             $files = [];
-
-            // Decode existing files if they exist
-            if ($deviation->initial_file) {
-                $existingFiles = json_decode($deviation->initial_file, true); // Convert to associative array
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
-                }
-            }
-
-            // Remove files that were removed in the frontend
-            if ($request->has('removed_files')) {
-                $removedFiles = json_decode($request->removed_files, true);
-                $files = array_diff($files, $removedFiles);
-                // Optionally, delete the files from the server
-                foreach ($removedFiles as $removedFile) {
-                    @unlink('upload/' . $removedFile);
-                }
-            }
-
-            // Process and add new files
             if ($request->hasfile('initial_file')) {
                 foreach ($request->file('initial_file') as $file) {
                     $name = $request->name . 'initial_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -2203,9 +2272,51 @@ class DeviationController extends Controller
                     $files[] = $name;
                 }
             }
+
+            if (!empty($files)) {
+                $deviation->initial_file = json_encode($files);
+            } else {
+                $deviation->initial_file = null;
+            }
+
+            $deviation->initial_file = json_encode($files);
         }
 
-        $deviation->initial_file = json_encode($files);
+
+        //$files = is_array($request->existing_initial_file) ? $request->existing_initial_file : [];
+
+        //if (!empty($request->initial_file)) {
+        //    $files = [];
+
+        //    // Decode existing files if they exist
+        //    if ($deviation->initial_file) {
+        //        $existingFiles = json_decode($deviation->initial_file, true); // Convert to associative array
+        //        if (is_array($existingFiles)) {
+        //            $files = $existingFiles;
+        //        }
+        //    }
+
+        //    // Remove files that were removed in the frontend
+        //    if ($request->has('removed_files')) {
+        //        $removedFiles = json_decode($request->removed_files, true);
+        //        $files = array_diff($files, $removedFiles);
+        //        // Optionally, delete the files from the server
+        //        foreach ($removedFiles as $removedFile) {
+        //            @unlink('upload/' . $removedFile);
+        //        }
+        //    }
+
+        //    // Process and add new files
+        //    if ($request->hasfile('initial_file')) {
+        //        foreach ($request->file('initial_file') as $file) {
+        //            $name = $request->name . 'initial_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //            $file->move('upload/', $name);
+        //            $files[] = $name;
+        //        }
+        //    }
+        //}
+
+        //$deviation->initial_file = json_encode($files);
 
         if (!empty ($request->QA_attachment)) {
             $files = [];
@@ -2252,16 +2363,29 @@ class DeviationController extends Controller
 
             $deviation->Capa_attachment = json_encode($files);
         }
-        $files = is_array($request->existing_QA_attachments) ? $request->existing_QA_attachments : [];
-        if (!empty ($request->QA_attachments)) {
-            if ($deviation->QA_attachments) {
-                $existingFiles = json_decode($deviation->QA_attachments, true); // Convert to associative array
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
-                }
-                // $files = is_array(json_decode($deviation->QA_attachments)) ? $deviation->QA_attachments : [];
-            }
 
+        //$files = is_array($request->existing_QA_attachments) ? $request->existing_QA_attachments : [];
+        //if (!empty ($request->QA_attachments)) {
+        //    if ($deviation->QA_attachments) {
+        //        $existingFiles = json_decode($deviation->QA_attachments, true); // Convert to associative array
+        //        if (is_array($existingFiles)) {
+        //            $files = $existingFiles;
+        //        }
+        //        // $files = is_array(json_decode($deviation->QA_attachments)) ? $deviation->QA_attachments : [];
+        //    }
+
+        //    if ($request->hasfile('QA_attachments')) {
+        //        foreach ($request->file('QA_attachments') as $file) {
+        //            $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //            $file->move('upload/', $name);
+        //            $files[] = $name;
+        //        }
+        //    }
+        //}
+        //$deviation->QA_attachments = json_encode($files);
+
+        if (!empty ($request->QA_attachments)) {
+            $files = [];
             if ($request->hasfile('QA_attachments')) {
                 foreach ($request->file('QA_attachments') as $file) {
                     $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -2269,9 +2393,15 @@ class DeviationController extends Controller
                     $files[] = $name;
                 }
             }
-        }
-        $deviation->QA_attachments = json_encode($files);
 
+            if (!empty($files)) {
+                $deviation->QA_attachments = json_encode($files);
+            } else {
+                $deviation->QA_attachments = null;
+            }
+
+            $deviation->QA_attachments = json_encode($files);
+        }
 
             if($deviation->stage >= 5){
 
@@ -2434,6 +2564,25 @@ class DeviationController extends Controller
             $history->save();
         }
 
+        //if($deviation->stage == 3){
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'Record Number';
+        //    $history->previous = "Null";
+        //    $history->current = Helpers::getDivisionName($deviation->division_id) . '/RV/RP/' . Helpers::year($deviation->created_at) . '/' . str_pad($deviation->record, 4, '0', STR_PAD_LEFT);
+        //    $history->comment = "Not Applicable";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    //$history->origin_state = $record->status;
+        //    $history->change_to =   "QA Initial Review";
+        //    $history->change_from = 'HOD Review';
+        //    $history->action_name = 'Create';
+        //    $history->save();
+        //}
+
+
+
         if ($lastDeviation->hod_final_attachments != $deviation->hod_final_attachments || !empty ($request->comment)) {
             // return 'history';
             $history = new DeviationAuditTrail;
@@ -2546,7 +2695,6 @@ class DeviationController extends Controller
             $history->save();
         }
 
-
         if ($lastDeviation->short_description != $deviation->short_description || !empty ($request->comment)) {
             // return 'history';
             $history = new DeviationAuditTrail;
@@ -2595,7 +2743,7 @@ class DeviationController extends Controller
             // return 'history';
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Deviation Observed';
+            $history->activity_type = 'Deviation Observed On';
             $history->previous = $lastDeviation->Deviation_date;
             $history->current = Helpers::getdateFormat($deviation->Deviation_date);
             $history->comment = $request->comment;
@@ -2606,6 +2754,72 @@ class DeviationController extends Controller
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Deviation_date) || $lastDeviation->Deviation_date === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+        if ($lastDeviation->deviation_time != $deviation->deviation_time || !empty ($request->comment)) {
+            // return 'history';
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Deviation Observed On (Time)';
+            $history->previous = $lastDeviation->deviation_time;
+            $history->current = $deviation->deviation_time;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            if (is_null($lastDeviation->deviation_time) || $lastDeviation->deviation_time === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+        if ($lastDeviation->Delay_Justification != $deviation->Delay_Justification || !empty ($request->comment)) {
+            // return 'history';
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Delay Justification';
+            $history->previous = $lastDeviation->Delay_Justification;
+            $history->current = $deviation->Delay_Justification;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            if (is_null($lastDeviation->Delay_Justification) || $lastDeviation->Delay_Justification === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+        if ($lastDeviation->Facility != $deviation->Facility || !empty ($request->comment)) {
+            // return 'history';
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Deviation Observed By';
+            $history->previous = $lastDeviation->Facility;
+            $history->current = $deviation->Facility;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            if (is_null($lastDeviation->Facility) || $lastDeviation->Facility === '') {
                 $history->action_name = 'New';
             } else {
                 $history->action_name = 'Update';
@@ -2811,27 +3025,58 @@ class DeviationController extends Controller
             $history->save();
         }
 
-        if ($lastDeviation->initial_file != $deviation->initial_file || !empty($request->comment)) {
-            // return 'history';
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Initial Attachments';
-            $history->previous = $lastDeviation->initial_file;
-            $history->current = $deviation->initial_file;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-            if (is_null($lastDeviation->initial_file) || $lastDeviation->initial_file === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->save();
-        }
+        $previousIniAttachments = $lastDeviation->initial_file;
+        $IniAttachments = $previousIniAttachments == $deviation->initial_file;
+
+        if ($IniAttachments != true) {
+
+            $existingHistory = DeviationAuditTrail::where('deviation_id', $id)
+            ->where('activity_type', 'Initial Attachments')
+            ->exists();
+
+                    $history = new DeviationAuditTrail;
+                    $history->deviation_id = $id;
+                    $history->activity_type = 'Initial Attachments';
+                    $history->previous = $previousIniAttachments;
+                    $history->current = $deviation->initial_file;
+                    $history->comment = "Not Applicable";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDeviation->status;
+                    $history->change_to =   "Not Applicable";
+                    $history->change_from = $lastDeviation->status;
+                    if ($existingHistory) {
+                        $history->action_name = "Update";
+                    } else {
+                        $history->action_name = "New";
+                    }
+                    $history->save();
+                }
+
+
+
+        //if ($lastDeviation->initial_file != $deviation->initial_file || !empty($request->comment)) {
+        //    // return 'history';
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'Initial Attachments';
+        //    $history->previous = $lastDeviation->initial_file;
+        //    $history->current = $deviation->initial_file;
+        //    $history->comment = $request->comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDeviation->status;
+        //    $history->change_to =   "Not Applicable";
+        //    $history->change_from = $lastDeviation->status;
+        //    if (is_null($lastDeviation->initial_file) || $lastDeviation->initial_file === '') {
+        //        $history->action_name = 'New';
+        //    } else {
+        //        $history->action_name = 'Update';
+        //    }
+        //    $history->save();
+        //}
 
         if ($lastDeviation->HOD_Remarks != $deviation->HOD_Remarks || !empty ($request->comment)) {
             // return 'history';
@@ -2908,28 +3153,56 @@ class DeviationController extends Controller
                         $history->save();
                     }
 
+                    $previousCftAttachments = $lastDeviation->Other5_attachment;
+                    $areIniAttachments = $previousCftAttachments == $deviation->Other5_attachment;
 
-        if ($lastDeviation->Other5_attachment != $deviation->Other5_attachment || !empty ($request->comment)) {
-            // return 'history';
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'CFT Attachments';
-            $history->previous = $lastDeviation->Other5_attachment;
-            $history->current = $deviation->Other5_attachment;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-            if (is_null($lastDeviation->Other5_attachment) || $lastDeviation->Other5_attachment === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->save();
-        }
+                    if ($areIniAttachments != true) {
+
+                        $existingHistory = DeviationAuditTrail::where('deviation_id', $id)
+                        ->where('activity_type', 'HOD Attachments')
+                        ->exists();
+
+                                $history = new DeviationAuditTrail;
+                                $history->deviation_id = $id;
+                                $history->activity_type = 'CFT Attachments';
+                                $history->previous = $previousCftAttachments;
+                                $history->current = $deviation->Other5_attachment;
+                                $history->comment = "Not Applicable";
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = $lastDeviation->status;
+                                $history->change_to =   "Not Applicable";
+                                $history->change_from = $lastDeviation->status;
+                                if ($existingHistory) {
+                                    $history->action_name = "Update";
+                                } else {
+                                    $history->action_name = "New";
+                                }
+                                $history->save();
+                            }
+
+        //if ($lastDeviation->Other5_attachment != $deviation->Other5_attachment || !empty ($request->comment)) {
+        //    // return 'history';
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'CFT Attachments';
+        //    $history->previous = $lastDeviation->Other5_attachment;
+        //    $history->current = $deviation->Other5_attachment;
+        //    $history->comment = $request->comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDeviation->status;
+        //    $history->change_to =   "Not Applicable";
+        //    $history->change_from = $lastDeviation->status;
+        //    if (is_null($lastDeviation->Other5_attachment) || $lastDeviation->Other5_attachment === '') {
+        //        $history->action_name = 'New';
+        //    } else {
+        //        $history->action_name = 'Update';
+        //    }
+        //    $history->save();
+        //}
 
 
         if ($lastDeviation->Deviation_category != $deviation->Deviation_category || !empty ($request->comment)) {
@@ -3019,6 +3292,51 @@ class DeviationController extends Controller
             }
             $history->save();
         }
+
+        if ($lastDeviation->short_description_required != $deviation->short_description_required || !empty ($request->comment)) {
+            // return 'history';
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Repeat Deviation?';
+            $history->previous = $lastDeviation->short_description_required;
+            $history->current = $deviation->short_description_required;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            if (is_null($lastDeviation->short_description_required) || $lastDeviation->short_description_required === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
+        if ($lastDeviation->nature_of_repeat != $deviation->nature_of_repeat || !empty ($request->comment)) {
+            // return 'history';
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Repeat Nature';
+            $history->previous = $lastDeviation->nature_of_repeat;
+            $history->current = $deviation->nature_of_repeat;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            if (is_null($lastDeviation->nature_of_repeat) || $lastDeviation->nature_of_repeat === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
 
         if ($lastDeviation->Customer_notification != $deviation->Customer_notification || !empty ($request->comment)) {
             // return 'history';
@@ -3630,6 +3948,30 @@ class DeviationController extends Controller
 
 
                 $deviation->update();
+
+
+                if ($lastDocument->record_number != $deviation->record_number || !empty ($request->comment)) {
+                    // return 'history';
+                    $history = new DeviationAuditTrail;
+                    $history->deviation_id = $id;
+                    $history->activity_type = 'Record Number';
+                     $history->previous = 'Null';
+                    $history->current = Helpers::getDivisionName($deviation->division_id) . '/DEV/' . Helpers::year($deviation->created_at) . '/' . str_pad($deviation->record, 4, '0', STR_PAD_LEFT);
+                    $history->comment = $deviation->submit_comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Not Applicable";
+                    $history->change_from = $lastDocument->status;
+                    if (is_null($lastDocument->record_number) || $lastDocument->record_number === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                }
+
                 toastr()->success('Document Sent');
                 return back();
             }

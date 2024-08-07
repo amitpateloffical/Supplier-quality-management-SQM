@@ -1317,15 +1317,15 @@
                                     </div>
 
 
-    <div class="col-lg-6 new-time-data-field">
-    <div class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
-        <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
-        <div class="relative-container">
-                <textarea id="docname" type="text" name="Delay_Justification" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Delay_Justification }}</textarea>
+                                <div class="col-lg-6 new-time-data-field">
+                                <div class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
+                                    <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
+                                    <div class="relative-container">
+                                            <textarea id="docname" type="text" name="Delay_Justification" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Delay_Justification }}</textarea>
 
-                @component('frontend.forms.language-model')
-                @endcomponent
-        </div>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                    </div>
 
             {{--
            <div style="position:relative;">
@@ -1335,11 +1335,11 @@
                 </button>
            </div>
             --}}
-    </div>
-    @error('Delay_Justification')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-</div>
+                                    </div>
+                                    @error('Delay_Justification')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
 
 
@@ -1360,7 +1360,7 @@
 
                                             <label for="If Other">Deviation Observed By<span class="text-danger">*</span></label>
                                             <div class="relative-container">
-                                                    <input id="docname" type="text" name="Facility" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} value="{{ $data->Delay_Justification }}" placeholder="Select Facility Name">
+                                                    <input id="docname" type="text" name="Facility" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} value="{{ $data->Facility }}" placeholder="Select Facility Name">
                                                     @component('frontend.forms.language-model')
                                                     @endcomponent
                                             </div>
@@ -10553,7 +10553,7 @@
                 </div>
 
                 <div class="button-block">
-                    <button style=" justify-content: center; width: 4rem; " type="submit"{{ $data->stage == 0 ||  $data->stage == 11 ? 'disabled' : '' }}
+                    <button style=" justify-content: center; width: 4rem;" type="submit"{{ $data->stage == 0 ||  $data->stage == 11 ? 'disabled' : '' }}
                         id="ChangesaveButton05" class="saveAuditFormBtn d-flex" style="align-items: center;">
                         <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
                             role="status">
@@ -10562,13 +10562,13 @@
                         Save
                     </button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                    <button style=" justify-content: center; width: 4rem; " type="button" class="nextButton" onclick="nextStep()">Next</button>
+                    <button style=" justify-content: center; width: 4rem; " type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                            Exit </a> </button>
                     {{-- <a href="/rcms/qms-dashboard">
                                         <button type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} class="backButton">Back</button>
                                     </a> --}}
-                    <button style=" justify-content: center; width: 4rem; " type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                        class="nextButton" onclick="nextStep()">Next</button>
-                    <button style=" justify-content: center; width: 4rem; " type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                            Exit </a> </button>
+
 
                             {{-- @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
                             <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
@@ -10585,9 +10585,9 @@
             </div>
         </div>
 
-        {{-- Pending Initiator Update --}}
-        <div id="CCForm123" class="inner-block cctabcontent">
-                            <div class="inner-block-content">
+            {{-- Pending Initiator Update --}}
+            <div id="CCForm123" class="inner-block cctabcontent">
+                                <div class="inner-block-content">
                                 <div class="sub-head">
                         Initiator Update
                     </div>

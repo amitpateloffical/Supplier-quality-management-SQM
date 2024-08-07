@@ -454,24 +454,24 @@
         <div style="float: inline-end; margin: 10px;">
             <style>
                 .pagination>.active>span {
-                    background-color: #E8A936 !important;
-                    border-color: #E8A936 !important;
+                    background-color: #0e7676cc !important;
+                    border-color: #0e7676cc !important;
                     color: #fff !important;
                 }
 
                 .pagination>.active>span:hover {
-                    background-color: #E8A936 !important;
-                    border-color: #E8A936 !important;
+                    background-color: #0e7676cc !important;
+                    border-color: #0e7676cc !important;
                 }
 
                 .pagination>li>a,
                 .pagination>li>span {
-                    color: #E8A936 !important;
+                    color: #0e7676cc !important;
                 }
 
                 .pagination>li>a:hover {
-                    background-color: #E8A936 !important;
-                    border-color: #E8A936 !important;
+                    background-color: #0e7676cc !important;
+                    border-color: #0e7676cc !important;
                     color: #fff !important;
                 }
             </style>

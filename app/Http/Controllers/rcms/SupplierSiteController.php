@@ -1934,17 +1934,13 @@ class SupplierSiteController extends Controller
     }
 
     public function update(Request $request, $id)
-    { 
-        //dd(request->all());      
+    {      
         $lastDocument = SupplierSite::find($id);
         $supplierSite = SupplierSite::find($id);
         
-
         $supplierSite->date_opened = $request->date_opened;
         $supplierSite->short_description = $request->short_description;
         $supplierSite->assign_to = $request->assign_to;
-        // dd($request->due_date);
-        // $supplierSite->due_date = $request->due_date;
         $supplierSite->supplier_person = $request->supplier_person;        
         $supplierSite->supplier_contact_person = $request->supplier_contact_person;
         $supplierSite->supplier_products = $request->supplier_products;
@@ -2273,7 +2269,7 @@ class SupplierSiteController extends Controller
             $history->save();
         }
 
-        if($lastDocument->logo_attachment != $request->logo_attachment){
+        if($lastDocument->logo_attachment != $supplierSite->logo_attachment){
                $history = new SupplierSiteAuditTrail();
                $history->supplier_site_id = $lastDocument->id;
                $history->activity_type = 'Logo';
@@ -2496,7 +2492,7 @@ class SupplierSiteController extends Controller
             $history->save();
         }
         
-        if($lastDocument->supplier_attachment != $request->supplier_attachment){
+        if($lastDocument->supplier_attachment != $supplierSite->supplier_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'File Attachment';
@@ -2517,7 +2513,7 @@ class SupplierSiteController extends Controller
             $history->save();
         }
         
-        if($lastDocument->gi_additional_attachment != $request->gi_additional_attachment){    
+        if($lastDocument->gi_additional_attachment != $supplierSite->gi_additional_attachment){    
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Additional Attachment';
@@ -2620,7 +2616,7 @@ class SupplierSiteController extends Controller
             $history->save();
         }
 
-        if($lastDocument->HOD_attachment != $request->HOD_attachment){
+        if($lastDocument->HOD_attachment != $supplierSite->HOD_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'HOD Attachments';
@@ -2641,7 +2637,7 @@ class SupplierSiteController extends Controller
             $history->save();
         }
         
-        if($lastDocument->hod_additional_attachment != $request->hod_additional_attachment){
+        if($lastDocument->hod_additional_attachment != $supplierSite->hod_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'HOD Additional Attachments';
@@ -2983,7 +2979,7 @@ class SupplierSiteController extends Controller
             $history->save();
         }
 
-         if($lastDocument->iso_certificate_attachment != $request->iso_certificate_attachment){
+         if($lastDocument->iso_certificate_attachment != $supplierSite->iso_certificate_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Certificate Attachment';
@@ -3209,7 +3205,7 @@ class SupplierSiteController extends Controller
             $history->save();
         }
         
-        if($lastDocument->supplier_detail_additional_attachment != $request->supplier_detail_additional_attachment){
+        if($lastDocument->supplier_detail_additional_attachment != $supplierSite->supplier_detail_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Supplier Detail Additional Attachment';
@@ -3633,7 +3629,7 @@ class SupplierSiteController extends Controller
             $history->save();
         }
         
-        if($lastDocument->score_card_additional_attachment != $request->score_card_additional_attachment){
+        if($lastDocument->score_card_additional_attachment != $supplierSite->score_card_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Score Card Additional Attachment';
@@ -3694,7 +3690,7 @@ class SupplierSiteController extends Controller
             $history->save();
         }
         
-        if($lastDocument->QA_reviewer_attachment != $request->QA_reviewer_attachment){
+        if($lastDocument->QA_reviewer_attachment != $supplierSite->QA_reviewer_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'QA Reviewer Attachment';
@@ -3715,7 +3711,7 @@ class SupplierSiteController extends Controller
             $history->save();
         }
         
-        if($lastDocument->qa_reviewer_additional_attachment != $request->qa_reviewer_additional_attachment){
+        if($lastDocument->qa_reviewer_additional_attachment != $supplierSite->qa_reviewer_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'QA Reviewer Additional Attachment';
@@ -3977,7 +3973,7 @@ class SupplierSiteController extends Controller
         }
 
         
-        if($lastDocument->risk_assessment_additional_attachment != $request->risk_assessment_additional_attachment){
+        if($lastDocument->risk_assessment_additional_attachment != $supplierSite->risk_assessment_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Risk Additional Attachment';
@@ -4019,7 +4015,7 @@ class SupplierSiteController extends Controller
         }
 
         
-        if($lastDocument->QA_head_attachment != $request->QA_head_attachment){
+        if($lastDocument->QA_head_attachment != $supplierSite->QA_head_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'QA Head Attachment';
@@ -4041,7 +4037,7 @@ class SupplierSiteController extends Controller
         }
 
         
-        if($lastDocument->qa_head_additional_attachment != $request->qa_head_additional_attachment){
+        if($lastDocument->qa_head_additional_attachment != $supplierSite->qa_head_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'QA Head Additional Attachment';

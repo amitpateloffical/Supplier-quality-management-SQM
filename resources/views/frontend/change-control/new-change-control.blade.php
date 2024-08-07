@@ -1197,7 +1197,7 @@
                             </div>
                         </div>
                         <div class="group-input">
-                            <label for="attach-list">List Of Attachments</label>
+                            <label for="attach-list">Change clouser Attachments</label>
                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
                             </div>
                             <div class="file-attachment-field">

@@ -18,6 +18,10 @@
         min-height: 100vh;
     }
 
+    .imageContainer p img{
+                    width: 600px !important;
+                    height: 300px;
+                }
     .w-10 {
         width: 10%;
     }
@@ -230,27 +234,27 @@
                                 <div><strong>Changed To :</strong>{{ $datas->change_to }}</div>
                             </td>
                             <td>
-                                <div>
+                                <div class="imageContainer">
                                     <strong> Data Field Name :</strong><a
                                         href="#">{{ $datas->activity_type ? $datas->activity_type : 'Not Applicable' }}</a>
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if ($datas->activity_type == 'Activity Log')
                                         <strong>Change From
-                                            :</strong>{{ $datas->change_from ? $datas->change_from : 'Not Applicable' }}
+                                            :</strong>{!! $datas->change_from ? $datas->change_from : 'Not Applicable' !!}
                                     @else
                                         <strong>Change From
-                                            :</strong>{{ $datas->previous ? $datas->previous : 'Not Applicable' }}
+                                            :</strong>{!! $datas->previous ? $datas->previous : 'Not Applicable' !!}
                                     @endif
                                 </div>
                                 <br>
-                                <div>
+                                <div class="imageContainer">
                                     @if ($datas->activity_type == 'Activity Log')
                                         <strong>Change To
-                                            :</strong>{{ $datas->change_to ? $datas->change_to : 'Not Applicable' }}
+                                            :</strong>{!! $datas->change_to ? $datas->change_to : 'Not Applicable' !!}
                                     @else
                                         <strong>Change To
-                                            :</strong>{{ $datas->current ? $datas->current : 'Not Applicable' }}
+                                            :</strong>{!! $datas->current ? $datas->current : 'Not Applicable' !!}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">

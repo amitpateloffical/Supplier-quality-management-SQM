@@ -135,7 +135,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('cep_attachment')) {
                 foreach ($request->file('cep_attachment') as $file) {
-                    $name = "Supplier" . '-cep_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'cep' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -442,11 +442,26 @@ class SupplierController extends Controller
             // $history->change_to = "Opened";
             // $history->action_name = "Create";
             // $history->save(); // Save the new instance
-        
+
 
         $history = new SupplierAuditTrail;
         $history->supplier_id = $supplier->id;
-        $history->activity_type = 'Site/Location';
+        $history->activity_type = 'Request Number';
+        $history->previous = "Null";
+        $history->current = 'RV/RP/' . Helpers::year($supplier->created_at) . '/' . str_pad($supplier->record, 4, '0', STR_PAD_LEFT);
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $record->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save(); 
+
+        $history = new SupplierAuditTrail;
+        $history->supplier_id = $supplier->id;
+        $history->activity_type = 'Division';
         $history->previous = "Null";
         $history->current = Helpers::getDivisionName($request->division_id);
         $history->comment = "Not Applicable";
@@ -476,9 +491,9 @@ class SupplierController extends Controller
 
         $history = new SupplierAuditTrail;
         $history->supplier_id = $supplier->id;
-        $history->activity_type = 'Short Description';
+        $history->activity_type = 'Initiation Date';
         $history->previous = "Null";
-        $history->current = $request->short_description;
+        $history->current = Helpers::getdateFormat($supplier->intiation_date);
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -489,26 +504,9 @@ class SupplierController extends Controller
         $history->action_name = 'Create';
         $history->save();
 
-
         $history = new SupplierAuditTrail;
         $history->supplier_id = $supplier->id;
-        $history->activity_type = 'Request Number';
-        $history->previous = "Null";
-        $history->current = Helpers::getDivisionName($supplier->division_id) . '/RV/RP/' . Helpers::year($supplier->created_at) . '/' . str_pad($supplier->record, 4, '0', STR_PAD_LEFT);
-        $history->comment = "Not Applicable";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $record->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiation";
-        $history->action_name = 'Create';
-        $history->save();
-
-
-        $history = new SupplierAuditTrail;
-        $history->supplier_id = $supplier->id;
-        $history->activity_type = 'Due Date';
+        $history->activity_type = 'Date Due';
         $history->previous = "Null";
         $history->current = $supplier->due_date;
         $history->comment = "Not Applicable";
@@ -523,9 +521,9 @@ class SupplierController extends Controller
 
         $history = new SupplierAuditTrail;
         $history->supplier_id = $supplier->id;
-        $history->activity_type = 'Initiation Date';
+        $history->activity_type = 'Short Description';
         $history->previous = "Null";
-        $history->current = Helpers::getdateFormat($supplier->intiation_date);
+        $history->current = $request->short_description;
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -2431,7 +2429,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('cep_attachment')) {
                 foreach ($request->file('cep_attachment') as $file) {
-                    $name = "Supplier" . '-cep_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'cep' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2443,7 +2441,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('coa_attachment')) {
                 foreach ($request->file('coa_attachment') as $file) {
-                    $name = "Supplier" . '-coa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'coa' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2459,7 +2457,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('HOD_attachment')) {
                 foreach ($request->file('HOD_attachment') as $file) {
-                    $name = "Supplier" . '-HOD_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'HOD' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2532,7 +2530,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('QA_reviewer_attachment')) {
                 foreach ($request->file('QA_reviewer_attachment') as $file) {
-                    $name = "Supplier" . '-QA_reviewer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'QA_reviewer' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2565,7 +2563,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('QA_head_attachment')) {
                 foreach ($request->file('QA_head_attachment') as $file) {
-                    $name = "Supplier" . '-QA_head_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'QA_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2578,7 +2576,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('iso_certificate_attachment')) {
                 foreach ($request->file('iso_certificate_attachment') as $file) {
-                    $name = "Supplier" . '-iso_certificate_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'iso' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2590,7 +2588,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('gi_additional_attachment')) {
                 foreach ($request->file('gi_additional_attachment') as $file) {
-                    $name = "Supplier" . '-gi_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2602,7 +2600,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('hod_additional_attachment')) {
                 foreach ($request->file('hod_additional_attachment') as $file) {
-                    $name = "Supplier" . '-hod_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'hod' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2614,7 +2612,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('supplier_detail_additional_attachment')) {
                 foreach ($request->file('supplier_detail_additional_attachment') as $file) {
-                    $name = "Supplier" . '-supplier_detail_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'supplier_D' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2626,7 +2624,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('score_card_additional_attachment')) {
                 foreach ($request->file('score_card_additional_attachment') as $file) {
-                    $name = "Supplier" . '-score_card_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'score_card' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2638,7 +2636,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('qa_reviewer_additional_attachment')) {
                 foreach ($request->file('qa_reviewer_additional_attachment') as $file) {
-                    $name = "Supplier" . '-qa_reviewer_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'qard' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2650,7 +2648,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('risk_assessment_additional_attachment')) {
                 foreach ($request->file('risk_assessment_additional_attachment') as $file) {
-                    $name = "Supplier" . '-risk_assessment_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'r_a_add' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2662,7 +2660,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('qa_head_additional_attachment')) {
                 foreach ($request->file('qa_head_additional_attachment') as $file) {
-                    $name = "Supplier" . '-qa_head_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'qa_h_add' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2778,19 +2776,21 @@ class SupplierController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if($lastDocument->initiation_group != $request->initiation_group){
+        
+        
+        if($lastDocument->initiation_group != $supplier->initiation_group){
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
-            ->where('activity_type', 'Initiator Group')
+            ->where('activity_type', 'Initiation Department')
             ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Initiator Group';
+            $history->activity_type = 'Initiation Department';
             if($lastDocument->initiation_group == null){
                 $history->previous = "NULL";
             } else{
-                $history->previous =  Helpers::getFullDepartmentName($lastDocument->initiation_group);
+                $history->previous =  $lastDocument->initiation_group;
             }
-            $history->current = Helpers::getFullDepartmentName($request->initiation_group);
+            $history->current = Helpers::getFullDepartmentName($request->initiator_group_code);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2803,17 +2803,18 @@ class SupplierController extends Controller
         }
         if($lastDocument->initiator_group_code != $request->initiator_group_code){
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
-            ->where('activity_type', 'Initiator Group Code')
+            ->where('activity_type', 'Initiator Department Code')
             ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Initiator Group Code';
+            $history->activity_type = 'Initiator Department Code';
             $history->previous = $lastDocument->initiator_group_code;
             if($lastDocument->initiator_group_code == null){
                 $history->previous = "NULL";
             } else{
                 $history->previous = $lastDocument->initiator_group_code;
             }
+            $history->current = $request->initiator_group_code;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2940,22 +2941,37 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        // if($lastDocument->cep_attachment != $request->cep_attachment){
-        //     $history = new SupplierAuditTrail;
-        //     $history->supplier_id = $lastDocument->id;
-        //     $history->activity_type = 'CEP Attachment';
-        //     $history->previous = $lastDocument->cep_attachment;
-        //     $history->current = $request->cep_attachment;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-        //     $history->save();
-        // }
+        $previousAttachments_rf = $lastDocument->request_for;
+        $areIniAttachmentsSame = $previousAttachments_rf == $supplier->request_for;
+
+        if ($areIniAttachmentsSame != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Request For')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'Request For';
+            if($lastDocument->request_for == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->request_for;
+            }
+            // $history->previous = $previousAttachments;
+            $history->current = $supplier->request_for;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
 
         if($lastDocument->attach_batch != $request->attach_batch){
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
@@ -3509,7 +3525,7 @@ class SupplierController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if($lastDocument->sample_stand_approved != $request->supply_chain_availability){
+        if($lastDocument->supply_chain_availability != $supplier->supply_chain_availability){
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
             ->where('activity_type', 'Availability of Supply Chain?')
             ->exists();
@@ -4076,9 +4092,9 @@ class SupplierController extends Controller
             if($lastDocument->iso_certified_date == null){
                 $history->previous = "NULL";
             } else{
-                $history->previous = $lastDocument->iso_certified_date;
+                $history->previous = Helpers::getdateFormat($lastDocument->iso_certified_date);
             }
-            $history->current = $request->iso_certified_date;
+            $history->current = Helpers::getdateFormat($request->iso_certified_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4413,6 +4429,31 @@ class SupplierController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+        // dd($supplier->lead_time_days);
+        if($lastDocument->lead_time_days != $supplier->lead_time_days){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Lead Time Days')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Lead Time Days';
+            if($supplier->lead_time_days == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $supplier->lead_time_days;
+            }
+            $history->current = $supplier->lead_time_days;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+
         if($lastDocument->lead_time_days_weight != $request->lead_time_days_weight){
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
             ->where('activity_type', 'Lead Time Days Weight')
@@ -5107,17 +5148,59 @@ class SupplierController extends Controller
 
         //=======================================UPDATE ATTACHMENTS==========================================
 
-        $previousAttachments = $lastDocument->cep_attachment;
-        $areIniAttachmentsSame = $previousAttachments == $supplier->cep_attachment;
 
-        if ($areIniAttachmentsSame != true) {
+        
+        $previousAttachments_cp = $lastDocument->coa_attachment;
+        $areIniAttachmentsSame_cp = $previousAttachments_cp == $supplier->coa_attachment;
+        // dd($previousAttachments);
+
+        if ($areIniAttachmentsSame_cp != true) {
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
             ->where('activity_type', 'COAs Attachment')
             ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = (int)$id;
             $history->activity_type = 'COAs Attachment';
-            $history->previous = $previousAttachments;
+            if($lastDocument->coa_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->coa_attachment;
+            }
+            // $history->previous = $previousAttachments;
+            $history->current = $supplier->coa_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+
+        $previousAttachments = $lastDocument->cep_attachment;
+        $areIniAttachmentsSame = $previousAttachments == $supplier->cep_attachment;
+        // dd($previousAttachments);
+
+        if ($areIniAttachmentsSame != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'CEP Attachment')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'CEP Attachment';
+            if($lastDocument->cep_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->cep_attachment;
+            }
+            // $history->previous = $previousAttachments;
             $history->current = $supplier->cep_attachment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -5145,7 +5228,12 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = (int)$id;
             $history->activity_type = 'HOD Attachments';
-            $history->previous = $previousAttachments1;
+            if($lastDocument->HOD_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->HOD_attachment;
+            }
+            // $history->previous = $previousAttachments1;
             $history->current = $supplier->HOD_attachment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -5168,12 +5256,17 @@ class SupplierController extends Controller
 
         if ($areIniAttachmentsSame2 != true) {
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
-            ->where('activity_type', 'Additional Attachment')
+            ->where('activity_type', 'HOD Additional Attachment')
             ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = (int)$id;
-            $history->activity_type = 'Additional Attachment';
-            $history->previous = $previousAttachments2;
+            $history->activity_type = 'HOD Additional Attachment';
+            if($lastDocument->hod_additional_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->hod_additional_attachment;
+            }
+            // $history->previous = $previousAttachments2;
             $history->current = $supplier->hod_additional_attachment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -5200,7 +5293,12 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = (int)$id;
             $history->activity_type = 'ISO Ceritificate Attachment';
-            $history->previous = $previousAttachments3;
+            if($lastDocument->iso_certificate_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->iso_certificate_attachment;
+            }
+            // $history->previous = $previousAttachments3;
             $history->current = $supplier->iso_certificate_attachment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -5223,12 +5321,17 @@ class SupplierController extends Controller
 
         if ($areIniAttachmentsSame4 != true) {
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
-            ->where('activity_type', 'Additional Attachment')
+            ->where('activity_type', 'Supplier Additional Attachment')
             ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = (int)$id;
-            $history->activity_type = 'Additional Attachment';
-            $history->previous = $previousAttachments4;
+            $history->activity_type = 'Supplier Additional Attachment';
+            if($lastDocument->supplier_detail_additional_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->supplier_detail_additional_attachment;
+            }
+            // $history->previous = $previousAttachments4;
             $history->current = $supplier->supplier_detail_additional_attachment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -5250,12 +5353,17 @@ class SupplierController extends Controller
 
         if ($areIniAttachmentsSame5 != true) {
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
-            ->where('activity_type', 'Additional Attachment')
+            ->where('activity_type', 'Score Card Additional Attachment')
             ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = (int)$id;
-            $history->activity_type = 'Additional Attachment';
-            $history->previous = $previousAttachments5;
+            $history->activity_type = 'Score Card Additional Attachment';
+            if($lastDocument->score_card_additional_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->score_card_additional_attachment;
+            }
+            // $history->previous = $previousAttachments5;
             $history->current = $supplier->score_card_additional_attachment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -5283,7 +5391,12 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = (int)$id;
             $history->activity_type = 'QA Reviewer Attachment';
-            $history->previous = $previousAttachments6;
+            if($lastDocument->QA_reviewer_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->QA_reviewer_attachment;
+            }
+            // $history->previous = $previousAttachments6;
             $history->current = $supplier->QA_reviewer_attachment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -5306,12 +5419,17 @@ class SupplierController extends Controller
 
         if ($areIniAttachmentsSame7 != true) {
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
-            ->where('activity_type', 'Additional Attachment')
+            ->where('activity_type', 'QA Reviewer Additional Attachment')
             ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = (int)$id;
-            $history->activity_type = 'Additional Attachment';
-            $history->previous = $previousAttachments7;
+            $history->activity_type = 'QA Reviewer Additional Attachment';
+            if($lastDocument->qa_reviewer_additional_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->qa_reviewer_additional_attachment;
+            }
+            // $history->previous = $previousAttachments7;
             $history->current = $supplier->qa_reviewer_additional_attachment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -5333,12 +5451,17 @@ class SupplierController extends Controller
 
         if ($areIniAttachmentsSame8 != true) {
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
-            ->where('activity_type', 'Additional Attachment')
+            ->where('activity_type', 'Risk Assesment Additional Attachment')
             ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = (int)$id;
-            $history->activity_type = 'Additional Attachment';
-            $history->previous = $previousAttachments8;
+            $history->activity_type = 'Risk Assesment Additional Attachment';
+            if($lastDocument->risk_assessment_additional_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->risk_assessment_additional_attachment;
+            }
+            // $history->previous = $previousAttachments8;
             $history->current = $supplier->risk_assessment_additional_attachment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -5360,12 +5483,17 @@ class SupplierController extends Controller
 
         if ($areIniAttachmentsSame9 != true) {
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
-            ->where('activity_type', 'Additional Attachment')
+            ->where('activity_type', 'QA Head Attachment')
             ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = (int)$id;
-            $history->activity_type = 'Additional Attachment';
-            $history->previous = $previousAttachments9;
+            $history->activity_type = 'QA Head Attachment';
+            if($lastDocument->QA_head_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->QA_head_attachment;
+            }
+            // $history->previous = $previousAttachments9;
             $history->current = $supplier->QA_head_attachment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -5387,12 +5515,17 @@ class SupplierController extends Controller
 
         if ($areIniAttachmentsSame10 != true) {
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
-            ->where('activity_type', 'Additional Attachment')
+            ->where('activity_type', 'QA Head Reviewer Additional Attachment')
             ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = (int)$id;
-            $history->activity_type = 'Additional Attachment';
-            $history->previous = $previousAttachments10;
+            $history->activity_type = 'QA Head Reviewer Additional Attachment';
+            if($lastDocument->qa_head_additional_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->qa_head_additional_attachment;
+            }
+            // $history->previous = $previousAttachments10;
             $history->current = $supplier->qa_head_additional_attachment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -5447,11 +5580,11 @@ class SupplierController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
             $canvas->page_text(
-                $width / 4,
+                $width / 8,
                 $height / 2,
                 $data->status,
                 null,
-                25,
+                20,
                 [0, 0, 0],
                 2,
                 6,
@@ -5529,17 +5662,28 @@ class SupplierController extends Controller
         
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = "";
+            $history->activity_type = 'Approved By Contract Giver By, Approved By Contract Giver On';
+            if (is_null($lastDocument->approvedBy_contract_giver_by) || $lastDocument->approvedBy_contract_giver_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->approvedBy_contract_giver_by . ' , ' . $lastDocument->approvedBy_contract_giver_on;
+            }
+            $history->current = $supplier->approvedBy_contract_giver_by . ' , ' . $supplier->approvedBy_contract_giver_on;
+            // $history->previous = "";
             $history->action = 'Approved By Contract Giver';
-            $history->current = "";
+            // $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;        
+            $history->change_from = $lastDocument->status;    
+            if (is_null($lastDocument->approvedBy_contract_giver_by) || $lastDocument->approvedBy_contract_giver_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }    
             $history->save();
             $supplier->update();
 
@@ -5586,17 +5730,27 @@ class SupplierController extends Controller
         
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = "";
+            $history->activity_type = 'Link Manufacturer Code to Material Code through MPN in SAP By, Link Manufacturer Code to Material Code through MPN in SAP On';
+            if (is_null($lastDocument->manufacture_code_linked_by) || $lastDocument->manufacture_code_linked_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->manufacture_code_linked_by . ' , ' . $lastDocument->manufacture_code_linked_on;
+            }
+            $history->current = $supplier->manufacture_code_linked_by . ' , ' . $supplier->manufacture_code_linked_on;
             $history->action = 'Link Manufacturer Code to Material Code through MPN in SAP';
-            $history->current = "";
+            // $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Approved Manufacturer/Supplier";
-            $history->change_from = $lastDocument->status;        
+            $history->change_from = $lastDocument->status;      
+            if (is_null($lastDocument->manufacture_code_linked_by) || $lastDocument->manufacture_code_linked_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }      
             $history->save();
             $supplier->update();
 

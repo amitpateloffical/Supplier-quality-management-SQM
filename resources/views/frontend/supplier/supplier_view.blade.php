@@ -1649,7 +1649,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="hod_additional_attachment">Additional Attachment</label>
+                                    <label for="hod_additional_attachment">HOD Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div disabled class="file-attachment-list" id="hod_additional_attachment">
@@ -2121,7 +2121,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="supplier_detail_additional_attachment">Additional Attachment</label>
+                                    <label for="supplier_detail_additional_attachment">Supplier Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div disabled class="file-attachment-list" id="supplier_detail_additional_attachment">
@@ -2258,8 +2258,8 @@
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="Not Information at All" @if($data->supplier_bussiness_planning == "Not Information at All") selected @endif>Not Information at All</option>
                                         <option value="No Formal Information About" @if($data->supplier_bussiness_planning == "No Formal Information About") selected @endif>No Formal Information About</option>
-                                        <option value="Yes - Partially Aligned With" @if($data->supplier_bussiness_planning == "Yes - Partially Aligned With") selected @endif></option>
-                                        <option value="Yes - Completely Aligns" @if($data->supplier_bussiness_planning == "Yes - Completely Aligns") selected @endif></option>
+                                        <option value="Yes - Partially Aligned With" @if($data->supplier_bussiness_planning == "Yes - Partially Aligned With") selected @endif>Yes - Partially Aligned With</option>
+                                        <option value="Yes - Completely Aligns" @if($data->supplier_bussiness_planning == "Yes - Completely Aligns") selected @endif>Yes - Completely Aligns</option>
                                     </select>
                                 </div>
                             </div>
@@ -2394,7 +2394,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="score_card_additional_attachment">Additional Attachment</label>
+                                    <label for="score_card_additional_attachment">Score Card Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div disabled class="file-attachment-list" id="score_card_additional_attachment">
@@ -2498,7 +2498,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa_reviewer_additional_attachment">Additional Attachment</label>
+                                    <label for="qa_reviewer_additional_attachment">QA Reviewer Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div disabled class="file-attachment-list" id="qa_reviewer_additional_attachment">
@@ -2681,7 +2681,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="risk_assessment_additional_attachment">Additional Attachment</label>
+                                    <label for="risk_assessment_additional_attachment">Risk Assesment Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div disabled class="file-attachment-list" id="risk_assessment_additional_attachment">
@@ -2780,7 +2780,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa_head_additional_attachment">Additional Attachment</label>
+                                    <label for="qa_head_additional_attachment">QA Head Reviewer Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div disabled class="file-attachment-list" id="qa_head_additional_attachment">

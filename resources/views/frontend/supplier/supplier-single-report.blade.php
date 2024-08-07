@@ -551,10 +551,10 @@
 
                                 
                       
-                        <label class="Summer imageContainer" for="">Justification for Request</label>
-                        <div>
-                        @if ($data->request_justification)
-                            {!! $data->request_justification !!}
+                        <label class="Summer" for="">Justification for Request</label>
+                        <div class="imageContainer">
+                        @if ($data->cqa_remark)
+                            {!! $data->cqa_remark !!}
                         @else
                             Not Applicable
                         @endif
@@ -619,8 +619,10 @@
                         </td>
                     </tr>
 
-                    <tr>
-                        <th class="w-20">Remark</th>
+                </table>
+
+                    <!-- <tr>
+                        <th class="w-20"></th>
                         <td class="w-80 imageContainer" colspan="3">
                             @if ($data->cqa_remark)
                                 {{ $data->cqa_remark }}
@@ -628,8 +630,16 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-
+                    </tr> -->
+                    <label class="Summer" for="">Remark</label>
+                        <div class="imageContainer">
+                        @if ($data->cqa_remark)
+                            {!! $data->cqa_remark !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
+                <table>
                     <tr>
                         <th class="w-20">Accepted By</th>
                         <td class="w-30">
@@ -648,10 +658,11 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>                    
+                    </tr>     
+                    </table>               
                     
-                    <tr>
-                        <th class="w-20 imageContainer">Justification</th>
+                    <!-- <tr>
+                        <th class="w-20 imageContainer"></th>
                         <td class="w-80" colspan="3">
                             @if ($data->justification)
                                 {{ $data->justification }}
@@ -659,8 +670,17 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
+                    </tr> -->
+                    <label class="Summer" for="">Justification</label>
+                        <div class="imageContainer">
+                        @if ($data->cqa_remark)
+                            {!! $data->cqa_remark !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
 
+                    <table>
                     <tr>
                         <th class="w-20">CQA Coordinator</th>
                         <td class="w-30">
@@ -753,8 +773,9 @@
                             @endif
                         </td>
                     </tr>
+                    </table>
 
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20 imageContainer">Review Comment of Corporate CQA</th>
                         <td class="w-80" colspan="3"> 
                             @if ($data->cqa_corporate_comment)
@@ -763,8 +784,17 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
+                    </tr> -->   
+                    <label class="Summer" for="">Review Comment of Corporate CQA</label>
+                        <div class="imageContainer">
+                        @if ($data->cqa_corporate_comment)
+                            {!! $data->cqa_corporate_comment !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
 
+                    <table>
                     <tr>
                         <th class="w-20">CQA Designee</th>
                         <td class="w-30">
@@ -895,8 +925,9 @@
                             @endif
                         </td>
                     </tr>
+                </table>
 
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20 imageContainer">Justification</th>
                         <td class="w-80" colspan="3">
                             @if ($data->sample_order_justification)
@@ -905,8 +936,17 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
+                    </tr> -->
+                    <label class="Summer" for="">Justification</label>
+                        <div class="imageContainer">
+                        @if ($data->sample_order_justification)
+                            {!! $data->sample_order_justification !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
 
+                    <table>
                     <tr>
                         <th class="w-20">Feedback on Trail Status Completed</th>
                         <td class="w-30">
@@ -1101,8 +1141,7 @@
                     <div class="block-head">
                         HOD Review
                     </div>
-                    <table>
-                        <tr>
+                        <!-- <tr>
                             <th class="w-20 imageContainer">HOD Feedback</th>
                             <td class="w-80" colspan="3">
                                 @if ($data->HOD_feedback)
@@ -1111,9 +1150,19 @@
                                     Not Applicable
                                 @endif
                             </td>
-                        </tr>
+                        </tr> -->
 
-                        <tr>
+                        <label class="Summer" for="">HOD Feedback</label>
+                        <div class="imageContainer">
+                        @if ($data->HOD_feedback)
+                            {!! $data->HOD_feedback !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
+
+                        
+                        <!-- <tr>
                             <th class="w-20 imageContainer">HOD Comment</th>
                             <td class="w-80" colspan="3">
                                 @if ($data->HOD_comment)
@@ -1122,8 +1171,16 @@
                                     Not Applicable
                                 @endif
                             </td>
-                        </tr>
-                    </table>
+                        </tr> -->
+                        <label class="Summer" for="">HOD Comment</label>
+                        <div class="imageContainer">
+                        @if ($data->HOD_comment)
+                            {!! $data->HOD_comment !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
+                    <!-- </table> -->
                 </div>
 
                 <div class="border-table">
@@ -1153,7 +1210,7 @@
                 </div>
                 <div class="border-table">
                     <div class="block-head">
-                        Additional Attachments
+                    HOD Additional Attachments
                     </div>
                     <table>
                         <tr class="table_bg">
@@ -1261,8 +1318,9 @@
                                 @endif
                             </td>
                         </tr>
+                        </table>
 
-                        <tr>
+                        <!-- <tr>
                             <th class="w-20 imageContainer">Supplier Services</th>
                             <td class="w-80" colspan="3">
                                 @if ($data->supplier_serivce)
@@ -1271,8 +1329,17 @@
                                     Not Applicable
                                 @endif
                             </td>|
-                        </tr>
+                        </tr> -->
+                        <label class="Summer" for="">Supplier Services</label>
+                        <div class="imageContainer">
+                        @if ($data->supplier_serivce)
+                            {!! $data->supplier_serivce !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
 
+                        <table>
                         <tr>
                             <th class="w-20">Zone</th>
                             <td class="w-30">
@@ -1394,8 +1461,9 @@
                         @endif
                     </td>
                 </tr>
+                </table>
                 
-                <tr>
+                <!-- <tr>
                     <th class="w-20 imageContainer">Manufacturing Sites</th>
                     <td class="w-80" colspan="3">
                         @if ($data->manufacturing_sited)
@@ -1404,9 +1472,18 @@
                             Not Applicable
                         @endif
                     </td>
-                </tr>
+                </tr> -->
 
-                <tr>
+                <label class="Summer" for="">Manufacturing Sites</label>
+                        <div class="imageContainer">
+                        @if ($data->manufacturing_sited)
+                            {!! $data->manufacturing_sited !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
+
+                <!-- <tr>
                     <th class="w-20 imageContainer">Quality Management</th>
                     <td class="w-80" colspan="3">
                         @if ($data->quality_management)
@@ -1415,9 +1492,17 @@
                             Not Applicable
                         @endif
                     </td>
-                </tr>
+                </tr> -->
+                <label class="Summer" for="">Quality Management</label>
+                        <div class="imageContainer">
+                        @if ($data->quality_management)
+                            {!! $data->quality_management !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
 
-                <tr>
+                <!-- <tr>
                     <th class="w-20 imageContainer">Business History</th>
                     <td class="w-80" colspan="3">
                         @if ($data->bussiness_history)
@@ -1426,9 +1511,17 @@
                             Not Applicable
                         @endif
                     </td>
-                </tr>
+                </tr> -->
+                <label class="Summer" for="">Business History</label>
+                        <div class="imageContainer">
+                        @if ($data->bussiness_history)
+                            {!! $data->bussiness_history !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
 
-                <tr>
+                <!-- <tr>
                     <th class="w-20 imageContainer">Performance History</th>
                     <td class="w-80" colspan="3">
                         @if ($data->performance_history)
@@ -1437,9 +1530,17 @@
                             Not Applicable
                         @endif
                     </td>
-                </tr>
+                </tr> -->
+                <label class="Summer" for="">Performance History</label>
+                        <div class="imageContainer">
+                        @if ($data->performance_history)
+                            {!! $data->performance_history !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
 
-                <tr>
+                <!-- <tr>
                     <th class="w-20 imageContainer">Compliance Risk</th>
                     <td class="w-80" colspan="3">
                         @if ($data->compliance_risk)
@@ -1448,9 +1549,18 @@
                             Not Applicable
                         @endif
                     </td>
-                </tr>
+                </tr> -->
 
-            </table>
+                <label class="Summer" for="">Compliance Risk</label>
+                        <div class="imageContainer">
+                        @if ($data->compliance_risk)
+                            {!! $data->compliance_risk !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
+
+            <!-- </table> -->
         </div>
 
         
@@ -1483,7 +1593,7 @@
 
         <div class="border-table">
             <div class="block-head">
-                Additional Attachments
+            Supplier Additional Attachments
             </div>
             <table>
                 <tr class="table_bg">
@@ -1699,7 +1809,7 @@
         </div>
         <div class="border-table">
             <div class="block-head">
-                Additional Attachments
+            Score Card Additional Attachments
             </div>
             <table>
                 <tr class="table_bg">
@@ -1728,8 +1838,8 @@
             <div class="block-head">
                 QA Reviewer
             </div>
-            <table>
-                <tr>
+            <!-- <table> -->
+                <!-- <tr>
                     <th class="w-20 imageContainer">QA Reviewer Feedback</th>
                     <td class="w-80" colspan="3">
                         @if ($data->QA_reviewer_feedback)
@@ -1738,9 +1848,18 @@
                             Not Applicable
                         @endif
                     </td>
-                </tr>
+                </tr> -->
 
-                <tr>
+                <label class="Summer" for="">QA Reviewer Feedback</label>
+                        <div class="imageContainer">
+                        @if ($data->QA_reviewer_feedback)
+                            {!! $data->QA_reviewer_feedback !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
+
+                <!-- <tr>
                     <th class="w-20 imageContainer">QA Reviewer Comment</th>
                     <td class="w-80" colspan="3">
                         @if ($data->QA_reviewer_comment)
@@ -1749,8 +1868,18 @@
                             Not Applicable
                         @endif
                     </td>
-                </tr>
-            </table>
+                </tr> -->
+
+                <label class="Summer" for="">QA Reviewer Comment</label>
+                        <div class="imageContainer">
+                        @if ($data->QA_reviewer_comment)
+                            {!! $data->QA_reviewer_comment !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
+
+            <!-- </table> -->
         </div>
 
         <div class="border-table">
@@ -1781,7 +1910,7 @@
 
         <div class="border-table">
             <div class="block-head">
-                Additional Attachments
+            QA Reviewer Additional Attachments
             </div>
             <table>
                 <tr class="table_bg">
@@ -1995,7 +2124,7 @@
                 </tr>
             </table>
         </div>
-        <div class="border-table">
+        <!-- <div class="border-table">
             <div class="block-head">
                 Additional Attachments
             </div>
@@ -2019,7 +2148,7 @@
                     </tr>
                 @endif
             </table>
-        </div>
+        </div> -->
 
         <!--  Risk Assessment -->
         <div class="block" style="margin-top: 15px;">
@@ -2153,7 +2282,7 @@
 
         <div class="border-table">
             <div class="block-head">
-                Additional Attachments
+            Risk Assesment Additional Attachments
             </div>
             <table>
                 <tr class="table_bg">
@@ -2182,7 +2311,7 @@
             <div class="block-head">
                 QA Head Reviewer
             </div>
-            <table>
+            <!-- <table>
                 <tr>
                     <th class="w-20 imageContainer">QA Head Comment</th>
                     <td class="w-80" colspan="3">
@@ -2193,7 +2322,15 @@
                         @endif
                     </td>
                 </tr>
-            </table>
+            </table> -->
+            <label class="Summer" for="">QA Head Comment</label>
+                        <div class="imageContainer">
+                        @if ($data->QA_head_comment)
+                            {!! $data->QA_head_comment !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
         </div>
 
 
@@ -2225,7 +2362,7 @@
 
         <div class="border-table">
             <div class="block-head">
-                Additional Attachments
+            QA Head Reviewer Additional Attachments
             </div>
             <table>
                 <tr class="table_bg">

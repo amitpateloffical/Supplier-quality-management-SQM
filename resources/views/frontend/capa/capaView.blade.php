@@ -21,6 +21,216 @@
             color: white;
         }
     </style>
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
+    }
+</style>
+
+<style>
+    #start-record-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    #start-record-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    #start-record-btn:focus,
+    #start-record-btn:hover,
+    #start-record-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+</style>
+
+<style>
+    .group-input {
+        margin-bottom: 20px;
+    }
+    .mic-btn, .speak-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: none;
+    }
+    .mic-btn i, .speak-btn i {
+        color: black;
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active,
+    .speak-btn:focus,
+    .speak-btn:hover,
+    .speak-btn:active {
+        /* box-shadow: none; */
+    }
+    .relative-container {
+        position: relative;
+    }
+    .relative-container input {
+        width: 100%;
+        padding-right: 40px;
+    }
+</style>
+
+
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
+    }
+</style>
+
+    <style>
+    #start-record-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    #start-record-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    #start-record-btn:focus,
+    #start-record-btn:hover,
+    #start-record-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+</style>
+
+
+<style>
+    .mic-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px; /* Position the button at the right corner */
+        top: 50%; /* Center the button vertically */
+        transform: translateY(-50%); /* Adjust for the button's height */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn i {
+        color: black; /* Set the color of the icon */
+        box-shadow: none; /* Remove shadow */
+    }
+    .mic-btn:focus,
+    .mic-btn:hover,
+    .mic-btn:active {
+        box-shadow: none; /* Remove shadow on hover/focus/active */
+    }
+
+    .relative-container {
+        position: relative;
+    }
+
+    .relative-container textarea {
+        width: 100%;
+        padding-right: 40px; /* Ensure the text does not overlap the button */
+    }
+</style>
+
+<style>
+    .mini-modal {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        padding: 10px;
+        background-color: #fefefe;
+        border: 1px solid #888;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        width: 200px; /* Adjust width as needed */
+    }
+    .mini-modal-content {
+        background-color: #fefefe;
+        padding: 10px;
+        border-radius: 4px;
+    }
+    .mini-modal-content h2 {
+        font-size: 16px;
+        margin-top: 0;
+    }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+    }
+
+    .mic-btn {
+        right: 50px; /* Adjust position to avoid overlap with speaker button */
+    }
+
+    .speak-btn {
+        right: 16px;
+    }
+</style>
 
 
     <script>
@@ -85,7 +295,7 @@
                                 Propose Plan
                             </button>
                         @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#capa_more_info">
                                 More Info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -96,9 +306,9 @@
                             </button>
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
-                            </button> --}}  
+                            </button> --}}
                         @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                               <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
+                               <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#capa_more_info">
                               QA More Info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -119,7 +329,7 @@
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> -->
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#capa_more_info">
                                 Reject
                             </button>
                         @elseif($data->stage == 5)
@@ -204,11 +414,11 @@
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Project/Study</button> --}}
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm3')">CAPA Details</button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Additional Information</button> --}}
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Group Comments</button> --}}
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CAPA Closure</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Closure</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
                     </div>
 
                     <form action="{{ route('capaUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
@@ -328,6 +538,7 @@
                                                 <label for="Initiator Group">Initiator Group</label>
                                                 <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                      id="initiator_group">
+                                                     <option  value="0">-- Select --</option>
                                                     <option value="CQA"
                                                         @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
@@ -337,8 +548,8 @@
                                                     <option value="CQC"
                                                         @if ($data->initiator_Group== 'CQC') selected @endif>Central
                                                         Quality Control</option>
-                                                    <option value="CQC"
-                                                        @if ($data->initiator_Group== 'CQC') selected @endif>Manufacturing
+                                                    <option value="MANU"
+                                                        @if ($data->initiator_Group== 'MANU') selected @endif>Manufacturing
                                                     </option>
                                                     <option value="PSG"
                                                         @if ($data->initiator_Group== 'PSG') selected @endif>Plasma
@@ -401,16 +612,21 @@
                                             </div>
                                         </div> --}}
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Short Description">Short Description<span
-                                                        class="text-danger">*</span></label><span id="rchars">255</span>characters remaining
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                            <div class="group-input" id="short_description_group">
+                                                <label for="short_description">Short Description<span class="text-danger">*</span></label>
+                                                <span id="rchars">255</span> characters remaining
+                                               <div class="relative-container">
+                                                        <input type="text" name="short_description" id="docname" class="mic-input" maxlength="255" required {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->short_description }}">
+                                                        @component('frontend.forms.language-model')
+                                                        @endcomponent
+                                                    
+                                                    </div>
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
-        
                                         </div>
-        
-                                        
+
+
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
@@ -453,13 +669,63 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input" id="initiated_through_req">
                                                 <label for="initiated_through">Others<span
                                                         class="text-danger d-none">*</span></label>
                                                 <textarea name="initiated_through_req"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->initiated_through_req }}</textarea>
                                             </div>
+                                        </div> --}}
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input" id="initiated_through_req">
+                                                <label for="initiated_through">Others<span class="text-danger d-none">*</span></label>
+                                                <div class="relative-container">
+                                                    <textarea name="initiated_through_req" id="initiated_through_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initiated_through_req }}</textarea>
+                                                    <button class="mic-btn" type="button" style="display:none;">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+
+                                                    <button class="speak-btn" type="button">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                    <div class="mini-modal">
+                                                        <div class="mini-modal-content">
+                                                            <span class="close">&times;</span>
+                                                            <h2>Select Language</h2>
+                                                            <select id="language-select">
+                                                                <option value="en-us">English</option>
+                                                                <option value="hi-in">Hindi</option>
+                                                                <option value="te-in">Telugu</option>
+                                                                <option value="fr-fr">French</option>
+                                                                <option value="es-es">Spanish</option>
+                                                                <option value="zh-cn">Chinese (Mandarin)</option>
+                                                                <option value="ja-jp">Japanese</option>
+                                                                <option value="de-de">German</option>
+                                                                <option value="ru-ru">Russian</option>
+                                                                <option value="ko-kr">Korean</option>
+                                                                <option value="it-it">Italian</option>
+                                                                <option value="pt-br">Portuguese (Brazil)</option>
+                                                                <option value="ar-sa">Arabic</option>
+                                                                <option value="bn-in">Bengali</option>
+                                                                <option value="pa-in">Punjabi</option>
+                                                                <option value="mr-in">Marathi</option>
+                                                                <option value="gu-in">Gujarati</option>
+                                                                <option value="ur-pk">Urdu</option>
+                                                                <option value="ta-in">Tamil</option>
+                                                                <option value="kn-in">Kannada</option>
+                                                                <option value="ml-in">Malayalam</option>
+                                                                <option value="or-in">Odia</option>
+                                                                <option value="as-in">Assamese</option>
+                                                                <!-- Add more languages as needed -->
+                                                            </select>
+                                                            <button id="select-language-btn">Select</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="repeat">Repeat</label>
@@ -478,22 +744,106 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input" id="repeat_nature">
-                                                <label for="repeat_nature">Repeat Nature<span
-                                                        class="text-danger d-none">*</span></label>
-                                                <textarea name="repeat_nature"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->repeat_nature }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Problem Description">Problem Description</label>
-                                                <textarea name="problem_description"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->problem_description }}</textarea>
+                                                <label for="repeat_nature">Repeat Nature<span class="text-danger d-none">*</span></label>
+                                                <div class="relative-container">
+                                                    <textarea name="repeat_nature" id="repeat_nature_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->repeat_nature }}</textarea>
+                                                    <button class="mic-btn" type="button" style="display:none;">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+
+                                                    <button class="speak-btn" type="button">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                    <div class="mini-modal">
+                                                        <div class="mini-modal-content">
+                                                            <span class="close">&times;</span>
+                                                            <h2>Select Language</h2>
+                                                            <select id="language-select">
+                                                                <option value="en-us">English</option>
+                                                                <option value="hi-in">Hindi</option>
+                                                                <option value="te-in">Telugu</option>
+                                                                <option value="fr-fr">French</option>
+                                                                <option value="es-es">Spanish</option>
+                                                                <option value="zh-cn">Chinese (Mandarin)</option>
+                                                                <option value="ja-jp">Japanese</option>
+                                                                <option value="de-de">German</option>
+                                                                <option value="ru-ru">Russian</option>
+                                                                <option value="ko-kr">Korean</option>
+                                                                <option value="it-it">Italian</option>
+                                                                <option value="pt-br">Portuguese (Brazil)</option>
+                                                                <option value="ar-sa">Arabic</option>
+                                                                <option value="bn-in">Bengali</option>
+                                                                <option value="pa-in">Punjabi</option>
+                                                                <option value="mr-in">Marathi</option>
+                                                                <option value="gu-in">Gujarati</option>
+                                                                <option value="ur-pk">Urdu</option>
+                                                                <option value="ta-in">Tamil</option>
+                                                                <option value="kn-in">Kannada</option>
+                                                                <option value="ml-in">Malayalam</option>
+                                                                <option value="or-in">Odia</option>
+                                                                <option value="as-in">Assamese</option>
+                                                                <!-- Add more languages as needed -->
+                                                            </select>
+                                                            <button id="select-language-btn">Select</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
+                                            <div class="group-input" id="problem_description_group">
+                                                <label for="problem_description">Problem Description</label>
+                                                <div class="relative-container">
+                                                    <textarea name="problem_description" id="problem_description_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->problem_description }}</textarea>
+                                                    <button class="mic-btn" type="button" style="display:none;">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                    <button class="speak-btn" type="button">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                    <div class="mini-modal">
+                                                        <div class="mini-modal-content">
+                                                            <span class="close">&times;</span>
+                                                            <h2>Select Language</h2>
+                                                            <select id="language-select">
+                                                                <option value="en-us">English</option>
+                                                                <option value="hi-in">Hindi</option>
+                                                                <option value="te-in">Telugu</option>
+                                                                <option value="fr-fr">French</option>
+                                                                <option value="es-es">Spanish</option>
+                                                                <option value="zh-cn">Chinese (Mandarin)</option>
+                                                                <option value="ja-jp">Japanese</option>
+                                                                <option value="de-de">German</option>
+                                                                <option value="ru-ru">Russian</option>
+                                                                <option value="ko-kr">Korean</option>
+                                                                <option value="it-it">Italian</option>
+                                                                <option value="pt-br">Portuguese (Brazil)</option>
+                                                                <option value="ar-sa">Arabic</option>
+                                                                <option value="bn-in">Bengali</option>
+                                                                <option value="pa-in">Punjabi</option>
+                                                                <option value="mr-in">Marathi</option>
+                                                                <option value="gu-in">Gujarati</option>
+                                                                <option value="ur-pk">Urdu</option>
+                                                                <option value="ta-in">Tamil</option>
+                                                                <option value="kn-in">Kannada</option>
+                                                                <option value="ml-in">Malayalam</option>
+                                                                <option value="or-in">Odia</option>
+                                                                <option value="as-in">Assamese</option>
+                                                                <!-- Add more languages as needed -->
+                                                            </select>
+                                                            <button id="select-language-btn">Select</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-12">
                                             <div class="group-input">
                                                 <label for="CAPA Team">CAPA Team</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} 
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     multiple id="Audit" placeholder="Select..." name="capa_team[]">
                                                     @foreach ($users as $value)
                                                         <!-- <option {{ $data->capa_team == $value->id ? 'selected' : '' }}  value="{{ $value->id }}">{{ $value->name }}</option> -->
@@ -521,12 +871,54 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Initial Observation">Initial Observation</label>
+                                            <div class="group-input" id="initial_observation_group">
+                                                <label for="initial_observation">Initial Observation</label>
+                                                <div class="relative-container">
+                                                    <textarea name="initial_observation" id="initial_observation_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_observation }}</textarea>
+                                                    <button class="mic-btn" type="button" style="display:none;">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
 
-                                                <textarea name="initial_observation" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_observation }}</textarea>
+                                                    <button class="speak-btn" type="button">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                    <div class="mini-modal">
+                                                        <div class="mini-modal-content">
+                                                            <span class="close">&times;</span>
+                                                            <h2>Select Language</h2>
+                                                            <select id="language-select">
+                                                                <option value="en-us">English</option>
+                                                                <option value="hi-in">Hindi</option>
+                                                                <option value="te-in">Telugu</option>
+                                                                <option value="fr-fr">French</option>
+                                                                <option value="es-es">Spanish</option>
+                                                                <option value="zh-cn">Chinese (Mandarin)</option>
+                                                                <option value="ja-jp">Japanese</option>
+                                                                <option value="de-de">German</option>
+                                                                <option value="ru-ru">Russian</option>
+                                                                <option value="ko-kr">Korean</option>
+                                                                <option value="it-it">Italian</option>
+                                                                <option value="pt-br">Portuguese (Brazil)</option>
+                                                                <option value="ar-sa">Arabic</option>
+                                                                <option value="bn-in">Bengali</option>
+                                                                <option value="pa-in">Punjabi</option>
+                                                                <option value="mr-in">Marathi</option>
+                                                                <option value="gu-in">Gujarati</option>
+                                                                <option value="ur-pk">Urdu</option>
+                                                                <option value="ta-in">Tamil</option>
+                                                                <option value="kn-in">Kannada</option>
+                                                                <option value="ml-in">Malayalam</option>
+                                                                <option value="or-in">Odia</option>
+                                                                <option value="as-in">Assamese</option>
+                                                                <!-- Add more languages as needed -->
+                                                            </select>
+                                                            <button id="select-language-btn">Select</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -552,7 +944,7 @@
                                                 <textarea name="containment_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->containment_comments }}</textarea>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="CAPA Attachments">CAPA Attachment</label>
@@ -561,7 +953,7 @@
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="capa_attachment">
-                                                        
+
                                                         @if ($data->capa_attachment)
                                                             @foreach (json_decode($data->capa_attachment) as $file)
                                                                 <h6 type="button" class="file-container text-dark"
@@ -589,16 +981,58 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="CAPA QA Comments">CAPA QA Comments</label>
-                                                <textarea name="capa_qa_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->capa_qa_comments }}</textarea>
+                                            <div class="group-input" id="capa_qa_comments_group">
+                                                <label for="capa_qa_comments">CAPA QA Comments</label>
+                                                <div class="relative-container">
+                                                    <textarea name="capa_qa_comments" id="capa_qa_comments_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->capa_qa_comments }}</textarea>
+                                                    <button class="mic-btn" type="button" style="display:none;">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                    <button class="speak-btn" type="button">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                    <div class="mini-modal">
+                                                        <div class="mini-modal-content">
+                                                            <span class="close">&times;</span>
+                                                            <h2>Select Language</h2>
+                                                            <select id="language-select">
+                                                                <option value="en-us">English</option>
+                                                                <option value="hi-in">Hindi</option>
+                                                                <option value="te-in">Telugu</option>
+                                                                <option value="fr-fr">French</option>
+                                                                <option value="es-es">Spanish</option>
+                                                                <option value="zh-cn">Chinese (Mandarin)</option>
+                                                                <option value="ja-jp">Japanese</option>
+                                                                <option value="de-de">German</option>
+                                                                <option value="ru-ru">Russian</option>
+                                                                <option value="ko-kr">Korean</option>
+                                                                <option value="it-it">Italian</option>
+                                                                <option value="pt-br">Portuguese (Brazil)</option>
+                                                                <option value="ar-sa">Arabic</option>
+                                                                <option value="bn-in">Bengali</option>
+                                                                <option value="pa-in">Punjabi</option>
+                                                                <option value="mr-in">Marathi</option>
+                                                                <option value="gu-in">Gujarati</option>
+                                                                <option value="ur-pk">Urdu</option>
+                                                                <option value="ta-in">Tamil</option>
+                                                                <option value="kn-in">Kannada</option>
+                                                                <option value="ml-in">Malayalam</option>
+                                                                <option value="or-in">Odia</option>
+                                                                <option value="as-in">Assamese</option>
+                                                                <!-- Add more languages as needed -->
+                                                            </select>
+                                                            <button id="select-language-btn">Select</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" id="ChangesaveButton" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+                                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -609,7 +1043,7 @@
                             <div id="CCForm2" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        {{-- <div class="col-12 sub-head">
+                                        <div class="col-12 sub-head">
                                             Product Details
                                         </div>
                                         <div class="col-12">
@@ -630,37 +1064,107 @@
                                                             <th>Batch Disposition Decision</th>
                                                             <th>Remark</th>
                                                             <th>Batch Status</th>
+                                                            <th>Action</th> 
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        
-                                                    </tbody>
+                                              
                                                         @if ($data1->product_name)
                                                         @foreach (unserialize($data1->product_name) as $key => $temps)
                                                         <tr>
                                                             <td><input type="text" name="serial_number[]"
                                                                     value="{{ $key + 1 }}"></td>
-                                                            <td><input type="text" name="product_name[]"
-                                                                    value="{{ unserialize($data1->product_name)[$key] ? unserialize($data1->product_name)[$key] : '' }}">
+                                                            <td>                                                                   
+                                                            <select name="product_name[]" id="product_name" {{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>
+                                                                <option value="">-- Select value --</option>
+                                                                <option value="PLACE BEFORE BIMATOPROST OPH.SOLO.01%W/"{{ isset(unserialize($data1->product_name)[$key]) && unserialize($data1->product_name)[$key] == 'PLACE BEFORE BIMATOPROST OPH.SOLO.01%W/' ? ' selected' : '' }}>PLACE BEFORE BIMATOPROST OPH.SOLO.01%W/</option>
+                                                                <option value="BIMATOPROST AND TIMOLOL MALEATEED SOLUTION"{{ isset(unserialize($data1->product_name)[$key]) && unserialize($data1->product_name)[$key] == 'BIMATOPROST AND TIMOLOL MALEATEED SOLUTION' ? ' selected' : '' }}>BIMATOPROST AND TIMOLOL MALEATEED SOLUTION</option>
+                                                                <option value="CAFFEINE CITRATE ORAL SOLUTION USP 60MG/3ML"{{ isset(unserialize($data1->product_name)[$key]) && unserialize($data1->product_name)[$key] == 'CAFFEINE CITRATE ORAL SOLUTION USP 60MG/3ML' ? ' selected' : '' }}>CAFFEINE CITRATE ORAL SOLUTION USP 60MG/3ML</option>
+                                                                <option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)"{{ isset(unserialize($data1->product_name)[$key]) && unserialize($data1->product_name)[$key] == 'BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)' ? ' selected' : '' }}>BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)</option>
+                                                                <option value="DORZOLAMIDE PFREE 20MG/ML EDSOLSINGLEDOSECO"{{ isset(unserialize($data1->product_name)[$key]) && unserialize($data1->product_name)[$key] == 'DORZOLAMIDE PFREE 20MG/ML EDSOLSINGLEDOSECO' ? ' selected' : '' }}>DORZOLAMIDE PFREE 20MG/ML EDSOLSINGLEDOSECO</option>
+                                                            </select> 
+                                                                <td>
+                                                                   
+                                                                   <select id="batch_no" name="batch_no[]"{{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>
+                                                                    <option value="">-- Select value --</option>
+                                                                    <option value="DCAU0030"{{ isset(unserialize($data1->batch_no)[$key]) && unserialize($data1->batch_no)[$key] == 'DCAU0030' ? ' selected' : '' }}>DCAU0030</option>
+                                                                    <option value="BDZH0007"{{ isset(unserialize($data1->batch_no)[$key]) && unserialize($data1->batch_no)[$key] == 'BDZH0007' ? ' selected' : '' }}>BDZH0007</option>
+                                                                    <option value="BDZH0006"{{ isset(unserialize($data1->batch_no)[$key]) && unserialize($data1->batch_no)[$key] == 'BDZH0006' ? ' selected' : '' }}>BDZH0006</option>                                                                    <option value="BDZH0006"{{ isset(unserialize($data1->batch_no)[$key]) && unserialize($data1->batch_no)[$key] == 'BDZH0006' ? ' selected' : '' }}>BDZH0006</option>
+                                                                    <option value="BJJH0004A"{{ isset(unserialize($data1->batch_no)[$key]) && unserialize($data1->batch_no)[$key] == 'BJJH0004A' ? ' selected' : '' }}>BJJH0004A</option>
+                                                                    <option value="DCAU0036"{{ isset(unserialize($data1->batch_no)[$key]) && unserialize($data1->batch_no)[$key] == 'DCAU0036' ? ' selected' : '' }}>DCAU0036</option>
+                                                                </select>                                                          
+                                                                    </td>
+                                                                <td>
+                                                                @php
+                                                                    $mfg_date_array = @unserialize($data1->mfg_date);
+                                                                    if (!is_array($mfg_date_array)) {
+                                                                        $mfg_date_array = []; // Fallback to an empty array if unserialization fails
+                                                                    }
+                                                                @endphp                                         
+                                                                <div class="group-input new-date-data-field mb-0">
+                                                                   <div class="input-date ">
+                                                                    <div class="calenderauditee">
+                                                                        <input type="text" id="mfg_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($mfg_date_array[$key] ?? '') }}" />
+                                                                        <input type="date" id="mfg_date{{$key}}_checkdate" value="{{ $mfg_date_array[$key] ?? '' }}" name="mfg_date[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
+                                                                        oninput="handleDateInput(this, 'mfg_date{{$key}}'); checkDate('mfg_date{{$key}}_checkdate', 'expiry_date{{$key}}_checkdate')" />
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                                 
                                                             </td>
-                                                            <td><input type="text" name="batch_no[]"
-                                                                    value="{{ unserialize($data1->batch_no)[$key] ? unserialize($data1->batch_no)[$key] : '' }}">
+                                                           
+                                                            <td>
+                                                                @php
+                                                                    $expiry_date_array = @unserialize($data1->expiry_date);
+                                                                    if (!is_array($expiry_date_array)) {
+                                                                        $expiry_date_array = []; // Fallback to an empty array if unserialization fails
+                                                                    }
+
+                                                                    
+                                                                    $expiry_date_value = $expiry_date_array[$key] ?? '';
+                                                                @endphp                                                 
+                                                                <div class="group-input new-date-data-field mb-0">
+                                                                    <div class="input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input type="text" id="expiry_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($expiry_date_value) }}" />
+                                                                            <input type="date" id="expiry_date{{$key}}_checkdate" value="{{ $expiry_date_value }}" name="expiry_date[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
+                                                                            oninput="handleDateInput(this, 'expiry_date{{$key}}'); checkDate('mfg_date{{$key}}_checkdate', 'expiry_date{{$key}}_checkdate')" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                 
                                                             </td>
-                                                            <td><input type="text" name="mfg_date[]"
-                                                                    value="{{ unserialize($data1->mfg_date)[$key] ? unserialize($data1->mfg_date)[$key] : '' }}">
+                                                            <td>
+                                                                <?php
+                                                                $batchdespositionArray = @unserialize($data1->batch_desposition);
+                                                                if ($batchdespositionArray === false) {
+                                                                    $batchdespositionArray = [];
+                                                                }
+                                                                $value = isset($batchdespositionArray[$key]) ? $batchdespositionArray[$key] : '';
+                                                                ?>
+                                                                <input type="text" name="batch_desposition[]" value="<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); ?>">
                                                             </td>
-                                                            <td><input type="text" name="expiry_date[]"
-                                                                    value="{{ unserialize($data1->expiry_date)[$key] ? unserialize($data1->expiry_date)[$key] : '' }}">
+
+                                                            <td>
+                                                                <?php
+                                                                $remarkArray = @unserialize($data1->remark);
+                                                                if ($remarkArray === false) {
+                                                                    $remarkArray = [];
+                                                                }
+                                                                $value = isset($remarkArray[$key]) ? $remarkArray[$key] : '';
+                                                                ?>
+                                                                <input type="text" name="remark[]" value="<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); ?>">
                                                             </td>
-                                                            <td><input type="text" name="batch_desposition[]"
-                                                                    value="{{ unserialize($data1->batch_desposition)[$key] ? unserialize($data1->batch_desposition)[$key] : '' }}">
+
+                                                            <td>
+                                                                
+                                                                    <select id="batch_status" name="batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>
+                                                                        <option value="">-- Select value --</option>
+                                                                        <option value="Hold"{{ isset(unserialize($data1->batch_status)[$key]) && unserialize($data1->batch_status)[$key] == 'Hold' ? ' selected' : '' }}>Hold</option>
+                                                                        <option value="Release"{{ isset(unserialize($data1->batch_status)[$key]) && unserialize($data1->batch_status)[$key] == 'Release' ? ' selected' : '' }}>Release</option>
+                                                                        <option value="quarantine"{{ isset(unserialize($data1->batch_status)[$key]) && unserialize($data1->batch_status)[$key] == 'quarantine' ? ' selected' : '' }}>Quarantine</option>
+                                                                    </select>                                                               
                                                             </td>
-                                                            <td><input type="text" name="remark[]"
-                                                                    value="{{ unserialize($data1->remark)[$key] ? unserialize($data1->remark)[$key] : '' }}">
-                                                            </td>
-                                                            <td><input type="text" name="batch_status[]"
-                                                                    value="{{ unserialize($data1->batch_status)[$key] ? unserialize($data1->batch_status)[$key] : '' }}">
-                                                            </td>
+                                                             <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                         </tr>
                                                         @endforeach
                                                         @endif
@@ -668,7 +1172,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </div> --}}
+                                        </div>
                                         <div class="col-12 sub-head">
                                             Material Details
                                         </div>
@@ -717,28 +1221,28 @@
                                                                 <div class="input-date "><div
                                                                  class="calenderauditee">
                                                                 <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}  value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" />
-                                                                <input type="date" name="material_mfg_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" class="hide-input" 
+                                                                <input type="date" name="material_mfg_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" class="hide-input"
                                                                 oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`)" /></div></div></div></td> -->
- 
+
                                                                 <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
                                                                 <input type="text"   id="material_mfg_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}"/>
                                                                 <input type="date"  id="material_mfg_date{{$key}}_checkdate" value="{{unserialize($data2->material_mfg_date)[$key]}}"  name="material_mfg_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}
-                                                                "class="hide-input" 
+                                                                "class="hide-input"
                                                                 oninput="handleDateInput(this, `material_mfg_date{{$key}}`);checkDate('material_mfg_date{{$key}}_checkdate','material_expiry_date{{$key}}_checkdate')"  /></div></div></div></td>
-                                                                
+
                                                                 <!-- <td><div class="group-input new-date-data-field mb-0">
                                                                     <div class="input-date "><div
                                                                      class="calenderauditee">
                                                                     <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}  value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" />
-                                                                    <input type="date" name="material_expiry_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" class="hide-input" 
+                                                                    <input type="date" name="material_expiry_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" class="hide-input"
                                                                     oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`)" /></div></div></div></td> -->
                                                                     <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                                     <div class="calenderauditee">
                                                                 <input type="text"   id="material_expiry_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" />
-                                                                <input type="date" id="material_expiry_date{{$key}}_checkdate" value="{{unserialize($data2->material_mfg_date)[$key]}}"  name="material_expiry_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}"class="hide-input" 
+                                                                <input type="date" id="material_expiry_date{{$key}}_checkdate" value="{{unserialize($data2->material_mfg_date)[$key]}}"  name="material_expiry_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}"class="hide-input"
                                                                 oninput="handleDateInput(this, `material_expiry_date{{$key}}`);checkDate('material_mfg_date{{$key}}_checkdate','material_expiry_date{{$key}}_checkdate')"  /></div></div></div></td>
 
                                                             <td><input type="text" name="material_batch_desposition[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
@@ -750,18 +1254,18 @@
                                                              <!-- <td><input type="text" id="batch_status" name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data2->material_batch_status)[$key] ? unserialize($data2->material_batch_status)[$key] : '' }}">
                                                             </td>  -->
-                                                            <!-- <td> 
+                                                            <!-- <td>
                                                                <select id="batch_status"
                                                                    name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                   
+
                                                                <option value="">-- Select value --</option>
                                                                   <option value="Hold">Hold</option>
                                                                   <option value="Release">Release</option>
                                                                 <option value="quarantine">Quarantine</option>
                                                                 value="{{ unserialize($data2->material_batch_status)[$key] ? unserialize($data2->material_batch_status)[$key] : '' }}" >
-                                                            </select>   
+                                                            </select>
                                                         </td> -->
-                                                        <td> 
+                                                        <td>
                                                             <select id="batch_status" name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>
                                                                 <option value="">-- Select value --</option>
                                                                 <option value="Hold"{{ isset(unserialize($data2->material_batch_status)[$key]) && unserialize($data2->material_batch_status)[$key] == 'Hold' ? ' selected' : '' }}>Hold</option>
@@ -815,6 +1319,8 @@
                                                             <td><input type="text" name="equipment_comments[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data3->equipment_comments)[$key] ? unserialize($data3->equipment_comments)[$key] : '' }}">
                                                             </td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+
                                                         </tr>
                                                     @endforeach
                                                         @endif
@@ -828,135 +1334,104 @@
                                             Other type CAPA Details
                                         </div>
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Details">Details</label>
-                                                <input type="text" name="details_new"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    value="{{ $data->details_new }}">
+                                            <div class="group-input" id="details_new_group">
+                                                <label for="details_new">Details</label>
+                                                <div class="relative-container">
+                                                    <input type="text" name="details_new" id="details_new_input" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->details_new }}">
+                                                    <button class="mic-btn" type="button" style="display:none;">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                    <button class="speak-btn" type="button">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                    <div class="mini-modal">
+                                                        <div class="mini-modal-content">
+                                                            <span class="close">&times;</span>
+                                                            <h2>Select Language</h2>
+                                                            <select id="language-select">
+                                                                <option value="en-us">English</option>
+                                                                <option value="hi-in">Hindi</option>
+                                                                <option value="te-in">Telugu</option>
+                                                                <option value="fr-fr">French</option>
+                                                                <option value="es-es">Spanish</option>
+                                                                <option value="zh-cn">Chinese (Mandarin)</option>
+                                                                <option value="ja-jp">Japanese</option>
+                                                                <option value="de-de">German</option>
+                                                                <option value="ru-ru">Russian</option>
+                                                                <option value="ko-kr">Korean</option>
+                                                                <option value="it-it">Italian</option>
+                                                                <option value="pt-br">Portuguese (Brazil)</option>
+                                                                <option value="ar-sa">Arabic</option>
+                                                                <option value="bn-in">Bengali</option>
+                                                                <option value="pa-in">Punjabi</option>
+                                                                <option value="mr-in">Marathi</option>
+                                                                <option value="gu-in">Gujarati</option>
+                                                                <option value="ur-pk">Urdu</option>
+                                                                <option value="ta-in">Tamil</option>
+                                                                <option value="kn-in">Kannada</option>
+                                                                <option value="ml-in">Malayalam</option>
+                                                                <option value="or-in">Odia</option>
+                                                                <option value="as-in">Assamese</option>
+                                                                <!-- Add more languages as needed -->
+                                                            </select>
+                                                            <button id="select-language-btn">Select</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Comments"> CAPA QA Comments </label>
-                                                <textarea name="capa_qa_comments2" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->capa_qa_comments2 }}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="button-block">
-                                        <button type="submit" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
-                                        <button type="button"> <a class="text-white"
-                                                href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <!-- Project Study content -->
-                            <div id="CCForm3" class="inner-block cctabcontent">
-                                <div class="inner-block-content">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Project Datails Application">Project Datails
-                                                    Application</label>
-                                                <select name="project_details_application"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="">Enter Your Selection Here</option>
-                                                    <option
-                                                        {{ $data->project_details_application == 'yes' ? 'selected' : '' }}
-                                                        value="yes">Yes</option>
-                                                    <option
-                                                        {{ $data->project_details_application == 'no' ? 'selected' : '' }}
-                                                        value="no">No</option>
-                                                </select>
+                                        <div class="col-12">
+                                            <div class="group-input" id="capa_qa_comments2_group">
+                                                <label for="capa_qa_comments2">CAPA QA Comments</label>
+                                                <div class="relative-container">
+                                                    <textarea name="capa_qa_comments2" id="capa_qa_comments2_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->capa_qa_comments2 }}</textarea>
+                                                    <button class="mic-btn" type="button" style="display:none;">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+
+
+
+                                                    <button class="speak-btn" type="button">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                    <div class="mini-modal">
+                                                        <div class="mini-modal-content">
+                                                            <span class="close">&times;</span>
+                                                            <h2>Select Language</h2>
+                                                            <select id="language-select">
+                                                                <option value="en-us">English</option>
+                                                                <option value="hi-in">Hindi</option>
+                                                                <option value="te-in">Telugu</option>
+                                                                <option value="fr-fr">French</option>
+                                                                <option value="es-es">Spanish</option>
+                                                                <option value="zh-cn">Chinese (Mandarin)</option>
+                                                                <option value="ja-jp">Japanese</option>
+                                                                <option value="de-de">German</option>
+                                                                <option value="ru-ru">Russian</option>
+                                                                <option value="ko-kr">Korean</option>
+                                                                <option value="it-it">Italian</option>
+                                                                <option value="pt-br">Portuguese (Brazil)</option>
+                                                                <option value="ar-sa">Arabic</option>
+                                                                <option value="bn-in">Bengali</option>
+                                                                <option value="pa-in">Punjabi</option>
+                                                                <option value="mr-in">Marathi</option>
+                                                                <option value="gu-in">Gujarati</option>
+                                                                <option value="ur-pk">Urdu</option>
+                                                                <option value="ta-in">Tamil</option>
+                                                                <option value="kn-in">Kannada</option>
+                                                                <option value="ml-in">Malayalam</option>
+                                                                <option value="or-in">Odia</option>
+                                                                <option value="as-in">Assamese</option>
+                                                                <!-- Add more languages as needed -->
+                                                            </select>
+                                                            <button id="select-language-btn">Select</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        {{-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Protocol/Study Number">Initiator Group</label>
-                                                <select name="initiator_group"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="">Enter Your Selection Here</option>
-                                                    <option value="CQA"
-                                                        @if ($data->initiator_group== 'CQA') selected @endif>Corporate
-                                                        Quality
-                                                        Assurance
-                                                    </option>
-                                                    <option value="QAB"
-                                                        @if ($data->initiator_group== 'QAB') selected @endif>Quality
-                                                        Assurance
-                                                        Biopharma
-                                                    </option>
-                                                    <option value="CQC"
-                                                        @if ($data->initiator_group== 'CQC') selected @endif>Central Quality
-                                                        Control
-                                                    </option>
-                                                    <option value="CQC"
-                                                        @if ($data->initiator_group== 'CQC') selected @endif>Manufacturing
-                                                    </option>
-                                                    <option value="PSG"
-                                                        @if ($data->initiator_group== 'PSG') selected @endif>Plasma Sourcing
-                                                        Group
-                                                    </option>
-                                                    <option value="CS"
-                                                        @if ($data->initiator_group== 'CS') selected @endif>Central Stores
-                                                    </option>
-                                                    <option value="ITG"
-                                                        @if ($data->initiator_group== 'ITG') selected @endif>Information
-                                                        Technology Group
-                                                    </option>
-                                                    <option value="MM"
-                                                        @if ($data->initiator_group== 'MM') selected @endif>Molecular
-                                                        Medicine
-                                                    </option>
-                                                    <option value="CL"
-                                                        @if ($data->initiator_group== 'CL') selected @endif>Central
-                                                        Laboratory
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Site Number">Site Number</label>
-                                                <input type="text" name="site_number"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    value="{{ $data->site_number }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Subject Number">Subject Number</label>
-                                                <input type="text" name="subject_number"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    value="{{ $data->subject_number }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Subject Initials">Subject Initials</label>
-                                                <input type="text" name="subject_initials"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    value="{{ $data->subject_initials }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Sponsor">Sponsor</label>
-                                                <input type="text" name="sponsor"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    value="{{ $data->sponsor }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="General Deviation">General Deviation</label>
-                                                <textarea name="general_deviation" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->general_deviation }}</textarea>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
@@ -968,329 +1443,16 @@
                                     </div>
                                 </div>
                             </div>
-                              <div id="CCForm8" class="inner-block cctabcontent">
-                                <div class="inner-block-content">
-                                    <div class="sub-head">
-                                        CFT Information
-                                    </div>
-                                    <div class="row">
 
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Microbiology">CFT Reviewer</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="Microbiology_new">
-                                                    <option value="0">-- Select --</option>
-                                                    <option @if ($data->Microbiology_new=='yes') selected @endif value="yes" selected>Yes</option>
-                                                    <option @if ($data->Microbiology_new=='no') selected @endif value="no">No</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Microbiology-Person">CFT Reviewer Person</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  name="Microbiology_Person[]"
-                                                    placeholder="Select CFT Reviewers" data-search="false"
-                                                    data-silent-initial-value-set="true" id="cft_reviewer">
-                                                    <option value="0">-- Select --</option>
-                                                    @foreach ($cft as $data)
-                                                        <option value="{{ $data->id }}" selected>
-                                                            {{ $data->name }}</option>
-                                                    @endforeach
-                                                </select>
+                            <!-- Project Study content -->
 
-                                            </div>
-                                        </div> 
-
-
-                                     </div>
-                                    <div class="sub-head">
-                                        Concerned Information
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="group_review">Is Concerned Group Review Required?</label>
-                                                <select name="goup_review"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
-                                                    <option {{$data->goup_review == 'yes' ? 'selected' : '' }}
-                                                        value="yes">Yes</option>
-                                                    <option {{ $data->goup_review == 'no' ? 'selected' : '' }}
-                                                        value="no">No</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Production">Production</label>
-                                                <select name="Production_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
-                                                    <option {{ $data->Production_new== 'yes' ? 'selected' : '' }}
-                                                        value="yes">Yes</option>
-                                                    <option {{ $data->Production_new== 'no' ? 'selected' : '' }}
-                                                        value="no">No</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Production-Person">Production Person</label>
-                                                <select name="Production_Person"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
-                                                    @foreach ($users as $datas)
-                                                        <option
-                                                            {{ $data->Production_Person == $datas->id ? 'selected' : '' }}
-                                                            value="{{ $datas->id }}">{{ $datas->name }}</option>
-                                                    @endforeach
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Quality-Approver">Quality Approver</label>
-                                                <select name="Quality_Approver"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
-                                                    <option {{ $data->Quality_Approver == 'yes' ? 'selected' : '' }}
-                                                        value="yes">Yes</option>
-                                                    <option {{ $data->Quality_Approver == 'no' ? 'selected' : '' }}
-                                                        value="no">No</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Quality-Approver-Person">Quality Approver Person</label>
-                                                <select name="Quality_Approver_Person"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
-
-                                                    @foreach ($users as $datas)
-                                                        <option
-                                                            {{ $data->Quality_Approver_Person== $datas->id ? 'selected' : '' }}
-                                                            value="{{ $datas->id }}">{{ $datas->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="bd_domestic">Others</label>
-                                                <select name="bd_domestic"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
-                                                    <option {{ $data->bd_domestic == 'yes' ? 'selected' : '' }}
-                                                        value="yes">Yes</option>
-                                                    <option {{ $data->bd_domestic == 'no' ? 'selected' : '' }}
-                                                        value="no">No</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="bd_domestic-Person">Others Person</label>
-                                                <select name="Bd_Person"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
-
-                                                    @foreach ($users as $datas)
-                                                        <option {{ $data->Bd_Person == $datas->id ? 'selected' : '' }}
-                                                            value="{{ $datas->id }}">{{ $datas->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                          <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Additional Attachments">Additional Attachments</label>
-                                                <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="additional_attachments">
-                                                        {{-- @if (is_array($data->additional_attachments)) --}}
-                                                        @if ($data->additional_attachments)
-                                                           @foreach(json_decode($data->additional_attachments) as $file) 
-                                                          <h6 type="button" class="file-container text-dark" 
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i
-                                                                            class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                         @endforeach 
-                                                             @endif
-                                                        </div> 
-                                                     <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input type="file" id="myfile"
-                                                            name="additional_attachments[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'additional_attachments')"
-                                                            multiple>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>  
-                                    </div>
-                                    <div class="button-block">
-                                        <button type="submit" class="saveButton">Save</button>
-                                        <button type="button" class="backButton"
-                                            onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    </div>
-                                </div>  
-                            </div> 
+                            {{-- CFT Information --}}
+                           
+                             
                                <!-- Group Commentes-->
-                             <div id="CCForm7" class="inner-block cctabcontent">
-                                <div class="inner-block-content">
-
-                                    <div class="sub-head">
-                                        CFT Feedback
-                                    </div>
-                                    <div class="row">
-
-                                        <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="comments">CFT Comments</label>
-                                                <textarea name="cft_comments_form"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->cft_comments_form}}</textarea>
-                                            </div>
-                                        </div>
-                                         <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="comments">CFT Attachment</label>
-                                                <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="cft_attchament_new">
-                                                        {{-- @if (is_array($data->cft_attchament_new)) --}}
-                                                                 @if ($data->cft_attchament_new)
-                                                                     @foreach (json_decode($data->cft_attchament_new) as $file) 
-                                                                  <h6 type="button" class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i
-                                                                            class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6> 
-                                                             @endforeach 
-                                                                 @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input type="file" id="myfile" name="cft_attchament_new[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'cft_attchament_new')"
-                                                            multiple>
-                                                    </div>
-                                                </div>
-
-                                            </div> 
-                                        </div> 
-                                    </div>
-                                    <div class="row">
-                                        <div class="sub-head">
-                                            Concerned Group Feedback
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="comments">QA Comments</label>
-                                                <textarea name="qa_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->qa_comments_new}}
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="comments">QA Head Designee Comments</label>
-                                                <textarea name="designee_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->designee_comments_new}}
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="comments">Warehouse Comments</label>
-                                                <textarea name="Warehouse_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Warehouse_comments_new}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="comments">Engineering Comments</label>
-                                                <textarea name="Engineering_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Engineering_comments_new}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="comments">Instrumentation Comments</label>
-                                                <textarea name="Instrumentation_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Instrumentation_comments_new}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="comments">Validation Comments</label>
-                                                <textarea name="Validation_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Validation_comments_new}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="comments">Others Comments</label>
-                                                <textarea name="Others_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Others_comments_new}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="comments">Group Comments</label>
-                                                <textarea name="Group_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Group_comments_new}}</textarea>
-                                            </div>
-                                        </div>
-                                       
-                                         <div class="col-12">
-                                    
-                                            <div class="group-input">
-                                                <label for="group-attachments">Group Attachments</label>
-                                                <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="group_attachments_new">
-                                                       
-                                                        {{-- @if (is_array($data->group_attachments_new)) --}}
-                                                        @if ($data->group_attachments_new)
-                                                             @foreach (json_decode($data->group_attachments_new) as $file) 
-                                                                <h6 type="button" class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file}}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i
-                                                                            class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                             @endforeach 
-                                                       
-                                                        @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input type="file" id="myfile"
-                                                            name="group_attachments_new[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'group_attachments_new')"
-                                                            multiple>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> 
-                                    </div>
-                                    <div class="button-block">
-                                        <button type="submit" class="saveButton">Save</button>
-                                        <button type="button" class="backButton"
-                                            onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    </div>
-                                </div>
-                            </div>
+                             
                             <!-- CAPA Details content -->
-                            <div id="CCForm4" class="inner-block cctabcontent">
+                            <div id="CCForm3" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -1310,31 +1472,157 @@
                                         @enderror
                                     </div>
                                 </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Corrective Action">Corrective Action</label>
-                                                <textarea name="corrective_action" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->corrective_action }}</textarea>
+                                <div class="col-12">
+                                    <div class="group-input" id="corrective_action_group">
+                                        <label for="corrective_action">Corrective Action</label>
+                                        <div class="relative-container">
+                                            <textarea name="corrective_action" id="corrective_action_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->corrective_action }}</textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Preventive Action">Preventive Action</label>
-                                                <textarea name="preventive_action" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->preventive_action }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input" id="preventive_action_group">
+                                        <label for="preventive_action">Preventive Action</label>
+                                        <div class="relative-container">
+                                            <textarea name="preventive_action" id="preventive_action_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->preventive_action }}</textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Supervisor Review Comments">Supervisor Review
-                                                    Comments</label>
-                                                <textarea name="supervisor_review_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->supervisor_review_comments }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input" id="supervisor_review_comments_group">
+                                        <label for="supervisor_review_comments">Supervisor Review Comments</label>
+                                        <div class="relative-container">
+                                            <textarea name="supervisor_review_comments" id="supervisor_review_comments_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->supervisor_review_comments }}</textarea>
+                                            <button class="mic-btn" type="button" style="display:none;">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+
+                                            <button class="speak-btn" type="button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="mini-modal">
+                                                <div class="mini-modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <h2>Select Language</h2>
+                                                    <select id="language-select">
+                                                        <option value="en-us">English</option>
+                                                        <option value="hi-in">Hindi</option>
+                                                        <option value="te-in">Telugu</option>
+                                                        <option value="fr-fr">French</option>
+                                                        <option value="es-es">Spanish</option>
+                                                        <option value="zh-cn">Chinese (Mandarin)</option>
+                                                        <option value="ja-jp">Japanese</option>
+                                                        <option value="de-de">German</option>
+                                                        <option value="ru-ru">Russian</option>
+                                                        <option value="ko-kr">Korean</option>
+                                                        <option value="it-it">Italian</option>
+                                                        <option value="pt-br">Portuguese (Brazil)</option>
+                                                        <option value="ar-sa">Arabic</option>
+                                                        <option value="bn-in">Bengali</option>
+                                                        <option value="pa-in">Punjabi</option>
+                                                        <option value="mr-in">Marathi</option>
+                                                        <option value="gu-in">Gujarati</option>
+                                                        <option value="ur-pk">Urdu</option>
+                                                        <option value="ta-in">Tamil</option>
+                                                        <option value="kn-in">Kannada</option>
+                                                        <option value="ml-in">Malayalam</option>
+                                                        <option value="or-in">Odia</option>
+                                                        <option value="as-in">Assamese</option>
+                                                        <!-- Add more languages as needed -->
+                                                    </select>
+                                                    <button id="select-language-btn">Select</button>
+                                                </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1342,15 +1630,57 @@
                             </div>
 
                             <!-- CAPA Closure content -->
-                            <div id="CCForm5" class="inner-block cctabcontent">
+                            <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="QA Review & Closure">QA Review & Closure</label>
-                                                <textarea name="qa_review" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->qa_review }}</textarea>
+                                            <div class="group-input" id="qa_review_group">
+                                                <label for="qa_review">QA Review & Closure</label>
+                                                <div class="relative-container">
+                                                    <textarea name="qa_review" id="qa_review_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->qa_review }}</textarea>
+                                                    <button class="mic-btn" type="button" style="display:none;">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                    <button class="speak-btn" type="button">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                    <div class="mini-modal">
+                                                        <div class="mini-modal-content">
+                                                            <span class="close">&times;</span>
+                                                            <h2>Select Language</h2>
+                                                            <select id="language-select">
+                                                                <option value="en-us">English</option>
+                                                                <option value="hi-in">Hindi</option>
+                                                                <option value="te-in">Telugu</option>
+                                                                <option value="fr-fr">French</option>
+                                                                <option value="es-es">Spanish</option>
+                                                                <option value="zh-cn">Chinese (Mandarin)</option>
+                                                                <option value="ja-jp">Japanese</option>
+                                                                <option value="de-de">German</option>
+                                                                <option value="ru-ru">Russian</option>
+                                                                <option value="ko-kr">Korean</option>
+                                                                <option value="it-it">Italian</option>
+                                                                <option value="pt-br">Portuguese (Brazil)</option>
+                                                                <option value="ar-sa">Arabic</option>
+                                                                <option value="bn-in">Bengali</option>
+                                                                <option value="pa-in">Punjabi</option>
+                                                                <option value="mr-in">Marathi</option>
+                                                                <option value="gu-in">Gujarati</option>
+                                                                <option value="ur-pk">Urdu</option>
+                                                                <option value="ta-in">Tamil</option>
+                                                                <option value="kn-in">Kannada</option>
+                                                                <option value="ml-in">Malayalam</option>
+                                                                <option value="or-in">Odia</option>
+                                                                <option value="as-in">Assamese</option>
+                                                                <!-- Add more languages as needed -->
+                                                            </select>
+                                                            <button id="select-language-btn">Select</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Closure Attachments">Closure Attachment</label>
@@ -1408,8 +1738,8 @@
                                                 <label for="Effect.Check Creation Date">Effect.Check Creation
                                                     Date</label>
                                                 <input type="date" name="effect_check_date"
-                                                    value="{{ $data->effect_check_date }}"> 
-                                                    <div class="calenderauditee">                                     
+                                                    value="{{ $data->effect_check_date }}">
+                                                    <div class="calenderauditee">
                                                         <input type="text"  value="{{ $data->effect_check_date }}" id="effect_check_date"  readonly placeholder="DD-MMM-YYYY" />
                                                         <input type="date" name="effect_check_date" value=""
                                                         class="hide-input"
@@ -1453,18 +1783,63 @@
                                         <div class="col-12 sub-head">
                                             Extension Justification
                                         </div> -->
+                                        <div class="col-12 sub-head">
+                                            Extension Justification
+                                        </div>
                                         <div class="col-12">
-                                            <div class="group-input">
+                                            <div class="group-input" id="due_date_extension_group">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
-                                                <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                                <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
+                                                <div><small class="text-primary">Please mention justification if due date is crossed</small></div>
+                                                <div class="relative-container">
+                                                    <textarea name="due_date_extension" id="due_date_extension_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
+                                                    <button class="mic-btn" type="button" style="display:none;">
+                                                        <i class="fas fa-microphone"></i>
+                                                    </button>
+                                                    <button class="speak-btn" type="button">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                    <div class="mini-modal">
+                                                        <div class="mini-modal-content">
+                                                            <span class="close">&times;</span>
+                                                            <h2>Select Language</h2>
+                                                            <select id="language-select">
+                                                                <option value="en-us">English</option>
+                                                                <option value="hi-in">Hindi</option>
+                                                                <option value="te-in">Telugu</option>
+                                                                <option value="fr-fr">French</option>
+                                                                <option value="es-es">Spanish</option>
+                                                                <option value="zh-cn">Chinese (Mandarin)</option>
+                                                                <option value="ja-jp">Japanese</option>
+                                                                <option value="de-de">German</option>
+                                                                <option value="ru-ru">Russian</option>
+                                                                <option value="ko-kr">Korean</option>
+                                                                <option value="it-it">Italian</option>
+                                                                <option value="pt-br">Portuguese (Brazil)</option>
+                                                                <option value="ar-sa">Arabic</option>
+                                                                <option value="bn-in">Bengali</option>
+                                                                <option value="pa-in">Punjabi</option>
+                                                                <option value="mr-in">Marathi</option>
+                                                                <option value="gu-in">Gujarati</option>
+                                                                <option value="ur-pk">Urdu</option>
+                                                                <option value="ta-in">Tamil</option>
+                                                                <option value="kn-in">Kannada</option>
+                                                                <option value="ml-in">Malayalam</option>
+                                                                <option value="or-in">Odia</option>
+                                                                <option value="as-in">Assamese</option>
+                                                                <!-- Add more languages as needed -->
+                                                            </select>
+                                                            <button id="select-language-btn">Select</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
-                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1472,7 +1847,7 @@
                             </div>
 
                             <!-- Activity Log content -->
-                            <div id="CCForm6" class="inner-block cctabcontent">
+                            <div id="CCForm5" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -1489,6 +1864,7 @@
                                                 <div class="static">{{ $data->plan_proposed_on }}</div>
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">Plan Approved By</label>
@@ -1503,6 +1879,8 @@
                                                 <div class="static">{{ $data->Plan_approved_on }}</div>
                                             </div>
                                         </div>
+
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="QA More Info Required By">QA More Info Required
@@ -1519,6 +1897,7 @@
                                                 <div class="static">{{ $data->qa_more_info_required_on }}</div>
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancelled By</label>
@@ -1533,6 +1912,7 @@
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Completed By">Completed By</label>
@@ -1547,6 +1927,7 @@
                                                 <div class="static">{{ $data->completed_on }}</div>
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Approved By">Approved By</label>
@@ -1562,6 +1943,7 @@
                                                 <div class="static">{{ $data->approved_on }}</div>
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Rejected By">Rejected By</label>
@@ -1576,17 +1958,17 @@
                                                 <div class="static">{{ $data->rejected_on }}</div>
                                             </div>
                                         </div>
-                                    </div>
-                                    
+
+
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
-                                        <button type="submit"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                        {{-- <button type="submit" class="saveButton"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button> --}}
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        {{-- <button type="submit"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button> --}}
                                         <button type="button"> <a class="text-white"href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
                                 </div>
                             </div>
-                             
+
                         </div>
                     </form>
 
@@ -1653,12 +2035,16 @@
                                             <input type="radio" name="child_type" value="Action_Item">
                                             Action Item
                                         </label>
-                                        <!-- <label for="major">
+                                         <label for="major">
                                             <input type="radio" name="child_type" value="extension">
                                             Extension
-                                        </label> -->
+                                        </label>
+                                        <label for="major">
+                                            <input type="radio" name="child_type" value="RCA">
+                                          RCA
+                                        </label>
                                     @endif
-                                    
+
                                     @if ($data->stage == 6)
                                         <label for="major">
                                             <input type="radio" name="child_type" value="effectiveness_check">
@@ -1824,11 +2210,11 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
@@ -1850,7 +2236,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="modal1">
+            <div class="modal fade" id="capa_more_info">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
 
@@ -1869,16 +2255,16 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
-                                    <input type="text" name="username" required>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input class="input-new" type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
-                                    <input type="password" name="password" required>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input class="input-new" type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
-                                    <input type="comment" name="comment">
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
+                                    <input class="input-new" type="comment" name="comments" required>
                                 </div>
                             </div>
 
@@ -1903,6 +2289,11 @@
 
                 #step-form>div:nth-child(1) {
                     display: block;
+                }
+                .input-new{
+                    width: 100%;
+                    margin-bottom: 10px;
+                    border-radius: 5px;
                 }
             </style>
 
@@ -2003,12 +2394,12 @@
                  <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         const removeButtons = document.querySelectorAll('.remove-file');
-        
+
                         removeButtons.forEach(button => {
                             button.addEventListener('click', function () {
                                 const fileName = this.getAttribute('data-file-name');
                                 const fileContainer = this.closest('.file-container');
-        
+
                                 // Hide the file container
                                 if (fileContainer) {
                                     fileContainer.style.display = 'none';
@@ -2016,12 +2407,390 @@
                             });
                         });
                     });
-                </script> 
+                </script>
                 <script>
                     var maxLength = 255;
                     $('#docname').keyup(function() {
                         var textlen = maxLength - $(this).val().length;
                         $('#rchars').text(textlen);});
                 </script>
-                
+
+
+<script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize speech recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        // Function to start speech recognition and append result to the target element
+        function startRecognition(targetElement) {
+            recognition.start();
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                targetElement.value += transcript;
+            };
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+        }
+
+        // Event delegation for all mic buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.mic-btn')) {
+                const button = event.target.closest('.mic-btn');
+                const inputField = button.previousElementSibling;
+                if (inputField && inputField.classList.contains('mic-input')) {
+                    startRecognition(inputField);
+                }
+            }
+        });
+    });
+
+    // Show/hide the container based on user selection
+    function toggleOthersField(selectedValue) {
+        const container = document.getElementById('external_agencies_req');
+        if (selectedValue === 'others') {
+            container.classList.remove('d-none');
+        } else {
+            container.classList.add('d-none');
+        }
+    }
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize speech recognition
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    // Function to start speech recognition and append result to the target element
+    function startRecognition(targetElement) {
+        recognition.start();
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            targetElement.value += transcript;
+        };
+        recognition.onerror = function(event) {
+            console.error(event.error);
+        };
+    }
+
+    // Event delegation for all mic buttons
+    document.addEventListener('click', function(event) {
+        const button = event.target.closest('.mic-btn');
+        if (button) {
+            const inputField = button.previousElementSibling;
+            if (inputField && inputField.classList.contains('mic-input')) {
+                startRecognition(inputField);
+            }
+        }
+    });
+
+    // Show/hide mic button on focus/blur of input fields
+    const micInputs = document.querySelectorAll('.mic-input');
+    micInputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            const micBtn = this.nextElementSibling;
+            if (micBtn && micBtn.classList.contains('mic-btn')) {
+                micBtn.style.display = 'block';
+            }
+        });
+        input.addEventListener('blur', function(event) {
+            const micBtn = this.nextElementSibling;
+            if (micBtn && micBtn.classList.contains('mic-btn')) {
+                // Use a timeout to prevent immediate hiding when the button is clicked
+                setTimeout(() => {
+                    if (!event.relatedTarget || !event.relatedTarget.classList.contains('mic-btn')) {
+                        micBtn.style.display = 'none';
+                    }
+                }, 200);
+            }
+        });
+    });
+
+    // Show/hide the container based on user selection
+    window.toggleOthersField = function(selectedValue) {
+        const container = document.getElementById('external_agencies_req');
+        if (selectedValue === 'others') {
+            container.classList.remove('d-none');
+        } else {
+            container.classList.add('d-none');
+        }
+    }
+});
+
+$(document).ready(function() {
+    let audio = null;
+    let selectedLanguage = 'en-us'; // Default language
+    const apiKey = '16f141b794484a71b679325faf2d5fc4'; // Use the provided API key
+
+    // When the user clicks the button, open the mini modal
+    $(document).on('click', '.speak-btn', function() {
+        let inputField = $(this).siblings('textarea, input');
+        let textToSpeak = inputField.val();
+        let modal = $(this).siblings('.mini-modal');
+        if (textToSpeak) {
+            // Store the input field element
+            $(modal).data('inputField', inputField);
+            modal.css({
+                display: 'block',
+                top: $(this).position().top - modal.outerHeight() - 10,
+                left: $(this).position().left + $(this).outerWidth() - modal.outerWidth()
+            });
+        }
+    });
+
+    // When the user clicks on <span> (x), close the mini modal
+    $(document).on('click', '.close', function() {
+        $(this).closest('.mini-modal').css('display', 'none');
+    });
+
+    // When the user selects a language and clicks the button
+    $(document).on('click', '#select-language-btn', function(event) {
+        event.preventDefault(); // Prevent form submission
+        let modal = $(this).closest('.mini-modal');
+        selectedLanguage = modal.find('#language-select').val();
+        let inputField = modal.data('inputField');
+        let textToSpeak = inputField.val();
+
+        if (textToSpeak) {
+            if (audio) {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+
+            const url = `https://api.voicerss.org/?key=${apiKey}&hl=${selectedLanguage}&src=${encodeURIComponent(textToSpeak)}&r=0&c=WAV&f=44khz_16bit_stereo`;
+            audio = new Audio(url);
+            audio.play();
+            audio.onended = function() {
+                audio = null;
+            };
+        }
+
+        modal.css('display', 'none');
+    });
+
+    // Speech-to-Text functionality
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    function startRecognition(targetElement) {
+        recognition.start();
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            targetElement.value += transcript;
+        };
+        recognition.onerror = function(event) {
+            console.error(event.error);
+        };
+    }
+
+    $(document).on('click', '.mic-btn', function() {
+        const inputField = $(this).siblings('textarea, input');
+        startRecognition(inputField[0]);
+    });
+
+    // Show mic button on hover
+    $('.relative-container').hover(
+        function() {
+            $(this).find('.mic-btn').show();
+        },
+        function() {
+            $(this).find('.mic-btn').hide();
+        }
+    );
+});
+</script>
+
+// <script>
+// $(document).ready(function(){
+//     let audio = null;
+//     let selectedLanguage = 'en-us'; // Default language
+//     let inputText = '';
+
+//     // When the user clicks the button, open the mini modal
+//     $(document).on('click', '.speak-btn', function() {
+//         let inputField = $(this).siblings('textarea, input');
+//         inputText = inputField.val();
+//         let modal = $(this).siblings('.mini-modal');
+//         if (inputText) {
+//             // Store the input field element
+//             $(modal).data('inputField', inputField);
+//             modal.css({
+//                 display: 'block',
+//                 top: $(this).position().top - modal.outerHeight() - 10,
+//                 left: $(this).position().left + $(this).outerWidth() - modal.outerWidth()
+//             });
+//         }
+//     });
+
+//     // When the user clicks on <span> (x), close the mini modal
+//     $(document).on('click', '.close', function() {
+//         $(this).closest('.mini-modal').css('display', 'none');
+//     });
+
+//     // When the user selects a language and clicks the button
+//     $(document).on('click', '#select-language-btn', function(event) {
+//         event.preventDefault(); // Prevent form submission
+//         let modal = $(this).closest('.mini-modal');
+//         selectedLanguage = modal.find('#language-select').val();
+//         let inputField = modal.data('inputField');
+//         let textToSpeak = inputText;
+
+//         if (textToSpeak) {
+//             if (audio) {
+//                 audio.pause();
+//                 audio.currentTime = 0;
+//             }
+
+//             // Translate the text before converting to speech
+//             translateText(textToSpeak, selectedLanguage).then(translatedText => {
+//                 const apiKey = '16f141b794484a71b679325faf2d5fc4';
+//                 const url = `https://api.voicerss.org/?key=${apiKey}&hl=${selectedLanguage}&src=${encodeURIComponent(translatedText)}&r=0&c=WAV&f=44khz_16bit_stereo`;
+//                 audio = new Audio(url);
+//                 audio.play();
+//                 audio.onended = function() {
+//                     audio = null;
+//                 };
+//             });
+
+//         }
+
+//         modal.css('display', 'none');
+//     });
+
+//     // Speech-to-Text functionality
+//     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+//     recognition.continuous = false;
+//     recognition.interimResults = false;
+//     recognition.lang = 'en-US';
+
+//     function startRecognition(targetElement) {
+//         recognition.start();
+//         recognition.onresult = function(event) {
+//             const transcript = event.results[0][0].transcript;
+//             targetElement.value += transcript;
+//         };
+//         recognition.onerror = function(event) {
+//             console.error(event.error);
+//         };
+//     }
+
+//     $(document).on('click', '.mic-btn', function() {
+//         const inputField = $(this).siblings('textarea, input');
+//         startRecognition(inputField[0]);
+//     });
+
+//     // Show mic button on hover
+//     $('.relative-container').hover(
+//         function() {
+//             $(this).find('.mic-btn').show();
+//         },
+//         function() {
+//             $(this).find('.mic-btn').hide();
+//         }
+//     );
+
+//     // Function to translate text using RapidAPI
+//     async function translateText(text, targetLanguage) {
+//         const url = 'https://google-translate1.p.rapidapi.com/language/translate/v2';
+//         const options = {
+//             method: 'POST',
+//             headers: {
+//                 'x-rapidapi-key': '04a1f9ac37mshad30c58bfab6ebcp1c47f3jsn2b23573a251f',
+//                 'x-rapidapi-host': 'google-translate1.p.rapidapi.com',
+//                 'Accept-Encoding': 'application/gzip',
+//                 'Content-Type': 'application/x-www-form-urlencoded'
+//             },
+//             body: new URLSearchParams({
+//                 q: text,
+//                 target: targetLanguage.split('-')[0] // Get the language code only
+//             })
+//         };
+
+//         const response = await fetch(url, options);
+//         const data = await response.json();
+//         return data.data.translations[0].translatedText;
+//     }
+// });
+
+// </script>
+
+
         @endsection

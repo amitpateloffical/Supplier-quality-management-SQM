@@ -120,8 +120,27 @@
 
             } */
     </style>
+    <style>
+        #start-record-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+        #start-record-btn i {
+            color: black; /* Set the color of the icon */
+            box-shadow: none; /* Remove shadow */
+        }
+        #start-record-btn:focus,
+        #start-record-btn:hover,
+        #start-record-btn:active {
+            box-shadow: none; /* Remove shadow on hover/focus/active */
+        }
+    </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
     <style>
         .calenderauditee {
             position: relative;
@@ -319,7 +338,7 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td> <select name="facility_name[]" id="facility_name">  <option value="">-- Select --</option>  <option value="1">Facility</option>  <option value="2"> Equipment</option> <option value="3">Instrument</option></select> </td>' +
+                        '<td> <select name="facility_name[]" id="facility_name">  <option value="">-- Select --</option>  <option value="Facility">Facility</option>  <option value="Equipment"> Equipment</option> <option value="Instrument">Instrument</option></select> </td>' +
                         '<td><input type="text" name="IDnumber[]"></td>' +
                         '<td><input type="text" name="Remarks[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
@@ -397,7 +416,7 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="product_name[]"></td>' +
-                        '<td> <select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' +
+                        '<td> <select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="1">1 <option value="2">2</option> <option value="3">3</option><option value="4">4</option> <option value="5">5</option><option value="6">6</option> <option value="7">7</option> <option value="8">8</option><option value="9">9</option><option value="Final">Final</option> </select></td>' +
                         '<td><input type="text" name="batch_no[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
 
@@ -564,11 +583,11 @@
                 <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
                 <button class="cctablinks " id="Investigation_button" style="display: none"
                     onclick="openCity(event, 'CCForm9')">Investigation</button>
-               <button id="QRM_button" class="cctablinks" 
+               <button id="QRM_button" class="cctablinks"
                     onclick="openCity(event, 'CCForm115')">QA Secondary Review</button>
 
-                <button id="CAPA_button" class="cctablinks" 
-                    onclick="openCity(event, 'CCForm105')">Initiator Update</button> 
+                <button id="CAPA_button" class="cctablinks"
+                    onclick="openCity(event, 'CCForm105')">Initiator Update</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Investigation & CAPA</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Final Review</button>
@@ -628,76 +647,72 @@
 
 
                                 @php
-                                    // Calculate the due date (30 days from the initiation date)
-                                    $initiationDate = date('Y-m-d'); // Current date as initiation date
-                                    $dueDate = date('d/m/Y', strtotime($initiationDate . '+30 days')); // Due date in DD/MM/YYYY format
+                                    $initiationDate = date('d-M-Y');
+                                    $dueDate = date('d-M-Y', strtotime($initiationDate . '+30 days'));
                                 @endphp
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                        <input readonly type="text" value="{{ date('d/m/Y') }}" name="intiation_date" id="intiation_date"
-                                            style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date_hidden">
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 new-date-data-field">
+                                <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date">Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                 reason in "Due Date Extension Justification" data field.</small></div>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date_display" readonly placeholder="DD/MM/YYYY" />
-                                            <input type="date" id="due_date" name="due_date" readonly
-                                                class="hide-input"
-                                                onchange="handleDateInput(this, 'due_date_display')" />
-                                        </div>
+                                                <div class="calenderauditee">
+                                                    <input type="text" name="due_date" readonly value="{{$dueDate}}" />
+                                                    <!-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" /> -->
+                                                </div>
                                     </div>
                                 </div>
-                                
+
                                 <script>
                                     // Function to handle date input and update the display
                                     function handleDateInput(element, textInputID) {
                                         let textInput = document.getElementById(textInputID);
                                         const date = new Date(element.value);
-                                
+
                                         if (!isNaN(date)) {
                                             const day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
                                             const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Ensuring two digits
                                             const year = date.getFullYear();
-                                
+
                                             // Formatting the date in "DD/MM/YYYY" format
                                             textInput.value = `${day}/${month}/${year}`;
                                         } else {
                                             textInput.value = "";
                                         }
                                     }
-                                
+
                                     // Set min attribute for date input to today
                                     document.addEventListener('DOMContentLoaded', function() {
                                         var today = new Date();
                                         var day = today.getDate().toString().padStart(2, '0');
                                         var month = (today.getMonth() + 1).toString().padStart(2, '0');
                                         var year = today.getFullYear();
-                                
+
                                         var minDate = `${year}-${month}-${day}`;
                                         document.getElementById('due_date').setAttribute('min', minDate);
-                                
+
                                         var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
-                                
+
                                         if (dueDate) {
                                             var parts = dueDate.split('/');
                                             if (parts.length === 3) {
                                                 var date = new Date(parts[2], parts[1] - 1, parts[0]);
-                                
+
                                                 if (!isNaN(date)) {
                                                     const formattedDay = date.getDate().toString().padStart(2, '0');
                                                     const formattedMonth = (date.getMonth() + 1).toString().padStart(2, '0');
                                                     const formattedYear = date.getFullYear();
-                                
+
                                                     var dueDateFormatted = `${formattedDay}/${formattedMonth}/${formattedYear}`;
-                                
+
                                                     document.getElementById('due_date_display').value = dueDateFormatted;
                                                     document.getElementById('due_date').value = `${formattedYear}-${formattedMonth}-${formattedDay}`;
                                                 }
@@ -705,9 +720,9 @@
                                         }
                                     });
                                 </script>
-                                
 
-                                <div class="col-lg-12">
+
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Department</b><span
                                                 class="text-danger">*</span></label>
@@ -769,17 +784,27 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars">255</span>
-                                        Characters remaining
-                                        <input id="docname" type="text" name="short_description" maxlength="255"
-                                            required>
-                                    </div>
-                                    @error('short_description')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                                            class="text-danger">*</span></label><span id="rchars">255</span> characters remaining
+                                        <div class="relative-container">
+                                                <input id="docname" type="text" name="short_description" maxlength="255" class="mic-input" required>
 
-                                
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                    {{--<div style="position:relative;">
+                                    <input id="docname" type="text" name="short_description" maxlength="255" class="mic-input" required>
+                                    <button class="mic-btn" type="button" style="position: absolute; right: 45px; top: 51%; transform: translateY(-50%);">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                </div>--}}
+                            </div>
+                                @error('short_description')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+
 
 
                                 <div class="col-lg-6 new-date-data-field">
@@ -803,7 +828,7 @@
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time">
                                         <label for="deviation_time">Deviation Observed On (Time)</label>
-                                        <input type="text" name="deviation_time" id="deviation_time">
+                                        <input type="text" name="deviation_time" id="deviation_time" placeholder="Enter Deviation Observed On Time">
                                     </div>
                                     @error('Deviation_date')
                                         <div class="text-danger">{{ $message }}</div>
@@ -813,12 +838,25 @@
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time delayJustificationBlock">
                                         <label for="deviation_time">Delay Justification</label>
-                                        <textarea id="Delay_Justification" name="Delay_Justification"></textarea>
+
+                                        <div class="relative-container">
+                                            <textarea id="docname" id="Delay_Justification" name="Delay_Justification" maxlength="255" class="mic-input"></textarea>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                        {{--<div style="position:relative;">
+                                            <textarea id="Delay_Justification" name="Delay_Justification" class="mic-input"></textarea>
+                                            <button class="mic-btn" type="button" style="position: absolute; right: 15px; top: 51%; transform: translateY(-50%);">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>--}}
                                     </div>
                                     {{-- @error('Deviation_date')
-                                        <div class="text-danger">{{  $message  }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror --}}
                                 </div>
+
 
                                 <script>
                                     flatpickr("#deviation_time", {
@@ -832,7 +870,19 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="facility">Deviation Observed By</label>
-                                        <input type="text" name="Facility" id="deviation_observed_by" placeholder="Enter Facility Name">
+                                        <div class="relative-container">
+                                            <input id="deviation_observed_by" name="Facility" maxlength="255" class="mic-input" placeholder="Enter Facility Name">
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                        {{--<div style="position:relative;">
+                                            <input type="text" name="Facility" id="deviation_observed_by" placeholder="Enter Facility Name" class="mic-input">
+                                            <button class="mic-btn" type="button" style="position: absolute; right: 45px; top: 51%; transform: translateY(-50%);">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>--}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
@@ -1194,8 +1244,6 @@
                                                         <th style="width: 16%">Batch No</th>
                                                         <th style="width: 8%">Action</th>
 
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1208,16 +1256,16 @@
                                                         <select name="product_stage[]" id="product_stage"
                                                             class="productStage">
                                                             <option value="">-- Select --</option>
-                                                            <option value="">1</option>
-                                                            <option value="">2</option>
-                                                            <option value="">3</option>
-                                                            <option value="">4</option>
-                                                            <option value="">5</option>
-                                                            <option value="">6</option>
-                                                            <option value="">7</option>
-                                                            <option value="">8</option>
-                                                            <option value="">9</option>
-                                                            <option value="">Final</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="6">6</option>
+                                                            <option value="7">7</option>
+                                                            <option value="8">8</option>
+                                                            <option value="9">9</option>
+                                                            <option value="Final">Final</option>
                                                         </select>
                                                     </td>
                                                     <td><input type="text" class="productBatchNo" name="batch_no[]">
@@ -1339,15 +1387,25 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Description Deviation">Description of Deviation</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="tiny-disable" name="Description_Deviation[]" id="summernote-1" required>
-                                    </textarea>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <div class="relative-container">
+                                            <textarea id="deviation_observed_by" name="Description_Deviation[]" maxlength="255" class="mic-input" placeholder="Enter Description of Deviation" required></textarea>
+
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                        {{--<div style="position:relative;">
+                                            <textarea class="tiny-disable mic-input" name="Description_Deviation[]" id="summernote-1" required></textarea>
+                                            <button class="mic-btn" type="button" style="position: absolute; right: 15px; top: 51%; transform: translateY(-50%);">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>--}}
                                     </div>
                                     @error('Description_Deviation[]')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
 
                                 {{-- <div class="col-6">
                                 <div class="group-input">
@@ -1358,15 +1416,25 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Immediate Action">Immediate Action (if any)</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="tiny-disable" name="Immediate_Action[]" id="summernote-2"required>
-                                    </textarea>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <div class="relative-container">
+                                            <textarea id="summernote-2" name="Immediate_Action[]" maxlength="255" class="mic-input" placeholder="Enter Immediate Action" required></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                        {{--<div style="position:relative;">
+                                            <textarea class="tiny-disable mic-input" name="Immediate_Action[]" id="summernote-2" required></textarea>
+                                            <button class="mic-btn" type="button" style="position: absolute; right: 15px; top: 51%; transform: translateY(-50%);">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>--}}
                                     </div>
                                     @error('record')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                 {{-- <div class="col-6">
                                 <div class="group-input">
                                         <label for="Preliminary Impact">Preliminary Impact of Deviation</label>
@@ -1375,16 +1443,26 @@
                                 </div> --}}
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Preliminary Impact">Preliminary Impact of Deviation </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="tiny-disable" name="Preliminary_Impact[]" id="summernote-3" required>
-                                    </textarea>
+                                        <label for="Preliminary Impact">Preliminary Impact of Deviation</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <div class="relative-container">
+                                            <textarea id="summernote-3" name="Preliminary_Impact[]" maxlength="255" class="mic-input" placeholder="Enter Preliminary Impact of Deviation" required></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+
+                                        {{--<div style="position:relative;">
+                                            <textarea class="tiny-disable mic-input" name="Preliminary_Impact[]" id="summernote-3" required></textarea>
+                                            <button class="mic-btn" type="button" style="position: absolute; right: 15px; top: 51%; transform: translateY(-50%);">
+                                                <i class="fas fa-microphone"></i>
+                                            </button>
+                                        </div>--}}
                                     </div>
                                     @error('Preliminary_Impact')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments">Initial Attachments</label>
@@ -1567,7 +1645,7 @@
 
 
 
-                                
+
 
                                  <div class="col-lg-6">
                                     <div class="group-input">
@@ -1578,7 +1656,7 @@
                                             <option value="no">No</option>
                                         </select>
                                     </div>
-                                </div> 
+                                </div>
 
                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
@@ -1692,11 +1770,11 @@
                                             class="text-danger">*</span></label>
                                         <select disabled name="Customer_notification" id="Customer_notification" >
                                             <option value="0">-- Select --</option>
-                                            <option 
+                                            <option
                                             value="Yes">Yes</option>
-                                            <option  
+                                            <option
                                             value="No">No</option>
-                                            <option  
+                                            <option
                                                 value="NA">NA</option>
                                         </select>
                                         @error('Customer_notification')
@@ -1731,13 +1809,13 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: auto;">
+                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
                                     <button type="button"  class="backButton">Back</button>
                                 </a>
 
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"  class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="button" style=" justify-content: center; width: 4rem;"  class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                         {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
                                         class="button  launch_extension" data-bs-toggle="modal"
@@ -3918,13 +3996,13 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: auto;">
+                                <button type="submit" id="ChangesaveButton" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
                                     <button type="button"  class="backButton">Back</button>
                                 </a>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" id="ChangeNextButton" class="nextButton"
+                                <button type="button" style=" justify-content: center; width: 4rem;" id="ChangeNextButton" class="nextButton"
                                     onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                         {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
                                         class="button  launch_extension" data-bs-toggle="modal"
@@ -5268,14 +5346,14 @@
 
         </div>
         <div class="button-block">
-            <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save</button>
-            <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: auto;">
+            <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+            <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
                 <button type="button"  class="backButton">Back</button>
             </a>
-            <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
-            <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+            <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
+            <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                     Exit </a> </button>
-                   
+
         </div>
     </div>
 </div>
@@ -5310,14 +5388,14 @@
 
         </div>
         <div class="button-block">
-            <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save</button>
-            <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: auto;">
+            <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+            <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
                 <button type="button"  class="backButton">Back</button>
             </a>
-            <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
-            <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+            <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
+            <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                     Exit </a> </button>
-                   
+
         </div>
     </div>
 </div>
@@ -5352,14 +5430,14 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: auto;">
+                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
                                     <button type="button"  class="backButton">Back</button>
                                 </a>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                       
+
                             </div>
                         </div>
                     </div>
@@ -5395,14 +5473,14 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: auto;">
+                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
                                     <button type="button"  class="backButton">Back</button>
                                 </a>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                       
+
                             </div>
                         </div>
                     </div>
@@ -5467,12 +5545,12 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: auto;">
+                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
                                     <button type="button" class="backButton">Back</button>
                                 </a>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                         {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
                                         class="button  launch_extension" data-bs-toggle="modal"
@@ -8012,4 +8090,4 @@
             }
         </script>
 
-    @endsection
+@endsection

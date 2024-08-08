@@ -22,6 +22,10 @@
                     min-height: 100vh;
                 }
 
+                .imageContainer p img{
+                    width: 600px !important;
+                    height: 300px;
+                }
                 .w-10 {
                     width: 10%;
                 }
@@ -145,7 +149,7 @@
                 }
 
                 .table_bg {
-                    /* background: #E8A93657; */
+                    /* background: #0e7676cc57; */
                     background: #0e7676cc
                 }
 
@@ -154,7 +158,7 @@
                     padding: 10px;
                     margin-bottom: 10px;
                     margin-top: 10px;
-                    /* background: #E8A936; */
+                    /* background: #0e7676cc; */
                     background: #0e7676cc
                 }
 
@@ -361,34 +365,34 @@
                             </td>
 
                             <td>
-                                <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
+                                <div><strong>Changed From :</strong>{!! $dataDemo->change_from !!}</div>
                             </td>
 
                             <td>
-                                <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
+                                <div><strong>Changed To :</strong>{!! $dataDemo->change_to !!}</div>
                             </td>
                             <td>
-                                <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                <div class="imageContainer">
+                                    <strong> Data Field Name :</strong>
+                                    {{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change From
-                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
+                                            :</strong>{!! $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' !!}
                                     @else
                                         <strong>Change From
-                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                            :</strong>{!! $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' !!}
                                     @endif
                                 </div>
                                 <br>
-                                <div>
+                                <div class="imageContainer">
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change To
-                                            :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
+                                            :</strong>{!! $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' !!}
                                     @else
                                         <strong>Change To
-                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
+                                            :</strong>{!! $dataDemo->current ? $dataDemo->current : 'Not Applicable' !!}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">
@@ -408,7 +412,7 @@
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? Helpers::getdateFormat($dataDemo->created_at) : 'Not Applicable' }}
+                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
@@ -422,24 +426,24 @@
         <div style="float: inline-end; margin: 10px;">
             <style>
                 .pagination>.active>span {
-                    background-color: #E8A936 !important;
-                    border-color: #E8A936 !important;
+                    background-color: #0e7676cc !important;
+                    border-color: #0e7676cc !important;
                     color: #fff !important;
                 }
 
                 .pagination>.active>span:hover {
-                    background-color: #E8A936 !important;
-                    border-color: #E8A936 !important;
+                    background-color: #0e7676cc !important;
+                    border-color: #0e7676cc !important;
                 }
 
                 .pagination>li>a,
                 .pagination>li>span {
-                    color: #E8A936 !important;
+                    color: #0e7676cc !important;
                 }
 
                 .pagination>li>a:hover {
-                    background-color: #E8A936 !important;
-                    border-color: #E8A936 !important;
+                    background-color: #0e7676cc !important;
+                    border-color: #0e7676cc !important;
                     color: #fff !important;
                 }
             </style>

@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    SCAR Report
+                    SCAR Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -196,7 +196,7 @@
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
 
-                        <th class="w-20">Date Initiation</th>
+                        <th class="w-20"> Initiation Date</th>
                         <td class="w-30">{{ Helpers::getDateFormat($data->initiation_date) }}</td>
                     </tr>
                     <tr>
@@ -209,10 +209,12 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Assign To</th>
+                        <th class="w-20">Assigned To</th>
                         <td class="w-30">
                             @if ($data->assign_to)
                                 {{ Helpers::getInitiatorName($data->assign_to) }}
+
+                                {{-- {{ Helpers::getInitiatorName($data->assign_to) }} --}}
                             @else
                                 Not Applicable
                             @endif
@@ -230,16 +232,6 @@
                         </td>
                     </tr>
 
-                    <tr>
-                        <th class="w-20">Description</th>
-                        <td class="w-80" colspan="3">
-                            @if ($data->description)
-                                {{ $data->description }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
 
                     <tr>
                         <th class="w-20">SCAR Name</th>
@@ -254,7 +246,7 @@
                         <th class="w-20">Owner Name</th>
                         <td class="w-30">
                             @if ($data->owner_name)
-                                {{ $data->owner_name}}
+                                {{ $data->owner_name }}
                             @else
                                 Not Applicable
                             @endif
@@ -262,7 +254,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">FollowUp Date</th>
+                        <th class="w-20">Follow Up Date</th>
                         <td class="w-30">
                             @if ($data->followup_date)
                                 {{ Helpers::getdateFormat($data->followup_date) }}
@@ -274,7 +266,7 @@
                         <th class="w-20">Supplier Site</th>
                         <td class="w-30">
                             @if ($data->supplier_site)
-                                {{ $data->supplier_site}}
+                                {{ $data->supplier_site }}
                             @else
                                 Not Applicable
                             @endif
@@ -294,13 +286,24 @@
                         <th class="w-20">Supplier Site Contact Email</th>
                         <td class="w-30">
                             @if ($data->supplier_site_contact_email)
-                                {{ $data->supplier_site_contact_email}}
+                                {{ $data->supplier_site_contact_email }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                     </tr>
 
+                    <tr>
+                        <th class="w-20">Description</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->description)
+                                {{ $data->description }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                   
                     <tr>
                         <th class="w-20">Recommended Action</th>
                         <td class="w-80" colspan="3">
@@ -311,6 +314,24 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+
+
+                <div class="block-head">
+                    Supplier Response
+                </div>
+                <table>
+
+                    <!-- <tr>
+                        <th class="w-20">Recommended Action</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->recommended_action)
+                                {{ $data->recommended_action }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr> -->
 
                     <tr>
                         <th class="w-20">Non Conformance</th>
@@ -336,14 +357,14 @@
                         <th class="w-20">Expected Closure Time</th>
                         <td class="w-30">
                             @if ($data->expected_closure_time)
-                                {{ $data->expected_closure_time}}
+                                {{ $data->expected_closure_time }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                     </tr>
 
-                    
+
                     <tr>
                         <th class="w-20">Root Cause</th>
                         <td class="w-80" colspan="3">
@@ -402,7 +423,7 @@
                 <tr>
                     <th class="w-20">Submitted By</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->submitted_by  }}</div>
+                        <div class="static">{{ $data->submitted_by }}</div>
                     </td>
                     <th class="w-20">Submitted On</th>
                     <td class="w-30">

@@ -476,7 +476,7 @@ function addMultipleFiles(input, block_id) {
 <div class="col-lg-6">
     <div class="group-input">
         <label for="Initiator Group"><b>Initiator Group</b></label>
-        <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} id="initiator_group">
+        <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} id="initiator_group">
             <option value="">Select Department</option>
             <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
             <option value="QAB" @if ($data->Initiator_Group == 'QAB') selected @endif>Quality Assurance Biopharma</option>
@@ -503,7 +503,7 @@ function addMultipleFiles(input, block_id) {
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" id="initiator_group_code"  name="initiator_group_code" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value="{{$data->initiator_group_code}}" readonly>
+                                        <input type="text" id="initiator_group_code"  name="initiator_group_code" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{$data->initiator_group_code}}" readonly>
                                     </div>
 
                                 </div>

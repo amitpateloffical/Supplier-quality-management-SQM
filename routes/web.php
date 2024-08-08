@@ -27,6 +27,7 @@ use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\CustomerController;
 use App\Http\Controllers\rcms\ExtensionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
+use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\rcms\RcmsDashboardController;
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
@@ -190,8 +191,10 @@ Route::get('risk-management', [RiskManagementController::class, 'risk']);
 Route::get('RiskManagement/{id}', [RiskManagementController::class, 'show'])->name('showRiskManagement');
 Route::post('risk_store', [RiskManagementController::class, 'store'])->name('risk_store');
 Route::post('riskAssesmentUpdate/{id}', [RiskManagementController::class, 'riskUpdate'])->name('riskUpdate');
-Route::post('riskAssesmentStateChange{id}', [RiskManagementController::class, 'riskAssesmentStateChange'])->name('riskAssesmentStateUpdate');
+Route::post('riskAssesmentStateChangeshow/{id}', [RiskManagementController::class, 'riskAssesmentStateChange'])->name('riskAssesmentStateChangeshow');
 Route::post('reject_Risk/{id}', [RiskManagementController::class, 'RejectStateChange'])->name('reject_Risk');
+Route::post('more_info_model/{id}', [RiskManagementController::class, 'MoreInfoCAPA'])->name('more_info_model');
+
 
 Route::get('riskAuditTrial/{id}', [RiskManagementController::class, 'riskAuditTrial']);
 Route::get('auditDetailsrisk/{id}', [RiskManagementController::class, 'auditDetailsrisk'])->name('showriskAuditDetails');
@@ -292,7 +295,7 @@ Route::view('question-training', 'frontend.TMS.question-training');
 Route::view('edit-question', 'frontend.TMS.edit-question');
 
 Route::view('change-control-list', 'frontend.change-control.change-control-list');
-Route::view('auditReport', 'frontend.deviation_report.auditReport');
+// Route::view('auditReport', 'frontend.deviation_report.auditReport');
 
 
 Route::view('change-control-list-print', 'frontend.change-control.change-control-list-print');
@@ -563,6 +566,17 @@ Route::post('child_external_Supplier/{id}', [SupplierAuditController::class, 'ch
 Route::get('auditReport/{id}', [SupplierAuditController::class, 'auditReport'])->name('SupplierAuditTrialReport');
 Route::get('singleReport/{id}', [SupplierAuditController::class, 'singleReport'])->name('SupplierSingleReport');
 
+//==================
 
+Route::get('extension-new', [ExtensionNewController::class, 'index']);
+Route::post('extension_new', [ExtensionNewController::class, 'store'])->name('extension_new.store');
+Route::get('extension_newshow/{id}', [ExtensionNewController::class, 'show']);
+
+Route::put('extension_new/{id}', [ExtensionNewController::class, 'update'])->name('extension_new.update');
+Route::post('extension_send_stage/{id}', [ExtensionNewController::class, 'sendstage'])->name('extension_send_stage');
+Route::post('moreinfoState_extension/{id}', [ExtensionNewController::class, 'moreinfoStateChange'])->name('moreinfoState_extension');
+Route::post('RejectState_extension/{id}', [ExtensionNewController::class, 'reject'])->name('RejectState_extension');
+Route::post('send-cqa/{id}', [ExtensionNewController::class, 'sendCQA'])->name('send-cqa');
+Route::post('send-approved/{id}', [ExtensionNewController::class, 'sendApproved'])->name('send-approved');
 
 

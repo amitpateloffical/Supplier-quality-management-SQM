@@ -45,7 +45,7 @@ a:hover {
 
 button {
     border: 0;
-    background: #d68e58;
+    background: #000;
     color: white;
     border: 2px solid black;
     transition: all 0.3s linear;
@@ -577,7 +577,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 }
 
 #change-control-fields .inner-block .group-input table thead th {
-    background: #0039bd85;
+    background: #0e7676cc;
 }
 
 #change-control-fields .inner-block .group-input table input,
@@ -650,7 +650,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 }
 
 #change-control-fields .cctabcontent .button-block button {
-    background: #4274da;
+    background: #0e7676cc;
     color: white;
     border: 0;
     padding: 4px 15px;
@@ -1904,7 +1904,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 }
 
 #change-control-fields .group-input .file-attachment-field .add-btn div {
-    background: #002bff;
+    background: #0e7676cc;
     color: white;
     border-radius: 5px;
     text-align: center;

@@ -39,6 +39,20 @@ class Helpers
     
         }
 
+        public static function getdateFormatNew($date)
+        {
+            if(empty($date)) {
+                return ''; // or any default value you prefer
+            }
+            // else{
+            else{
+                $date = Carbon::parse($date);
+                $formatted_date = $date->format("d-M-Y");
+                return $formatted_date;
+            }
+    
+        }
+
 static function getFullDepartmentName($code)
 {
     $full_department_name = '';
@@ -212,6 +226,11 @@ static function getFullDepartmentName($code)
         } else {
             return false;
         }         
+    }
+    public static function showStage($parentType, $model, $count)
+    {
+        $existingRecordsCount = $model::where('parent_type', $parentType)->count();
+        return $existingRecordsCount > $count;
     }
 
     public static function checkRoles_check_approvers($document)
@@ -442,5 +461,36 @@ public static function getInitiatorGroupFullName($shortName)
         } catch (\Exception $e) {
             // 
         }
+    }
+
+    public static function getHODDropdown() {
+        $hodUserList = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->where('user_roles.q_m_s_roles_id', '4')
+            ->select('users.id', 'users.name')
+            ->distinct()
+            ->get();
+    
+        $dropdown = [];
+        foreach ($hodUserList as $hodUser) {
+            $dropdown[] = ['id' => $hodUser->id, 'name' => $hodUser->name];
+        }
+    
+        return $dropdown;
+    }
+    public static function getQADropdown() {
+        $QAUserList = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->where('user_roles.q_m_s_roles_id', '7')
+            ->select('users.id', 'users.name')
+            ->distinct()
+            ->get();
+    
+        $dropdown = [];
+        foreach ($QAUserList as $QAUser) {
+            $dropdown[] = ['id' => $QAUser->id, 'name' => $QAUser->name];
+        }
+    
+        return $dropdown;
     }
 }

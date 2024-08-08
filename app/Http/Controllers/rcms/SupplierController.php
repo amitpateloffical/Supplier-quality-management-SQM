@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\rcms;
 
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -30,7 +31,8 @@ User,
 OpenStage,
 SCAR,
 Capa,
-    RiskManagement
+RiskManagement,
+SupplierChecklist
 };
 
 class SupplierController extends Controller
@@ -56,44 +58,101 @@ class SupplierController extends Controller
         $supplier->date_opened = $request->date_opened;
         $supplier->intiation_date = $request->intiation_date;
         $supplier->short_description = $request->short_description;
-        $supplier->assign_to = $request->assign_to;
+        // $supplier->assign_to = $request->assign_to;
         $supplier->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
-        $supplier->supplier_person = $request->supplier_person;        
-        $supplier->supplier_contact_person = $request->supplier_contact_person;
-        $supplier->supplier_products = $request->supplier_products;
-        $supplier->description = $request->description;
-        $supplier->supplier_type = $request->supplier_type;
-        $supplier->supplier_sub_type = $request->supplier_sub_type;
-        $supplier->supplier_other_type = $request->supplier_other_type;
-        $supplier->supply_from = $request->supply_from;
-        $supplier->supply_to = $request->supply_to;
-        $supplier->supplier_website = $request->supplier_website;
-        $supplier->supplier_web_search = $request->supplier_web_search;
-        $supplier->related_url = $request->related_url;
-        $supplier->related_quality_events = $request->related_quality_events;
+        $supplier->intiation_date = $request->intiation_date;
+        $supplier->initiator_group_code = $request->initiator_group_code;
+        $supplier->initiation_group = Helpers::getFullDepartmentName($request->initiator_group_code);
+        $supplier->manufacturerName = $request->manufacturerName;
+        $supplier->starting_material = $request->starting_material;
+        $supplier->material_code = $request->material_code;
+        $supplier->pharmacopoeial_claim = $request->pharmacopoeial_claim;
+        $supplier->cep_grade = $request->cep_grade;
+        $supplier->request_for = implode(',',$request->request_for);
+        // dd($request->request_for);
+        $supplier->attach_batch = $request->attach_batch;
+        $supplier->request_justification = $request->request_justification;
+        $supplier->manufacturer_availability = $request->manufacturer_availability;
+        $supplier->request_accepted = $request->request_accepted;
+        $supplier->cqa_remark = $request->cqa_remark;
+        $supplier->accepted_by = $request->accepted_by;
+        $supplier->accepted_on = $request->accepted_on;
+        $supplier->pre_purchase_sample = $request->pre_purchase_sample;
+        $supplier->justification = $request->justification;
+        $supplier->cqa_coordinator = $request->cqa_coordinator;
+        $supplier->pre_purchase_sample_analysis = $request->pre_purchase_sample_analysis;
+        $supplier->availability_od_coa = $request->availability_od_coa;
+        $supplier->analyzed_location = $request->analyzed_location;
+        $supplier->cqa_comment = $request->cqa_comment;
+        $supplier->materialName = $request->materialName;
+        $supplier->manufacturerNameNew = $request->manufacturerNameNew;
+        $supplier->analyzedLocation = $request->analyzedLocation;
+        $supplier->cqa_corporate_comment = $request->cqa_corporate_comment;
+        $supplier->cqa_designee = $request->cqa_designee;
+        $supplier->sample_ordered = $request->sample_ordered;
+        $supplier->sample_order_justification = $request->sample_order_justification;
+        $supplier->acknowledge_by = $request->acknowledge_by;
+        $supplier->trail_status_feedback = $request->trail_status_feedback;
+        $supplier->sample_stand_approved = $request->sample_stand_approved;
+        $supplier->tse_bse = $request->tse_bse;
+        $supplier->tse_bse_remark = $request->tse_bse_remark;
+        $supplier->residual_solvent = $request->residual_solvent;
+        $supplier->residual_solvent_remark = $request->residual_solvent_remark;
+        $supplier->gmo = $request->gmo;
+        $supplier->gmo_remark = $request->gmo_remark;
+        $supplier->melamine = $request->melamine;
+        $supplier->melamine_remark = $request->melamine_remark;
+        $supplier->gluten = $request->gluten;
+        $supplier->gluten_remark = $request->gluten_remark;
+        $supplier->nitrosamine = $request->nitrosamine;
+        $supplier->nitrosamine_remark = $request->nitrosamine_remark;
+        $supplier->who = $request->who;
+        $supplier->who_remark = $request->who_remark;
+        $supplier->gmp = $request->gmp;
+        $supplier->gmp_remark = $request->gmp_remark;
+        $supplier->iso_certificate = $request->iso_certificate;
+        $supplier->iso_certificate_remark = $request->iso_certificate_remark;
+        $supplier->manufacturing_license = $request->manufacturing_license;
+        $supplier->manufacturing_license_remark = $request->manufacturing_license_remark;
+        $supplier->cep = $request->cep;
+        $supplier->cep_remark = $request->cep_remark;
+        $supplier->msds = $request->msds;
+        $supplier->msds_remark = $request->msds_remark;
+        $supplier->elemental_impurities = $request->elemental_impurities;
+        $supplier->elemental_impurities_remark = $request->elemental_impurities_remark;
+        $supplier->declaration = $request->declaration;
+        $supplier->declaration_remark = $request->declaration_remark;
+        $supplier->supply_chain_availability = $request->supply_chain_availability;
+        $supplier->quality_agreement_availability = $request->quality_agreement_availability;
+        $supplier->risk_assessment_done = $request->risk_assessment_done;
+        $supplier->risk_rating = $request->risk_rating;
+        $supplier->manufacturer_audit_planned = $request->manufacturer_audit_planned;
+        $supplier->manufacturer_audit_conducted = $request->manufacturer_audit_conducted;
+        $supplier->manufacturer_can_be = $request->manufacturer_can_be;  
+        $supplier->supplierJustification = $request->supplierJustification;     
 
-        if (!empty($request->logo_attachment)) {
+        if (!empty($request->cep_attachment)) {
             $files = [];
-            if ($request->hasfile('logo_attachment')) {
-                foreach ($request->file('logo_attachment') as $file) {
-                    $name = "Supplier" . '-logo_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('cep_attachment')) {
+                foreach ($request->file('cep_attachment') as $file) {
+                    $name = 'cep' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $supplier->logo_attachment = json_encode($files);
+            $supplier->cep_attachment = json_encode($files);
         }
 
-        if (!empty($request->supplier_attachment)) {
+        if (!empty($request->coa_attachment)) {
             $files = [];
-            if ($request->hasfile('supplier_attachment')) {
-                foreach ($request->file('supplier_attachment') as $file) {
-                    $name = "Supplier" . '-supplier_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('coa_attachment')) {
+                foreach ($request->file('coa_attachment') as $file) {
+                    $name = "Supplier" . '-coa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $supplier->supplier_attachment = json_encode($files);
+            $supplier->coa_attachment = json_encode($files);
         } 
 
         /****************** HOD Review ********************/
@@ -319,6 +378,46 @@ class SupplierController extends Controller
         $supplier->status = 'Opened';
         $supplier->stage = 1;
         $supplier->save();
+        
+        /******************** Supplier Checklist ******************/
+        $supplierId = $supplier->id;
+        $types = ['tse', 'residual_solvent','melamine','gmo','gluten','manufacturer_evaluation','who','gmp','ISO','manufacturing_license','CEP','risk_assessment','elemental_impurity','azido_impurities'];
+
+        foreach ($types as $type) {
+            $attachments = $request->file("{$type}_attachment") ?? [];
+            $issueDates = $request->input("certificate_issue_{$type}") ?? [];
+            $expiryDates = $request->input("certificate_expiry_{$type}") ?? [];
+            $remarks = $request->input("{$type}_remarks") ?? [];
+
+            $maxRows = max(count($attachments), count($issueDates), count($expiryDates), count($remarks));
+
+            Log::info("Processing type: {$type}, rows: {$maxRows}");
+
+            for ($index = 0; $index < $maxRows; $index++) {
+                $attachmentPath = null;
+                if (isset($attachments[$index]) && $attachments[$index] != null) {
+                    $attachment = $attachments[$index];
+                    $filename =  "Supplier-" . "Certificate" . rand(1, 100) . '.' . $attachment->getClientOriginalExtension();
+                    $attachmentPath = $attachment->move('upload/', $filename);
+                }
+
+                // Safely handle possibly missing array elements
+                $issueDate = $issueDates[$index] ?? 'NULL';
+                $expiryDate = $expiryDates[$index] ?? 'NULL';
+                $remark = $remarks[$index] ?? 'NULL';
+
+                Log::info("Creating row: index={$index}, issue_date={$issueDate}, expiry_date={$expiryDate}, remarks={$remark}, attachment={$attachmentPath}");
+
+                SupplierChecklist::create([
+                    'supplier_id' => $supplierId,
+                    'doc_type' => $type,
+                    'attachment' => $attachmentPath,
+                    'issue_date' => $issueDates[$index] ?? null,
+                    'expiry_date' => $expiryDates[$index] ?? null,
+                    'remarks' => $remarks[$index] ?? null,
+                ]);
+            }
+        }
 
         $certificationData = SupplierGrid::where(['supplier_id' => $supplier->id, 'identifier' =>'CertificationData'])->firstOrCreate();
         $certificationData->supplier_id = $supplier->id;
@@ -327,11 +426,89 @@ class SupplierController extends Controller
         $certificationData->save();
 
         /******************* Audit Trail Code ***********************/
+
+        
+            // $history = new SupplierAuditTrail();
+            // $history->supplier_id = $record->id;
+            // $history->activity_type = 'Record Number';
+            // $history->previous = "Null";
+            // $history->current = Helpers::getDivisionName($record->division_id) . 'RV/RP/' . Helpers::year($record->created_at) . '/' . str_pad($record->record, 4, '0', STR_PAD_LEFT);
+            // $history->comment = "NA";
+            // $history->user_id = Auth::user()->id;
+            // $history->user_name = Auth::user()->name;
+            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            // $history->origin_state = $record->status;
+            // $history->change_from = "Initiation";
+            // $history->change_to = "Opened";
+            // $history->action_name = "Create";
+            // $history->save(); // Save the new instance
+
+
+        $history = new SupplierAuditTrail;
+        $history->supplier_id = $supplier->id;
+        $history->activity_type = 'Request Number';
+        $history->previous = "Null";
+        $history->current = 'RV/RP/' . Helpers::year($supplier->created_at) . '/' . str_pad($supplier->record, 4, '0', STR_PAD_LEFT);
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $record->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save(); 
+
+        $history = new SupplierAuditTrail;
+        $history->supplier_id = $supplier->id;
+        $history->activity_type = 'Division';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName($request->division_id);
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $supplier->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+
         $history = new SupplierAuditTrail;
         $history->supplier_id = $supplier->id;
         $history->activity_type = 'Inititator';
         $history->previous = "Null";
         $history->current = Auth::user()->name;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $supplier->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+
+        $history = new SupplierAuditTrail;
+        $history->supplier_id = $supplier->id;
+        $history->activity_type = 'Initiation Date';
+        $history->previous = "Null";
+        $history->current = Helpers::getdateFormat($supplier->intiation_date);
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $supplier->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+
+        $history = new SupplierAuditTrail;
+        $history->supplier_id = $supplier->id;
+        $history->activity_type = 'Date Due';
+        $history->previous = "Null";
+        $history->current = $supplier->due_date;
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -357,42 +534,12 @@ class SupplierController extends Controller
         $history->action_name = 'Create';
         $history->save();
 
-        $history = new SupplierAuditTrail;
-        $history->supplier_id = $supplier->id;
-        $history->activity_type = 'Due Date';
-        $history->previous = "Null";
-        $history->current = $supplier->due_date;
-        $history->comment = "Not Applicable";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $supplier->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiation";
-        $history->action_name = 'Create';
-        $history->save();
-
-        $history = new SupplierAuditTrail;
-        $history->supplier_id = $supplier->id;
-        $history->activity_type = 'Initiation Date';
-        $history->previous = "Null";
-        $history->current = $supplier->intiation_date;
-        $history->comment = "Not Applicable";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $supplier->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiation";
-        $history->action_name = 'Create';
-        $history->save();
-
         if(!empty($request->assign_to)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Assign To';
             $history->previous = "Null";
-            $history->current = $supplier->assign_to;
+            $history->current = Helpers::getInitiatorName($supplier->assign_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -404,12 +551,12 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        if(!empty($request->supplier_person)){
+        if(!empty($request->initiation_group)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Supplier Person';
+            $history->activity_type = 'Initiation Department';
             $history->previous = "Null";
-            $history->current = $supplier->supplier_person;
+            $history->current = Helpers::getInitiatorName($supplier->initiation_group);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -421,12 +568,12 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        if(!empty($request->supplier_contact_person)){
+        if(!empty($request->initiator_group_code)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Supplier Contact Person';
+            $history->activity_type = 'Initiator Department Code';
             $history->previous = "Null";
-            $history->current = $supplier->supplier_contact_person;
+            $history->current = Helpers::getInitiatorName($supplier->initiator_group_code);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -438,18 +585,530 @@ class SupplierController extends Controller
             $history->save();
         }
 
+        if(!empty($request->manufacturerName)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Name of Manufacturer';
+            $history->previous = "Null";
+            $history->current = $supplier->manufacturerName;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->starting_material)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Name of Starting Material';
+            $history->previous = "Null";
+            $history->current = $supplier->starting_material;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->material_code)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Material Code';
+            $history->previous = "Null";
+            $history->current = $supplier->material_code;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->pharmacopoeial_claim)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Pharmacopoeial Claim';
+            $history->previous = "Null";
+            $history->current = $supplier->pharmacopoeial_claim;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->cep_grade)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'CEP Grade Material';
+            $history->previous = "Null";
+            $history->current = $supplier->cep_grade;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        // if(!empty($request->request_for)){
+        //     $history = new SupplierAuditTrail;
+        //     $history->supplier_id = $supplier->id;
+        //     $history->activity_type = 'Request For';
+        //     $history->previous = "Null";
+        //     $history->current = $supplier->request_for;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $supplier->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
+        if(!empty($request->attach_batch)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Attach Three Batch COAs';
+            $history->previous = "Null";
+            $history->current = $supplier->attach_batch;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->request_justification)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Justification for Request';
+            $history->previous = "Null";
+            $history->current = $supplier->request_justification;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->manufacturer_availability)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Availability of Manufacturer COAs';
+            $history->previous = "Null";
+            $history->current = $supplier->manufacturer_availability;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
+        if(!empty($request->request_accepted)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Request Accepted';
+            $history->previous = "Null";
+            $history->current = $supplier->request_accepted;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
+    
+        if(!empty($request->cqa_remark)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Remark';
+            $history->previous = "Null";
+            $history->current = $supplier->cqa_remark;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->accepted_by)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Accepted By';
+            $history->previous = "Null";
+            $history->current = $supplier->accepted_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->pre_purchase_sample)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Pre Purchase Sample Required?';
+            $history->previous = "Null";
+            $history->current = $supplier->pre_purchase_sample;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->justification)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Justification';
+            $history->previous = "Null";
+            $history->current = $supplier->justification;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->cqa_coordinator)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'CQA Coordinator';
+            $history->previous = "Null";
+            $history->current = $supplier->cqa_coordinator;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->pre_purchase_sample_analysis)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Pre Purchase Sample Analysis Completed?';
+            $history->previous = "Null";
+            $history->current = $supplier->pre_purchase_sample_analysis;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->availability_od_coa)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Availability of COAS After Analysis';
+            $history->previous = "Null";
+            $history->current = $supplier->availability_od_coa;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->analyzed_location)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Analyzed on Location';
+            $history->previous = "Null";
+            $history->current = $supplier->analyzed_location;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->cqa_comment)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Review Comment of CQA';
+            $history->previous = "Null";
+            $history->current = $supplier->cqa_comment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
+        if(!empty($request->materialName)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Material Name';
+            $history->previous = "Null";
+            $history->current = $supplier->materialName;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->manufacturerNameNew)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Name of the Manufacturer';
+            $history->previous = "Null";
+            $history->current = $supplier->manufacturerNameNew;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->analyzedLocation)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Analyzed on Location';
+            $history->previous = "Null";
+            $history->current = $supplier->analyzedLocation;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->supplierJustification)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Justification';
+            $history->previous = "Null";
+            $history->current = $supplier->supplierJustification;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->cqa_corporate_comment)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Review Comment of Corporate CQA';
+            $history->previous = "Null";
+            $history->current = $supplier->cqa_corporate_comment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->cqa_designee)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'CQA Designee';
+            $history->previous = "Null";
+            $history->current = $supplier->cqa_designee;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->sample_ordered)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Samples Ordered for Suitability Trail at R&D/MS & T';
+            $history->previous = "Null";
+            $history->current = $supplier->sample_ordered;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->sample_order_justification)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Justification';
+            $history->previous = "Null";
+            $history->current = $supplier->sample_order_justification;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->acknowledge_by)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Acknowledge By';
+            $history->previous = "Null";
+            $history->current = $supplier->acknowledge_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->trail_status_feedback)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Feedback on Trail Status Completed';
+            $history->previous = "Null";
+            $history->current = $supplier->trail_status_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->sample_stand_approved)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Sample Stand Approved?';
+            $history->previous = "Null";
+            $history->current = $supplier->sample_stand_approved;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->supply_chain_availability)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Availability of Supply Chain?';
+            $history->previous = "Null";
+            $history->current = $supplier->supply_chain_availability;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if(!empty($request->quality_agreement_availability)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Availability of Quality Agreement?';
+            $history->previous = "Null";
+            $history->current = $supplier->quality_agreement_availability;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
-
-
-        if(!empty($request->supplier_products)){
+        // =======
+        if(!empty($request->risk_assessment_done)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Supplier Product';
+            $history->activity_type = 'Risk Assessment Done?';
             $history->previous = "Null";
-            $history->current = $supplier->supplier_products;
+            $history->current = $supplier->risk_assessment_done;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -460,12 +1119,12 @@ class SupplierController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->supplier_type)){
+        if(!empty($request->risk_rating)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Supplier Type';
+            $history->activity_type = 'Risk Rating';
             $history->previous = "Null";
-            $history->current = $supplier->supplier_type;
+            $history->current = $supplier->risk_rating;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -476,12 +1135,12 @@ class SupplierController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->supplier_sub_type)){
+        if(!empty($request->manufacturer_audit_planned)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Supplier Sub Type';
+            $history->activity_type = 'manufacturer_audit_planned';
             $history->previous = "Null";
-            $history->current = $supplier->supplier_contact_person;
+            $history->current = $supplier->manufacturer_audit_planned;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -492,12 +1151,12 @@ class SupplierController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->supplier_other_type)){
+        if(!empty($request->manufacturer_audit_conducted)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Supplier Other Type';
+            $history->activity_type = 'Maufacturer Audit Conducted On';
             $history->previous = "Null";
-            $history->current = $supplier->supplier_contact_person;
+            $history->current = $supplier->manufacturer_audit_conducted;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -508,76 +1167,12 @@ class SupplierController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->supply_from)){
+        if(!empty($request->manufacturer_can_be)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Supplier From';
+            $history->activity_type = 'Manufacturer Can be?';
             $history->previous = "Null";
-            $history->current = $supplier->supply_from;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $supplier->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-        if(!empty($request->supply_to)){
-            $history = new SupplierAuditTrail;
-            $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Supplier To';
-            $history->previous = "Null";
-            $history->current = $supplier->supply_to;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $supplier->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-        if(!empty($request->supplier_website)){
-            $history = new SupplierAuditTrail;
-            $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Supplier website';
-            $history->previous = "Null";
-            $history->current = $supplier->supplier_website;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $supplier->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-        if(!empty($request->related_url)){
-            $history = new SupplierAuditTrail;
-            $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Related URL';
-            $history->previous = "Null";
-            $history->current = $supplier->related_url;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $supplier->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-        if(!empty($request->related_quality_events)){
-            $history = new SupplierAuditTrail;
-            $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Related Quality Events';
-            $history->previous = "Null";
-            $history->current = $supplier->related_quality_events;
+            $history->current = $supplier->manufacturer_can_be;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -593,7 +1188,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'HOD Feedback';
             $history->previous = "Null";
-            $history->current = $supplier->HOD_feedback;
+            $history->current = strip_tags($supplier->HOD_feedback);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -609,7 +1204,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'HOD Comment';
             $history->previous = "Null";
-            $history->current = $supplier->HOD_comment;
+            $history->current = strip_tags($supplier->HOD_comment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -737,7 +1332,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Supplier Services';
             $history->previous = "Null";
-            $history->current = $supplier->supplier_serivce;
+            $history->current = strip_tags($supplier->supplier_serivce);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -913,7 +1508,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Manufacturing Site';
             $history->previous = "Null";
-            $history->current = $supplier->manufacturing_sited;
+            $history->current = strip_tags($supplier->manufacturing_sited);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -929,7 +1524,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Quality  Management';
             $history->previous = "Null";
-            $history->current = $supplier->quality_management;
+            $history->current = strip_tags($supplier->quality_management);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -945,7 +1540,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Business History';
             $history->previous = "Null";
-            $history->current = $supplier->bussiness_history;
+            $history->current = strip_tags($supplier->bussiness_history);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -961,7 +1556,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Performance History';
             $history->previous = "Null";
-            $history->current = $supplier->performance_history;
+            $history->current = strip_tags($supplier->performance_history);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -977,7 +1572,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Compliance Risk';
             $history->previous = "Null";
-            $history->current = $supplier->compliance_risk;
+            $history->current = strip_tags($supplier->compliance_risk);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1052,22 +1647,7 @@ class SupplierController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->lead_time_days)){
-            $history = new SupplierAuditTrail;
-            $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Lead Time Days';
-            $history->previous = "Null";
-            $history->current = $supplier->lead_time_days;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $supplier->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+        
         if(!empty($request->lead_time_days_weight)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -1313,7 +1893,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'QA Reviewer Feedback';
             $history->previous = "Null";
-            $history->current = $supplier->QA_reviewer_feedback;
+            $history->current = strip_tags($supplier->QA_reviewer_feedback);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1329,7 +1909,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'QA Reviewer Comment';
             $history->previous = "Null";
-            $history->current = $supplier->QA_reviewer_comment;
+            $history->current = strip_tags($supplier->QA_reviewer_comment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1345,7 +1925,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Last Audit Date';
             $history->previous = "Null";
-            $history->current = $supplier->last_audit_date;
+            $history->current = Helpers::getdateFormat($supplier->last_audit_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1361,7 +1941,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Next Audit Date';
             $history->previous = "Null";
-            $history->current = $supplier->next_audit_date;
+            $history->current = Helpers::getdateFormat($supplier->next_audit_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1537,7 +2117,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'QA Head Comment';
             $history->previous = "Null";
-            $history->current = $supplier->QA_head_comment;
+            $history->current = strip_tags($supplier->QA_head_comment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1549,15 +2129,219 @@ class SupplierController extends Controller
             $history->save();
         }
 
+        //============================CREATE ATTACHMENTS=================================
+
+        if(!empty($request->cep_attachment)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'COAs Attachment';
+            $history->previous = "Null";
+            $history->current = strip_tags($supplier->cep_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        
+
+        if(!empty($request->HOD_attachment)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'HOD Attachments';
+            $history->previous = "Null";
+            $history->current = strip_tags($supplier->HOD_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        
+        if(!empty($request->hod_additional_attachment)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Additional Attachment';
+            $history->previous = "Null";
+            $history->current = strip_tags($supplier->hod_additional_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        
+        if(!empty($request->iso_certificate_attachment)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'ISO Ceritificate Attachment';
+            $history->previous = "Null";
+            $history->current = strip_tags($supplier->iso_certificate_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        
+        if(!empty($request->supplier_detail_additional_attachment)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Additional Attachment';
+            $history->previous = "Null";
+            $history->current = strip_tags($supplier->supplier_detail_additional_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        
+        if(!empty($request->score_card_additional_attachment)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Additional Attachment';
+            $history->previous = "Null";
+            $history->current = strip_tags($supplier->score_card_additional_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        
+        if(!empty($request->QA_reviewer_attachment)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'QA Reviewer Attachment';
+            $history->previous = "Null";
+            $history->current = strip_tags($supplier->QA_reviewer_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        
+        if(!empty($request->qa_reviewer_additional_attachment)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Additional Attachment';
+            $history->previous = "Null";
+            $history->current = strip_tags($supplier->qa_reviewer_additional_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        
+        if(!empty($request->risk_assessment_additional_attachment)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Additional Attachment';
+            $history->previous = "Null";
+            $history->current = strip_tags($supplier->risk_assessment_additional_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        
+        if(!empty($request->QA_head_attachment)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Additional Attachment';
+            $history->previous = "Null";
+            $history->current = strip_tags($supplier->QA_head_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        
+        if(!empty($request->qa_head_additional_attachment)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Additional Attachment';
+            $history->previous = "Null";
+            $history->current = strip_tags($supplier->qa_head_additional_attachment);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $supplier->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        
+
+
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
 
     public function show(Request $request, $id){
         $data = Supplier::find($id);
+        $supplierChecklist = SupplierChecklist::where('supplier_id', $id)->get();
         $gridData = SupplierGrid::where(['supplier_id' => $id, 'identifier' => "CertificationData"])->first();
         $certificationData = json_decode($gridData->data, true);
-        return view('frontend.supplier.supplier_view', compact('data', 'certificationData'));
+        return view('frontend.supplier.supplier_view', compact('data', 'certificationData', 'supplierChecklist'));
     }
 
     public function update(Request $request, $id){       
@@ -1566,46 +2350,103 @@ class SupplierController extends Controller
 
         $supplier->date_opened = $request->date_opened;
         $supplier->short_description = $request->short_description;
-        $supplier->assign_to = $request->assign_to;
+        // $supplier->assign_to = $request->assign_to;
         // dd($request->due_date);
         // $supplier->due_date = $request->due_date;
-        $supplier->supplier_person = $request->supplier_person;        
-        $supplier->supplier_contact_person = $request->supplier_contact_person;
-        $supplier->supplier_products = $request->supplier_products;
-        $supplier->description = $request->description;
-        $supplier->supplier_type = $request->supplier_type;
-        $supplier->supplier_sub_type = $request->supplier_sub_type;
-        // dd($request->supplier_sub_type);
-        $supplier->supplier_other_type = $request->supplier_other_type;
-        $supplier->supply_from = $request->supply_from;
-        $supplier->supply_to = $request->supply_to;
-        $supplier->supplier_website = $request->supplier_website;
-        $supplier->supplier_web_search = $request->supplier_web_search;
-        $supplier->related_url = $request->related_url;
-        $supplier->related_quality_events = $request->related_quality_events;
+       $supplier->initiator_group_code = $request->initiator_group_code;
+    //    dd($request->initiation_group);
+        $supplier->initiation_group = Helpers::getFullDepartmentName($request->initiator_group_code);
+        $supplier->manufacturerName = $request->manufacturerName;
+        $supplier->starting_material = $request->starting_material;
+        $supplier->material_code = $request->material_code;
+        $supplier->pharmacopoeial_claim = $request->pharmacopoeial_claim;
+        $supplier->cep_grade = $request->cep_grade;
+        $supplier->request_for = implode(',',$request->request_for);
+        $supplier->attach_batch = $request->attach_batch;
+        $supplier->request_justification = $request->request_justification;
+        $supplier->manufacturer_availability = $request->manufacturer_availability;
+        // dd($request->manufacturer_availability);
+        $supplier->request_accepted = $request->request_accepted;
+        $supplier->cqa_remark = $request->cqa_remark;
+        $supplier->accepted_by = $request->accepted_by;
+        $supplier->accepted_on = $request->accepted_on;
+        $supplier->pre_purchase_sample = $request->pre_purchase_sample;
+        $supplier->justification = $request->justification;
+        $supplier->cqa_coordinator = $request->cqa_coordinator;
+        $supplier->pre_purchase_sample_analysis = $request->pre_purchase_sample_analysis;
+        $supplier->availability_od_coa = $request->availability_od_coa;
+        $supplier->analyzed_location = $request->analyzed_location;
+        $supplier->cqa_comment = $request->cqa_comment;
+        $supplier->materialName = $request->materialName;
+        $supplier->manufacturerNameNew = $request->manufacturerNameNew;
+        $supplier->analyzedLocation = $request->analyzedLocation;
+        $supplier->cqa_corporate_comment = $request->cqa_corporate_comment;
+        $supplier->cqa_designee = $request->cqa_designee;
+        $supplier->sample_ordered = $request->sample_ordered;
+        $supplier->sample_order_justification = $request->sample_order_justification;
+        $supplier->acknowledge_by = $request->acknowledge_by;
+        $supplier->trail_status_feedback = $request->trail_status_feedback;
+        $supplier->sample_stand_approved = $request->sample_stand_approved;
+        $supplier->tse_bse = $request->tse_bse;
+        $supplier->tse_bse_remark = $request->tse_bse_remark;
+        $supplier->residual_solvent = $request->residual_solvent;
+        $supplier->residual_solvent_remark = $request->residual_solvent_remark;
+        $supplier->gmo = $request->gmo;
+        $supplier->gmo_remark = $request->gmo_remark;
+        $supplier->melamine = $request->melamine;
+        $supplier->melamine_remark = $request->melamine_remark;
+        $supplier->gluten = $request->gluten;
+        $supplier->gluten_remark = $request->gluten_remark;
+        $supplier->nitrosamine = $request->nitrosamine;
+        $supplier->nitrosamine_remark = $request->nitrosamine_remark;
+        $supplier->who = $request->who;
+        $supplier->who_remark = $request->who_remark;
+        $supplier->gmp = $request->gmp;
+        $supplier->gmp_remark = $request->gmp_remark;
+        $supplier->iso_certificate = $request->iso_certificate;
+        $supplier->iso_certificate_remark = $request->iso_certificate_remark;
+        $supplier->manufacturing_license = $request->manufacturing_license;
+        $supplier->manufacturing_license_remark = $request->manufacturing_license_remark;
+        $supplier->cep = $request->cep;
+        $supplier->cep_remark = $request->cep_remark;
+        $supplier->msds = $request->msds;
+        $supplier->msds_remark = $request->msds_remark;
+        $supplier->elemental_impurities = $request->elemental_impurities;
+        $supplier->elemental_impurities_remark = $request->elemental_impurities_remark;
+        $supplier->declaration = $request->declaration;
+        $supplier->declaration_remark = $request->declaration_remark;
+        $supplier->supply_chain_availability = $request->supply_chain_availability;
+        $supplier->quality_agreement_availability = $request->quality_agreement_availability;
+        $supplier->risk_assessment_done = $request->risk_assessment_done;
+        $supplier->risk_rating = $request->risk_rating;
+        $supplier->manufacturer_audit_planned = $request->manufacturer_audit_planned;
+        $supplier->manufacturer_audit_conducted = $request->manufacturer_audit_conducted;
+        $supplier->manufacturer_can_be = $request->manufacturer_can_be;
+        $supplier->supplierJustification = $request->supplierJustification;
+    
 
-        if (!empty($request->logo_attachment)) {
+        if (!empty($request->cep_attachment)) {
             $files = [];
-            if ($request->hasfile('logo_attachment')) {
-                foreach ($request->file('logo_attachment') as $file) {
-                    $name = "Supplier" . '-logo_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('cep_attachment')) {
+                foreach ($request->file('cep_attachment') as $file) {
+                    $name = 'cep' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $supplier->logo_attachment = json_encode($files);
+            $supplier->cep_attachment = json_encode($files);
         }
 
-        if (!empty($request->supplier_attachment)) {
+        if (!empty($request->coa_attachment)) {
             $files = [];
-            if ($request->hasfile('supplier_attachment')) {
-                foreach ($request->file('supplier_attachment') as $file) {
-                    $name = "Supplier" . '-supplier_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('coa_attachment')) {
+                foreach ($request->file('coa_attachment') as $file) {
+                    $name = 'coa' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $supplier->supplier_attachment = json_encode($files);
+            $supplier->coa_attachment = json_encode($files);
         } 
 
         /****************** HOD Review ********************/
@@ -1616,7 +2457,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('HOD_attachment')) {
                 foreach ($request->file('HOD_attachment') as $file) {
-                    $name = "Supplier" . '-HOD_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'HOD' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1635,6 +2476,7 @@ class SupplierController extends Controller
         $supplier->other_contacts = $request->other_contacts;
         $supplier->supplier_serivce = $request->supplier_serivce;
         $supplier->zone = $request->zone;
+        // dd($request->zone);
         $supplier->country = $request->country;
         $supplier->state = $request->state;
         $supplier->city = $request->city;
@@ -1688,7 +2530,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('QA_reviewer_attachment')) {
                 foreach ($request->file('QA_reviewer_attachment') as $file) {
-                    $name = "Supplier" . '-QA_reviewer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'QA_reviewer' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1721,7 +2563,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('QA_head_attachment')) {
                 foreach ($request->file('QA_head_attachment') as $file) {
-                    $name = "Supplier" . '-QA_head_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'QA_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1734,7 +2576,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('iso_certificate_attachment')) {
                 foreach ($request->file('iso_certificate_attachment') as $file) {
-                    $name = "Supplier" . '-iso_certificate_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'iso' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1746,7 +2588,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('gi_additional_attachment')) {
                 foreach ($request->file('gi_additional_attachment') as $file) {
-                    $name = "Supplier" . '-gi_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1758,7 +2600,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('hod_additional_attachment')) {
                 foreach ($request->file('hod_additional_attachment') as $file) {
-                    $name = "Supplier" . '-hod_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'hod' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1770,7 +2612,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('supplier_detail_additional_attachment')) {
                 foreach ($request->file('supplier_detail_additional_attachment') as $file) {
-                    $name = "Supplier" . '-supplier_detail_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'supplier_D' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1782,7 +2624,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('score_card_additional_attachment')) {
                 foreach ($request->file('score_card_additional_attachment') as $file) {
-                    $name = "Supplier" . '-score_card_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'score_card' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1794,7 +2636,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('qa_reviewer_additional_attachment')) {
                 foreach ($request->file('qa_reviewer_additional_attachment') as $file) {
-                    $name = "Supplier" . '-qa_reviewer_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'qard' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1806,7 +2648,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('risk_assessment_additional_attachment')) {
                 foreach ($request->file('risk_assessment_additional_attachment') as $file) {
-                    $name = "Supplier" . '-risk_assessment_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'r_a_add' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1818,7 +2660,7 @@ class SupplierController extends Controller
             $files = [];
             if ($request->hasfile('qa_head_additional_attachment')) {
                 foreach ($request->file('qa_head_additional_attachment') as $file) {
-                    $name = "Supplier" . '-qa_head_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = 'qa_h_add' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1828,6 +2670,82 @@ class SupplierController extends Controller
         
         $supplier->update();
 
+        /***************** Certificate Checklist *************************/
+
+        
+        $types = ['tse', 'residual_solvent','melamine','gmo','gluten','manufacturer_evaluation','who','gmp','ISO','manufacturing_license','CEP','risk_assessment','elemental_impurity','azido_impurities'];
+
+        $supplierID = $supplier->id;
+        if (!empty($supplierID)) {
+            Log::info("Supplier ID: " . $supplierID);
+
+            if ($request->has('remove_files')) {
+                foreach ($request->input('remove_files') as $idToRemove) {
+                    $grid = SupplierChecklist::find($idToRemove);
+                    if ($grid && $grid->attachment) {
+                        Storage::delete('public/upload/' . $grid->attachment);
+                        $grid->attachment = null;
+                        $grid->save();
+                    }
+                }
+            }
+
+            foreach ($types as $type) {
+                $attachments = $request->file("{$type}_attachment") ?? [];
+                $issueDates = $request->input("certificate_issue_{$type}") ?? [];
+                $expiryDates = $request->input("certificate_expiry_{$type}") ?? [];
+                $remarks = $request->input("{$type}_remarks") ?? [];
+
+                $maxRows = max(count($attachments), count($issueDates), count($expiryDates), count($remarks));
+
+                for ($index = 0; $index < $maxRows; $index++) {
+                    $grid = SupplierChecklist::where('supplier_id', $supplierID)
+                                            ->where('doc_type', $type)
+                                            ->skip($index)
+                                            ->first();
+
+                    $attachmentPath = null;
+                    if (isset($attachments[$index]) && $attachments[$index] != null) {
+                        $attachment = $attachments[$index];
+
+                        $filename = "Supplier-Certificate" . rand(1, 100) . '.' . $attachment->getClientOriginalExtension();
+                        $attachmentPath = $attachment->move('upload/', $filename); // Store the file in public/attachments
+                    }
+
+                    if ($grid) {
+                        $grid->update([
+                            'attachment' => $attachmentPath ?? $grid->attachment,
+                            'issue_date' => $issueDates[$index] ?? $grid->issue_date,
+                            'expiry_date' => $expiryDates[$index] ?? $grid->expiry_date,
+                            'remarks' => $remarks[$index] ?? $grid->remarks,
+                        ]);
+                    } else {
+                        // Debugging: Check the data before creating a new record
+                        Log::info("Creating new SupplierChecklist record", [
+                            'supplier_id' => $supplierID,
+                            'doc_type' => $type,
+                            'attachment' => $attachmentPath,
+                            'issue_date' => $issueDates[$index] ?? null,
+                            'expiry_date' => $expiryDates[$index] ?? null,
+                            'remarks' => $remarks[$index] ?? null,
+                        ]);
+
+                        SupplierChecklist::create([
+                            'supplier_id' => $supplierID,
+                            'doc_type' => $type,
+                            'attachment' => $attachmentPath,
+                            'issue_date' => $issueDates[$index] ?? null,
+                            'expiry_date' => $expiryDates[$index] ?? null,
+                            'remarks' => $remarks[$index] ?? null,
+                        ]);
+                    }
+                }
+            }
+        } else {
+            return redirect()->back()->with('error', 'Supplier ID is required.');
+        }
+
+
         $certificationData = SupplierGrid::where(['supplier_id' => $supplier->id, 'identifier' =>'CertificationData'])->firstOrCreate();
         $certificationData->supplier_id = $supplier->id;
         $certificationData->identifier = 'CertificationData';
@@ -1835,10 +2753,18 @@ class SupplierController extends Controller
         $certificationData->update();
 
         if($lastDocument->short_description != $request->short_description){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Short Description')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Short Description';
-            $history->previous = $lastDocument->short_description;
+            if($lastDocument->short_description == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->short_description;
+            }
+            
             $history->current = $request->short_description;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -1847,15 +2773,24 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if($lastDocument->supplier_contact_person != $request->supplier_contact_person){
+        
+        
+        if($lastDocument->initiation_group != $supplier->initiation_group){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Initiation Department')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Supplier Contact Person';
-            $history->previous = $lastDocument->supplier_contact_person;
-            $history->current = $request->supplier_contact_person;
+            $history->activity_type = 'Initiation Department';
+            if($lastDocument->initiation_group == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous =  $lastDocument->initiation_group;
+            }
+            $history->current = Helpers::getFullDepartmentName($request->initiator_group_code);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1863,15 +2798,23 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if($lastDocument->supplier_products != $request->supplier_products){
+        if($lastDocument->initiator_group_code != $request->initiator_group_code){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Initiator Department Code')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Supplier Product';
-            $history->previous = $lastDocument->supplier_products;
-            $history->current = $request->supplier_products;
+            $history->activity_type = 'Initiator Department Code';
+            $history->previous = $lastDocument->initiator_group_code;
+            if($lastDocument->initiator_group_code == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->initiator_group_code;
+            }
+            $history->current = $request->initiator_group_code;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1879,15 +2822,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if($lastDocument->description != $request->description){
+        if($lastDocument->manufacturerName != $request->manufacturerName){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Name of Manufacturer')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Description';
-            $history->previous = $lastDocument->description;
-            $history->current = $request->description;
+            $history->activity_type = 'Name of Manufacturer';
+            if($lastDocument->manufacturerName == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->manufacturerName;
+            }
+            $history->current = $request->manufacturerName;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1895,15 +2845,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if($lastDocument->supplier_type != $request->supplier_type){
+        if($lastDocument->starting_material != $request->starting_material){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Name of Starting Material')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Supplier Type';
-            $history->previous = $lastDocument->supplier_type;
-            $history->current = $request->supplier_type;
+            $history->activity_type = 'Name of Starting Material';
+            if($lastDocument->starting_material == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->starting_material;
+            }
+            $history->current = $request->starting_material;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1911,15 +2868,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if($lastDocument->supplier_sub_type != $request->supplier_sub_type){
+        if($lastDocument->material_code != $request->material_code){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Material Code')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Supplier Sub Type';
-            $history->previous = $lastDocument->supplier_sub_type;
-            $history->current = $request->supplier_sub_type;
+            $history->activity_type = 'Material Code';
+            if($lastDocument->material_code == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->material_code;
+            }
+            $history->current = $request->material_code;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1927,15 +2891,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if($lastDocument->supplier_other_type != $request->supplier_other_type){
+        if($lastDocument->pharmacopoeial_claim != $request->pharmacopoeial_claim){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Pharmacopoeial Claim')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Other Type';
-            $history->previous = $lastDocument->supplier_other_type;
-            $history->current = $request->supplier_other_type;
+            $history->activity_type = 'Pharmacopoeial Claim';
+            if($lastDocument->pharmacopoeial_claim == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->pharmacopoeial_claim;
+            }
+            $history->current = $request->pharmacopoeial_claim;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1943,15 +2914,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if($lastDocument->supply_from != $request->supply_from){
+        if($lastDocument->cep_grade != $request->cep_grade){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'CEP Grade Material')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Supply from';
-            $history->previous = $lastDocument->supply_from;
-            $history->current = $request->supply_from;
+            $history->activity_type = 'CEP Grade Material';
+            if($lastDocument->cep_grade == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->cep_grade;
+            }
+            $history->current = $request->cep_grade;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1959,15 +2937,27 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if($lastDocument->supply_to != $request->supply_to){
+
+        $previousAttachments_rf = $lastDocument->request_for;
+        $areIniAttachmentsSame = $previousAttachments_rf == $supplier->request_for;
+
+        if ($areIniAttachmentsSame != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Request For')
+            ->exists();
             $history = new SupplierAuditTrail;
-            $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Supply To';
-            $history->previous = $lastDocument->supply_to;
-            $history->current = $request->supply_to;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'Request For';
+            if($lastDocument->request_for == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->request_for;
+            }
+            // $history->previous = $previousAttachments;
+            $history->current = $supplier->request_for;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1975,15 +2965,27 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
             $history->save();
         }
-        if($lastDocument->supplier_website != $request->supplier_website){
+
+        if($lastDocument->attach_batch != $request->attach_batch){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Attach Three Batch COAs')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Supplier Web Site';
-            $history->previous = $lastDocument->supplier_website;
-            $history->current = $request->supplier_website;
+            $history->activity_type = 'Attach Three Batch COAs';
+            if($lastDocument->attach_batch == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->attach_batch;
+            }
+            $history->current = $request->attach_batch;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1991,15 +2993,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if($lastDocument->related_url != $request->related_url){
+        if($lastDocument->request_justification != $request->request_justification){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Justification for Request')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Related URLs';
-            $history->previous = $lastDocument->related_url;
-            $history->current = $request->related_url;
+            $history->activity_type = 'Justification for Request';
+            if($lastDocument->request_justification == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->request_justification;
+            }
+            $history->current = $request->request_justification;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2007,15 +3016,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if($lastDocument->related_quality_events != $request->related_quality_events){
+        if($lastDocument->manufacturer_availability != $request->manufacturer_availability){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Availability of Manufacturer COAs')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'Related Quality Events';
-            $history->previous = $lastDocument->related_quality_events;
-            $history->current = $request->related_quality_events;
+            $history->activity_type = 'Availability of Manufacturer COAs';
+            if($lastDocument->manufacturer_availability == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->manufacturer_availability;
+            }
+            $history->current = $request->manufacturer_availability;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2023,14 +3039,667 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+        if($lastDocument->request_accepted != $request->request_accepted){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Request Accepted')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Request Accepted';
+            if($lastDocument->request_accepted == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->request_accepted;
+            }
+            $history->current = $request->request_accepted;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->cqa_remark != $request->cqa_remark){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'CQA Remark')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'CQA Remark';
+            if($lastDocument->cqa_remark == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = strip_tags($lastDocument->cqa_remark);
+            }
+            $history->current = strip_tags($request->cqa_remark);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->accepted_by != $request->accepted_by){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Accepted By')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Accepted By';
+            if($lastDocument->accepted_by == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = Helpers::getInitiatorName($lastDocument->accepted_by);
+            }
+            $history->current = Helpers::getInitiatorName($request->accepted_by);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->pre_purchase_sample != $request->pre_purchase_sample){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Pre Purchase Sample Required?')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Pre Purchase Sample Required?';
+            if($lastDocument->pre_purchase_sample == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->pre_purchase_sample;
+            }
+            $history->current = $request->pre_purchase_sample;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->justification != $request->justification){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Justification')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Justification';
+            if($lastDocument->justification == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->justification;
+            }
+            $history->current = $request->justification;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->cqa_coordinator != $request->cqa_coordinator){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'CQA Coordinator')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'CQA Coordinator';
+            if($lastDocument->cqa_coordinator == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = Helpers::getInitiatorName($lastDocument->cqa_coordinator);
+            }
+            $history->current = Helpers::getInitiatorName($request->cqa_coordinator);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->pre_purchase_sample_analysis != $request->pre_purchase_sample_analysis){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Pre Purchase Sample Analysis Completed?')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Pre Purchase Sample Analysis Completed?';
+            if($lastDocument->pre_purchase_sample_analysis == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->pre_purchase_sample_analysis;
+            }
+            $history->current = $request->pre_purchase_sample_analysis;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->availability_od_coa != $request->availability_od_coa){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Availability of COAS After Analysis')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Availability of COAS After Analysis';
+            if($lastDocument->availability_od_coa == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->availability_od_coa;
+            }
+            $history->current = $request->availability_od_coa;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->analyzed_location != $request->analyzed_location){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Analyzed on Location')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Analyzed on Location';
+            if($lastDocument->analyzed_location == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->analyzed_location;
+            }
+            $history->current = $request->analyzed_location;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->cqa_comment != $request->cqa_comment){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Review Comment of CQA')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Review Comment of CQA';
+            if($lastDocument->cqa_comment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->cqa_comment;
+            }
+            $history->current = $request->cqa_comment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->materialName != $request->materialName){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Material Name')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Material Name';
+            if($lastDocument->materialName == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->materialName;
+            }
+            $history->current = $request->materialName;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->manufacturerNameNew != $request->manufacturerNameNew){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Name of the Manufacturer')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Name of the Manufacturer';
+            if($lastDocument->manufacturerNameNew == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->manufacturerNameNew;
+            }
+            $history->current = $request->manufacturerNameNew;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->analyzedLocation != $request->analyzedLocation){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Analyzed on Location')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Analyzed on Location';
+            if($lastDocument->analyzedLocation == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->analyzedLocation;
+            }
+            $history->current = $request->analyzedLocation;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->supplierJustification != $request->supplierJustification){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Supplier Justification')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Supplier Justification';
+            if($lastDocument->supplierJustification == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->supplierJustification;
+            }
+            $history->current = $request->supplierJustification;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->cqa_corporate_comment != $request->cqa_corporate_comment){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Review Comment of Corporate CQA')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Review Comment of Corporate CQA';
+            if($lastDocument->cqa_corporate_comment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->cqa_corporate_comment;
+            }
+            $history->current = $request->cqa_corporate_comment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->cqa_designee != $request->cqa_designee){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'CQA Designee')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'CQA Designee';
+            if($lastDocument->cqa_designee == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous =  Helpers::getInitiatorName($lastDocument->cqa_designee);
+            }
+            $history->current = Helpers::getInitiatorName($request->cqa_designee);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->sample_ordered != $request->sample_ordered){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Samples Ordered for Suitability Trail at R&D/MS & T')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Samples Ordered for Suitability Trail at R&D/MS & T';
+            if($lastDocument->sample_ordered == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->sample_ordered;
+            }
+            $history->current = $request->sample_ordered;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->sample_order_justification != $request->sample_order_justification){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Sample Justification')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Sample Justification';
+            if($lastDocument->sample_order_justification == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->sample_order_justification;
+            }
+            $history->current = $request->sample_order_justification;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->acknowledge_by != $request->acknowledge_by){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Acknowledge By')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Acknowledge By';
+            if($lastDocument->acknowledge_by == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = Helpers::getInitiatorName($lastDocument->acknowledge_by);
+            } 
+            $history->current = Helpers::getInitiatorName($request->acknowledge_by);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->trail_status_feedback != $request->trail_status_feedback){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Feedback on Trail Status Completed')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Feedback on Trail Status Completed';
+            if($lastDocument->trail_status_feedback == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->trail_status_feedback;
+            }
+            $history->current = $request->trail_status_feedback;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->sample_stand_approved != $request->sample_stand_approved){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Sample Stand Approved?')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Sample Stand Approved?';
+            if($lastDocument->sample_stand_approved == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->sample_stand_approved;
+            }
+            $history->current = $request->sample_stand_approved;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->supply_chain_availability != $supplier->supply_chain_availability){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Availability of Supply Chain?')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Availability of Supply Chain?';
+            if($lastDocument->supply_chain_availability == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->supply_chain_availability;
+            }
+            
+            $history->current = $request->supply_chain_availability;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->quality_agreement_availability != $request->quality_agreement_availability){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Availability of Quality Agreement?')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Availability of Quality Agreement?';
+            if($lastDocument->quality_agreement_availability == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->quality_agreement_availability;
+            }
+            $history->current = $request->quality_agreement_availability;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->risk_assessment_done != $request->risk_assessment_done){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Risk Assessment Done?')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Risk Assessment Done?';
+            if($lastDocument->risk_assessment_done == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->risk_assessment_done;
+            }
+            $history->current = $request->risk_assessment_done;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->risk_rating != $request->risk_rating){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Risk Rating')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Risk Rating';
+            if($lastDocument->risk_rating == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->risk_rating;
+            }
+            $history->current = $request->risk_rating;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->manufacturer_audit_planned != $request->manufacturer_audit_planned){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Manufacturer Audit planned')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Manufacturer Audit planned';
+            if($lastDocument->manufacturer_audit_planned == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->manufacturer_audit_planned;
+            }
+            $history->current = $request->manufacturer_audit_planned;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->manufacturer_audit_conducted != $request->manufacturer_audit_conducted){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Maufacturer Audit Conducted On')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Maufacturer Audit Conducted On';
+            if($lastDocument->manufacturer_audit_conducted == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->manufacturer_audit_conducted;
+            }
+            $history->current = $request->manufacturer_audit_conducted;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if($lastDocument->manufacturer_can_be != $request->manufacturer_can_be){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Manufacturer Can be?')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $lastDocument->id;
+            $history->activity_type = 'Manufacturer Can be?';
+            if($lastDocument->manufacturer_can_be == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->manufacturer_can_be;
+            }
+            $history->current = $request->manufacturer_can_be;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+
         if($lastDocument->HOD_feedback != $request->HOD_feedback){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'HOD Feedback')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'HOD Feedback';
-            $history->previous = $lastDocument->HOD_feedback;
+            if($lastDocument->HOD_feedback == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->HOD_feedback;
+            }
             $history->current = $request->HOD_feedback;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2039,14 +3708,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+
         if($lastDocument->HOD_comment != $request->HOD_comment){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'HOD Comments')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
-            $history->activity_type = 'HOD Comment';
-            $history->previous = $lastDocument->HOD_comment;
+            $history->activity_type = 'HOD Comments';
+            if($lastDocument->HOD_comment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->HOD_comment;
+            }
             $history->current = $request->HOD_comment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2055,14 +3732,23 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+
+
         if($lastDocument->supplier_name != $request->supplier_name){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Supplier Name')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Supplier Name';
-            $history->previous = $lastDocument->supplier_name;
+            if($lastDocument->supplier_name == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->supplier_name;
+            }
             $history->current = $request->supplier_name;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2071,14 +3757,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->supplier_id != $request->supplier_id){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Supplier ID')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Supplier ID';
-            $history->previous = $lastDocument->supplier_id;
+            if($lastDocument->supplier_id == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->supplier_id;
+            }
             $history->current = $request->supplier_id;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2087,14 +3780,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->manufacturer_name != $request->manufacturer_name){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Manufacturer Name')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Manufacturer Name';
-            $history->previous = $lastDocument->manufacturer_name;
+            if($lastDocument->manufacturer_name == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->manufacturer_name;
+            }
             $history->current = $request->manufacturer_name;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2103,14 +3803,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->manufacturer_id != $request->manufacturer_id){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Manufacturer Id')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Manufacturer Id';
-            $history->previous = $lastDocument->manufacturer_id;
+            if($lastDocument->manufacturer_id == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->manufacturer_id;
+            }
             $history->current = $request->manufacturer_id;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2119,14 +3826,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->vendor_name != $request->vendor_name){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Vendor Name')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Vendor Name';
-            $history->previous = $lastDocument->vendor_name;
+            if($lastDocument->vendor_name == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->vendor_name;
+            }
             $history->current = $request->vendor_name;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2135,14 +3849,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->vendor_id != $request->vendor_id){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Vendor ID')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Vendor ID';
-            $history->previous = $lastDocument->vendor_id;
+            if($lastDocument->vendor_id == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->vendor_id;
+            }
             $history->current = $request->vendor_id;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2151,14 +3872,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->contact_person != $request->contact_person){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Contact Person')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Contact Person';
-            $history->previous = $lastDocument->contact_person;
+            if($lastDocument->contact_person == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->contact_person;
+            }
             $history->current = $request->contact_person;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2167,14 +3895,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->other_contacts != $request->other_contacts){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Other Contacts')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Other Contacts';
-            $history->previous = $lastDocument->other_contacts;
+            if($lastDocument->other_contacts == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->other_contacts;
+            }
             $history->current = $request->other_contacts;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2183,15 +3918,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->supplier_serivce != $request->supplier_serivce){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Supplier Services')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Supplier Services';
-            $history->previous = $lastDocument->supplier_serivce;
-            $history->current = $request->supplier_serivce;
+            if($lastDocument->supplier_serivce == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = strip_tags($lastDocument->supplier_serivce);
+            }
+            $history->current = strip_tags($request->supplier_serivce);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2199,14 +3941,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->zone != $request->zone){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Zone')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Zone';
-            $history->previous = $lastDocument->zone;
+            if($lastDocument->zone == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->zone;
+            }
             $history->current = $request->zone;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2215,14 +3964,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->country != $request->country){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Country')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Country';
-            $history->previous = $lastDocument->country;
+            if($lastDocument->country == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->country;
+            }
             $history->current = $request->country;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2231,14 +3987,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->state != $request->state){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'State')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'State';
-            $history->previous = $lastDocument->state;
+            if($lastDocument->state == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->state;
+            }
             $history->current = $request->state;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2247,14 +4010,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->city != $request->city){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'City')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'City';
-            $history->previous = $lastDocument->city;
+            if($lastDocument->city == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->city;
+            }
             $history->current = $request->city;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2263,14 +4033,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->address != $request->address){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Address')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Address';
-            $history->previous = $lastDocument->address;
+            if($lastDocument->address == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->address;
+            }
             $history->current = $request->address;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2279,14 +4056,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->suppplier_web_site != $request->suppplier_web_site){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Supplier Web Site')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Supplier Web Site';
-            $history->previous = $lastDocument->suppplier_web_site;
+            if($lastDocument->suppplier_web_site == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->suppplier_web_site;
+            }
             $history->current = $request->suppplier_web_site;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2295,15 +4079,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->iso_certified_date != $request->iso_certified_date){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'ISO Certification date')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'ISO Certification date';
-            $history->previous = $lastDocument->iso_certified_date;
-            $history->current = $request->iso_certified_date;
+            if($lastDocument->iso_certified_date == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = Helpers::getdateFormat($lastDocument->iso_certified_date);
+            }
+            $history->current = Helpers::getdateFormat($request->iso_certified_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2311,14 +4102,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->suppplier_contacts != $request->suppplier_contacts){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Contract')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Contract';
-            $history->previous = $lastDocument->suppplier_contacts;
+            if($lastDocument->suppplier_contacts == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->suppplier_contacts;
+            }
             $history->current = $request->suppplier_contacts;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2327,14 +4125,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->related_non_conformance != $request->related_non_conformance){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Related Non Conformances')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Related Non Conformances';
-            $history->previous = $lastDocument->related_non_conformance;
+            if($lastDocument->related_non_conformance == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->related_non_conformance;
+            }
             $history->current = $request->related_non_conformance;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2343,14 +4148,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->suppplier_agreement != $request->suppplier_agreement){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Supplier Contracts/Agreements')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Supplier Contracts/Agreements';
-            $history->previous = $lastDocument->suppplier_agreement;
+            if($lastDocument->suppplier_agreement == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->suppplier_agreement;
+            }
             $history->current = $request->suppplier_agreement;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2359,14 +4171,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->regulatory_history != $request->regulatory_history){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Regulatory History')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Regulatory History';
-            $history->previous = $lastDocument->regulatory_history;
+            if($lastDocument->regulatory_history == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->regulatory_history;
+            }
             $history->current = $request->regulatory_history;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2375,14 +4194,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->distribution_sites != $request->distribution_sites){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Distribution Sites')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Distribution Sites';
-            $history->previous = $lastDocument->distribution_sites;
+            if($lastDocument->distribution_sites == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->distribution_sites;
+            }
             $history->current = $request->distribution_sites;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2391,15 +4217,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->manufacturing_sited != $request->manufacturing_sited){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Manufacturing Sites')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Manufacturing Sites';
-            $history->previous = $lastDocument->manufacturing_sited;
-            $history->current = $request->manufacturing_sited;
+            if($lastDocument->manufacturing_sited == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = strip_tags($lastDocument->manufacturing_sited);
+            }
+            $history->current = strip_tags($request->manufacturing_sited);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2407,15 +4240,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->quality_management != $request->quality_management){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Quality Management')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Quality Management';
-            $history->previous = $lastDocument->quality_management;
-            $history->current = $request->quality_management;
+            if($lastDocument->quality_management == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = strip_tags($lastDocument->quality_management);
+            }
+            $history->current = strip_tags($request->quality_management);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2423,15 +4263,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->bussiness_history != $request->bussiness_history){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Business History')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Business History';
-            $history->previous = $lastDocument->bussiness_history;
-            $history->current = $request->bussiness_history;
+            if($lastDocument->bussiness_history == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = strip_tags($lastDocument->bussiness_history);
+            }
+            $history->current = strip_tags($request->bussiness_history);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2439,15 +4286,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->performance_history != $request->performance_history){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Performance History')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Performance History';
-            $history->previous = $lastDocument->performance_history;
-            $history->current = $request->performance_history;
+            if($lastDocument->performance_history == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = strip_tags($lastDocument->performance_history);
+            }
+            $history->current = strip_tags($request->performance_history);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2455,15 +4309,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->compliance_risk != $request->compliance_risk){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Compliance Risk')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Compliance Risk';
-            $history->previous = $lastDocument->compliance_risk;
-            $history->current = $request->compliance_risk;
+            if($lastDocument->compliance_risk == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = strip_tags($lastDocument->compliance_risk);
+            }
+            $history->current = strip_tags($request->compliance_risk);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2471,14 +4332,23 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+
+
         if($lastDocument->cost_reduction != $request->cost_reduction){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Cost Reduction')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Cost Reduction';
-            $history->previous = $lastDocument->cost_reduction;
+            if($lastDocument->cost_reduction == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->cost_reduction;
+            }
             $history->current = $request->cost_reduction;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2487,14 +4357,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->cost_reduction_weight != $request->cost_reduction_weight){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Cost Reduction Weight')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Cost Reduction Weight';
-            $history->previous = $lastDocument->cost_reduction_weight;
+            if($lastDocument->cost_reduction_weight == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->cost_reduction_weight;
+            }
             $history->current = $request->cost_reduction_weight;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2503,14 +4380,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->payment_term != $request->payment_term){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Payment Terms')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Payment Terms';
-            $history->previous = $lastDocument->payment_term;
+            if($lastDocument->payment_term == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->payment_term;
+            }
             $history->current = $request->payment_term;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2519,14 +4403,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->payment_term_weight != $request->payment_term_weight){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Payment Terms Weight')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Payment Terms Weight';
-            $history->previous = $lastDocument->payment_term_weight;
+            if($lastDocument->payment_term_weight == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->payment_term_weight;
+            }
             $history->current = $request->payment_term_weight;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2535,15 +4426,23 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if($lastDocument->lead_time_days != $request->lead_time_days){
+        
+        if($lastDocument->lead_time_days != $supplier->lead_time_days){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Lead Time Days')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Lead Time Days';
-            $history->previous = $lastDocument->lead_time_days;
-            $history->current = $request->lead_time_days;
+            if($supplier->lead_time_days == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $supplier->lead_time_days;
+            }
+            $history->current = $supplier->lead_time_days;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2551,14 +4450,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+
         if($lastDocument->lead_time_days_weight != $request->lead_time_days_weight){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Lead Time Days Weight')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Lead Time Days Weight';
-            $history->previous = $lastDocument->lead_time_days_weight;
+            if($lastDocument->lead_time_days_weight == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->lead_time_days_weight;
+            }
             $history->current = $request->lead_time_days_weight;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2567,14 +4474,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->ontime_delivery != $request->ontime_delivery){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'On-Time Delivery')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'On-Time Delivery';
-            $history->previous = $lastDocument->ontime_delivery;
+            if($lastDocument->ontime_delivery == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->ontime_delivery;
+            }
             $history->current = $request->ontime_delivery;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2583,14 +4497,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->ontime_delivery_weight != $request->ontime_delivery_weight){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'On-Time Delivery Weight')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'On-Time Delivery Weight';
-            $history->previous = $lastDocument->ontime_delivery_weight;
+            if($lastDocument->ontime_delivery_weight == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->ontime_delivery_weight;
+            }
             $history->current = $request->ontime_delivery_weight;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2599,14 +4520,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->supplier_bussiness_planning != $request->supplier_bussiness_planning){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Supplier Business Planning')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Supplier Business Planning';
-            $history->previous = $lastDocument->supplier_bussiness_planning;
+            if($lastDocument->supplier_bussiness_planning == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->supplier_bussiness_planning;
+            }
             $history->current = $request->supplier_bussiness_planning;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2615,14 +4543,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->supplier_bussiness_planning_weight != $request->supplier_bussiness_planning_weight){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Supplier Business Weight')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Supplier Business Weight';
-            $history->previous = $lastDocument->supplier_bussiness_planning_weight;
+            if($lastDocument->supplier_bussiness_planning_weight == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->supplier_bussiness_planning_weight;
+            }
             $history->current = $request->supplier_bussiness_planning_weight;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2631,14 +4566,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->rejection_ppm != $request->rejection_ppm){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Rejection in PPM')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Rejection in PPM';
-            $history->previous = $lastDocument->rejection_ppm;
+            if($lastDocument->rejection_ppm == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->rejection_ppm;
+            }
             $history->current = $request->rejection_ppm;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2647,14 +4589,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->rejection_ppm_weight != $request->rejection_ppm_weight){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Rejection in PPM Weight')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Rejection in PPM Weight';
-            $history->previous = $lastDocument->rejection_ppm_weight;
+            if($lastDocument->rejection_ppm_weight == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->rejection_ppm_weight;
+            }
             $history->current = $request->rejection_ppm_weight;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2663,14 +4612,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->quality_system != $request->quality_system){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Quality Systems')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Quality Systems';
-            $history->previous = $lastDocument->quality_system;
+            if($lastDocument->quality_system == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->quality_system;
+            }
             $history->current = $request->quality_system;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2679,14 +4635,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->quality_system_ranking != $request->quality_system_ranking){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Quality Systems Ranking')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Quality Systems Ranking';
-            $history->previous = $lastDocument->quality_system_ranking;
+            if($lastDocument->quality_system_ranking == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->quality_system_ranking;
+            }
             $history->current = $request->quality_system_ranking;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2695,14 +4658,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->car_generated != $request->car_generated){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', '# of CAR generated')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = '# of CAR generated';
-            $history->previous = $lastDocument->car_generated;
+            if($lastDocument->car_generated == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->car_generated;
+            }
             $history->current = $request->car_generated;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2711,14 +4681,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->car_generated_weight != $request->car_generated_weight){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', '# of CAR generated Weight')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = '# of CAR generated Weight';
-            $history->previous = $lastDocument->car_generated_weight;
+            if($lastDocument->car_generated_weight == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->car_generated_weight;
+            }
             $history->current = $request->car_generated_weight;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2727,14 +4704,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->closure_time != $request->closure_time){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'CAR Closure Time')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'CAR Closure Time';
-            $history->previous = $lastDocument->closure_time;
+            if($lastDocument->closure_time == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->closure_time;
+            }
             $history->current = $request->closure_time;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2743,14 +4727,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->closure_time_weight != $request->closure_time_weight){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'CAR Closure Time Weight')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'CAR Closure Time Weight';
-            $history->previous = $lastDocument->closure_time_weight;
+            if($lastDocument->closure_time_weight == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->closure_time_weight;
+            }
             $history->current = $request->closure_time_weight;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2759,14 +4750,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->end_user_satisfaction != $request->end_user_satisfaction){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'End-User Satisfaction')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'End-User Satisfaction';
-            $history->previous = $lastDocument->end_user_satisfaction;
+            if($lastDocument->end_user_satisfaction == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->end_user_satisfaction;
+            }
             $history->current = $request->end_user_satisfaction;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2775,14 +4773,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->end_user_satisfaction_weight != $request->end_user_satisfaction_weight){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'End-User Satisfaction Weight')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'End-User Satisfaction Weight';
-            $history->previous = $lastDocument->end_user_satisfaction_weight;
+            if($lastDocument->end_user_satisfaction_weight == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->end_user_satisfaction_weight;
+            }
             $history->current = $request->end_user_satisfaction_weight;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2791,15 +4796,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->QA_reviewer_feedback != $request->QA_reviewer_feedback){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'QA Reviewer Feedback')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'QA Reviewer Feedback';
-            $history->previous = $lastDocument->QA_reviewer_feedback;
-            $history->current = $request->QA_reviewer_feedback;
+            if($lastDocument->QA_reviewer_feedback == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = strip_tags($lastDocument->QA_reviewer_feedback);
+            }
+            $history->current = strip_tags($request->QA_reviewer_feedback);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2807,15 +4819,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->QA_reviewer_comment != $request->QA_reviewer_comment){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'QA Reviewer Comment')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'QA Reviewer Comment';
-            $history->previous = $lastDocument->QA_reviewer_comment;
-            $history->current = $request->QA_reviewer_comment;
+            if($lastDocument->QA_reviewer_comment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = strip_tags($lastDocument->QA_reviewer_comment);
+            }
+            $history->current = strip_tags($request->QA_reviewer_comment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2823,15 +4842,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->last_audit_date != $request->last_audit_date){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Last Audit Date')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Last Audit Date';
-            $history->previous = $lastDocument->last_audit_date;
-            $history->current = $request->last_audit_date;
+            if($lastDocument->last_audit_date == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->last_audit_date;
+            }
+            $history->current = Helpers::getdateFormat($request->last_audit_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2839,15 +4865,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->next_audit_date != $request->next_audit_date){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Next Audit Date')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Next Audit Date';
-            $history->previous = $lastDocument->next_audit_date;
-            $history->current = $request->next_audit_date;
+            if($lastDocument->next_audit_date == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->next_audit_date;
+            }
+            $history->current = Helpers::getdateFormat($request->next_audit_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2855,14 +4888,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->audit_frequency != $request->audit_frequency){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Audit Frequency')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Audit Frequency';
-            $history->previous = $lastDocument->audit_frequency;
+            if($lastDocument->audit_frequency == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->audit_frequency;
+            }
             $history->current = $request->audit_frequency;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2871,14 +4911,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->last_audit_result != $request->last_audit_result){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Last Audit Result')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Last Audit Result';
-            $history->previous = $lastDocument->last_audit_result;
+            if($lastDocument->last_audit_result == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->last_audit_result;
+            }
             $history->current = $request->last_audit_result;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2887,14 +4934,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->facility_type != $request->facility_type){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Facility Type')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Facility Type';
-            $history->previous = $lastDocument->facility_type;
+            if($lastDocument->facility_type == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->facility_type;
+            }
             $history->current = $request->facility_type;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2903,14 +4957,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->nature_of_employee != $request->nature_of_employee){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Number of Employees')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Number of Employees';
-            $history->previous = $lastDocument->nature_of_employee;
+            if($lastDocument->nature_of_employee == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->nature_of_employee;
+            }
             $history->current = $request->nature_of_employee;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2919,14 +4980,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->technical_support != $request->technical_support){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Access to Technical Support')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Access to Technical Support';
-            $history->previous = $lastDocument->technical_support;
+            if($lastDocument->technical_support == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->technical_support;
+            }
             $history->current = $request->technical_support;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2935,14 +5003,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->survice_supported != $request->survice_supported){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Services Supported')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Services Supported';
-            $history->previous = $lastDocument->survice_supported;
+            if($lastDocument->survice_supported == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->survice_supported;
+            }
             $history->current = $request->survice_supported;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2951,14 +5026,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->reliability != $request->reliability){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Reliability')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Reliability';
-            $history->previous = $lastDocument->reliability;
+            if($lastDocument->reliability == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->reliability;
+            }
             $history->current = $request->reliability;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2967,14 +5049,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->revenue != $request->revenue){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Revenue')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Revenue';
-            $history->previous = $lastDocument->revenue;
+            if($lastDocument->revenue == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->revenue;
+            }
             $history->current = $request->revenue;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2983,14 +5072,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->client_base != $request->client_base){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Client Base')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Client Base';
-            $history->previous = $lastDocument->client_base;
+            if($lastDocument->client_base == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->client_base;
+            }
             $history->current = $request->client_base;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2999,14 +5095,21 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->previous_audit_result != $request->previous_audit_result){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Previous Audit Results')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Previous Audit Results';
-            $history->previous = $lastDocument->previous_audit_result;
+            if($lastDocument->previous_audit_result == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->previous_audit_result;
+            }
             $history->current = $request->previous_audit_result;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -3015,15 +5118,22 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
         if($lastDocument->QA_head_comment != $request->QA_head_comment){
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'QA Head Comment')
+            ->exists();
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'QA Head Comment';
-            $history->previous = $lastDocument->QA_head_comment;
-            $history->current = $request->QA_head_comment;
+            if($lastDocument->QA_head_comment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = strip_tags($lastDocument->QA_head_comment);
+            }
+            $history->current = strip_tags($request->QA_head_comment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3031,9 +5141,408 @@ class SupplierController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+
+
+        //=======================================UPDATE ATTACHMENTS==========================================
+
+
+        
+        $previousAttachments_cp = $lastDocument->coa_attachment;
+        $areIniAttachmentsSame_cp = $previousAttachments_cp == $supplier->coa_attachment;
+        // dd($previousAttachments);
+
+        if ($areIniAttachmentsSame_cp != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'COAs Attachment')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'COAs Attachment';
+            if($lastDocument->coa_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->coa_attachment;
+            }
+            // $history->previous = $previousAttachments;
+            $history->current = $supplier->coa_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+
+        $previousAttachments = $lastDocument->cep_attachment;
+        $areIniAttachmentsSame = $previousAttachments == $supplier->cep_attachment;
+        // dd($previousAttachments);
+
+        if ($areIniAttachmentsSame != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'CEP Attachment')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'CEP Attachment';
+            if($lastDocument->cep_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->cep_attachment;
+            }
+            // $history->previous = $previousAttachments;
+            $history->current = $supplier->cep_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+
+        $previousAttachments1 = $lastDocument->HOD_attachment;
+        $areIniAttachmentsSame1 = $previousAttachments1 == $supplier->HOD_attachment;
+
+        if ($areIniAttachmentsSame1 != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'HOD Attachments')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'HOD Attachments';
+            if($lastDocument->HOD_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->HOD_attachment;
+            }
+            // $history->previous = $previousAttachments1;
+            $history->current = $supplier->HOD_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+
+        $previousAttachments2 = $lastDocument->hod_additional_attachment;
+        $areIniAttachmentsSame2 = $previousAttachments2 == $supplier->hod_additional_attachment;
+
+        if ($areIniAttachmentsSame2 != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'HOD Additional Attachment')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'HOD Additional Attachment';
+            if($lastDocument->hod_additional_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->hod_additional_attachment;
+            }
+            // $history->previous = $previousAttachments2;
+            $history->current = $supplier->hod_additional_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+        $previousAttachments3 = $lastDocument->iso_certificate_attachment;
+        $areIniAttachmentsSame3 = $previousAttachments3 == $supplier->iso_certificate_attachment;
+
+        if ($areIniAttachmentsSame3 != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'ISO Ceritificate Attachment')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'ISO Ceritificate Attachment';
+            if($lastDocument->iso_certificate_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->iso_certificate_attachment;
+            }
+            // $history->previous = $previousAttachments3;
+            $history->current = $supplier->iso_certificate_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+
+        $previousAttachments4 = $lastDocument->supplier_detail_additional_attachment;
+        $areIniAttachmentsSame4 = $previousAttachments4 == $supplier->supplier_detail_additional_attachment;
+
+        if ($areIniAttachmentsSame4 != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Supplier Additional Attachment')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'Supplier Additional Attachment';
+            if($lastDocument->supplier_detail_additional_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->supplier_detail_additional_attachment;
+            }
+            // $history->previous = $previousAttachments4;
+            $history->current = $supplier->supplier_detail_additional_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+        $previousAttachments5 = $lastDocument->score_card_additional_attachment;
+        $areIniAttachmentsSame5 = $previousAttachments5 == $supplier->score_card_additional_attachment;
+
+        if ($areIniAttachmentsSame5 != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Score Card Additional Attachment')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'Score Card Additional Attachment';
+            if($lastDocument->score_card_additional_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->score_card_additional_attachment;
+            }
+            // $history->previous = $previousAttachments5;
+            $history->current = $supplier->score_card_additional_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+
+        $previousAttachments6 = $lastDocument->QA_reviewer_attachment;
+        $areIniAttachmentsSame6 = $previousAttachments6 == $supplier->QA_reviewer_attachment;
+
+        if ($areIniAttachmentsSame6 != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'QA Reviewer Attachment')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'QA Reviewer Attachment';
+            if($lastDocument->QA_reviewer_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->QA_reviewer_attachment;
+            }
+            // $history->previous = $previousAttachments6;
+            $history->current = $supplier->QA_reviewer_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+
+        $previousAttachments7 = $lastDocument->qa_reviewer_additional_attachment;
+        $areIniAttachmentsSame7 = $previousAttachments7 == $supplier->qa_reviewer_additional_attachment;
+
+        if ($areIniAttachmentsSame7 != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'QA Reviewer Additional Attachment')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'QA Reviewer Additional Attachment';
+            if($lastDocument->qa_reviewer_additional_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->qa_reviewer_additional_attachment;
+            }
+            // $history->previous = $previousAttachments7;
+            $history->current = $supplier->qa_reviewer_additional_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+        $previousAttachments8 = $lastDocument->risk_assessment_additional_attachment;
+        $areIniAttachmentsSame8 = $previousAttachments8 == $supplier->risk_assessment_additional_attachment;
+
+        if ($areIniAttachmentsSame8 != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'Risk Assesment Additional Attachment')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'Risk Assesment Additional Attachment';
+            if($lastDocument->risk_assessment_additional_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->risk_assessment_additional_attachment;
+            }
+            // $history->previous = $previousAttachments8;
+            $history->current = $supplier->risk_assessment_additional_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+        $previousAttachments9 = $lastDocument->QA_head_attachment;
+        $areIniAttachmentsSame9 = $previousAttachments9 == $supplier->QA_head_attachment;
+
+        if ($areIniAttachmentsSame9 != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'QA Head Attachment')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'QA Head Attachment';
+            if($lastDocument->QA_head_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->QA_head_attachment;
+            }
+            // $history->previous = $previousAttachments9;
+            $history->current = $supplier->QA_head_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+        $previousAttachments10 = $lastDocument->qa_head_additional_attachment;
+        $areIniAttachmentsSame10 = $previousAttachments10 == $supplier->qa_head_additional_attachment;
+
+        if ($areIniAttachmentsSame10 != true) {
+            $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
+            ->where('activity_type', 'QA Head Reviewer Additional Attachment')
+            ->exists();
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = (int)$id;
+            $history->activity_type = 'QA Head Reviewer Additional Attachment';
+            if($lastDocument->qa_head_additional_attachment == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->qa_head_additional_attachment;
+            }
+            // $history->previous = $previousAttachments10;
+            $history->current = $supplier->qa_head_additional_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+
         return back();
     }
 
@@ -3046,13 +5555,15 @@ class SupplierController extends Controller
         $data = Supplier::find($id);
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
-            $gridData = SupplierGrid::where('supplier_id', $data->id)->first();
+            $gridData = SupplierGrid::where('supplier_id', $data->id)->first();            
+            $supplierChecklist = SupplierChecklist::where('supplier_id', $id)->get();
             
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.supplier.supplier-single-report', compact(
                 'data',
                 'gridData',
+                'supplierChecklist'
             ))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
@@ -3069,11 +5580,11 @@ class SupplierController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
             $canvas->page_text(
-                $width / 4,
+                $width / 8,
                 $height / 2,
                 $data->status,
                 null,
-                25,
+                20,
                 [0, 0, 0],
                 2,
                 6,
@@ -3140,6 +5651,140 @@ class SupplierController extends Controller
         }
     }
 
+    public function approvedByContractGiver(Request $request, $id){
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $supplier = Supplier::find($id);
+            $lastDocument = Supplier::find($id);
+
+            $supplier->approvedBy_contract_giver_by = Auth::user()->name;
+            $supplier->approvedBy_contract_giver_on = Carbon::now()->format('d-M-Y');
+            $supplier->approvedBy_contract_giver_comment = $request->comments;
+        
+            $history = new SupplierAuditTrail();
+            $history->supplier_id = $id;
+            $history->activity_type = 'Approved By Contract Giver By, Approved By Contract Giver On';
+            if (is_null($lastDocument->approvedBy_contract_giver_by) || $lastDocument->approvedBy_contract_giver_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->approvedBy_contract_giver_by . ' , ' . $lastDocument->approvedBy_contract_giver_on;
+            }
+            $history->current = $supplier->approvedBy_contract_giver_by . ' , ' . $supplier->approvedBy_contract_giver_on;
+            // $history->previous = "";
+            $history->action = 'Approved By Contract Giver';
+            // $history->current = "";
+            $history->comment = $request->comments;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;    
+            if (is_null($lastDocument->approvedBy_contract_giver_by) || $lastDocument->approvedBy_contract_giver_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }    
+            $history->save();
+            $supplier->update();
+
+            // foreach ($list as $u) {
+            //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
+            //         $email = Helpers::getInitiatorEmail($u->user_id);
+            //         if ($email !== null) {
+
+            //             try {
+            //                 Mail::send(
+            //                     'mail.view-mail',
+            //                     ['data' => $deviation],
+            //                     function ($message) use ($email) {
+            //                         $message->to($email)
+            //                             ->subject("Activity Performed By " . Auth::user()->name);
+            //                     }
+            //                 );
+            //             } catch (\Exception $e) {
+            //                 //log error
+            //             }
+            //         }
+            //     }
+            // }
+            $supplier->update();
+            toastr()->success('Sent to Pending CQA Review After Purchase Sample Request');
+            return back();
+
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        } 
+    }
+
+    public function linkManufacturerToApprovedManufacturer(Request $request, $id){
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $supplier = Supplier::find($id);
+            $lastDocument = Supplier::find($id);
+
+            $supplier->stage = "12";
+            $supplier->status = "Approved Manufacturer/Supplier";
+            $supplier->manufacture_code_linked_by = Auth::user()->name;
+            $supplier->manufacture_code_linked_on = Carbon::now()->format('d-M-Y');
+            $supplier->manufacture_code_linked_comment = $request->comments;
+        
+            $history = new SupplierAuditTrail();
+            $history->supplier_id = $id;
+            $history->activity_type = 'Link Manufacturer Code to Material Code through MPN in SAP By, Link Manufacturer Code to Material Code through MPN in SAP On';
+            if (is_null($lastDocument->manufacture_code_linked_by) || $lastDocument->manufacture_code_linked_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->manufacture_code_linked_by . ' , ' . $lastDocument->manufacture_code_linked_on;
+            }
+            $history->current = $supplier->manufacture_code_linked_by . ' , ' . $supplier->manufacture_code_linked_on;
+            $history->action = 'Link Manufacturer Code to Material Code through MPN in SAP';
+            // $history->current = "";
+            $history->comment = $request->comments;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Approved Manufacturer/Supplier";
+            $history->change_from = $lastDocument->status;      
+            if (is_null($lastDocument->manufacture_code_linked_by) || $lastDocument->manufacture_code_linked_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }      
+            $history->save();
+            $supplier->update();
+
+            // foreach ($list as $u) {
+            //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
+            //         $email = Helpers::getInitiatorEmail($u->user_id);
+            //         if ($email !== null) {
+
+            //             try {
+            //                 Mail::send(
+            //                     'mail.view-mail',
+            //                     ['data' => $deviation],
+            //                     function ($message) use ($email) {
+            //                         $message->to($email)
+            //                             ->subject("Activity Performed By " . Auth::user()->name);
+            //                     }
+            //                 );
+            //             } catch (\Exception $e) {
+            //                 //log error
+            //             }
+            //         }
+            //     }
+            // }
+            $supplier->update();
+            toastr()->success('Sent to Approved Manufacturer/Supplier');
+            return back();
+
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+
     public function supplierSendStage(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -3147,26 +5792,52 @@ class SupplierController extends Controller
             $lastDocument = Supplier::find($id);
             if ($supplier->stage == 1) {
                     $supplier->stage = "2";
-                    $supplier->status = "Pending Qualification";
+                    $supplier->status = "Pending Initiating Department Update";
                     $supplier->submitted_by = Auth::user()->name;
                     $supplier->submitted_on = Carbon::now()->format('d-M-Y');
                     $supplier->submitted_comment = $request->comments;
 
                     $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action = 'Submit Supplier Details';
-                    $history->current = "Not Applicable";
+                    $history->activity_type = 'Need for Sourcing of Starting Material By, Need for Sourcing of Starting Material On';
+                    if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->submitted_by . ' , ' . $lastDocument->submitted_on;
+                    }
+                    $history->current = $supplier->submitted_by . ' , ' . $supplier->submitted_on;
+                    $history->action='Need for Sourcing of Starting Material';
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Pending Qualification";
+                    $history->change_to =   "Pending Initiating Department Update";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
+
+                    // $history = new SupplierAuditTrail();
+                    // $history->supplier_id = $id;
+                    // $history->activity_type = 'Need for Sourcing of Starting Material On';
+                    // $history->previous = "";
+                    // $history->action = 'Need for Sourcing of Starting Material';
+                    // $history->current = "Not Applicable";
+                    // $history->comment = $request->comments;
+                    // $history->user_id = Auth::user()->id;
+                    // $history->user_name = Auth::user()->name;
+                    // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    // $history->origin_state = $lastDocument->status;
+                    // $history->change_to =   "Pending Initiating Department Update";
+                    // $history->change_from = $lastDocument->status;
+                    // $history->stage = 'Plan Proposed';
+                    // $history->save();
+
                     //  $list = Helpers::getHodUserList();
                     //     foreach ($list as $u) {
                     //         if($u->q_m_s_divisions_id == $supplier->division_id){
@@ -3185,30 +5856,40 @@ class SupplierController extends Controller
                     //   }
                     $supplier->update();
 
-                    toastr()->success('Sent to HOD Review');
+                    toastr()->success('Sent to Pending Initiating Department Update');
                     return back();
             }
             if ($supplier->stage == 2) {
                     $supplier->stage = "3";
-                    $supplier->status = "Pending Supplier Audit";
-                    $supplier->pending_qualification_by = Auth::user()->name;
-                    $supplier->pending_qualification_on = Carbon::now()->format('d-M-Y');
-                    $supplier->pending_qualification_comment = $request->comments;
+                    $supplier->status = "Pending Update FROM CQA";
+                    $supplier->request_justified_by = Auth::user()->name;
+                    $supplier->request_justified_on = Carbon::now()->format('d-M-Y');
+                    $supplier->request_justified_comment = $request->comments;
 
                     $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action = 'Qualification Complete';
-                    $history->current = "Not Applicable";
+                    $history->activity_type = 'Request Justified By, Request Justified On';
+                    if (is_null($lastDocument->request_justified_by) || $lastDocument->request_justified_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->request_justified_by . ' , ' . $lastDocument->request_justified_on;
+                    }
+                    $history->current = $supplier->request_justified_by . ' , ' . $supplier->request_justified_on;
+                    $history->action = 'Request Justified';
+                    // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Pending Supplier Audit";
+                    $history->change_to =   "Pending Update FROM CQA";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->request_justified_by) || $lastDocument->request_justified_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                     //  $list = Helpers::getHodUserList();
                     //     foreach ($list as $u) {
@@ -3228,30 +5909,39 @@ class SupplierController extends Controller
                     //   }
                     $supplier->update();
                     
-                    toastr()->success('Sent to Pending Supplier Audit');
+                    toastr()->success('Document Sent');
                     return back();
             }
             if ($supplier->stage == 3) {
                 $supplier->stage = "4";
-                $supplier->status = "Pending Rejction";
-                $supplier->pending_supplier_audit_by = Auth::user()->name;
-                $supplier->pending_supplier_audit_on = Carbon::now()->format('d-M-Y');
-                $supplier->pending_supplier_audit_comment = $request->comments;
+                $supplier->status = "Pending Purchase Sample Request";
+                $supplier->prepurchase_sample_by = Auth::user()->name;
+                $supplier->prepurchase_sample_on = Carbon::now()->format('d-M-Y');
+                $supplier->prepurchase_sample_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action = 'Audit Failed';
-                    $history->current = "Not Applicable";
+                    $history->activity_type = 'Pre-Purchase Sample Required By, Pre-Purchase Sample Required On';
+                    if (is_null($lastDocument->prepurchase_sample_by) || $lastDocument->prepurchase_sample_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->prepurchase_sample_by . ' , ' . $lastDocument->prepurchase_sample_on;
+                    }
+                    $history->current = $supplier->prepurchase_sample_by . ' , ' . $supplier->prepurchase_sample_on;
+                    $history->action = 'Pre-Purchase Sample Required';
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Pending Rejction";
+                    $history->change_to =  "Pending Purchase Sample Request";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->prepurchase_sample_by) || $lastDocument->prepurchase_sample_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
@@ -3271,30 +5961,40 @@ class SupplierController extends Controller
                 //   }
                 $supplier->update();
 
-                toastr()->success('Sent to Pending Rejction');
+                toastr()->success('Document Sent');
                 return back();
             }
             if ($supplier->stage == 4) {
-                $supplier->stage = "6";
-                $supplier->status = "Obselete";
-                $supplier->pending_rejection_by = Auth::user()->name;
-                $supplier->pending_rejection_on = Carbon::now()->format('d-M-Y');
-                $supplier->pending_rejection_comment = $request->comments;
+                $supplier->stage = "5";
+                $supplier->status = "Pending CQA Review After Purchase Sample Request";
+                $supplier->pendigPurchaseSampleRequested_by = Auth::user()->name;
+                $supplier->pendigPurchaseSampleRequested_on = Carbon::now()->format('d-M-Y');
+                $supplier->pendigPurchaseSampleRequested_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action = 'Supplier Obsolete';
-                    $history->current = $supplier->submit_by;
+                    $history->activity_type = 'Purchase Sample Request Initiated & Acknowledgement By PD By , Purchase Sample Request Initiated & Acknowledgement By PD On';
+                    if (is_null($lastDocument->pendigPurchaseSampleRequested_by) || $lastDocument->pendigPurchaseSampleRequested_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->pendigPurchaseSampleRequested_by . ' , ' . $lastDocument->pendigPurchaseSampleRequested_on;
+                    }
+                    $history->current = $supplier->pendigPurchaseSampleRequested_by . ' , ' . $supplier->pendigPurchaseSampleRequested_on;
+                    $history->action = 'Purchase Sample Request Initiated & Acknowledgement By PD';
+                    
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Obselete";
+                    $history->change_to = "Pending CQA Review After Purchase Sample Request";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->pendigPurchaseSampleRequested_by) || $lastDocument->pendigPurchaseSampleRequested_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
@@ -3314,7 +6014,485 @@ class SupplierController extends Controller
                 //   }
                 $supplier->update();
                 
-                toastr()->success('Pending CFT Review');
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 5) {
+                $supplier->stage = "6";
+                $supplier->status = "Pending F&D Review";
+                $supplier->purchaseSampleanalysis_by = Auth::user()->name;
+                $supplier->purchaseSampleanalysis_on = Carbon::now()->format('d-M-Y');
+                $supplier->purchaseSampleanalysis_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'Purchase Sample Analysis Satisfactory By , Purchase Sample Analysis Satisfactory On';
+                    if (is_null($lastDocument->purchaseSampleanalysis_by) || $lastDocument->purchaseSampleanalysis_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->purchaseSampleanalysis_by . ' , ' . $lastDocument->purchaseSampleanalysis_on;
+                    }
+                    $history->current = $supplier->purchaseSampleanalysis_by . ' , ' . $supplier->purchaseSampleanalysis_on;
+                    $history->action = 'Purchase Sample Analysis Satisfactory';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending F&D Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->purchaseSampleanalysis_by) || $lastDocument->purchaseSampleanalysis_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 6) {
+                $supplier->stage = "7";
+                $supplier->status = "Pending Acknowledgement By Purchase Department";
+                $supplier->FdReviewCompleted_by = Auth::user()->name;
+                $supplier->FdReviewCompleted_on = Carbon::now()->format('d-M-Y');
+                $supplier->FdReviewCompleted_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;                    
+                    $history->activity_type = 'F&D Review Completed By , F&D Review Completed On';
+                    if (is_null($lastDocument->FdReviewCompleted_by) || $lastDocument->FdReviewCompleted_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->FdReviewCompleted_by . ' , ' . $lastDocument->FdReviewCompleted_on;
+                    }
+                    $history->current = $supplier->FdReviewCompleted_by . ' , ' . $supplier->FdReviewCompleted_on;
+                    $history->action = 'F&D Review Completed';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Acknowledgement By Purchase Department";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->FdReviewCompleted_by) || $lastDocument->FdReviewCompleted_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 7) {
+                $supplier->stage = "8";
+                $supplier->status = "Pending CQA Final Review";
+                $supplier->acknowledgByPD_by = Auth::user()->name;
+                $supplier->acknowledgByPD_on = Carbon::now()->format('d-M-Y');
+                $supplier->acknowledgByPD_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Acknowledgement By Purchase Department By , Acknowledgement By Purchase Department On';
+                    if (is_null($lastDocument->acknowledgByPD_by) || $lastDocument->acknowledgByPD_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->acknowledgByPD_by . ' , ' . $lastDocument->acknowledgByPD_on;
+                    }
+                    $history->current = $supplier->acknowledgByPD_by . ' , ' . $supplier->acknowledgByPD_on;
+                    $history->action = 'Acknowledgement By Purchase Department';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending CQA Final Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->acknowledgByPD_by) || $lastDocument->acknowledgByPD_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 8) {
+                $supplier->stage = "10";
+                $supplier->status = "Pending Manufacturer Risk Assessment";
+                $supplier->requirementFullfilled_by = Auth::user()->name;
+                $supplier->requirementFullfilled_on = Carbon::now()->format('d-M-Y');
+                $supplier->requirementFullfilled_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'All Requirements Fulfilled By , All Requirements Fulfilled On';
+                    if (is_null($lastDocument->requirementFullfilled_by) || $lastDocument->requirementFullfilled_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->requirementFullfilled_by . ' , ' . $lastDocument->requirementFullfilled_on;
+                    }
+                    $history->current = $supplier->requirementFullfilled_by . ' , ' . $supplier->requirementFullfilled_on;
+                    $history->action = 'All Requirements Fulfilled';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Manufacturer Risk Assessment";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->requirementFullfilled_by) || $lastDocument->requirementFullfilled_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 10) {
+                $supplier->stage = "11";
+                $supplier->status = "Pending Manufacturer Audit";
+                $supplier->riskRatingObservedAsHigh_by = Auth::user()->name;
+                $supplier->riskRatingObservedAsHigh_on = Carbon::now()->format('d-M-Y');
+                $supplier->riskRatingObservedAsHigh_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Risk Rating Observed as High/Medium By , Risk Rating Observed as High/Medium On';
+                    if (is_null($lastDocument->riskRatingObservedAsHigh_by) || $lastDocument->riskRatingObservedAsHigh_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->riskRatingObservedAsHigh_by . ' , ' . $lastDocument->riskRatingObservedAsHigh_on;
+                    }
+                    $history->current = $supplier->riskRatingObservedAsHigh_by . ' , ' . $supplier->riskRatingObservedAsHigh_on;
+                    $history->action = 'Risk Rating Observed as High/Medium';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Manufacturer Audit";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->riskRatingObservedAsHigh_by) || $lastDocument->riskRatingObservedAsHigh_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 11) {
+                $supplier->stage = "12";
+                $supplier->status = "Approved Manufacturer/Supplier";
+                $supplier->manufacturerAuditPassed_by = Auth::user()->name;
+                $supplier->manufacturerAuditPassed_on = Carbon::now()->format('d-M-Y');
+                $supplier->manufacturerAuditPassed_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Manufacturer Audit Passed By , Manufacturer Audit Passed On';
+                    if (is_null($lastDocument->manufacturerAuditPassed_by) || $lastDocument->manufacturerAuditPassed_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->manufacturerAuditPassed_by . ' , ' . $lastDocument->manufacturerAuditPassed_on;
+                    }
+                    $history->current = $supplier->manufacturerAuditPassed_by . ' , ' . $supplier->manufacturerAuditPassed_on;
+                    $history->action = 'Manufacturer Audit Passed';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Approved Manufacturer/Supplier";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->manufacturerAuditPassed_by) || $lastDocument->manufacturerAuditPassed_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 12) {
+                $supplier->stage = "13";
+                $supplier->status = "Pending Manufacturer Risk Assessment";
+                $supplier->periodicRevolutionInitiated_by = Auth::user()->name;
+                $supplier->periodicRevolutionInitiated_on = Carbon::now()->format('d-M-Y');
+                $supplier->periodicRevolutionInitiated_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Initiate Periodic Revaluation By , Initiate Periodic Revaluation On';
+                    if (is_null($lastDocument->periodicRevolutionInitiated_by) || $lastDocument->periodicRevolutionInitiated_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->periodicRevolutionInitiated_by . ' , ' . $lastDocument->periodicRevolutionInitiated_on;
+                    }
+                    $history->current = $supplier->periodicRevolutionInitiated_by . ' , ' . $supplier->periodicRevolutionInitiated_on;
+                    $history->action = 'Initiate Periodic Revaluation';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Manufacturer Risk Assessment";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->manufacturerAuditPassed_by) || $lastDocument->manufacturerAuditPassed_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 13) {
+                $supplier->stage = "14";
+                $supplier->status = "Pending Manufacturer Audit";
+                $supplier->riskRatingObservedAsHighMedium_by = Auth::user()->name;
+                $supplier->riskRatingObservedAsHighMedium_on = Carbon::now()->format('d-M-Y');
+                $supplier->riskRatingObservedAsHighMedium_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Risk Rating Observed as High/Medium By , Risk Rating Observed as High/Medium On';
+                    if (is_null($lastDocument->riskRatingObservedAsHighMedium_by) || $lastDocument->riskRatingObservedAsHighMedium_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->riskRatingObservedAsHighMedium_by . ' , ' . $lastDocument->riskRatingObservedAsHighMedium_on;
+                    }
+                    $history->current = $supplier->riskRatingObservedAsHighMedium_by . ' , ' . $supplier->riskRatingObservedAsHighMedium_on;
+                    $history->action = 'Risk Rating Observed as High/Medium';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Manufacturer Audit";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->riskRatingObservedAsHighMedium_by) || $lastDocument->riskRatingObservedAsHighMedium_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 14) {
+                $supplier->stage = "12";
+                $supplier->status = "Approved Manufacturer/Supplier";
+                $supplier->pendingManufacturerAuditFailed_by = Auth::user()->name;
+                $supplier->pendingManufacturerAuditFailed_on = Carbon::now()->format('d-M-Y');
+                $supplier->pendingManufacturerAuditFailed_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Manufacturer Audit Failed By , Manufacturer Audit Failed On';
+                    if (is_null($lastDocument->pendingManufacturerAuditFailed_by) || $lastDocument->pendingManufacturerAuditFailed_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->pendingManufacturerAuditFailed_by . ' , ' . $lastDocument->pendingManufacturerAuditFailed_on;
+                    }
+                    $history->current = $supplier->pendingManufacturerAuditFailed_by . ' , ' . $supplier->pendingManufacturerAuditFailed_on;
+                    $history->action = 'Manufacturer Audit Failed';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Approved Manufacturer/Supplier";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->pendingManufacturerAuditFailed_by) || $lastDocument->pendingManufacturerAuditFailed_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
                 return back();
             }
         } else {
@@ -3323,30 +6501,689 @@ class SupplierController extends Controller
         }
     }
 
-    public function sendToSupplierApproved(Request $request, $id){
+
+    public function supplierStageReject(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $supplier = Supplier::find($id);
+            $lastDocument = Supplier::find($id);
+            if ($supplier->stage == 13) {
+                    $supplier->stage = "12";
+                    $supplier->status = "Approved Manufacturer/Supplier";
+                    $supplier->riskRatingObservedLow_by = Auth::user()->name;
+                    $supplier->riskRatingObservedLow_on = Carbon::now()->format('d-M-Y');
+                    $supplier->riskRatingObservedLow_comment = $request->comments;
+
+                    $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    
+                    $history->activity_type = 'Risk Rating Observed as Low By , Risk Rating Observed as Low On';
+                    if (is_null($lastDocument->riskRatingObservedLow_by) || $lastDocument->riskRatingObservedLow_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->riskRatingObservedLow_by . ' , ' . $lastDocument->riskRatingObservedLow_on;
+                    }
+                    $history->current = $supplier->riskRatingObservedLow_by . ' , ' . $supplier->riskRatingObservedLow_on;
+                    $history->action = 'Risk Rating Observed as Low';
+                    // $history->current = "Not Applicable";
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Approved Manufacturer/Supplier";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->riskRatingObservedLow_by) || $lastDocument->riskRatingObservedLow_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                    //  $list = Helpers::getHodUserList();
+                    //     foreach ($list as $u) {
+                    //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                    //             $email = Helpers::getInitiatorEmail($u->user_id);
+                    //              if ($email !== null) {
+                    //               Mail::send(
+                    //                   'mail.view-mail',
+                    //                    ['data' => $supplier],
+                    //                 function ($message) use ($email) {
+                    //                     $message->to($email)
+                    //                         ->subject("Document is Send By".Auth::user()->name);
+                    //                 }
+                    //               );
+                    //             }
+                    //      }
+                    //   }
+                    $supplier->update();
+
+                    toastr()->success('Document Sent');
+                    return back();
+            }
+            if ($supplier->stage == 12) {
+                    $supplier->stage = "11";
+                    $supplier->status = "Pending Manufacturer Audit";
+                    $supplier->requestedToPendingManufacturerAudit_by = Auth::user()->name;
+                    $supplier->requestedToPendingManufacturerAudit_on = Carbon::now()->format('d-M-Y');
+                    $supplier->requestedToPendingManufacturerAudit_comment = $request->comments;
+
+                    $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Need for Sourcing of Starting Material By, Need for Sourcing of Starting Material On';
+                    if (is_null($lastDocument->requestedToPendingManufacturerAudit_by) || $lastDocument->requestedToPendingManufacturerAudit_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->requestedToPendingManufacturerAudit_by . ' , ' . $lastDocument->requestedToPendingManufacturerAudit_on;
+                    }
+                    $history->current = $supplier->requestedToPendingManufacturerAudit_by . ' , ' . $supplier->requestedToPendingManufacturerAudit_on;
+                    $history->action = 'Request More Info';
+                    // $history->current = "Not Applicable";
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Manufacturer Audit";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->requestedToPendingManufacturerAudit_by) || $lastDocument->requestedToPendingManufacturerAudit_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                    //  $list = Helpers::getHodUserList();
+                    //     foreach ($list as $u) {
+                    //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                    //             $email = Helpers::getInitiatorEmail($u->user_id);
+                    //              if ($email !== null) {
+                    //               Mail::send(
+                    //                   'mail.view-mail',
+                    //                    ['data' => $supplier],
+                    //                 function ($message) use ($email) {
+                    //                     $message->to($email)
+                    //                         ->subject("Document is Send By".Auth::user()->name);
+                    //                 }
+                    //               );
+                    //             }
+                    //      }
+                    //   }
+                    $supplier->update();
+                    
+                    toastr()->success('Document Sent');
+                    return back();
+            }
+            if ($supplier->stage == 11) {
+                $supplier->stage = "10";
+                $supplier->status = "Pending Manufacturer Risk Assessment";
+                $supplier->requestedToPendigManufacturerRA_by = Auth::user()->name;
+                $supplier->requestedToPendigManufacturerRA_on = Carbon::now()->format('d-M-Y');
+                $supplier->requestedToPendigManufacturerRA_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Request More Info By , Request More Info On';
+                    if (is_null($lastDocument->requestedToPendigManufacturerRA_by) || $lastDocument->requestedToPendigManufacturerRA_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->requestedToPendigManufacturerRA_by . ' , ' . $lastDocument->requirementFullfilled_on;
+                    }
+                    $history->current = $supplier->requestedToPendigManufacturerRA_by . ' , ' . $supplier->requirementFullfilled_on;
+                    $history->action = 'Request More Info';
+                    // $history->current = "Not Applicable";
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Manufacturer Risk Assessment";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->requestedToPendigManufacturerRA_by) || $lastDocument->requestedToPendigManufacturerRA_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 10) {
+                $supplier->stage = "8";
+                $supplier->status = "Pending CQA Final Review";
+                $supplier->requestedToPendingCQAFinal_by = Auth::user()->name;
+                $supplier->submitterequestedToPendingCQAFinal_on = Carbon::now()->format('d-M-Y');
+                $supplier->requestedToPendingCQAFinal_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Request More Info By , Request More Info On';
+                    if (is_null($lastDocument->requestedToPendingCQAFinal_by) || $lastDocument->requestedToPendingCQAFinal_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->requestedToPendingCQAFinal_by . ' , ' . $lastDocument->submitterequestedToPendingCQAFinal_on;
+                    }
+                    $history->current = $supplier->requestedToPendingCQAFinal_by . ' , ' . $supplier->submitterequestedToPendingCQAFinal_on;
+                    $history->action = 'Request More Info';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending CQA Final Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->requestedToPendingCQAFinal_by) || $lastDocument->requestedToPendingCQAFinal_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 8) {
+                $supplier->stage = "7";
+                $supplier->status = "Pending Acknowledgement By Purchase Department";
+                $supplier->requestedToPD_by = Auth::user()->name;
+                $supplier->requestedToPD_on = Carbon::now()->format('d-M-Y');
+                $supplier->requestedToPD_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Request More Info By , Request More Info On';
+                    if (is_null($lastDocument->requestedToPD_by) || $lastDocument->requestedToPD_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->requestedToPD_by . ' , ' . $lastDocument->requestedToPD_on;
+                    }
+                    $history->current = $supplier->requestedToPD_by . ' , ' . $supplier->requestedToPD_on;
+                    $history->action = 'Request More Info';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Acknowledgement By Purchase Department";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->requestedToPD_by) || $lastDocument->requestedToPD_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 7) {
+                $supplier->stage = "6";
+                $supplier->status = "Pending F&D Review";
+                $supplier->reqquestedToFD_by = Auth::user()->name;
+                $supplier->reqquestedToFD_on = Carbon::now()->format('d-M-Y');
+                $supplier->reqquestedToFD_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Request More Info By , Request More Info On';
+                    if (is_null($lastDocument->reqquestedToFD_by) || $lastDocument->reqquestedToFD_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->reqquestedToFD_by . ' , ' . $lastDocument->reqquestedToFD_on;
+                    }
+                    $history->current = $supplier->reqquestedToFD_by . ' , ' . $supplier->reqquestedToFD_on;
+                    $history->action = 'Request More Info';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending F&D Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->reqquestedToFD_by) || $lastDocument->reqquestedToFD_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 6) {
+                $supplier->stage = "5";
+                $supplier->status = "Pending CQA Review After Purchase Sample Request";
+                $supplier->requestedToCQA_by = Auth::user()->name;
+                $supplier->requestedToCQA_on = Carbon::now()->format('d-M-Y');
+                $supplier->requestedToCQA_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Request More Info By , Request More Info On';
+                    if (is_null($lastDocument->requestedToCQA_by) || $lastDocument->requestedToCQA_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->requestedToCQA_by . ' , ' . $lastDocument->requestedToCQA_on;
+                    }
+                    $history->current = $supplier->requestedToCQA_by . ' , ' . $supplier->requestedToCQA_on;
+                    $history->action = 'Request More Info';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending CQA Review After Purchase Sample Request";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->requestedToCQA_by) || $lastDocument->requestedToCQA_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 5) {
+                $supplier->stage = "4";
+                $supplier->status = "Pending Purchase Sample Request";
+                $supplier->purchaseSampleanalysisNotSatisfactory_by = Auth::user()->name;
+                $supplier->purchaseSampleanalysisNotSatisfactory_on = Carbon::now()->format('d-M-Y');
+                $supplier->purchaseSampleanalysisNotSatisfactory_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                $history->activity_type = 'Purchase Sample Analysis Not Satisfactory By , Purchase Sample Analysis Not Satisfactory On';
+                if (is_null($lastDocument->purchaseSampleanalysisNotSatisfactory_by) || $lastDocument->purchaseSampleanalysisNotSatisfactory_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->purchaseSampleanalysisNotSatisfactory_by . ' , ' . $lastDocument->requirementFullfilled_on;
+                }
+                $history->current = $supplier->purchaseSampleanalysisNotSatisfactory_by . ' , ' . $supplier->requirementFullfilled_on;
+                    // $history->previous = "";
+                    $history->action = 'Purchase Sample Analysis Not Satisfactory';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Purchase Sample Request";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->purchaseSampleanalysisNotSatisfactory_by) || $lastDocument->purchaseSampleanalysisNotSatisfactory_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 4) {
+                $supplier->stage = "3";
+                $supplier->status = "Pending Update FROM CQA";
+                $supplier->requestedToPendingCQA_by = Auth::user()->name;
+                $supplier->requestedToPendingCQA_on = Carbon::now()->format('d-M-Y');
+                $supplier->requestedToPendingCQA_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Request More Info By , Request More Info On';
+                    if (is_null($lastDocument->requestedToPendingCQA_by) || $lastDocument->requestedToPendingCQA_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->requestedToPendingCQA_by . ' , ' . $lastDocument->requestedToPendingCQA_on;
+                    }
+                    $history->current = $supplier->requestedToPendingCQA_by . ' , ' . $supplier->requestedToPendingCQA_on;
+                    $history->action = 'Request More Info';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Update FROM CQA";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->requestedToPendingCQA_by) || $lastDocument->requestedToPendingCQA_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 3) {
+                $supplier->stage = "2";
+                $supplier->status = "Pending Initiating Department Update";
+                $supplier->requestedTo_initiating_department_by = Auth::user()->name;
+                $supplier->requestedTo_initiating_department_on = Carbon::now()->format('d-M-Y');
+                $supplier->requestedTo_initiating_department_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Request More Info By , Request More Info On';
+                    if (is_null($lastDocument->requestedTo_initiating_department_by) || $lastDocument->requestedTo_initiating_department_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->requestedTo_initiating_department_by . ' , ' . $lastDocument->requestedTo_initiating_department_on;
+                    }
+                    $history->current = $supplier->requestedTo_initiating_department_by . ' , ' . $supplier->requestedTo_initiating_department_on;
+                    $history->action = 'Request More Info';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Pending Initiating Department Update";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->requestedTo_initiating_department_by) || $lastDocument->requestedTo_initiating_department_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 2) {
+                $supplier->stage = "1";
+                $supplier->status = "Opened";
+                $supplier->request_justified_by = Auth::user()->name;
+                $supplier->request_justified_on = Carbon::now()->format('d-M-Y');
+                $supplier->request_justified_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Request Not Justified By , Request Not Justified On';
+                    if (is_null($lastDocument->request_justified_by) || $lastDocument->request_justified_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->request_justified_by . ' , ' . $lastDocument->request_justified_on;
+                    }
+                    $history->current = $supplier->request_justified_by . ' , ' . $supplier->request_justified_on;
+                    $history->action = 'Request Not Justified';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Opened";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->request_justified_by) || $lastDocument->request_justified_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($supplier->stage == 1) {
+                $supplier->stage = "0";
+                $supplier->status = "Closed - Cancelled";
+                $supplier->cancelled_by = Auth::user()->name;
+                $supplier->cancelled_on = Carbon::now()->format('d-M-Y');
+                $supplier->cancelled_comment = $request->comments;
+
+                $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Cancel By , Cancel On';
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                    }
+                    $history->current = $supplier->cancelled_by . ' , ' . $supplier->cancelled_on;
+                    $history->action = 'Cancel';
+                    // $history->current = $supplier->submit_by;
+                    $history->comment = $request->comments;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Closed - Cancelled";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $supplier->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $supplier],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+                $supplier->update();
+                
+                toastr()->success('Document Sent');
+                return back();
+            }
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+    public function sendToPendingCQAReview(Request $request, $id){
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $supplier = Supplier::find($id);
             $lastDocument = Supplier::find($id);
 
             $supplier->stage = "5";
-            $supplier->status = "Supplier Approved";
-            $supplier->supplier_approved_by = Auth::user()->name;
-            $supplier->supplier_approved_on = Carbon::now()->format('d-M-Y');
-            $supplier->supplier_approved_comment = $request->comments;
+            $supplier->status = "Pending CQA Review After Purchase Sample Request";
+            $supplier->prepurchase_sample_notRequired_by = Auth::user()->name;
+            $supplier->prepurchase_sample_notRequired_on = Carbon::now()->format('d-M-Y');
+            $supplier->prepurchase_sample_notRequired_comment = $request->comments;
         
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = "";
-            $history->action = 'Audit Passed';
-            $history->current = "";
+            $history->activity_type = 'Pre-Purchase Sample Not Required By , Pre-Purchase Sample Not Required On';
+            if (is_null($lastDocument->prepurchase_sample_notRequired_by) || $lastDocument->prepurchase_sample_notRequired_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->prepurchase_sample_notRequired_by . ' , ' . $lastDocument->prepurchase_sample_notRequired_on;
+            }
+            $history->current = $supplier->prepurchase_sample_notRequired_by . ' , ' . $supplier->prepurchase_sample_notRequired_on;
+            $history->action = 'Pre-Purchase Sample Not Required';
+            // $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Supplier Approved";
-            $history->change_from = $lastDocument->status;        
+            $history->change_to = "Pending CQA Review After Purchase Sample Request";
+            $history->change_from = $lastDocument->status;  
+            if (is_null($lastDocument->prepurchase_sample_notRequired_by) || $lastDocument->prepurchase_sample_notRequired_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }      
             $history->save();
             $supplier->update();
 
@@ -3380,31 +7217,111 @@ class SupplierController extends Controller
         }
     }
 
-    public function supplierApprovedToObselete(Request $request, $id)
-    {
+    public function sendToApprovedManufacturerFromPendingManufacturer(Request $request, $id){
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $supplier = Supplier::find($id);
             $lastDocument = Supplier::find($id);
 
-            $supplier->stage = "6";
-            $supplier->status = "Obselete";
-            $supplier->supplier_approved_to_obselete_by = Auth::user()->name;
-            $supplier->supplier_approved_to_obselete_on = Carbon::now()->format('d-M-Y');
-            $supplier->supplier_approved_to_obselete_comment = $request->comments;
+            $supplier->stage = "12";
+            $supplier->status = "Approved Manufacturer/Supplier";
+            $supplier->prepurchase_sample_notRequired_by = Auth::user()->name;
+            $supplier->prepurchase_sample_notRequired_on = Carbon::now()->format('d-M-Y');
+            $supplier->prepurchase_sample_notRequired_comment = $request->comments;
         
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = "";
-            $history->action = 'Supplier Obsolete';
-            $history->current = "";
+            $history->activity_type = 'Risk Rating Observed as Low By , Risk Rating Observed as Low On';
+            if (is_null($lastDocument->prepurchase_sample_notRequired_by) || $lastDocument->prepurchase_sample_notRequired_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->prepurchase_sample_notRequired_by . ' , ' . $lastDocument->prepurchase_sample_notRequired_on;
+            }
+            $history->current = $supplier->prepurchase_sample_notRequired_by . ' , ' . $supplier->prepurchase_sample_notRequired_on;
+            // $history->previous = "";
+            $history->action = 'Risk Rating Observed as Low';
+            // $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Obselete";
-            $history->change_from = $lastDocument->status;        
+            $history->change_to = "Approved Manufacturer/Supplier";
+            $history->change_from = $lastDocument->status; 
+            if (is_null($lastDocument->prepurchase_sample_notRequired_by) || $lastDocument->prepurchase_sample_notRequired_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }       
+            $history->save();
+            $supplier->update();
+
+            // foreach ($list as $u) {
+            //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
+            //         $email = Helpers::getInitiatorEmail($u->user_id);
+            //         if ($email !== null) {
+
+            //             try {
+            //                 Mail::send(
+            //                     'mail.view-mail',
+            //                     ['data' => $deviation],
+            //                     function ($message) use ($email) {
+            //                         $message->to($email)
+            //                             ->subject("Activity Performed By " . Auth::user()->name);
+            //                     }
+            //                 );
+            //             } catch (\Exception $e) {
+            //                 //log error
+            //             }
+            //         }
+            //     }
+            // }
+            $supplier->update();
+            toastr()->success('Document Sent');
+            return back();
+
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+    public function manufacturerRejected(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $supplier = Supplier::find($id);
+            $lastDocument = Supplier::find($id);
+
+            
+            $supplier->stage = "9";
+            $supplier->status = "Manufacturer Rejected";
+            $supplier->requiredNotFulfilled_by = Auth::user()->name;
+            $supplier->requiredNotFulfilled_on = Carbon::now()->format('d-M-Y');
+            $supplier->requiredNotFulfilled_comment = $request->comments;
+        
+            $history = new SupplierAuditTrail();
+            $history->supplier_id = $id;
+            $history->activity_type = 'All Requirements Not Fulfilled By , All Requirements Not Fulfilled On';
+            if (is_null($lastDocument->requiredNotFulfilled_by) || $lastDocument->requiredNotFulfilled_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->requiredNotFulfilled_by . ' , ' . $lastDocument->requiredNotFulfilled_on;
+            }
+            $history->current = $supplier->requiredNotFulfilled_by . ' , ' . $supplier->requiredNotFulfilled_on;
+            // $history->previous = "";
+            $history->action = 'All Requirements Not Fulfilled';
+            // $history->current = "";
+            $history->comment = $request->comments;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Manufacturer Rejected";
+            $history->change_from = $lastDocument->status;    
+            if (is_null($lastDocument->requiredNotFulfilled_by) || $lastDocument->requiredNotFulfilled_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }    
             $history->save();
             $supplier->update();
 
@@ -3451,17 +7368,27 @@ class SupplierController extends Controller
         
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = "";
+            $history->activity_type = 'Cancel By , Cancel On';
+            if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+            }
+            $history->current = $supplier->cancelled_by . ' , ' . $supplier->cancelled_on;
             $history->action = 'Cancel';
-            $history->current = "";
+            // $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to =  "Close - Cancelled";
-            $history->change_from = $lastDocument->status;        
+            $history->change_from = $lastDocument->status;       
+            if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            } 
             $history->save();
             $supplier->update();
 
@@ -3489,102 +7416,6 @@ class SupplierController extends Controller
             toastr()->success('Document Sent');
             return back();
 
-        } else {
-            toastr()->error('E-signature Not match');
-            return back();
-        }
-    }
-
-    public function sendToPendingSupplierAudit(Request $request, $id){
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $supplier = Supplier::find($id);
-            $lastDocument = Supplier::find($id);
-            if ($supplier->stage == 4) {
-                    $supplier->stage = "3";
-                    $supplier->status = "Pending Supplier Audit";
-                    $supplier->reAudit_by = Auth::user()->name;
-                    $supplier->reAudit_on = Carbon::now()->format('d-M-Y');
-                    $supplier->reAudit_comment = $request->comments;
-
-                    $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action = 'Re-Audit';
-                    $history->current = "Not Applicable";
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Pending Supplier Audit";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    $history->save();
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $supplier],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
-                    $supplier->update();
-
-                    toastr()->success('Sent to HOD Review');
-                    return back();
-            }
-            if ($supplier->stage == 5) {
-                    $supplier->stage = "3";
-                    $supplier->status = "Pending Supplier Audit";
-                    $supplier->rejectedDueToQuality_by = Auth::user()->name;
-                    $supplier->rejectedDueToQuality_on = Carbon::now()->format('d-M-Y');
-                    $supplier->rejectedDueToQuality_comment = $request->comments;
-
-                    $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action = 'Reject Due To Quality Issues';
-                    $history->current = "Not Applicable";
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Pending Supplier Audit";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    $history->save();
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $supplier],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
-                    $supplier->update();
-                    
-                    toastr()->success('Sent to Pending Supplier Audit');
-                    return back();
-            }
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -3655,7 +7486,7 @@ class SupplierController extends Controller
     //    $pre = Deviation::all();
         return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre'));
     }
-    if ($request->revision == "RA") {
+    if ($request->revision == "RA") { 
         $supplierA->originator = User::where('id', $supplierA->initiator_id)->value('name');
     //    $pre = Deviation::all();
     $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
@@ -3670,10 +7501,12 @@ class SupplierController extends Controller
     if ($request->revision == "SCAR") {
         $supplierA->originator = User::where('id', $supplierA->initiator_id)->value('name');
         $supplierData = Supplier::select('id','supplier_name','supplier_products','distribution_sites')->get();
-    //    $pre = Deviation::all();
-    $old_record = SCAR::select('id', 'division_id', 'record')->get();
-        return view('frontend.scar.scar_new', compact('record_number','supplierData', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
+        $supplierName = Supplier::select('id','supplier_name')->get();
+        $supplierProduct = Supplier::where('supplier_products' , '!=' , "null")->get();
+        $distributionSites = Supplier::where('distribution_sites', '!=', "null")->get();
+        $old_record = SCAR::select('id', 'division_id', 'record')->get();
+        return view('frontend.scar.scar_new', compact('record_number','supplierName','supplierProduct','distributionSites', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
     }
 
-    }
+    } 
 }

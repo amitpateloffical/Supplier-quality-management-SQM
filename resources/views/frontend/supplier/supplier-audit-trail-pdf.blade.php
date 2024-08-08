@@ -18,6 +18,10 @@
         min-height: 100vh;
     }
 
+    .imageContainer p img{
+                    width: 600px !important;
+                    height: 300px;
+                }
     .w-10 {
         width: 10%;
     }
@@ -145,13 +149,14 @@
     }
 </style>
 
+<?php use Carbon\Carbon; ?>
 <body>
 
     <header>
         <table>
             <tr>
                 <td class="w-70 head">
-                     Audit Trial Report
+                    Supplier Audit Trial Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -163,10 +168,13 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Change Control No.</strong>
+                    <strong>Supplier No.</strong>
                 </td>
-                <td class="w-40">
-                   {{ Helpers::getDivisionName($doc->division_id) }}/SUPPPLIER/{{ Helpers::year($doc->created_at)}}/ {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                @php
+                    $requestNUmber = 'RV/RP/' . str_pad($doc->record, 4, '0', STR_PAD_LEFT) . '/' . date('Y');
+                @endphp
+                <td class="w-40">   
+                   {{ $requestNUmber }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -206,14 +214,77 @@
         <div class="second-table">
             <table>
                 <tr class="table_bg">
-                    <th>Field History</th>
+                    <!-- <th>Field History</th>
                     <th>Date Performed</th>
                     <th>Person Responsible</th>
-                    <th>Change Type</th>
+                    <th>Change Type</th> -->
+                    <th>Flow Changed From</th>
+                    <th>Flow Changed To</th>
+                    <th>Data Field</th>
+                    <th>Action Type</th>
+                    <th>Performer</th>
                 </tr>
                 @foreach ($data as $datas)
                     <tr>
-                        <td>
+                    <td>
+                                <div><strong>Changed From :</strong>{{ $datas->change_from }}</div>
+                            </td>
+
+                            <td>
+                                <div><strong>Changed To :</strong>{{ $datas->change_to }}</div>
+                            </td>
+                            <td>
+                                <div class="imageContainer">
+                                    <strong> Data Field Name :</strong><a
+                                        href="#">{{ $datas->activity_type ? $datas->activity_type : 'Not Applicable' }}</a>
+                                </div>
+                                <div style="margin-top: 5px;">
+                                    @if ($datas->activity_type == 'Activity Log')
+                                        <strong>Change From
+                                            :</strong>{!! $datas->change_from ? $datas->change_from : 'Not Applicable' !!}
+                                    @else
+                                        <strong>Change From
+                                            :</strong>{!! $datas->previous ? $datas->previous : 'Not Applicable' !!}
+                                    @endif
+                                </div>
+                                <br>
+                                <div class="imageContainer">
+                                    @if ($datas->activity_type == 'Activity Log')
+                                        <strong>Change To
+                                            :</strong>{!! $datas->change_to ? $datas->change_to : 'Not Applicable' !!}
+                                    @else
+                                        <strong>Change To
+                                            :</strong>{!! $datas->current ? $datas->current : 'Not Applicable' !!}
+                                    @endif
+                                </div>
+                                <div style="margin-top: 5px;">
+                                    <strong>Change Type
+                                        :</strong>{{ $datas->action_name ? $datas->action_name : 'Not Applicable' }}
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <strong> Action Name
+                                        :</strong>{{ $datas->action ? $datas->action : 'Not Applicable' }}
+
+                                </div>
+                            </td>
+                            <td>
+                                <div><strong> Peformed By
+                                        :</strong>{{ $datas->user_name ? $datas->user_name : 'Not Applicable' }}
+                                </div>
+                                @php
+                                    
+                                    $formattedDate = Carbon::parse($datas->created_at)->format('d-M-Y H:i:s');
+                                @endphp
+                                <div style="margin-top: 5px;"> <strong>Performed On
+                                        :</strong>{{ $datas->created_at ? ($formattedDate) : 'Not Applicable' }}
+                                </div>
+                                <div style="margin-top: 5px;"><strong> Comments
+                                        :</strong>{{ $datas->comment ? $datas->comment : 'Not Applicable' }}</div>
+
+                            </td>
+                        <!-- <td>
                             <div>{{ $datas->activity_type }}</div>
                             <div>
                                 <div><strong>Changed From :</strong></div>
@@ -236,7 +307,7 @@
                             @else
                                 New
                             @endif
-                        </td>
+                        </td> -->
                     </tr>
                 @endforeach
             </table>

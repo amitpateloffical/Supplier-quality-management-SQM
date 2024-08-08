@@ -35,7 +35,7 @@ return new class extends Migration
             $table->text('related_observations')->nullable();
             $table->string('date_Response_due2')->nullable();
             $table->string('capa_date_due')->nullable();
-            $table->integer('assign_to2')->nullable();
+            $table->text('assign_to2')->nullable();
             $table->integer('cro_vendor')->nullable();
             $table->text('comments')->nullable();
             $table->text('impact')->nullable();

@@ -36,6 +36,9 @@
 <body>
 
     <style>
+    .tox-statusbar__branding {
+        display: none;
+    }
         #create-record-button {
             display: none;
             margin-left: auto;

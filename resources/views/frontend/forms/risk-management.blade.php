@@ -80,7 +80,7 @@
                 container.append(textarea)
             }
         </script>
-        <script>
+        {{-- <script>
             function calculateInitialResult(selectElement) {
                 let row = selectElement.closest('tr');
                 let R = parseFloat(row.querySelector('.fieldR').value) || 0;
@@ -101,7 +101,7 @@
                 let result = R * P * N;
                 row.querySelector('.residual-rpn').value = result;
             }
-        </script>
+        </script> --}}
         <script>
             function calculateRiskAnalysis(selectElement) {
                 // Get the row containing the changed select element
@@ -176,7 +176,7 @@
                     @csrf
                     <div id="step-form">
 
-                        @if(!empty($parent_id))                            
+                        @if (!empty($parent_id))
                             <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                             <input type="hidden" name="parent_type" value="{{ $parent_type }}">
                         @endif
@@ -199,7 +199,8 @@
                                             <label for="Division Code"><b>Site/Location Code</b></label>
                                             <input readonly type="text" name="division_code"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                            <input type="hidden" name="division_id"
+                                                value="{{ session()->get('division') }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -213,7 +214,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Date Due"><b>Date of Initiation</b></label>
-                                            <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                            <input disabled type="text" value="{{ date('d-M-Y') }}"
+                                                name="intiation_date">
                                             <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
 
                                             {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
@@ -235,42 +237,93 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 new-date-data-field">
+                                    @php
+                                        $initiationDate = date('Y-m-d');
+                                        $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
+                                    @endphp
+
+                                    <div class="col-md-6 new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Date Due">Date Due</label>
-                                            <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
-                                            </div>
+                                            <label for="due-date">Date Due</label>
+                                            <div><small class="text-primary">Please mention expected date of
+                                                    completion</small></div>
                                             <div class="calenderauditee">
-                                                <input type="text" id="due_date" readonly
-                                                    placeholder="DD-MMM-YYYY" />
-                                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'due_date')" />
+                                                <div class="calenderauditee">
+                                                    <input type="text" name="due_date" id="due_date" readonly
+                                                        placeholder="DD-MM-YYYY" />
+                                                    <input type="date" name="due_date_n"
+                                                        min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <script>
+                                        // Format the due date to DD-MM-YYYY
+                                        // Your input date
+                                        var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+
+                                        // Create a Date object
+                                        var date = new Date(dueDate);
+
+                                        // Array of month names
+                                        var monthNames = [
+                                            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                        ];
+
+                                        // Extracting day, month, and year from the date
+                                        var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                                        var monthIndex = date.getMonth();
+                                        var year = date.getFullYear();
+
+                                        // Formatting the date in "DD-MM-YYYY" format
+                                        var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+
+                                        // Set the formatted due date value to the input field
+                                        document.getElementById('due_date').value = dueDateFormatted;
+                                    </script>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Initiator Group</b></label>
                                             <select name="Initiator_Group" id="initiator_group">
                                                 <option value="">-- Select --</option>
-                                                <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
-                                                <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
-                                                <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
-                                                <option value="MANU" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
-                                                <option value="PSG" @if(old('Initiator_Group') =="PSG") selected @endif>Plasma Sourcing Group</option>
-                                                <option value="CS"  @if(old('Initiator_Group') == "CS") selected @endif>Central Stores</option>
-                                                <option value="ITG" @if(old('Initiator_Group') =="ITG") selected @endif>Information Technology Group</option>
-                                                <option value="MM"  @if(old('Initiator_Group') == "MM") selected @endif>Molecular Medicine</option>
-                                                <option value="CL"  @if(old('Initiator_Group') == "CL") selected @endif>Central Laboratory</option>
+                                                <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
+                                                    Corporate Quality Assurance</option>
+                                                <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>
+                                                    Quality Assurance Biopharma</option>
+                                                <option value="CQC" @if (old('Initiator_Group') == 'CQA') selected @endif>
+                                                    Central Quality Control</option>
+                                                <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
+                                                    Manufacturing</option>
+                                                <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>
+                                                    Plasma Sourcing Group</option>
+                                                <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>
+                                                    Central Stores</option>
+                                                <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
+                                                    Information Technology Group</option>
+                                                <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
+                                                    Molecular Medicine</option>
+                                                <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>
+                                                    Central Laboratory</option>
 
-                                                <option value="TT"  @if(old('Initiator_Group') == "TT") selected @endif>Tech team</option>
-                                                <option value="QA"  @if(old('Initiator_Group') == "QA") selected @endif> Quality Assurance</option>
-                                                <option value="QM"  @if(old('Initiator_Group') == "QM") selected @endif>Quality Management</option>
-                                                <option value="IA"  @if(old('Initiator_Group') == "IA") selected @endif>IT Administration</option>
-                                                <option value="ACC"  @if(old('Initiator_Group') == "ACC") selected @endif>Accounting</option>
-                                                <option value="LOG"  @if(old('Initiator_Group') == "LOG") selected @endif>Logistics</option>
-                                                <option value="SM"  @if(old('Initiator_Group') == "SM") selected @endif>Senior Management</option>
-                                                <option value="BA"  @if(old('Initiator_Group') == "BA") selected @endif>Business Administration</option>
+                                                <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>
+                                                    Tech team</option>
+                                                <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
+                                                    Quality Assurance</option>
+                                                <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
+                                                    Quality Management</option>
+                                                <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>
+                                                    IT Administration</option>
+                                                <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
+                                                    Accounting</option>
+                                                <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
+                                                    Logistics</option>
+                                                <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
+                                                    Senior Management</option>
+                                                <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
+                                                    Business Administration</option>
                                             </select>
                                         </div>
                                     </div>
@@ -294,13 +347,20 @@
                                             <label for="Short Description">Short Description<span
                                                     class="text-danger">*</span></label><span id="rchars">255</span>
                                             characters remaining
-                                            <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                            <div class="relative-container">
+                                                <input class="mic-input" id="docname" type="text"
+                                                    name="short_description" maxlength="255" required>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
-                                    </div>  
+                                    </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="severity-level">Severity Level</label>
-                                            <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
+                                            <span class="text-primary">Severity levels in a QMS record gauge issue
+                                                seriousness, guiding priority for corrective actions. Ranging from low to
+                                                high, they ensure quality standards and mitigate critical risks.</span>
                                             <select name="severity2_level">
                                                 <option value="0">-- Select --</option>
                                                 <option value="minor">Minor</option>
@@ -312,14 +372,15 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Department(s)">Department(s)</label>
-                                            <select name="departments[]" placeholder="Select Departments" data-search="false"
-                                                data-silent-initial-value-set="true" id="departments" multiple>
-                                                <option value="">Select Department</option>
-                                                <option value="1">QA</option>
-                                                <option value="2">QC</option>
-                                                <option value="3">R&D</option>
-                                                <option value="4">Manufacturing</option>
-                                                <option value="5">Warehouse</option>
+                                            <select name="departments[]" placeholder="Select Departments"
+                                                data-search="false" data-silent-initial-value-set="true" id="departments"
+                                                multiple>
+
+                                                <option value="QA">QA</option>
+                                                <option value="QC">QC</option>
+                                                <option value="R&D">R&D</option>
+                                                <option value="Manufacturing">Manufacturing</option>
+                                                <option value="Warehouse">Warehouse</option>
                                             </select>
                                         </div>
                                     </div>
@@ -419,25 +480,33 @@
 
                                             </select>
                                         </div>
-                                    </div>--}}
+                                    </div> --}}
                                     <div class="col-6">
                                         <div class="group-input">
                                             <label for="Description">Risk/Opportunity Description</label>
-                                            <textarea name="description" id="description"></textarea>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="description" id="description"></textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
-                                    </div> 
-                                    
+                                    </div>
+
                                     {{-- <div class="col-6">
                                         <div class="group-input">
                                             <label for="Description"> Opportunity Description</label>
                                             <textarea name=" Opportunity_description" id="Opportunitydescription"></textarea>
                                         </div>
                                     </div> --}}
-                                   
+
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Risk/Opportunity Comments</label>
-                                            <textarea name="comments" id="comments"></textarea>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="comments" id="comments"></textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                     </div>
 
@@ -445,7 +514,8 @@
                                 <div class="button-block">
                                     <button type="submit" id="ChangeSaveButton" class="saveButton">Save</button>
                                     <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
 
@@ -459,13 +529,14 @@
                                         <div class="group-input">
                                             <label for="Department(s)">Department(s)</label>
                                             <select multiple name="departments2[]" placeholder="Select Departments"
-                                                data-search="false" data-silent-initial-value-set="true" id="departments">
-                                                <option value="">Select Department</option>
-                                                <option value="1">QA</option>
-                                                <option value="2">QC</option>
-                                                <option value="3">R&D</option>
-                                                <option value="4">Manufacturing</option>
-                                                <option value="5">Warehouse</option>
+                                                data-search="false" data-silent-initial-value-set="true"
+                                                id="departments">
+
+                                                <option value="QA">QA</option>
+                                                <option value="QC">QC</option>
+                                                <option value="R&D">R&D</option>
+                                                <option value="Manufacturing">Manufacturing</option>
+                                                <option value="Warehouse">Warehouse</option>
 
                                             </select>
                                         </div>
@@ -490,15 +561,15 @@
                                             <label for="Site Name">Site Name</label>
                                             <select name="site_name" id="site_name">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">City MFR A</option>
-                                                <option value="2">City MFR B</option>
-                                                <option value="3">City MFR C</option>
-                                                <option value="4">Complex A</option>
-                                                <option value="5">Complex B</option>
-                                                <option value="6">Maerketing A</option>
-                                                <option value="7">Maerketing B</option>
-                                                <option value="8">Maerketing C</option>
-                                                <option value="9">Oceanside</option>
+                                                <option value="City MFR A">City MFR A</option>
+                                                <option value="City MFR B">City MFR B</option>
+                                                <option value="City MFR C">City MFR C</option>
+                                                <option value="Complex A">Complex A</option>
+                                                <option value="Complex B">Complex B</option>
+                                                <option value="Marketing A">Marketing A</option>
+                                                <option value="Marketing B">Marketing B</option>
+                                                <option value="Marketing C">Marketing C</option>
+                                                <option value="Oceanside">Oceanside</option>
                                             </select>
                                         </div>
                                     </div>
@@ -560,13 +631,13 @@
                                             <label for="Duration">Duration</label>
                                             <select name="duration" id="duration">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">2 hours</option>
-                                                <option value="2">4 hours</option>
-                                                <option value="3">8 hours</option>
-                                                <option value="4">16 hours</option>
-                                                <option value="5">24 hours</option>
-                                                <option value="6">36 hours</option>
-                                                <option value="7">72 hours</option>
+                                                <option value="2 hours">2 hours</option>
+                                                <option value="4 hours">4 hours</option>
+                                                <option value="8 hours">8 hours</option>
+                                                <option value="16 hours">16 hours</option>
+                                                <option value="24 hours">24 hours</option>
+                                                <option value="36 hours">36 hours</option>
+                                                <option value="72 hours">72 hours</option>
                                             </select>
                                         </div>
                                     </div>
@@ -575,64 +646,69 @@
                                             <label for="Hazard">Hazard</label>
                                             <select name="hazard" id="hazard">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">Confined Space</option>
-                                                <option value="2">Electrical</option>
-                                                <option value="3">Energy use</option>
-                                                <option value="4">Ergonomics</option>
-                                                <option value="5">Machine Guarding</option>
-                                                <option value="6">Material Storage</option>
-                                                <option value="7">Material use</option>
-                                                <option value="8">Pressure</option>
-                                                <option value="9">Thermal</option>
-                                                <option value="10">Water use</option>
+                                                <option value="Confined Space">Confined Space</option>
+                                                <option value="Electrical">Electrical</option>
+                                                <option value="Energy use">Energy use</option>
+                                                <option value="Ergonomics">Ergonomics</option>
+                                                <option value="Machine Guarding">Machine Guarding</option>
+                                                <option value="Material Storage">Material Storage</option>
+                                                <option value="Material use">Material use</option>
+                                                <option value="Pressure">Pressure</option>
+                                                <option value="Thermal">Thermal</option>
+                                                <option value="Water use">Water use</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Room">Room</label>
+
                                             <select name="room2" id="room2">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">Automation</option>
-                                                <option value="2">Biochemistry</option>
-                                                <option value="3">Blood Collection</option>
-                                                <option value="4">Enter Yo</option>
-                                                <option value="5">Buffer Preparation</option>
-                                                <option value="6">Bulk Fill</option>
-                                                <option value="7">Calibration</option>
-                                                <option value="8">Component Manufacturing</option>
-                                                <option value="9">Computer</option>
-                                                <option value="10">Computer / Automated Systems</option>
-                                                <option value="11">Despensing Donor Suitability</option>
-                                                <option value="12">Filling</option>
-                                                <option value="13">Filtration</option>
-                                                <option value="14">Formulation</option>
-                                                <option value="15">Incoming QA</option>
-                                                <option value="16">Hazard</option>
-                                                <option value="17">Laboratory</option>
-                                                <option value="18">Laboratory Support Facility</option>
-                                                <option value="19">Enter Your</option>
-                                                <option value="20">Lot Release</option>
-                                                <option value="21">Manufacturing</option>
-                                                <option value="22">Materials Management</option>
-                                                <option value="23">Room</option>
-                                                <option value="24">Operations</option>
-                                                <option value="25">Packaging</option>
-                                                <option value="26">Plant Engineering</option>
-                                                <option value="27">Enter Your Sele</option>
-                                                <option value="29">Njown</option>
-                                                <option value="30">Powder Filling</option>
-                                                <option value="31">Process Development</option>
-                                                <option value="32">Product Distribution</option>
-                                                <option value="33">Product Testing</option>
-                                                <option value="34">Production Purification</option>
-                                                <option value="35">QA</option>
-                                                <option value="36">QA Laboratory Quality Control</option>
-                                                <option value="37">Quality Control / Assurance</option>
-                                                <option value="38">Sanitization</option>
-                                                <option value="39">Shipping/Distribution Storage/Distribution</option>
-                                                <option value="40">Storage and Distribution</option>
+                                                <option value="Automation">Automation</option>
+                                                <option value="Biochemistry">Biochemistry</option>
+                                                <option value="Blood Collection">Blood Collection</option>
+                                                <option value="Buffer Preparation">Buffer Preparation</option>
+                                                <option value="Bulk Fill">Bulk Fill</option>
+                                                <option value="Calibration">Calibration</option>
+                                                <option value="Component Manufacturing">Component Manufacturing</option>
+                                                <option value="Computer">Computer</option>
+                                                <option value="Computer / Automated Systems">Computer / Automated Systems
+                                                </option>
+                                                <option value="Despensing Donor Suitability">Despensing Donor Suitability
+                                                </option>
+                                                <option value="Filling">Filling</option>
+                                                <option value="Filtration">Filtration</option>
+                                                <option value="Formulation">Formulation</option>
+                                                <option value="Incoming QA">Incoming QA</option>
+                                                <option value="Hazard">Hazard</option>
+                                                <option value="Laboratory">Laboratory</option>
+                                                <option value="Laboratory Support Facility">Laboratory Support Facility
+                                                </option>
+                                                <option value="Lot Release">Lot Release</option>
+                                                <option value="Manufacturing">Manufacturing</option>
+                                                <option value="Materials Management">Materials Management</option>
+                                                <option value="Room">Room</option>
+                                                <option value="Operations">Operations</option>
+                                                <option value="Packaging">Packaging</option>
+                                                <option value="Plant Engineering">Plant Engineering</option>
+                                                <option value="Njown">Njown</option>
+                                                <option value="Powder Filling">Powder Filling</option>
+                                                <option value="Process Development">Process Development</option>
+                                                <option value="Product Distribution">Product Distribution</option>
+                                                <option value="Product Testing">Product Testing</option>
+                                                <option value="Production Purification">Production Purification</option>
+                                                <option value="QA">QA</option>
+                                                <option value="QA Laboratory Quality Control">QA Laboratory Quality Control
+                                                </option>
+                                                <option value="Quality Control / Assurance">Quality Control / Assurance
+                                                </option>
+                                                <option value="Sanitization">Sanitization</option>
+                                                <option value="Shipping/Distribution Storage/Distribution">
+                                                    Shipping/Distribution Storage/Distribution</option>
+                                                <option value="Storage and Distribution">Storage and Distribution</option>
                                             </select>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -640,29 +716,27 @@
                                             <label for="Regulatory Climate">Regulatory Climate</label>
                                             <select name="regulatory_climate" id="regulatory_climate">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">0. No significant regulatory issues affecting operation
+                                                <option value="No significant regulatory issues affecting operation">
+                                                    0. No significant regulatory issues affecting operation
                                                 </option>
-                                                <option value="2">1. Some regulatory or enforcement changes potentially
-                                                    affecting
-                                                    operation are
-                                                    anticipated </option>
-                                                <option value="3">2. A few regulatory or enforcement changes affect
-                                                    operations</option>
-                                                <option value="4">3. Regulatory and enforcement changes affect operation
+                                                <option
+                                                    value="Some regulatory or enforcement changes potentially affecting operation are anticipated">
+                                                    1. Some regulatory or enforcement changes potentially affecting
+                                                    operation are anticipated
                                                 </option>
-                                                <option value="5">4. Significant programatic regulatory and enforcement
-                                                    changes affect
+                                                <option value="A few regulatory or enforcement changes affect operations">
+                                                    2. A few regulatory or enforcement changes affect operations
+                                                </option>
+                                                <option value="Regulatory and enforcement changes affect operation">
+                                                    3. Regulatory and enforcement changes affect operation
+                                                </option>
+                                                <option
+                                                    value="Significant programmatic regulatory and enforcement changes affect operation">
+                                                    4. Significant programmatic regulatory and enforcement changes affect
                                                     operation
                                                 </option>
-                                                <option value="2">1. Some regulatory or enforcement changes potentially
-                                                    affecting operation are anticipated </option>
-                                                <option value="3">2. A few regulatory or enforcement changes affect
-                                                    operations</option>
-                                                <option value="4">3. Regulatory and enforcement changes affect operation
-                                                </option>
-                                                <option value="5">4. Significant programatic regulatory and enforcement
-                                                    changes affect operation</option>
                                             </select>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -670,14 +744,15 @@
                                             <label for="Number of Employees">Number of Employees</label>
                                             <select name="Number_of_employees" id="Number_of_employees">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">0-50</option>
-                                                <option value="2">50-100</option>
-                                                <option value="3">100-200</option>
-                                                <option value="4">200-300</option>
-                                                <option value="5">300-500</option>
-                                                <option value="6">500-1000</option>
-                                                <option value="7">1000+</option>
+                                                <option value="0-50">0-50</option>
+                                                <option value="50-100">50-100</option>
+                                                <option value="100-200">100-200</option>
+                                                <option value="200-300">200-300</option>
+                                                <option value="300-500">300-500</option>
+                                                <option value="500-1000">500-1000</option>
+                                                <option value="1000+">1000+</option>
                                             </select>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -685,10 +760,10 @@
                                             <label for="Risk Management Strategy">Risk Management Strategy</label>
                                             <select name="risk_management_strategy" id="risk_management_strategy">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">Accept</option>
-                                                <option value="2">Avoid the Risk</option>
-                                                <option value="3">Mitigate</option>
-                                                <option value="4">Transfer</option>
+                                                <option value="Accept">Accept</option>
+                                                <option value="Avoid the Risk">Avoid the Risk</option>
+                                                <option value="Mitigate">Mitigate</option>
+                                                <option value="Transfer">Transfer</option>
                                             </select>
                                         </div>
                                     </div>
@@ -697,7 +772,8 @@
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
                         </div>
@@ -714,8 +790,9 @@
                                             <label for="Date Due">Scheduled Start Date</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="schedule_start_date" readonly
-                                                    placeholder="DD-MMM-YYYY" />
-                                                <input type="date" id="schedule_start_date_checkdate" name="schedule_start_date1" class="hide-input"
+                                                    placeholder="DD-MM-YYYY" />
+                                                <input type="date" id="schedule_start_date_checkdate"
+                                                    name="schedule_start_date1" class="hide-input"
                                                     oninput="handleDateInput(this, 'schedule_start_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                             </div>
                                         </div>
@@ -725,8 +802,9 @@
                                             <label for="Date Due">Scheduled End Date</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="schedule_end_date" readonly
-                                                    placeholder="DD-MMM-YYYY" />
-                                                <input type="date" id="schedule_end_date_checkdate" name="schedule_end_date1" class="hide-input"
+                                                    placeholder="DD-MM-YYYY" />
+                                                <input type="date" id="schedule_end_date_checkdate"
+                                                    name="schedule_end_date1" class="hide-input"
                                                     oninput="handleDateInput(this, 'schedule_end_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                             </div>
                                         </div>
@@ -734,13 +812,23 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Estimated Man-Hours">Estimated Man-Hours</label>
-                                            <input type="text" name="estimated_man_hours" id="estimated_man_hours">
+                                            <div class="relative-container">
+                                                <input class="mic-input" type="text" name="estimated_man_hours"
+                                                    id="estimated_man_hours">
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Estimated Cost">Estimated Cost</label>
-                                            <input type="text" name="estimated_cost" id="estimated_cost">
+                                            <div class="relative-container">
+                                                <input class="mic-input" type="text" name="estimated_cost"
+                                                    id="estimated_cost">
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-6">
@@ -754,25 +842,29 @@
                                             <label for="Currency">Currency</label>
                                             <select name="currency" id="currency">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">ARS-Argentine Peso</option>
-                                                <option value="2">AUD-Australian Dollar</option>
-                                                <option value="3">BRL-Brazilian Real CAD-Canadian Dollar</option>
-                                                <option value="4">CHF-Swiss Franc</option>
-                                                <option value="5">CNY-Chinese Yuan</option>
-                                                <option value="6">EUR-Euro</option>
-                                                <option value="7">HKD-Hong Kong Dollar ILS-Israeli New Sheqel</option>
-                                                <option value="8">INR-Indian Rupee JPY-Japanese Yen</option>
-                                                <option value="9">KRW-South Korean Won</option>
-                                                <option value="10">MXN-Mexican Peso</option>
-                                                <option value="11">RUB-Russian Rouble</option>
-                                                <option value="12">SAR-Saudi Riyal</option>
-                                                <option value="13">TRY-Turkish Lira</option>
-                                                <option value="14">USD-US Dollar</option>
-                                                <option value="15">XAG-Silver</option>
-                                                <option value="16">XAU-Gold</option>
-                                                <option value="17">XPD-Palladium</option>
-                                                <option value="18">XPT-Platinum</option>
+                                                <option value="ARS-Argentine Peso">ARS-Argentine Peso</option>
+                                                <option value="AUD-Australian Dollar">AUD-Australian Dollar</option>
+                                                <option value="BRL-Brazilian Real">BRL-Brazilian Real</option>
+                                                <option value="CAD-Canadian Dollar">CAD-Canadian Dollar</option>
+                                                <option value="CHF-Swiss Franc">CHF-Swiss Franc</option>
+                                                <option value="CNY-Chinese Yuan">CNY-Chinese Yuan</option>
+                                                <option value="EUR-Euro">EUR-Euro</option>
+                                                <option value="HKD-Hong Kong Dollar">HKD-Hong Kong Dollar</option>
+                                                <option value="ILS-Israeli New Sheqel">ILS-Israeli New Sheqel</option>
+                                                <option value="INR-Indian Rupee">INR-Indian Rupee</option>
+                                                <option value="JPY-Japanese Yen">JPY-Japanese Yen</option>
+                                                <option value="KRW-South Korean Won">KRW-South Korean Won</option>
+                                                <option value="MXN-Mexican Peso">MXN-Mexican Peso</option>
+                                                <option value="RUB-Russian Rouble">RUB-Russian Rouble</option>
+                                                <option value="SAR-Saudi Riyal">SAR-Saudi Riyal</option>
+                                                <option value="TRY-Turkish Lira">TRY-Turkish Lira</option>
+                                                <option value="USD-US Dollar">USD-US Dollar</option>
+                                                <option value="XAG-Silver">XAG-Silver</option>
+                                                <option value="XAU-Gold">XAU-Gold</option>
+                                                <option value="XPD-Palladium">XPD-Palladium</option>
+                                                <option value="XPT-Platinum">XPT-Platinum</option>
                                             </select>
+
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-6">
@@ -807,7 +899,11 @@
                                     <div class="col-6">
                                         <div class="group-input">
                                             <label for="Justification / Rationale">Justification / Rationale</label>
-                                            <textarea name="justification" id="justification"></textarea>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="justification" id="justification"></textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -824,32 +920,44 @@
                                             <table class="table table-bordered" id="action_plan_details">
                                                 <thead>
                                                     <tr>
-                                                        <th>Row #</th>
-                                                        <th>Action</th>
+                                                        <th style="width: 4%">Row#</th>
+                                                        <th>Remarks</th>
                                                         <th>Responsible Person</th>
                                                         <th>Deadline</th>
                                                         <th>Item static</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled ="text" name="serial_number[]" value="1"></td>
+                                                    <td><input disabled ="text" name="serial_number[]" value="1">
+                                                    </td>
                                                     <td><input type="text" name="action[]"></td>
                                                     {{-- <td><input type="text" name="responsible[]"></td> --}}
-                                                    <td> <select id="select-state" placeholder="Select..." name="responsible[]">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
+                                                    <td> <select id="select-state" placeholder="Select..."
+                                                            name="responsible[]">
+                                                            <option value="">Select a value</option>
+                                                            @foreach ($users as $data)
+                                                                <option value="{{ $data->id }}">{{ $data->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select></td>
                                                     {{-- <td><input type="date" name="deadline[]"></td> --}}
-                                                    <td><div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date "><div
-                                                        class="calenderauditee">
-                                                        <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="deadline[]" class="hide-input" 
-                                                        oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>
+                                                    <td>
+                                                        <div class="group-input new-date-data-field mb-0">
+                                                            <div class="input-date ">
+                                                                <div class="calenderauditee">
+                                                                    <input type="text" id="deadline' + serialNumber +'"
+                                                                        readonly placeholder="DD-MM-YYYY" />
+                                                                    <input type="date" name="deadline[]"
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                     <td><input type="text" name="item_static[]"></td>
+                                                    <td><button type="text" class="removeBtnMI">Remove</button>
+                                                    </td>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -863,7 +971,8 @@
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Report Attachments">Work Group Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="reference"></div>
                                                 <div class="add-btn">
@@ -879,7 +988,8 @@
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
                         </div>
@@ -897,11 +1007,13 @@
                                             <select name="root_cause_methodology[]" multiple placeholder="-- Select --"
                                                 data-search="false" data-silent-initial-value-set="true"
                                                 id="root-cause-methodology">
-                                                <option value="">-- Select --</option>
-                                                <option value="1">Why-Why Chart</option>
-                                                <option value="2">Failure Mode and Efect Analysis</option>
-                                                <option value="3">Fishbone or Ishikawa Diagram</option>
-                                                <option value="4">Is/Is Not Analysis</option>
+
+                                                <option value="Why-Why Chart">Why-Why Chart</option>
+                                                <option value="Failure Mode and Efect Analysis">Failure Mode and Efect
+                                                    Analysis</option>
+                                                <option value="Fishbone or Ishikawa Diagram">Fishbone or Ishikawa Diagram
+                                                </option>
+                                                <option value="Is/Is Not Analysis">Is/Is Not Analysis</option>
                                             </select>
                                         </div>
                                     </div>
@@ -917,7 +1029,7 @@
                                                     id="risk-assessment-risk-management">
                                                     <thead>
                                                         <tr>
-                                                            <th>Row #</th>
+                                                            <th style="width: 4%">Row#</th>
                                                             <th>Risk Factor</th>
                                                             <th>Risk element </th>
                                                             <th>Probable cause of risk element</th>
@@ -934,9 +1046,11 @@
                                                             <th>Residual Detectability- H(1)/M(2)/L(3)</th>
                                                             <th>Residual RPN</th>
                                                             <th>Risk Acceptance (Y/N)</th>
-                                                            <th>Mitigation proposal (Mention either CAPA reference number, IQ,
+                                                            <th>Mitigation proposal (Mention either CAPA reference number,
+                                                                IQ,
                                                                 OQ or
                                                                 PQ)</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1018,7 +1132,11 @@
                                                         <tr style="background: #f4bb22">
                                                             <th style="width:150px;">Problem Statement :</th>
                                                             <td>
-                                                                <textarea name="why_problem_statement"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="why_problem_statement"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         <tr class="why-row">
@@ -1079,7 +1197,11 @@
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
                                                             <td>
-                                                                <textarea name="why_root_cause"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="why_root_cause"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1112,61 +1234,121 @@
                                                         <tr>
                                                             <th style="background: #0039bd85">What</th>
                                                             <td>
-                                                                <textarea name="what_will_be"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="what_will_be"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="what_will_not_be"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="what_will_not_be"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="what_rationable"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="what_rationable"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Where</th>
                                                             <td>
-                                                                <textarea name="where_will_be"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="where_will_be"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="where_will_not_be"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="where_will_not_be"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="where_rationable"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="where_rationable"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">When</th>
                                                             <td>
-                                                                <textarea name="when_will_be"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="when_will_be"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="when_will_not_be"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="when_will_not_be"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="when_rationable"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="when_rationable"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Coverage</th>
                                                             <td>
-                                                                <textarea name="coverage_will_be"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="coverage_will_be"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="coverage_will_not_be"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="coverage_will_not_be"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="coverage_rationable"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="coverage_rationable"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Who</th>
                                                             <td>
-                                                                <textarea name="who_will_be"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="who_will_be"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="who_will_not_be"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="who_will_not_be"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <textarea name="who_rationable"></textarea>
+                                                                <div class="relative-container">
+                                                                    <textarea class="mic-input" name="who_rationable"></textarea>
+                                                                    @component('frontend.forms.language-model')
+                                                                    @endcomponent
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1176,15 +1358,21 @@
                                     </div>
                                     <div class="col-12 sub-head"></div>
                                     <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="root_cause_description">Root Cause Description</label>
-                                            <textarea name="root_cause_description"></textarea>
+                                        <label for="root_cause_description">Root Cause Description</label>
+                                        <div class="relative-container">
+                                            <textarea class="mic-input" name="root_cause_description"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="investigation_summary">Investigation Summary</label>
-                                            <textarea name="investigation_summary"></textarea>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="investigation_summary"></textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1208,7 +1396,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Occurrence">Occurrence</label>
-                                            <select name="occurrence" id="analysisP" onchange='calculateRiskAnalysis(this)'>
+                                            <select name="occurrence" id="analysisP"
+                                                onchange='calculateRiskAnalysis(this)'>
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="5">Extremely Unlikely</option>
                                                 <option value="4">Rare</option>
@@ -1221,7 +1410,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Detection">Detection</label>
-                                            <select name="detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
+                                            <select name="detection" id="analysisN"
+                                                onchange='calculateRiskAnalysis(this)'>
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="5">Impossible</option>
                                                 <option value="4">Rare</option>
@@ -1235,7 +1425,8 @@
                                         <div class="group-input">
                                             <label for="RPN">RPN</label>
                                             <div><small class="text-primary">Auto - Calculated</small></div>
-                                            <input type="text" name="rpn" id="analysisRPN" value="" readonly>
+                                            <input type="text" name="rpn" id="analysisRPN" value=""
+                                                readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -1243,7 +1434,8 @@
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
                         </div>
@@ -1255,14 +1447,19 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Residual Risk">Residual Risk</label>
-                                            <input type="text" name="residual_risk" id="residual_risk">
+                                            <div class="relative-container">
+                                                <input class="mic-input" type="text" name="residual_risk"
+                                                    id="residual_risk">
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Residual Risk Impact">Residual Risk Impact</label>
                                             <select name="residual_risk_impact" id="analysisR2"
-                                            onchange='calculateRiskAnalysis2(this)'>
+                                                onchange='calculateRiskAnalysis2(this)'>
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="1">High</option>
                                                 <option value="2">Low</option>
@@ -1274,7 +1471,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Residual Risk Probability">Residual Risk Probability</label>
-                                            <select name="residual_risk_probability" id="analysisP2" onchange='calculateRiskAnalysis2(this)'>
+                                            <select name="residual_risk_probability" id="analysisP2"
+                                                onchange='calculateRiskAnalysis2(this)'>
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="1">High</option>
                                                 <option value="2">Medium</option>
@@ -1285,7 +1483,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Detection">Residual Detection</label>
-                                            <select name="detection2" id="analysisN2" onchange='calculateRiskAnalysis2(this)'>
+                                            <select name="detection2" id="analysisN2"
+                                                onchange='calculateRiskAnalysis2(this)'>
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="5">Impossible</option>
                                                 <option value="4">Rare</option>
@@ -1299,13 +1498,18 @@
                                         <div class="group-input">
                                             <label for="RPN">Residual RPN</label>
                                             <div><small class="text-primary">Auto - Calculated</small></div>
-                                            <input type="text" name="rpn2" id="analysisRPN2" value="" readonly>
+                                            <input type="text" name="rpn2" id="analysisRPN2" value=""
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <textarea name="comments2" id="comments2"></textarea>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="comments2" id="comments2"></textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1313,7 +1517,8 @@
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
                         </div>
@@ -1330,7 +1535,7 @@
                                             <table class="table table-bordered" id="action_plan_details2">
                                                 <thead>
                                                     <tr>
-                                                        <th>Row #</th>
+                                                        <th style="width: 4%">Row#</th>
                                                         <th>Mitigation Steps</th>
                                                         <th>
                                                             Deadline
@@ -1342,30 +1547,43 @@
                                                         </th>
                                                         <th>Status</th>
                                                         <th>Remarks</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]" value="1"></td>
+                                                    <td><input disabled type="text" name="serial_number[]"
+                                                            value="1"></td>
                                                     <td><input type="text" name="mitigation_steps[]"></td>
                                                     {{-- <td><input type="date" name="deadline2[]"></td>  --}}
-                                                    <td><div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date "><div
-                                                        class="calenderauditee">
-                                                        <input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="deadline2[]" class="hide-input" 
-                                                        oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>
+                                                    <td>
+                                                        <div class="group-input new-date-data-field mb-0">
+                                                            <div class="input-date ">
+                                                                <div class="calenderauditee">
+                                                                    <input type="text"
+                                                                        id="deadline2' + serialNumber +'" readonly
+                                                                        placeholder="DD-MM-YYYY" />
+                                                                    <input type="date" name="deadline2[]"
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                     {{-- <td><input type="text" name="item_static[]"></td> --}}
-                                                    
 
-                                                    <td> <select id="select-state" placeholder="Select..." name="responsible_person[]">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
+
+                                                    <td> <select id="select-state" placeholder="Select..."
+                                                            name="responsible_person[]">
+                                                            <option value="">Select a value</option>
+                                                            @foreach ($users as $data)
+                                                                <option value="{{ $data->id }}">{{ $data->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select></td>
                                                     <td><input type="text" name="status[]"></td>
                                                     <td><input type="text" name="remark[]"></td>
+                                                    <td><button type="text" class="removeBtnMI1">Remove</button>
+                                                    </td>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1391,18 +1609,24 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Department(s)">Mitigation Required</label>
-                                            <select name="mitigation_required"   onchange="otherController(this.value, 'yes', 'initiated_through_req')" >
+                                            <select name="mitigation_required"
+                                                onchange="otherController(this.value, 'yes', 'initiated_through_req')">
                                                 <option value="">Select Mitigation </option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
 
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input" id="initiated_through_req">
-                                            <label for="mitigation-plan">Mitigation Plan<span class="text-danger d-none">*</span></label>
-                                            <textarea  name="mitigation_plan"></textarea>
+                                            <label for="mitigation-plan">Mitigation Plan<span
+                                                    class="text-danger d-none">*</span></label>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="mitigation_plan"></textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 new-date-data-field">
@@ -1410,7 +1634,7 @@
                                             <label for="Date Due">Scheduled End Date</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="mitigation_due_date" readonly
-                                                    placeholder="DD-MMM-YYYY" />
+                                                    placeholder="DD-MM-YYYY" />
                                                 <input type="date" name="mitigation_due_date" class="hide-input"
                                                     oninput="handleDateInput(this, 'mitigation_due_date')" />
                                             </div>
@@ -1421,16 +1645,20 @@
                                             <label for="mitigation-status">Status of Mitigation</label>
                                             <select name="mitigation_status">
                                                 <option value="0">-- Select --</option>
-                                                <option value="green">Green Status</option>
-                                                <option value="amber">Amber Status</option>
-                                                <option value="red">Red Staus</option>
+                                                <option value="Green Status">Green Status</option>
+                                                <option value="Amber Status">Amber Status</option>
+                                                <option value="Red Status">Red Status</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="mitigation-status-comments">Mitigation Status Comments</label>
-                                            <textarea name="mitigation_status_comments"></textarea>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="mitigation_status_comments"></textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -1462,13 +1690,21 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="impact-analysis">Impact Analysis</label>
-                                            <textarea name="impact_analysis"></textarea>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="impact_analysis"></textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="risk-analysis">Risk Analysis</label>
-                                            <textarea name="risk_analysis"></textarea>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="risk_analysis"></textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-6">
@@ -1500,11 +1736,12 @@
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Reference Recores">Reference Record</label>
-                                            <select multiple id="reference_record" name="refrence_record[]" >
-                                                <option value="">--Select---</option>
+                                            <select multiple id="reference_record" name="refrence_record[]">
+
                                                 @foreach ($old_record as $new)
-                                                    <option value="{{ $new->id }}">
-                                                        {{ Helpers::getDivisionName($new->division_id) }}/RA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
+                                                    <option
+                                                        value="{{ Helpers::getDivisionName($new->division_id) . '/RA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                        {{ Helpers::getDivisionName($new->division_id) . '/RA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -1516,8 +1753,13 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="due_date_extension">Due Date Extension Justification</label>
-                                            <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                            <textarea name="due_date_extension"></textarea>
+                                            <div><small class="text-primary">Please Mention justification if due date is
+                                                    crossed</small></div>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="due_date_extension"></textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1525,7 +1767,8 @@
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
                         </div>
@@ -1533,14 +1776,65 @@
                         <!-- Signatures content -->
                         <div id="CCForm7" class="inner-block cctabcontent">
                             <div class="inner-block-content">
-                                <div class="row">
-                                    <div class="col-lg-6">
+                                {{-- <div class="row">
+                                    <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="Submitted By..">Submitted By..</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Submitted On">Submitted On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Evaluated By">Evaluated By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Evaluated On">Evaluated On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Plan Approved By">Plan Approved By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Plan Approved On">Plan Approved On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Risk Analysis Completed By">Risk Analysis Completed By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Risk Analysis Completed On">Risk Analysis Completed On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                </div> --}}
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Submitted By..">Submitted By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="Submitted On">Submitted On</label>
                                             <div class="static"></div>
@@ -1548,46 +1842,245 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Evaluated By">Evaluated By</label>
+                                            <label for="Submitted Comment">Submitted Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="More Information Required By">More Information Required By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="More Information Required On">More Information Required On</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Evaluated On">Evaluated On</label>
+                                            <label for="More Information Required Comment">More Information Required
+                                                Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Evaluation Complete By">Evaluation Complete By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Evaluation Complete On">Evaluation Complete On</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Plan Approved By">Plan Approved By</label>
+                                            <label for="Evaluation Complete Comment">Evaluation Complete Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Request More Info By">Request More Info By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Request More Info On">Request More Info On</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Plan Approved On">Plan Approved On</label>
+                                            <label for="Request More Info Comment">Request More Info
+                                                Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Action Plan Completed By">Action Plan Completed By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Action Plan Completed On">Action Plan Completed On</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Risk Analysis Completed By">Risk Analysis Completed By</label>
+                                            <label for="Action Plan Completed Comment">Action Plan Completed
+                                                Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Reject Action Plan By">Reject Action Plan By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Reject Action Plan On">Reject Action Plan On</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Risk Analysis Completed On">Risk Analysis Completed On</label>
+                                            <label for="Reject Action Plan Comment">Reject Action Plan
+                                                Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Action Plan Approved By">Action Plan Approved By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Action Plan Approved On">Action Plan Approved On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Action Plan Approved Comment">Action Plan Approved Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Reject Action Plan By">Reject Action Plan By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Reject Action Plan On">Reject Action Plan On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Reject Action Plan Comment">Reject Action Plan Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="All Actions Completed By">All Actions Completed By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="All Actions Completed On">All Actions Completed On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="All Actions Completed Comment">All Actions Completed
+                                                Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Request More Info By">Request More Info By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Request More Info On">Request More Info On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Request More Info Comment">Request More Info
+                                                Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="More Actions Needed By">More Actions Needed By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="More Actions Needed On">More Actions Needed On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="More Actions Needed Comment">More Actions Needed Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Residual Risk Evaluation Completed By">Residual Risk Evaluation
+                                                Completed By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Residual Risk Evaluation Completed On">Residual Risk Evaluation
+                                                Completed On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Residual Risk Evaluation Completed Comment">Residual Risk
+                                                Evaluation Completed Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Cancelled By">Cancelled By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="Cancelled On">Cancelled On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Cancelled Comment">Cancelled Comment</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    {{-- <button type="submit" class="saveButton">Save</button> --}}
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="submit">Submit</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    {{-- <button type="submit">Submit</button> --}}
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
                         </div>
@@ -1724,17 +2217,18 @@
             });
         </script>
 
-    <script>
-        $(document).ready(function() {
-            $('#action_plan').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    console.log(users);
-                    var html =
-                    '<tr>' +
-                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
-                        '<td><input type="text" name="action[]"></td>' +
-                        '<td><select name="responsible[]">' +
+        <script>
+            $(document).ready(function() {
+                $('#action_plan').click(function(e) {
+                    function generateTableRow(serialNumber) {
+                        var users = @json($users);
+                        console.log(users);
+                        var html =
+                            '<tr>' +
+                            '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="action[]"></td>' +
+                            '<td><select name="responsible[]">' +
                             '<option value="">Select a value</option>';
 
                         for (var i = 0; i < users.length; i++) {
@@ -1742,36 +2236,43 @@
                         }
 
                         html += '</select></td>' +
-                        // '<td><input type="date" name="deadline[]"></td>'
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>'
-                        +
-                        '<td><input type="text" name="item_static[]"></td>' +
-                        '</tr>';
+                            // '<td><input type="date" name="deadline[]"></td>'
+                            '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' +
+                            serialNumber +
+                            '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' +
+                    serialNumber + '`)" /></div></div></div></td>' +
+                            '<td><input type="text" name="item_static[]"></td>' +
+                            '<td><button type="text" class="removeBtnMI">Remove</button></td>' +
+                            '</tr>';
 
 
 
-                    return html;
-                }
+                        return html;
+                    }
 
-                var tableBody = $('#action_plan_details tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
-            $('#action_plan2').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    console.log(users);
-                    var html =
-                    '<tr>' +
-                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
-                        '<td><input type="text" name="mitigation_steps[]"></td>' +
-                        // '<td><input type="date" name="deadline2[]"></td>' 
-                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>'
-                        
-                        
-                        +
-                        '<td><select name="responsible_person[]">' +
+                    var tableBody = $('#action_plan_details tbody');
+                    var rowCount = tableBody.children('tr').length;
+                    var newRow = generateTableRow(rowCount + 1);
+                    tableBody.append(newRow);
+                });
+                $('#action_plan2').click(function(e) {
+                    function generateTableRow(serialNumber) {
+                        var users = @json($users);
+                        console.log(users);
+                        var html =
+                            '<tr>' +
+                            '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="mitigation_steps[]"></td>' +
+                            // '<td><input type="date" name="deadline2[]"></td>'
+                            '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' +
+                            serialNumber +
+                            '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' +
+                    serialNumber + '`)" /></div></div></div></td>'
+
+
+                            +
+                            '<td><select name="responsible_person[]">' +
                             '<option value="">Select a value</option>';
 
                         for (var i = 0; i < users.length; i++) {
@@ -1779,24 +2280,33 @@
                         }
 
                         html += '</select></td>' +
-                        '<td><input type="text" name="status[]"></td>' +
-                        '<td><input type="text" name="remark[]"></td>' +
-                        '</tr>';
+                            '<td><input type="text" name="status[]"></td>' +
+                            '<td><input type="text" name="remark[]"></td>' +
+                            '<td><button type="text" class="removeBtnMI1">Remove</button></td>' +
+                            '</tr>';
 
-                    return html;
-                }
+                        return html;
+                    }
 
-                var tableBody = $('#action_plan_details2 tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
+                    var tableBody = $('#action_plan_details2 tbody');
+                    var rowCount = tableBody.children('tr').length;
+                    var newRow = generateTableRow(rowCount + 1);
+                    tableBody.append(newRow);
+                });
             });
-        });
-    </script>
-    <script>
-        var maxLength = 255;
-        $('#docname').keyup(function() {
-            var textlen = maxLength - $(this).val().length;
-            $('#rchars').text(textlen);});
-    </script>
+
+            $(document).on('click', '.removeBtnMI', function() {
+                $(this).closest('tr').remove();
+            })
+            $(document).on('click', '.removeBtnMI1', function() {
+                $(this).closest('tr').remove();
+            })
+        </script>
+        <script>
+            var maxLength = 255;
+            $('#docname').keyup(function() {
+                var textlen = maxLength - $(this).val().length;
+                $('#rchars').text(textlen);
+            });
+        </script>
     @endsection

@@ -8,7 +8,7 @@ use App\Models\Capa;
 use App\Models\CC;
 use Illuminate\Support\Facades\App;
 use App\Models\EffectivenessCheck;
-use App\Models\Extension;
+use App\Models\extension_new;
 use App\Models\InternalAudit;
 use App\Models\ManagementReview;
 use App\Models\RiskManagement;
@@ -59,7 +59,7 @@ class DashboardController extends Controller
 
         $datas = CC::orderByDesc('id')->get();
         $datas1 = ActionItem::orderByDesc('id')->get();
-        $datas2 = Extension::orderByDesc('id')->get();
+        $datas2 = extension_new::orderByDesc('id')->get();
         $datas3 = EffectivenessCheck::orderByDesc('id')->get();
         $datas4 = InternalAudit::orderByDesc('id')->get();
         $datas5 = Capa::orderByDesc('id')->get();
@@ -93,6 +93,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         $supplierSite = SupplierSite::orderByDesc('id')->get();
@@ -115,6 +116,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
 
@@ -135,24 +137,26 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas2 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
             array_push($table, [
                 "id" => $data->id,
-                "parent" => $data->cc_id ? $data->cc_id : "-",
-                "record" => $data->record,
+                "parent" => $data->parent_id ? $data->parent_id : "-",
+                "record" => $data->record_number,
                 "type" => "Extension",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
-                "division_id" => $data->division_id,
+                "division_id" => $data->site_location_code,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "initiator_id" => $data->initiator_id,
+                "initiator_id" => $data->initiator,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date ? $data->due_date : "-",
             ]);
         }
         foreach ($datas3 as $data) {
@@ -160,7 +164,7 @@ class DashboardController extends Controller
 
             array_push($table, [
                 "id" => $data->id,
-                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "parent" => $data->parent_id ? $data->parent_id : "-",
                 "record" => $data->record,
                 "type" => "Effectiveness-Check",
                 "parent_id" => $data->parent_id,
@@ -172,6 +176,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas4 as $data) {
@@ -191,26 +196,28 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas5 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
-            $revised_date = Extension::where('parent_id', $data->id)->where('parent_type', "Capa")->value('revised_date');
+            // $revised_date = extension_new::where('parent_id', $data->id)->where('parent_type', "Capa")->value('revised_date');
 
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_id ? $data->parent_id : "-",
                 "record" => $data->record,
-                "type" => "Capa",
+                "type" => "CAPA",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
                 "initiator_id" => $data->initiator_id,
-                "intiation_date" => $revised_date ? $revised_date : $data->intiation_date,
+                "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas6 as $data) {
@@ -229,6 +236,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas7 as $data) {
@@ -247,6 +255,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas8 as $data) {
@@ -264,6 +273,7 @@ class DashboardController extends Controller
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
+                "due_date" => $data->due_date,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -283,6 +293,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas10 as $data) {
@@ -302,6 +313,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas11 as $data) {
@@ -321,6 +333,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas12 as $data) {
@@ -328,7 +341,7 @@ class DashboardController extends Controller
 
             array_push($table, [
                 "id" => $data->id,
-                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "parent" => $data->parent_id ? $data->parent_id : "-",
                 "record" => $data->record,
                 "division_id" => $data->division_id,
                 "type" => "Observation",
@@ -340,6 +353,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas13 as $data) {
@@ -359,6 +373,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas15 as $data) {
@@ -378,6 +393,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($supplier as $data) {
@@ -397,6 +413,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
 
@@ -417,6 +434,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
 
@@ -437,6 +455,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         $table  = collect($table)->sortBy('record')->reverse()->toArray();
@@ -455,7 +474,7 @@ class DashboardController extends Controller
         $table = [];
         if ($process == 1) {
             $datas1 = ActionItem::where('cc_id', $id)->orderByDesc('id')->get();
-            $datas2 = Extension::where('cc_id', $id)->orderByDesc('id')->get();
+            $datas2 = extension_new::where('cc_id', $id)->orderByDesc('id')->get();
             foreach ($datas1 as $data) {
                 array_push($table, [
                     "id" => $data->id,
@@ -490,7 +509,7 @@ class DashboardController extends Controller
                 $ab = ActionItem::find($id);
                 $data = CC::where('id', $ab->cc_id)->orderByDesc('id')->first();
                 $datas1 = ActionItem::where('cc_id', $ab->cc_id)->orderByDesc('id')->get();
-                $datas2 = Extension::where('cc_id', $ab->cc_id)->orderByDesc('id')->get();
+                $datas2 = extension_new::where('cc_id', $ab->cc_id)->orderByDesc('id')->get();
                 foreach ($data as $datas) {
                     array_push($table, [
                         "id" => $data->id,
@@ -536,10 +555,10 @@ class DashboardController extends Controller
                     ]);
                 }
             } elseif ($process == 3) {
-                $ab = Extension::find($id);
+                $ab = extension_new::find($id);
                 $data = CC::where('id', $ab->cc_id)->orderByDesc('id')->first();
                 $datas1 = ActionItem::where('cc_id', $ab->cc_id)->orderByDesc('id')->get();
-                $datas2 = Extension::where('cc_id', $ab->cc_id)->orderByDesc('id')->get();
+                $datas2 = extension_new::where('cc_id', $ab->cc_id)->orderByDesc('id')->get();
                 foreach ($data as $datas) {
                     array_push($table, [
                         "id" => $data->id,
@@ -596,9 +615,9 @@ class DashboardController extends Controller
 
         if ($process == "extension") {
 
-            $data = Extension::where('id', $id)->orderByDesc('id')->first();
+            $data = extension_new::where('id', $id)->orderByDesc('id')->first();
 
-            if ($data->parent_type == "Capa") {
+            if ($data->parent_type == "CAPA") {
                 $data2 = Capa::where('id', $data->parent_id)->first();
                 $data2->create = Carbon::parse($data2->created_at)->format('d-M-Y h:i A');
                 array_push(
@@ -607,7 +626,7 @@ class DashboardController extends Controller
                         "id" => $data2->id,
                         "parent" => $data2->parent_record ? $data2->parent_record : "-",
                         "record" => $data2->record,
-                        "type" => "Capa",
+                        "type" => "CAPA",
                         "parent_id" => $data2->parent_id,
                         "parent_type" => $data2->parent_type,
                         "division_id" => $data2->division_id,
@@ -779,7 +798,8 @@ class DashboardController extends Controller
             $data = CC::find($id);
             $single = "change_control_single_pdf/" . $data->id;
             $audit = "audit/" . $data->id;
-        } elseif ($type == "Capa") {
+            $parent = "#";
+        } elseif ($type == "CAPA") {
             $data = Capa::find($id);
             $single = "capaSingleReport/" . $data->id;
             $audit = "capaAuditReport/" . $data->id;
@@ -792,6 +812,7 @@ class DashboardController extends Controller
             $data = RiskManagement::find($id);
             $single = "riskSingleReport/" . $data->id;
             $audit = "riskAuditReport/" . $data->id;
+            $parent = "#";
         } elseif ($type == "Lab-Incident") {
             $data = LabIncident::find($id);
             $single = "LabIncidentSingleReport/" . $data->id;
@@ -808,19 +829,22 @@ class DashboardController extends Controller
             $data = ActionItem::find($id);
             $single = "actionitemSingleReport/"  . $data->id;
             $audit = "actionitemAuditReport/" . $data->id;
+            $parent = "#". $data->id;
         } elseif ($type == "Extension") {
-            $data = Extension::find($id);
-            $single = "extensionSingleReport/" .$data->id;
-            $audit = "extensionAuditReport/" .$data->id;
-
+            $data = extension_new::find($id);
+            $single = "singleReportNew/" .$data->id;
+            $audit = "auditReportext/" .$data->id;
+            $parent = "#";
         } elseif ($type == "Observation") {
             $data = Observation::find($id);
-            $single = "#";
-            $audit = "ObservationAuditTrialShow/" .$data->id;
+            $single = "ObservationSingleReport/" .$data->id;            
+            $audit = "showaudittrialobservation/" .$data->id;
+            $parent = "#". $data->id;
         } elseif ($type == "Effectiveness-Check") {
             $data = EffectivenessCheck::find($id);
             $single = "effectiveSingleReport/" .$data->id;
             $audit = "effectiveAuditReport/" .$data->id;
+            $parent="#" . $data->id;
         } elseif ($type == "Management-Review") {
             $data = ManagementReview::find($id);
             $single = "managementReview/" . $data->id;
@@ -861,7 +885,7 @@ class DashboardController extends Controller
             Record No. ' . str_pad($data->record, 4, '0', STR_PAD_LEFT) .
             '</div>
         <div class="division">
-        ' . Helpers::getDivisionName(session()->get('division')) . '/ ' . $type . '
+        ' . Helpers::getDivisionName($data->division_id) . '/ ' . $type . '
         </div>
         <div class="status">' .
             $data->status . '

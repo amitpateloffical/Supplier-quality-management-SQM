@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-3">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vidyagxp - Software</title>
+    <title>Connexo - Software</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
@@ -153,11 +153,11 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Audit Program Audit Trial Report
+                    SCAR Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">
+                        <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -295,7 +295,7 @@
                                     {{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}</div>
                                 <div style="margin-top: 5px;">
                                     <strong>Performed On :</strong>
-                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d/M/Y') : 'Not Applicable' }}
+                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d/M/Y H:i:s') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     <strong>Comments :</strong>

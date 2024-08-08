@@ -1,60 +1,158 @@
 @extends('frontend.layout.main')
 @section('container')
 
-@php 
-$users = DB::table('users')->select('id', 'name')->get();
-@endphp
-<style>
-    textarea.note-codable {
-        display: none !important;
-    }
+    @php
+        $users = DB::table('users')->select('id', 'name')->get();
+    @endphp
+    <style>
+        textarea.note-codable {
+            display: none !important;
+        }
 
-    header {
-        display: none;
-    }
-</style>
+        header {
+            display: none;
+        }
 
-<script>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+            color: black;
+            display: none;
+            /* Hide the button initially */
+        }
+
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .relative-container input:focus+.mic-btn {
+            display: inline-block;
+            /* Show the button when input is focused */
+        }
+
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none;
+        }
+    </style>
+
+    <script>
         $(document).ready(function() {
             let certificateIndex = 1;
-            $('#certificationData').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
-                        ' <td><input type="text" name="certificationData[' + certificateIndex + '][type]"></td>' +
-                        ' <td><input type="text"name="certificationData[' + certificateIndex +'][issuingAgency]"></td>' +
-                        '<td><input type="date" name="certificationData[' + certificateIndex + '][issueDate]"></td>' +
-                        '<td><input type="date" name="certificationData[' + certificateIndex + '][expiryDate]"></td>' +
-                        '<td><input type="text" name="certificationData[' + certificateIndex + '][supportingDoc]"></td>' +
-                        '<td><input type="text" name="certificationData[' + certificateIndex + '][remarks]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                        '</tr>';
-                    '</tr>';
 
-                    certificateIndex++;
-                    return html;
+            $('#certificationData').click(function(e) {
+                e.preventDefault();
+
+                function generateTableRow(index) {
+                    return `
+                    <tr>
+                        <td><input disabled type="text" name="serial[]" value="${index + 1}"></td>
+                        <td><input type="text" name="certificationData[${index}][type]"></td>
+                        <td><input type="text" name="certificationData[${index}][issuingAgency]"></td>
+                        <td><input type="date" name="certificationData[${index}][issueDate]" id="issueDate_${index}" onchange="updateExpiryDateMin(${index})"></td>
+                        <td><input type="date" name="certificationData[${index}][expiryDate]" id="expiryDate_${index}"></td>
+                        <td><input type="text" name="certificationData[${index}][supportingDoc]"></td>
+                        <td><input type="text" name="certificationData[${index}][remarks]"></td>
+                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                    </tr>`;
                 }
+
                 var tableBody = $('#certificationDataTable tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
+                var newRow = generateTableRow(certificateIndex);
                 tableBody.append(newRow);
+                certificateIndex++;
+            });
+
+            $(document).on('click', '.removeRowBtn', function() {
+                $(this).closest('tr').remove();
+            });
+        });
+
+        function updateExpiryDateMin(index) {
+            var issueDateInput = document.getElementById('issueDate_' + index);
+            var expiryDateInput = document.getElementById('expiryDate_' + index);
+
+            if (issueDateInput && expiryDateInput) {
+                var issueDate = new Date(issueDateInput.value);
+                if (issueDate) {
+                    expiryDateInput.min = issueDate.toISOString().split('T')[0];
+                }
+            }
+        }
+    </script>
+
+    <script>
+        < link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
+
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
+                }
+            });
+
+            document.querySelectorAll('.mic-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        micBtn.style.display = 'inline-block';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        setTimeout(() => {
+                            micBtn.style.display = 'none';
+                        }, 200); // Delay to prevent button from hiding immediately when clicked
+                    }
+                });
             });
         });
     </script>
-    <script>
-        $(document).on('click', '.removeRowBtn', function() {
-            $(this).closest('tr').remove();
-        })
-    </script>
+
+
 
     <div class="form-field-head">
-    
+
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
             {{ Helpers::getDivisionName(session()->get('division')) }} / Supplier Site
         </div>
-    
+
     </div>
 
     <div id="change-control-fields">
@@ -74,28 +172,32 @@ $users = DB::table('users')->select('id', 'name')->get();
 
             <!--  Contract Tab content -->
             <form action="{{ route('supplier-site-store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+                @csrf
                 <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator"><b>Record Number</b></label>
-                                    <input type="text" value="{{ Helpers::getDivisionName(session()->get('division')) }}/SS/{{ date('Y') }}/{{ str_pad($record_number, 4, '0', STR_PAD_LEFT) }}" readonly>
+                                    <input type="text"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/SS/{{ date('Y') }}/{{ str_pad($record_number, 4, '0', STR_PAD_LEFT) }}"
+                                        readonly>
                                     <input type="hidden" name="record" id="record">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator"><b>Division</b></label>
-                                    <input disabled type="text" name="division_id" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                    <input disabled type="text" name="division_id"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                     <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator"><b>Initiator</b></label>
-                                    <input disabled type="text" name="initiator_id" id="initiator_id" value="{{Auth::user()->name}}">
+                                    <input disabled type="text" name="initiator_id" id="initiator_id"
+                                        value="{{ Auth::user()->name }}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -112,11 +214,11 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     </label>
                                     <select id="select-state" name="assign_to">
                                         <option value="">Select a value</option>
-                                        @if(!empty($users))
-                                            @foreach($users as $user)
-                                                <option value="{{$user->id }}">{{ $user->name }}</option>
+                                        @if (!empty($users))
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
-                                        @endif                                    
+                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -129,65 +231,54 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="due-date">Date Due</label>
-                                    <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                    <div class="calenderauditee">
-                                    <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                    <div><small class="text-primary">Please mention expected date of completion</small>
                                     </div>
+                                    <div class="calenderauditee">
+                                        <div class="calenderauditee">
+                                            <input disabled type="text" value="{{ Helpers::getdateFormat($dueDate) }}"
+                                                id="due_date" name="due_date" />
+                                            {{-- <input type="date" name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" /> --}}
+
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <script>
-                                    // Format the due date to DD-MM-YYYY
-                                    // Your input date
-                                    var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
-
-                                    // Create a Date object
-                                    var date = new Date(dueDate);
-
-                                    // Array of month names
-                                    var monthNames = [
-                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                                    ];
-
-                                    // Extracting day, month, and year from the date
-                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                                    var monthIndex = date.getMonth();
-                                    var year = date.getFullYear();
-
-                                    // Formatting the date in "dd-MMM-yyyy" format
-                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
-
-                                    // Set the formatted due date value to the input field
-                                    document.getElementById('due_date').value = dueDateFormatted;
-                                </script>
-
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255</span>
-                                    characters remaining
-                                    <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                    <label for="Short Description">Short Description<span
+                                            class="text-danger">*</span></label>
+                                    <span id="rchars">255</span> characters remaining
+
+                                    <div class="relative-container">
+                                        <input id="docname" type="text" name="short_description" maxlength="255"
+                                            class="mic-input" required>
+                                        <button class="mic-btn" type="button">
+                                            @component('frontend.forms.language-model', ['name' => 'short_description', 'id' => 'short_description'])
+                                            @endcomponent
+                                    </div>
                                 </div>
                             </div>
+
                             <script>
                                 var maxLength = 255;
                                 $('#docname').keyup(function() {
                                     var textlen = maxLength - $(this).val().length;
-                                    $('#rchars').text(textlen);});
+                                    $('#rchars').text(textlen);
+                                });
                             </script>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Supplier.">Supplier</label>
-                                    <select name="supplier_person" id="supplier_person"> 
+                                    <select name="supplier_person" id="supplier_person">
                                         <option value="">Select Supplier</option>
-                                        @if(!empty($users))
-                                            @foreach($users as $user)
-                                                <option value="{{$user->id }}">{{ $user->name }}</option>
+                                        @if (!empty($users))
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
-                                        @endif 
+                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -195,9 +286,11 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for=" Attachments">Logo</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="logo_attachment"></div>
+                                        <div class="file-attachment-list" id="logo_attachment">
+                                        </div>
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="logo_attachment[]"
@@ -206,36 +299,49 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Contact Person">Contact Person</label>
                                     <select name="supplier_contact_person" id="supplier_contact_person">
                                         <option value="">Select Supplier</option>
-                                        @if(!empty($users))
-                                            @foreach($users as $user)
-                                                <option value="{{$user->id }}">{{ $user->name }}</option>
+                                        @if (!empty($users))
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
-                                        @endif                                    
+                                        @endif
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Suppliers Products">Suppliers Products</label>
-                                    <input name="supplier_products" id="supplier_products" type="text">
+                                    <div class="relative-container">
+                                        <input class="mic-input" id="supplier_products" type="text"
+                                            name="supplier_products" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supplier_products', 'id' => 'supplier_products'])
+                                        @endcomponent
+                                    </div>
                                 </div>
                             </div>
+
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Description">Description</label>
-                                    <textarea name="description" placeholder></textarea>
+                                    <div class="relative-container">
+                                        <textarea name="description" class="mic-input" id="description" placeholder=""></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'description', 'id' => 'description'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Type..">Type</label>
                                     <select name="supplier_type">
-                                        <option>Enter Your Selection Here</option>
+                                        <option value="">Enter Your Selection Here</option>
                                         <option value="CRO">CRO</option>
                                         <option value="F&B">F&B</option>
                                         <option value="Finished Goods">Finished Goods</option>
@@ -250,7 +356,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <script>
                                 $(document).ready(function() {
                                     $('#suplier_other').hide();
-                            
+
                                     $('[name="supplier_type"]').change(function() {
                                         if ($(this).val() === 'Other') {
                                             $('#suplier_other').show();
@@ -262,17 +368,19 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     });
                                 });
                             </script>
-                             <div id="suplier_other" class="col-lg-6">
+
+                            <div id="suplier_other" class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="">Other <span  class="text-danger">*</span></label>
-                                    <input  type="text">
+                                    <label for="">Other <span class="text-danger">*</span></label>
+                                    <input type="text">
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Sub Type.">Sub Type</label>
                                     <select name="supplier_sub_type">
-                                        <option>Enter Your Selection Here</option>
+                                        <option value="">Enter Your Selection Here</option>
                                         <option value="Other">Other</option>
                                         <option value="Vendor">Vendor</option>
                                         <option value="Finished Goods">Finished Goods</option>
@@ -304,40 +412,73 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Other Type">Other Type</label>
-                                    <input type="text" name="supplier_other_type" placeholder="Enter Other Type">
+                                    <div class="relative-container">
+                                        <input type="text" name="supplier_other_type" id="supplier_other_type"
+                                            placeholder="Enter Other Type" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supplier_other_type', 'id' => 'supplier_other_type'])
+                                        @endcomponent
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Supply from">Supply From</label>
+                                    <div class="relative-container">
+                                        <input type="text" name="supply_from" id="supply_from"
+                                            placeholder="Enter Supply From" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supply_from', 'id' => 'supply_from'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Supply from">Supply from</label>
-                                    <input type="text" name="supply_from" placeholder="Enter Supply From">
+                                    <label for="Supply to">Supply To</label>
+                                    <div class="relative-container">
+                                        <input type="text" name="supply_to" id="supply_to"
+                                            placeholder="Enter Supply To" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supply_to', 'id' => 'supply_to'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Supply to">Supply to</label>
-                                    <input type="text" name="supply_to" placeholder="Enter Supply To">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Supplier Web Site">Supplier Web Site</label>
-                                    <input type="text" name="supplier_website" placeholder="Enter Supply Website">
+                                    <label for="Supplier Web Site">Supplier Website</label>
+                                    <div class="relative-container">
+                                        <input type="text" name="supplier_website" id="supplier_website"
+                                            placeholder="Enter Supply Website" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supplier_website', 'id' => 'supplier_website'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Web Search">Web Search</label>
-                                    <input type="search" name="supplier_web_search" placeholder="Enter Supply Web Search">
+                                    <div class="relative-container">
+                                        <input type="search" name="supplier_web_search" id="supplier_web_search"
+                                            placeholder="Enter Supply Web Search" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supplier_web_search', 'id' => 'supplier_web_search'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments">File Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="supplier_attachment"></div>
                                         <div class="add-btn">
@@ -352,7 +493,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="gi_additional_attachment">Additional Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="gi_additional_attachment"></div>
                                         <div class="add-btn">
@@ -373,33 +515,34 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Related Quality Events">Related Quality Events</label>
-                                    <input type="text" name="related_quality_events" placeholder="Enter Related Quality Events">
+                                    <div class="relative-container">
+                                        <input type="text" name="related_quality_events" id="related_quality_events"
+                                            placeholder="Enter Related Quality Events" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', [
+                                            'name' => 'related_quality_events',
+                                            'id' => 'related_quality_events',
+                                        ])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
 
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Of Complaints/Deviations"># Of Complaints/Deviations</label>
-                                    <input type="text" name="">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="total demerit points">Total Demerit Points</label>
-                                    <input type="text" name="" id="totalDemeritPoints">
-                                </div>
-                            </div> --}}
+
                         </div>
 
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
                         </div>
                     </div>
                 </div>
-                
+
+
 
                 <!-- HOD Review content -->
                 <div id="CCForm2" class="inner-block cctabcontent">
@@ -408,19 +551,30 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_feedback">HOD Feedback</label>
-                                    <textarea type="text" name="HOD_feedback" placeholder="Enter HOD Feedback" id="HOD_feedback"></textarea>
+                                    <div class="relative-container">
+                                        <textarea name="HOD_feedback" id="HOD_feedback" class="mic-input" placeholder="Enter HOD Feedback"></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'HOD_feedback', 'id' => 'HOD_feedback'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_comment">HOD Comment</label>
-                                    <textarea type="text" name="HOD_comment" placeholder="Enter HOD Comment" id="HOD_comment"></textarea>
+                                    <div class="relative-container">
+                                        <textarea name="HOD_comment" id="HOD_comment" class="mic-input" placeholder="Enter HOD Comment"></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'HOD_comment', 'id' => 'HOD_comment'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_attachment">HOD Attachments</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="HOD_attachment"></div>
                                         <div class="add-btn">
@@ -435,7 +589,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="hod_additional_attachment">Additional Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="hod_additional_attachment"></div>
                                         <div class="add-btn">
@@ -451,7 +606,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -463,7 +620,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Issues">
-                                        Certifications & Accreditation<button type="button" name="ann" id="certificationData">+</button>
+                                        Certifications & Accreditation<button type="button" name="ann"
+                                            id="certificationData">+</button>
                                     </label>
                                     <table class="table table-bordered" id="certificationDataTable">
                                         <thead>
@@ -480,79 +638,138 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><input type="text" value="1" name="certificationData[]" readonly></td>
+                                                <td><input disabled type="text" name="serial[]" value="1"></td>
                                                 <td><input type="text" name="certificationData[0][type]"></td>
                                                 <td><input type="text" name="certificationData[0][issuingAgency]"></td>
-                                                <td><input type="date" name="certificationData[0][issueDate]"></td>
-                                                <td><input type="date" name="certificationData[0][expiryDate]"></td>
+                                                <td><input type="date" name="certificationData[0][issueDate]"
+                                                        id="issueDate_0" onchange="updateExpiryDateMin(0)"></td>
+                                                <td><input type="date" name="certificationData[0][expiryDate]"
+                                                        id="expiryDate_0"></td>
                                                 <td><input type="text" name="certificationData[0][supportingDoc]"></td>
                                                 <td><input type="text" name="certificationData[0][remarks]"></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier.">Supplier</label>
-                                    <input type="text" name="supplier_name" id="supplier_name" placeholder="Enter Supplier Name">
+                                    <div class="relative-container">
+                                        <input type="text" name="supplier_name" id="supplier_name"
+                                            placeholder="Enter Supplier Name" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supplier_name', 'id' => 'supplier_name'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier.">Supplier ID</label>
-                                <input type="text" name="supplier_id" placeholder="Enter Supplier ID">
+                                    <div class="relative-container">
+                                        <input type="text" name="supplier_id" id="supplier_id"
+                                            placeholder="Enter Supplier ID" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supplier_id', 'id' => 'supplier_id'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="">Manufacturer</label>
-                                    <input type="text" name="manufacturer_name" placeholder="Enter Manufacturer ID">
+                                    <div class="relative-container">
+                                        <input type="text" name="manufacturer_name" id="manufacturer_name"
+                                            placeholder="Enter Manufacturer Name" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'manufacturer_name', 'id' => 'manufacturer_name'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="manufacturer">Manufacturer ID</label>
-                                <input type="text" name="manufacturer_id" placeholder="Enter Manufacturer ID">
+                                    <div class="relative-container">
+                                        <input type="text" name="manufacturer_id" id="manufacturer_id"
+                                            placeholder="Enter Manufacturer ID" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'manufacturer_id', 'id' => 'manufacturer_id'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="">Vendor</label>
-                                    <input type="text" name="vendor_name" placeholder="Enter Vendor Name">
+                                    <div class="relative-container">
+                                        <input type="text" name="vendor_name" id="vendor_name"
+                                            placeholder="Enter Vendor Name" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'vendor_name', 'id' => 'vendor_name'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="manufacturer">Vendor ID</label>
-                                    <input type="text" name="vendor_id" placeholder="Enter Vendor ID">
+                                    <div class="relative-container">
+                                        <input type="text" name="vendor_id" id="vendor_id"
+                                            placeholder="Enter Vendor ID" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'vendor_id', 'id' => 'vendor_id'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Contact Person">Contact Person</label>
-                                    <input type="text" name="contact_person" id="contact_person" placeholder="Enter Contact Person">
+                                    <div class="relative-container">
+                                        <input type="text" name="contact_person" id="contact_person"
+                                            placeholder="Enter Contact Person" class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'contact_person', 'id' => 'contact_person'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
+
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="Other Contacts">Other Contacts</label>
-                                    <textarea name="other_contacts" id="other_contacts"></textarea>
+                                    <div class="relative-container">
+                                        <textarea name="other_contacts" id="other_contacts" class="mic-input" placeholder="Enter Other Contacts"></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'other_contacts', 'id' => 'other_contacts'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Supplier Services">Supplier Services</label>
-                                    <textarea name="supplier_serivce" id="supplier_serivce" cols="30" ></textarea>
+                                    <div class="relative-container">
+                                        <textarea name="supplier_serivce" id="supplier_serivce" class="mic-input" placeholder="Enter Supplier Service"
+                                            cols="30"></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'supplier_serivce', 'id' => 'supplier_serivce'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
-                            
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Zone">Zone</label>
                                     <select name="zone">
-                                        <option>Enter Your Selection Here</option>
+                                        <option value="">Enter Your Selection Here</option>
                                         <option>Asia</option>
                                         <option>Europe</option>
                                         <option>Africa</option>
@@ -566,16 +783,18 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Country">Country</label>
-                                    <select name="country" class="form-select country" aria-label="Default select example" onchange="loadStates()">
-                                        <option selected>Select Country</option>
+                                    <select name="country" class="form-select country"
+                                        aria-label="Default select example" onchange="loadStates()">
+                                        <option value="">Select Country</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="City">State</label>
-                                    <select name="state" class="form-select state" aria-label="Default select example" onchange="loadCities()">
-                                        <option selected>Select State/District</option>
+                                    <select name="state" class="form-select state" aria-label="Default select example"
+                                        onchange="loadCities()">
+                                        <option value="">Select State/District</option>
                                     </select>
                                 </div>
                             </div>
@@ -583,7 +802,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="State/District">City</label>
                                     <select name="city" class="form-select city" aria-label="Default select example">
-                                        <option selected>Select City</option>
+                                        <option value="">Select City</option>
                                     </select>
                                 </div>
                             </div>
@@ -678,21 +897,36 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Address">Address</label>
-                                    <textarea type="text" name="address" id="address"></textarea>
+                                    <div class="relative-container">
+                                        <textarea name="address" id="address" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'address', 'id' => 'address'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Supplier Web Site">Supplier Web Site</label>
-                                    <input type="text" name="suppplier_web_site" id="suppplier_web_site" placeholder="Enter Website ">
+                                    <label for="Supplier Web Site">Supplier Website</label>
+                                    <div class="relative-container">
+                                        <input type="text" name="suppplier_web_site" id="suppplier_web_site"
+                                            class="mic-input" placeholder="Enter Website" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'suppplier_web_site', 'id' => 'suppplier_web_site'])
+                                        @endcomponent
+                                    </div>
                                 </div>
                             </div>
+
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="ISO Certification date">ISO Certification Date</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="iso_certified_date" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="iso_certified_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" oninput="handleDateInput(this, 'iso_certified_date')" />
+                                        <input type="text" id="iso_certified_date" readonly
+                                            placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="iso_certified_date"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                            class="hide-input" oninput="handleDateInput(this, 'iso_certified_date')" />
                                     </div>
                                 </div>
                             </div>
@@ -700,7 +934,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="iso_certificate_attachment">Certificate Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="iso_certificate_attachment"></div>
                                         <div class="add-btn">
@@ -715,77 +950,145 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Contracts">Contracts</label>
-                                    <input type="text" name="suppplier_contacts" id="suppplier_contacts">
+                                    <div class="relative-container">
+                                        <input type="text" name="suppplier_contacts" id="suppplier_contacts"
+                                            class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'suppplier_contacts', 'id' => 'suppplier_contacts'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Related Non Conformances">Related Non Conformances</label>
-                                    <input type="text" name="related_non_conformance" id="related_non_conformance">
+                                    <div class="relative-container">
+                                        <input type="text" name="related_non_conformance" id="related_non_conformance"
+                                            class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', [
+                                            'name' => 'related_non_conformance',
+                                            'id' => 'related_non_conformance',
+                                        ])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier Contracts/Agreements">Supplier Contracts/Agreements</label>
-                                    <input type="text" id="suppplier_agreement" name="suppplier_agreement">
+                                    <div class="relative-container">
+                                        <input type="text" name="suppplier_agreement" id="suppplier_agreement"
+                                            class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'suppplier_agreement', 'id' => 'suppplier_agreement'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Regulatory History">Regulatory History</label>
-                                    <input type="text" id="regulatory_history" name="regulatory_history">
+                                    <div class="relative-container">
+                                        <input type="text" name="regulatory_history" id="regulatory_history"
+                                            class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'regulatory_history', 'id' => 'regulatory_history'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
-                        
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Distribution Sites">Distribution Sites</label>
-                                    <input type="text" id="distribution_sites" name="distribution_sites">
+                                    <div class="relative-container">
+                                        <input type="text" name="distribution_sites" id="distribution_sites"
+                                            class="mic-input" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'distribution_sites', 'id' => 'distribution_sites'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Quality Management ">Manufacturing Sites </label>
-                                    <textarea name="text" name="manufacturing_sited" id="manufacturing_sited"></textarea>
+                                    <div class="relative-container">
+                                        <textarea name="manufacturing_sited" id="manufacturing_sited" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'manufacturing_sited', 'id' => 'manufacturing_sited'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
-                            </div>  
+                            </div>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Quality Management ">Quality Management </label>
-                                    <textarea name="text" id="quality_management" name="quality_management"></textarea>
+                                    <div class="relative-container">
+                                        <textarea id="quality_management" name="quality_management" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'quality_management', 'id' => 'quality_management'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Business History">Business History</label>
-                                    <textarea name="text" id="bussiness_history" name="bussiness_history"></textarea>
+                                    <div class="relative-container">
+                                        <textarea id="bussiness_history" name="bussiness_history" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'bussiness_history', 'id' => 'bussiness_history'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
-                            
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Performance History ">Performance History </label>
-                                    <textarea name="text" id="performance_history" name="performance_history"></textarea>
+                                    <div class="relative-container">
+                                        <textarea id="performance_history" name="performance_history" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'performance_history', 'id' => 'performance_history'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Compliance Risk">Compliance Risk</label>
-                                    <textarea name="text" id="compliance_risk" name="compliance_risk"></textarea>
+                                    <div class="relative-container">
+                                        <textarea id="compliance_risk" name="compliance_risk" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'compliance_risk', 'id' => 'compliance_risk'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="supplier_detail_additional_attachment">Additional Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="supplier_detail_additional_attachment"></div>
+                                        <div class="file-attachment-list" id="supplier_detail_additional_attachment">
+                                        </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="supplier_detail_additional_attachment[]"
-                                                oninput="addMultipleFiles(this, 'supplier_detail_additional_attachment')" multiple>
+                                            <input type="file" id="myfile"
+                                                name="supplier_detail_additional_attachment[]"
+                                                oninput="addMultipleFiles(this, 'supplier_detail_additional_attachment')"
+                                                multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -796,7 +1099,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -840,7 +1145,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Payment Terms">Payment Terms</label>
                                     <select id="payment_term" name="payment_term">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="< 30 Days">< 30 Days</option>
+                                        <option value="< 30 Days">
+                                            < 30 Days</option>
                                         <option value="30 - 45 Days">30 - 45 Days</option>
                                         <option value="45 - 60 Days">45 - 60 Days</option>
                                         <option value=">= 60 Days">>= 60 Days</option>
@@ -870,7 +1176,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 <div class="group-input">
                                     <label for="Lead Time Days">Lead Time Days</label>
                                     <select name="lead_time_days" name="lead_time_days">
-                                        <option>Enter Your Selection Here</option>
+                                        <option value="">Enter Your Selection Here</option>
                                         <option value="> 11 Days"> > 11 Days</option>
                                         <option value="6 - 10">6 - 10</option>
                                         <option value="3 -5">3 -5</option>
@@ -904,7 +1210,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <option value="100%">100%</option>
                                         <option value="98-99%">98-99%</option>
                                         <option value="96-97%">96-97%</option>
-                                        <option value="< 95%">< 95%</option>
+                                        <option value="< 95%">
+                                            < 95%</option>
                                     </select>
                                 </div>
                             </div>
@@ -933,15 +1240,16 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="Not Information at All">Not Information at All</option>
                                         <option value="No Formal Information About">No Formal Information About</option>
-                                        <option value="Yes - Partially Aligned With"></option>
-                                        <option value="Yes - Completely Aligns"></option>
+                                        <option value="Yes - Partially Aligned With">Yes - Partially Aligned With</option>
+                                        <option value="Yes - Completely Aligns">Yes - Completely Aligns</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Supplier Business Weight">Supplier Business Weight</label>
-                                    <select id="supplier_bussiness_planning_weight" name="supplier_bussiness_planning_weight">
+                                    <select id="supplier_bussiness_planning_weight"
+                                        name="supplier_bussiness_planning_weight">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -1016,7 +1324,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <option value="10">10</option>
                                     </select>
                                 </div>
-                            </div>  
+                            </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="# of CAR's generated"># of CAR's generated</label>
@@ -1112,13 +1420,16 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="score_card_additional_attachment">Additional Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="score_card_additional_attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="score_card_additional_attachment[]"
-                                                oninput="addMultipleFiles(this, 'score_card_additional_attachment')" multiple>
+                                            <input type="file" id="myfile"
+                                                name="score_card_additional_attachment[]"
+                                                oninput="addMultipleFiles(this, 'score_card_additional_attachment')"
+                                                multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -1156,7 +1467,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1168,19 +1481,32 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_feedback">QA Reviewer Feedback</label>
-                                    <textarea type="text" name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback" id="QA_reviewer_feedback"></textarea>
+                                    <div class="relative-container">
+                                        <textarea name="QA_reviewer_feedback" id="QA_reviewer_feedback" class="mic-input"
+                                            placeholder="Enter QA Reviewer Feedback"></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'QA_reviewer_feedback', 'id' => 'QA_reviewer_feedback'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_comment">QA Reviewer Comment</label>
-                                    <textarea type="text" name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment" id="QA_reviewer_comment"></textarea>
+                                    <div class="relative-container">
+                                        <textarea name="QA_reviewer_comment" id="QA_reviewer_comment" class="mic-input"
+                                            placeholder="Enter QA Reviewer Comment"></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'QA_reviewer_comment', 'id' => 'QA_reviewer_comment'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_attachment">QA Reviewer Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="QA_reviewer_attachment"></div>
                                         <div class="add-btn">
@@ -1195,13 +1521,16 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="qa_reviewer_additional_attachment">Additional Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="qa_reviewer_additional_attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="qa_reviewer_additional_attachment[]"
-                                                oninput="addMultipleFiles(this, 'qa_reviewer_additional_attachment')" multiple>
+                                            <input type="file" id="myfile"
+                                                name="qa_reviewer_additional_attachment[]"
+                                                oninput="addMultipleFiles(this, 'qa_reviewer_additional_attachment')"
+                                                multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -1211,7 +1540,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1223,18 +1554,38 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Last Audit Date</label>
+                                    {{-- <div class="calenderauditee">
+                                        <input type="text" id="last_audit_date" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="last_audit_date"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'last_audit_date')" />
+                                    </div> --}}
+
                                     <div class="calenderauditee">
                                         <input type="text" id="last_audit_date" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="last_audit_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'last_audit_date')" />
+                                        <input type="date" name="last_audit_date"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'last_audit_date'); updateNextAuditDateMin(this.value);" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Next Audit Date</label>
+                                    {{-- <div class="calenderauditee">
+                                        <input type="text" id="next_audit_date" readonly
+                                            placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="next_audit_date"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'next_audit_date')" />
+                                    </div> --}}
+
                                     <div class="calenderauditee">
-                                        <input type="text" id="next_audit_date" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="next_audit_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'next_audit_date')" />
+                                        <input type="text" id="next_audit_date" readonly
+                                            placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="next_audit_date"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'next_audit_date')" />
                                     </div>
                                 </div>
                             </div>
@@ -1280,7 +1631,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="Operation, R&M - Level 3">Operation, R&M - Level 3</option>
                                         <option value="Operation, R&M - Level 2">Operation, R&M - Level 2</option>
-                                        <option value="Operation Only, Stock Point Only">Operation Only, Stock Point Only</option>
+                                        <option value="Operation Only, Stock Point Only">Operation Only, Stock Point Only
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -1289,7 +1641,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Number of Employees">Number of Employees</label>
                                     <select id="nature_of_employee" name="nature_of_employee">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="<25"> < 25 </option>
+                                        <option value="<25">
+                                            < 25 </option>
                                         <option value="26-49">26-49</option>
                                         <option value=">50">>50</option>
                                     </select>
@@ -1300,9 +1653,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Access to Technical Support">Access to Technical Support</label>
                                     <select id="technical_support" name="technical_support">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Very Limited Access">Very Limited Access to Technical Experts</option>
-                                        <option value="Available When Requested">Available When Requested or Via Beacon Center</option>
-                                        <option value="Regulatory Schedule Visit by Region Experts">Regulatory Schedule Visit by Region Experts</option>
+                                        <option value="Very Limited Access to Technical Experts ">Very Limited Access to
+                                            Technical Experts
+                                        </option>
+                                        <option value="Available When Requested or Via Beacon Center">Available When
+                                            Requested or Via Beacon Center</option>
+                                        <option value="Regulatory Schedule Visit by Region Experts">Regulatory Schedule
+                                            Visit by Region Experts</option>
                                     </select>
                                 </div>
                             </div>
@@ -1322,8 +1679,10 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Reliability">Reliability</label>
                                     <select id="reliability" name="reliability">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Significantly Below Expectations">Significantly Below Expectations</option>
-                                        <option value="Marginally Below Expectations">Marginally Below Expectations</option>
+                                        <option value="Significantly Below Expectations">Significantly Below Expectations
+                                        </option>
+                                        <option value="Marginally Below Expectations">Marginally Below Expectations
+                                        </option>
                                         <option value="Meets Expectations">Meets Expectations</option>
                                     </select>
                                 </div>
@@ -1335,7 +1694,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                         <option value="">Enter Your Selection Here</option>
                                         <option value=">50 M">>50 M</option>
                                         <option value="26-49 M">26-49 M</option>
-                                        <option value="<25 M">< 25 M</option>
+                                        <option value="<25 M">
+                                            < 25 M</option>
                                     </select>
                                 </div>
                             </div>
@@ -1344,7 +1704,8 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Client Base">Client Base</label>
                                     <select id="client_base" name="client_base">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Single or Disproportionally Skewed">Single or Disproportionally Skewed</option>
+                                        <option value="Single or Disproportionally Skewed">Single or Disproportionally
+                                            Skewed</option>
                                         <option value="Multiple Clients">Multiple Clients</option>
                                         <option value="Well Diversified">Well Diversified</option>
                                     </select>
@@ -1355,9 +1716,13 @@ $users = DB::table('users')->select('id', 'name')->get();
                                     <label for="Previous Audit Results">Previous Audit Results</label>
                                     <select id="previous_audit_result" name="previous_audit_result">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Below Requirement Major NCN's or No Audit History">Below Requirement Major NCN's or No Audit History</option>
-                                        <option value="Marginally Below Requirement With Minor NCN's">Marginally Below Requirement With Minor NCN's</option>
-                                        <option value="Meets Requirement and Minimal NCN's">Meets Requirement and Minimal NCN's</option>
+                                        <option value="Below Requirement Major NCN's or No Audit History">Below
+                                            Requirement
+                                            Major NCN's or No Audit History</option>
+                                        <option value="Marginally Below Requirement With Minor NCN's">Marginally Below
+                                            Requirement With Minor NCN's</option>
+                                        <option value="Meets Requirement and Minimal NCN's">Meets Requirement and Minimal
+                                            NCN's</option>
                                     </select>
                                 </div>
                             </div>
@@ -1365,13 +1730,17 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="risk_assessment_additional_attachment">Additional Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="risk_assessment_additional_attachment"></div>
+                                        <div class="file-attachment-list" id="risk_assessment_additional_attachment">
+                                        </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="risk_assessment_additional_attachment[]"
-                                                oninput="addMultipleFiles(this, 'risk_assessment_additional_attachment')" multiple>
+                                            <input type="file" id="myfile"
+                                                name="risk_assessment_additional_attachment[]"
+                                                oninput="addMultipleFiles(this, 'risk_assessment_additional_attachment')"
+                                                multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -1410,7 +1779,9 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1422,13 +1793,19 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_head_comment">QA Head Comment</label>
-                                    <textarea type="text" name="QA_head_comment" placeholder="Enter QA Head Comment" id="QA_head_comment"></textarea>
+                                    <div class="relative-container">
+                                        <textarea name="QA_head_comment" id="QA_head_comment" class="mic-input" placeholder="Enter QA Head Comment"></textarea>
+                                        @component('frontend.forms.language-model', ['name' => 'QA_head_comment', 'id' => 'QA_head_comment'])
+                                        @endcomponent
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_head_attachment">QA Head Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="QA_head_attachment"></div>
                                         <div class="add-btn">
@@ -1443,13 +1820,16 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="qa_head_additional_attachment">Additional Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="qa_head_additional_attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="qa_head_additional_attachment[]"
-                                                oninput="addMultipleFiles(this, 'qa_head_additional_attachment')" multiple>
+                                            <input type="file" id="myfile"
+                                                name="qa_head_additional_attachment[]"
+                                                oninput="addMultipleFiles(this, 'qa_head_additional_attachment')"
+                                                multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -1459,30 +1839,32 @@ $users = DB::table('users')->select('id', 'name')->get();
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a>
+                            </button>
                         </div>
                     </div>
                 </div>
-            
+
                 <!-- Signature content -->
                 <div id="CCForm8" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Submitted By">Submitted By</label>
+                                    <label for="Submitted By">Submit Supplier Details By</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Submitted On">Submitted On</label>
+                                    <label for="Submitted On">Submit Supplier Details On</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Submitted Comment">Submitted Comment</label>
+                                    <label for="Submitted Comment">Submit Supplier Details Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -1490,60 +1872,186 @@ $users = DB::table('users')->select('id', 'name')->get();
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review By">Suppplier Review By</label>
+                                    <label for="Suppplier Review By">Cancelled By</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Suppplier Review On">Suppplier Review On</label>
+                                    <label for="Suppplier Review On">Cancelled On</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Suppplier Review Comment">Suppplier Review Comment</label>
+                                    <label for="Suppplier Review Comment">Cancelled Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By"> Qualification Complete By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review On">Qualification Complete on</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppplier Review Comment">Qualification Complete Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Score Card By">Score Card By</label>
+                                    <label for="Suppplier Review By">Audit Passed By</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Score Card On">Score Card On</label>
+                                    <label for="Suppplier Review On">Audit Passed On</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Score Card Comment">Score Card Comment</label>
+                                    <label for="Suppplier Review Comment">Audit Passed Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Risk Assessment By">Risk Assessment By</label>
+                                    <label for="Suppplier Review By">Audit Failed By</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Risk Assessment On">Risk Assessment On</label>
+                                    <label for="Suppplier Review On">Audit Failed On</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Risk Assessment Comment">Risk Assessment Comment</label>
+                                    <label for="Suppplier Review Comment">Audit Failed Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By">Conditionally Approved By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review On">Conditionally Approved On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppplier Review Comment">Conditionally Approved Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By">Supplier Approved to Obsolete By </label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review On">Supplier Approved to Obsolete On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppplier Review Comment">Supplier Approved to Obsolete Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By">Reject Due To Quality Issues By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review On">Reject Due To Quality Issues On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppplier Review Comment">Reject Due To Quality Issues Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By">Pending Rejction to Supplier Obsolete By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review On">Pending Rejction to Supplier Obsolete On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppplier Review Comment">Pending Rejction to Supplier Obsolete
+                                        Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By">Re-Audit By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review On">Re-Audit On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppplier Review Comment">Re-Audit Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1570,6 +2078,27 @@ $users = DB::table('users')->select('id', 'name')->get();
             evt.currentTarget.className += " active";
         }
 
+
+
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
         const saveButtons = document.querySelectorAll(".saveButton");
         const nextButtons = document.querySelectorAll(".nextButton");
         const form = document.getElementById("step-form");
@@ -1615,6 +2144,22 @@ $users = DB::table('users')->select('id', 'name')->get();
                 // Update current step
                 currentStep--;
             }
+        }
+    </script>
+    <script>
+        function handleDateInput(input, targetId) {
+            const date = new Date(input.value);
+            const formattedDate = date.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            }).replace(/ /g, '-');
+            document.getElementById(targetId).value = formattedDate;
+        }
+
+        function updateNextAuditDateMin(lastAuditDate) {
+            const nextAuditDateInput = document.querySelector('input[name="next_audit_date"]');
+            nextAuditDateInput.min = lastAuditDate;
         }
     </script>
 @endsection

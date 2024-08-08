@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>VidyaGxP - Software</title>
+    <title>Connexo - Software</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
@@ -16,6 +15,84 @@
         margin: 0;
         padding: 0;
         min-width: 100vw;
+        min-height: 100vh;
+    }
+
+    .w-10 {
+        width: 10%;
+    }
+
+    .w-20 {
+        width: 20%;
+    }
+
+    .w-30 {
+        width: 30%;
+    }
+
+    .w-40 {
+        width: 40%;
+    }
+
+    .w-50 {
+        width: 50%;
+    }
+
+    .w-60 {
+        width: 60%;
+    }
+
+    .w-70 {
+        width: 70%;
+    }
+
+    .w-80 {
+        width: 80%;
+    }
+
+    .w-90 {
+        width: 90%;
+    }
+
+    .w-100 {
+        width: 100%;
+    }
+
+    .h-100 {
+        height: 100%;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    header .head {
+        font-weight: bold;
+        text-align: center;
+        font-size: 1.2rem;
+    }
+
+    @page {
+        size: A4;
+        margin-top: 160px;
+        margin-bottom: 60px;
+    }
+
+    header {
         position: fixed;
         top: -140px;
         left: 0;
@@ -66,10 +143,6 @@
     .table_bg {
         background: #4274da57;
     }
-    /* .pagenum:before {
-        content: counter(page);
-    } */
-   
 </style>
 
 <body>
@@ -78,11 +151,11 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Deviation Audit Trail Report
+                     Audit Trial Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="" class="w-100" >
                     </div>
                 </td>
             </tr>
@@ -93,7 +166,7 @@
                     <strong>Deviation No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($doc->division_id) }}/DEV/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::getDivisionName($doc->division_id) }}/DEV/{{ Helpers::year($doc->created_at)}}/ {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -101,6 +174,7 @@
             </tr>
         </table>
     </header>
+
     <footer>
         <table>
             <tr>
@@ -110,54 +184,19 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                <td class="w-30">
-                    
-                </td>
+
             </tr>
         </table>
     </footer>
+
     <div class="inner-block">
 
-        <div class="head">Deviation Audit Trail Report</div>
-
-        <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/DEV/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
-        </div>
-
-        {{-- <div class="first-table">
-            <table>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>Start Date (GMT) :</strong> {{ $doc->created_at }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Sub Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>End Date (GMT) :</strong>
-                        @if ($doc->stage >= 9)
-                            {{ $doc->updated_at }}
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">&nbsp;</td>
-                    <td class="w-50">
-                        <strong>Person Responsible : {{ $doc->originator }}</strong>
-                    </td>
-                </tr>
-            </table>
-        </div> --}}
 
         <div class="second-table">
             <table>
                 <thead>
                     <tr class="table_bg">
+                        <th>S.No</th>
                         <th>Flow Changed From</th>
                         <th>Flow Changed To</th>
                         <th>Data Field</th>
@@ -165,71 +204,105 @@
                         <th>Performer</th>
                     </tr>
                 </thead>
+                {{-- @foreach ($data as $datas)
+                    <tr>
+                        @php
+                            $previousItem = null;
+                        @endphp --}}
+
                 <tbody>
-                    @php
-                    $previousItem = null;
-                    @endphp
-                    @foreach ($data as $datas => $dataDemo)
+                    @foreach ($data as $index => $dataDemo)
                         <tr>
+                            <td>{{ $loop->iteration }}</td>
                             <td>
-                                @if($previousItem == null)
-                                <div><strong>Changed From :</strong>{{" Intiation"}}</div>
-                                @else
-                             <div><strong>Changed From :</strong>{{$previousItem->origin_state ? $previousItem->origin_state  : "Not Applicable"}}</div>
-                                @endif
-                                  @php
-                                 $previousItem  = $dataDemo;
-                                @endphp                 
-    
-                           
-                             </td>
-                            <td>
-                                <div><strong>Changed To :</strong>{{$dataDemo->origin_state ? $dataDemo->origin_state  : "Not Applicable"}}</div>
-       
-                               </td>
-                            <td>
-                                    <div>
-                                <strong> Data Field Name :</strong>{{ $dataDemo->activity_type ? $dataDemo->activity_type  : "Not Applicable" }}</a> </div>
-                                <div style="margin-top: 5px;">
-                               
-                                        <strong>Change From :</strong>{!!$dataDemo->previous ? $dataDemo->previous  : "NULL"!!}</div>
-                                        <br>
-                                        <!--  -->
-                                <div ><strong>Changed To :</strong>{!!$dataDemo->current ? $dataDemo->current  : "Not Applicable"!!}</div> 
-                                        <div style="margin-top: 5px;"><strong>Change Type :</strong>{{$dataDemo->action_name ? $dataDemo->action_name  : "Not Applicable"}}
-                                        </div>
+                                <div><strong>Changed From :</strong> {{ $dataDemo->change_from }}</div>
                             </td>
-                            {{-- <td>
-                                {{$dataDemo->previous == "NULL" ? 'Modify' : 'New'}}
-                            </td> --}}
-                            {{-- <td>
-                                {{$dataDemo->action_name ? $dataDemo->action_name  : "Not Applicable"}}
-                            </td> --}}
+                            <td>
+                                <div><strong>Changed To :</strong> {{ $dataDemo->change_to }}</div>
+                            </td>
                             <td>
                                 <div>
-                               <strong> Action Name :</strong>{{$dataDemo->action ? $dataDemo->action  : "Not Applicable"}}
-        
+                                    <strong>Data Field Name :</strong>
+                                    {{ $dataDemo->activity_type ?: 'Not Applicable' }}
                                 </div>
-                                </td>
-                            <td>
-                                <div ><strong> Peformed By :</strong>{{$dataDemo->user_name ? $dataDemo->user_name  : "Not Applicable"}}</div>
-                                <div style="margin-top: 5px;">  <strong>Performed On :</strong>{{$dataDemo->created_at ? $dataDemo->created_at  : "Not Applicable"}}</div>
-                                 <div style="margin-top: 5px;"><strong> Comments :</strong>{{$dataDemo->comment ? $dataDemo->comment  : "Not Applicable"}}</div>       
+                                <div style="margin-top: 5px;" class="imageContainer">
+                                    <!-- Assuming $dataDemo->image_url contains the URL of your image -->
+                                    @if ($dataDemo->activity_type == 'Activity Log')
+                                        <strong>Change From :</strong>
+                                        @if ($dataDemo->change_from)
+                                            {{-- Check if the change_from is a date --}}
+                                            @if (strtotime($dataDemo->change_from))
+                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d-M-Y') }}
+                                            @else
+                                                {{ str_replace(',', ', ', $dataDemo->change_from) }}
+                                            @endif
+                                        @elseif($dataDemo->change_from && trim($dataDemo->change_from) == '')
+                                            NULL
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    @else
+                                        <strong>Change From :</strong>
+                                        @if (!empty(strip_tags($dataDemo->previous)))
+                                            {{-- Check if the previous is a date --}}
+                                            @if (strtotime($dataDemo->previous))
+                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d-M-Y') }}
+                                            @else
+                                                {!! $dataDemo->previous !!}
+                                            @endif
+                                        @elseif($dataDemo->previous == null)
+                                            Null
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    @endif
+                                </div>
+                                <br>
+
+                                <div class="imageContainer">
+                                    @if ($dataDemo->activity_type == 'Activity Log')
+                                        <strong>Change To :</strong>
+                                        @if (strtotime($dataDemo->change_to))
+                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
+                                        @else
+                                            {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
+                                        @endif
+                                    @else
+                                        <strong>Change To :</strong>
+                                        @if (strtotime($dataDemo->current))
+                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
+                                        @else
+                                            {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
+                                        @endif
+                                    @endif
+                                </div>
+                                <div style="margin-top: 5px;">
+                                    <strong>Change Type :</strong>
+                                    {{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
+                                </div>
                             </td>
-                            
+                            <td>
+                                <div><strong>Action Name :</strong>
+                                    {{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}</div>
+                            </td>
+                            <td>
+                                <div><strong>Performed By :</strong>
+                                    {{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}</div>
+                                <div style="margin-top: 5px;"> <strong>Performed On
+                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
+                                </div>
+                                <div style="margin-top: 5px;"><strong>Comments :</strong>
+                                    {{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
+                            </td>
                         </tr>
-                        @php
-                        $previousItem = $dataDemo;
-                        @endphp
                     @endforeach
                 </tbody>
             </table>
+
+            </table>
         </div>
-        
 
     </div>
-
-    
 
 </body>
 

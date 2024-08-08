@@ -212,11 +212,11 @@
             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
             @endif
             <div class="buttons-new">
-                @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
+                {{--@if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
+                @endif--}}
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer" >
                     Review
                 </button>
-                @endif
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
                     View
                     </button>
@@ -334,8 +334,8 @@
               </div>
 
             <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
-            <div style="margin-bottom: 5px;  font-weight: bold;"> Originator :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
-            <div style="margin-bottom: 5px; font-weight: bold;">Short Description : {{$document->short_description}}</div>
+            <div style="margin-bottom: 5px;  font-weight: bold;"> Originator :{{ $document->initiator }}</div>
+            <div style="margin-bottom: 5px; font-weight: bold;">Short Description : {{ strip_tags($document->short_description) }}</div>
             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date :  {{$document->due_date}}</div>
 
        </div>
@@ -426,7 +426,7 @@
                         <!-- ------Record Is send by Hod Review----------- -->
                         <td>
                         <div>
-                     <strong> Data Field Name :</strong><a href="{{ url('DeviationAuditTrialDetails', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type  : "Not Applicable" }}</a> </div>
+                     <strong> Data Field Name :</strong><a href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type  : "Not Applicable" }}</a> </div>
                       <div style="margin-top: 5px;">
                       <strong>Change From :</strong>{!!$dataDemo->previous ? $dataDemo->previous  : "NULL"!!}</div>
                             <br>
@@ -443,7 +443,7 @@
                         </td>
                         <td>
                        <div ><strong> Peformed By :</strong>{{$dataDemo->user_name ? $dataDemo->user_name  : "Not Applicable"}}</div>
-                      <div style="margin-top: 5px;">  <strong>Performed On :</strong>{{$dataDemo->created_at ? $dataDemo->created_at  : "Not Applicable"}}</div>
+                      <div style="margin-top: 5px;">  <strong>Performed On :</strong>{{$dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable'}}</div>
                        <div style="margin-top: 5px;"><strong> Comments :</strong>{{$dataDemo->comment ? $dataDemo->comment  : "Not Applicable"}}</div>
 
                         </td>

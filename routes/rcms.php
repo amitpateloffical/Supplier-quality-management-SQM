@@ -13,6 +13,7 @@ use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\CapaController;
 use App\Http\Controllers\rcms\FormDivisionController;
+use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\rcms\ManagementReviewController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
@@ -39,6 +40,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::resource('CC', CCController::class);
             Route::resource('actionItem', ActionItemController::class);
             Route::post('action-stage-cancel/{id}', [ActionItemController::class, 'actionStageCancel']);
+            Route::post('action-stage-more_info/{id}', [ActionItemController::class, 'actionStageMoreinfo']);
             Route::get('action-item-audittrialshow/{id}', [ActionItemController::class, 'actionItemAuditTrialShow'])->name('showActionItemAuditTrial');
             Route::get('action-item-audittrialdetails/{id}', [ActionItemController::class, 'actionItemAuditTrialDetails'])->name('showaudittrialactionItem');
             Route::get('actionitemSingleReport/{id}', [ActionItemController::class, 'singleReport'])->name('actionitemSingleReport');
@@ -140,8 +142,10 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('RejectStateChange/{id}', [ObservationController::class, 'RejectStateChange'])->name('RejectStateChangeObservation');
             Route::post('observation_child/{id}', [ObservationController::class, 'observation_child'])->name('observationchild');
             Route::post('boostStage/{id}', [ObservationController::class, 'boostStage'])->name('updatestageobservation');
-            Route::get('ObservationAuditTrialShow/{id}', [ObservationController::class, 'ObservationAuditTrialShow'])->name('ShowObservationAuditTrial');
-            Route::get('ObservationAuditTrialDetails/{id}', [ObservationController::class, 'ObservationAuditTrialDetails'])->name('showaudittrialobservation');
+
+            Route::get('ShowObservationAuditTrial/{id}', [ObservationController::class, 'ObservationAuditTrialShow'])->name('ShowObservationAuditTrial');
+            Route::get('showaudittrialobservation/{id}', [ObservationController::class, 'ObservationAuditTrialDetails'])->name('showaudittrialobservation');
+            Route::get('ObservationSingleReport/{id}', [ObservationController::class, 'ObservationSingleReportshow'])->name('ObservationSingleReport');
 
             /*********** Supplier Routes ************/
             Route::get('supplier', [SupplierController::class, 'index']);
@@ -159,7 +163,13 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('sendToPendingSupplierAudit/{id}', [SupplierController::class, 'sendToPendingSupplierAudit'])->name('sendToPendingSupplierAudit');
             Route::post('supplier_child/{id}', [SupplierController::class, 'supplier_child'])->name('supplier_child_1');            
             Route::post('store_audit_review/{id}', [SupplierController::class, 'store_audit_review'])->name('store_audit_review');
+            Route::post('approvedBy-contract-giver/{id}', [SupplierController::class, 'approvedByContractGiver'])->name('approvedBy-contract-giver');
+            Route::post('link-manufacturer/{id}', [SupplierController::class, 'linkManufacturerToApprovedManufacturer'])->name('link-manufacturer');
 
+            Route::post('supplier-reject-stage/{id}', [SupplierController::class, 'supplierStageReject'])->name('supplier-reject-stage');
+            Route::post('sendTo-pendig-CQA/{id}', [SupplierController::class, 'sendToPendingCQAReview'])->name('sendTo-pendig-CQA');
+            Route::post('manufacturer-reject/{id}', [SupplierController::class, 'manufacturerRejected'])->name('manufacturer-reject');
+            Route::post('risk-rating-observed-low/{id}', [SupplierController::class, 'sendToApprovedManufacturerFromPendingManufacturer'])->name('risk-rating-observed-low');
             /*********** Supplier Site Routes ************/
             Route::get('supplier-site', [SupplierSiteController::class, 'index']);
             Route::post('supplier-site-store', [SupplierSiteController::class, 'store'])->name('supplier-site-store');
@@ -227,8 +237,12 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('launch-extension-deviation');
             Route::post('launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('launch-extension-capa');
             Route::post('deviation/pending_initiator_update/{id}', [DeviationController::class, 'pending_initiator_update'])->name('pending_initiator_update');
+            Route::get('devAuditreport/{id}', [DeviationController::class, 'devAuditreport'])->name('devAuditreport');
 
-
+            //===============================extension new --------------
+            Route::get('singleReportNew/{id}', [ExtensionNewController::class, 'singleReport'])->name('singleReportNew');
+            Route::get('audit_trailNew/{id}', [ExtensionNewController::class, 'extensionNewAuditTrail']);
+            Route::get('auditReportext/{id}', [ExtensionNewController::class, 'auditReportext'])->name('auditReportext');
              
 
         }

@@ -43,12 +43,12 @@
                         <table>
                             <tr>
                                 <td class="w-70 head">
-                                Audit Trail
+                                <!-- Audit Trail -->
                                 </td>
                                 <td class="w-30">
-                                    <div class="logo">
+                                    <!-- <div class="logo">
                                         <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="" class="w-100">
-                                    </div>
+                                    </div> -->
                                 </td>
                             </tr>
                         </table>

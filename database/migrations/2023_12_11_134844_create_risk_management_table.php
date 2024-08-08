@@ -113,7 +113,7 @@ return new class extends Migration
             $table->longtext('comments2')->nullable();
             $table->longtext('investigation_summary')->nullable();
             $table->longtext('root_cause_description')->nullable();
-            $table->string('refrence_record')->nullable();
+            $table->longtext('refrence_record')->nullable();
             $table->string('mitigation_required')->nullable();
             $table->longtext('mitigation_plan')->nullable();
             $table->text('mitigation_due_date')->nullable();

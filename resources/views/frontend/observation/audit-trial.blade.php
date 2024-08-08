@@ -231,6 +231,7 @@
                                     <!-- Assuming $dataDemo->image_url contains the URL of your image -->
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change From :</strong>
+                                        {{--              :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }} --}}
                                         @if ($dataDemo->change_from)
                                             {{-- Check if the change_from is a date --}}
                                             @if (strtotime($dataDemo->change_from))

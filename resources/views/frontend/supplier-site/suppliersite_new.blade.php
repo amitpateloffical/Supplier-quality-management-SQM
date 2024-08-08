@@ -235,41 +235,17 @@
                                     </div>
                                     <div class="calenderauditee">
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="due_date"
+                                            <input disabled type="text" value="{{ Helpers::getdateFormat($dueDate) }}"
+                                                id="due_date" name="due_date" />
+                                            {{-- <input type="date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                                oninput="handleDateInput(this, 'due_date')" /> --}}
+
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <script>
-                                // Format the due date to DD-MM-YYYY
-                                // Your input date
-                                var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
-
-                                // Create a Date object
-                                var date = new Date(dueDate);
-
-                                // Array of month names
-                                var monthNames = [
-                                    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                                ];
-
-                                // Extracting day, month, and year from the date
-                                var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                                var monthIndex = date.getMonth();
-                                var year = date.getFullYear();
-
-                                // Formatting the date in "dd-MMM-yyyy" format
-                                var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
-
-                                // Set the formatted due date value to the input field
-                                document.getElementById('due_date').value = dueDateFormatted;
-                            </script>
-
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Short Description">Short Description<span
@@ -336,19 +312,19 @@
                                         @endif
                                     </select>
                                 </div>
-                                {{-- </div> --}}
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Suppliers Products">Suppliers Products</label>
-                                        <div class="relative-container">
-                                            <input class="mic-input" id="supplier_products" type="text"
-                                                name="supplier_products" maxlength="255">
-                                            @component('frontend.forms.language-model', ['name' => 'supplier_products', 'id' => 'supplier_products'])
-                                            @endcomponent
-                                        </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppliers Products">Suppliers Products</label>
+                                    <div class="relative-container">
+                                        <input class="mic-input" id="supplier_products" type="text"
+                                            name="supplier_products" maxlength="255">
+                                        @component('frontend.forms.language-model', ['name' => 'supplier_products', 'id' => 'supplier_products'])
+                                        @endcomponent
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -552,18 +528,7 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Of Complaints/Deviations"># Of Complaints/Deviations</label>
-                                    <input type="text" name="">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="total demerit points">Total Demerit Points</label>
-                                    <input type="text" name="" id="totalDemeritPoints">
-                                </div>
-                            </div> --}}
+
                         </div>
 
                         <div class="button-block">
@@ -1589,25 +1554,25 @@
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Last Audit Date</label>
-                                    {{-- <div class="calenderauditee">
+                                   {{-- <div class="calenderauditee">
                                         <input type="text" id="last_audit_date" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="last_audit_date"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                             oninput="handleDateInput(this, 'last_audit_date')" />
                                     </div> --}}
 
-                                    <div class="calenderauditee">
+                                   <div class="calenderauditee">
                                         <input type="text" id="last_audit_date" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="last_audit_date"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'last_audit_date'); updateNextAuditDate(this.value)" />
+                                            oninput="handleDateInput(this, 'last_audit_date'); updateNextAuditDateMin(this.value);" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Next Audit Date</label>
-                                    {{-- <div class="calenderauditee">
+                                    {{--<div class="calenderauditee">
                                         <input type="text" id="next_audit_date" readonly
                                             placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_audit_date"
@@ -1615,7 +1580,7 @@
                                             oninput="handleDateInput(this, 'next_audit_date')" />
                                     </div> --}}
 
-                                    <div class="calenderauditee">
+                                   <div class="calenderauditee">
                                         <input type="text" id="next_audit_date" readonly
                                             placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_audit_date"
@@ -2040,43 +2005,45 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Suppplier Review By">Supplier Obsolete By</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Suppplier Review On">Supplier Obsolete On</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Suppplier Review Comment">Supplier Obsolete Comment</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
 
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Suppplier Review By">Re-Audit By</label>
-                                <div class="static"></div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By">Pending Rejction to Supplier Obsolete By</label>
+                                    <div class="static"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Suppplier Review On">Re-Audit On</label>
-                                <div class="static"></div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review On">Pending Rejction to Supplier Obsolete On</label>
+                                    <div class="static"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Suppplier Review Comment">Re-Audit Comment</label>
-                                <div class="static"></div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppplier Review Comment">Pending Rejction to Supplier Obsolete
+                                        Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review By">Re-Audit By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Suppplier Review On">Re-Audit On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Suppplier Review Comment">Re-Audit Comment</label>
+                                    <div class="static"></div>
+                                </div>
                             </div>
                         </div>
 
@@ -2111,6 +2078,27 @@
             evt.currentTarget.className += " active";
         }
 
+
+
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
         const saveButtons = document.querySelectorAll(".saveButton");
         const nextButtons = document.querySelectorAll(".nextButton");
         const form = document.getElementById("step-form");
@@ -2157,7 +2145,8 @@
                 currentStep--;
             }
         }
-
+    </script>
+    <script>
         function handleDateInput(input, targetId) {
             const date = new Date(input.value);
             const formattedDate = date.toLocaleDateString('en-GB', {
@@ -2168,29 +2157,9 @@
             document.getElementById(targetId).value = formattedDate;
         }
 
-        function updateNextAuditDate(lastAuditDate) {
-            const date = new Date(lastAuditDate);
-
-            // Calculate the next audit date (one day after the last audit date)
-            date.setDate(date.getmonth() + 1);
-
-            // Format the date in the desired format
-            const formattedDate = date.toLocaleDateString('en-GB', {
-                day: '2-digit',
-                month: 'short',
-                year: 'numeric'
-            }).replace(/ /g, '-');
-
-            // Get the next audit date input fields
+        function updateNextAuditDateMin(lastAuditDate) {
             const nextAuditDateInput = document.querySelector('input[name="next_audit_date"]');
-            const nextAuditDateDisplay = document.getElementById('next_audit_date');
-
-            // Set the value of the input fields
-            nextAuditDateInput.value = date.toISOString().split('T')[0];
-            nextAuditDateDisplay.value = formattedDate;
-
-            // Make the input field editable
-            nextAuditDateInput.readOnly = false;
+            nextAuditDateInput.min = lastAuditDate;
         }
     </script>
 @endsection

@@ -240,7 +240,7 @@
                         <th class="w-20">Initiator Group</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
-                                {{ $data->Initiator_Group }}
+                                {{ Helpers::getInitiatorGroupFullName($data->Initiator_Group) }}
                             @else
                                 Not Applicable
                             @endif
@@ -615,7 +615,15 @@
                         <th class="w-20">Severity Rate</th>
                         <td class="w-80">
                             @if ($data->severity_rate)
-                                {{ $data->severity_rate }}
+                                @if ($data->severity_rate == 1)
+                                    Negligible
+                                @elseif($data->severity_rate == 2)
+                                    Moderate
+                                @elseif($data->severity_rate == 3)
+                                    Major
+                                @else
+                                    Fatal
+                                @endif
                             @else
                                 Not Applicable
                             @endif
@@ -624,7 +632,17 @@
                         <th class="w-20">Occurrence</th>
                         <td class="w-80">
                             @if ($data->occurrence)
-                                {{ $data->occurrence }}
+                                @if ($data->occurrence == 1)
+                                    Very Likely
+                                @elseif($data->occurrence == 2)
+                                    Likely
+                                @elseif($data->occurrence == 3)
+                                    Unlikely
+                                @elseif($data->occurrence == 4)
+                                    Rare
+                                @else
+                                    Extremely Unlikely
+                                @endif
                             @else
                                 Not Applicable
                             @endif
@@ -634,7 +652,17 @@
                         <th class="w-20">Detection</th>
                         <td class="w-80">
                             @if ($data->detection)
-                                {{ $data->detection }}
+                                @if ($data->detection == 1)
+                                    Very Likely
+                                @elseif($data->detection == 2)
+                                    Likely
+                                @elseif($data->detection == 3)
+                                    Unlikely
+                                @elseif($data->detection == 4)
+                                    Rare
+                                @else
+                                    Impossible
+                                @endif
                             @else
                                 Not Applicable
                             @endif
@@ -1424,10 +1452,10 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="block">
+        <div class="block">
             <div class="head">
                 <div class="block-head">
-                    Failure Mode and Effect Analysis Part(1)
+                    Failure Mode and Effect Analysis
                 </div>
                 <div class="border-table">
                     <table style="margin-top: 20px; width: 100%; table-layout: fixed;">
@@ -1441,7 +1469,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @if (!empty($riskEffectAnalysis))
+                            @if (!empty($riskEffectAnalysis->risk_factor))
                                 @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
@@ -1462,9 +1490,7 @@
         </div>
         <div class="block">
             <div class="head">
-                <div class="block-head">
-                    Failure Mode and Effect Analysis (Part 2)
-                </div>
+
                 <div class="border-table">
                     <table style="margin-top: 20px; width: 100%; table-layout: fixed;">
                         <tr class="table_bg">
@@ -1480,7 +1506,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @if (is_array($riskEffectAnalysis) && !empty($riskEffectAnalysis))
+                            @if (!empty($riskEffectAnalysis->risk_factor))
                                 @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
@@ -1503,9 +1529,7 @@
         </div>
         <div class="block">
             <div class="head">
-                <div class="block-head">
-                    Failure Mode and Effect Analysis (Part 3)
-                </div>
+
                 <div class="border-table">
                     <table style="margin-top: 20px; width: 100%; table-layout: fixed;">
                         <tr class="table_bg">
@@ -1522,7 +1546,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @if (is_array($riskEffectAnalysis) && !empty($riskEffectAnalysis))
+                            @if (!empty($riskEffectAnalysis->risk_factor))
                                 @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
@@ -1547,9 +1571,7 @@
         </div>
         <div class="block">
             <div class="head">
-                <div class="block-head">
-                    Failure Mode and Effect Analysis (Part 4)
-                </div>
+
                 <div class="border-table">
                     <table style="margin-top: 20px; width: 100%; table-layout: fixed;">
                         <tr class="table_bg">
@@ -1562,7 +1584,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @if (is_array($riskEffectAnalysis) && !empty($riskEffectAnalysis))
+                            @if (!empty($riskEffectAnalysis->risk_factor))
                                 @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
@@ -1579,10 +1601,50 @@
                     </table>
                 </div>
             </div>
-        </div> --}}
+        </div>
+
+        <div class="block">
+            <div class="head">
+                <div class="block-head">
+                    Mitigation Plan Details
+                </div>
+
+                <div class="border-table">
+                    <table style="margin-top: 20px; width: 100%; table-layout: fixed;">
+                        <tr class="table_bg">
+                            <th style="width: 8%">Row#</th>
+                            <th>Mitigation Steps</th>
+                            <th>Deadline</th>
+                            <th>Responsible Person</th>
+                            <th>Status</th>
+                            <th>Remarks</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (unserialize($data6->mitigation_steps) as $key => $temps)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $temps ? $temps : 'N/A' }}</td>
+                                    <td>
+                                        {{ unserialize($data6->deadline2)[$key] ? Helpers::getdateFormat(unserialize($data6->deadline2)[$key]) : 'N/A' }}
+                                    </td>
+                                    <td>
+                                        {{ unserialize($data6->responsible_person)[$key] ? Helpers::getInitiatorName(unserialize($data6->responsible_person)[$key]) : 'N/A' }}
+                                    </td>
+                                    <td>{{ unserialize($data6->status)[$key] ? unserialize($data6->status)[$key] : 'N/A' }}
+                                    </td>
+                                    <td>{{ unserialize($data6->remark)[$key] ? unserialize($data6->remark)[$key] : 'N/A' }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-
 
     <footer>
         <table>

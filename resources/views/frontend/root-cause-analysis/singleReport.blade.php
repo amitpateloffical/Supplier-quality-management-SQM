@@ -78,6 +78,11 @@
         border-collapse: collapse;
         font-size: 0.9rem;
         vertical-align: middle;
+       
+       
+    }
+    .tbl-bottum{
+        margin-bottom: 20px
     }
 
     table {
@@ -196,14 +201,14 @@
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                         <th class="w-20">Record Number</th>
-                        <td class="w-30">@if($data->record) {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->record) {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         
                     </tr>
                     <tr>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                         <th class="w-20">Date Initiation</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
                        
                     </tr>
                     <tr>
@@ -211,7 +216,7 @@
                         <th class="w-20">Due Date</th>
                         <td class="w-30"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                         <th class="w-20">Assigned To</th>
-                         <td class="w-30">
+                         <td class="w-80">
                             @if ($data->assign_to)
                                 {{ Helpers::getInitiatorName($data->assign_to) }}
                             @else
@@ -224,7 +229,7 @@
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">@if($data->initiator_Group){{ Helpers::getFullDepartmentName($data->initiator_Group) }} @else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->initiator_Group){{ Helpers::getFullDepartmentName($data->initiator_Group) }} @else Not Applicable @endif</td>
                        
                     </tr>
                     <tr>
@@ -237,7 +242,7 @@
                         <th class="w-20">Severity Level</th>
                         <td class="w-30">@if($data->severity_level){{ $data->severity_level }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiated Through</th>
-                        <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
                        
                     </tr>
 
@@ -250,12 +255,12 @@
                         <th class="w-20">Type</th>
                         <td class="w-30">@if($data->Type){{ $data->Type }}@else Not Applicable @endif</td>
                         <th class="w-20">Priority Level</th>
-                        <td class="w-30">@if($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>
 
                     </tr>
                     <tr>
                         <th class="w-20">Department(s)</th>
-                        <td class="w-30">@if($data->department){{ $data->department }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->department){{ $data->department }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Description</th>
@@ -269,7 +274,7 @@
                     <tr>
 
                         <th class="w-20">Related URL</th>
-                        <td class="w-80">@if($data->related_url){{ $data->related_url }}@else Not Applicable @endif</td>
+                        <td class="w-80"  colspan="3">@if($data->related_url){{ $data->related_url }}@else Not Applicable @endif</td>
                     </tr>
                     
                 </table>
@@ -310,6 +315,7 @@
                             <th class="w-20">Root Cause Methodology</th>
                             <td class="w-80">@if($data->root_cause_methodology){{ $data->root_cause_methodology }}@else Not Applicable @endif</td>
                         </tr>
+                       
 
                         <tr>
                             <th class="w-20">Root Cause Description</th>
@@ -330,6 +336,155 @@
                         </tr>
                       --}}
                     </table>
+                    <div class="border-table tbl-bottum ">
+                        <div class="block-head">
+                          Root Cause
+                        </div>
+                        <table>
+        
+                            <tr class="table_bg">
+                                <th class="w-10">Row #</th>
+                                <th class="w-30">Root Cause Category</th>
+                                <th class="w-30">Root Cause Sub-Category</th>
+                                <th class="w-30">Probability</th>
+                                <th class="w-30">Remarks</th>
+                            </tr>
+                                {{-- @if($data->root_cause_initial_attachment)
+                                @foreach(json_decode($data->root_cause_initial_attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                                @else --}}
+                                @if (!empty($data->Root_Cause_Category))
+                               @foreach (unserialize($data->Root_Cause_Category) as $key => $Root_Cause_Category)
+                                <tr>
+                                 <td class="w-10">{{ $key + 1 }}</td>
+                                 <td class="w-30">{{ unserialize($data->Root_Cause_Category)[$key] ? unserialize($data->Root_Cause_Category)[$key] : '' }}</td>
+                                 <td class="w-30">{{ unserialize($data->Root_Cause_Sub_Category)[$key] ? unserialize($data->Root_Cause_Sub_Category)[$key] : '' }}</td>
+                                 <td class="w-30">{{ unserialize($data->Probability)[$key] ? unserialize($data->Probability)[$key] : '' }}</td>
+                                 <td class="w-30">{{ unserialize($data->Remarks)[$key] ?? null }}</td>
+                                </tr>
+                                 @endforeach
+                                @else
+                                
+                            @endif
+        
+                        </table>
+                    </div>
+       
+                    <div class="border-table  tbl-bottum">
+                        <div class="block-head">
+                            Failure Mode and Effect Analysis
+                        </div>
+                        <table>
+        
+                            <tr class="table_bg">
+                                <th class="w-10">Row #</th>
+                                <th class="w-30">Risk Factor</th>
+                                <th class="w-30">Risk element</th>
+                                <th class="w-30">Probable cause of risk element</th>
+                                <th class="w-30">Existing Risk Controls</th>
+                            </tr>
+                                {{-- @if($data->root_cause_initial_attachment)
+                                @foreach(json_decode($data->root_cause_initial_attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                                @else --}}
+                                @if (!empty($data->risk_factor))
+                                 @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
+                                <tr>
+                                 <td class="w-10">{{ $key + 1 }}</td>
+                                 <td class="w-30">{{ $riskFactor }}</td>
+                                 <td class="w-30">{{ unserialize($data->risk_element)[$key] ?? null }}</td>
+                                 <td class="w-30">{{ unserialize($data->problem_cause)[$key] ?? null }}</td>
+                                 <td class="w-30">{{ unserialize($data->existing_risk_control)[$key] ?? null }}</td>
+                                </tr>
+                                 @endforeach
+                                @else
+                                
+                              @endif
+
+                        </table>
+
+                    </div>
+                    <div  class="border-table  tbl-bottum">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-10">Row #</th>
+                                <th class="w-30">Initial Severity- H(3)/M(2)/L(1)</th>
+                                <th class="w-30">Initial Probability- H(3)/M(2)/L(1)</th>
+                                <th class="w-30">Initial Detectability- H(1)/M(2)/L(3)</th>
+                                <th class="w-30">Initial RPN</th>
+                            </tr>
+                            @if (!empty($data->risk_factor))
+                            @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
+                           <tr>
+                            <td class="w-10">{{ $key + 1 }}</td>
+                            <td class="w-30">{{ unserialize($data->initial_severity)[$key] }}</td>
+                            <td class="w-30">{{ (unserialize($data->initial_detectability)[$key]) }}</td>
+                            <td class="w-30">{{ (unserialize($data->initial_probability)[$key] )  }}</td>
+                            <td class="w-30">{{ unserialize($data->initial_rpn)[$key] }}</td>
+                           </tr>
+                            @endforeach
+                           @else
+                           
+                         @endif
+                        </table>
+                    </div>
+                    <div  class="border-table  tbl-bottum">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-10">Row #</th>
+                                <th class="w-30">Risk Acceptance (Y/N)</th>
+                                <th class="w-30">Proposed Additional Risk control measure (Mandatory for Risk elements having RPN>4)</th>
+                                <th class="w-30">Residual Severity- H(3)/M(2)/L(1)</th>
+                                <th class="w-30">Residual Probability- H(3)/M(2)/L(1)</th>
+                            </tr>
+                            @if (!empty($data->risk_factor))
+                            @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
+                           <tr>
+                                    <td class="w-10">{{ $key + 1 }}</td>
+                                    <td class="w-30">{{ (unserialize($data->risk_acceptance)[$key]) }}</td>
+                                    <td class="w-30">{{ unserialize($data->risk_control_measure)[$key] }}</td>
+                                    <td class="w-30">{{ (unserialize($data->residual_severity)[$key])  }}</td>
+                                    <td class="w-30">{{(unserialize($data->residual_probability)[$key] ) }}</td>
+                           </tr>
+                            @endforeach
+                           @else
+                           
+                         @endif
+                        </table>
+                    </div>
+                    <div class="border-table  tbl-bottum">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-10">Row #</th>
+                                <th class="w-30">Residual Detectability- H(1)/M(2)/L(3)</th>
+                                <th class="w-30">Residual RPN</th>
+                                <th class="w-30">Risk Acceptance (Y/N)</th>
+                                <th class="w-30">Mitigation proposal (Mention either CAPA reference number, IQ, OQ or PQ)</th>
+                            </tr>
+                            @if (!empty($data->risk_factor))
+                            @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
+                           <tr>
+                                    <td class="w-10">{{ $key + 1 }}</td>
+                                    <td class="w-30">{{  (unserialize($data->residual_detectability)[$key]) }}</td>
+                                    <td class="w-30">{{  unserialize($data->residual_rpn)[$key] }}</td>
+                                    <td class="w-30">{{ (unserialize($data->risk_acceptance2)[$key])   }}</td>
+                                    <td class="w-30">{{unserialize($data->mitigation_proposal)[$key]}}</td>
+                           </tr>
+                            @endforeach
+                           @else
+                           
+                         @endif
+                        </table>
+                    </div>
+        
                     <div class="block-head">
                         Fishbone or Ishikawa Diagram 
                     </div>
@@ -449,10 +604,11 @@
                       
                     </tr> 
              </table>
-                        
-             <div class="block-head">
+            
+             <div class="block-head mt-1">
                 Why-Why Chart 
             </div>
+            
             <table>
 
                 <tr>
@@ -666,25 +822,34 @@
                         <td class="w-30"> @if($data->acknowledge_by) {{ $data->acknowledge_by }} @else Not Applicable @endif</td>
                         <th class="w-20">Acknowledge By</th>
                         <td class="w-30"> @if($data->acknowledge_on) {{ Helpers::getdateFormat($data->acknowledge_on) }} @else Not Applicable @endif</td>
+                        
+                    </tr>
+                    <tr>
                         <th class="w-20">Acknowledge Comment</th>
-                        <td class="w-30"> @if($data->acknowledge_comment) {{ $data->acknowledge_comment }} @else Not Applicable @endif</td>
+                        <td class="w-80"> @if($data->acknowledge_comment) {{ $data->acknowledge_comment }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Submited By</th>
                         <td class="w-30"> @if($data->submitted_by) {{ $data->submitted_by }} @else Not Applicable @endif</td>
                         <th class="w-20">Submited On</th>
                         <td class="w-30"> @if($data->submitted_on) {{ Helpers::getdateFormat($data->submitted_on) }} @else Not Applicable @endif</td>
+                       
+                    </tr>
+                    <tr>
                         <th class="w-20">Sumitted Comment</th>
-                        <td class="w-30"> @if($data->submitted_comment) {{ $data->submitted_comment }} @else Not Applicable @endif</td>
+                        <td class="w-80"> @if($data->submitted_comment) {{ $data->submitted_comment }} @else Not Applicable @endif</td>
                     </tr>
                      <tr>
                         <th class="w-20">QA Review Completed By</th>
                         <td class="w-30"> @if($data->qA_review_complete_by) {{ $data->qA_review_complete_by }} @else Not Applicable @endif</td>
                         <th class="w-20">QA Review Completed On</th>
                         <td class="w-30"> @if($data->qA_review_complete_on) {{ Helpers::getdateFormat($data->qA_review_complete_on) }} @else Not Applicable @endif</td>
+                       
+                    </tr> 
+                    <tr>
                         <th class="w-20">QA Review Completed Comment</th>
-                        <td class="w-30"> @if($data->qA_review_complete_comment) {{ $data->qA_review_complete_comment }} @else Not Applicable @endif</td>
-                    </tr>                    
+                        <td class="w-80"> @if($data->qA_review_complete_comment) {{ $data->qA_review_complete_comment }} @else Not Applicable @endif</td>
+                    </tr>                   
                 </table>
             </div>
         </div>

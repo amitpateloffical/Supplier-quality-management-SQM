@@ -1197,7 +1197,7 @@
                             </div>
                         </div>
                         <div class="group-input">
-                            <label for="attach-list">List Of Attachments</label>
+                            <label for="attach-list">Change clouser Attachments</label>
                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
                             </div>
                             <div class="file-attachment-field">
@@ -1320,20 +1320,34 @@
                                     <label for="Submit_On">HOD Review Completed Comment</label>
                                 </div>
                             </div>
-
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA_Review_Complete_By">Pending CFT Review Completed By</label>
+                                    <label for="cft_review_by"> CFT Review Completed By</label>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA_Review_Complete_On">Pending CFT Review Completed On</label>
+                                    <label for="cft_review_on"> CFT Review  Completed On</label>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="QA_Review_Complete_On">Pending CFT Review Completed Comment</label>
+                                    <label for="cft_review_comment"> CFT Review  Completed Comment</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="cftNot_required_by"> CFT Review Not Required By</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="cftNot_required_on"> CFT Review Not Required On</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="cftNot_required_comment"> CFT Review Not Required Comment</label>
                                 </div>
                             </div>
 
@@ -1349,7 +1363,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="QA_Review_Complete_On">Review Completed Comment</label>
+                                    <label for="QA_Review_Complete_comment">Review Completed Comment</label>
                                 </div>
                             </div>
 

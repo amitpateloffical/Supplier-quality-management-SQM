@@ -230,23 +230,19 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Division Code"><b>Division Code</b></label>
-                                                    <input disabled type="text" name="division_code"
-                                                        value=" {{ Helpers::getDivisionName($data->division_id) }}">
-                                                
+                                                    <input disabled type="text" name="division_code" value=" {{ Helpers::getDivisionName($data->division_id) }}">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator">Initiator</label>
-                                                    <div class="static"><input disabled type="text"
-                                                            value="{{ Helpers::getInitiatorName($data->initiator_id) }}"></div>
+                                                    <div class="static"><input disabled type="text" value="{{ Helpers::getInitiatorName($data->initiator_id) }}"></div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="date_initiation">Date of Initiation</label>
-                                                    <div class="static"><input disabled type="text"
-                                                            value="{{ Helpers::getdateFormat($data->intiation_date) }}"></div>
+                                                    <div class="static"><input disabled type="text" value="{{ Helpers::getdateFormat($data->intiation_date) }}"></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -267,12 +263,12 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Microbiology">CFT Reviewer</label>
-                                                    <select name="cft_reviewer" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                        <option value="">-- Select --</option>
-                                                        <option value="yes" selected>Yes</option>
-                                                        <option value="no">No</option>
-                                                    </select>
-                                                </div>
+                                                        <select name="cft_reviewer" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                            <option value="">-- Select --</option>
+                                                            <option value="yes" {{ $data->cft_reviewer == 'yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="no" {{ $data->cft_reviewer == 'no' ? 'selected' : '' }}>No</option>
+                                                        </select>
+                                                    </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
@@ -302,6 +298,7 @@
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiator Group</label>
                                                     <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} >
+                                                       <option >--select--</option>
                                                         <option value="CQA"
                                                             @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
                                                             Quality Assurance</option>
@@ -372,7 +369,7 @@
                                                     <label for="Short Description">Short Description<span
                                                             class="text-danger">*</span></label><span id="rchars"  class="text-primary">255 </span><span class="text-primary"> characters remaining</span>   
                                                     <div class="relative-container">
-                                                        <textarea class="mic-input" name="short_description" id="docname" type="text" maxlength="255" required {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->short_description}} </textarea>
+                                                        <input class="mic-input" name="short_description" id="docname" type="text" maxlength="255" required {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->short_description }}">
                                                         @component('frontend.forms.language-model')
                                                         @endcomponent
                                                     </div>
@@ -1492,7 +1489,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="others">Initial attachment</label>
+                                                <label for="others">Change Clouser attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="attach_list">
@@ -1644,24 +1641,62 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-3">
+                                             <div class="col-lg-3">
                                                 <div class="group-input">
-                                                    <label for="QA_Review_Complete_By">Pending CFT Review Completed By</label>
+                                                    <label for="cft_review_by"> CFT Review Completed By</label>
                                                     <div class="static"> {{  $data->cft_review_by }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="group-input">
-                                                    <label for="QA_Review_Complete_On">Pending CFT Review Completed On</label>
+                                                    <label for="cft_review_on"> CFT Review Completed On</label>
                                                     <div class="static">{{  $data->cft_review_on }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="QA_Review_Complete_On">Pending CFT Review Completed Comment</label>
+                                                    <label for="cft_review_comment">CFT Review Completed Comment</label>
                                                     <div class="static">{{  $data->cft_review_comment }}</div>
                                                 </div>
+                                            </div> 
+
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="cftNot_required_by"> CFT Review Not Required By</label>
+                                                    <div class="static"> {{  $data->cftNot_required_by }}</div>
+                                                </div>
                                             </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="cftNot_required_on"> CFT Review Not Required On</label>
+                                                    <div class="static">{{  $data->cftNot_required_on }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="cftNot_required_comment">CFT Review Not Required Comment</label>
+                                                    <div class="static">{{  $data->cftNot_required_comment }}</div>
+                                                </div>
+                                            </div> 
+
+                                            {{-- <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_By">Pending CFT Review Completed By</label>
+                                                    <div class="static"> {{  $data->cftNot_required_by }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_On">Pending CFT Review Completed On</label>
+                                                    <div class="static">{{  $data->cftNot_required_on }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="QA_Review_Complete_On">Pending CFT Review Completed Comment</label>
+                                                    <div class="static">{{  $data->cftNot_required_comment }}</div>
+                                                </div>
+                                            </div> --}}
 
                                             <div class="col-lg-3">
                                                 <div class="group-input">
@@ -1706,7 +1741,7 @@
                                             <!-- <button type="submit" class="saveButton">Save</button> -->
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
-                                            <button type="submit">Submit</button>
+                                            <!-- <button type="submit">Submit</button> -->
                                             <button type="button"> <a class="text-white"
                                             href="{{ url('rcms/qms-dashboard') }}">Exit</a> </button>
                                         </div>

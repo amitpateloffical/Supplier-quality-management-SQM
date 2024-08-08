@@ -324,7 +324,8 @@
                             </div>
 
                             <div> <strong>Record ID.</strong>
-                                {{ Helpers::getDivisionName($document->division_id) }}/OBS/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
+                                {{-- {{ Helpers::getDivisionName($document->division_id) }}/OBS/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }} --}}
+                                {{str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
                             </div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ Auth::user()->name }}
@@ -364,10 +365,13 @@
 
                             <td>
                                 <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
+                                {{-- :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }} --}}
+
                             </td>
 
                             <td>
                                 <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
+
                             </td>
                             <td>
                                 <div>
@@ -377,10 +381,10 @@
                                 <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change From
-                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
+                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }}
                                     @else
                                         <strong>Change From
-                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
                                     @endif
                                 </div>
                                 <br>

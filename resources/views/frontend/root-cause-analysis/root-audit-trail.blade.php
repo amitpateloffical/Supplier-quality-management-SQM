@@ -234,7 +234,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['doc_id' => $document->id, 'type' => 'Supplier'])
+                                        ->where(['doc_id' => $document->id, 'type' => 'RCA'])
                                         ->get();
                                 @endphp
                                 <div class="table-responsive" style="padding: 20px;">
@@ -251,7 +251,7 @@
                                                 @foreach ($reviewer as $review)
                                                     <tr>
                                                         <td>{{ $review->reviewer_comment_by }}</td>
-                                                        <td>{{ $review->reviewer_comment_on }}</td>
+                                                        <td>{{ Helpers::getdateFormat($review->reviewer_comment_on) }}</td>
                                                         <td>{{ $review->reviewer_comment }}</td>
                                                     </tr>
                                                 @endforeach
@@ -301,9 +301,9 @@
                                                 <label for="Reviewer Completed on">Reviewer Completed On</label>
                                                 <input disabled type="text" class="form-control"
                                                     name="reviewer_completed_on" id="reviewer_completed_on"
-                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                                    value="{{ $auditCollect ? Helpers::getdateFormat($auditCollect->reviewer_comment_on) : '' }}">
                                             </div>
-                                            <input type="hidden" id="type" name="type" value="Supplier">
+                                            <input type="hidden" id="type" name="type" value="RCA">
                                         </div>
                                         <div class="modal-footer">
                                             {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
@@ -323,9 +323,9 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong> {{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
+                            <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->originator ? $document->originator : '' }}
+                                : {{ $document->originator ? $document->originator : '' }}
                             </div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
@@ -375,10 +375,10 @@
                                 <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change From
-                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
+                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }}
                                     @else
                                         <strong>Change From
-                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
                                     @endif
                                 </div>
                                 <br>

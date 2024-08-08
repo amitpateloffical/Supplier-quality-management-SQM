@@ -200,14 +200,14 @@
                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                         @endif
                         <div class="buttons-new">
-                            {{-- @if ($document->stage < 6)
+                            @if ($document->stage < 6)
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                     Review
                                 </button>
                             @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
                                 View
-                            </button> --}}
+                            </button>
                             <button class="button_theme1"><a class="text-white"
                                     href="{{ url('RiskManagement/' . $document->id) }}"> Back
                                 </a>
@@ -234,7 +234,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['doc_id' => $document->id, 'type' => 'Supplier'])
+                                        ->where(['doc_id' => $document->id, 'type' => 'Risk-Assesment'])
                                         ->get();
                                 @endphp
                                 <div class="table-responsive" style="padding: 20px;">
@@ -251,7 +251,7 @@
                                                 @foreach ($reviewer as $review)
                                                     <tr>
                                                         <td>{{ $review->reviewer_comment_by }}</td>
-                                                        <td>{{ $review->reviewer_comment_on }}</td>
+                                                        <td>{{ Helpers::getdateFormat($review->reviewer_comment_on) }}</td>
                                                         <td>{{ $review->reviewer_comment }}</td>
                                                     </tr>
                                                 @endforeach
@@ -301,9 +301,9 @@
                                             <label for="Reviewer Completed on">Reviewer Completed On</label>
                                             <input disabled type="text" class="form-control" name="reviewer_completed_on"
                                                 id="reviewer_completed_on"
-                                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                                value="{{ $auditCollect ? Helpers::getdateFormat($auditCollect->reviewer_comment_on) : '' }}">
                                         </div>
-                                        <input type="hidden" id="type" name="type" value="Supplier">
+                                        <input type="hidden" id="type" name="type" value="Risk-Assesment">
                                     </div>
                                     <div class="modal-footer">
                                         {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
@@ -371,8 +371,8 @@
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                    <strong> Data Field Name
+                                        :</strong><a>{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')

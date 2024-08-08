@@ -3273,7 +3273,7 @@
                         <th class="w-20">Submit By</th>
                         <td class="w-30">{{ $data->submit_by }}</td>
                         <th class="w-20">Submit On</th>
-                        <td class="w-30"> {{ \Carbon\Carbon::parse($data->submit_on)->format('d-m-Y') }}</td>
+                        <td class="w-30"> {{ $data->submit_on }}</td>
                         <th class="w-20">Submit Comments</th>
                         <td class="w-30">{{ $data->submit_comment }}</td>
                     </tr>
@@ -3282,7 +3282,7 @@
                         <th class="w-20">Cancel By</th>
                         <td class="w-30">{{ $data->cancelled_by }}</td>
                         <th class="w-20">Cancel On</th>
-                        <td class="w-30"> {{ \Carbon\Carbon::parse($data->cancelled_on)->format('d-m-Y') }}</td>
+                        <td class="w-30"> {{ $data->cancelled_on }}</td>
                         <th class="w-20">Cancel Comments</th>
                         <td class="w-30">{{ $data->cancelled_comments }}</td>
                     </tr>

@@ -220,7 +220,7 @@
                                             <div class="calenderauditee">
                                                 <input type="text" name="due_date" id="due_date" readonly
                                                     placeholder="DD-MM-YYYY" />
-                                                <input type="date" name="due_date_n"
+                                                <input type="hidden" name="due_date_n"
                                                     min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'due_date')" />
                                             </div>
@@ -274,9 +274,9 @@
                                             placeholder="Select Reference Records">
 
                                             @foreach ($old_record as $new)
-                                                <option value=" {{ Helpers::getDivisionName($new->division_id) . '/AI/' . date('Y') .'/' .  Helpers::recordFormat($new->record) }}">
-                                                   
-                                                    {{ Helpers::getDivisionName($new->division_id) . '/AI/' . date('Y') .'/' .  Helpers::recordFormat($new->record) }}
+                                                <option
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/AI/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/AI/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -284,7 +284,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="HOD Persons">HOD Persons</label>
+                                        <label for="HOD Persons">HOD Person</label>
                                         <select name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
                                             data-silent-initial-value-set="true" id="hod">
                                             <option value="">select</option>
@@ -642,7 +642,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit" class="saveButton">Save</button>
+                                {{-- <button type="submit" class="saveButton">Save</button> --}}
                                 <button type="button"> <a class="text-white"
                                         href="{{ url('rcms/qms-dashboard') }}">Exit
                                     </a> </button>

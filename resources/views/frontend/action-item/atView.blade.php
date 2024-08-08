@@ -317,39 +317,39 @@
                                     <div class="group-input">
                                         <label for="Related Records">Action Item Related Records</label>
                                         <select {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} multiple
-                                            id="related_records" name="related_records[]"
+                                            id="related_records" name="Reference_Recores1[]"
                                             placeholder="Select Reference Records">
 
                                             @if (!empty($old_record))
-                                            @foreach ($old_record as $new)
-                                            @php
-                                                $recordValue =
-                                                    Helpers::getDivisionName($new->division_id) .
-                                                    '/AI/' .
-                                                    date('Y') .
-                                                    '/' .
-                                                    Helpers::recordFormat($new->record);
-                                                $selected = in_array(
-                                                    $recordValue,
-                                                    explode(',', $data->related_records),
-                                                )
-                                                    ? 'selected'
-                                                    : '';
-                                            @endphp
-                                            <option value="{{ $recordValue }}" {{ $selected }}>
-                                                {{ $recordValue }}
-                                            </option>
-                                        @endforeach
-                                        @endif
+                                                @foreach ($old_record as $new)
+                                                    @php
+                                                        $recordValue =
+                                                            Helpers::getDivisionName($new->division_id) .
+                                                            '/AI/' .
+                                                            date('Y') .
+                                                            '/' .
+                                                            Helpers::recordFormat($new->record);
+                                                        $selected = in_array(
+                                                            $recordValue,
+                                                            explode(',', $data->Reference_Recores1),
+                                                        )
+                                                            ? 'selected'
+                                                            : '';
+                                                    @endphp
+                                                    <option value="{{ $recordValue }}" {{ $selected }}>
+                                                        {{ $recordValue }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
                                         </select>
-
                                     </div>
+
                                 </div>
 
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="HOD Persons">HOD Persons</label>
+                                        <label for="HOD Persons">HOD Person</label>
                                         <select name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
                                             data-silent-initial-value-set="true" id="hod"
                                             {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
@@ -803,7 +803,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit" class="saveButton">Save</button>
+                                {{-- <button type="submit" class="saveButton">Save</button> --}}
                                 <button type="button"> <a class="text-white"
                                         href="{{ url('rcms/qms-dashboard') }}">Exit
                                     </a> </button>
@@ -1014,9 +1014,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                    </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1060,9 +1060,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1107,9 +1107,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                    </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>

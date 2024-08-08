@@ -460,7 +460,9 @@
                             @endphp
                             <tr>
                                 <td>{{ $serialNumber++ }}</td>
-                                <td>{{ $formattedEndTime }}</td>
+                                <!-- <td>{{ $formattedEndTime }}</td> -->
+                                <td>{{ unserialize($sgrid->end_time)[$key] ?? '' }}</td>
+
                                 <td>
                                     @foreach ($users as $value)
                                         @if (unserialize($sgrid->auditor)[$key] == $value->id)
@@ -515,7 +517,7 @@
                         <th class="w-20">Audit Schedule By</th>
                         <td class="w-30">{{ $data->audit_schedule_by }}</td>
                         <th class="w-20">Audit Schedule On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-30">{{ $data->audit_schedule_on }}</td>
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->comment }}</td>
                     </tr>

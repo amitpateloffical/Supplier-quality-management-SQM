@@ -180,7 +180,6 @@
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                    {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
@@ -238,6 +237,9 @@
                         </td>
 
                     </tr>
+                </table>
+
+                    <table>
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">
@@ -472,9 +474,9 @@
                 <table>
                     <tr>
                         <th class="w-20">Submit by</th>
-                        <td class="w-30">{{ $data->submit_by }}</td>
+                        <td class="w-80">{{ $data->submit_by }}</td>
                         <th class="w-20">Submit On</th>
-                        <td class="w-30">{{ $data->submit_on }}</td>
+                        <td class="w-80">{{ $data->submit_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Submit Comment</th>
@@ -482,9 +484,9 @@
                     </tr>
                     <tr>
                         <th class="w-20">Not Effective By</th>
-                        <td class="w-30">{{ $data->not_effective_by }}</td>
+                        <td class="w-80">{{ $data->not_effective_by }}</td>
                         <th class="w-20">Not Effective On</th>
-                        <td class="w-30">{{ $data->not_effective_on }}</td>
+                        <td class="w-80">{{ $data->not_effective_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Not Effective Comment</th>
@@ -492,9 +494,9 @@
                     </tr>
                     <tr>
                         <th class="w-20">More Information Required By(Not Effective)</th>
-                        <td class="w-30">{{ $data->more_not_effective_by }}</td>
+                        <td class="w-80">{{ $data->more_not_effective_by }}</td>
                         <th class="w-20">More Information Required On(Not Effective)</th>
-                        <td class="w-30">{{ $data->more_not_effective_on }}</td>
+                        <td class="w-80">{{ $data->more_not_effective_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">More Information Required Comment(Not Effective)</th>
@@ -502,9 +504,9 @@
                     </tr>
                     <tr>
                         <th class="w-20">Effective by</th>
-                        <td class="w-30">{{ $data->effective_by }}</td>
+                        <td class="w-80">{{ $data->effective_by }}</td>
                         <th class="w-20">Effective On</th>
-                        <td class="w-30">{{ $data->effective_on }}</td>
+                        <td class="w-80">{{ $data->effective_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Effective Comment</th>
@@ -512,9 +514,9 @@
                     </tr>
                     <tr>
                         <th class="w-20">More Information Required By(Effective)</th>
-                        <td class="w-30">{{ $data->more_effective_by }}</td>
+                        <td class="w-80">{{ $data->more_effective_by }}</td>
                         <th class="w-20">More Information Required On(Effective)</th>
-                        <td class="w-30">{{ $data->more_effective_on }}</td>
+                        <td class="w-80">{{ $data->more_effective_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">More Information Required Comment(Effective)</th>
@@ -523,10 +525,10 @@
                     <tr>
                         <th class="w-20">Not Effective Approval Complete By
                         </th>
-                        <td class="w-30">{{ $data->not_effective_approval_complete_by }}</td>
+                        <td class="w-80">{{ $data->not_effective_approval_complete_by }}</td>
                         <th class="w-20">
                             Not Effective Approval Complete On</th>
-                        <td class="w-30">{{ $data->not_effective_approval_complete_on }}</td>
+                        <td class="w-80">{{ $data->not_effective_approval_complete_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Not Effective Approval Complete Comment</th>
@@ -535,10 +537,10 @@
                     <tr>
                         <th class="w-20">Effective Approval Complete By
                         </th>
-                        <td class="w-30">{{ $data->effective_approval_complete_by }}</td>
+                        <td class="w-80">{{ $data->effective_approval_complete_by }}</td>
                         <th class="w-20">
                             Effective Approval Complete On</th>
-                        <td class="w-30">{{ $data->effective_approval_complete_on }}</td>
+                        <td class="w-80">{{ $data->effective_approval_complete_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Effective Approval Complete Comment</th>

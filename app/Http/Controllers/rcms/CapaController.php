@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActionItem;
 use App\Models\Capa;
 use App\Models\CapaHistory;
 use App\Models\RecordNumber;
@@ -809,7 +810,7 @@ class CapaController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        
+
 
         if (!empty($capa->site_number)) {
             $history = new CapaAuditTrial();
@@ -2175,8 +2176,8 @@ class CapaController extends Controller
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $data1 = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
-    
-        
+
+
         $data2 = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
         $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
         $changeControl = OpenStage::find(1);
@@ -2214,7 +2215,7 @@ class CapaController extends Controller
                     } else {
                         $history->previous = $lastDocument->plan_proposed_by . ' , ' . $lastDocument->plan_proposed_on;
                     }
-                    
+
                     //$history->previous = "";
                     $history->action = 'Prapose Plan';
                     $history->current = $capa->plan_proposed_by . ' , ' . $capa->plan_proposed_on;
@@ -2815,13 +2816,13 @@ class CapaController extends Controller
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             return view('frontend.extension.extension_new', compact('parent_id','parent_record','parentDivisionId', 'parent_name','parent_type', 'record_number', 'parent_due_date'));
         }
-        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         if ($request->child_type == "Action_Item") {
             $parent_name = "CAPA";
 
             return view('frontend.forms.action-item', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
-        
+
         if ($request->child_type == "RCA") {
             $parent_due_date = "";
             $parent_id = $id;
@@ -2878,7 +2879,7 @@ class CapaController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 2.5, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('CAPA' . $id . '.pdf');
         }
     }

@@ -189,7 +189,7 @@
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    General Information
+                    Supplier/Manufacturer/Vendor
                 </div>
                 <table>
                     <tr>
@@ -1624,6 +1624,24 @@ Not Applicable
                     </tr>
 
                     <tr>
+                        <th class="w-20">Audit Passed By</th>
+                        <td class="w-30">
+                            <div class="static">{{ $supplierData->supplier_approved_by ?? 'Not Applicable' }}</div>
+                        </td>
+                        <th class="w-20">Audit Passed On</th>
+                        <td class="w-30">
+                            <div class="static">{{ $supplierData->supplier_approved_on ?? 'Not Applicable' }}</div>
+                        </td>
+                        <th class="w-20">Audit Passed Comment</th>
+                        <td class="w-30">
+                            <div class="static">{{ $supplierData->supplier_approved_comment ?? 'Not Applicable' }}
+                            </div>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
                         <th class="w-20">Audit Failed By</th>
                         <td class="w-30">
                             <div class="static">{{ $supplierData->pending_supplier_audit_by ?? 'Not Applicable' }}
@@ -1638,40 +1656,6 @@ Not Applicable
                         <td class="w-30">
                             <div class="static">
                                 {{ $supplierData->pending_supplier_audit_comment ?? 'Not Applicable' }}
-                            </div>
-                        </td>
-
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Supplier Obsolete By</th>
-                        <td class="w-30">
-                            <div class="static">{{ $supplierData->pending_rejection_by ?? 'Not Applicable' }}</div>
-                        </td>
-                        <th class="w-20">Supplier Obsolete On</th>
-                        <td class="w-30">
-                            <div class="static">{{ $supplierData->pending_rejection_on ?? 'Not Applicable' }}</div>
-                        </td>
-                        <th class="w-20">Supplier Obsolete Comment</th>
-                        <td class="w-30">
-                            <div class="static">{{ $supplierData->pending_rejection_comment ?? 'Not Applicable' }}
-                            </div>
-                        </td>
-
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Audit Passed By</th>
-                        <td class="w-30">
-                            <div class="static">{{ $supplierData->supplier_approved_by ?? 'Not Applicable' }}</div>
-                        </td>
-                        <th class="w-20">Audit Passed On</th>
-                        <td class="w-30">
-                            <div class="static">{{ $supplierData->supplier_approved_on ?? 'Not Applicable' }}</div>
-                        </td>
-                        <th class="w-20">Audit Passed Comment</th>
-                        <td class="w-30">
-                            <div class="static">{{ $supplierData->supplier_approved_comment ?? 'Not Applicable' }}
                             </div>
                         </td>
 
@@ -1694,6 +1678,7 @@ Not Applicable
 
                     </tr>
 
+
                     <tr>
                         <th class="w-20">Supplier Approved to Obsolete By</th>
                         <td class="w-30">
@@ -1712,23 +1697,6 @@ Not Applicable
                         </td>
 
                     </tr>
-
-                    <tr>
-                        <th class="w-20">Re-Audit By</th>
-                        <td class="w-30">
-                            <div class="static">{{ $supplierData->reAudit_by ?? 'Not Applicable' }}</div>
-                        </td>
-                        <th class="w-20">Re-Audit On</th>
-                        <td class="w-30">
-                            <div class="static">{{ $supplierData->reAudit_on ?? 'Not Applicable' }}</div>
-                        </td>
-                        <th class="w-20">Re-Audit Comment</th>
-                        <td class="w-30">
-                            <div class="static">{{ $supplierData->reAudit_comment ?? 'Not Applicable' }}</div>
-                        </td>
-
-                    </tr>
-
                     <tr>
                         <th class="w-20">Reject Due To Quality Issues By</th>
                         <td class="w-30">
@@ -1747,6 +1715,41 @@ Not Applicable
                         </td>
 
                     </tr>
+
+                    <tr>
+                        <th class="w-20">Pending Rejction to Supplier Obsolete By</th>
+                        <td class="w-30">
+                            <div class="static">{{ $supplierData->pending_rejection_by ?? 'Not Applicable' }}</div>
+                        </td>
+                        <th class="w-20">Pending Rejction to Supplier Obsolete On</th>
+                        <td class="w-30">
+                            <div class="static">{{ $supplierData->pending_rejection_on ?? 'Not Applicable' }}</div>
+                        </td>
+                        <th class="w-20">Pending Rejction to Supplier Obsolete
+                            Comment</th>
+                        <td class="w-30">
+                            <div class="static">{{ $supplierData->pending_rejection_comment ?? 'Not Applicable' }}
+                            </div>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th class="w-20">Re-Audit By</th>
+                        <td class="w-30">
+                            <div class="static">{{ $supplierData->reAudit_by ?? 'Not Applicable' }}</div>
+                        </td>
+                        <th class="w-20">Re-Audit On</th>
+                        <td class="w-30">
+                            <div class="static">{{ $supplierData->reAudit_on ?? 'Not Applicable' }}</div>
+                        </td>
+                        <th class="w-20">Re-Audit Comment</th>
+                        <td class="w-30">
+                            <div class="static">{{ $supplierData->reAudit_comment ?? 'Not Applicable' }}</div>
+                        </td>
+
+                    </tr>
+
+
                 </table>
             </div>
         </div>

@@ -71,15 +71,15 @@
         }
 
         /* .sub-head {
-                                                        margin-left: 280px;
-                                                        margin-right: 280px;
-                                                        color: #4274da;
-                                                        border-bottom: 2px solid #4274da;
-                                                        padding-bottom: 5px;
-                                                        margin-bottom: 20px;
-                                                        font-weight: bold;
-                                                        font-size: 1.2rem;
-                                                         } */
+                                                                        margin-left: 280px;
+                                                                        margin-right: 280px;
+                                                                        color: #4274da;
+                                                                        border-bottom: 2px solid #4274da;
+                                                                        padding-bottom: 5px;
+                                                                        margin-bottom: 20px;
+                                                                        font-weight: bold;
+                                                                        font-size: 1.2rem;
+                                                                         } */
 
         .launch_extension {
             background: #4274da;
@@ -130,12 +130,12 @@
         }
 
         /* .saveButton:disabled
-                                                        {
-                                                           background: black!important;
-                                                           border:  black!important;
-                                                         }
-                                                           
-                                                        */
+                                                                        {
+                                                                           background: black!important;
+                                                                           border:  black!important;
+                                                                         }
+                                                                           
+                                                                        */
 
         .main-danger-block {
             display: flex;
@@ -575,7 +575,7 @@
                                         <input id="docname" type="text" name="short_description" maxlength="255"
                                             value="{{ $data->short_description }}" class="mic-input" required>
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'short_description', 'id' => 'short_description'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                     </div>
 
@@ -2291,11 +2291,14 @@
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Last Audit Date</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="last_audit_date" placeholder="DD-MMM-YYYY"
-                                            value="{{ Helpers::getdateFormat($data->last_audit_date) }}" 
-                                        />
+                                        <input type="text" id="last_audit_date_display"
+                                            name="last_audit_date_display" placeholder="DD-MMM-YYYY"
+                                            value="{{ Helpers::getdateFormat($data->last_audit_date) }}" />
 
-                                        <input type="date" name="last_audit_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'last_audit_date'); updateNextAuditDateMin(this.value);" />  
+                                        <input type="date" id="last_audit_date" name="last_audit_date"
+                                            value="{{ \Carbon\Carbon::parse($data->last_audit_date)->format('Y-m-d') }}"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'last_audit_date'); updateNextAuditDateMin(this.value);" />
                                     </div>
                                 </div>
                             </div>
@@ -2303,13 +2306,16 @@
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Next Audit Date</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="next_audit_date" name="next_audit_date"
-                                            placeholder="DD-MMM-YYYY"
+                                        <input type="text" id="next_audit_date_display"
+                                            name="next_audit_date_display" placeholder="DD-MMM-YYYY"
                                             value="{{ Helpers::getdateFormat($data->next_audit_date) }}" />
-                                        <input type="date" name="next_audit_date"
-                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'next_audit_date')" />
+
+                                        <input type="date" id="next_audit_date" name="next_audit_date"
+                                            value="{{ \Carbon\Carbon::parse($data->next_audit_date)->format('Y-m-d') }}"
+                                            min="{{ \Carbon\Carbon::parse($data->last_audit_date)->addDay()->format('Y-m-d') }}"
+                                            class="hide-input" />
                                     </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -3308,8 +3314,11 @@
         }
 
         function updateNextAuditDateMin(lastAuditDate) {
-            const nextAuditDateInput = document.querySelector('input[name="next_audit_date"]');
-            nextAuditDateInput.min = lastAuditDate;
+            var nextAuditDateInput = document.getElementById('next_audit_date');
+            var nextDay = new Date(lastAuditDate);
+            nextDay.setDate(nextDay.getDate() + 1);
+            var nextDayString = nextDay.toISOString().split('T')[0];
+            nextAuditDateInput.min = nextDayString;
         }
     </script>
 @endsection

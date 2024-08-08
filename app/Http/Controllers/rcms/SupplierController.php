@@ -4429,7 +4429,7 @@ class SupplierController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        // dd($supplier->lead_time_days);
+        
         if($lastDocument->lead_time_days != $supplier->lead_time_days){
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
             ->where('activity_type', 'Lead Time Days')

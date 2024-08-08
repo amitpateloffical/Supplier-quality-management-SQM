@@ -919,7 +919,7 @@
                         <th class="w-20">Acknowledge By</th>
                         <td class="w-30">
                             @if ($data->acknowledge_by)
-                                {{ $data->acknowledge_by }}
+                                {{ Helpers::getInitiatorName($data->acknowledge_by) }}
                             @else
                                 Not Applicable
                             @endif

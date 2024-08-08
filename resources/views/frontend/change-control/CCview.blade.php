@@ -369,7 +369,7 @@
                                                     <label for="Short Description">Short Description<span
                                                             class="text-danger">*</span></label><span id="rchars"  class="text-primary">255 </span><span class="text-primary"> characters remaining</span>   
                                                     <div class="relative-container">
-                                                        <textarea class="mic-input" name="short_description" id="docname" type="text" maxlength="255" required {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->short_description}} </textarea>
+                                                        <input class="mic-input" name="short_description" id="docname" type="text" maxlength="255" required {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->short_description }}">
                                                         @component('frontend.forms.language-model')
                                                         @endcomponent
                                                     </div>

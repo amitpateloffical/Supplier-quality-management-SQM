@@ -237,7 +237,7 @@
                         <td>
                             <div>
                                 <strong>Data Field Name :</strong>
-                                {{ $datas->activity_type ?: 'Not Applicable' }}
+                                {{$datas->activity_type ?: 'Not Applicable' }}
                             </div>
                             <div style="margin-top: 5px;" class="imageContainer">
                                 <!-- Assuming $dataDemo->image_url contains the URL of your image -->

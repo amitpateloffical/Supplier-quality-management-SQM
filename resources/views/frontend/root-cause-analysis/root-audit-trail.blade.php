@@ -325,7 +325,7 @@
 
                             <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->originator ? $document->originator : '' }}
+                                : {{ $document->originator ? $document->originator : '' }}
                             </div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
@@ -375,10 +375,10 @@
                                 <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change From
-                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
+                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }}
                                     @else
                                         <strong>Change From
-                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
                                     @endif
                                 </div>
                                 <br>

@@ -593,8 +593,8 @@
                                     <select multiple name="related_records[]" placeholder="Select Reference Records"
                                         data-search="false" data-silent-initial-value-set="true" id="related_records">
                                         @foreach ($pre as $prix)
-                                            <option value="{{ $prix->id }}">
-                                                {{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
+                                            <option value="{{ Helpers::getDivisionName($prix->division_id) . '/CC/' . date('Y') . '/' . Helpers::recordFormat($prix->record) }}"> 
+                                                {{ Helpers::getDivisionName($prix->division_id) }}/CC/{{ date('Y') }}/{{ Helpers::recordFormat($prix->record) }}
                                             </option>
                                         @endforeach
                                     </select>

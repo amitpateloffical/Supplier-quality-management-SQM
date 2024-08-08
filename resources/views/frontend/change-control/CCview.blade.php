@@ -549,7 +549,7 @@
                                             </div>
                                         </div>
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit</a> </button>
                                         </div>
@@ -583,7 +583,7 @@
                                                             @if (!empty($docdetail->sno))
                                                                 @foreach (unserialize($docdetail->current_doc_no) as $key => $datas)
                                                                     <tr>
-                                                                        <td><input type="text" name="serial_number[]"
+                                                                        <td><input type="text" name="serial_number[]" disabled
                                                                                 value="{{ $key ? $key + 1 : '1' }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></td>
                                                                         <td><input type="text"
                                                                                 name="current_doc_number[]"
@@ -678,7 +678,7 @@
                                         </div>
 
                                         <div class="button-block">
-                                            <button type="submit"id="ChangesaveButton" class="saveButton">Save</button>
+                                            <button type="submit"id="ChangesaveButton" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -721,9 +721,7 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="related_records">Related Records</label>
-                                                    {{--  <input type="text" name="related_records" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        value="{{ $review->related_records }}">  --}}
-                                                    <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
+                                                    <!-- <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
                                                         placeholder="Select Reference Records" data-search="false"
                                                         data-silent-initial-value-set="true" id="related_records">
                                                         @foreach ($pre as $prix)
@@ -731,6 +729,30 @@
                                                                 {{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
                                                             </option>
                                                         @endforeach
+                                                    </select> -->
+
+                                                    <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]">
+
+                                                        @foreach ($pre as $new)
+                                                            @php
+                                                                $recordValue =
+                                                                    Helpers::getDivisionName($new->division_id) .
+                                                                    '/CC/' .
+                                                                    date('Y') .
+                                                                    '/' .
+                                                                    Helpers::recordFormat($new->record);
+                                                                $selected = in_array(
+                                                                    $recordValue,
+                                                                    explode(',', $data->related_records),
+                                                                )
+                                                                    ? 'selected'
+                                                                    : '';
+                                                            @endphp
+                                                            <option value="{{ $recordValue }}" {{ $selected }}>
+                                                                {{ $recordValue }}
+                                                            </option>
+                                                        @endforeach
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -767,7 +789,7 @@
                                             </div>
                                         </div>
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -842,7 +864,7 @@
                                         </div>
 
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1187,7 +1209,7 @@
                                             </div>
                                         </div>
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1306,7 +1328,7 @@
                                         </div>
 
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1365,7 +1387,7 @@
                                         </div>
 
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1581,7 +1603,7 @@
                                             </div>
                                         </div>
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>

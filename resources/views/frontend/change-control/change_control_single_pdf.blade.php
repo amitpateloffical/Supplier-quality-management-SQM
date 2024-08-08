@@ -376,6 +376,39 @@
                 <div class="block-head">
                     Change Details
                 </div>
+
+                <div class="border-table">
+                    <div class="block-head">
+                        Document Details
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-10">S.N.</th>
+                            <th class="w-20">Current Doc No.</th>
+                            <th class="w-20">Current Version No.</th>
+                            <th class="w-20">New Document No.</th>
+                            <th class="w-20">New Version No.</th>
+                        </tr>
+                        @if (!empty($docdetail->sno))
+                            @foreach (unserialize($docdetail->current_doc_no) as $key => $datas)
+                                <tr>
+                                    <td> {{ $key + 1 }}</td>
+                                    <td> {{ unserialize($docdetail->current_doc_no)[$key] ? unserialize($docdetail->current_doc_no)[$key] : '' }} </td>
+                                    <td> {{ unserialize($docdetail->current_version_no)[$key] ? unserialize($docdetail->current_version_no)[$key] : '' }} </td>
+                                    <td> {{ unserialize($docdetail->new_doc_no)[$key] ? unserialize($docdetail->new_doc_no)[$key] : '' }} </td>
+                                    <td> {{ unserialize($docdetail->new_version_no)[$key] ? unserialize($docdetail->new_version_no)[$key] : '' }} </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
+
+
                 <table>
                     <tr>
                         <th class="w-20">Current Practice</th>
@@ -730,63 +763,64 @@
                     </div>
                 </td>
             </tr>
-            <tr>
-                <th class="w-20">Severity</th>
+            <th class="w-20">Severity</th>
                 <td class="w-30">
-                    @if($data->severity == 1)
-                        Negligible
-                    @elseif($data->severity == 2)
-                        Minor
-                    @elseif($data->severity == 3)
-                        Moderate
-                    @elseif($data->severity == 4)
-                        Major
+                    @if ($data->severity)
+                        @if ($data->severity == 1)
+                            Negligible
+                        @elseif($data->severity == 2)
+                            Minor
+                        @elseif($data->severity == 3)
+                            Moderate
+                        @elseif($data->severity == 4)
+                            Major
+                        @else
+                            Fatel
+                        @endif
                     @else
-                        Fatel
+                        Not Applicable
                     @endif
                 </td>
 
-                <th class="w-20">Occurance</th>
+
+<th class="w-20">Occurance</th>
                 <td class="w-30">
-                    @if($data->Occurance == 1)
-                        Extremely Unlikely
-                    @elseif($data->Occurance == 2)
-                        Rare
-                    @elseif($data->Occurance == 3)
-                        Unlikely
-                    @elseif($data->Occurance == 4)
-                        Likely
+                    @if ($data->occurrence)
+                        @if ($data->Occurance == 1)
+                            Extremely Unlikely
+                        @elseif($data->Occurance == 2)
+                            Rare
+                        @elseif($data->Occurance == 3)
+                            Unlikely
+                        @elseif($data->Occurance == 4)
+                            Likely
+                        @else
+                            Very Likely
+                        @endif
                     @else
-                        Very Likely
-                    @endif
-                </td>
-            </tr>
-            <tr>
-                <th class="w-20">Detection</th>
-                <td class="w-30">
-                    @if($data->Detection == 1)
-                        Impossible
-                    @elseif($data->Detection == 2)
-                        Rare
-                    @elseif($data->Detection == 3)
-                        Unlikely
-                    @else
-                        Very Likely
+                        Not Applicable
                     @endif
                 </td>
 
-                <th class="w-20">RPN</th>
-                <td class="w-30"> {{ $data->RPN }}</td>
-            </tr>
 
-            <tr>
-                <th class="w-20">Risk Evaluation</th>
-                <td class="w-80" colspan="3">
-                    <div>
-                        {{ $data->risk_evaluation }}
-                    </div>
+
+
+<th class="w-20">Detection</th>
+                <td class="w-30">
+                    @if ($data->detection)
+                        @if ($data->Detection == 1)
+                            Impossible
+                        @elseif($data->Detection == 2)
+                            Rare
+                        @elseif($data->Detection == 3)
+                            Unlikely
+                        @else
+                            Very Likely
+                        @endif
+                    @else
+                        Not Applicable
+                    @endif
                 </td>
-            </tr>
 
             <tr>
                 <th class="w-20">Mitigation Action</th>
@@ -977,7 +1011,7 @@
             </tr>
 
             <tr>
-                <th class="w-20">Pending CFT Review Completed By</th>
+                <th class="w-20">CFT Review Completed By</th>
                 <td class="w-30">
                     @if ($data->cft_review_by)
                         {{ $data->cft_review_by }}
@@ -985,7 +1019,7 @@
                         Not Applicable
                     @endif
                 </td>
-                <th class="w-20">Pending CFT Review Completed On</th>
+                <th class="w-20">CFT Review Completed On</th>
                 <td class="w-30">
                     @if ($data->cft_review_on)
                         {{ $data->cft_review_on }}
@@ -993,10 +1027,37 @@
                         Not Applicable
                     @endif
                 </td>
-                <th class="w-20">Pending CFT Review Completed Comment</th>
+                <th class="w-20">CFT Review Completed Comment</th>
                 <td class="w-30">
                     @if ($data->cft_review_comment)
                         {{ $data->cft_review_comment }}
+                    @else
+                        Not Applicable
+                    @endif
+                </td>
+            </tr>
+
+            <tr>
+                <th class="w-20">CFT Not Required Completed By</th>
+                <td class="w-30">
+                    @if ($data->cftNot_required_by)
+                        {{ $data->cftNot_required_by }}
+                    @else
+                        Not Applicable
+                    @endif
+                </td>
+                <th class="w-20">CFT Not Required Completed On</th>
+                <td class="w-30">
+                    @if ($data->cftNot_required_on)
+                        {{ $data->cftNot_required_on }}
+                    @else
+                        Not Applicable
+                    @endif
+                </td>
+                <th class="w-20">CFT Not Required Completed Comment</th>
+                <td class="w-30">
+                    @if ($data->cftNot_required_comment)
+                        {{ $data->cftNot_required_comment }}
                     @else
                         Not Applicable
                     @endif

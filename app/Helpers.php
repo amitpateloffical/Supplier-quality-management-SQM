@@ -61,6 +61,9 @@ static function getFullDepartmentName($code)
         case 'CQA':
             $full_department_name = "Corporate Quality Assurance";
             break;
+        case 'QA':
+                $full_department_name = "Quality Assurance";
+                break;
         case 'QAB':
             $full_department_name = "Quality Assurance Biopharma";
             break;

@@ -1826,7 +1826,7 @@
                                 <div class="group-input">
                                     <label for="Lead Time Days">Lead Time Days</label>
                                     <select name="lead_time_days" name="lead_time_days">
-                                        <option>Enter Your Selection Here</option>
+                                        <option value="">Enter Your Selection Here</option>
                                         <option value="> 11 Days"> > 11 Days</option>
                                         <option value="6 - 10">6 - 10</option>
                                         <option value="3 -5">3 -5</option>

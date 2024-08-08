@@ -1930,6 +1930,9 @@ class CCController extends Controller
         }
 
         if ($areIniAttachmentsSame != true) {
+            $existingHistory = RcmDocHistory::where('cc_id', $id)
+            ->where('activity_type', 'Initial Attachment')
+            ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Initial Attachment';

@@ -299,8 +299,7 @@
                                                  id="initiator_group">
                                                  <option value="">-- Select --</option>
                                                 <option value="CQA"
-                                                    @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
-                                                    Quality Assurance</option>
+                                                    @if ($data->initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
                                                 <option value="QAB"
                                                     @if ($data->initiator_Group== 'QAB') selected @endif>Quality
                                                     Assurance Biopharma</option>

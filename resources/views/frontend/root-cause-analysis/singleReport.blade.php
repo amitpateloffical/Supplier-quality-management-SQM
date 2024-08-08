@@ -229,7 +229,7 @@
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-80">@if($data->initiator_Group){{ Helpers::getFullDepartmentName($data->initiator_Group) }} @else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->initiator_Group){{ Helpers::getInitiatorGroupFullName($data->initiator_Group) }} @else Not Applicable @endif</td>
                        
                     </tr>
                     <tr>

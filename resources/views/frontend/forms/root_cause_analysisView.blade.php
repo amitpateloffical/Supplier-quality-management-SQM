@@ -402,7 +402,7 @@
                                                     
                                                     <div class="relative-container">
                                                         <textarea name="short_description" class="mic-input"  id="docname" type="text"    maxlength="255" required  {{$data->stage == 0 || $data->stage == 4 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
-                                                        @component('frontend.forms.language-model')
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                         @endcomponent
                                                     
                                                     </div>
@@ -556,7 +556,7 @@
                                                         <label for="initiated_if_other">Others<span class="text-danger d-none">*</span></label>
                                                         <div class="relative-container">
                                                             <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} name="initiated_if_other" id="initiated_if_other">{{$data->initiated_if_other}}</textarea>
-                                                            @component('frontend.forms.language-model')
+                                                            @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                             @endcomponent
                                                         </div>
                                                     </div>
@@ -642,7 +642,7 @@
                                             <label for="description">Description</label>
                                             <div class="relative-container">
                                                     <textarea class="mic-input" name="description"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->description }}</textarea>
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                     @endcomponent
                                             </div>
                                         </div>
@@ -654,7 +654,7 @@
                                                 <label for="comments">Comments</label>
                                                 <div class="relative-container">
                                                     <textarea name="comments" class="mic-input" id="comments" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{$data->comments}}</textarea>
-                                                   @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                     @endcomponent
                                                    
                                                 </div>                 
@@ -1020,7 +1020,7 @@
                                                             <th style="width:150px;">Problem Statement</th>
                                                             <td class="relative-container">
                                                             <textarea name="why_problem_statement">{{ $data->why_problem_statement }}</textarea>
-                                                            @component('frontend.forms.language-model')
+                                                            @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                             @endcomponent
                                                         </td>
                                                             
@@ -1035,7 +1035,7 @@
                                                                     @if (!empty($data->why_1))
                                                                         @foreach (unserialize($data->why_1) as $key => $measure)
                                                                             <textarea name="why_1[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
-                                                                            @component('frontend.forms.language-model')
+                                                                            @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                                             @endcomponent
                                                                             @endforeach
                                                                     @endif
@@ -1053,7 +1053,7 @@
                                                                     @if (!empty($data->why_2))
                                                                         @foreach (unserialize($data->why_2) as $key => $measure)
                                                                             <textarea name="why_2[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
-                                                                            @component('frontend.forms.language-model')
+                                                                            @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                                             @endcomponent
                                                                             @endforeach
                                                                     @endif
@@ -1070,7 +1070,7 @@
                                                                     @if (!empty($data->why_3))
                                                                         @foreach (unserialize($data->why_3) as $key => $measure)
                                                                             <textarea name="why_3[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
-                                                                            @component('frontend.forms.language-model')
+                                                                            @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                                             @endcomponent
                                                                         @endforeach
                                                                     @endif
@@ -1087,7 +1087,7 @@
                                                                     @if (!empty($data->why_4))
                                                                         @foreach (unserialize($data->why_4) as $key => $measure)
                                                                             <textarea name="why_4[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
-                                                                            @component('frontend.forms.language-model')
+                                                                            @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                                             @endcomponent
                                                                         @endforeach
                                                                     @endif
@@ -1104,7 +1104,7 @@
                                                                     @if (!empty($data->why_5))
                                                                         @foreach (unserialize($data->why_5) as $key => $measure)
                                                                             <textarea name="why_5[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
-                                                                            @component('frontend.forms.language-model')
+                                                                            @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                                             @endcomponent
                                                                         @endforeach
                                                                     @endif
@@ -1116,7 +1116,7 @@
                                                             <td  class="relative-container">
                                                            
                                                            <textarea name="why_root_cause"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->why_root_cause }}</textarea>
-                                                           @component('frontend.forms.language-model')
+                                                           @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                            @endcomponent
                                                        </td>
                                                         </tr>
@@ -1237,17 +1237,17 @@
                                                             <th style="background: #0039bd85">What</th>
                                                             <td class="relative-container">
                                                                 <textarea name="what_will_be" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->what_will_be }}</textarea>
-                                                                @component('frontend.forms.language-model')
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                                 @endcomponent
                                                             </td>
                                                             <td class="relative-container">
                                                                 <textarea name="what_will_not_be" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->what_will_not_be }}</textarea>
-                                                                @component('frontend.forms.language-model')
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                                 @endcomponent
                                                             </td>
                                                             <td class="relative-container">
                                                                 <textarea name="what_rationable"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->what_rationable }}</textarea>
-                                                                @component('frontend.forms.language-model')
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                                 @endcomponent
                                                             </td>
                                                         </tr>
@@ -1255,17 +1255,17 @@
                                                             <th style="background: #0039bd85">Where</th>
                                                             <td class="relative-container">
                                                                 <textarea name="where_will_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->where_will_be }}</textarea>
-                                                                @component('frontend.forms.language-model')
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                                 @endcomponent
                                                             </td>
                                                             <td class="relative-container">
                                                                 <textarea name="where_will_not_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->where_will_not_be }}</textarea>
-                                                                @component('frontend.forms.language-model')
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                                 @endcomponent
                                                             </td>
                                                             <td class="relative-container">
                                                                 <textarea name="where_rationable"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->where_rationable }}</textarea>
-                                                                @component('frontend.forms.language-model')
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                                 @endcomponent
                                                             </td>
                                                         </tr>
@@ -1274,21 +1274,21 @@
                                                             <td class="relative-container">
                                                                 <textarea name="when_will_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->when_will_be }}</textarea>
                                                                 
-                                                                @component('frontend.forms.language-model')
-                                                              @endcomponent
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
+                                                                @endcomponent
                                                            
                                                             </td>
                                                             <td class="relative-container">
                                                                 <textarea name="when_will_not_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->when_will_not_be }}</textarea>
                                                                 
-                                                                @component('frontend.forms.language-model')
-                                                                 @endcomponent
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
+                                                                @endcomponent
                                                             </td>
                                                             <td class="relative-container">
                                                                 <textarea name="when_rationable"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->when_rationable }}</textarea>
                                                                 
-                                                                @component('frontend.forms.language-model')
-                                                              @endcomponent
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
+                                                                @endcomponent
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -1296,36 +1296,35 @@
                                                             <td class="relative-container">
                                                                 <textarea name="coverage_will_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->coverage_will_be }}</textarea>
                                                                
-                                                                @component('frontend.forms.language-model')
-                                                                 @endcomponent
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
+                                                                @endcomponent
                                                             </td>
                                                             <td class="relative-container">
                                                                 <textarea name="coverage_will_not_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->coverage_will_not_be }}</textarea>
-                                                                
-                                                                 @component('frontend.forms.language-model')
-                                                                    @endcomponent
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
+                                                                @endcomponent
                                                             </td>
                                                             <td class="relative-container">
                                                                 <textarea name="coverage_rationable"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->coverage_rationable }}</textarea>
                                                            
-                                                           @component('frontend.forms.language-model')
-                                                              @endcomponent </td>
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
+                                                                @endcomponent
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Who</th>
                                                             <td   class="relative-container">
                                                                 <textarea name="who_will_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->who_will_be }}</textarea>
-                                                                @component('frontend.forms.language-model')
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                                 @endcomponent
                                                             </td>
                                                             <td  class="relative-container">
                                                                 <textarea name="who_will_not_be"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->who_will_not_be }}</textarea>
-                                                                @component('frontend.forms.language-model')
-                                                              @endcomponent
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
+                                                                @endcomponent
                                                             </td>
                                                             <td  class="relative-container">
                                                                 <textarea name="who_rationable"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ $data->who_rationable }}</textarea>
-                                                                @component('frontend.forms.language-model')
+                                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                                 @endcomponent
                                                             </td>
                                                         </tr>
@@ -1340,7 +1339,7 @@
                                             <label for="root_cause_description">Root Cause Description</label>
                                             <div class="relative-container">
                                                 <textarea name="root_cause_description"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} class="mic-input"  id="root_cause_description">{{ $data->root_cause_description }}</textarea>
-                                                @component('frontend.forms.language-model')
+                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                 @endcomponent
                                             </div>
                                         </div>
@@ -1350,7 +1349,7 @@
                                             <label for="investigation_summary">Investigation Summary</label>
                                             <div class="relative-container">
                                                 <textarea name="investigation_summary" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} class="mic-input" id="investigation_summary">{{ $data->investigation_summary }}</textarea>
-                                                @component('frontend.forms.language-model')
+                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
                                                 @endcomponent
                                             </div>
                                         </div>
@@ -1426,8 +1425,8 @@
                                             <label for="cft_comments_new">Final Comments</label>
                                             <div class="relative-container">
                                                 <textarea name="cft_comments_new" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id="cft_comments_new" class="mic-input">{{ $data->cft_comments_new }}</textarea>
-                                                @component('frontend.forms.language-model')
-                                               @endcomponent
+                                                @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>

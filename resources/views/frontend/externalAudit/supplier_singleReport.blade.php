@@ -460,7 +460,9 @@
                             @endphp
                             <tr>
                                 <td>{{ $serialNumber++ }}</td>
-                                <td>{{ $formattedEndTime }}</td>
+                                <!-- <td>{{ $formattedEndTime }}</td> -->
+                                <td>{{ unserialize($sgrid->end_time)[$key] ?? '' }}</td>
+
                                 <td>
                                     @foreach ($users as $value)
                                         @if (unserialize($sgrid->auditor)[$key] == $value->id)

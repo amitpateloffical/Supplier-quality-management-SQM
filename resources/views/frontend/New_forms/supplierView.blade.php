@@ -11,6 +11,9 @@ $users = DB::table('users')
         textarea.note-codable {
             display: none !important;
         }
+        .hide-input {
+            display: none;
+        }
 
         header {
             display: none;
@@ -874,98 +877,94 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input input-date">
                                                 <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
                                                 <div class="calenderauditee">                                     
-                                                    <input type="text"  id="start_date"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="start_date_checkdate" name="start_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->start_date }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
+                                                    <input type="text" id="start_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                                    <input type="date" id="start_date_checkdate" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->start_date }}" class="hide-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} oninput="handleDateInput(this, 'start_date');updateEndDateMin();"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 new-date-data-field">
-                                            <div class="group-input  input-date">
+                                            <div class="group-input input-date">
                                                 <label for="Audit Schedule End Date">Audit Schedule End Date</label>
                                                 <div class="calenderauditee">                                     
-                                                    <input type="text"  id="end_date"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="end_date_checkdate" name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->end_date }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
+                                                    <input type="text" id="end_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                                    <input type="date" id="end_date_checkdate" name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->end_date }}" class="hide-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} oninput="handleDateInput(this, 'end_date');"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
-    <div class="group-input">
-        <label for="audit-agenda-grid">
-            Audit Agenda
-            <button type="button" name="audit-agenda-grid" onclick="addAuditAgenda('audit-agenda-grid')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
-        </label>
-        <table class="table table-bordered" id="audit-agenda-grid">
-            <thead>
-                <tr>
-                    <th>Row #</th>
-                    <th>Area of Audit</th>
-                    <th>Scheduled Start Date</th>
-                    <th>Scheduled Start Time</th>
-                    <th>Scheduled End Date</th>
-                    <th>Scheduled End Time</th>
-                    <th>Auditor</th>
-                    <th>Auditee</th>
-                    <th>Remarks</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if ($sgrid->start_date)
-                    @foreach (unserialize($sgrid->start_date) as $key => $temps)
-                        <tr>
-                            <td><input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
-                            <td><input type="text" name="audit[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($sgrid->area_of_audit)[$key] ?? '' }}"></td>
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div class="calenderauditee">
-                                            <input type="text" class="test" id="scheduled_start_date{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->start_date)[$key]) }}" />
-                                            <input type="date" id="schedule_start_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($sgrid->start_date)[$key] }}" class="hide-input" oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" />
+                                            <div class="group-input">
+                                                <label for="audit-agenda-grid">
+                                                    Audit Agenda
+                                                    <button type="button" name="audit-agenda-grid" onclick="addAuditAgenda('audit-agenda-grid')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
+                                                </label>
+                                                <table class="table table-bordered" id="audit-agenda-grid">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Row #</th>
+                                                            <th>Area of Audit</th>
+                                                            <th>Scheduled Start Date</th>
+                                                            <th>Scheduled Start Time</th>
+                                                            <th>Scheduled End Date</th>
+                                                            <th>Scheduled End Time</th>
+                                                            <th>Auditor</th>
+                                                            <th>Auditee</th>
+                                                            <th>Remarks</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if ($sgrid->start_date)
+                                                            @foreach (unserialize($sgrid->start_date) as $key => $temps)
+                                                                <tr>
+                                                                    <td><input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
+                                                                    <td><input type="text" name="audit[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($sgrid->area_of_audit)[$key] ?? '' }}"></td>
+                                                                    <td>
+                                                                        <div class="group-input new-date-data-field mb-0">
+                                                                            <div class="input-date ">
+                                                                                <div class="calenderauditee">
+                                                                                    <input type="text" class="test" id="scheduled_start_date{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->start_date)[$key]) }}" />
+                                                                                    <input type="date" id="schedule_start_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($sgrid->start_date)[$key] }}" class="hide-input" oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><input type="time" name="scheduled_start_time[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($sgrid->start_time)[$key] ?? '' }}"></td>
+                                                                    <td>
+                                                                        <div class="group-input new-date-data-field mb-0">
+                                                                            <div class="input-date ">
+                                                                                <div class="calenderauditee">
+                                                                                    <input type="text" class="test" id="scheduled_end_date{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->end_date)[$key]) }}" />
+                                                                                    <input type="date" id="schedule_end_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($sgrid->end_date)[$key] }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><input type="time" name="scheduled_end_time[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($sgrid->end_time)[$key] ?? '' }}"></td>
+                                                                    <td>
+                                                                        <select id="select-state" placeholder="Select..." name="auditor[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                            <option value="">-Select-</option>
+                                                                            @foreach ($users as $value)
+                                                                                <option {{ unserialize($sgrid->auditor)[$key] == $value->id ? 'selected' : '' }} value="{{ $value->id }}">{{ $value->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select id="select-state" placeholder="Select..." name="auditee[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                            <option value="">-Select-</option>
+                                                                            @foreach ($users as $value)
+                                                                                <option {{ unserialize($sgrid->auditee)[$key] == $value->id ? 'selected' : '' }} value="{{ $value->id }}">{{ $value->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </td>
+                                                                    <td><input type="text" name="remark[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($sgrid->remark)[$key] ?? '' }}"></td>
+                                                                    <td><button type="button" class="removeRowBtn" style="background-color: black;color: white;" onclick="removeRow(this)">Remove</button></td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="scheduled_start_time[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($sgrid->start_time)[$key] ?? '' }}"></td>
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div class="calenderauditee">
-                                            <input type="text" class="test" id="scheduled_end_date{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->end_date)[$key]) }}" />
-                                            <input type="date" id="schedule_end_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($sgrid->end_date)[$key] }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="scheduled_end_time[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($sgrid->end_time)[$key] ?? '' }}"></td>
-                            <td>
-                                <select id="select-state" placeholder="Select..." name="auditor[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <option value="">-Select-</option>
-                                    @foreach ($users as $value)
-                                        <option {{ unserialize($sgrid->auditor)[$key] == $value->id ? 'selected' : '' }} value="{{ $value->id }}">{{ $value->name }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                <select id="select-state" placeholder="Select..." name="auditee[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <option value="">-Select-</option>
-                                    @foreach ($users as $value)
-                                        <option {{ unserialize($sgrid->auditee)[$key] == $value->id ? 'selected' : '' }} value="{{ $value->id }}">{{ $value->name }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td><input type="text" name="remark[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($sgrid->remark)[$key] ?? '' }}"></td>
-                            <td><button type="button" class="removeRowBtn" style="background-color: black;color: white;" onclick="removeRow(this)">Remove</button></td>
-                        </tr>
-                    @endforeach
-                @endif
-            </tbody>
-        </table>
-    </div>
-</div>
                                        
 <div class="col-lg-6">
     <div class="group-input">
@@ -1671,25 +1670,19 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit Start Date">Audit Start Date</label>
-                                                    <div class="calenderauditee">                                     
-                                                        <input type="text"  id="audit_start_date"  readonly placeholder="DD-MM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                        <input type="date" id="audit_start_date_checkdate" name="audit_start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_start_date }}"
-                                                        class="hide-input"
-                                                        oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
-                                                    </div>    
+                                                <div class="calenderauditee">                                     
+                                                    <input type="text" id="audit_start_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->audit_start_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                    <input type="date" id="audit_start_date_checkdate" name="audit_start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->audit_start_date }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input" oninput="handleDateInput(this, 'audit_start_date');updateEndDateMinAudit();" />
+                                                </div>    
                                             </div>
                                         </div>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit End Date">Audit End Date</label>
-                                                    <div class="calenderauditee">                                     
-                                                    <input type="text"  id="audit_end_date"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                    <input type="date" id="audit_end_date_checkdate" name="audit_end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }}"
-                                                    class="hide-input"
-                                                    oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
-                                                    </div>
+                                                <div class="calenderauditee">                                     
+                                                    <input type="text" id="audit_end_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                    <input type="date" id="audit_end_date_checkdate" name="audit_end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->audit_end_date }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input" oninput="handleDateInput(this, 'audit_end_date');" />
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -3145,5 +3138,42 @@ $(document).ready(function(){
         padding-right: 40px; /* Ensure the text does not overlap the button */
     }
 </style>
+
+<script>
+        function handleDateInput(inputElement, displayElementId) {
+            var displayElement = document.getElementById(displayElementId);
+            var dateValue = new Date(inputElement.value);
+            displayElement.value = dateValue.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        }
+
+        function updateEndDateMinAudit() {
+            var startDate = document.getElementById('audit_start_date_checkdate').value;
+            var endDateInput = document.getElementById('audit_end_date_checkdate');
+            endDateInput.min = startDate;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updateEndDateMinAudit(); // Initialize the end date min on page load
+        });
+    </script>
+
+
+    <script>
+        function handleDateInput(inputElement, displayElementId) {
+            var displayElement = document.getElementById(displayElementId);
+            var dateValue = new Date(inputElement.value);
+            displayElement.value = dateValue.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        }
+
+        function updateEndDateMin() {
+            var startDate = document.getElementById('start_date_checkdate').value;
+            var endDateInput = document.getElementById('end_date_checkdate');
+            endDateInput.min = startDate;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updateEndDateMin(); // Initialize the end date min on page load
+        });
+    </script>
 
         @endsection

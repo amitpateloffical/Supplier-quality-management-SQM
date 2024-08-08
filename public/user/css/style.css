@@ -55,6 +55,7 @@ button {
 button:hover {
     background: white;
     color: black;
+    border: 1px solid black;
 }
 
 /* =============================================
@@ -77,7 +78,23 @@ button:hover {
     justify-content: center;
     gap: 5px;
 }
-
+.button_theme {
+    /* height: px; */
+    padding: 4px 7px;
+    font-size: 0.7rem;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
 .button_theme1:hover {
     color: white;
     background: #111;
@@ -4296,6 +4313,7 @@ section#pdf-page .watermark {
     border-radius: 5px;
     margin-bottom: 20px;
     font-size: 0.85rem;
+    
 }
 
 #change-control-fields .inner-block .group-input .check-input {
@@ -4412,13 +4430,14 @@ section#pdf-page .watermark {
 #change-control-fields .inner-block .group-input table thead th {
     /* background: #0039bd85; */
     background: #0e7676cc;
+    color: #fff;
 }
 
 #change-control-fields .inner-block .group-input table input,
 #change-control-fields .inner-block .group-input table select {
     margin-bottom: 0px;
     border: 0;
-    padding: 0;
+    padding: 4;
 }
 
 #change-control-fields .cctab {

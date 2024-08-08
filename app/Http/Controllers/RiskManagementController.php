@@ -502,7 +502,7 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
-            $history->current = Helpers::getFullDepartmentName($data->Initiator_Group);
+            $history->current = Helpers::getInitiatorGroupFullName($data->Initiator_Group);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2013,8 +2013,8 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Initiator Group';
-            $history->previous = Helpers::getFullDepartmentName($lastDocument->Initiator_Group);
-            $history->current = Helpers::getFullDepartmentName($data->Initiator_Group);
+            $history->previous = Helpers::getInitiatorGroupFullName($lastDocument->Initiator_Group);
+            $history->current = Helpers::getInitiatorGroupFullName($data->Initiator_Group);
             $history->comment = $request->Initiator_Group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2846,8 +2846,10 @@ class RiskManagementController extends Controller
                 $history->previous = "Moderate";
             } elseif($lastDocument->severity_rate == 3){
                 $history->previous = "Major";
-            }else{
+            } elseif($lastDocument->severity_rate == 4){
                 $history->previous = "Fatal";
+            } else{
+                $history->previous = "Null";
             }
             // $history->current = $data->severity_rate;
             if($request->severity_rate == 1){
@@ -2883,10 +2885,12 @@ class RiskManagementController extends Controller
                 $history->previous = "Likely";
             } elseif($lastDocument->occurrence == 3){
                 $history->previous = "Unlikely";
-            }elseif($lastDocument->occurrence == 4){
+            } elseif($lastDocument->occurrence == 4){
                 $history->previous = "Rare";
-            }else{
+            } elseif($lastDocument->occurrence == 5){
                 $history->previous = "Extremely Unlikely";
+            } else{
+                $history->previous = "Null";
             }
             // $history->current = $data->occurrence;
             if($request->occurrence == 1){
@@ -2924,10 +2928,12 @@ class RiskManagementController extends Controller
                 $history->previous = "Likely";
             } elseif($lastDocument->detection == 3){
                 $history->previous = "Unlikely";
-            }elseif($lastDocument->detection == 4){
+            } elseif($lastDocument->detection == 4){
                 $history->previous = "Rare";
-            }else{
+            } elseif($lastDocument->detection == 5){
                 $history->previous = "Impossible";
+            } else{
+                $history->previous = "Null";
             }
             // $history->current = $data->detection;
             if($request->detection == 1){
@@ -3005,8 +3011,10 @@ class RiskManagementController extends Controller
                 $history->previous = "Low";
             } elseif($lastDocument->residual_risk_impact == 3){
                 $history->previous = "Medium";
-            }else{
+            } elseif($lastDocument->residual_risk_impact == 4){
                 $history->previous = "None";
+            } else{
+                $history->previous = "Null";
             }
             // $history->current = $data->residual_risk_impact;
             if($request->residual_risk_impact == 1){
@@ -3041,8 +3049,10 @@ class RiskManagementController extends Controller
                 $history->previous = "High";
             } elseif($lastDocument->residual_risk_probability == 2){
                 $history->previous = "Medium";
-            }else{
+            } elseif($lastDocument->residual_risk_probability == 3){
                 $history->previous = "Low";
+            } else{
+                $history->previous = "Null";
             }
 
             // $history->current = $data->residual_risk_probability;
@@ -3078,10 +3088,12 @@ class RiskManagementController extends Controller
                 $history->previous = "Likely";
             } elseif($lastDocument->detection2 == 3){
                 $history->previous = "Unlikely";
-            }elseif($lastDocument->detection2 == 4){
+            } elseif($lastDocument->detection2 == 4){
                 $history->previous = "Rare";
-            }else{
+            } elseif($lastDocument->detection2 == 5){
                 $history->previous = "Impossible";
+            } else{
+                $history->previous = "Null";
             }
             // $history->current = $data->detection2;
             if($request->detection2 == 1){
@@ -3090,9 +3102,9 @@ class RiskManagementController extends Controller
                 $history->current = "Likely";
             } elseif($request->detection2 == 3){
                 $history->current = "Unlikely";
-            }elseif($request->detection2 == 4){
+            } elseif($request->detection2 == 4){
                 $history->current = "Rare";
-            }else{
+            } else{
                 $history->current = "Impossible";
             }
             $history->comment = $request->detection2_comment;

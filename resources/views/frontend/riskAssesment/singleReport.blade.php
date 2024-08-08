@@ -240,7 +240,7 @@
                         <th class="w-20">Initiator Group</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
-                                {{ $data->Initiator_Group }}
+                                {{ Helpers::getInitiatorGroupFullName($data->Initiator_Group) }}
                             @else
                                 Not Applicable
                             @endif

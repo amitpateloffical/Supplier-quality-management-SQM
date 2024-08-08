@@ -1554,14 +1554,14 @@
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Last Audit Date</label>
-                                    {{-- <div class="calenderauditee">
+                                   {{-- <div class="calenderauditee">
                                         <input type="text" id="last_audit_date" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="last_audit_date"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                             oninput="handleDateInput(this, 'last_audit_date')" />
                                     </div> --}}
 
-                                    <div class="calenderauditee">
+                                   <div class="calenderauditee">
                                         <input type="text" id="last_audit_date" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="last_audit_date"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
@@ -1572,7 +1572,7 @@
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Next Audit Date</label>
-                                    {{-- <div class="calenderauditee">
+                                    {{--<div class="calenderauditee">
                                         <input type="text" id="next_audit_date" readonly
                                             placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_audit_date"
@@ -1580,7 +1580,7 @@
                                             oninput="handleDateInput(this, 'next_audit_date')" />
                                     </div> --}}
 
-                                    <div class="calenderauditee">
+                                   <div class="calenderauditee">
                                         <input type="text" id="next_audit_date" readonly
                                             placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_audit_date"

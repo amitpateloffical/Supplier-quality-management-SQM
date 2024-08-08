@@ -551,8 +551,8 @@
 
                                 
                       
-                        <label class="Summer" for="">Justification for Request</label>
-                        <div class="imageContainer">
+                        <label style="margin-left:10px;" class="Summer" for="">Justification for Request</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->cqa_remark)
                             {!! $data->cqa_remark !!}
                         @else
@@ -561,7 +561,7 @@
                         </div>
 
                    
-                        <div class="border-table">
+                        <div class="border-table" style="margin-top: 10px;">
                             <div class="block-head">
                                 CEP Attachment
                             </div>
@@ -594,7 +594,7 @@
 
             <!-- HOD Details -->
 
-            <div class="block">
+            <div class="block" style="margin-top: 10px;">
                 <div class="block-head">
                     CQA Department
                 </div>
@@ -631,8 +631,8 @@
                             @endif
                         </td>
                     </tr> -->
-                    <label class="Summer" for="">Remark</label>
-                        <div class="imageContainer">
+                    <label style="margin-left:10px;" class="Summer" for="">Remark</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->cqa_remark)
                             {!! $data->cqa_remark !!}
                         @else
@@ -671,8 +671,8 @@
                             @endif
                         </td>
                     </tr> -->
-                    <label class="Summer" for="">Justification</label>
-                        <div class="imageContainer">
+                    <label style="margin-left:10px;" class="Summer" for="">Justification</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->cqa_remark)
                             {!! $data->cqa_remark !!}
                         @else
@@ -785,8 +785,8 @@
                             @endif
                         </td>
                     </tr> -->   
-                    <label class="Summer" for="">Review Comment of Corporate CQA</label>
-                        <div class="imageContainer">
+                    <label style="margin-left:10px;" class="Summer" for="">Review Comment of Corporate CQA</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->cqa_corporate_comment)
                             {!! $data->cqa_corporate_comment !!}
                         @else
@@ -937,8 +937,8 @@
                             @endif
                         </td>
                     </tr> -->
-                    <label class="Summer" for="">Justification</label>
-                        <div class="imageContainer">
+                    <label style="margin-left:10px;" class="Summer" for="">Justification</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->sample_order_justification)
                             {!! $data->sample_order_justification !!}
                         @else
@@ -1208,7 +1208,7 @@
                         @endif
                     </table>
                 </div>
-                <div class="border-table">
+                <div class="border-table" style="margin-top: 10px;">
                     <div class="block-head">
                     HOD Additional Attachments
                     </div>
@@ -1239,6 +1239,78 @@
                     <div class="block-head">
                         Supplier Details
                     </div>
+
+
+                    <div class="border-table">
+                    <div class="block-head">
+                    Certifications & Accreditation
+                    </div>
+                    <table class="table table-bordered" id="certificationDataTable">
+                                        <thead>
+                                            <tr class="table_bg">
+                                                <th style="width:45px;">Row #</th>
+                                                <th>Type</th>
+                                                <th>Issuing Agency</th>
+                                                <th>Issue Date</th>
+                                                <th>Expiry Date</th>
+                                                <th>Supporting Document</th>
+                                                <th>Remarks</th>
+                                                <!-- <th>Action</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if ($certificationData && is_array($certificationData))
+                                                @foreach ($certificationData as $gridData)
+                                                    <tr>
+                                                        <td>
+                                                        {{ $loop->index + 1 }}
+                                                        </td>
+                                                        <td>
+                                                          {{ isset($gridData['type']) ? $gridData['type'] : '' }}
+                                                        </td>
+                                                        <td>
+                                                        {{ isset($gridData['issuingAgency']) ? $gridData['issuingAgency'] : '' }}
+                                                        </td>
+                                                        <td>
+                                                        {{ isset($gridData['issueDate']) ? $gridData['issueDate'] : '' }}
+                                                        </td>
+                                                        <td>
+                                                        {{ isset($gridData['expiryDate']) ? $gridData['expiryDate'] : '' }}
+                                                        </td>
+                                                        <td>
+                                                        {{ isset($gridData['supportingDoc']) ? $gridData['supportingDoc'] : '' }}
+                                                        </td>
+                                                        <td>
+                                                        {{ isset($gridData['remarks']) ? $gridData['remarks'] : '' }}
+                                                        </td>
+                                                        <!-- <td>
+                                                            <button type="button" class="removeRowBtn">Remove</button>
+                                                        </td> -->
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td style="width: 60px;"><input type="text"
+                                                            name="certificationData[0][serial]" value="1" readonly>
+                                                    </td>
+                                                    <td><input type="text" name="certificationData[0][type]"></td>
+                                                    <td><input type="text"
+                                                            name="certificationData[0][issuingAgency]"></td>
+                                                    <td><input type="date" name="certificationData[0][issueDate]"
+                                                            class="issueDate" max="{{ date('Y-m-d') }}"></td>
+                                                    <td><input type="date" name="certificationData[0][expiryDate]"
+                                                            class="expiryDate" disabled></td>
+                                                    <td><input type="text"
+                                                            name="certificationData[0][supportingDoc]"></td>
+                                                    <td><input type="text" name="certificationData[0][remarks]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                    </div>
+
+                    
                     <table>
                         <tr>
                             <th class="w-20">Supplier Name</th>
@@ -1330,8 +1402,8 @@
                                 @endif
                             </td>|
                         </tr> -->
-                        <label class="Summer" for="">Supplier Services</label>
-                        <div class="imageContainer">
+                        <label style="margin-left:10px;" class="Summer" for="">Supplier Services</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->supplier_serivce)
                             {!! $data->supplier_serivce !!}
                         @else
@@ -1474,8 +1546,8 @@
                     </td>
                 </tr> -->
 
-                <label class="Summer" for="">Manufacturing Sites</label>
-                        <div class="imageContainer">
+                <label style="margin-left:10px;" class="Summer" for="">Manufacturing Sites</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->manufacturing_sited)
                             {!! $data->manufacturing_sited !!}
                         @else
@@ -1493,8 +1565,8 @@
                         @endif
                     </td>
                 </tr> -->
-                <label class="Summer" for="">Quality Management</label>
-                        <div class="imageContainer">
+                <label style="margin-left:10px;" class="Summer" for="">Quality Management</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->quality_management)
                             {!! $data->quality_management !!}
                         @else
@@ -1512,8 +1584,8 @@
                         @endif
                     </td>
                 </tr> -->
-                <label class="Summer" for="">Business History</label>
-                        <div class="imageContainer">
+                <label style="margin-left:10px;" class="Summer" for="">Business History</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->bussiness_history)
                             {!! $data->bussiness_history !!}
                         @else
@@ -1531,8 +1603,8 @@
                         @endif
                     </td>
                 </tr> -->
-                <label class="Summer" for="">Performance History</label>
-                        <div class="imageContainer">
+                <label style="margin-left:10px;" class="Summer" for="">Performance History</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->performance_history)
                             {!! $data->performance_history !!}
                         @else
@@ -1551,8 +1623,8 @@
                     </td>
                 </tr> -->
 
-                <label class="Summer" for="">Compliance Risk</label>
-                        <div class="imageContainer">
+                <label style="margin-left:10px;" class="Summer" for="">Compliance Risk</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->compliance_risk)
                             {!! $data->compliance_risk !!}
                         @else
@@ -1564,7 +1636,7 @@
         </div>
 
         
-        <div class="border-table">
+        <div class="border-table" style="margin-top: 10px;">
                 <div class="block-head">
                     ISO Certificate Attachments
                 </div>
@@ -1591,7 +1663,7 @@
             </div>
 
 
-        <div class="border-table">
+        <div class="border-table" style="margin-top: 10px;">
             <div class="block-head">
             Supplier Additional Attachments
             </div>
@@ -1719,7 +1791,7 @@
                     <th class="w-20">Rejection in PPM</th>
                     <td class="w-30">
                         @if ($data->rejection_ppm)
-                            {{ $data->addresrejection_ppms }}
+                            {{ $data->rejection_ppm }}
                         @else
                             Not Applicable
                         @endif
@@ -1850,8 +1922,8 @@
                     </td>
                 </tr> -->
 
-                <label class="Summer" for="">QA Reviewer Feedback</label>
-                        <div class="imageContainer">
+                <label style="margin-left:10px;" class="Summer" for="">QA Reviewer Feedback</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->QA_reviewer_feedback)
                             {!! $data->QA_reviewer_feedback !!}
                         @else
@@ -1870,8 +1942,8 @@
                     </td>
                 </tr> -->
 
-                <label class="Summer" for="">QA Reviewer Comment</label>
-                        <div class="imageContainer">
+                <label style="margin-left:10px;" class="Summer" for="">QA Reviewer Comment</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->QA_reviewer_comment)
                             {!! $data->QA_reviewer_comment !!}
                         @else
@@ -1908,7 +1980,7 @@
             </table>
         </div>
 
-        <div class="border-table">
+        <div class="border-table" style="margin-top: 10px;">
             <div class="block-head">
             QA Reviewer Additional Attachments
             </div>
@@ -2036,7 +2108,7 @@
                     <th class="w-20">Rejection in PPM</th>
                     <td class="w-30">
                         @if ($data->rejection_ppm)
-                            {{ $data->addresrejection_ppms }}
+                            {{ $data->rejection_ppm }}
                         @else
                             Not Applicable
                         @endif
@@ -2323,8 +2395,8 @@
                     </td>
                 </tr>
             </table> -->
-            <label class="Summer" for="">QA Head Comment</label>
-                        <div class="imageContainer">
+            <label style="margin-left:10px;" class="Summer" for="">QA Head Comment</label>
+                        <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->QA_head_comment)
                             {!! $data->QA_head_comment !!}
                         @else
@@ -2360,7 +2432,7 @@
             </table>
         </div>
 
-        <div class="border-table">
+        <div class="border-table" style="margin-top: 10px;">
             <div class="block-head">
             QA Head Reviewer Additional Attachments
             </div>
@@ -2387,7 +2459,7 @@
         </div>
 
         <!--  Activity Log -->
-        <div class="block">
+        <div class="block" style="margin-top: 10px;">
             <div class="block-head">
                 Activity Log
             </div>

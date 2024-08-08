@@ -10,6 +10,9 @@
         textarea.note-codable {
             display: none !important;
         }
+        #request_for > div > div {
+            z-index: 3 !important;
+        }
 
         header {
             display: none;
@@ -1987,10 +1990,10 @@
                                                                                     <option value="">---- Select ----
                                                                                     </option>
                                                                                     <option value="Yes"
-                                                                                        @if ($data->attach_batch == 'Yes') selected @endif>
+                                                                                        @if ($data->msds == 'Yes') selected @endif>
                                                                                         Yes</option>
                                                                                     <option value="No"
-                                                                                        @if ($data->attach_batch == 'Yes') selected @endif>
+                                                                                        @if ($data->msds == 'Yes') selected @endif>
                                                                                         No</option>
                                                                                 </select>
                                                                             </div>
@@ -1998,7 +2001,7 @@
                                                                         <td>
                                                                             <div style="margin: auto; display: flex; justify-content: center; "
                                                                                 class="relative-container">
-                                                                                <textarea name="msds_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->tse_bse_remark }}</textarea>
+                                                                                <textarea name="msds_remark" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->msds_remark }}</textarea>
                                                                                 @component('frontend.forms.language-model')
                                                                                 @endcomponent
                                                                             </div>

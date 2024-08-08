@@ -2608,8 +2608,35 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Severity';
-            $history->previous = $lastDocument->severity;
-            $history->current = $request->severity;
+
+            if ($lastDocument->severity == 1){
+                $history->previous = "Negligible";
+            } elseif ($lastDocument->severity == 2){
+                $history->previous = "Minor";
+            } elseif($lastDocument->severity == 3){
+                $history->previous = "Moderate";
+            } elseif($lastDocument->severity == 4){
+                $history->previous = "Major";
+            } elseif($lastDocument->severity == 5){
+                $history->previous = "Fatel";
+            } else {
+                $history->previous = "NULL";
+            } 
+
+            if ($request->severity == 1){
+                $history->current = "Negligible";
+            } elseif ($request->severity == 2){
+                $history->current = "Minor";
+            } elseif($request->severity == 3){
+                $history->current = "Moderate";
+            } elseif($request->severity == 4){
+                $history->current = "Major";
+            } elseif($request->severity == 5){
+                $history->current = "Fatel";
+            } else {
+                $history->current = "Not Applicable";
+            }
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2632,8 +2659,35 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Occurance';
-            $history->previous = $lastDocument->Occurance;
-            $history->current = $request->Occurance;
+            
+            if ($lastDocument->Occurance == 1){
+                $history->previous = "Extremely Unlikely";
+            } elseif ($lastDocument->Occurance == 2){
+                $history->previous = "Rare";
+            } elseif($lastDocument->Occurance == 3){
+                $history->previous = "Unlikely";
+            } elseif($lastDocument->Occurance == 4){
+                $history->previous = "Likely";
+            } elseif($lastDocument->Occurance == 5){
+                $history->previous = "Very Likely";
+            } else {
+                $history->previous = "NULL";
+            } 
+
+            if ($request->Occurance == 1){
+                $history->current = "Extremely Unlikely";
+            } elseif ($request->Occurance == 2){
+                $history->current = "Rare";
+            } elseif($request->Occurance == 3){
+                $history->current = "Unlikely";
+            } elseif($request->Occurance == 4){
+                $history->current = "Likely";
+            } elseif($request->Occurance == 5){
+                $history->current = "Very Likely";
+            } else {
+                $history->current = "Not Applicable";
+            }
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2656,8 +2710,31 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Detection';
-            $history->previous = $lastDocument->Detection;
-            $history->current = $request->Detection;
+
+            if ($lastDocument->Detection == 1){
+                $history->previous = "Impossible";
+            } elseif ($lastDocument->Detection == 2){
+                $history->previous = "Rare";
+            } elseif($lastDocument->Detection == 3){
+                $history->previous = "Unlikely";
+            } elseif($lastDocument->Detection == 4){
+                $history->previous = "Likely";
+            } else {
+                $history->previous = "NULL";
+            } 
+
+            if ($request->Detection == 1){
+                $history->current = "Impossible";
+            } elseif ($request->Detection == 2){
+                $history->current = "Rare";
+            } elseif($request->Detection == 3){
+                $history->current = "Unlikely";
+            } elseif($request->Detection == 4){
+                $history->current = "Likely";
+            } else {
+                $history->current = "Not Applicable";
+            }
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

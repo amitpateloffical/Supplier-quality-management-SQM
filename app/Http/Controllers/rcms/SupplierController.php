@@ -4437,10 +4437,10 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Lead Time Days';
-            if($supplier->lead_time_days == null){
+            if($lastDocument->lead_time_days == null){ 
                 $history->previous = "NULL";
             } else{
-                $history->previous = $supplier->lead_time_days;
+                $history->previous = $lastDocument->lead_time_days;
             }
             $history->current = $supplier->lead_time_days;
             $history->comment = "Not Applicable";
@@ -5557,13 +5557,17 @@ class SupplierController extends Controller
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $gridData = SupplierGrid::where('supplier_id', $data->id)->first();            
             $supplierChecklist = SupplierChecklist::where('supplier_id', $id)->get();
+
+            $gridData = SupplierGrid::where(['supplier_id' => $id, 'identifier' => "CertificationData"])->first();
+            $certificationData = json_decode($gridData->data, true);
             
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.supplier.supplier-single-report', compact(
                 'data',
                 'gridData',
-                'supplierChecklist'
+                'supplierChecklist',
+                'certificationData'
             ))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',

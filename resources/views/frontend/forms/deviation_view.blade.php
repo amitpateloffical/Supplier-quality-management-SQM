@@ -1995,7 +1995,7 @@
                                         </div>
 
                                         <div class="relative-container">
-                                            <textarea id="summernote-2" name="Immediate_Action[]" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} placeholder="Enter Immediate Action">{{ $data->Description_Deviation }}</textarea>
+                                            <textarea id="summernote-2" name="Immediate_Action[]" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} placeholder="Enter Immediate Action">{{ $data->Immediate_Action }}</textarea>
 
                                             @component('frontend.forms.language-model')
                                             @endcomponent
@@ -2028,7 +2028,7 @@
                                             <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                         </div>
                                         <div class="relative-container">
-                                            <textarea id="summernote-3" name="Preliminary_Impact[]" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} placeholder="Enter Preliminary Impact of Deviation">{{ $data->Description_Deviation }}</textarea>
+                                            <textarea id="summernote-3" name="Preliminary_Impact[]" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} placeholder="Enter Preliminary Impact of Deviation">{{ $data->Preliminary_Impact }}</textarea>
 
                                             @component('frontend.forms.language-model')
                                             @endcomponent
@@ -7976,7 +7976,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Review Required1"> Other's 1 Review Required? </label>
+                                        <label for="Review Required1"> Other's 1 Review Required?</label>
                                         <select disabled
                                             name="Other1_review"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="Other1_review" value="{{ $data1->Other1_review }}">
@@ -11647,21 +11647,21 @@
 
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="submit by">Submit By :-</label>
+                            <label for="submit by">Submited By :-</label>
                             <div class="static">{{ $data->submit_by }}</div>
                         </div>
                     </div>
 
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="submit on">Submit On :-</label>
+                            <label for="submit on">Submited On :-</label>
                             <div class="static">{{ $data->submit_on }}</div>
                         </div>
                     </div>
 
                     <div class="col-lg-3">
                         <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                            <label for="submit comment">Submit Comments :-</label>
+                            <label for="submit comment">Submited Comments :-</label>
                             <div class="static">{{ $data->submit_comment }}</div>
                         </div>
                     </div>
@@ -11693,21 +11693,21 @@
 
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="HOD Review Complete By">HOD Review Complete By :-</label>
+                            <label for="HOD Review Complete By">HOD Review Completed By :-</label>
                             <div class="static">{{ $data->HOD_Review_Complete_By }}</div>
                         </div>
                     </div>
 
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="HOD Review Complete On">HOD Review Complete On :-</label>
+                            <label for="HOD Review Complete On">HOD Review Completed On :-</label>
                             <div class="static">{{ $data->HOD_Review_Complete_On }}</div>
                         </div>
                     </div>
 
                     <div class="col-lg-3">
                         <div class="group-input" style=" ">
-                            <label for="HOD Review Comments">HOD Review Comments :-</label>
+                            <label for="HOD Review Comments">HOD Review Completed Comments :-</label>
                             <div class="static">{{ $data->HOD_Review_Comments }}</div>
                         </div>
                     </div>
@@ -11761,22 +11761,22 @@
 
                     {{-- stage 3 --}}
 
-                    <div class="sub-head">QA Initial Review Completed</div>
+                    <div class="sub-head">QA Initial Review Complete</div>
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="QA Initial Review Complete By">QA Initial Review Complete By :-</label>
+                            <label for="QA Initial Review Complete By">QA Initial Review Completed By :-</label>
                             <div class="static">{{ $data->QA_Initial_Review_Complete_By }}</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="QA Initial Review Complete On">QA Initial Review Complete On :-</label>
+                            <label for="QA Initial Review Complete On">QA Initial Review Completed On :-</label>
                             <div class="static">{{ $data->QA_Initial_Review_Complete_On }}</div>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                            <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
+                            <label for="QA Initial Review Comments">QA Initial Review Completed Comments:-</label>
                             <div class="static">{{ $data->QA_Initial_Review_Comments }}</div>
                         </div>
                     </div>
@@ -11886,7 +11886,7 @@
                     </div>
                     <div class="col-lg-3">
                         <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                            <label for="QA Final Review Comments">QA Secondary Review Complete Comments :-</label>
+                            <label for="QA Final Review Comments">QA Secondary Review Completed Comments :-</label>
                             <div class="static">{{ $data->QA_Secondary_Review_Completed_Comments }}</div>
                         </div>
                     </div>

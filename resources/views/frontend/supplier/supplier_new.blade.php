@@ -574,7 +574,7 @@
                                                                 <table class="table table-bordered">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th style="width: 15%">Certificate Name</th>
+                                                                            <th style="width: 24%">Certificate Name</th>
                                                                             <th style="width: 20%">Attachment</th>
                                                                             <th style="width: 15%">Issue Date</th>
                                                                             <th style="width: 15%">Expiry Date</th>
@@ -583,9 +583,9 @@
                                                                     </thead>
                                                                     <tbody id="{{ $type }}_rows">
                                                                         <tr>
-                                                                            <td>
-                                                                                {{ strtoupper(str_replace('_', ' ', $type)) }} <br>
-                                                                                <button type="button" onclick="addRow('{{ $type }}')">Add Row</button>
+                                                                            <td style="    display: flex; justify-content: space-between;">
+                                                                                <div>{{ strtoupper(str_replace('_', ' ', $type)) }}</div> 
+                                                                                <div> <button class="button_theme" type="button" onclick="addRow('{{ $type }}')">Add Row</button> </div>
                                                                             </td>
                                                                             <td>
                                                                                 <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
@@ -597,7 +597,7 @@
                                                                                 <input type="date" id="expirydate_{{ $loop->index }}_{{ $type }}" name="certificate_expiry_{{ $type }}[]" class="custom-border expirydate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
                                                                             </td>
                                                                             <td class="relative-container">
-                                                                                <textarea class="mic-input" name="{{ $type }}_remarks[]" class="custom-border"></textarea>
+                                                                                <textarea class="mic-input custom-border" name="{{ $type }}_remarks[]" ></textarea>
                                                                                 @component('frontend.forms.language-model')
                                                                                                         @endcomponent
                                                                                 
@@ -2923,11 +2923,12 @@
                 let tbody = document.getElementById(`${type}_rows`);
                 let newRow = document.createElement('tr');
                 newRow.innerHTML = `
-                    <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+                    <td><button class="button_theme" type="button" onclick="removeRow(this)">Remove</button></td>
                     <td><input type="file" name="${type}_attachment[]" class="custom-border"></td>
                     <td><input type="date" name="certificate_issue_${type}[]" class="custom-border"></td>
                     <td><input type="date" name="certificate_expiry_${type}[]" class="custom-border"></td>
                     <td><textarea name="${type}_remarks[]" class="custom-border"></textarea></td>
+                
                 `;
                 tbody.appendChild(newRow);
                 // console.log(`Row added for type: ${type}`);

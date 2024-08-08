@@ -1287,8 +1287,8 @@
                                                                 <table class="table table-bordered">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th style="width: 15%">Certificate Name</th>
-                                                                            <th style="width: 25%">Attachment</th>
+                                                                            <th style="width: 24%">Certificate Name</th>
+                                                                            <th style="width: 20%">Attachment</th>
                                                                             <th style="width: 15%">Issue Date</th>
                                                                             <th style="width: 15%">Expiry Date</th>
                                                                             <th>Remark</th>
@@ -1305,14 +1305,15 @@
                                                                                 );
                                                                             @endphp
                                                                             <tr>
-                                                                                <td>
-                                                                                    {{ strtoupper(str_replace('_', ' ', $type)) }}
-                                                                                    <br>
-                                                                                    <button type="button"
-                                                                                        onclick="addRow('{{ $type }}')">Add
-                                                                                        Row</button>
-                                                                                    <button type="button"
-                                                                                        onclick="removeRow(this)">Remove</button>
+                                                                                <td style=" display: flex; justify-content: space-between;">
+                                                                                   <div> {{ strtoupper(str_replace('_', ' ', $type)) }}</div>
+                                                                                   
+                                                                                  <div>
+                                                                                    <button class="button_theme" type="button"
+                                                                                    onclick="addRow('{{ $type }}')">Add
+                                                                                    Row</button>
+                                                                                  </div>
+                                                                                    
                                                                                 </td>
                                                                                 <td>
                                                                                     @if ($grid->attachment)
@@ -4665,7 +4666,7 @@
         let newRow = document.createElement('tr');
         newRow.innerHTML = `
             <td>
-                <button type="button" onclick="removeRow(this)">Remove</button>
+                <button class="button_theme" style="margin-left: px;"  type="button" onclick="removeRow(this)">Remove</button>
             </td>
             <td>
                 <input type="file" name="${type}_attachment[]" class="custom-border">

@@ -432,7 +432,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="RLS Record Number">Record Number</label>
-                                                <input disabled type="text" name="record_number"
+                                                <input disabled type="text" id="record_number" name="record_number"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                                 {{-- <div class="static"></div> --}}
                                             </div>
@@ -982,7 +982,7 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input" id="capa_qa_comments_group">
-                                                <label for="capa_qa_comments">CAPA QA Comments</label>
+                                                <label for="capa_qa_comments">Comments</label>
                                                 <div class="relative-container">
                                                     <textarea name="capa_qa_comments" id="capa_qa_comments_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->capa_qa_comments }}</textarea>
                                                     <button class="mic-btn" type="button" style="display:none;">
@@ -1067,7 +1067,7 @@
                                                             <th>Action</th> 
                                                         </tr>
                                                     </thead>
-                                              
+                                                    <tbody>
                                                         @if ($data1->product_name)
                                                         @foreach (unserialize($data1->product_name) as $key => $temps)
                                                         <tr>
@@ -1202,28 +1202,14 @@
                                                         <tr>
                                                             <td><input type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ $key + 1 }}"></td>
-                                                            <!-- {{-- <td><input type="text" name="product_name[]"
-                                                                    value="{{ unserialize($data2->material_name)[$key] ? unserialize($data2->material_name)[$key] : '' }}">
-                                                            </td> --}} -->
+                                                           
                                                             <td><input type="text" name="material_name[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                 value="{{ unserialize($data2->material_name)[$key] ? unserialize($data2->material_name)[$key] : '' }}">
                                                         </td>
                                                             <td><input type="text" name="material_batch_no[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data2->material_batch_no)[$key] ? unserialize($data2->material_batch_no)[$key] : '' }}">
                                                             </td>
-                                                            <!-- {{-- <td><input type="text" name="material_mfg_date[]"
-                                                                    value="{{ unserialize($data2->material_mfg_date)[$key] ? unserialize($data2->material_mfg_date)[$key] : '' }}">
-                                                            </td>
-                                                            <td><input type="text" name="material_expiry_date[]"
-                                                                    value="{{ unserialize($data2->material_expiry_date)[$key] ? unserialize($data2->material_expiry_date)[$key] : '' }}">
-                                                            </td> --}} -->
-                                                            <!-- <td><div class="group-input new-date-data-field mb-0">
-                                                                <div class="input-date "><div
-                                                                 class="calenderauditee">
-                                                                <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}  value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" />
-                                                                <input type="date" name="material_mfg_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" class="hide-input"
-                                                                oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`)" /></div></div></div></td> -->
-
+                                                            
                                                                 <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
@@ -1232,13 +1218,8 @@
                                                                 "class="hide-input"
                                                                 oninput="handleDateInput(this, `material_mfg_date{{$key}}`);checkDate('material_mfg_date{{$key}}_checkdate','material_expiry_date{{$key}}_checkdate')"  /></div></div></div></td>
 
-                                                                <!-- <td><div class="group-input new-date-data-field mb-0">
-                                                                    <div class="input-date "><div
-                                                                     class="calenderauditee">
-                                                                    <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}  value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" />
-                                                                    <input type="date" name="material_expiry_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" class="hide-input"
-                                                                    oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`)" /></div></div></div></td> -->
-                                                                    <td><div class="group-input new-date-data-field mb-0">
+                                                                
+                                                               <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                                     <div class="calenderauditee">
                                                                 <input type="text"   id="material_expiry_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" />
@@ -1251,20 +1232,7 @@
                                                              <td><input type="text" name="material_remark[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data2->material_remark)[$key] ? unserialize($data2->material_remark)[$key] : '' }}">
                                                             </td>
-                                                             <!-- <td><input type="text" id="batch_status" name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                                    value="{{ unserialize($data2->material_batch_status)[$key] ? unserialize($data2->material_batch_status)[$key] : '' }}">
-                                                            </td>  -->
-                                                            <!-- <td>
-                                                               <select id="batch_status"
-                                                                   name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-
-                                                               <option value="">-- Select value --</option>
-                                                                  <option value="Hold">Hold</option>
-                                                                  <option value="Release">Release</option>
-                                                                <option value="quarantine">Quarantine</option>
-                                                                value="{{ unserialize($data2->material_batch_status)[$key] ? unserialize($data2->material_batch_status)[$key] : '' }}" >
-                                                            </select>
-                                                        </td> -->
+                                                             
                                                         <td>
                                                             <select id="batch_status" name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>
                                                                 <option value="">-- Select value --</option>
@@ -1289,9 +1257,8 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Material Details">
-                                                    Equipment/Instruments Details<button type="button" name="ann"
-                                                    id="equipment"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
+                                                    Equipment/Instruments Details<button type="button" name="ann" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    id="equipment">+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="equipment_details">
                                                     <thead>
@@ -1319,13 +1286,11 @@
                                                             <td><input type="text" name="equipment_comments[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data3->equipment_comments)[$key] ? unserialize($data3->equipment_comments)[$key] : '' }}">
                                                             </td>
-                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
 
-                                                        </tr>
+                                                            </tr>
                                                     @endforeach
                                                         @endif
-
-
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1852,14 +1817,14 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Plan Proposed By">Plan Proposed By</label>
+                                                <label for="Plan Proposed By">Proposed Plan By</label>
                                                 <input type="hidden" name="plan_proposed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->plan_proposed_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Plan Proposed On">Plan Proposed On</label>
+                                                <label for="Plan Proposed On">Proposed Plan On</label>
                                                 <input type="hidden" name="plan_proposed_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->plan_proposed_on }}</div>
                                             </div>
@@ -1867,49 +1832,46 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Plan Approved By">Plan Approved By</label>
+                                                <label for="QA More Info Required By">More Info Required By</label>
+                                                <input type="hidden" name="more_info_review_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->more_info_review_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="QA More Info Required On">More Info Required On</label>
+                                                <input type="hidden" name="more_info_review_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->more_info_review_on }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Plan Approved By">Approved Plan By</label>
                                                 <input type="hidden" name="plan_approved_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->plan_approved_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Plan Approved On">Plan Approved On</label>
+                                                <label for="Plan Approved On">Approved Plan On</label>
                                                 <input type="hidden" name="plan_approved_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->Plan_approved_on }}</div>
                                             </div>
                                         </div>
 
-
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="QA More Info Required By">QA More Info Required
-                                                    By</label>
+                                                <label for="QA More Info Required By">QA More Info Required By</label>
                                                 <input type="hidden" name="qa_more_info_required_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->qa_more_info_required_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="QA More Info Required On">QA More Info Required
-                                                    On</label>
+                                                <label for="QA More Info Required On">QA More Info Required On</label>
                                                 <input type="hidden" name="qa_more_info_required_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->qa_more_info_required_on }}</div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Cancelled By">Cancelled By</label>
-                                                <input type="hidden" name="cancelled_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->cancelled_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Cancelled On">Cancelled On</label>
-                                                <input type="hidden" name="cancelled_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
 
@@ -1943,6 +1905,21 @@
                                                 <div class="static">{{ $data->approved_on }}</div>
                                             </div>
                                         </div>
+                                        
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Completed By">All Actions Completed By</label>
+                                                <input type="hidden" name="all_actions_completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->all_actions_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Completed On">All Actions Completed On</label>
+                                                <input type="hidden" name="all_actions_completed_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->all_actions_completed_on }}</div>
+                                            </div>
+                                        </div>
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -1956,6 +1933,20 @@
                                                 <label for="Rejected On">Rejected On</label>
                                                 <input type="hidden" name="rejected_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->rejected_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Cancelled By">Cancelled By</label>
+                                                <input type="hidden" name="cancelled_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->cancelled_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Cancelled On">Cancelled On</label>
+                                                <input type="hidden" name="cancelled_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
 

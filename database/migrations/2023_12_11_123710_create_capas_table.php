@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('capas', function (Blueprint $table) {
             $table->id();
             $table->integer('record')->nullable();
+            $table->text('record_number')->nullable();
+            $table->text('initiator_name')->nullable();
             $table->string('form_type')->nullable();
             $table->string('division_id')->nullable();
             $table->integer('initiator_id')->nullable();
@@ -92,12 +94,17 @@ return new class extends Migration
             $table->string('completed_by')->nullable();
             $table->string('cancelled_by')->nullable();
             $table->string('qa_more_info_required_by')->nullable();
+            $table->string('qa_more_info_required_on')->nullable();
             $table->string('plan_approved_by')->nullable();
             $table->string('plan_proposed_by')->nullable();
 
+            $table->string('more_info_review_by')->nullable();
+            $table->string('more_info_review_on')->nullable();
+            $table->string('all_actions_completed_by')->nullable();
+            $table->string('all_actions_completed_on')->nullable();
+
             $table->string('plan_proposed_on')->nullable();
             $table->string('Plan_approved_on')->nullable();
-            $table->string('qa_more_info_required_on')->nullable();
             $table->string('cancelled_on')->nullable();
             $table->string('completed_on')->nullable();
             $table->string('approved_on')->nullable();

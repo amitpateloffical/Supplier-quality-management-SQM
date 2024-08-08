@@ -374,10 +374,10 @@
                                 <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change From
-                                            :</strong> {{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
+                                            :</strong> {{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }}
                                     @else
                                         <strong>Change From
-                                            :</strong> {{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                            :</strong> {{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
                                     @endif
                                 </div>
                                 <br>

@@ -276,8 +276,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number">Record Number</label>
-                                        <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
+                                        <input type="text" value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}" readonly>                                            
+                                        <input type="hidden" id="record_number" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}" > 
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -296,8 +296,8 @@
                                     <div class="group-input">
                                         <label for="Initiator">Initiator</label>
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                        <input disabled type="text" name="division_code"
-                                            value="{{ Auth::user()->name }}">
+                                        <input readonly type="text" value="{{ Auth::user()->name }}">
+                                        <input type="hidden" id="initiator_name" name="initiator_name" value="{{ Auth::user()->name }}">    
                                     </div>
                                 </div>
 
@@ -874,7 +874,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input" id="capa_qa_comments_group">
-                                        <label for="capa_qa_comments">CAPA QA Comments</label>
+                                        <label for="capa_qa_comments">Comments</label>
                                         <div class="relative-container">
                                             <textarea name="capa_qa_comments" id="capa_qa_comments_textarea" class="mic-input" ></textarea>
                                             <button class="mic-btn" type="button" style="display:none;">
@@ -1012,13 +1012,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td><input disabled type="text" name="serial_number[]" value="1"></td>
-                                                    <td><input type="text" name="equipment[]"></td>
-                                                    <td><input type="text" name="equipment_instruments[]"></td>
-                                                    <td><input type="text" name="equipment_comments[]"></td>
-                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                                </tr>
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -1435,32 +1429,47 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Plan Proposed By">Plan Proposed By</label>
+                                        <label for="Plan Proposed By">Proposed Plan By</label>
                                         <input type="hidden" name="plan_proposed_by">
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Plan Proposed On">Plan Proposed On</label>
+                                        <label for="Plan Proposed On">Proposed Plan On</label>
                                         <input type="hidden" name="plan_proposed_on">
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Plan Approved By">Plan Approved By</label>
+                                        <label for="QA More Info Required By">More Info Required By</label>
+                                        <input type="hidden" name="more_info_review_by">
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="QA More Info Required On">More Info Required On</label>
+                                        <input type="hidden" name="more_info_review_on">
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Plan Approved By">Approved Plan By</label>
                                         <input type="hidden" name="Plan_approved_by">
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Plan Approved On">Plan Approved On</label>
+                                        <label for="Plan Approved On">Approved Plan On</label>
                                         <input type="hidden" name="Plan_approved_on">
                                         <div class="static"></div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA More Info Required By">QA More Info Required By</label>
@@ -1475,20 +1484,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled By">Cancelled By</label>
-                                        <input type="hidden" name="cancelled_by">
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled On">Cancelled On</label>
-                                        <input type="hidden" name="cancelled_on">
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
+                            
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed By">Completed By</label>
@@ -1503,6 +1499,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Approved By">Approved By</label>
@@ -1518,6 +1515,22 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
+                               
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed By">All Actions Completed By</label>
+                                        <input type="hidden" name="all_actions_completed_by">
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed On">All Actions Completed On</label>
+                                        <input type="hidden" name="all_actions_completed_on">
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Rejected By">Rejected By</label>
@@ -1529,6 +1542,20 @@
                                     <div class="group-input">
                                         <label for="Rejected On">Rejected On</label>
                                         <input type="hidden" name="rejected_on">
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Cancelled By</label>
+                                        <input type="hidden" name="cancelled_by">
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled On">Cancelled On</label>
+                                        <input type="hidden" name="cancelled_on">
                                         <div class="static"></div>
                                     </div>
                                 </div>

@@ -52,13 +52,11 @@ class CapaController extends Controller
     {
 
         // return $request;
-
         if (!$request->short_description) {
             toastr()->error("Short description is required");
             return redirect()->back();
         }
         $capa = new Capa();
-        $lastDocument = new Capa();
 
         $capa->form_type = "CAPA";
         $capa->record = ((RecordNumber::first()->value('counter')) + 1);
@@ -67,6 +65,8 @@ class CapaController extends Controller
         $capa->parent_id = $request->parent_id;
         $capa->parent_type = $request->parent_type;
         $capa->division_code = $request->division_code;
+        $capa->initiator_name = $request->initiator_name;
+        $capa->record_number = $request->record_number;
         $capa->intiation_date = $request->intiation_date;
         $capa->general_initiator_group = $request->initiator_group;
         $capa->short_description = $request->short_description;
@@ -74,8 +74,8 @@ class CapaController extends Controller
         $capa->due_date= $request->due_date;
         // dd($capa->due_date);
 
-        $capa->pending_more_info_review_by= $request->pending_more_info_review_by;
-        $capa->pending_more_info_review_on= $request->pending_more_info_review_on;
+        $capa->more_info_review_by= $request->more_info_review_by;
+        $capa->more_info_review_on= $request->more_info_review_on;
         $capa->pending_more_info_review_comment= $request->pending_more_info_review_comment;
 
         $capa->pending_more_info_review_comment= $request->pending_more_info_review_comment;
@@ -277,10 +277,44 @@ class CapaController extends Controller
         if (!empty($capa->division_code)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = $capa->division_code;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($capa->record_number)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = $capa->record_number;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($capa->initiator_name)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = $capa->initiator_name;
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -298,7 +332,7 @@ class CapaController extends Controller
 ';
             $history->previous = "Null";
             $history->current = $capa->due_date_extension;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -313,8 +347,8 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
-            $history->current = $capa->initiator_Group;
-            $history->comment = "NA";
+            $history->current = Helpers::getFullDepartmentName($capa->initiator_Group);
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -331,7 +365,7 @@ class CapaController extends Controller
             $history->activity_type = 'Initiator Group Code';
             $history->previous = "Null";
             $history->current = $capa->initiator_group_code;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -348,7 +382,7 @@ class CapaController extends Controller
             $history->activity_type = 'Date of Initiation';
             $history->previous = "Null";
             $history->current = $capa->intiation_date->format('d-M-Y');
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -365,7 +399,7 @@ class CapaController extends Controller
             $history->activity_type = 'Severity Level';
             $history->previous = "Null";
             $history->current = $capa->severity_level_form;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -383,7 +417,7 @@ class CapaController extends Controller
             $history->activity_type = 'Initiated Through';
             $history->previous = "Null";
             $history->current = $capa->initiated_through;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -399,7 +433,7 @@ class CapaController extends Controller
             $history->activity_type = 'Others';
             $history->previous = "Null";
             $history->current = $capa->initiated_through_req;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -416,7 +450,7 @@ class CapaController extends Controller
             $history->activity_type = 'Repeat';
             $history->previous = "Null";
             $history->current = $capa->repeat;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -433,7 +467,7 @@ class CapaController extends Controller
             $history->activity_type = 'Repeat Nature';
             $history->previous = "Null";
             $history->current = $capa->repeat_nature;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -450,7 +484,7 @@ class CapaController extends Controller
             $history->activity_type = 'Problem Description';
             $history->previous = "Null";
             $history->current = $capa->problem_description;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -463,19 +497,14 @@ class CapaController extends Controller
 
 
 
-        if ($lastDocument->capa_team != $capa->capa_team || !empty($request->capa_team_comment)) {
-            // Fetch previous and current team members' names
-            $previousTeamMembers = User::whereIn('id', explode(',', $lastDocument->capa_team))->pluck('name')->toArray();
-            $currentTeamMembers = User::whereIn('id', explode(',', $capa->capa_team))->pluck('name')->toArray();
-
-
+        if (!empty($request->capa_team_comment)) {
 
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
             $history->activity_type = 'CAPA Team';
-            $history->previous = implode(', ', $previousTeamMembers); // Convert array to comma-separated string
-            $history->current = implode(', ', $currentTeamMembers);   // Convert array to comma-separated string
-            $history->comment = "NA";
+            $history->previous = "Null";
+            $history->current = $capa->capa_team;   // Convert array to comma-separated string
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -493,7 +522,7 @@ class CapaController extends Controller
             $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
             $history->current = $capa->general_initiator_group;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -510,7 +539,7 @@ class CapaController extends Controller
             $history->activity_type = 'Short Description';
             $history->previous = "Null";
             $history->current = $capa->short_description;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -527,7 +556,7 @@ class CapaController extends Controller
         //     $history->activity_type = 'Problem Description';
         //     $history->previous = "Null";
         //     $history->current = $capa->problem_description;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -544,7 +573,7 @@ class CapaController extends Controller
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
             $history->current = $capa->due_date;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -555,10 +584,7 @@ class CapaController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->assign_to != $capa->assign_to || !empty($request->assign_to_comment)) {
-            // Fetch previous and current assigned user's name
-            $previousAssignedUser = User::find($lastDocument->assign_to)->name ?? 'Null'; // Assuming there might be a case where the user doesn't exist
-            $currentAssignedUser = User::find($capa->assign_to)->name ?? 'Null'; // Assuming there might be a case where the user doesn't exist
+        if (!empty($request->assign_to_comment)) {
 
             $lastDataAudittrail = CapaAuditTrial::where('capa_id', $capa->id)
                 ->where('activity_type', 'Assigned To')
@@ -567,8 +593,8 @@ class CapaController extends Controller
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
             $history->activity_type = 'Assigned To';
-            $history->previous = $previousAssignedUser; // Previous assigned user name
-            $history->current = $currentAssignedUser;   // Current assigned user name
+            $history->previous = "Null";// Previous assigned user name
+            $history->current = $capa->assign_to_comment;   // Current assigned user name
             $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -599,7 +625,7 @@ class CapaController extends Controller
             $history->activity_type = 'Reference Records';
             $history->previous = "Null";
             $history->current = $formattedRecordsString;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -620,7 +646,7 @@ class CapaController extends Controller
             $history->activity_type = 'Initial Observation';
             $history->previous = "Null";
             $history->current = $capa->initial_observation;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -637,7 +663,7 @@ class CapaController extends Controller
             $history->activity_type = 'Interim Containnment';
             $history->previous = "Null";
             $history->current = $capa->interim_containnment;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -654,7 +680,7 @@ class CapaController extends Controller
             $history->activity_type = 'Containment Comments';
             $history->previous = "Null";
             $history->current = $capa->containment_comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -670,7 +696,7 @@ class CapaController extends Controller
             $history->activity_type = 'CAPA Attachment';
             $history->previous = "Null";
             $history->current = $capa->capa_attachment;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -687,7 +713,7 @@ class CapaController extends Controller
             $history->activity_type = 'CAPA QA Comments';
             $history->previous = "Null";
             $history->current = $capa->capa_qa_comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -704,7 +730,7 @@ class CapaController extends Controller
             $history->activity_type = 'CAPA QA Comments';
             $history->previous = "Null";
             $history->current = $capa->capa_qa_comments2;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -721,7 +747,7 @@ class CapaController extends Controller
             $history->activity_type = 'Details';
             $history->previous = "Null";
             $history->current = $capa->details_new;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -738,7 +764,7 @@ class CapaController extends Controller
             $history->activity_type = '';
             $history->previous = "Null";
             $history->current = $capa->capa_type;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -756,7 +782,7 @@ class CapaController extends Controller
             $history->activity_type = 'Project Datails Application';
             $history->previous = "Null";
             $history->current = $capa->project_details_application;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -773,7 +799,7 @@ class CapaController extends Controller
             $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
             $history->current = $capa->project_initiator_group;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -791,7 +817,7 @@ class CapaController extends Controller
             $history->activity_type = 'Site Number';
             $history->previous = "Null";
             $history->current = $capa->site_number;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -808,7 +834,7 @@ class CapaController extends Controller
             $history->activity_type = 'Subject Number';
             $history->previous = "Null";
             $history->current = $capa->subject_number;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -825,7 +851,7 @@ class CapaController extends Controller
             $history->activity_type = 'Subject Initials';
             $history->previous = "Null";
             $history->current = $capa->subject_initials;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -842,7 +868,7 @@ class CapaController extends Controller
             $history->activity_type = 'Sponsor';
             $history->previous = "Null";
             $history->current = $capa->sponsor;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -859,7 +885,7 @@ class CapaController extends Controller
             $history->activity_type = 'General Deviation';
             $history->previous = "Null";
             $history->current = $capa->general_deviation;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -876,7 +902,7 @@ class CapaController extends Controller
             $history->activity_type = 'CAPA Type';
             $history->previous = "Null";
             $history->current = $capa->capa_type;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -893,7 +919,7 @@ class CapaController extends Controller
             $history->activity_type = 'Corrective Action';
             $history->previous = "Null";
             $history->current = $capa->corrective_action;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -910,7 +936,7 @@ class CapaController extends Controller
             $history->activity_type = 'Preventive Action';
             $history->previous = "Null";
             $history->current = $capa->preventive_action;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -927,7 +953,7 @@ class CapaController extends Controller
             $history->activity_type = 'Supervisor Review Comments';
             $history->previous = "Null";
             $history->current = $capa->supervisor_review_comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -944,7 +970,7 @@ class CapaController extends Controller
             $history->activity_type = 'QA Review & Closure';
             $history->previous = "Null";
             $history->current = $capa->qa_review;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -961,7 +987,7 @@ class CapaController extends Controller
             $history->activity_type = 'Effectiveness Check required';
             $history->previous = "Null";
             $history->current = $capa->effectiveness;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -978,7 +1004,7 @@ class CapaController extends Controller
             $history->activity_type = 'Effect.Check Creation Date';
             $history->previous = "Null";
             $history->current = $capa->effect_check_date;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -995,7 +1021,7 @@ class CapaController extends Controller
             $history->activity_type = 'Closure Attachment';
             $history->previous = "Null";
             $history->current = $capa->closure_attachment;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1022,6 +1048,7 @@ class CapaController extends Controller
         $capa->parent_id = $request->parent_id;
         $capa->parent_type = $request->parent_type;
         $capa->division_code = $request->division_code;
+        $capa->record_number = $request->record_number;
         $capa->intiation_date= $request->intiation_date;
         $capa->general_initiator_group = $request->initiator_group;
         $capa->short_description = $request->short_description;
@@ -1199,7 +1226,7 @@ class CapaController extends Controller
                 $data3->equipment_comments = serialize($request->equipment_comments);
             }
         }
-            $data3->save();
+           
             $capa->update();
 
         //     $record = RecordNumber::first();
@@ -1227,7 +1254,7 @@ class CapaController extends Controller
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
+        //     $history->change_to =   "Null";
         //     $history->change_from = $lastDocument->status;
         //     $history->action_name = $lastDataAudittrail  ? 'Update' : 'New';
         //     $history->save();
@@ -1249,7 +1276,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->general_initiator_group) || $lastDocument->general_initiator_group === '') {
                 $history->action_name = 'New';
@@ -1275,7 +1302,7 @@ class CapaController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->change_to =   "Not Applicable";
+        $history->change_to =   "Null";
         $history->change_from = $lastDocument->status;
         if (is_null($lastDocument->initiated_through_req) || $lastDocument->initiated_through_req === '') {
             $history->action_name = 'New';
@@ -1300,7 +1327,7 @@ class CapaController extends Controller
 //     $history->user_name = Auth::user()->name;
 //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 //     $history->origin_state = $lastDocument->status;
-//     $history->change_to =   "Not Applicable";
+//     $history->change_to =   "Null";
 //     $history->change_from = $lastDocument->status;
 //     $history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
 //     $history->save();
@@ -1321,7 +1348,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->initiator_Group) || $lastDocument->initiator_Group === '') {
                 $history->action_name = 'New';
@@ -1345,7 +1372,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->initiator_group_code) || $lastDocument->initiator_group_code === '') {
                 $history->action_name = 'New';
@@ -1370,7 +1397,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             //$history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             if (is_null($lastDocument->short_description) || $lastDocument->short_description === '') {
@@ -1397,7 +1424,7 @@ class CapaController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->change_to =   "Not Applicable";
+        $history->change_to =   "Null";
         $history->change_from = $lastDocument->status;
         //$history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
         if (is_null($lastDocument->repeat_nature) || $lastDocument->repeat_nature === '') {
@@ -1423,7 +1450,7 @@ class CapaController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->change_to =   "Not Applicable";
+        $history->change_to =   "Null";
         $history->change_from = $lastDocument->status;
         if (is_null($lastDocument->repeat) || $lastDocument->repeat === '') {
             $history->action_name = 'New';
@@ -1446,7 +1473,7 @@ class CapaController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->change_to =   "Not Applicable";
+        $history->change_to =   "Null";
         $history->change_from = $lastDocument->status;
         if (is_null($lastDocument->initiated_through) || $lastDocument->initiated_through === '') {
             $history->action_name = 'New';
@@ -1473,7 +1500,7 @@ class CapaController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->change_to =   "Not Applicable";
+        $history->change_to =   "Null";
         $history->change_from = $lastDocument->status;
         if (is_null($lastDocument->severity_level_form) || $lastDocument->severity_level_form === '') {
             $history->action_name = 'New';
@@ -1498,7 +1525,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             //$history->action_name = $lastDataAudittrail  ? 'New' : 'Update';
             if (is_null($lastDocument->problem_description) || $lastDocument->problem_description === '') {
@@ -1511,8 +1538,8 @@ class CapaController extends Controller
 
         if ($lastDocument->assign_to != $capa->assign_to || !empty($request->assign_to_comment)) {
             // Fetch previous and current assigned user's name
-            $previousAssignedUser = User::find($lastDocument->assign_to)->name ?? 'Unknown'; // Assuming there might be a case where the user doesn't exist
-            $currentAssignedUser = User::find($capa->assign_to)->name ?? 'Unknown'; // Assuming there might be a case where the user doesn't exist
+            $previousAssignedUser = User::find($lastDocument->assign_to)->name ?? 'Null'; // Assuming there might be a case where the user doesn't exist
+            $currentAssignedUser = User::find($capa->assign_to)->name ?? 'Null'; // Assuming there might be a case where the user doesn't exist
 
             $lastDataAudittrail = CapaAuditTrial::where('capa_id', $capa->id)
                 ->where('activity_type', '  Assigned To')
@@ -1528,7 +1555,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->assign_to) || $lastDocument->assign_to === '') {
                 $history->action_name = 'New';
@@ -1556,7 +1583,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->capa_team) || $lastDocument->capa_team === '') {
                 $history->action_name = 'New';
@@ -1596,7 +1623,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->initial_observation) || $lastDocument->initial_observation === '') {
                 $history->action_name = 'New';
@@ -1620,7 +1647,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->interim_containnment) || $lastDocument->interim_containnment === '') {
                 $history->action_name = 'New';
@@ -1644,7 +1671,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->containment_comments) || $lastDocument->containment_comments === '') {
                 $history->action_name = 'New';
@@ -1674,7 +1701,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->capa_attachment) || $lastDocument->capa_attachment === '') {
                 $history->action_name = 'New';
@@ -1699,7 +1726,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->capa_qa_comments) || $lastDocument->capa_qa_comments === '') {
                 $history->action_name = 'New';
@@ -1752,7 +1779,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->capa_related_record) || $lastDocument->capa_related_record === '') {
                 $history->action_name = 'New';
@@ -1776,7 +1803,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->project_details_application) || $lastDocument->project_details_application === '') {
                 $history->action_name = 'New';
@@ -1800,7 +1827,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->project_initiator_group) || $lastDocument->project_initiator_group === '') {
                 $history->action_name = 'New';
@@ -1824,7 +1851,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->site_number) || $lastDocument->site_number === '') {
                 $history->action_name = 'New';
@@ -1849,7 +1876,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->subject_number) || $lastDocument->subject_number === '') {
                 $history->action_name = 'New';
@@ -1873,7 +1900,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->subject_initials) || $lastDocument->subject_initials === '') {
                 $history->action_name = 'New';
@@ -1899,7 +1926,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->sponsor) || $lastDocument->sponsor === '') {
                 $history->action_name = 'New';
@@ -1923,7 +1950,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->general_deviation) || $lastDocument->general_deviation === '') {
                 $history->action_name = 'New';
@@ -1948,7 +1975,7 @@ class CapaController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->change_to =   "Not Applicable";
+        $history->change_to =   "Null";
         $history->change_from = $lastDocument->status;
         if (is_null($lastDocument->capa_type) || $lastDocument->capa_type === '') {
             $history->action_name = 'New';
@@ -1974,7 +2001,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->corrective_action) || $lastDocument->corrective_action === '') {
                 $history->action_name = 'New';
@@ -1999,7 +2026,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->preventive_action) || $lastDocument->preventive_action === '') {
                 $history->action_name = 'New';
@@ -2024,7 +2051,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->supervisor_review_comments) || $lastDocument->supervisor_review_comments === '') {
                 $history->action_name = 'New';
@@ -2049,7 +2076,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->qa_review) || $lastDocument->qa_review === '') {
                 $history->action_name = 'New';
@@ -2074,7 +2101,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->effectiveness) || $lastDocument->effectiveness === '') {
                 $history->action_name = 'New';
@@ -2098,7 +2125,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->effect_check_date) || $lastDocument->effect_check_date === '') {
                 $history->action_name = 'New';
@@ -2123,7 +2150,7 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to =   "Null";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->closure_attachment) || $lastDocument->closure_attachment === '') {
                 $history->action_name = 'New';
@@ -2181,7 +2208,7 @@ class CapaController extends Controller
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Plan Proposed By, Plan Proposed On';
+                    $history->activity_type = 'Proposed Plan By, Proposed Plan On';
                     if (is_null($lastDocument->plan_proposed_by) || $lastDocument->plan_proposed_by === '') {
                         $history->previous = "";
                     } else {
@@ -2240,7 +2267,7 @@ class CapaController extends Controller
 
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'Plan Approved By, Plan Approved On';
+                $history->activity_type = 'Approved Plan By, Approved Plan On';
                 if (is_null($lastDocument->plan_approved_by) || $lastDocument->plan_approved_by === '') {
                     $history->previous = "";
                 } else {
@@ -2332,7 +2359,7 @@ class CapaController extends Controller
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Approved On, Approved_On';
+                        $history->activity_type = 'Approved By, Approved On';
                         if (is_null($lastDocument->approved_by) || $lastDocument->approved_by === '') {
                             $history->previous = "";
                         } else {
@@ -2363,21 +2390,21 @@ class CapaController extends Controller
             if ($capa->stage == 5) {
                 $capa->stage = "6";
                 $capa->status = "Closed - Done";
-                $capa->completed_by = Auth::user()->name;
-                $capa->completed_on = Carbon::now()->format('d-M-Y');
+                $capa->all_actions_completed_by = Auth::user()->name;
+                $capa->all_actions_completed_on = Carbon::now()->format('d-M-Y');
                 // $capa->completed_comment = $request->comment;
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Completed By, Completed On';
-                        if (is_null($lastDocument->completed_by) || $lastDocument->completed_by === '') {
+                        $history->activity_type = 'All Completed By, All Completed On';
+                        if (is_null($lastDocument->all_actions_completed_by) || $lastDocument->all_actions_completed_by === '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $lastDocument->completed_by . ' , ' . $lastDocument->completed_on;
+                            $history->previous = $lastDocument->all_actions_completed_by . ' , ' . $lastDocument->all_actions_completed_on;
                         }
                         $history->previous = "";
                         $history->action = 'All Action Completed';
-                        $history->current = $capa->completed_by . ' , ' . $capa->completed_on;
+                        $history->current = $capa->all_actions_completed_by . ' , ' . $capa->all_actions_completed_on;
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -2386,7 +2413,7 @@ class CapaController extends Controller
                         $history->change_to =   "Closed - Done";
                         $history->change_from = $lastDocument->status;
                         $history->stage = 'All Action Completed';
-                        if (is_null($lastDocument->completed_by) || $lastDocument->completed_by === '') {
+                        if (is_null($lastDocument->all_actions_completed_by) || $lastDocument->all_actions_completed_by === '') {
                             $history->action_name = 'New';
                         } else {
                             $history->action_name = 'Update';
@@ -2471,20 +2498,20 @@ class CapaController extends Controller
           if($capa->stage == 2){
             $capa->stage = "1";
             $capa->status = "Opened";
-            $capa->pending_more_info_review_by = Auth::user()->name;
-            $capa->pending_more_info_review_on = Carbon::now()->format('d-M-Y');
+            $capa->more_info_review_by = Auth::user()->name;
+            $capa->more_info_review_on = Carbon::now()->format('d-M-Y');
             // $capa->pending_more_info_review_comment = $request->comments;
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Pending More Info ReviewBy, Pending More Info Review On';
-                    if (is_null($lastDocument->pending_more_info_review_by) || $lastDocument->pending_more_info_review_by === '') {
+                    $history->activity_type = 'More Info Required By, More Info Required On';
+                    if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
                         $history->previous = "";
                     } else {
-                        $history->previous = $lastDocument->pending_more_info_review_by . ' , ' . $lastDocument->pending_more_info_review_on;
+                        $history->previous = $lastDocument->more_info_review_by . ' , ' . $lastDocument->more_info_review_on;
                     }
                     $history->previous ="";
-                    $history->current = $capa->pending_more_info_review_by . ' , ' . $capa->pending_more_info_review_on;
+                    $history->current = $capa->more_info_review_by . ' , ' . $capa->more_info_review_on;
                     $history->action = 'More Info Required';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
@@ -2494,7 +2521,7 @@ class CapaController extends Controller
                     $history->change_to =   "Opened";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'More Info Required';
-                    if (is_null($lastDocument->pending_more_info_review_by) || $lastDocument->pending_more_info_review_by === '') {
+                    if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
                         $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
@@ -2537,8 +2564,8 @@ class CapaController extends Controller
         // $capa->qa_more_info_required_comment = $request->comments;
 
 
-        $capa->rejected_by = Auth::user()->name;
-        $capa->rejected_on = Carbon::now()->format('d-M-Y');
+        // $capa->rejected_by = Auth::user()->name;
+        // $capa->rejected_on = Carbon::now()->format('d-M-Y');
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'QA More Info Required By, QA More Info Required On';

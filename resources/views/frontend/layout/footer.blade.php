@@ -1317,8 +1317,7 @@
             function generateTableRow(serialNumber) {
                 var html =
                     '<tr>' +
-                    '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
-                    '"></td>' +
+                    '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +'"></td>' +
                     '<td><input type="text" name="equipment[]"></td>' +
                     '<td><input type="text" name="equipment_instruments[]"></td>' +
                     '<td><input type="text" name="equipment_comments[]"></td>' +

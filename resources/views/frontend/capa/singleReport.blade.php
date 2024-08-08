@@ -257,9 +257,25 @@
                   <table>  
                      <tr>
                         <th class="w-20 pt-1">CAPA Team</th>
-                        <td class="w-30">@if($data->capa_team){{  Helpers::getInitiatorName($data->capa_team) }}@else Not Applicable @endif</td>
+                        <td class="w-30">
+                            @if($data->capa_team)
+                                @foreach (explode(',', $data->capa_team) as $Key => $value)
+                                    <li>{{ Helpers::getInitiatorName($value) }}</li>
+                                @endforeach
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                         <th class="w-20">Reference Records</th>
-                        <td class="w-30">@if($data->capa_related_record){{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
+                        <td class="w-30">
+                            @if($data->capa_related_record)
+                                @foreach (explode(',', $data->capa_related_record) as $Key => $value)
+                                    <li>{{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($value) }}</li>
+                                @endforeach
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                     
                     <tr >

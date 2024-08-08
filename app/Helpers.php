@@ -20,14 +20,14 @@ class Helpers
     public static function getdateFormat($date, $usingFormat = false)
         {
             try {
-                
+
                 if(empty($date)) {
                     return ''; // or any default value you prefer
                 }
-                else{        
+                else{
                     if ($usingFormat) {
                         $date = Carbon::createFromFormat('d/m/Y', $date);
-                    } else {       
+                    } else {
                         $date = Carbon::parse($date);
                     }
                     $formatted_date = $date->format("d-M-Y");
@@ -36,7 +36,7 @@ class Helpers
             } catch (\Exception $e) {
                 return "-";
             }
-    
+
         }
 
         public static function getdateFormatNew($date)
@@ -50,7 +50,7 @@ class Helpers
                 $formatted_date = $date->format("d-M-Y");
                 return $formatted_date;
             }
-    
+
         }
 
 static function getFullDepartmentName($code)
@@ -100,7 +100,7 @@ static function getFullDepartmentName($code)
         case 'BA':
             $full_department_name = "Business Administration";
             break;
-        
+
         default:
             break;
     }
@@ -114,84 +114,84 @@ static function getFullDepartmentName($code)
     }
 
     public static function isRevised($data)
-    {   
+    {
         if($data  >= 8 ){
             return 'disabled';
         }else{
             return  '';
         }
-         
+
     }
     public static function getHodUserList(){
-        
+
         return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
     }
     public static function getQAUserList(){
-        
+
         return $QAUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'7'])->get();
     }
     public static function getInitiatorUserList(){
-        
+
         return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'3'])->get();
     }
     public static function getApproverUserList(){
-        
+
         return $ApproverUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'1'])->get();
     }
     public static function getReviewerUserList(){
-        
+
         return $ReviewerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'2'])->get();
     }
     public static function getCFTUserList(){
-        
+
         return $CFTUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'5'])->get();
     }
     public static function getTrainerUserList(){
-        
+
         return $TrainerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'6'])->get();
     }
     public static function getActionOwnerUserList(){
-        
+
         return $ActionOwnerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'8'])->get();
     }
     public static function getQAHeadUserList(){
-        
+
         return $QAHeadUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'9'])->get();
     }
     public static function getQCHeadUserList(){
-        
+
         return $QCHeadUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'10'])->get();
     }
     public static function getLeadAuditeeUserList(){
-        
+
         return $LeadAuditeeUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'11'])->get();
     }
     public static function getLeadAuditorUserList(){
-        
+
         return $LeadAuditorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'12'])->get();
     }
     public static function getAuditManagerUserList(){
-        
+
         return $AuditManagerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'13'])->get();
     }
     public static function getSupervisorUserList(){
-        
+
         return $SupervisorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'14'])->get();
     }
     public static function getResponsibleUserList(){
-        
+
         return $ResponsibleUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'15'])->get();
     }
     public static function getWorkGroupUserList(){
-        
+
         return $WorkGroupUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'16'])->get();
     }
     public static function getViewUserList(){
-        
+
         return $ViewUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'17'])->get();
     }
     public static function getFPUserList(){
-        
+
         return $FPUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'18'])->get();
     }
 
@@ -209,13 +209,13 @@ static function getFullDepartmentName($code)
         //    return true;
         // }else{
         //     return false;
-        // } 
+        // }
     }
 
 
     public static function checkRoles_check_reviewers($document)
     {
-       
+
         if ($document->reviewers) {
             $datauser = explode(',', $document->reviewers);
             for ($i = 0; $i < count($datauser); $i++) {
@@ -225,7 +225,7 @@ static function getFullDepartmentName($code)
             }
         } else {
             return false;
-        }         
+        }
     }
     public static function showStage($parentType, $model, $count)
     {
@@ -358,7 +358,7 @@ static function getFullDepartmentName($code)
     }
     public static function getInitiatorEmail($id)
     {
-   
+
         return   DB::table('users')->where('id',$id)->value('email');
     }
     public static function getDepartmentNameWithString($id)
@@ -386,12 +386,12 @@ static function getFullDepartmentName($code)
         }
         return $resp;
     }
-   
+
 public static function getInitiatorGroupFullName($shortName)
-    { 
+    {
 
         switch ($shortName) {
-            case 'Corporate Quality Assurance':
+            case 'CQA':
                 return 'Corporate Quality Assurance';
                 break;
             case 'QAB':
@@ -459,7 +459,7 @@ public static function getInitiatorGroupFullName($shortName)
                     ->subject('Record is for Review');
             });
         } catch (\Exception $e) {
-            // 
+            //
         }
     }
 
@@ -470,12 +470,12 @@ public static function getInitiatorGroupFullName($shortName)
             ->select('users.id', 'users.name')
             ->distinct()
             ->get();
-    
+
         $dropdown = [];
         foreach ($hodUserList as $hodUser) {
             $dropdown[] = ['id' => $hodUser->id, 'name' => $hodUser->name];
         }
-    
+
         return $dropdown;
     }
     public static function getQADropdown() {
@@ -485,12 +485,12 @@ public static function getInitiatorGroupFullName($shortName)
             ->select('users.id', 'users.name')
             ->distinct()
             ->get();
-    
+
         $dropdown = [];
         foreach ($QAUserList as $QAUser) {
             $dropdown[] = ['id' => $QAUser->id, 'name' => $QAUser->name];
         }
-    
+
         return $dropdown;
     }
 }

@@ -1,4 +1,5 @@
 <!-- resources/views/components/mic-and-speak.blade.php -->
+@props(['disabled' => false])
 <style>
     .mini-modal {
         display: none;
@@ -169,10 +170,10 @@
 
 
 
-<button class="mic-btn" type="button" style="display: none;">
+<button class="mic-btn" type="button" style="display: none;" {{ $disabled ? 'disabled' : '' }}>
     <i class="fas fa-microphone"></i>
 </button>
-<button class="speak-btn" type="button">
+<button class="speak-btn" type="button" {{ $disabled ? 'disabled' : '' }}>
     <i class="fas fa-volume-up"></i>
 </button>
 <div class="mini-modal">
@@ -269,7 +270,7 @@
         let selectedLanguage = 'en-us'; // Default language
         let inputText = '';
 
-        // When the user clicks the button, open the mini modal 
+        // When the user clicks the button, open the mini modal
         $(document).on('click', '.speak-btn', function() {
             let inputField = $(this).siblings('textarea, input');
             inputText = inputField.val();
@@ -382,7 +383,7 @@
         let audio = null;
         let selectedLanguage = 'en-us'; // Default language
 
-        // When the user clicks the button, open the mini modal 
+        // When the user clicks the button, open the mini modal
         $(document).on('click', '.speak-btn', function() {
             let inputField = $(this).siblings('textarea, input');
             let textToSpeak = inputField.val();

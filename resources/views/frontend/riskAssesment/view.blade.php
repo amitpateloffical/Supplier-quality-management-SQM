@@ -501,7 +501,7 @@
                                                         class="mic-input" maxlength="255" required
                                                         value="{{ $data->short_description }}"
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -698,7 +698,7 @@
                                                 <div class="relative-container">
                                                     <textarea name="description" class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="description">{{ $data->description }}</textarea>
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -710,7 +710,7 @@
                                                 <div class="relative-container">
                                                     <textarea name="comments" class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="comments">{{ $data->comments }}</textarea>
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -1813,13 +1813,19 @@
                                                                     @foreach (unserialize($fishbone->measurement) as $key => $measure)
                                                                         <div><input type="text"
                                                                                 value="{{ $measure }}"
-                                                                                name="measurement[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
+                                                                                name="measurement[]"
+                                                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                                        </div>
                                                                         <div><input type="text"
                                                                                 value="{{ unserialize($fishbone->materials)[$key] ? unserialize($fishbone->materials)[$key] : '' }}"
-                                                                                name="materials[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
+                                                                                name="materials[]"
+                                                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                                        </div>
                                                                         <div><input type="text"
                                                                                 value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}"
-                                                                                name="methods[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
+                                                                                name="methods[]"
+                                                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                                        </div>
                                                                     @endforeach
                                                                 @endif
                                                             </div>
@@ -1831,13 +1837,19 @@
                                                                     @foreach (unserialize($fishbone->environment) as $key => $measure)
                                                                         <div><input type="text"
                                                                                 value="{{ $measure }}"
-                                                                                name="environment[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
+                                                                                name="environment[]"
+                                                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                                        </div>
                                                                         <div><input type="text"
                                                                                 value="{{ unserialize($fishbone->manpower)[$key] ? unserialize($fishbone->manpower)[$key] : '' }}"
-                                                                                name="manpower[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
+                                                                                name="manpower[]"
+                                                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                                        </div>
                                                                         <div><input type="text"
                                                                                 value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}"
-                                                                                name="machine[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
+                                                                                name="machine[]"
+                                                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                                        </div>
                                                                     @endforeach
                                                                 @endif
 
@@ -3011,9 +3023,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3058,9 +3070,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3105,9 +3117,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>

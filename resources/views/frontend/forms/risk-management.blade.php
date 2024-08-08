@@ -407,9 +407,9 @@
                                                 <option value="Audit">Audit</option>
                                                 <option value="Complaint">Complaint</option>
                                                 <option value="Employee">Employee</option>
-                                                <option value="Customer">Customer</option>
+                                                {{-- <option value="Customer">Customer</option>
                                                 <option value="Regulation">Regulation</option>
-                                                <option value="Competition">Competition</option>
+                                                <option value="Competition">Competition</option> --}}
                                                 <option value="Other">Other</option>
                                             </select>
                                         </div>
@@ -549,9 +549,9 @@
                                                 <option value="Audit">Audit</option>
                                                 <option value="Complaint">Complaint</option>
                                                 <option value="Employee">Employee</option>
-                                                <option value="Customer">Customer</option>
+                                                {{-- <option value="Customer">Customer</option>
                                                 <option value="Regulation">Regulation</option>
-                                                <option value="Competition">Competition</option>
+                                                <option value="Competition">Competition</option> --}}
                                                 <option value="Other">Other</option>
                                             </select>
                                         </div>

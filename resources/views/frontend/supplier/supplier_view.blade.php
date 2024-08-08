@@ -1557,16 +1557,17 @@
 
                             <!-- to be filled by CQA Department -->
                             <div class="container">
-                                <div class="collapsible-section">
-                                    <!-- CQA Department Section -->
-                                    <div class="collapsible-header" data-toggle="collapse" data-target="#collapseCQA"
-                                        aria-expanded="false" aria-controls="collapseCQA">
-                                        <span class="title">CQA Department</span>
-                                        <span class="icon">&#x25B2;</span>
-                                    </div>
-                                    <div class="collapse" id="collapseCQA">
-                                        <div class="collapsible-content">
-                                            <div class="row">
+                                    <div class="collapsible-section">
+
+                                        <!-- Formulation & Development Department/CQA/MS&T Section -->
+                                        <div class="collapsible-header" data-toggle="collapse" data-target="#collapseFormulation" aria-expanded="false"
+                                            aria-controls="collapseFormulation">
+                                            <span class="title">Formulation & Development Department/CQA/MS&T</span>
+                                            <span class="icon">&#x25B2;</span>
+                                        </div>
+                                        <div class="collapse" id="collapseFormulation">
+                                            <div class="collapsible-content">
+                                                <div class="row">
 
                                                 <div class="col-lg-6">
                                                     <div class="group-input">

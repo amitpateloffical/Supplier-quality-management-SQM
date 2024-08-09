@@ -839,7 +839,7 @@ class RiskManagementController extends Controller
         if (!empty($data->room)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Room';
+            $history->activity_type = 'Room.';
             $history->previous = "Null";
             $history->current = $data->room;
             $history->comment = "NA";
@@ -2380,11 +2380,11 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->room != $data->room || !empty($request->room_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Room')
+            ->where('activity_type', 'Room.')
             ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Room';
+            $history->activity_type = 'Room.';
             $history->previous = $lastDocument->room;
             $history->current = $data->room;
             $history->comment = $request->room_comment;
@@ -4066,8 +4066,8 @@ class RiskManagementController extends Controller
         $doc = RiskManagement::find($id);
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-            $audit = RiskAuditTrail::where('risk_id', $id)->orderbyDesc('id')->get();
-            $data = RiskAuditTrail::where('risk_id', $id)->get();
+            $audit = RiskAuditTrail::where('risk_id', $id)->get();
+            $data = RiskAuditTrail::where('risk_id', $id)->orderbyDesc('id')->get();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.riskAssesment.auditReport', compact('data', 'doc','audit'))

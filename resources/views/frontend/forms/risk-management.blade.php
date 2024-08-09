@@ -597,7 +597,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Room">Room</label>
+                                            <label for="Room">Room.</label>
                                             <select name="room" id="room">
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="C-101">C-101</option>

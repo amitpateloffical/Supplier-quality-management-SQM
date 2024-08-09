@@ -414,7 +414,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Room</th>
+                        <th class="w-20">Room.</th>
                         <td class="w-80">
                             @if ($data->room)
                                 {{ $data->room }}
@@ -1163,15 +1163,15 @@
                         <td class="w-80">
                             @if ($data->detection2)
                                 @if ($data->detection2 == 1)
-                                    Impossible
+                                    Very Likely
                                 @elseif($data->detection2 == 2)
-                                    Rare
+                                    Likely
                                 @elseif($data->detection2 == 3)
                                     Unlikely
                                 @elseif($data->detection2 == 4)
-                                    Likely
+                                    Rare
                                 @else
-                                    Very Likely
+                                    Impossible
                                 @endif
                             @else
                                 Not Applicable

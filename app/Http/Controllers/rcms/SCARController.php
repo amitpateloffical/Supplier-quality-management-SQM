@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\rcms;
 
-use App\Http\Controllers\Controller; 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -92,9 +92,9 @@ class SCARController extends Controller
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
         $history->action_name = 'Create';
-        $history->save(); 
+        $history->save();
 
-       
+
         $history = new ScarAuditTrail();
         $history->scar_id = $scar->id;
         $history->activity_type = 'Division';
@@ -109,8 +109,8 @@ class SCARController extends Controller
         $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
-     
-        
+
+
         $history = new ScarAuditTrail;
         $history->scar_id = $scar->id;
         $history->activity_type = 'Inititator';
@@ -227,7 +227,7 @@ class SCARController extends Controller
             $history->scar_id = $scar->id;
             $history->activity_type = 'Follow Up Date';
             $history->previous = "Null";
-            $history->current = $request->followup_date;
+            $history->current = Helpers::getdateFormat($request->followup_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -482,7 +482,7 @@ class SCARController extends Controller
         $scar->effectiveness_check_summary = $request->effectiveness_check_summary;
         $scar->capa_plan = $request->capa_plan;
         $scar->update();
-        
+
 
         if($lastDocument->short_description != $request->short_description){
             $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
@@ -571,8 +571,8 @@ class SCARController extends Controller
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Follow Up Date';
-            $history->previous = $lastDocument->followup_date;
-            $history->current = $request->followup_date;
+            $history->previous = Helpers::getdateFormat($lastDocument->followup_date);
+            $history->current = Helpers::getdateFormat($request->followup_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -868,8 +868,7 @@ class SCARController extends Controller
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
             $data = ScarAuditTrail::where('scar_id', $id)->orderByDesc('id')->get();
-            $audit = ScarAuditTrail::where('scar_id', $id)->orderByDesc('id')->get();
-
+            $audit = ScarAuditTrail::where('scar_id', $id)->get();
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
@@ -924,7 +923,7 @@ class SCARController extends Controller
                     }
                     $history->current = $scar->submitted_by . ' , ' . $scar->submitted_on;
                     $history->action = 'Submit';
-                   
+
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -1030,7 +1029,7 @@ class SCARController extends Controller
                         $history->previous = $lastDocument->audit_schedule_by . ' , ' . $lastDocument->workin_progress_on;
                     }
                     $history->current = $scar->audit_schedule_by . ' , ' .  $scar->workin_progress_on;
-                   // $history->current = "Not Applicable";  
+                   // $history->current = "Not Applicable";
                    $history->action = 'Work in Progress';
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
@@ -1086,7 +1085,7 @@ class SCARController extends Controller
                     $history->action = 'Response';
                    // $history->current = $scar->response_submitted_by;
                     $history->comment = $request->comments;
-                    
+
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1150,7 +1149,7 @@ class SCARController extends Controller
                     } else {
                         $history->action_name = 'Update';
                     }
-    
+
                     $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {

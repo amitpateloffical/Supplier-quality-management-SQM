@@ -184,6 +184,19 @@
             </tr>
         </table>
     </header>
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -303,7 +316,7 @@
                             @endif
                         </td>
                     </tr>
-                   
+
                     <tr>
                         <th class="w-20">Recommended Action</th>
                         <td class="w-80" colspan="3">
@@ -326,10 +339,10 @@
                         <th class="w-20">Recommended Action</th>
                         <td class="w-80" colspan="3">
                             @if ($data->recommended_action)
-                                {{ $data->recommended_action }}
-                            @else
-                                Not Applicable
-                            @endif
+{{ $data->recommended_action }}
+@else
+Not Applicable
+@endif
                         </td>
                     </tr> -->
 
@@ -512,21 +525,7 @@
             </table>
         </div>
     </div>
-    </div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-
-            </tr>
-        </table>
-    </footer>
 
 </body>
 

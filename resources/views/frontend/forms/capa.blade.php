@@ -1427,14 +1427,14 @@
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Plan Proposed By">Proposed Plan By</label>
                                         <input type="hidden" name="plan_proposed_by">
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Plan Proposed On">Proposed Plan On</label>
                                         <input type="hidden" name="plan_proposed_on">
@@ -1443,12 +1443,18 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Submitted Comment">Proposed Plan Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
                                         <label for="QA More Info Required By">More Info Required By</label>
                                         <input type="hidden" name="more_info_review_by">
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA More Info Required On">More Info Required On</label>
                                         <input type="hidden" name="more_info_review_on">
@@ -1457,50 +1463,71 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Submitted Comment">More Info Required Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
                                         <label for="Plan Approved By">Approved Plan By</label>
                                         <input type="hidden" name="Plan_approved_by">
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Plan Approved On">Approved Plan On</label>
                                         <input type="hidden" name="Plan_approved_on">
                                         <div class="static"></div>
                                     </div>
                                 </div>
-
                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Submitted Comment">Approved Plan Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA More Info Required By">QA More Info Required By</label>
                                         <input type="hidden" name="qa_more_info_required_by">
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA More Info Required On">QA More Info Required On</label>
                                         <input type="hidden" name="qa_more_info_required_on">
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                            
                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Submitted Comment">QA More Info Required Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Completed By">Completed By</label>
                                         <input type="hidden" name="completed_by">
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Completed On">Completed On</label>
                                         <input type="hidden" name="completed_on">
                                         <div class="static"></div>
                                     </div>
                                 </div>
-
                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Submitted Comment">Completed Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved By">Approved By</label>
                                         <input type="hidden" name="approved_by">
@@ -1508,58 +1535,82 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved On">Approved On</label>
                                         <input type="hidden" name="approved_on">
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                               
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Completed By">All Actions Completed By</label>
-                                        <input type="hidden" name="all_actions_completed_by">
+                                        <label for="Submitted Comment">Approved Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
-                                        <label for="Completed On">All Actions Completed On</label>
-                                        <input type="hidden" name="all_actions_completed_on">
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Rejected By">Rejected By</label>
+                                        <label for="Rejected By">Reject More Info Review By</label>
                                         <input type="hidden" name="rejected_by">
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
-                                        <label for="Rejected On">Rejected On</label>
+                                        <label for="Rejected On">Reject More Info Review On</label>
                                         <input type="hidden" name="rejected_on">
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Submitted Comment">Reject More Info Review Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Completed By">All Actions Completed By</label>
+                                        <input type="hidden" name="all_actions_completed_by">
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Completed On">All Actions Completed On</label>
+                                        <input type="hidden" name="all_actions_completed_on">
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Submitted Comment">All Actions Completed Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-3">
+                                    <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
                                         <input type="hidden" name="cancelled_by">
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Cancelled On">Cancelled On</label>
                                         <input type="hidden" name="cancelled_on">
                                         <div class="static"></div>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Submitted Comment">Cancelled Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
                             </div>
+                            
                             <div class="button-block">
                                 {{-- <button type="submit" class="saveButton">Save</button> --}}
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

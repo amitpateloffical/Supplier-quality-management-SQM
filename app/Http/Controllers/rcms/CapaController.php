@@ -79,8 +79,6 @@ class CapaController extends Controller
         $capa->more_info_review_on= $request->more_info_review_on;
         $capa->pending_more_info_review_comment= $request->pending_more_info_review_comment;
 
-        $capa->pending_more_info_review_comment= $request->pending_more_info_review_comment;
-
         $capa->assign_to = $request->assign_to;
        $capa->capa_team = implode(',', $request->capa_team);
         $capa->capa_type = $request->capa_type;
@@ -711,7 +709,7 @@ class CapaController extends Controller
         if (!empty($capa->capa_qa_comments)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'CAPA QA Comments';
+            $history->activity_type = 'Comments';
             $history->previous = "Null";
             $history->current = $capa->capa_qa_comments;
             $history->comment = "Not Applicable";
@@ -1714,12 +1712,12 @@ class CapaController extends Controller
 
             if ($lastDocument->capa_qa_comments !=  $capa->capa_qa_comments || ! empty($request->capa_qa_comments_comment)) {
                 $lastDataAudittrail  = CapaAuditTrial::where('capa_id', $capa->id)
-                      ->where('activity_type', '  CAPA QA Comments')
+                      ->where('activity_type', 'Comments')
                       ->exists();
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = '  CAPA QA Comments';
+            $history->activity_type = 'Comments';
             $history->previous = $lastDocument->capa_qa_comments;
             $history->current = $capa->capa_qa_comments;
             $history->comment = $request->capa_qa_comments_comment;
@@ -1960,6 +1958,53 @@ class CapaController extends Controller
             }            $history->save();
         }
 
+        if ($lastDocument->capa_qa_comments2 !=  $capa->capa_qa_comments2 || ! empty($request->capa_qa_comments2_comment)) {
+            $lastDataAudittrail  = CapaAuditTrial::where('capa_id', $capa->id)
+                  ->where('activity_type', '  CAPA QA Comments')
+                  ->exists();
+
+        $history = new CapaAuditTrial();
+        $history->capa_id = $id;
+        $history->activity_type = '  CAPA QA Comments';
+        $history->previous = $lastDocument->capa_qa_comments2;
+        $history->current = $capa->capa_qa_comments2;
+        $history->comment = $request->capa_qa_comments2_comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Null";
+        $history->change_from = $lastDocument->status;
+        if (is_null($lastDocument->capa_qa_comments2) || $lastDocument->capa_qa_comments2 === '') {
+            $history->action_name = 'New';
+        } else {
+            $history->action_name = 'Update';
+        }            $history->save();
+    }
+
+                if ($lastDocument->details_new !=  $capa->details_new || ! empty($request->capa_qa_comments2_comment)) {
+                    $lastDataAudittrail  = CapaAuditTrial::where('capa_id', $capa->id)
+                        ->where('activity_type', '  Details')
+                        ->exists();
+
+                $history = new CapaAuditTrial();
+                $history->capa_id = $id;
+                $history->activity_type = '  Details';
+                $history->previous = $lastDocument->details_new;
+                $history->current = $capa->details_new;
+                $history->comment = $request->capa_qa_comments2_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Null";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->details_new) || $lastDocument->details_new === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }            $history->save();
+            }
         if ($lastDocument->capa_type !=  $capa->capa_type || ! empty($request->capa_type_comment)) {
             $lastDataAudittrail  = CapaAuditTrial::where('capa_id', $capa->id)
                   ->where('activity_type', '  Corrective Action')
@@ -2203,7 +2248,7 @@ class CapaController extends Controller
                 $capa->status = "Pending CAPA Plan";
                 $capa->plan_proposed_by = Auth::user()->name;
                 $capa->plan_proposed_on = Carbon::now()->format('d-M-Y');
-                // $capa->plan_proposed_comment = $request->comment;
+                $capa->plan_proposed_comment = $request->comment;
 
 
 
@@ -2263,7 +2308,7 @@ class CapaController extends Controller
                 $capa->status = "CAPA In Progress";
                 $capa->plan_approved_by = Auth::user()->name;
                 $capa->plan_approved_on = Carbon::now()->format('d-M-Y');
-                // $capa->plan_approved_comment = $request->comment;
+                $capa->plan_approved_comment = $request->comment;
 
 
                 $history = new CapaAuditTrial();
@@ -2318,7 +2363,7 @@ class CapaController extends Controller
                 $capa->status = "QA Review";
                 $capa->completed_by = Auth::user()->name;
                 $capa->completed_on = Carbon::now()->format('d-M-Y');
-                // $capa->completed_comment = $request->comment;
+                $capa->completedd_comment = $request->comment;
 
 
                     $history = new CapaAuditTrial();
@@ -2355,7 +2400,7 @@ class CapaController extends Controller
                 $capa->status = "Pending Actions Completion";
                 $capa->approved_by = Auth::user()->name;
                 $capa->approved_on = Carbon::now()->format('d-M-Y');
-                // $capa->approved_comment = $request->comment;
+                $capa->approved_comment = $request->comment;
 
 
                         $history = new CapaAuditTrial();
@@ -2393,11 +2438,11 @@ class CapaController extends Controller
                 $capa->status = "Closed - Done";
                 $capa->all_actions_completed_by = Auth::user()->name;
                 $capa->all_actions_completed_on = Carbon::now()->format('d-M-Y');
-                // $capa->completed_comment = $request->comment;
+                $capa->all_actions_completed_comment = $request->comment;
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'All Completed By, All Completed On';
+                        $history->activity_type = 'All Action Completed By, All Action Completed On';
                         if (is_null($lastDocument->all_actions_completed_by) || $lastDocument->all_actions_completed_by === '') {
                             $history->previous = "";
                         } else {
@@ -2431,104 +2476,117 @@ class CapaController extends Controller
     }
 
 
-    // public function capaCancel(Request $request, $id)
-    // {
-    //     if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-    //         $capa = Capa::find($id);
-    //         $lastDocument = Capa::find($id);
-
-    //         $capa->stage = "0";
-    //         $capa->status = "Closed-Cancelled";
-    //         $capa->cancelled_by = Auth::user()->name;
-    //         $capa->cancelled_on = Carbon::now()->format('d-M-Y');
-    //                 $history = new CapaAuditTrial();
-    //                 $history->capa_id = $id;
-    //                 $history->activity_type = 'Activity Log';
-    //                 $history->previous ="";
-    //                 $history->current = $capa->cancelled_by;
-    //                 $history->comment = $request->comment;
-    //                 $history->user_id = Auth::user()->id;
-    //                 $history->user_name = Auth::user()->name;
-    //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    //                 $history->origin_state =  $capa->status;
-    //                 $history->stage = 'Cancelled';
-    //                 $history->save();
-    //         $capa->update();
-    //         $history = new CapaHistory();
-    //         $history->type = "Capa";
-    //         $history->doc_id = $id;
-    //         $history->user_id = Auth::user()->id;
-    //         $history->user_name = Auth::user()->name;
-    //         $history->stage_id = $capa->stage;
-    //         $history->status = $capa->status;
-    //         $history->save();
-
-    //         // $list = Helpers::getInitiatorUserList();
-    //         // foreach ($list as $u) {
-    //         //     if($u->q_m_s_divisions_id == $capa->division_id){
-    //         //       $email = Helpers::getInitiatorEmail($u->user_id);
-    //         //       if ($email !== null) {
-
-    //         //         Mail::send(
-    //         //             'mail.view-mail',
-    //         //             ['data' => $capa],
-    //         //             function ($message) use ($email) {
-    //         //                 $message->to($email)
-    //         //                     ->subject("Cancelled By ".Auth::user()->name);
-    //         //             }
-    //         //          );
-    //         //       }
-    //         //     }
-    //         // }
-
-    //         toastr()->success('Document Sent');
-    //         return back();
-    //     } else {
-    //         toastr()->error('E-signature Not match');
-    //         return back();
-    //     }
-    // }
-
-    public function capa_qa_more_info(Request $request, $id)
+    public function capaCancel(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $capa = Capa::find($id);
             $lastDocument = Capa::find($id);
 
-
-          if($capa->stage == 2){
-            $capa->stage = "1";
-            $capa->status = "Opened";
-            $capa->more_info_review_by = Auth::user()->name;
-            $capa->more_info_review_on = Carbon::now()->format('d-M-Y');
-            // $capa->pending_more_info_review_comment = $request->comments;
+            $capa->stage = "0";
+            $capa->status = "Closed-Cancelled";
+            $capa->cancelled_by = Auth::user()->name;
+            $capa->cancelled_on = Carbon::now()->format('d-M-Y');
+            $capa->cancelled_comment = $request->comment;
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'More Info Required By, More Info Required On';
-                    if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
+                    $history->activity_type = 'Cancelled By, Cancelled On';
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                         $history->previous = "";
                     } else {
-                        $history->previous = $lastDocument->more_info_review_by . ' , ' . $lastDocument->more_info_review_on;
-                    }
+                        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                    }       
                     $history->previous ="";
-                    $history->current = $capa->more_info_review_by . ' , ' . $capa->more_info_review_on;
-                    $history->action = 'More Info Required';
+                    $history->action = 'Cancelled';
+                    $history->current = $capa->all_actions_completed_by . ' , ' . $capa->all_actions_completed_on;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Opened";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'More Info Required';
-                    if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
+                    $history->origin_state =  $capa->status;
+                    $history->stage = 'Cancelled';
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                         $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
                     }
                     $history->save();
             $capa->update();
+            $history = new CapaHistory();
+            $history->type = "Capa";
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->stage_id = $capa->stage;
+            $history->status = $capa->status;
+            $history->save();
+
+            // $list = Helpers::getInitiatorUserList();
+            // foreach ($list as $u) {
+            //     if($u->q_m_s_divisions_id == $capa->division_id){
+            //       $email = Helpers::getInitiatorEmail($u->user_id);
+            //       if ($email !== null) {
+
+            //         Mail::send(
+            //             'mail.view-mail',
+            //             ['data' => $capa],
+            //             function ($message) use ($email) {
+            //                 $message->to($email)
+            //                     ->subject("Cancelled By ".Auth::user()->name);
+            //             }
+            //          );
+            //       }
+            //     }
+            // }
+
+            toastr()->success('Document Sent');
+            return back();
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+    public function capa_qa_more_info(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $capa = Capa::find($id);
+            $lastDocument = Capa::find($id);
+            
+            if($capa->stage == 2){
+                $capa->stage = "1";
+                $capa->status = "Opened";
+                $capa->more_info_review_by = Auth::user()->name;
+                $capa->more_info_review_on = Carbon::now()->format('d-M-Y');
+                $capa->more_info_review_comment = $request->comment;
+                
+                $history = new CapaAuditTrial();
+                $history->capa_id = $id;
+                $history->activity_type = 'More Info Required By, More Info Required On';
+                if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->more_info_review_by . ' , ' . $lastDocument->more_info_review_on;
+                }
+                $history->previous ="";
+                $history->current = $capa->more_info_review_by . ' , ' . $capa->more_info_review_on;
+                $history->action = 'More Info Required';
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Opened";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'More Info Required';
+                if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                $capa->update();
+                //dd($capa);
             // $history = new CapaHistory();
             // $history->type = "Capa";
             // $history->doc_id = $id;
@@ -2562,11 +2620,8 @@ class CapaController extends Controller
         $capa->status = "Pending CAPA plan";
         $capa->qa_more_info_required_by = Auth::user()->name;
         $capa->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-        // $capa->qa_more_info_required_comment = $request->comments;
-
-
-        // $capa->rejected_by = Auth::user()->name;
-        // $capa->rejected_on = Carbon::now()->format('d-M-Y');
+        $capa->qa_more_info_required_comment = $request->comment;
+        
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'QA More Info Required By, QA More Info Required On';
@@ -2607,20 +2662,20 @@ class CapaController extends Controller
         if ($capa->stage == 4) {
             $capa->stage = "3";
             $capa->status = "CAPA In Progress";
-            $capa->reject_more_info_review_by = Auth::user()->name;
-            $capa->reject_more_info_review_on = Carbon::now()->format('d-M-Y');
-            // $capa->reject_more_info_review_comment = $request->comments;
+            $capa->reject_more_info_requierd_by = Auth::user()->name;
+            $capa->reject_more_info_requierd_on = Carbon::now()->format('d-M-Y');
+            $capa->reject_more_info_requierd_comment = $request->comments;
             $capa->update();
             $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'Reject More Info Review By, Reject More Info Review On';
-                    if (is_null($lastDocument->reject_more_info_review_by) || $lastDocument->reject_more_info_review_by === '') {
+                    if (is_null($lastDocument->reject_more_info_requierd_by) || $lastDocument->reject_more_info_requierd_by === '') {
                         $history->previous = "";
                     } else {
-                        $history->previous = $lastDocument->reject_more_info_review_by . ' , ' . $lastDocument->reject_more_info_review_on;
+                        $history->previous = $lastDocument->reject_more_info_requierd_by . ' , ' . $lastDocument->reject_more_info_requierd_on;
                     }                       $history->previous = "";
                     $history->action = 'Reject';
-                    $history->current = $capa->reject_more_info_review_by . ' , ' . $capa->reject_more_info_review_on;
+                    $history->current = $capa->reject_more_info_requierd_by . ' , ' . $capa->reject_more_info_requierd_on;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2629,7 +2684,7 @@ class CapaController extends Controller
                     $history->change_to =   "CAPA In Progress";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Reject';
-                    if (is_null($lastDocument->reject_more_info_review_by) || $lastDocument->reject_more_info_review_by === '') {
+                    if (is_null($lastDocument->reject_more_info_requierd_by) || $lastDocument->reject_more_info_requierd_by === '') {
                         $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
@@ -2684,7 +2739,7 @@ class CapaController extends Controller
                 $capa->status = "Opened";
                 $capa->rejected_by = Auth::user()->name;
                 $capa->rejected_on = Carbon::now()->format('d-M-Y');
-                // $capa->rejected_comment = $request->comments;
+                $capa->rejected_comment = $request->comments;
 
                 $capa->update();
                 $history = new CapaHistory();

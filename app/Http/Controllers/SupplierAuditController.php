@@ -366,7 +366,7 @@ if (!empty($internalAudit->severity_level)) {
 if (!empty($internalAudit->initiated_if_other)) {
     $history = new ExternalAuditTrailSupplier();
     $history->supplier_id = $internalAudit->id;
-    $history->activity_type = 'Initial Through Others';
+    $history->activity_type = 'Others';
     $history->previous = "Null";
     $history->current = $internalAudit->initiated_if_other;
     $history->comment = "NA";

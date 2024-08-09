@@ -878,7 +878,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
                                                 <div class="calenderauditee">                                     
                                                     <input type="text" id="start_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="start_date_checkdate" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->start_date }}" class="hide-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} oninput="handleDateInput(this, 'start_date');updateEndDateMin();"/>
+                                                    <input type="date" id="start_date_checkdate" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->start_date ? $data->start_date->format('Y-m-d') : '' }}" class="hide-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} oninput="handleDateInput(this, 'start_date');updateEndDateMin();"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -887,7 +887,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Audit Schedule End Date">Audit Schedule End Date</label>
                                                 <div class="calenderauditee">                                     
                                                     <input type="text" id="end_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="end_date_checkdate" name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->end_date }}" class="hide-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} oninput="handleDateInput(this, 'end_date');"/>
+                                                    <input type="date" id="end_date_checkdate" name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->end_date ? $data->end_date ->format('Y-m-d') : '' }}" class="hide-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} oninput="handleDateInput(this, 'end_date');"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -923,7 +923,7 @@ function addMultipleFiles(input, block_id) {
                                                                             <div class="input-date ">
                                                                                 <div class="calenderauditee">
                                                                                     <input type="text" class="test" id="scheduled_start_date{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->start_date)[$key]) }}" />
-                                                                                    <input type="date" id="schedule_start_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($sgrid->start_date)[$key] }}" class="hide-input" oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" />
+                                                                                    <input type="date" id="schedule_start_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($sgrid->start_date)[$key] ?? '' }}" class="hide-input" oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" />
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -934,7 +934,7 @@ function addMultipleFiles(input, block_id) {
                                                                             <div class="input-date ">
                                                                                 <div class="calenderauditee">
                                                                                     <input type="text" class="test" id="scheduled_end_date{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($sgrid->end_date)[$key]) }}" />
-                                                                                    <input type="date" id="schedule_end_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($sgrid->end_date)[$key] }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" />
+                                                                                    <input type="date" id="schedule_end_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($sgrid->end_date)[$key] ?? '' }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" />
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -2094,7 +2094,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="Response Feedback Verified By"> Rejected By
                                                     </label> 
-                                                <div class="static">{{ $data->rejected_by}}</div>
+                                                <div class="static">{{ $data->rejected_by}}</div>Audit Agend
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
@@ -3154,26 +3154,39 @@ $(document).ready(function(){
 
         document.addEventListener("DOMContentLoaded", function() {
             updateEndDateMinAudit(); // Initialize the end date min on page load
+
+        document.getElementById('audit_start_date_checkdate').addEventListener('input', function() {
+            updateEndDateMin();
         });
+    });
     </script>
 
 
     <script>
-        function handleDateInput(inputElement, displayElementId) {
-            var displayElement = document.getElementById(displayElementId);
-            var dateValue = new Date(inputElement.value);
-            displayElement.value = dateValue.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        }
+    function handleDateInput(inputElement, displayElementId) {
+        var displayElement = document.getElementById(displayElementId);
+        var dateValue = new Date(inputElement.value);
+        displayElement.value = dateValue.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
 
-        function updateEndDateMin() {
-            var startDate = document.getElementById('start_date_checkdate').value;
-            var endDateInput = document.getElementById('end_date_checkdate');
-            endDateInput.min = startDate;
+    function updateEndDateMin() {
+        var startDate = document.getElementById('start_date_checkdate').value;
+        var endDateInput = document.getElementById('end_date_checkdate');
+        if (startDate) {
+            endDateInput.setAttribute('min', startDate);
         }
+    }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            updateEndDateMin(); // Initialize the end date min on page load
+    document.addEventListener("DOMContentLoaded", function() {
+        updateEndDateMin(); // Initialize the end date min on page load
+
+        // Reapply the min attribute whenever the start date is changed
+        document.getElementById('start_date_checkdate').addEventListener('input', function() {
+            updateEndDateMin();
         });
-    </script>
+    });
+</script>
+
+
 
         @endsection

@@ -933,7 +933,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="iso_certificate_attachment">Certificate Attachment</label>
+                                    <label for="iso_certificate_attachment">ISO Ceritificate Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">

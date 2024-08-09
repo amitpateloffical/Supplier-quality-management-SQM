@@ -71,15 +71,15 @@
         }
 
         /* .sub-head {
-                                                                        margin-left: 280px;
-                                                                        margin-right: 280px;
-                                                                        color: #4274da;
-                                                                        border-bottom: 2px solid #4274da;
-                                                                        padding-bottom: 5px;
-                                                                        margin-bottom: 20px;
-                                                                        font-weight: bold;
-                                                                        font-size: 1.2rem;
-                                                                         } */
+                                                                                        margin-left: 280px;
+                                                                                        margin-right: 280px;
+                                                                                        color: #4274da;
+                                                                                        border-bottom: 2px solid #4274da;
+                                                                                        padding-bottom: 5px;
+                                                                                        margin-bottom: 20px;
+                                                                                        font-weight: bold;
+                                                                                        font-size: 1.2rem;
+                                                                                         } */
 
         .launch_extension {
             background: #4274da;
@@ -130,12 +130,12 @@
         }
 
         /* .saveButton:disabled
-                                                                        {
-                                                                           background: black!important;
-                                                                           border:  black!important;
-                                                                         }
-                                                                           
-                                                                        */
+                                                                                        {
+                                                                                           background: black!important;
+                                                                                           border:  black!important;
+                                                                                         }
+                                                                                           
+                                                                                        */
 
         .main-danger-block {
             display: flex;
@@ -663,7 +663,7 @@
                                         <input id="supplier_products" type="text" name="supplier_products"
                                             maxlength="255" value="{{ $data->supplier_products }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'supplier_products', 'id' => 'supplier_products'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -676,7 +676,7 @@
                                     <div class="relative-container">
                                         <textarea id="description" name="description" class="mic-input"> {{ $data->description }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'description', 'id' => 'description'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -817,7 +817,7 @@
                                             maxlength="255" value="{{ $data->supplier_other_type }}"
                                             placeholder="Enter Other Type" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'supplier_other_type', 'id' => 'supplier_other_type'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -831,7 +831,7 @@
                                             value="{{ $data->supply_from }}" placeholder="Enter Supply From"
                                             class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'supply_from', 'id' => 'supply_from'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -845,7 +845,7 @@
                                             value="{{ $data->supply_to }}" placeholder="Enter Supply To"
                                             class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'supply_to', 'id' => 'supply_to'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -859,7 +859,7 @@
                                             maxlength="255" value="{{ $data->supplier_website }}"
                                             placeholder="Enter Supplier Website" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'supplier_website', 'id' => 'supplier_website'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -873,7 +873,7 @@
                                             maxlength="255" value="{{ $data->supplier_web_search }}"
                                             placeholder="Enter Supply Web Search" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'supplier_web_search', 'id' => 'supplier_web_search'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -960,10 +960,7 @@
                                             maxlength="255" value="{{ $data->related_quality_events }}"
                                             placeholder="Enter Related Quality Events" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', [
-                                                'name' => 'related_quality_events',
-                                                'id' => 'related_quality_events',
-                                            ])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -997,7 +994,7 @@
                                     <div class="relative-container">
                                         <textarea id="HOD_feedback" name="HOD_feedback" placeholder="Enter HOD Feedback" class="mic-input">{{ $data->HOD_feedback }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'HOD_feedback', 'id' => 'HOD_feedback'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1011,7 +1008,7 @@
                                     <div class="relative-container">
                                         <textarea id="HOD_comment" name="HOD_comment" placeholder="Enter HOD Comment" class="mic-input">{{ $data->HOD_comment }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'HOD_comment', 'id' => 'HOD_comment'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1186,7 +1183,7 @@
                                             value="{{ $data->supplier_name }}" placeholder="Enter Supplier Name"
                                             class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'supplier_name', 'id' => 'supplier_name'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1201,7 +1198,7 @@
                                             value="{{ $data->supplier_id }}" placeholder="Enter Supplier ID"
                                             class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'supplier_id', 'id' => 'supplier_id'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1217,7 +1214,7 @@
                                             maxlength="255" value="{{ $data->manufacturer_name }}"
                                             placeholder="Enter Manufacturer Name" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'manufacturer_name', 'id' => 'manufacturer_name'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1233,7 +1230,7 @@
                                             maxlength="255" value="{{ $data->manufacturer_id }}"
                                             placeholder="Enter Manufacturer ID" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'manufacturer_id', 'id' => 'manufacturer_id'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1249,7 +1246,7 @@
                                             value="{{ $data->vendor_name }}" placeholder="Enter Vendor Name"
                                             class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'vendor_name', 'id' => 'vendor_name'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1265,7 +1262,7 @@
                                             value="{{ $data->vendor_id }}" placeholder="Enter Vendor ID"
                                             class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'vendor_id', 'id' => 'vendor_id'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1280,7 +1277,7 @@
                                             value="{{ $data->contact_person }}" placeholder="Enter Contact Person"
                                             class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'contact_person', 'id' => 'contact_person'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1294,7 +1291,7 @@
                                     <div class="relative-container">
                                         <textarea id="other_contacts" name="other_contacts" placeholder="Enter Other Contacts" class="mic-input">{{ $data->other_contacts }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'other_contacts', 'id' => 'other_contacts'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1309,7 +1306,7 @@
                                         <textarea id="supplier_serivce" name="supplier_serivce" cols="30" placeholder="Enter Supplier Service"
                                             class="mic-input">{{ $data->supplier_serivce }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'supplier_serivce', 'id' => 'supplier_serivce'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1462,7 +1459,7 @@
                                     <div class="relative-container">
                                         <textarea id="address" name="address" placeholder="Enter Address" class="mic-input">{{ $data->address }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'address', 'id' => 'address'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1478,7 +1475,7 @@
                                             maxlength="255" value="{{ $data->suppplier_web_site }}"
                                             placeholder="Enter Website" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'suppplier_web_site', 'id' => 'suppplier_web_site'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1540,7 +1537,7 @@
                                         <input id="suppplier_contacts" type="text" name="suppplier_contacts"
                                             maxlength="255" value="{{ $data->suppplier_contacts }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'suppplier_contacts', 'id' => 'suppplier_contacts'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1556,10 +1553,7 @@
                                             maxlength="255" value="{{ $data->related_non_conformance }}"
                                             class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', [
-                                                'name' => 'related_non_conformance',
-                                                'id' => 'related_non_conformance',
-                                            ])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1574,7 +1568,7 @@
                                         <input id="suppplier_agreement" type="text" name="suppplier_agreement"
                                             maxlength="255" value="{{ $data->suppplier_agreement }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'suppplier_agreement', 'id' => 'suppplier_agreement'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1590,7 +1584,7 @@
                                         <input id="regulatory_history" type="text" name="regulatory_history"
                                             maxlength="255" value="{{ $data->regulatory_history }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'regulatory_history', 'id' => 'regulatory_history'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1606,7 +1600,7 @@
                                         <input id="distribution_sites" type="text" name="distribution_sites"
                                             maxlength="255" value="{{ $data->distribution_sites }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'distribution_sites', 'id' => 'distribution_sites'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1621,7 +1615,7 @@
                                         <input id="manufacturing_sited" type="text" name="manufacturing_sited"
                                             maxlength="255" value="{{ $data->manufacturing_sited }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'manufacturing_sited', 'id' => 'manufacturing_sited'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1635,7 +1629,7 @@
                                         <input id="quality_management" type="text" name="quality_management"
                                             maxlength="255" value="{{ $data->quality_management }}" class="mic-input">
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'quality_management', 'id' => 'quality_management'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1649,7 +1643,7 @@
                                     <div class="relative-container">
                                         <textarea id="bussiness_history" name="bussiness_history" placeholder="Enter Business History" class="mic-input">{{ $data->bussiness_history }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'bussiness_history', 'id' => 'bussiness_history'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1665,7 +1659,7 @@
                                         <textarea id="performance_history" name="performance_history" placeholder="Enter Performance History"
                                             class="mic-input">{{ $data->performance_history }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'performance_history', 'id' => 'performance_history'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -1679,7 +1673,7 @@
                                     <div class="relative-container">
                                         <textarea id="compliance_risk" name="compliance_risk" placeholder="Enter Compliance Risk" class="mic-input">{{ $data->compliance_risk }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'compliance_risk', 'id' => 'compliance_risk'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -2182,7 +2176,7 @@
                                         <textarea id="QA_reviewer_feedback" name="QA_reviewer_feedback" placeholder="Enter QA Reviewer Feedback"
                                             class="mic-input">{{ $data->QA_reviewer_feedback }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'QA_reviewer_feedback', 'id' => 'QA_reviewer_feedback'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -2197,7 +2191,7 @@
                                         <textarea id="QA_reviewer_comment" name="QA_reviewer_comment" placeholder="Enter QA Reviewer Comment"
                                             class="mic-input">{{ $data->QA_reviewer_comment }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'QA_reviewer_comment', 'id' => 'QA_reviewer_comment'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -2290,30 +2284,49 @@
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Last Audit Date</label>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="last_audit_date_display"
-                                            name="last_audit_date_display" placeholder="DD-MMM-YYYY"
+                                    {{-- <div class="calenderauditee">
+                                        <input type="text" id="last_audit_date" name="last_audit_date"
+                                            placeholder="DD-MMM-YYYY"
                                             value="{{ Helpers::getdateFormat($data->last_audit_date) }}" />
 
-                                        <input type="date" id="last_audit_date" name="last_audit_date"
-                                            value="{{ \Carbon\Carbon::parse($data->last_audit_date)->format('Y-m-d') }}"
+                                        <input type="date" id="last_audit_date_name" name="last_audit_date_name"
+                                            value="{{ $data->last_audit_date ? \Carbon\Carbon::parse($data->last_audit_date)->format('Y-m-d') : '' }}"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'last_audit_date'); updateNextAuditDateMin(this.value);" />
+                                            oninput="handleDateInput(this, 'last_audit_date');" />
+                                    </div> --}}
+                                    <div class="calenderauditee">
+                                        <input type="text" id="last_audit_date" readonly placeholder="DD-MM-YYYY"
+                                            value="{{ Helpers::getdateFormat($data->last_audit_date) }}"/>
+                                        <input type="date" id="last_audit_date_name" name="last_audit_date"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                            value="{{ $data->last_audit_date ? \Carbon\Carbon::parse($data->last_audit_date)->format('Y-m-d') : '' }}"
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'last_audit_date');updateEndDateMin();" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Next Audit Date</label>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="next_audit_date_display"
-                                            name="next_audit_date_display" placeholder="DD-MMM-YYYY"
+                                    {{-- <div class="calenderauditee">
+                                        <input type="text" id="next_audit_date" name="next_audit_date"
+                                            placeholder="DD-MMM-YYYY"
                                             value="{{ Helpers::getdateFormat($data->next_audit_date) }}" />
 
-                                        <input type="date" id="next_audit_date" name="next_audit_date"
-                                            value="{{ \Carbon\Carbon::parse($data->next_audit_date)->format('Y-m-d') }}"
-                                            min="{{ \Carbon\Carbon::parse($data->last_audit_date)->addDay()->format('Y-m-d') }}"
-                                            class="hide-input" />
+                                        <input type="date" id="next_audit_date_name" name="next_audit_date_name"
+                                            value="{{ $data->next_audit_date ? \Carbon\Carbon::parse($data->next_audit_date)->format('Y-m-d') : '' }}"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput=" handleDateInput(this,'next_audit_date');" />
+                                    </div> --}}
+
+                                    <div class="calenderauditee">
+                                        <input type="text" id="next_audit_date"  readonly placeholder="DD-MM-YYYY"
+                                            value="{{ Helpers::getdateFormat($data->next_audit_date) }}"/>
+                                        <input type="date" id="next_audit_date_name" name="next_audit_date"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                            value="{{ $data->next_audit_date ? \Carbon\Carbon::parse ($data->next_audit_date)->format('Y-m-d') : '' }}"
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'next_audit_date');" />
                                     </div>
 
                                 </div>
@@ -2620,7 +2633,7 @@
                                     <div class="relative-container">
                                         <textarea id="QA_head_comment" name="QA_head_comment" placeholder="Enter QA Head Comment" class="mic-input">{{ $data->QA_head_comment }}</textarea>
                                         <button class="mic-btn" type="button">
-                                            @component('frontend.forms.language-model', ['name' => 'QA_head_comment', 'id' => 'QA_head_comment'])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </button>
                                     </div>
@@ -3300,25 +3313,36 @@
             }
         }
     </script>
+
+
+
     <script>
-        function handleDateInput(input, targetId) {
-            const target = document.getElementById(targetId);
-            const date = new Date(input.value);
-            const options = {
+        function handleDateInput(inputElement, displayElementId) {
+            var displayElement = document.getElementById(displayElementId);
+            var dateValue = new Date(inputElement.value);
+            displayElement.value = dateValue.toLocaleDateString('en-GB', {
                 day: '2-digit',
-                month: 'short',
+                month: '2-digit',
                 year: 'numeric'
-            };
-            const formattedDate = date.toLocaleDateString('en-US', options).replace(/ /g, '-');
-            target.value = formattedDate;
+            });
         }
 
-        function updateNextAuditDateMin(lastAuditDate) {
-            var nextAuditDateInput = document.getElementById('next_audit_date');
-            var nextDay = new Date(lastAuditDate);
-            nextDay.setDate(nextDay.getDate() + 1);
-            var nextDayString = nextDay.toISOString().split('T')[0];
-            nextAuditDateInput.min = nextDayString;
+        function updateEndDateMin() {
+            var startDate = document.getElementById('last_audit_date_name').value;
+            var endDateInput = document.getElementById('next_audit_date_name');
+            if (startDate) {
+                endDateInput.setAttribute('min', startDate);
+            }
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updateEndDateMin(); // Initialize the end date min on page load
+
+            // Reapply the min attribute whenever the start date is changed
+            document.getElementById('last_audit_date_name').addEventListener('input', function() {
+                updateEndDateMin();
+            });
+        });
     </script>
+
 @endsection

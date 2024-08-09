@@ -364,14 +364,7 @@
                     </tr>
 
 
-                    <!-- <th class="w-20">Initiator Date</th>
-                        <td class="w-30">
-                            @if ($data->intiation_date)
-{{ Helpers::getDateFormat($data->intiation_date) }}
-@else
-Not Applicable
-@endif
-                        </td> -->
+                   
 
                 </table>
             </div>

@@ -441,7 +441,7 @@
                                                     <th>Root Cause Sub-Category</th>
                                                     <th>Probability</th>
                                                     <th>Remarks</th>
-                                                    <th>Action</th>
+                                                    <th style="width: 10px">Action</th>
 
                                                 </tr>
                                             </thead>

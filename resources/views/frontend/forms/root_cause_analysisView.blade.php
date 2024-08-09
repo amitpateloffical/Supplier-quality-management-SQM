@@ -761,8 +761,8 @@
                                                             <th>Root Cause Category</th>
                                                             <th>Root Cause Sub-Category</th>
                                                             <th>Probability</th>
-                                                            <th>Remarks</th>
-                                                            <th>Action</th>
+                                                            <th style="width: 200px">Remarks</th>
+                                                            <th style="width:5%">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -775,7 +775,7 @@
                                                                 <td><input type="text" name="Root_Cause_Sub_Category[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ unserialize($data->Root_Cause_Sub_Category)[$key] ? unserialize($data->Root_Cause_Sub_Category)[$key] : '' }}"></td>
                                                                 <td><input type="text" name="Probability[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ unserialize($data->Probability)[$key] ? unserialize($data->Probability)[$key] : '' }}"></td>
                                                                 <td><input type="text" name="Remarks[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ unserialize($data->Remarks)[$key] ?? null }}"></td>
-                                                                <td><button type="text" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
+                                                                <td style="width:5%"><button type="text" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                             @endif

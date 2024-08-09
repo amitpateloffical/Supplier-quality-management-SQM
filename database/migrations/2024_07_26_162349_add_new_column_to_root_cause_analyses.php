@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('root_cause_analyses', function (Blueprint $table) {
-            $table->string('cancelled_comment')->nullable();
+            $table->longText('cancelled_comment')->nullable();
             //
         });
     }

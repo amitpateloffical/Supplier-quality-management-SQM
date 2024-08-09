@@ -1051,7 +1051,6 @@
                                                     <th style="width: 16%"> ID Number</th>
                                                     <th style="width: 15%">Remarks</th>
                                                     <th style="width: 8%">Action</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1065,8 +1064,8 @@
                                                     </select> </td>
                                                 <td><input type="text" name="IDnumber[]" class="id-number"></td>
                                                 <td><input type="text" name="Remarks[]" class="remarks"></td>
-                                                <td><input type="text" name="Action[]" class="action" readonly></td>
-
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                {{--<td><input type="text" name="Action[]" class="action" readonly></td>--}}
                                             </tbody>
 
                                         </table>
@@ -1156,7 +1155,8 @@
                                                         name="ReferenceDocumentName[]"></td>
                                                 <td><input type="text" class="Document_Remarks"
                                                         name="Document_Remarks[]"></td>
-                                                <td><input type="text" class="" name="Action[]" readonly></td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                {{--<td><input type="text" class="" name="Action[]" readonly></td>--}}
 
 
                                             </tbody>
@@ -1270,7 +1270,8 @@
                                                     </td>
                                                     <td><input type="text" class="productBatchNo" name="batch_no[]">
                                                     </td>
-                                                    <td><input type="text" class="Removebtn" name="Action[]" readonly>
+                                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                    {{--<td><input type="text" class="Removebtn" name="Action[]" readonly>--}}
                                                     </td>
 
 
@@ -1684,7 +1685,7 @@
                                         <label for="short_description_required">Repeat Deviation?</label>
                                         <select name="short_description_required" id="short_description_required" disabled
                                             required>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="Recurring" @if (old('short_description_required') == 'Recurring') selected @endif>
                                                 Yes</option>
                                             <option value="Non_Recurring"
@@ -1769,7 +1770,7 @@
                                         <label for="Customer notification">Customer Notification Required ? <span
                                             class="text-danger">*</span></label>
                                         <select disabled name="Customer_notification" id="Customer_notification" >
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option
                                             value="Yes">Yes</option>
                                             <option
@@ -2057,7 +2058,7 @@
                                     <div class="group-input">
                                         <label for="Production Review">Production Review Required ?</label>
                                         <select name="Production_Review" id="Production_Review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -2162,7 +2163,7 @@
                                     <div class="group-input">
                                         <label for="Warehouse Review Required">Warehouse Review Required ?</label>
                                         <select name="Warehouse_review" id="Warehouse_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -2185,7 +2186,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification">Warehouse Person</label>
                                         <select name="Warehouse_notification" id="Warehouse_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -2267,7 +2268,7 @@
                                         <label for="Quality Control Review Required">Quality Control Review Required
                                             ?</label>
                                         <select name="Quality_review" id="Quality_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -2290,7 +2291,7 @@
                                     <div class="group-input">
                                         <label for="Quality Control Person">Quality Control Person</label>
                                         <select name="Quality_Control_Person" id="Quality_Control_Person" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -2371,7 +2372,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification">Quality Assurance Review Required ?</label>
                                         <select name="Quality_Assurance" id="QualityAssurance_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -2394,7 +2395,7 @@
                                     <div class="group-input">
                                         <label for="Quality Assurance Person">Quality Assurance Person</label>
                                         <select name="QualityAssurance_person" id="QualityAssurance_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -2481,7 +2482,7 @@
                                     <div class="group-input">
                                         <label for="Engineering Review Required">Engineering Review Required ?</label>
                                         <select name="Engineering_review" id="Engineering_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -2503,7 +2504,7 @@
                                     <div class="group-input">
                                         <label for="Engineering Person">Engineering Person</label>
                                         <select name="Engineering_person" id="Engineering_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -2588,7 +2589,7 @@
                                         <label for="Analytical Development Laboratory Review Required">Analytical
                                             Development Laboratory Review Required ?</label>
                                         <select name="Analytical_Development_review" id="Analytical_Development_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -2612,7 +2613,7 @@
                                         <label for="Analytical Development Laboratory Person">Analytical Development
                                             Laboratory Person</label>
                                         <select name="Analytical_Development_person" id="Analytical_Development_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -2706,7 +2707,7 @@
                                         <label for="Process Development Laboratory"> Process Development Laboratory / Kilo
                                             Lab Review Required ?</label>
                                         <select name="Kilo_Lab_review" id="Kilo_Lab_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -2730,7 +2731,7 @@
                                         <label for="Process Development Laboratory"> Process Development Laboratory / Kilo
                                             Lab Person</label>
                                         <select name="Kilo_Lab_person" id="Kilo_Lab_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -2818,7 +2819,7 @@
                                         <label for="Design Review Required">Technology Transfer / Design Review Required
                                             ?</label>
                                         <select name="Technology_transfer_review" id="Technology_transfer_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -2841,7 +2842,7 @@
                                     <div class="group-input">
                                         <label for="Design Person"> Technology Transfer / Design Person</label>
                                         <select name="Technology_transfer_person" id="Technology_transfer_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -2927,7 +2928,7 @@
                                         <label for="Safety Review Required">Environment, Health & Safety Review Required
                                             ?</label>
                                         <select name="Environment_Health_review" id="Environment_Health_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -2951,7 +2952,7 @@
                                         <label for="Safety Person"> Environment, Health & Safety Person</label>
                                         <select name="Environment_Health_Safety_person"
                                             id="Environment_Health_Safety_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -3039,7 +3040,7 @@
                                         <label for="Administration Review Required">Human Resource & Administration Review
                                             Required ?</label>
                                         <select name="Human_Resource_review" id="Human_Resource_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -3062,7 +3063,7 @@
                                     <div class="group-input">
                                         <label for="Administration Person"> Human Resource & Administration Person</label>
                                         <select name="Human_Resource_person" id="Human_Resource_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -3151,7 +3152,7 @@
                                             Required ?</label>
                                         <select name=" Information_Technology_review"
                                             id=" Information_Technology_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -3175,7 +3176,7 @@
                                         <label for="Information Technology Person"> Information Technology Person</label>
                                         <select name=" Information_Technology_person"
                                             id=" Information_Technology_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -3262,7 +3263,7 @@
                                         <label for="Project management Review Required"> Project management Review
                                             Required ?</label>
                                         <select name="Project_management_review" id="Project_management_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -3285,7 +3286,7 @@
                                     <div class="group-input">
                                         <label for="Project management Person"> Project management Person</label>
                                         <select name="Project_management_person" id="Project_management_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -3372,7 +3373,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 1 Review Required ?</label>
                                         <select name="Other1_review" id="Other1_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -3408,7 +3409,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 1 Department</label>
                                         <select name="Other1_Department_person" id="Other1_Department_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="Production">Production</option>
                                             <option value="Warehouse">Warehouse</option>
                                             <option value="Quality_Control">Quality Control</option>
@@ -3499,7 +3500,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 2 Review Required ?</label>
                                         <select name="Other2_review" id="Other2_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -3535,7 +3536,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 2 Department</label>
                                         <select name="Other2_Department_person" id="Other2_Department_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="Production">Production</option>
                                             <option value="Warehouse">Warehouse</option>
                                             <option value="Quality_Control">Quality Control</option>
@@ -3628,7 +3629,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 3 Review Required ?</label>
                                         <select name="Other3_review" id="Other3_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -3651,7 +3652,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 3 Person</label>
                                         <select name="Other3_person" id="Other3_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -3664,7 +3665,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 3 Department</label>
                                         <select name="Other3_Department_person" id="Other3_Department_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="Production">Production</option>
                                             <option value="Warehouse">Warehouse</option>
                                             <option value="Quality_Control">Quality Control</option>
@@ -3757,7 +3758,7 @@
                                     <div class="group-input">
                                         <label for="review4"> Other's 4 Review Required ?</label>
                                         <select name="Other4_review" id="Other4_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -3780,7 +3781,7 @@
                                     <div class="group-input">
                                         <label for="Person4"> Other's 4 Person</label>
                                         <select name="Other4_person" id="Other4_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -3793,7 +3794,7 @@
                                     <div class="group-input">
                                         <label for="Department4"> Other's 4 Department</label>
                                         <select name="Other4_Department_person" id="Other4_Department_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="Production">Production</option>
                                             <option value="Warehouse">Warehouse</option>
                                             <option value="Quality_Control">Quality Control</option>
@@ -3887,7 +3888,7 @@
                                     <div class="group-input">
                                         <label for="review5"> Other's 5 Review Required ?</label>
                                         <select name="Other5_review" id="Other5_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -3910,7 +3911,7 @@
                                     <div class="group-input">
                                         <label for="Person5">Other's 5 Person</label>
                                         <select name="Other5_person" id="Other5_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -3923,7 +3924,7 @@
                                     <div class="group-input">
                                         <label for="Department5"> Other's 5 Department</label>
                                         <select name="Other5_Department_person" id="Other5_Department_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="Production">Production</option>
                                             <option value="Warehouse">Warehouse</option>
                                             <option value="Quality_Control">Quality Control</option>

@@ -1390,7 +1390,7 @@
                                         <label for="Description Deviation">Description of Deviation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         <div class="relative-container">
-                                            <textarea id="deviation_observed_by" name="Description_Deviation[]" maxlength="255" class="mic-input" placeholder="Enter Description of Deviation" required></textarea>
+                                            <textarea id="deviation_observed_by" name="Description_Deviation[]" class="mic-input" placeholder="Enter Description of Deviation" required></textarea>
 
                                             @component('frontend.forms.language-model')
                                             @endcomponent
@@ -1419,7 +1419,7 @@
                                         <label for="Immediate Action">Immediate Action (if any)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         <div class="relative-container">
-                                            <textarea id="summernote-2" name="Immediate_Action[]" maxlength="255" class="mic-input" placeholder="Enter Immediate Action" required></textarea>
+                                            <textarea id="summernote-2" name="Immediate_Action[]" class="mic-input" placeholder="Enter Immediate Action" required></textarea>
                                             @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
@@ -1447,7 +1447,7 @@
                                         <label for="Preliminary Impact">Preliminary Impact of Deviation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         <div class="relative-container">
-                                            <textarea id="summernote-3" name="Preliminary_Impact[]" maxlength="255" class="mic-input" placeholder="Enter Preliminary Impact of Deviation" required></textarea>
+                                            <textarea id="summernote-3" name="Preliminary_Impact[]" class="mic-input" placeholder="Enter Preliminary Impact of Deviation" required></textarea>
                                             @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
@@ -1536,9 +1536,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save </button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; ">
-                                    <button type="button" style=" justify-content: center; width: 4rem; " class="backButton">Back</button>
-                                </a>
+                                <button type="button" style=" justify-content: center; width: 4rem; " class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; " class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; "> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -1652,7 +1650,7 @@
                                     <div class="group-input">
                                         <label for="Investigation required">Investigation Required ?</label>
                                         <select disabled name="Investigation_required" id="Investigation_required" disabled>
-                                            <option value="select">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -1811,10 +1809,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
-                                    <button type="button"  class="backButton">Back</button>
-                                </a>
-
+                                <button type="button" onclick="previousStep()" class="backButton">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;"  class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -3396,7 +3391,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 1 Person</label>
                                         <select name="Other1_person" id="Other1_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -3523,7 +3518,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 2 Person</label>
                                         <select name="Other2_person" id="Other2_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -3998,9 +3993,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
-                                    <button type="button"  class="backButton">Back</button>
-                                </a>
+                                <button type="button" onclick="previousStep()" class="backButton">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;" id="ChangeNextButton" class="nextButton"
                                     onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -4681,12 +4674,10 @@
                             </div>
 
                             <div class="button-block">
-                                <button type="submit" class="saveButton" style=" justify-content: center; width: 4rem; margin-left: auto;">Save</button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: auto;">
-                                    <button type="button" class="backButton" >Back</button>
-                                </a>
-                                <button type="button" class="nextButton" style=" justify-content: center; width: 4rem; margin-left: auto;" onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="submit" class="saveButton" style=" justify-content: center; width: 4rem;">Save</button>
+                                <button type="button" onclick="previousStep()" class="backButton" >Back</button>
+                                <button type="button" class="nextButton" style=" justify-content: center; width: 4rem;" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                         {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
                                         class="button  launch_extension" data-bs-toggle="modal"
@@ -4885,12 +4876,10 @@
                                 }
                             </script>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" style=" justify-content: center; width: 4rem; margin-left: auto;">Save</button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: auto;">
-                                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="backButton">Back</button>
-                                </a>
-                                <button type="button"  style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="submit" class="saveButton" style=" justify-content: center; width: 4rem;">Save</button>
+                                <button type="button" onclick="previousStep()" style=" justify-content: center; width: 4rem;" class="backButton">Back</button>
+                                <button type="button"  style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                         {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
                                         class="button  launch_extension" data-bs-toggle="modal"
@@ -5137,12 +5126,10 @@
                                 </div>
 
                                 <div class="button-block">
-                                    <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save</button>
-                                    <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: auto;">
-                                        <button type="button" class="backButton">Back</button>
-                                    </a>
-                                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" > <a href="{{ url('rcms/qms-dashboard') }}"
+                                    <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+                                    <button type="button" onclick="previousStep()" class="backButton">Back</button>
+                                    <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button" style=" justify-content: center; width: 4rem;" > <a href="{{ url('rcms/qms-dashboard') }}"
                                             class="text-white">
                                             Exit </a> </button>
                                             {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
@@ -5348,9 +5335,7 @@
         </div>
         <div class="button-block">
             <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
-            <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
-                <button type="button"  class="backButton">Back</button>
-            </a>
+            <button type="button" onclick="previousStep()" class="backButton">Back</button>
             <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                     Exit </a> </button>
@@ -5390,9 +5375,7 @@
         </div>
         <div class="button-block">
             <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
-            <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
-                <button type="button"  class="backButton">Back</button>
-            </a>
+            <button type="button" onclick="previousStep()" class="backButton">Back</button>
             <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                     Exit </a> </button>
@@ -5432,9 +5415,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
-                                    <button type="button"  class="backButton">Back</button>
-                                </a>
+                                <button type="button" onclick="previousStep()" class="backButton">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -5475,9 +5456,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
-                                    <button type="button"  class="backButton">Back</button>
-                                </a>
+                                <button type="button" onclick="previousStep()" class="backButton">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -5547,9 +5526,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem;">
-                                    <button type="button" class="backButton">Back</button>
-                                </a>
+                                <button type="button" onclick="previousStep()" class="backButton">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -6234,9 +6211,7 @@
 
                                 <div class="button-block">
                                     <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save</button>
-                                    <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: auto;">
-                                        <button type="button"  class="backButton">Back</button>
-                                    </a>
+                                    <button type="button" onclick="previousStep()" class="backButton">Back</button>
                                     <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}"
                                             class="text-white">

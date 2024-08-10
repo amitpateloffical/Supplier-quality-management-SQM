@@ -323,7 +323,7 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID:</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
+                            <div> <strong>Record ID :</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 : {{ $document->originator ? $document->originator : '' }}
                             </div>
@@ -408,7 +408,7 @@
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? Helpers::getdateFormat($dataDemo->created_at) : 'Not Applicable' }}
+                                    :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at->format('d-M-Y H:i:s') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>

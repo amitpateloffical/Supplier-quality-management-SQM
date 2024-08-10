@@ -1676,7 +1676,7 @@ $history->save();
                 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'QA Review Complete by ,QA Review Complete on';
+                $history->activity_type = 'QA Review Complete By,QA Review Complete On';
 
                 if (is_null($lastDocument->qA_review_complete_by) || $lastDocument->qA_review_complete_by === '') {
                     $history->previous = "";
@@ -1734,7 +1734,7 @@ $history->save();
                     $history->previous = $lastDocument->cancelled_by  . ' , ' . $lastDocument->cancelled_on;
                 }
                 $history->current = $root->cancelled_by  . ' , ' . $root->cancelled_on;
-                $history->activity_type = 'Cancelled By, Cancelled On';
+                $history->activity_type = 'Cancelled By,Cancelled On';
                 // $history->previous = $lastDocument->cancelled_by;
                 // $history->current = $root->cancelled_by;
                 $history->comment = $request->comment;
@@ -1812,7 +1812,7 @@ $history->save();
                 } else {
                     $history->previous = $lastDocument->moreinfo_by  . ' , ' . $lastDocument->moreinfo_on;
                 }
-                $history->activity_type = 'More information Required By ,More information Required On';
+                $history->activity_type = 'More information Required By,More information Required On';
                 // $history->previous = $lastDocument->moreinfo_by;
                 // $history->current = $root->moreinfo_by;
                 $history->current = $root->moreinfo_by  . ' , ' . $root->moreinfo_on;

@@ -667,7 +667,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#Reference_Recores1, #hod'
+            ele: '#Reference_Recores1'
         });
 
         function openCity(evt, cityName) {

@@ -402,7 +402,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current =$data->division_code;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -419,7 +419,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($data->initiator_id);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -436,7 +436,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Date of Initiation';
             $history->previous = "Null";
             $history->current = Helpers::getdateFormat($data->intiation_date);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -452,7 +452,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($data->division_id) . '/RA/' . Helpers::year($data->created_at) . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -469,7 +469,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($data->assign_to);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -486,7 +486,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
             $history->current = $data->due_date;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -503,7 +503,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorGroupFullName($data->Initiator_Group);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -520,7 +520,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Initiator Group Code';
             $history->previous = "Null";
             $history->current = $data->initiator_group_code;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -537,7 +537,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Short Description';
             $history->previous = "Null";
             $history->current = $data->short_description;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -554,7 +554,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Severity Level';
             $history->previous = "Null";
             $history->current = $data->severity2_level;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -571,7 +571,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Department(s)';
             $history->previous = "Null";
             $history->current = $data->departments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -588,7 +588,7 @@ class RiskManagementController extends Controller
         //     $history->activity_type = 'Team Members';
         //     $history->previous = "Null";
         //     $history->current = $data->team_members;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -605,7 +605,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Source of Risk/Opportunity';
             $history->previous = "Null";
             $history->current = $data->source_of_risk;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -622,7 +622,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Type';
             $history->previous = "Null";
             $history->current = $data->type;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -639,7 +639,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Priority Level';
             $history->previous = "Null";
             $history->current = $data->priority_level;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -656,7 +656,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Risk/Opportunity Description';
             $history->previous = "Null";
             $history->current = $data->description;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -673,7 +673,7 @@ class RiskManagementController extends Controller
         //     $history->activity_type = 'Country';
         //     $history->previous = "Null";
         //     $history->current = $data->country;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -690,7 +690,7 @@ class RiskManagementController extends Controller
         //     $history->activity_type = 'State/District';
         //     $history->previous = "Null";
         //     $history->current = $data->state;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -707,7 +707,7 @@ class RiskManagementController extends Controller
         //     $history->activity_type = 'City';
         //     $history->previous = "Null";
         //     $history->current = $data->city;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -724,7 +724,7 @@ class RiskManagementController extends Controller
         //     $history->activity_type = 'Description';
         //     $history->previous = "Null";
         //     $history->current = $data->description;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -741,7 +741,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Risk/Opportunity Comments';
             $history->previous = "Null";
             $history->current = $data->comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -758,7 +758,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Department(s)';
             $history->previous = "Null";
             $history->current = $data->departments2;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -775,7 +775,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Source of Risk';
             $history->previous = "Null";
             $history->current = $data->source_of_risk2;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -791,7 +791,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Site Name';
             $history->previous = "Null";
             $history->current = $data->site_name;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -808,7 +808,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Building';
             $history->previous = "Null";
             $history->current = $data->building;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -825,7 +825,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Floor';
             $history->previous = "Null";
             $history->current = $data->floor;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -842,7 +842,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Room.';
             $history->previous = "Null";
             $history->current = $data->room;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -859,7 +859,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Duration';
             $history->previous = "Null";
             $history->current = $data->duration;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -876,7 +876,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Hazard';
             $history->previous = "Null";
             $history->current = $data->hazard;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -893,7 +893,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Room';
             $history->previous = "Null";
             $history->current = $data->room2;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -910,7 +910,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Regulatory Climate';
             $history->previous = "Null";
             $history->current = $data->regulatory_climate;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -927,7 +927,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Number Of Employees';
             $history->previous = "Null";
             $history->current = $data->Number_of_employees;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -944,7 +944,7 @@ class RiskManagementController extends Controller
         //     $history->activity_type = 'Reference Recores';
         //     $history->previous = "Null";
         //     $history->current = $data->refrence_record;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -958,7 +958,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Risk Management Strategy';
             $history->previous = "Null";
             $history->current = $data->risk_management_strategy;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -975,7 +975,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Scheduled Start Date';
             $history->previous = "Null";
             $history->current =  Helpers::getdateFormat($data->schedule_start_date1);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -991,7 +991,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Scheduled End Date';
             $history->previous = "Null";
             $history->current =  Helpers::getdateFormat($data->schedule_end_date1);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1008,7 +1008,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Estimated Man Hours';
             $history->previous = "Null";
             $history->current = $data->estimated_man_hours;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1025,7 +1025,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Estimated Cost';
             $history->previous = "Null";
             $history->current = $data->estimated_cost;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1042,7 +1042,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Currency';
             $history->previous = "Null";
             $history->current = $data->currency;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1059,7 +1059,7 @@ class RiskManagementController extends Controller
         //     $history->activity_type = 'Training Require';
         //     $history->previous = "Null";
         //     $history->current = $data->training_require;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1076,7 +1076,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Justification';
             $history->previous = "Null";
             $history->current = $data->justification;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1093,7 +1093,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Work Group Attachments';
             $history->previous = "Null";
             $history->current = $data->reference;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1110,7 +1110,7 @@ class RiskManagementController extends Controller
         //     $history->activity_type = 'Cost Of Risk';
         //     $history->previous = "Null";
         //     $history->current = $data->cost_of_risk;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1127,7 +1127,7 @@ class RiskManagementController extends Controller
         //     $history->activity_type = 'Environmental Impact';
         //     $history->previous = "Null";
         //     $history->current = $data->environmental_impact;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1144,7 +1144,7 @@ class RiskManagementController extends Controller
         //     $history->activity_type = 'Public Perception Impact';
         //     $history->previous = "Null";
         //     $history->current = $data->public_perception_impact;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1161,7 +1161,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Root Cause Methodology';
             $history->previous = "Null";
             $history->current = implode(',', $request->root_cause_methodology);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1178,7 +1178,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Root Cause Description';
             $history->previous = "Null";
             $history->current = $data->root_cause_description;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1195,7 +1195,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Investigation Summary';
             $history->previous = "Null";
             $history->current = $data->investigation_summary;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1212,7 +1212,7 @@ class RiskManagementController extends Controller
         //     $history->activity_type = 'Calculated Risk';
         //     $history->previous = "Null";
         //     $history->current = $data->calculated_risk;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1229,7 +1229,7 @@ class RiskManagementController extends Controller
         //     $history->activity_type = 'Impacted Objects';
         //     $history->previous = "Null";
         //     $history->current = $data->impacted_objects;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1255,7 +1255,7 @@ class RiskManagementController extends Controller
             }else{
                 $history->current = "Fatal";
             }
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1283,7 +1283,7 @@ class RiskManagementController extends Controller
             }else{
                 $history->current = "Extremely Unlikely";
             }
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1310,7 +1310,7 @@ class RiskManagementController extends Controller
             }else{
                 $history->current = "Impossible";
             }
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1327,7 +1327,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Rpn';
             $history->previous = "Null";
             $history->current = $data->rpn;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1344,7 +1344,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Residual Risk';
             $history->previous = "Null";
             $history->current = $data->residual_risk;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1370,7 +1370,7 @@ class RiskManagementController extends Controller
             }else{
                 $history->current = "None";
             }
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1394,7 +1394,7 @@ class RiskManagementController extends Controller
             }else{
                 $history->current = "Low";
             }
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1422,7 +1422,7 @@ class RiskManagementController extends Controller
             }else{
                 $history->current = "Impossible";
             }
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1439,7 +1439,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Residual RPN';
             $history->previous = "Null";
             $history->current = $data->rpn2;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1456,7 +1456,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Comments';
             $history->previous = "Null";
             $history->current = $data->comments2;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1473,7 +1473,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Mitigation Required';
             $history->previous = "Null";
             $history->current = $data->mitigation_required;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1489,7 +1489,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Mitigation Plan';
             $history->previous = "Null";
             $history->current = $data->mitigation_plan;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1502,10 +1502,10 @@ class RiskManagementController extends Controller
         if (!empty($data->mitigation_due_date)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Scheduled End Date';
+            $history->activity_type = 'Scheduled End-Date';
             $history->previous = "Null";
             $history->current =  Helpers::getdateFormat($data->mitigation_due_date);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1521,7 +1521,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Status of Mitigation';
             $history->previous = "Null";
             $history->current = $data->mitigation_status;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1538,7 +1538,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Mitigation Status Comments';
             $history->previous = "Null";
             $history->current = $data->mitigation_status_comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1555,7 +1555,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Impact';
             $history->previous = "Null";
             $history->current = $data->impact;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1572,7 +1572,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Criticality';
             $history->previous = "Null";
             $history->current = $data->criticality;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1588,7 +1588,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Impact Analysis';
             $history->previous = "Null";
             $history->current = $data->impact_analysis;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1605,7 +1605,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Risk  Analysis';
             $history->previous = "Null";
             $history->current = $data->risk_analysis;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1621,7 +1621,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Reference Record';
             $history->previous = "Null";
             $history->current = implode(',', $request->refrence_record);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1637,7 +1637,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Due Date Extension Justification';
             $history->previous = "Null";
             $history->current = $data->due_date_extension;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3200,11 +3200,11 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->mitigation_due_date != $data->mitigation_due_date || !empty($request->mitigation_due_date_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Scheduled End Date')
+            ->where('activity_type', 'Scheduled End-Date')
             ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Scheduled End Date';
+            $history->activity_type = 'Scheduled End-Date';
             $history->previous =  Helpers::getdateFormat($lastDocument->mitigation_due_date);
             $history->current =  Helpers::getdateFormat($data->mitigation_due_date);
             $history->comment = $request->mitigation_due_date_comment;

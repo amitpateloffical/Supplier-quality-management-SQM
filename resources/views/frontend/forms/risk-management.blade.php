@@ -251,7 +251,7 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" name="due_date" id="due_date" readonly
                                                         placeholder="DD-MM-YYYY" />
-                                                    <input type="date" name="due_date_n"
+                                                    <input type="hidden" name="due_date_n"
                                                         min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                                 </div>
@@ -1631,7 +1631,7 @@
                                     </div>
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Date Due">Scheduled End Date</label>
+                                            <label for="Date Due">Scheduled End-Date</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="mitigation_due_date" readonly
                                                     placeholder="DD-MM-YYYY" />
@@ -1922,7 +1922,7 @@
                                             <div class="static"></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    {{-- <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="Reject Action Plan By">Reject Action Plan By</label>
                                             <div class="static"></div>
@@ -1940,7 +1940,7 @@
                                                 Comment</label>
                                             <div class="static"></div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="Action Plan Approved By">Action Plan Approved By</label>

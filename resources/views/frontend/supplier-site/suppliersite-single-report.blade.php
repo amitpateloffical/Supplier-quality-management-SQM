@@ -398,7 +398,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Suppplier Attachments
+                    File Attachments
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -510,7 +510,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Additional Attachments
+                  HOD Additional Attachments
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -936,7 +936,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Additional Attachments
+                    Supplier Details Additional Attachments
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1196,7 +1196,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Additional Attachments
+                    Score Card Additional Attachments
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1288,7 +1288,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Additional Attachments
+                    QA Reviewer Additional Attachments
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1457,7 +1457,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Additional Attachments
+                   Risk Additional Attachments
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1532,7 +1532,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Additional Attachments
+                    QA Head Additional Attachments
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1657,15 +1657,15 @@
                     <tr>
                         <th class="w-20">Conditionally Approved By</th>
                         <td class="w-30">
-                            <div class="static">{{ $supplierData->supplier_approved_by ?? 'Not Applicable' }}</div>
+                            <div class="static">{{ $supplierData->conditionally_approved_by ?? 'Not Applicable' }}</div>
                         </td>
                         <th class="w-20">Conditionally Approved On</th>
                         <td class="w-30">
-                            <div class="static">{{ $supplierData->supplier_approved_on ?? 'Not Applicable' }}</div>
+                            <div class="static">{{ $supplierData->conditionally_approved_on ?? 'Not Applicable' }}</div>
                         </td>
                         <th class="w-20">Conditionally Approved Comment</th>
                         <td class="w-30">
-                            <div class="static">{{ $supplierData->supplier_approved_comment ?? 'Not Applicable' }}
+                            <div class="static">{{ $supplierData->conditionally_approved_comments ?? 'Not Applicable' }}
                             </div>
                         </td>
 

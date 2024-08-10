@@ -207,7 +207,8 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->initiator_Group){{ Helpers::getInitiatorGroupFullName($data->initiator_Group) }} @else Not Applicable @endif</td>
+                        {{-- <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td> --}}
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">{{ $data->initiator_group_code }}</td>
 
@@ -295,7 +296,7 @@
                 </div>
 
                 <div class = "inner-block">
-                    <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">CAPA QA Comments</label>
+                    <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Comments</label>
                 <span style="font-size:0.8rem; margin-left:10px">@if($data->capa_qa_comments ){{ $data->capa_qa_comments  }} @else Not Applicable @endif</span>
                 </div>
                 
@@ -394,7 +395,7 @@
             </div> -->
             <div class="block">
                 <div class="block-head">
-                    Product Information
+                    Product Details
                 </div>
                 <div class="border-table">
                     <table>
@@ -570,7 +571,12 @@
                 </div>
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">CAPA QA Comments</label>
-                <span style="font-size:0.8rem; margin-left:10px">@if($data->capa_qa_comments ){{ $data->capa_qa_comments  }} @else Not Applicable @endif</span>
+                <span style="font-size:0.8rem; margin-left:10px">@if($data->capa_qa_comments2 ){{ $data->capa_qa_comments2  }} @else Not Applicable @endif</span>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-head">
+                    CAPA Details
                 </div>
 
                 <table>
@@ -594,11 +600,48 @@
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Supervisor Review Comments</label>
                 <span style="font-size:0.8rem; margin-left:10px">@if($data->supervisor_review_comments ){{ $data->supervisor_review_comments  }} @else Not Applicable @endif</span>
                 </div>
-
+            </div>
+                <div class="block">
+                    <div class="block-head">
+                        CAPA Closure
+                    </div>
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">QA Review & Closure</label>
                 <span style="font-size:0.8rem; margin-left:10px">@if($data->qa_review ){{ $data->qa_review  }} @else Not Applicable @endif</span>
                 </div>
+            </div>
+
+        <div class="block">
+            <div class="block-head">
+                Closure Attachment
+             </div>
+               <div class="border-table">
+                 <table>
+                     <tr class="table_bg">
+                         <th class="w-20">Sr no..</th>
+                         <th class="w-60">File </th>
+                     </tr>
+                         @if($data->closure_attachment)
+                         @foreach(json_decode($data->closure_attachment) as $key => $file)
+                             <tr>
+                                 <td class="w-20">{{ $key + 1 }}</td>
+                                 <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                             </tr>
+                         @endforeach
+                         @else
+                         <tr>
+                             <td class="w-20">1</td>
+                             <td class="w-20">Not Applicable</td>
+                         </tr>
+                     @endif
+
+                 </table>
+               </div>
+            </div>
+                <div class="block">
+                    <div class="block-head">
+                        Extension Justification
+                    </div>
 
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Due Date Extension Justification</label>
@@ -611,43 +654,21 @@
 
                     </div>
 
-                    <div class="block-head">
-                        Closure Attachment
-                     </div>
-                       <div class="border-table">
-                         <table>
-                             <tr class="table_bg">
-                                 <th class="w-20">Sr no..</th>
-                                 <th class="w-60">File </th>
-                             </tr>
-                                 @if($data->closure_attachment)
-                                 @foreach(json_decode($data->closure_attachment) as $key => $file)
-                                     <tr>
-                                         <td class="w-20">{{ $key + 1 }}</td>
-                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                     </tr>
-                                 @endforeach
-                                 @else
-                                 <tr>
-                                     <td class="w-20">1</td>
-                                     <td class="w-20">Not Applicable</td>
-                                 </tr>
-                             @endif
-
-                         </table>
-                       </div>
             <div class="block">
                 <div class="block-head">
                     Activity Log
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Plan Proposed By
+                        <th class="w-20">Proposed Plan By
                         </th>
                         <td class="w-30">{{ $data->plan_proposed_by }}</td>
                         <th class="w-20">
-                            Plan Proposed On</th>
+                            Proposed Plan On</th>
                         <td class="w-30">{{ $data->plan_proposed_on }}</td>
+                        <th class="w-20">
+                            Proposed Plan Comment</th>
+                        <td class="w-30">{{ $data->plan_proposed_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Plan Approved By
@@ -656,43 +677,78 @@
                         <th class="w-20">
                             Plan Approved On</th>
                         <td class="w-30">{{ $data->Plan_approved_on }}</td>
+                        <th class="w-20">
+                            Plan Approved Comment</th>
+                        <td class="w-30">{{ $data->plan_approved_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">{{ $data->more_info_review_by }}</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">{{ $data->more_info_review_on }}</td>
+                        <th class="w-20">More Info Required Comment</th>
+                        <td class="w-30">{{ $data->more_info_review_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Approved Plan By
+                        </th>
+                        <td class="w-30">{{ $data->plan_approved_by }}</td>
+                        <th class="w-20">
+                            Approved Plan On</th>
+                        <td class="w-30">{{ $data->Plan_approved_on }}</td>
+                        <th class="w-20">
+                            Approved Plan Comment</th>
+                        <td class="w-30">{{ $data->plan_approved_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">QA More Info Required By
                         </th>
                         <td class="w-30">{{ $data->qa_more_info_required_by }}</td>
                         <th class="w-20">
-                            QA More Info Required On</th>
+                            QA More Info Required By</th>
                         <td class="w-30">{{ $data->qa_more_info_required_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Cancelled By
-                        </th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
                         <th class="w-20">
-                            Cancelled On</th>
-                        <td class="w-30">{{ $data->cancelled_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Completed By
-                        </th>
-                        <td class="w-30">{{ $data->completed_by }}</td>
-                        <th class="w-20">
-                            Completed On</th>
-                        <td class="w-30">{{ $data->completed_on }}</td>
+                            QA More Info Required By</th>
+                        <td class="w-30">{{ $data->qa_more_info_required_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Approved By</th>
                         <td class="w-30">{{ $data->approved_by }}</td>
                         <th class="w-20">Approved On</th>
                         <td class="w-30">{{ $data->approved_on }}</td>
+                        <th class="w-20">
+                            Approved Comment</th>
+                        <td class="w-30">{{ $data->approved_comment }}</td>
                     </tr>
 
                     <tr>
                         <th class="w-20">Rejected By</th>
-                        <td class="w-30">{{ $data->rejected_by }}</td>
+                        <td class="w-30">{{ $data->reject_more_info_requierd_by }}</td>
                         <th class="w-20">Rejected On</th>
-                        <td class="w-30">{{ $data->rejected_on }}</td>
+                        <td class="w-30">{{ $data->reject_more_info_requierd_on }}</td>
+                        <th class="w-20">
+                            Rejected Comment</th>
+                        <td class="w-30">{{ $data->reject_more_info_requierd_comment }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">All Actions Completed By</th>
+                        <td class="w-30">{{ $data->all_actions_completed_by }}</td>
+                        <th class="w-20">All Actions Completed By</th>
+                        <td class="w-30">{{ $data->all_actions_completed_on }}</td>
+                        <th class="w-20">
+                            All Actions Completed By</th>
+                        <td class="w-30">{{ $data->all_actions_completed_comment }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_by }}</td>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_on }}</td>
+                        <th class="w-20">
+                            Cancelled Comment</th>
+                        <td class="w-30">{{ $data->cancelled_comment }}</td>
                     </tr>
 
                 </table>

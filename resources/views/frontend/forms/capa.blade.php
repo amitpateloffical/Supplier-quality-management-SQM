@@ -497,7 +497,7 @@
                                         <label for="severity-level">Severity Level</label>
                                         <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
                                         <select name="severity_level_form">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="minor">Minor</option>
                                             <option value="major">Major</option>
                                             <option value="critical">Critical</option>
@@ -512,14 +512,14 @@
                                         <select name="initiated_through"
                                             onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="internal_audit">Internal Audit</option>
-                                            <option value="external_audit">External Audit</option>
+                                            <option value="internal audit">Internal Audit</option>
+                                            <option value="external audit">External Audit</option>
                                             <option value="recall">Recall</option>
                                             <option value="return">Return</option>
                                             <option value="deviation">Deviation</option>
                                             <option value="complaint">Complaint</option>
                                             <option value="regulatory">Regulatory</option>
-                                            <option value="lab-incident">Lab Incident</option>
+                                            <option value="lab incident">Lab Incident</option>
                                             <option value="improvement">Improvement</option>
                                             <option value="others">Others</option>
                                         </select>
@@ -1550,21 +1550,21 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
-                                        <label for="Rejected By">Reject More Info Review By</label>
+                                        <label for="Rejected By">Rejected By</label>
                                         <input type="hidden" name="rejected_by">
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
-                                        <label for="Rejected On">Reject More Info Review On</label>
+                                        <label for="Rejected On">Rejected On</label>
                                         <input type="hidden" name="rejected_on">
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Submitted Comment">Reject More Info Review Comment</label>
+                                        <label for="Submitted Comment">Rejected Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>

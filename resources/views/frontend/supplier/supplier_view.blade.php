@@ -285,6 +285,37 @@
             });
         });
     </script> -->
+                                                                     <script>
+                                                                            document.addEventListener('DOMContentLoaded', function () {
+                                                                                // Get all issue date and expiry date inputs
+                                                                                const issueDateInputs = document.querySelectorAll('.issuedate');
+                                                                                const expiryDateInputs = document.querySelectorAll('.expirydate');
+
+                                                                                // Add event listeners to issue date inputs
+                                                                                issueDateInputs.forEach(input => {
+                                                                                    input.addEventListener('change', validateDates);
+                                                                                });
+
+                                                                                // Add event listeners to expiry date inputs
+                                                                                expiryDateInputs.forEach(input => {
+                                                                                    input.addEventListener('change', validateDates);
+                                                                                });
+
+                                                                                function validateDates() {
+                                                                                    const type = this.dataset.type;
+                                                                                    const index = this.dataset.index;
+                                                                                    const issueDate = document.getElementById(`issuedate_${index}_${type}`).value;
+                                                                                    const expiryDate = document.getElementById(`expirydate_${index}_${type}`).value;
+
+                                                                                    if (issueDate && expiryDate) {
+                                                                                        if (new Date(issueDate) > new Date(expiryDate)) {
+                                                                                            alert('Expiry date cannot be before the issue date.');
+                                                                                            this.value = '';
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            });
+                                                                        </script>
 
     <script>
         $(document).ready(function() {
@@ -743,7 +774,7 @@
                                                 value="{{ Helpers::getdateFormat($data->due_date) }}" name="due_date" />
                                             <input type="date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                                oninput="handleDateInput(this, 'due_date')" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -1265,116 +1296,86 @@
 
                                                 <input type="hidden" name="supplier_id" value="{{ $data->id }}">
                                                 <div class="col-12">
-                                                    <div class="group-input">
-                                                        <div class="why-why-chart">
-                                                            @php
-                                                                $types = [
-                                                                    'tse',
-                                                                    'residual_solvent',
-                                                                    'melamine',
-                                                                    'gmo',
-                                                                    'gluten',
-                                                                    'manufacturer_evaluation',
-                                                                    'who',
-                                                                    'gmp',
-                                                                    'ISO',
-                                                                    'manufacturing_license',
-                                                                    'CEP',
-                                                                    'risk_assessment',
-                                                                    'elemental_impurity',
-                                                                    'azido_impurities',
-                                                                ];
-                                                            @endphp
+                                                <div class="group-input">
+                                                    <div class="why-why-chart">
+                                                        @php
+                                                            $types = [
+                                                                'tse',
+                                                                'residual_solvent',
+                                                                'melamine',
+                                                                'gmo',
+                                                                'gluten',
+                                                                'manufacturer_evaluation',
+                                                                'who',
+                                                                'gmp',
+                                                                'ISO',
+                                                                'manufacturing_license',
+                                                                'CEP',
+                                                                'risk_assessment',
+                                                                'elemental_impurity',
+                                                                'azido_impurities',
+                                                            ];
+                                                        @endphp
 
-                                                            @foreach ($types as $type)
-                                                                <table class="table table-bordered">
-                                                                    <thead>
+                                                        @foreach ($types as $type)
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="width: 24%">Certificate Name</th>
+                                                                        <th style="width: 20%">Attachment</th>
+                                                                        <th style="width: 15%">Issue Date</th>
+                                                                        <th style="width: 15%">Expiry Date</th>
+                                                                        <th>Remark</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="{{ $type }}_rows">
+                                                                    @foreach ($supplierChecklist->where('doc_type', $type) as $grid)
+                                                                        @php
+                                                                            $filePath = $grid->attachment;
+                                                                            $fileName = str_replace('upload\\', '', $filePath);
+                                                                        @endphp
                                                                         <tr>
-                                                                            <th style="width: 24%">Certificate Name</th>
-                                                                            <th style="width: 20%">Attachment</th>
-                                                                            <th style="width: 15%">Issue Date</th>
-                                                                            <th style="width: 15%">Expiry Date</th>
-                                                                            <th>Remark</th>
+                                                                            <td style="display: flex; justify-content: space-between;">
+                                                                                <div>{{ strtoupper(str_replace('_', ' ', $type)) }}</div>
+                                                                                <div>
+                                                                                    <button class="button_theme" type="button" onclick="addRow('{{ $type }}')">Add Row</button>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                @if ($grid->attachment)
+                                                                                    <input type="file" name="{{ $type }}_attachment[]" class="custom-border" style="color: white;">
+                                                                                    <span type="button" class="file-container text-dark mt-2" style="background-color: rgb(243, 242, 240);">
+                                                                                        <b>{{ $fileName }}</b>
+                                                                                        <a href="{{ asset('upload/' . $fileName) }}" target="_blank">
+                                                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                                        </a>
+                                                                                        <a type="button" class="remove-file" data-file-name="{{ $fileName }}">
+                                                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                                        </a>
+                                                                                    </span>
+                                                                                @else
+                                                                                    <input type="file" name="{{ $type }}_attachment[]" class="custom-border">
+                                                                                @endif
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="date" id="issuedate_{{ $loop->index }}_{{ $type }}" name="certificate_issue_{{ $type }}[]" value="{{ $grid->issue_date }}" class="custom-border issuedate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="date" id="expirydate_{{ $loop->index }}_{{ $type }}" name="certificate_expiry_{{ $type }}[]" value="{{ $grid->expiry_date }}" class="custom-border expirydate" data-type="{{ $type }}" data-index="{{ $loop->index }}">
+                                                                            </td>
+                                                                            <td class="relative-container">
+                                                                                <textarea name="{{ $type }}_remarks[]" class="custom-border">{{ $grid->remarks }}</textarea>
+                                                                                @component('frontend.forms.language-model')
+                                                                                @endcomponent
+                                                                            </td>
                                                                         </tr>
-                                                                    </thead>
-                                                                    <tbody id="{{ $type }}_rows">
-                                                                        @foreach ($supplierChecklist->where('doc_type', $type) as $grid)
-                                                                            @php
-                                                                                $filePath = $grid->attachment;
-                                                                                $fileName = str_replace(
-                                                                                    'upload\\',
-                                                                                    '',
-                                                                                    $filePath,
-                                                                                );
-                                                                            @endphp
-                                                                            <tr>
-                                                                                <td style=" display: flex; justify-content: space-between;">
-                                                                                   <div> {{ strtoupper(str_replace('_', ' ', $type)) }}</div>
-                                                                                   
-                                                                                  <div>
-                                                                                    <button class="button_theme" type="button"
-                                                                                    onclick="addRow('{{ $type }}')">Add
-                                                                                    Row</button>
-                                                                                  </div>
-                                                                                    
-                                                                                </td>
-                                                                                <td>
-                                                                                    @if ($grid->attachment)
-                                                                                        <input type="file"
-                                                                                            name="{{ $type }}_attachment[]"
-                                                                                            class="custom-border"
-                                                                                            style="color: white;">
-                                                                                        <span type="button"
-                                                                                            class="file-container text-dark mt-2"
-                                                                                            style="background-color: rgb(243, 242, 240);">
-                                                                                            <b>{{ $fileName }}</b>
-                                                                                            <a href="{{ asset('upload/' . $fileName) }}"
-                                                                                                target="_blank"><i
-                                                                                                    class="fa fa-eye text-primary"
-                                                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                                            <a type="button"
-                                                                                                class="remove-file"
-                                                                                                data-file-name="{{ $fileName }}"><i
-                                                                                                    class="fa-solid fa-circle-xmark"
-                                                                                                    style="color:red; font-size:20px;"></i></a>
-                                                                                        </span>
-                                                                                    @else
-                                                                                        <input type="file"
-                                                                                            name="{{ $type }}_attachment[]"
-                                                                                            class="custom-border">
-                                                                                    @endif
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input type="date"
-                                                                                        id="issuedate_{{ $loop->index }}_{{ $type }}"
-                                                                                        name="certificate_issue_{{ $type }}[]"
-                                                                                        value="{{ $grid->issue_date }}"
-                                                                                        class="custom-border issuedate"
-                                                                                        data-type="{{ $type }}"
-                                                                                        data-index="{{ $loop->index }}">
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input type="date"
-                                                                                        id="expirydate_{{ $loop->index }}_{{ $type }}"
-                                                                                        name="certificate_expiry_{{ $type }}[]"
-                                                                                        value="{{ $grid->expiry_date }}"
-                                                                                        class="custom-border expirydate"
-                                                                                        data-type="{{ $type }}"
-                                                                                        data-index="{{ $loop->index }}">
-                                                                                </td>
-                                                                                <td class="relative-container">
-                                                                                    <textarea name="{{ $type }}_remarks[]" class="custom-border">{{ $grid->remarks }}</textarea>
-                                                                                    @component('frontend.forms.language-model')
-                                                                                    @endcomponent
-                                                                                </td>
-                                                                            </tr>
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
-                                                            @endforeach
-                                                        </div>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        @endforeach
                                                     </div>
                                                 </div>
+                                            </div>
 
 
                                                 <div class="col-lg-6">
@@ -2204,7 +2205,7 @@
 
                         <div class="button-block mt-4">
                             <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
                                 </a> </button>

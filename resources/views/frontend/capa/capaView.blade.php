@@ -1815,82 +1815,107 @@
                             <div id="CCForm5" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Plan Proposed By">Proposed Plan By</label>
                                                 <input type="hidden" name="plan_proposed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->plan_proposed_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Plan Proposed On">Proposed Plan On</label>
                                                 <input type="hidden" name="plan_proposed_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->plan_proposed_on }}</div>
                                             </div>
                                         </div>
-
                                         <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Submitted Comment">Proposed Plan Comment</label>
+                                                <div class="static">{{ $data->plan_proposed_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="QA More Info Required By">More Info Required By</label>
                                                 <input type="hidden" name="more_info_review_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->more_info_review_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="QA More Info Required On">More Info Required On</label>
                                                 <input type="hidden" name="more_info_review_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->more_info_review_on }}</div>
                                             </div>
                                         </div>
-
                                         <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Submitted Comment">More Info Required Comment</label>
+                                                <div class="static">{{ $data->more_info_review_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">Approved Plan By</label>
                                                 <input type="hidden" name="plan_approved_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->plan_approved_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Plan Approved On">Approved Plan On</label>
                                                 <input type="hidden" name="plan_approved_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->Plan_approved_on }}</div>
                                             </div>
                                         </div>
-
                                         <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Submitted Comment">Approved Plan Comment</label>
+                                                <div class="static">{{ $data->plan_approved_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="QA More Info Required By">QA More Info Required By</label>
                                                 <input type="hidden" name="qa_more_info_required_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->qa_more_info_required_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="QA More Info Required On">QA More Info Required On</label>
                                                 <input type="hidden" name="qa_more_info_required_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->qa_more_info_required_on }}</div>
                                             </div>
                                         </div>
-
                                         <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Submitted Comment">QA More Info Required Comment</label>
+                                                <div class="static">{{ $data->qa_more_info_required_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Completed By">Completed By</label>
                                                 <input type="hidden" name="completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->completed_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Completed On">Completed On</label>
                                                 <input type="hidden" name="completed_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->completed_on }}</div>
                                             </div>
                                         </div>
-
                                         <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Submitted Comment">Completed Comment</label>
+                                                <div class="static">{{ $data->completedd_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Approved By">Approved By</label>
                                                 <input type="hidden" name="approved_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
@@ -1898,58 +1923,80 @@
                                                 <div class="static">{{ $data->approved_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Approved On">Approved On</label>
                                                 <input type="hidden" name="approved_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->approved_on }}</div>
                                             </div>
                                         </div>
-                                        
                                         <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Submitted Comment">Approved Comment</label>
+                                                <div class="static">{{ $data->approved_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Rejected By">Reject More Info Review By</label>
+                                                <input type="hidden" name="reject_more_info_requierd_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->reject_more_info_requierd_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="group-input">
+                                                <label for="Rejected On">Reject More Info Review On</label>
+                                                <input type="hidden" name="reject_more_info_requierd_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->reject_more_info_requierd_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Submitted Comment">Reject More Info Review Comment</label>
+                                                <div class="static">{{ $data->reject_more_info_requierd_comment }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Completed By">All Actions Completed By</label>
                                                 <input type="hidden" name="all_actions_completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->all_actions_completed_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Completed On">All Actions Completed On</label>
                                                 <input type="hidden" name="all_actions_completed_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->all_actions_completed_on }}</div>
                                             </div>
                                         </div>
-
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Rejected By">Rejected By</label>
-                                                <input type="hidden" name="rejected_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->rejected_by }}</div>
+                                                <label for="Submitted Comment">All Actions Completed Comment</label>
+                                                <div class="static">{{ $data->all_actions_completed_comment }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Rejected On">Rejected On</label>
-                                                <input type="hidden" name="rejected_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->rejected_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
+                                        
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancelled By</label>
                                                 <input type="hidden" name="cancelled_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Cancelled On">Cancelled On</label>
                                                 <input type="hidden" name="cancelled_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
-
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Submitted Comment">Cancelled Comment</label>
+                                                <div class="static">{{ $data->cancelled_comment }}</div>
+                                            </div>
+                                        </div>
 
                                     <div class="button-block">
                                         {{-- <button type="submit" class="saveButton"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button> --}}
@@ -2255,7 +2302,7 @@
                                 </div>
                                 <div class="group-input">
                                     <label for="comment">Comment <span class="text-danger">*</span></label>
-                                    <input class="input-new" type="comment" name="comments" required>
+                                    <input class="input-new" type="comment" name="comment" required>
                                 </div>
                             </div>
 

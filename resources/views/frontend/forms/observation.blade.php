@@ -654,7 +654,6 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="comments">Comments</label>
-
                                         <div class="relative-container">
                                             <textarea name="comments" id="comments" cols="30" class="mic-input"></textarea>
                                             @component('frontend.forms.language-model')
@@ -677,7 +676,6 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="sub-head">Impact Analysis</div>
-
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -709,8 +707,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Severity Rate">Severity Rate</label>
-                                        <select name="severity_rate" id="analysisR"
-                                            onchange='calculateRiskAnalysis(this)'>
+                                        <select name="severity_rate" id="analysisR" onchange='calculateRiskAnalysis(this)'>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="1">Negligible</option>
                                             <option value="2">Moderate</option>

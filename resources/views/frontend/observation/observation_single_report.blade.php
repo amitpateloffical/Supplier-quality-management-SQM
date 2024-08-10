@@ -165,16 +165,11 @@
         background: #4274da57;
     }
 </style>
-
-
 <body>
-
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
-                    Observation Single Report
-                </td>
+                <td class="w-70 head"> Observation Single Report </td>
                 <td class="w-30">
                     <div class="logo">
                         <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="" class="w-100">
@@ -216,9 +211,7 @@
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
-                <div class="block-head">
-                    General Information
-                </div>
+                <div class="block-head"> General Information </div>
                 <table>
                     <tr>
                         <th class="w-20">Initiator</th>
@@ -317,9 +310,7 @@
                         </td>
                     </tr> --}}
                 </table>
-                <div class="block-head">
-                    Attached Files
-                </div>
+                <div class="block-head"> Attached Files </div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
@@ -343,9 +334,7 @@
 
                     </table>
                 </div>
-                <div class="block-head">
-                    Related Obsevations
-                </div>
+                <div class="block-head"> Related Observations </div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
@@ -373,9 +362,7 @@
 
             <div class="block">
                 <div class="head">
-                    <div class="block-head">
-                        CAPA Plan Details
-                    </div>
+                    <div class="block-head"> CAPA Plan Details </div>
                     <table>
                         <tr>
                             <th class="w-20">Date Response Due</th>
@@ -404,7 +391,6 @@
                                     Not Applicable
                                 @endif
                             </td>
-
                         </tr>
                         <tr>
                             <th class="w-20">Comments</th>
@@ -423,9 +409,7 @@
 
             <div class="block">
                 <div class="head">
-                    <div class="block-head">
-                        Impact Analysis
-                    </div>
+                    <div class="block-head">Impact Analysis </div>
                     <table>
                         <tr>
                             <th class="w-20">Impact</th>
@@ -436,7 +420,6 @@
                                     Not Applicable
                                 @endif
                             </td>
-
                         </tr>
                         <tr>
                             <th class="w-20">Impact Analysis</th>
@@ -447,48 +430,73 @@
                                     Not Applicable
                                 @endif
                             </td>
-
                         </tr>
-
                     </table>
                 </div>
             </div>
             <div class="block">
                 <div class="head">
-                    <div class="block-head">
-                        Risk Analysis
-                    </div>
+                    <div class="block-head"> Risk Analysis </div>
                     <table>
                         <tr>
                             <th class="w-20">Severity Rate</th>
                             <td class="w-30">
                                 @if ($data->severity_rate)
-                                    {{ $data->severity_rate }}
+                                @if ($data->severity_rate == 1)
+                                    Negligible
+                                @elseif($data->severity_rate == 2)
+                                    Moderate
+                                @elseif($data->severity_rate == 3)
+                                    Major
                                 @else
-                                    Not Applicable
+                                    Fatal
                                 @endif
+                            @else
+                                Not Applicable
+                            @endif
+
                             </td>
 
                             <th class="w-20">Occurrence</th>
                             <td class="w-30">
                                 @if ($data->occurrence)
-                                    {{ $data->occurrence }}
+                                @if ($data->occurrence == 1)
+                                    Very Likely
+                                @elseif($data->occurrence == 2)
+                                    Likely
+                                @elseif($data->occurrence == 3)
+                                    Unlikely
+                                @elseif($data->occurrence == 4)
+                                    Rare
                                 @else
-                                    Not Applicable
+                                    Extremely Unlikely
                                 @endif
+                            @else
+                                Not Applicable
+                            @endif
+
                             </td>
                         </tr>
-
                         <tr>
                             <th class="w-20">Detection</th>
                             <td class="w-30">
                                 @if ($data->detection)
-                                    {{ $data->detection }}
+                                @if ($data->detection == 1)
+                                    Very Likely
+                                @elseif($data->detection == 2)
+                                    Likely
+                                @elseif($data->detection == 3)
+                                    Unlikely
+                                @elseif($data->detection == 4)
+                                    Rare
                                 @else
-                                    Not Applicable
+                                    Impossible
                                 @endif
-                            </td>
+                            @else
+                                Not Applicable
+                            @endif
 
+                            </td>
                             <th class="w-20">RPN</th>
                             <td class="w-30" colspan="3">
                                 @if ($data->analysisRPN)
@@ -503,9 +511,7 @@
             </div>
             <div class="block">
                 <div class="head">
-                    <div class="block-head">
-                        Action Summary
-                    </div>
+                    <div class="block-head"> Action Summary </div>
                     <table>
                         <tr>
                             <th class="w-20">Actual Start Date</th>
@@ -541,13 +547,8 @@
 
             <div class="block">
                 <div class="head">
-                    <div class="block-head">
-                        Response Summary
-                    </div>
-
-                    <div class="block-head">
-                        Attached Files
-                    </div>
+                    <div class="block-head"> Response Summary </div>
+                    <div class="block-head">Attached Files</div>
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
@@ -609,9 +610,7 @@
 
             <div class="block">
                 <div class="head">
-                    <div class="block-head">
-                        Activity Log
-                    </div>
+                    <div class="block-head"> Activity Log </div>
                     <table>
                         <tr>
                             <th class="w-20">Report Issued By</th>

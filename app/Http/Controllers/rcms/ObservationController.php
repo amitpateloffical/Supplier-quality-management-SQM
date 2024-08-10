@@ -34,7 +34,6 @@ class ObservationController extends Controller
         return view('frontend.forms.observation', compact('due_date', 'record_number'));
     }
 
-
     public function observationstore(Request $request)
     {
 
@@ -122,7 +121,6 @@ class ObservationController extends Controller
 
             $data->related_observations = json_encode($files);
         }
-
 
         if (!empty($request->attach_files2)) {
             $files = [];
@@ -502,9 +500,9 @@ class ObservationController extends Controller
     if (! empty($data->assign_to2)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Assigned To-2';
+        $history->activity_type = 'Assigned To';
         $history->previous = "Null";
-        $history->current = Helpers::getInitiatorName($data->assign_to2);
+        $history->current =$data->assign_to2;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -586,6 +584,7 @@ class ObservationController extends Controller
         $history->Observation_id = $data->id;
         $history->activity_type = 'Severity Rate ';
         $history->previous = "Null";
+
         $history->current = $data->severity_rate;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
@@ -1106,7 +1105,7 @@ class ObservationController extends Controller
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Assigned To';
-            $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);
+            $history->previous = $lastDocument->assign_to;
             $history->current = Helpers::getInitiatorName($data->assign_to);
             $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
@@ -1332,8 +1331,8 @@ class ObservationController extends Controller
                     ->exists();
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Assigned To-2';
-            $history->previous = Helpers::getInitiatorName($lastDocument->assign_to2);
+            $history->activity_type = 'Assigned To';
+            $history->previous = $lastDocument->assign_to2;
             $history->current = Helpers::getInitiatorName($data->assign_to2);
             $history->comment = $request->assign_to2_comment;
             $history->user_id = Auth::user()->id;
@@ -1430,8 +1429,28 @@ class ObservationController extends Controller
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Severity Rate ';
-            $history->previous = $lastDocument->severity_rate;
-            $history->current = $data->severity_rate;
+            // $history->previous = $lastDocument->severity_rate;
+            if($lastDocument->severity_rate == 1){
+                $history->previous = "Negligible";
+            } elseif($lastDocument->severity_rate == 2){
+                $history->previous = "Moderate";
+            } elseif($lastDocument->severity_rate == 3){
+                $history->previous = "Major";
+            } elseif($lastDocument->severity_rate == 4){
+                $history->previous = "Fatal";
+            } else{
+                $history->previous = "Null";
+            }
+            // $history->current = $data->severity_rate;
+            if($request->severity_rate == 1){
+                $history->current = "Negligible";
+            } elseif($request->severity_rate == 2){
+                $history->current = "Moderate";
+            } elseif($request->severity_rate == 3){
+                $history->current = "Major";
+            }else{
+                $history->current = "Fatal";
+            }
             $history->comment = $request->severity_rate_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1450,8 +1469,32 @@ class ObservationController extends Controller
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Occurrence ';
-            $history->previous = $lastDocument->occurrence;
-            $history->current = $data->occurrence;
+            // $history->previous = $lastDocument->occurrence;
+            if($lastDocument->occurrence == 1){
+                $history->previous = "Very Likely";
+            } elseif($lastDocument->occurrence == 2){
+                $history->previous = "Likely";
+            } elseif($lastDocument->occurrence == 3){
+                $history->previous = "Unlikely";
+            } elseif($lastDocument->occurrence == 4){
+                $history->previous = "Rare";
+            } elseif($lastDocument->occurrence == 5){
+                $history->previous = "Extremely Unlikely";
+            } else{
+                $history->previous = "Null";
+            }
+            // $history->current = $data->occurrence;
+            if($request->occurrence == 1){
+                $history->current = "Very Likely";
+            } elseif($request->occurrence == 2){
+                $history->current = "Likely";
+            } elseif($request->occurrence == 3){
+                $history->current = "Unlikely";
+            } elseif($request->occurrence == 4){
+                $history->current = "Rare";
+            } else{
+                $history->current = "Extremely Unlikely";
+            }
             $history->comment = $request->occurrence_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1470,8 +1513,32 @@ class ObservationController extends Controller
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Detection ';
-            $history->previous = $lastDocument->detection;
-            $history->current = $data->detection;
+            // $history->previous = $lastDocument->detection;
+            if($lastDocument->detection == 1){
+                $history->previous = "Very Likely";
+            } elseif($lastDocument->detection == 2){
+                $history->previous = "Likely";
+            } elseif($lastDocument->detection == 3){
+                $history->previous = "Unlikely";
+            }elseif($lastDocument->detection == 4){
+                $history->previous = "Rare";
+            } elseif($lastDocument->detection == 5){
+                $history->previous = "Impossible";
+            } else{
+                $history->previous = "Null";
+            }
+            // $history->current = $data->detection;
+            if($request->detection == 1){
+                $history->current = "Very Likely";
+            } elseif($request->detection == 2){
+                $history->current = "Likely";
+            } elseif($request->detection == 3){
+                $history->current = "Unlikely";
+            }elseif($request->detection == 4){
+                $history->current = "Rare";
+            }else{
+                $history->current = "Impossible";
+            }
             $history->comment = $request->detection_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1717,7 +1784,7 @@ class ObservationController extends Controller
                 $changestage->stage = "2";
                 $changestage->status = "Pending CAPA Plan";
                 $changestage->Report_Issued_By = Auth::user()->name;
-                $changestage->Report_Issued_On = Carbon::now()->format('d-M-Y H:i A');
+                $changestage->Report_Issued_On = Carbon::now()->format('d-M-Y');
                 $changestage->Report_Issued_Comment = $request->comment;
 
 
@@ -1778,7 +1845,7 @@ class ObservationController extends Controller
                 $changestage->stage = "3";
                 $changestage->status = "Pending Approval";
                 $changestage->Completed_By = Auth::user()->name;
-                $changestage->completed_on = Carbon::now()->format('d-M-Y H:i A');
+                $changestage->completed_on = Carbon::now()->format('d-M-Y');
                 $changestage->Completed_Comment = $request->comment;
 
                 $history = new AuditTrialObservation();
@@ -1789,10 +1856,9 @@ class ObservationController extends Controller
                 if (is_null($lastDocument->Completed_By) || $lastDocument->Completed_By === '') {
                     $history->previous = "";
                 } else {
-                    $history->previous = $lastDocument->Completed_By . ' , ' . $lastDocument->completed_on;
+                    $history->previous = $lastDocument->Completed_By . ' , ' . $lastDocument->Completed_on;
                 }
-                $history->current = $changestage->Completed_By . ' , ' . $changestage->completed_on;
-
+                $history->current = $changestage->Completed_By . ' , ' . $changestage->Completed_on;
                 $history->comment = $request->comment;
                 $history->action = 'Complete';
                 $history->user_id = Auth::user()->id;
@@ -1835,7 +1901,7 @@ class ObservationController extends Controller
                 $changestage->stage = "4";
                 $changestage->status = "CAPA Execution in Progress";
                 $changestage->QA_Approved_By = Auth::user()->name;
-                $changestage->QA_Approved_on = Carbon::now()->format('d-M-Y H:i A');
+                $changestage->QA_Approved_on = Carbon::now()->format('d-M-Y');
                 $changestage->QA_Approved_Comment = $request->comment;
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
@@ -1889,7 +1955,7 @@ class ObservationController extends Controller
                 $changestage->stage = "5";
                 $changestage->status = "Pending Final Approval";
                 $changestage->All_CAPA_Closed_By = Auth::user()->name;
-                $changestage->All_CAPA_Closed_On = Carbon::now()->format('d-M-Y H:i A');
+                $changestage->All_CAPA_Closed_On = Carbon::now()->format('d-M-Y');
                 $changestage->All_CAPA_Closed_Comment = $request->comment;
 
                 $history = new AuditTrialObservation();
@@ -1947,7 +2013,7 @@ class ObservationController extends Controller
                 $changestage->stage = "6";
                 $changestage->status = "Closed - Done";
                 $changestage->Final_Approval_By = Auth::user()->name;
-                $changestage->Final_Approval_on = Carbon::now()->format('d-M-Y H:i A');
+                $changestage->Final_Approval_on = Carbon::now()->format('d-M-Y');
                 $changestage->Final_Approval_Comment = $request->comment;
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
@@ -2014,14 +2080,14 @@ class ObservationController extends Controller
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
                 $changeControl->Cancelled_By = Auth::user()->name;
-                $changeControl->Cancelled_On = Carbon::now()->format('d-M-Y H:i A');
+                $changeControl->Cancelled_On = Carbon::now()->format('d-M-Y');
                 $changeControl->Cancelled_Comment = $request->comment;
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
                 // $history->activity_type = 'Activity Log';
                 // $history->current = $changeControl->Completed_By;
-                $history->activity_type = 'Cancelled By, Cancelled On';
+                $history->activity_type = 'Final Approval By, Final Approval On';
                 if (is_null($lastDocument->Cancelled_By) || $lastDocument->Cancelled_By === '') {
                     $history->previous = "";
                 } else {
@@ -2064,14 +2130,14 @@ class ObservationController extends Controller
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
                 $changeControl->Cancelled_By = Auth::user()->name;
-                $changeControl->Cancelled_On = Carbon::now()->format('d-M-Y H:i A');
+                $changeControl->Cancelled_On = Carbon::now()->format('d-M-Y');
                 $changeControl->Cancelled_Comment = $request->comment;
 
                 $history = new AuditTrialObservation();
                                 $history->Observation_id = $id;
                                 // $history->activity_type = 'Activity Log';
                                 // $history->current = $changeControl->Completed_By;
-                                $history->activity_type = 'Cancelled By, Cancelled On';
+                                $history->activity_type = 'Final Approval By, Final Approval On';
                                 if (is_null($lastDocument->Cancelled_By) || $lastDocument->Cancelled_By === '') {
                                     $history->previous = "";
                                 } else {
@@ -2120,14 +2186,14 @@ class ObservationController extends Controller
                 $changeControl->stage = "2";
                 $changeControl->status = "Pending CAPA Plan";
                 $changeControl->Reject_CAPA_Plan_By = Auth::user()->name;
-                $changeControl->Reject_CAPA_Plan_On = Carbon::now()->format('d-M-Y H:i A');
+                $changeControl->Reject_CAPA_Plan_On = Carbon::now()->format('d-M-Y');
                 $changeControl->Reject_CAPA_Plan_Comment = $request->comment;
 
                 $history = new AuditTrialObservation();
                                 $history->Observation_id = $id;
                                 // $history->activity_type = 'Activity Log';
                                 // $history->current = $changeControl->Completed_By;
-                                $history->activity_type = 'Reject CAPA Plan By, Reject CAPA Plan On';
+                                $history->activity_type = 'Final Approval By, Final Approval On';
                                 if (is_null($lastDocument->Reject_CAPA_Plan_By) || $lastDocument->Reject_CAPA_Plan_By === '') {
                                     $history->previous = "";
                                 } else {
@@ -2143,15 +2209,15 @@ class ObservationController extends Controller
                                 $history->stage = "Reject CAPA Plan";
                                 $history->change_to = 'Pending CAPA Plan';
                                 $history->change_from = 'Pending Approval';
-                                // $history->action_name = 'Not Applicable';
-                                if (is_null($lastDocument->Reject_CAPA_Plan_By) || $lastDocument->Reject_CAPA_Plan_By === '') {
-                                    $history->action_name = 'New';
-                                } else {
-                                    $history->action_name = 'Update';
-                                }
-                                                $history->save();
+                // $history->action_name = 'Not Applicable';
+                if (is_null($lastDocument->Reject_CAPA_Plan_By) || $lastDocument->Reject_CAPA_Plan_By === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                                $history->save();
 
-                                $changeControl->update();
+                $changeControl->update();
             //     $list = Helpers::getLeadAuditeeUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -2176,14 +2242,14 @@ class ObservationController extends Controller
                 $changeControl->stage = "2";
                 $changeControl->status = "Pending CAPA Plan";
                 $changeControl->Reject_CAPA_Plan_By1 = Auth::user()->name;
-                $changeControl->Reject_CAPA_Plan_On1 = Carbon::now()->format('d-M-Y H:i A');
+                $changeControl->Reject_CAPA_Plan_On1 = Carbon::now()->format('d-M-Y');
                 $changeControl->Reject_CAPA_Plan_Comment1 = $request->comment;
 
                 $history = new AuditTrialObservation();
                                 $history->Observation_id = $id;
                                 // $history->activity_type = 'Activity Log';
                                 // $history->current = $changeControl->Completed_By;
-                                $history->activity_type = 'Reject CAPA Plan By, Reject CAPA Plan On';
+                                $history->activity_type = 'Final Approval By, Final Approval On';
                                 if (is_null($lastDocument->Reject_CAPA_Plan_By1) || $lastDocument->Reject_CAPA_Plan_By1 === '') {
                                     $history->previous = "";
                                 } else {
@@ -2246,14 +2312,14 @@ class ObservationController extends Controller
                 $changeControl->stage = "6";
                 $changeControl->status = "Closed - Done";
                 $changeControl->QA_Approval_Without_CAPA_By = Auth::user()->name;
-                $changeControl->QA_Approval_Without_CAPA_On = Carbon::now()->format('d-M-Y H:i A');
+                $changeControl->QA_Approval_Without_CAPA_On = Carbon::now()->format('d-M-Y');
                 $changeControl->QA_Approval_Without_CAPA_Comment = $request->comment;
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
                 // $history->activity_type = 'Activity Log';
                 // $history->current = $changeControl->Completed_By;
-                $history->activity_type = 'QA Approval Without CAPA By, QA Approval Without CAPA On';
+                $history->activity_type = 'Final Approval By, Final Approval On';
                 if (is_null($lastDocument->QA_Approval_Without_CAPA_By) || $lastDocument->QA_Approval_Without_CAPA_By === '') {
                     $history->previous = "";
                 } else {

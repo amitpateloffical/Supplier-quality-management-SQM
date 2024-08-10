@@ -202,10 +202,9 @@
                         <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"><button class="button_theme1"> Exit
                             </button></a>
 
-
                     </div>
-
                 </div>
+
                 <div class="status">
                     <div class="head">Current Status</div>
                     {{-- ------------------------------By Pankaj-------------------------------- --}}
@@ -391,18 +390,24 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="assign_to">Assigned To</label>
-                                                <select name="assign_to"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="">-- Select --</option>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}" {{ $user->id == $data->assign_to ? 'selected' : '' }}>{{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+                                        <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="Assign To">Assigned To <span class="text-danger"></span>
+                                        </label>
+                                        <select id="assign_to" name="assign_to"
+                                            @if ($data->stage >= 6) disabled @endif>
+                                            <option value="">Select a value</option>
+                                            @if (!empty($users))
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->id }}"
+                                                        @if ($data->assign_to == $user->id) selected @endif>
+                                                        {{ $user->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+
                                         <!-- <div class="col-lg-6">
                                                                                                                                                                                                                                                                                                                             <div class="group-input">
                                                                                                                                                                                                                                                                                                                       </div>
@@ -438,9 +443,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
-                                                        class="text-danger">*</span></label><span
-                                                    id="rchars">255</span>
-                                                characters remaining
+                                                        class="text-danger">*</span></label><span id="rchars">255</span> characters remaining
 
                                                 <div class="relative-container">
                                             <input id="docname" type="text" name="short_description"
@@ -789,18 +792,23 @@
 
                                     </div>
                                 </div> --}}
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="assign_to2">Assigned To</label>
-                                                <select name="assign_to2"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="">-- Select --</option>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}" {{ $user->id == $data->assign_to2 ? 'selected' : '' }}>{{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="Assign To">Assigned To <span class="text-danger"></span>
+                                        </label>
+                                        <select id="assign_to2" name="assign_to2"
+                                            @if ($data->stage >= 6) disabled @endif>
+                                            <option value="">Select a value</option>
+                                            @if (!empty($users))
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->id }}"
+                                                        @if ($data->assign_to == $user->id) selected @endif>
+                                                        {{ $user->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
 
                                         {{-- <div class="col-lg-6">
                                     <div class="group-input">
@@ -843,8 +851,7 @@
                                 </div> --}}
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="action-plan-grid">
-                                                    Action Plan<button type="button" name="action-plan-grid"
+                                                <label for="action-plan-grid"> Action Plan<button type="button" name="action-plan-grid"
                                                         id="observation_table"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="observation">
@@ -863,8 +870,7 @@
                                                         @foreach (unserialize($griddata->action) as $key => $temps)
                                                             <tr>
                                                                 <!-- <td><input type="text" name="serial_number[]" value="{{ $key + 1 }}"></td> -->
-                                                                <td><input disabled type="text" name="serial_number[]"
-                                                                        value="{{ $key + 1 }}">
+                                                                <td><input disabled type="text" name="serial_number[]"  value="{{ $key + 1 }}">
                                                                 </td>
                                                                 <td><input type="text" name="action[]"
                                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -934,7 +940,6 @@
     @endphp
     <input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $value }}">
 </td> --}}
-
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -955,7 +960,7 @@
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -1052,7 +1057,7 @@
                                                 <label for="Detection">Detection</label>
                                                 <select name="detection" id="analysisN"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    onchange='calculateRiskAnalysis(this)'>
+                                                    onchange='calculateRiskAnalysis(this)' value="name">
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option value="5"
                                                         {{ $data->detection == '5' ? 'selected' : '' }}>Impossible</option>

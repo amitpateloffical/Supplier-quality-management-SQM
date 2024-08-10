@@ -397,13 +397,14 @@
                                     <input type="url" name="related_url" />
                                 </div>
                             </div>
-                        </div>
+                       
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                             <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                </a> </button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a> </button>
                         </div>
+
+                    </div>
                     </div>
                 </div>
 

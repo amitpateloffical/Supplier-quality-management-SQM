@@ -822,34 +822,53 @@
                         <td class="w-30"> @if($data->acknowledge_by) {{ $data->acknowledge_by }} @else Not Applicable @endif</td>
                         <th class="w-20">Acknowledge By</th>
                         <td class="w-30"> @if($data->acknowledge_on) {{ Helpers::getdateFormat($data->acknowledge_on) }} @else Not Applicable @endif</td>
-                        
-                    </tr>
-                    <tr>
                         <th class="w-20">Acknowledge Comment</th>
                         <td class="w-80"> @if($data->acknowledge_comment) {{ $data->acknowledge_comment }} @else Not Applicable @endif</td>
                     </tr>
+                    {{-- <tr>
+                        <th class="w-20">Acknowledge Comment</th>
+                        <td class="w-80"> @if($data->acknowledge_comment) {{ $data->acknowledge_comment }} @else Not Applicable @endif</td>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Submited By</th>
                         <td class="w-30"> @if($data->submitted_by) {{ $data->submitted_by }} @else Not Applicable @endif</td>
                         <th class="w-20">Submited On</th>
                         <td class="w-30"> @if($data->submitted_on) {{ Helpers::getdateFormat($data->submitted_on) }} @else Not Applicable @endif</td>
-                       
-                    </tr>
-                    <tr>
                         <th class="w-20">Sumitted Comment</th>
                         <td class="w-80"> @if($data->submitted_comment) {{ $data->submitted_comment }} @else Not Applicable @endif</td>
                     </tr>
+                    <tr>
+                        <th class="w-20">More information Required By</th>
+                        <td class="w-30"> @if($data->moreinfo_by) {{ $data->moreinfo_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">More information Required On</th>
+                        <td class="w-30"> @if($data->moreinfo_on) {{ Helpers::getdateFormat($data->moreinfo_on) }} @else Not Applicable @endif</td>
+                        <th class="w-20">More information Required Comment</th>
+                        <td class="w-80"> @if($data->moreinfo_comment) {{ $data->moreinfo_comment }} @else Not Applicable @endif</td>
+                    </tr>
+                    {{-- <tr>
+                        <th class="w-20">Sumitted Comment</th>
+                        <td class="w-80"> @if($data->submitted_comment) {{ $data->submitted_comment }} @else Not Applicable @endif</td>
+                    </tr> --}}
                      <tr>
                         <th class="w-20">QA Review Completed By</th>
                         <td class="w-30"> @if($data->qA_review_complete_by) {{ $data->qA_review_complete_by }} @else Not Applicable @endif</td>
                         <th class="w-20">QA Review Completed On</th>
                         <td class="w-30"> @if($data->qA_review_complete_on) {{ Helpers::getdateFormat($data->qA_review_complete_on) }} @else Not Applicable @endif</td>
-                       
-                    </tr> 
-                    <tr>
                         <th class="w-20">QA Review Completed Comment</th>
                         <td class="w-80"> @if($data->qA_review_complete_comment) {{ $data->qA_review_complete_comment }} @else Not Applicable @endif</td>
-                    </tr>                   
+                    </tr> 
+                    {{-- <tr>
+                        <th class="w-20">QA Review Completed Comment</th>
+                        <td class="w-80"> @if($data->qA_review_complete_comment) {{ $data->qA_review_complete_comment }} @else Not Applicable @endif</td>
+                    </tr>                    --}}
+                    <tr>
+                        <th class="w-20">Cancalled By</th>
+                        <td class="w-30"> @if($data->cancelled_by) {{ $data->cancelled_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">QA Review Completed On</th>
+                        <td class="w-30"> @if($data->cancelled_on) {{ Helpers::getdateFormat($data->cancelled_on) }} @else Not Applicable @endif</td>
+                        <th class="w-20">Cancalled Comment</th>
+                        <td class="w-80"> @if($data->cancelled_comment) {{ $data->cancelled_comment }} @else Not Applicable @endif</td>
+                    </tr> 
                 </table>
             </div>
         </div>

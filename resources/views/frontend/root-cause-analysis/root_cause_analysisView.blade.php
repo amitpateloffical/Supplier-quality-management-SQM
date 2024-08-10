@@ -756,7 +756,7 @@
                                                 <table class="table table-bordered" id="root-cause-first-table">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width:4%">Row #</th>
+                                                            <th style="width:8%">Row #</th>
                                                             <th>Root Cause Category</th>
                                                             <th>Root Cause Sub-Category</th>
                                                             <th>Probability</th>

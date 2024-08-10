@@ -1026,11 +1026,11 @@
                                                         </tr>
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
-                                                                Why 1 <span
+                                                                Why 1 <span id="addWhyButton1" class="addWhyButton"
                                                                     onclick="addWhyField('why_1_block', 'why_1[]')"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</span>
                                                             </th>
                                                             <td>
-                                                                <div class="why_1_block  relative-container"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                <div class="why_1_block  "{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                                     @if (!empty($data->why_1))
                                                                         @foreach (unserialize($data->why_1) as $key => $measure)
                                                                             <textarea name="why_1[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
@@ -1044,11 +1044,11 @@
                                                         </tr>
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
-                                                                Why 2 <span
+                                                                Why 2 <span id="addWhyButton2" class="addWhyButton"
                                                                     onclick="addWhyField('why_2_block', 'why_2[]')"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : ''}}>+</span>
                                                             </th>
                                                             <td>
-                                                                <div class="why_2_block  relative-container">
+                                                                <div class="why_2_block  ">
                                                                     @if (!empty($data->why_2))
                                                                         @foreach (unserialize($data->why_2) as $key => $measure)
                                                                             <textarea name="why_2[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
@@ -1061,11 +1061,11 @@
                                                         </tr>
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
-                                                                Why 3 <span
+                                                                Why 3 <span id="addWhyButton3" class="addWhyButton"
                                                                     onclick="addWhyField('why_3_block', 'why_3[]')"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</span>
                                                             </th>
                                                             <td>
-                                                                <div class="why_3_block relative-container">
+                                                                <div class="why_3_block ">
                                                                     @if (!empty($data->why_3))
                                                                         @foreach (unserialize($data->why_3) as $key => $measure)
                                                                             <textarea name="why_3[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
@@ -1078,11 +1078,11 @@
                                                         </tr>
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
-                                                                Why 4 <span
+                                                                Why 4 <span id="addWhyButton4" class="addWhyButton"
                                                                     onclick="addWhyField('why_4_block', 'why_4[]')"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</span>
                                                             </th>
                                                             <td>
-                                                                <div class="why_4_block relative-container">
+                                                                <div class="why_4_block ">
                                                                     @if (!empty($data->why_4))
                                                                         @foreach (unserialize($data->why_4) as $key => $measure)
                                                                             <textarea name="why_4[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
@@ -1095,11 +1095,11 @@
                                                         </tr>
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
-                                                                Why 5 <span
+                                                                Why 5 <span id="addWhyButton5" class="addWhyButton"
                                                                     onclick="addWhyField('why_5_block', 'why_5[]')"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</span>
                                                             </th>
                                                             <td>
-                                                                <div class="why_5_block relative-container">
+                                                                <div class="why_5_block ">
                                                                     @if (!empty($data->why_5))
                                                                         @foreach (unserialize($data->why_5) as $key => $measure)
                                                                             <textarea name="why_5[]"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $measure }}</textarea>
@@ -2064,7 +2064,25 @@ function add4Input_case(tableId) {
             $('#rchars').text(textlen);});
     </script>
     
-{{-- voice Command --}}
+    <script>
+                function disableButtonsIfNeeded(stage) {
+                    if (stage == 0 || stage == 4) {
+                        document.querySelectorAll('.addWhyButton').forEach(button => {
+                            button.style.pointerEvents = 'none'; // Disable click
+                            button.style.opacity = '0.5'; // Optional: make it look disabled
+                            button.title = 'Button is disabled'; // Optional: show a tooltip
+                        });
+                    }
+                }
+
+                // Assuming $data->stage is passed into the script
+                // Replace the following line with the actual way of retrieving $data->stage value in your environment
+                const stage =
+                    {{ $data->stage }}; // You may need to adjust this based on how you're passing the data to the script
+
+                // Call the function to disable buttons if needed
+                disableButtonsIfNeeded(stage);
+            </script>
     
 
 

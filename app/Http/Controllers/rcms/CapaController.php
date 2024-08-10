@@ -1341,7 +1341,7 @@ class CapaController extends Controller
             $history->capa_id = $id;
             $history->activity_type = 'Initiator Group';
             $history->previous = $lastDocument->initiator_Group;
-            $history->current = $capa->initiator_Group;
+            $history->current =  Helpers::getFullDepartmentName($capa->initiator_Group);
             $history->comment = $request->initiator_Group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

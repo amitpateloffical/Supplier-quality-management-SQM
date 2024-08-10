@@ -1227,14 +1227,15 @@
                     '<option value="BJJH0004A">BJJH0004A</option>' +
                     '<option value="DCAU0036">DCAU0036</option>' +
                     '</select></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="mfg_date' +
+                    '<td> <div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="mfg_date' + serialNumber + '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="mfg_date[]" id="mfg_date' + serialNumber + '_checkdate" class="hide-input" max="' + new Date().toISOString().split('T')[0] + '" oninput="handleDateInput(this, `mfg_date' + serialNumber + '`);checkDate(`mfg_date' + serialNumber + '_checkdate`,`expiry_date' + serialNumber + '_checkdate`)" /></div></div></div></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="expiry_date' +
                     serialNumber +
-                    '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="mfg_date[]" class="hide-input" oninput="handleDateInput(this, `mfg_date' +
-                    serialNumber + '`)" /></div></div></div></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="expiry_date' +
+                    '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="expiry_date[]" id="expiry_date' +
                     serialNumber +
-                    '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="expiry_date[]" class="hide-input" oninput="handleDateInput(this, `expiry_date' +
-                    serialNumber + '`)" /></div></div></div></td>' +
+                    '_checkdate" class="hide-input" oninput="handleDateInput(this, `expiry_date' +
+                    serialNumber + '`);checkDate(`mfg_date' + serialNumber +
+                    '_checkdate`,`expiry_date' + serialNumber +
+                    '_checkdate`)" /></div></div></div></td>' +
                     '<td><input type="text" name="batch_desposition[]"></td>' +
                     '<td><input type="text" name="remark[]"></td>' +
                     '<td><select name="batch_status[]" id="batch_status">' +
@@ -1282,7 +1283,7 @@
                     serialNumber +
                     '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="material_mfg_date[]" id="material_mfg_date' +
                     serialNumber +
-                    '_checkdate"  class="hide-input" oninput="handleDateInput(this, `material_mfg_date' +
+                    '_checkdate"  class="hide-input" max="' + new Date().toISOString().split('T')[0] + '" oninput="handleDateInput(this, `material_mfg_date' +
                     serialNumber + '`);checkDate(`material_mfg_date' + serialNumber +
                     '_checkdate`,`material_expiry_date' + serialNumber +
                     '_checkdate`)" /></div></div></div></td>' +

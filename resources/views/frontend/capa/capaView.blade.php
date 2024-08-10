@@ -538,7 +538,7 @@
                                                 <label for="Initiator Group">Initiator Group</label>
                                                 <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                      id="initiator_group">
-                                                     <option  value="0">-- Select --</option>
+                                                     <option  value="">-- Select --</option>
                                                     <option value="CQA"
                                                         @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
@@ -632,7 +632,7 @@
                                                 <label for="severity-level">Severity Level</label>
                                                 <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level_form">
-                                                    <option  value="0">-- Select --</option>
+                                                    <option  value="">-- Select --</option>
                                                     <option @if ($data->severity_level_form=='minor') selected @endif value="minor">Minor</option>
                                                     <option @if ($data->severity_level_form=='major') selected @endif value="major">Major</option>
                                                     <option @if ($data->severity_level_form=='critical') selected @endif value="critical">Critical</option>
@@ -646,10 +646,10 @@
                                                 <select name="initiated_through"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option @if ($data->initiated_through == 'internal_audit') selected @endif
-                                                        value="internal_audit">Internal Audit</option>
-                                                        <option @if ($data->initiated_through == 'external_audit') selected @endif
-                                                        value="external_audit">External Audit</option>
+                                                    <option @if ($data->initiated_through == 'internal audit') selected @endif
+                                                        value="internal audit">Internal Audit</option>
+                                                        <option @if ($data->initiated_through == 'external audit') selected @endif
+                                                        value="external audit">External Audit</option>
                                                     <option @if ($data->initiated_through == 'recall') selected @endif
                                                         value="recall">Recall</option>
                                                     <option @if ($data->initiated_through == 'return') selected @endif
@@ -660,8 +660,8 @@
                                                         value="complaint">Complaint</option>
                                                     <option @if ($data->initiated_through == 'regulatory') selected @endif
                                                         value="regulatory">Regulatory</option>
-                                                    <option @if ($data->initiated_through == 'lab-incident') selected @endif
-                                                        value="lab-incident">Lab Incident</option>
+                                                    <option @if ($data->initiated_through == 'lab incident') selected @endif
+                                                        value="lab incident">Lab Incident</option>
                                                     <option @if ($data->initiated_through == 'improvement') selected @endif
                                                         value="improvement">Improvement</option>
                                                     <option @if ($data->initiated_through == 'others') selected @endif
@@ -1257,8 +1257,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Material Details">
-                                                    Equipment/Instruments Details<button type="button" name="ann" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    id="equipment">+</button>
+                                                    Equipment/Instruments Details<button type="button" name="ann" id="equipment" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="equipment_details">
                                                     <thead>
@@ -1938,21 +1937,21 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="group-input">
-                                                <label for="Rejected By">Reject More Info Review By</label>
+                                                <label for="Rejected By">Rejected By</label>
                                                 <input type="hidden" name="reject_more_info_requierd_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->reject_more_info_requierd_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="group-input">
-                                                <label for="Rejected On">Reject More Info Review On</label>
+                                                <label for="Rejected On">Rejected On</label>
                                                 <input type="hidden" name="reject_more_info_requierd_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->reject_more_info_requierd_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Submitted Comment">Reject More Info Review Comment</label>
+                                                <label for="Submitted Comment">Rejected Comment</label>
                                                 <div class="static">{{ $data->reject_more_info_requierd_comment }}</div>
                                             </div>
                                         </div>

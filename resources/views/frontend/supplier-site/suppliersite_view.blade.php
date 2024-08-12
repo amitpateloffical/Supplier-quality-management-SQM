@@ -71,15 +71,15 @@
         }
 
         /* .sub-head {
-                                                                                                                                                    margin-left: 280px;
-                                                                                                                                                    margin-right: 280px;
-                                                                                                                                                    color: #4274da;
-                                                                                                                                                    border-bottom: 2px solid #4274da;
-                                                                                                                                                    padding-bottom: 5px;
-                                                                                                                                                    margin-bottom: 20px;
-                                                                                                                                                    font-weight: bold;
-                                                                                                                                                    font-size: 1.2rem;
-                                                                                                                                                     } */
+                                                                                                                                                        margin-left: 280px;
+                                                                                                                                                        margin-right: 280px;
+                                                                                                                                                        color: #4274da;
+                                                                                                                                                        border-bottom: 2px solid #4274da;
+                                                                                                                                                        padding-bottom: 5px;
+                                                                                                                                                        margin-bottom: 20px;
+                                                                                                                                                        font-weight: bold;
+                                                                                                                                                        font-size: 1.2rem;
+                                                                                                                                                         } */
 
         .launch_extension {
             background: #4274da;
@@ -130,12 +130,12 @@
         }
 
         /* .saveButton:disabled
-                                                                                                                                                    {
-                                                                                                                                                       background: black!important;
-                                                                                                                                                       border:  black!important;
-                                                                                                                                                     }
-                                                                                                                                                       
-                                                                                                                                                    */
+                                                                                                                                                        {
+                                                                                                                                                           background: black!important;
+                                                                                                                                                           border:  black!important;
+                                                                                                                                                         }
+                                                                                                                                                           
+                                                                                                                                                        */
 
         .main-danger-block {
             display: flex;
@@ -252,8 +252,10 @@
             if (issueDateInput && expiryDateInput) {
                 var issueDate = new Date(issueDateInput.value);
                 if (issueDate) {
-                    expiryDateInput.min = issueDate.toISOString().split('T')[0];
-                    if (new Date(expiryDateInput.value) < issueDate) {
+                    var minExpiryDate = new Date(issueDate);
+                    minExpiryDate.setDate(minExpiryDate.getDate() + 1);
+                    expiryDateInput.min = minExpiryDate.toISOString().split('T')[0];
+                    if (new Date(expiryDateInput.value) <= issueDate) {
                         expiryDateInput.value = expiryDateInput.min;
                     }
                 }
@@ -3363,8 +3365,21 @@
         function updateEndDateMin() {
             var startDate = document.getElementById('last_audit_date_name').value;
             var endDateInput = document.getElementById('next_audit_date_name');
+
             if (startDate) {
-                endDateInput.setAttribute('min', startDate);
+                // Set the minimum date to one day after the start date
+                var minEndDate = new Date(startDate);
+                minEndDate.setDate(minEndDate.getDate() + 1);
+
+                // Format the date to match the input type date format (yyyy-mm-dd)
+                var formattedMinEndDate = minEndDate.toISOString().split('T')[0];
+                endDateInput.setAttribute('min', formattedMinEndDate);
+
+                // Ensure the next audit date is after the last audit date
+                if (endDateInput.value && endDateInput.value <= startDate) {
+                    endDateInput.value = '';
+                    // alert("The next audit date must be after the last audit date.");
+                }
             }
         }
 
@@ -3373,6 +3388,11 @@
 
             // Reapply the min attribute whenever the start date is changed
             document.getElementById('last_audit_date_name').addEventListener('input', function() {
+                updateEndDateMin();
+            });
+
+            // Validate the end date when it is changed
+            document.getElementById('next_audit_date_name').addEventListener('input', function() {
                 updateEndDateMin();
             });
         });

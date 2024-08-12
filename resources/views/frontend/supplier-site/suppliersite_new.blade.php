@@ -84,6 +84,7 @@
             if (issueDateInput && expiryDateInput) {
                 var issueDate = new Date(issueDateInput.value);
                 if (issueDate) {
+                    issueDate.setDate(issueDate.getDate() + 1);
                     expiryDateInput.min = issueDate.toISOString().split('T')[0];
                 }
             }
@@ -2165,7 +2166,18 @@
 
         function updateNextAuditDateMin(lastAuditDate) {
             const nextAuditDateInput = document.querySelector('input[name="next_audit_date"]');
-            nextAuditDateInput.min = lastAuditDate;
+
+            // Create a new Date object from the lastAuditDate
+            const lastAuditDateObj = new Date(lastAuditDate);
+
+            // Add one day to the lastAuditDate
+            lastAuditDateObj.setDate(lastAuditDateObj.getDate() + 1);
+
+            // Format the date to YYYY-MM-DD format
+            const minNextAuditDate = lastAuditDateObj.toISOString().split('T')[0];
+
+            // Set the min attribute of the next audit date input
+            nextAuditDateInput.min = minNextAuditDate;
         }
     </script>
 @endsection

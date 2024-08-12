@@ -397,13 +397,14 @@
                                     <input type="url" name="related_url" />
                                 </div>
                             </div>
-                        </div>
+                       
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                             <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                </a> </button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a> </button>
                         </div>
+
+                    </div>
                     </div>
                 </div>
 
@@ -592,8 +593,8 @@
                                                     <td>
                                                         <div class="why_1_block  relative-container">
                                                             <textarea name="why_1[]"></textarea>
-                                                            @component('frontend.forms.language-model')
-                                                            @endcomponent
+                                                            {{-- @component('frontend.forms.language-model')
+                                                            @endcomponent --}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -605,8 +606,8 @@
                                                     <td>
                                                         <div class="why_2_block  relative-container">
                                                             <textarea name="why_2[]"></textarea>
-                                                            @component('frontend.forms.language-model')
-                                                            @endcomponent
+                                                            {{-- @component('frontend.forms.language-model')
+                                                            @endcomponent --}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -618,8 +619,8 @@
                                                     <td>
                                                         <div class="why_3_block  relative-container">
                                                             <textarea name="why_3[]"></textarea>
-                                                            @component('frontend.forms.language-model')
-                                                            @endcomponent
+                                                            {{-- @component('frontend.forms.language-model')
+                                                            @endcomponent --}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -631,8 +632,8 @@
                                                     <td>
                                                         <div class="why_4_block  relative-container">
                                                             <textarea name="why_4[]"></textarea>
-                                                            @component('frontend.forms.language-model')
-                                                            @endcomponent
+                                                            {{-- @component('frontend.forms.language-model')
+                                                            @endcomponent --}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -644,8 +645,8 @@
                                                     <td>
                                                         <div class="why_5_block  relative-container">
                                                             <textarea name="why_5[]"></textarea>
-                                                            @component('frontend.forms.language-model')
-                                                            @endcomponent
+                                                            {{-- @component('frontend.forms.language-model')
+                                                            @endcomponent --}}
                                                         </div>
                                                     </td>
                                                 </tr>

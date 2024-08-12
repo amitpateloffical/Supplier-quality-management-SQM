@@ -682,7 +682,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }}/Deviation
+            {{ Helpers::getDivisionName($data->division_id) }}/Deviation
         </div>
     </div>
 
@@ -2070,7 +2070,7 @@
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a class="remove-file"
+                                                                <a class="remove-file" style="@if ($data->stage == 0 || $data->stage == 11) pointer-events: none; @endif"
                                                                     data-remove-id="initialFile-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
@@ -2190,7 +2190,7 @@
                                                                     <a href="{{ asset('upload/' . $file) }}"
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a class="remove-file"
+                                                                    <a class="remove-file" style="@if ($data->stage == 0 || $data->stage == 3) pointer-events: none; @endif"
                                                                      data-remove-id="AuditFile-{{ $loop->index }}"
                                                                         data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
@@ -2224,7 +2224,7 @@
                                                                     <a href="{{ asset('upload/' . $file) }}"
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a class="remove-file"
+                                                                    <a class="remove-file" style="{{ in_array($data->stage, [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11]) ? 'pointer-events: none;' : '' }}"
                                                                     data-remove-id="AuditFile-{{ $loop->index }}"
 
                                                                         data-file-name="{{ $file }}"><i
@@ -2529,7 +2529,7 @@
                                                         name="Deviation_category"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                         value="{{ $data->Deviation_category }}"
                                                         onchange="handleDeviationCategoryChange()" required>
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data->Deviation_category == 'minor') selected @endif
                                                             value="minor">Minor</option>
                                                         <option @if ($data->Deviation_category == 'major') selected @endif
@@ -2543,7 +2543,7 @@
                                                         name="Deviation_category"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                         onchange="handleDeviationCategoryChange()"
                                                         value="{{ $data->Deviation_category }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data->Deviation_category == 'minor') selected @endif
                                                             value="minor">Minor</option>
                                                         <option @if ($data->Deviation_category == 'major') selected @endif
@@ -2564,7 +2564,7 @@
                                     <div class="group-input">
                                         <label for="capa_required"> CAPA Required ?</label>
                                         <select name="capa_required" id="capa_required">
-                                            <option value="select">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -2932,7 +2932,7 @@
                                             disabled
                                             id="short_description_required" onchange="checkRecurring(this)"
                                             value="{{ $data->short_description_required }}">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="Recurring"
                                                 @if ($data->short_description_required == 'Recurring' || old('short_description_required') == 'Recurring') selected @endif>Yes</option>
                                             <option value="Non_Recurring"
@@ -3009,7 +3009,7 @@
                                             <select disabled id="Deviation_category"
                                                 name="Deviation_category"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                 value="{{ $data->Deviation_category }}">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 <option @if ($data->Deviation_category == 'minor') selected @endif value="minor">
                                                     Minor</option>
                                                 <option @if ($data->Deviation_category == 'major') selected @endif value="major">
@@ -3023,7 +3023,7 @@
                                                 <select disabled id="Deviation_category"
                                                     name="Deviation_category"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                     value="{{ $data->Deviation_category }}">
-                                                    <option value="0">-- Select --</option>
+                                                    <option value="">-- Select --</option>
                                                     <option @if ($data->Deviation_category == 'minor') selected @endif
                                                         value="minor">Minor</option>
                                                     <option @if ($data->Deviation_category == 'major') selected @endif
@@ -3181,7 +3181,7 @@
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                     class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
+                                                            <a type="button" class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11]) ? 'pointer-events: none;' : '' }}"
                                                                 data-remove-id="Initial_attachmentFile-{{ $loop->index }}"
 
                                                                 data-file-name="{{ $file }}"><i
@@ -6936,7 +6936,7 @@
                                                 class="text-danger">*</span></label>
                                         <select name="Other1_person" @if ($data->stage == 4) disabled @endif
                                             id="Other1_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
                                                     value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7375,7 +7375,7 @@
                                                 class="text-danger">*</span></label>
                                         <select name="Other3_person" @if ($data->stage == 4) disabled @endif
                                             id="Other3_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
                                                     value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7590,7 +7590,7 @@
                                                 class="text-danger">*</span></label>
                                         <select name="Other4_person" @if ($data->stage == 4) disabled @endif
                                             id="Other4_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option {{ $data1->Other4_person == $user->id ? 'selected' : '' }}
                                                     value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7806,7 +7806,7 @@
                                                 class="text-danger">*</span></label>
                                         <select name="Other5_person" @if ($data->stage == 4) disabled @endif
                                             id="Other5_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
                                                     value="{{ $user->id }}">{{ $user->name }}</option>
@@ -8005,7 +8005,7 @@
                                         <select disabled
                                             name="Other1_person"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="Other1_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
                                                     value="{{ $user->id }}">{{ $user->name }}</option>
@@ -8161,7 +8161,7 @@
                                         <select disabled
                                             name="Other2_person"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="Other2_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
                                                     value="{{ $user->id }}">{{ $user->name }}</option>
@@ -8613,7 +8613,7 @@
                                         <select disabled
                                             name="Other5_person"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="Other5_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
                                                     value="{{ $user->id }}">{{ $user->name }}</option>
@@ -8715,7 +8715,7 @@
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
+                                                            <a type="button" class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 5, 6, 7, 8, 9, 10, 11]) ? 'pointer-events: none;' : '' }}"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
                                                                     style="color:red; font-size:20px;"></i></a>
@@ -9415,7 +9415,7 @@
                                         <a href="{{ asset('upload/' . $file) }}"
                                             target="_blank"><i class="fa fa-eye text-primary"
                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                        <a class="remove-file"
+                                        <a class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]) ? 'pointer-events: none;' : '' }}"
                                         data-remove-id="hodfinalFile-{{ $loop->index }}"
                                             data-file-name="{{ $file }}"><i
                                                 class="fa-solid fa-circle-xmark"
@@ -9503,7 +9503,7 @@
                                         <a href="{{ asset('upload/' . $file) }}"
                                             target="_blank"><i class="fa fa-eye text-primary"
                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                        <a class="remove-file"
+                                        <a class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11]) ? 'pointer-events: none;' : '' }}"
                                         data-remove-id="qafinalattFile-{{ $loop->index }}"
                                             data-file-name="{{ $file }}"><i
                                                 class="fa-solid fa-circle-xmark"
@@ -9524,10 +9524,10 @@
                 </div>
             </div>
 
-        </div>
-        <div class="button-block">
-            {{--<button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save</button>--}}
-            <button  type="submit" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                </div>
+                                <div class="button-block">
+                                    {{--<button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save</button>--}}
+                                    <button  type="submit" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                         id="ChangesaveButton312" class="saveButton saveAuditFormBtn d-flex"
                                         style="align-items: center;">
                                         <div class="spinner-border spinner-border-sm auditFormSpinner"
@@ -9536,78 +9536,79 @@
                                         </div>
                                         Save
                                     </button>
-            <button style=" justify-content: center; width: 4rem; " type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                            class="nextButton" onclick="nextStep()">Next</button>
-            <button type="button" class="nextButton" onclick="previousStep()" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>Back</button>
+                                    <button type="button" class="nextButton" onclick="previousStep()" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>Back</button>
+                                    <button style=" justify-content: center; width: 4rem; " type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} class="nextButton" onclick="nextStep()">Next</button>
 
-            {{-- <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button> --}}
-            <button type="button" style=" justify-content: center; width: 4rem; "> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                    Exit </a> </button>
+                                    {{-- <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                    <button type="button" style=" justify-content: center; width: 4rem; "> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                            Exit </a> </button>
 
-        </div>
-    </div>
-</div>
-        <!-- {{-- -------------QRM----------------- --}} -->
-        <div id="CCForm11" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="row">
-                    <div class="col-12 sub-head"></div>
-                    @if($qrmExtension && $qrmExtension->qrm_proposed_due_date)
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Proposed Due Date">Proposed Due Date</label>
-                                <input name="qrm_proposed_due_date" id="qrm_proposed_due_date" value="{{ Helpers::getdateFormat($qrmExtension->qrm_proposed_due_date) }}" disabled>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    @else
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Proposed Due Date">Proposed Due Date</label>
-                                <input name="qrm_proposed_due_date" id="qrm_proposed_due_date" disabled>
-                            </div>
-                        </div>
-                    @endif
 
-                    <div class="col-12 mb-4">
-                        <div class="group-input">
-                            <label for="agenda">
-                                Failure Mode and Effect Analysis
-                                <button type="button" name="agenda"
-                                   id="risk-assessment-risk-management">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#failure_mode_and_effect_analysis" style="font-size: 0.8rem; font-weight: 400;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" style="width: 200%"
-                                    id="risk-assessment-risk-management_details">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Risk Factor</th>
-                                            <th>Risk element </th>
-                                            <th>Probable cause of risk element</th>
-                                            <th>Existing Risk Controls</th>
-                                            <th>Initial Severity- H(3)/M(2)/L(1)</th>
-                                            <th>Initial Probability- H(3)/M(2)/L(1)</th>
-                                            <th>Initial Detectability- H(1)/M(2)/L(3)</th>
-                                            <th>Initial RPN</th>
-                                            <th>Risk Acceptance (Y/N)</th>
-                                            <th>Proposed Additional Risk control measure (Mandatory for Risk
-                                                elements having RPN>4)</th>
-                                            <th>Residual Severity- H(3)/M(2)/L(1)</th>
-                                            <th>Residual Probability- H(3)/M(2)/L(1)</th>
-                                            <th>Residual Detectability- H(1)/M(2)/L(3)</th>
-                                            <th>Residual RPN</th>
-                                            <th>Risk Acceptance (Y/N)</th>
-                                            <th>Mitigation proposal (Mention either CAPA reference number, IQ,
-                                                OQ or
-                                                PQ)</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+
+                <!-- {{-- -------------QRM----------------- --}} -->
+                <div id="CCForm11" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-12 sub-head"></div>
+                            @if($qrmExtension && $qrmExtension->qrm_proposed_due_date)
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Proposed Due Date">Proposed Due Date</label>
+                                        <input name="qrm_proposed_due_date" id="qrm_proposed_due_date" value="{{ Helpers::getdateFormat($qrmExtension->qrm_proposed_due_date) }}" disabled>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Proposed Due Date">Proposed Due Date</label>
+                                        <input name="qrm_proposed_due_date" id="qrm_proposed_due_date" disabled>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <div class="col-12 mb-4">
+                                <div class="group-input">
+                                    <label for="agenda">
+                                        Failure Mode and Effect Analysis
+                                        <button type="button" name="agenda"
+                                        id="risk-assessment-risk-management">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#failure_mode_and_effect_analysis" style="font-size: 0.8rem; font-weight: 400;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" style="width: 200%"
+                                            id="risk-assessment-risk-management_details">
+                                            <thead>
+                                                <tr>
+                                                    <th>Row #</th>
+                                                    <th>Risk Factor</th>
+                                                    <th>Risk element </th>
+                                                    <th>Probable cause of risk element</th>
+                                                    <th>Existing Risk Controls</th>
+                                                    <th>Initial Severity- H(3)/M(2)/L(1)</th>
+                                                    <th>Initial Probability- H(3)/M(2)/L(1)</th>
+                                                    <th>Initial Detectability- H(1)/M(2)/L(3)</th>
+                                                    <th>Initial RPN</th>
+                                                    <th>Risk Acceptance (Y/N)</th>
+                                                    <th>Proposed Additional Risk control measure (Mandatory for Risk
+                                                        elements having RPN>4)</th>
+                                                    <th>Residual Severity- H(3)/M(2)/L(1)</th>
+                                                    <th>Residual Probability- H(3)/M(2)/L(1)</th>
+                                                    <th>Residual Detectability- H(1)/M(2)/L(3)</th>
+                                                    <th>Residual RPN</th>
+                                                    <th>Risk Acceptance (Y/N)</th>
+                                                    <th>Mitigation proposal (Mention either CAPA reference number, IQ,
+                                                        OQ or
+                                                        PQ)</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
     @if ($grid_data_qrms && is_array($grid_data_qrms->data))
         <!-- {{-- {{ count($investigation_data->data) }} --}} -->
@@ -10042,9 +10043,7 @@
 
                 <div class="button-block">
                     <button style=" justify-content: center; width: 4rem; " type="submit" class="saveButton" {{ $data->stage == 9 ? 'disabled' : '' }}>Save</button>
-                    <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: auto;">
-                        <button type="button" class="backButton">Back</button>
-                    </a>
+                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
                     <button style=" justify-content: center; width: 4rem; " type="button" class="nextButton" onclick="nextStep()">Next</button>
                     <button style=" justify-content: center; width: 4rem; " type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                             Exit </a> </button>
@@ -10361,12 +10360,10 @@
                                         </div>
                                         Save
                                     </button>
-                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: auto;">
-                        <button type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} class="backButton">Back</button>
-                    </a>
+                        <button type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} class="backButton" onclick="previousStep()">Back</button>
 
-                <button style=" justify-content: center; width: 4rem; " type="button" class="nextButton" onclick="nextStep()">Next</button>
-                <button style=" justify-content: center; width: 4rem; " type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                        <button style=" justify-content: center; width: 4rem; " type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button style=" justify-content: center; width: 4rem; " type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>
                         {{-- @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
                         <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
@@ -10395,7 +10392,7 @@
                                 name="Deviation_category"{{ $data->stage == 0 || $data->stage == 11 || $data->stage != 5 ? 'disabled' : '' }}
                                 value="{{ $data->Deviation_category }}"
                                 onchange="handleDeviationCategoryChange11()" required>
-                                <option value="0">-- Select --</option>
+                                <option value="">-- Select --</option>
                                 <option @if ($data->Deviation_category == 'minor') selected @endif
                                     value="minor">Minor</option>
                                 <option @if ($data->Deviation_category == 'major') selected @endif
@@ -10531,7 +10528,7 @@
                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                         class="fa fa-eye text-primary"
                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                <a type="button" class="remove-file"
+                                                <a type="button" class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11]) ? 'pointer-events: none;' : '' }}"
                                                 data-remove-id="QAATFile-{{ $loop->index }}"
                                                     data-file-name="{{ $file }}"><i
                                                         class="fa-solid fa-circle-xmark"
@@ -10634,7 +10631,7 @@
                                                 <a href="{{ asset('upload/' . $file) }}"
                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                <a class="remove-file"
+                                                <a class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11]) ? 'pointer-events: none;' : '' }}"
                                                 data-remove-id="initorUpdateFile-{{ $loop->index }}"
                                                     data-file-name="{{ $file }}"><i
                                                         class="fa-solid fa-circle-xmark"
@@ -10805,7 +10802,7 @@
                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                         class="fa fa-eye text-primary"
                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                <a type="button" class="remove-file"
+                                                <a type="button" class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11]) ? 'pointer-events: none;' : '' }}"
                                                 data-remove-id="closureattachmentFile-{{ $loop->index }}"
                                                     data-file-name="{{ $file }}"><i
                                                         class="fa-solid fa-circle-xmark"
@@ -10834,6 +10831,7 @@
                         </div>
                         Save
                     </button>
+                    <button type="button" onclick="previousStep()" class="backButton">Back</button>
                     {{-- <a href="/rcms/qms-dashboard">
                                         <button type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} class="backButton">Back</button>
                                     </a> --}}
@@ -12412,10 +12410,7 @@
                         </div>
                         Save
                     </button>
-                    <a href="/rcms/qms-dashboard">
-                        <button type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                            class="backButton">Back</button>
-                    </a>
+                    <button type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} class="backButton" onclick="previousStep()">Back</button>
                     {{-- <button type="submit"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>Submit</button> --}}
                     <button type="button"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}> <a
                             href="{{ url('rcms/qms-dashboard') }}" class="text-white">

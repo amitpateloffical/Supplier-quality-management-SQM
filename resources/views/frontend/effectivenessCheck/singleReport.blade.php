@@ -194,15 +194,15 @@
                 <table>
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->record)
-                                {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                                {{ Helpers::getDivisionName($data->division_id) }}/EC/{{ Helpers::year($data->created_at) }}/{{ Helpers::recordFormat($data->record) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">
+                        <th class="w-20">Division Code</th>
+                        <td class="w-80">
                             @if ($data->division_id)
                                 {{ Helpers::getDivisionName($data->division_id) }}
                             @else
@@ -213,14 +213,14 @@
 
                     <tr> {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
+                        <td class="w-80">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                         <th class="w-20">Date of Initiation</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
 
                     <tr>
                         <th class="w-20">Assigned To</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->assign_to)
                                 {{ Helpers::getInitiatorName($data->assign_to) }}
                             @else
@@ -239,7 +239,7 @@
                     </tr>
                 </table>
 
-                    <table>
+                <table>
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">
@@ -269,7 +269,7 @@
                     </tr>
                 </table>
                 <div class="block-head">
-                    Attachments
+                    Attachment
                 </div>
                 <div class="border-table">
                     <table>
@@ -330,7 +330,7 @@
                 </tr>
             </table>
             <div class="block-head">
-                Attachments
+                Effectiveness check Attachment
             </div>
             <div class="border-table">
                 <table>
@@ -338,8 +338,8 @@
                         <th class="w-20">S.N.</th>
                         <th class="w-60">File </th>
                     </tr>
-                    @if ($data->Attachments)
-                        @foreach (json_decode($data->Attachments) as $key => $file)
+                    @if ($data->Effectiveness_check_Attachment)
+                        @foreach (json_decode($data->Effectiveness_check_Attachment) as $key => $file)
                             <tr>
                                 <td class="w-20">{{ $key + 1 }}</td>
                                 <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -416,7 +416,7 @@
                 </tr>
             </table>
             <div class="block-head">
-                Attachment
+                Reference Attachment
             </div>
             <div class="border-table">
                 <table>

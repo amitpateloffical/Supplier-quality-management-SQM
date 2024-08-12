@@ -136,6 +136,18 @@
             let textarea = document.createElement('textarea')
             textarea.setAttribute('name', name);
             container.append(textarea)
+            let languageModelDiv = document.createElement('div');
+        
+        // Add the language model component HTML
+            languageModelDiv.innerHTML = `
+            <div class="relative-container">
+                @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 4])
+                @endcomponent
+            </div>
+        `;
+
+        // Append the language model component to the container
+        container.append(languageModelDiv);
         }
     </script>
 

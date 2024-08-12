@@ -2499,7 +2499,7 @@
                                         </div>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="mitigation-due-date">Scheduled End Date</label>
+                                                <label for="mitigation-due-date">Scheduled End-Date</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="mitigation_due_date" readonly
                                                         value="{{ Helpers::getdateFormat($data->mitigation_due_date) }}"
@@ -2838,7 +2838,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-3">
+                                        {{-- <div class="col-lg-3">
                                             <div class="group-input">
                                                 <label for="Reject Action Plan By">Reject Action Plan By</label>
                                                 <div class="static">{{ $data->reject_action_by }}</div>
@@ -2856,7 +2856,7 @@
                                                     Comment</label>
                                                 <div class="static">{{ $data->reject_action_comment }}</div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="col-lg-3">
                                             <div class="group-input">

@@ -71,15 +71,15 @@
         }
 
         /* .sub-head {
-                                                                                        margin-left: 280px;
-                                                                                        margin-right: 280px;
-                                                                                        color: #4274da;
-                                                                                        border-bottom: 2px solid #4274da;
-                                                                                        padding-bottom: 5px;
-                                                                                        margin-bottom: 20px;
-                                                                                        font-weight: bold;
-                                                                                        font-size: 1.2rem;
-                                                                                         } */
+                                                                                                                                                        margin-left: 280px;
+                                                                                                                                                        margin-right: 280px;
+                                                                                                                                                        color: #4274da;
+                                                                                                                                                        border-bottom: 2px solid #4274da;
+                                                                                                                                                        padding-bottom: 5px;
+                                                                                                                                                        margin-bottom: 20px;
+                                                                                                                                                        font-weight: bold;
+                                                                                                                                                        font-size: 1.2rem;
+                                                                                                                                                         } */
 
         .launch_extension {
             background: #4274da;
@@ -130,12 +130,12 @@
         }
 
         /* .saveButton:disabled
-                                                                                        {
-                                                                                           background: black!important;
-                                                                                           border:  black!important;
-                                                                                         }
-                                                                                           
-                                                                                        */
+                                                                                                                                                        {
+                                                                                                                                                           background: black!important;
+                                                                                                                                                           border:  black!important;
+                                                                                                                                                         }
+                                                                                                                                                           
+                                                                                                                                                        */
 
         .main-danger-block {
             display: flex;
@@ -252,8 +252,10 @@
             if (issueDateInput && expiryDateInput) {
                 var issueDate = new Date(issueDateInput.value);
                 if (issueDate) {
-                    expiryDateInput.min = issueDate.toISOString().split('T')[0];
-                    if (new Date(expiryDateInput.value) < issueDate) {
+                    var minExpiryDate = new Date(issueDate);
+                    minExpiryDate.setDate(minExpiryDate.getDate() + 1);
+                    expiryDateInput.min = minExpiryDate.toISOString().split('T')[0];
+                    if (new Date(expiryDateInput.value) <= issueDate) {
                         expiryDateInput.value = expiryDateInput.min;
                     }
                 }
@@ -457,10 +459,10 @@
 
                             @if ($data->stage >= 6)
                                 <div class="active bg-danger">
-                                    Obselete</div>
+                                    Obsolete</div>
                             @else
                                 <div class="">
-                                    Obselete</div>
+                                    Obsolete</div>
                             @endif
                         </div>
                     @endif
@@ -480,13 +482,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button>
             </div>
 
-            <script>
-                $(document).ready(function() {
-                    <?php if ($data->stage == 6 || $data->stage == 0 ) { ?>
-                    $("#target :input").prop("disabled", true);
-                    <?php } ?>
-                });
-            </script>
+
             <!--  Contract Tab content -->
             <form id="target" action="{{ route('supplier-site-update', $data->id) }} }}" method="POST"
                 enctype="multipart/form-data">
@@ -549,7 +545,7 @@
 
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="due-date">Date Due</label>
+                                    <label for="due-date">Due Date</label>
                                     <div><small class="text-primary">Please mention expected date of completion</small>
                                     </div>
                                     <div class="calenderauditee">
@@ -625,7 +621,8 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -896,10 +893,16 @@
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
+                                                        {{-- <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
+                                                                style="color:red; font-size:20px;"></i></a> --}}
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif">
+                                                            <i class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i>
+                                                        </a>
                                                     </h6>
                                                 @endforeach
                                             @endif
@@ -929,7 +932,8 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -1031,7 +1035,8 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -1049,7 +1054,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="hod_additional_attachment">Additional Attachment</label>
+                                    <label for="hod_additional_attachment">HOD Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -1063,7 +1068,8 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -1375,6 +1381,10 @@
                                     stateSelect = document.querySelector('.state'),
                                     citySelect = document.querySelector('.city');
 
+                                var selectedCountry = "{{ $data->country }}";
+                                var selectedState = "{{ $data->state }}";
+                                var selectedCity = "{{ $data->city }}";
+
                                 function loadCountries() {
                                     let apiEndPoint = `${config.cUrl}/countries`;
 
@@ -1386,10 +1396,16 @@
                                         success: function(data) {
                                             data.forEach(country => {
                                                 const option = document.createElement('option');
-                                                option.value = country.iso2;
+                                                option.value = country.name;
                                                 option.textContent = country.name;
+                                                option.dataset.code = country
+                                                    .iso2;
+                                                if (country.name === selectedCountry) {
+                                                    option.selected = true;
+                                                }
                                                 countrySelect.appendChild(option);
                                             });
+                                            loadStates();
                                         },
                                         error: function(xhr, status, error) {
                                             console.error('Error loading countries:', error);
@@ -1401,7 +1417,7 @@
                                     stateSelect.disabled = false;
                                     stateSelect.innerHTML = '<option value="">Select State</option>';
 
-                                    const selectedCountryCode = countrySelect.value;
+                                    const selectedCountryCode = countrySelect.options[countrySelect.selectedIndex].dataset.code;
 
                                     $.ajax({
                                         url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
@@ -1411,10 +1427,16 @@
                                         success: function(data) {
                                             data.forEach(state => {
                                                 const option = document.createElement('option');
-                                                option.value = state.iso2;
+                                                option.value = state.name;
                                                 option.textContent = state.name;
+                                                option.dataset.code = state
+                                                    .iso2;
+                                                if (state.name === selectedState) {
+                                                    option.selected = true;
+                                                }
                                                 stateSelect.appendChild(option);
                                             });
+                                            loadCities();
                                         },
                                         error: function(xhr, status, error) {
                                             console.error('Error loading states:', error);
@@ -1426,8 +1448,8 @@
                                     citySelect.disabled = false;
                                     citySelect.innerHTML = '<option value="">Select City</option>';
 
-                                    const selectedCountryCode = countrySelect.value;
-                                    const selectedStateCode = stateSelect.value;
+                                    const selectedCountryCode = countrySelect.options[countrySelect.selectedIndex].dataset.code;
+                                    const selectedStateCode = stateSelect.options[stateSelect.selectedIndex].dataset.code;
 
                                     $.ajax({
                                         url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
@@ -1437,8 +1459,11 @@
                                         success: function(data) {
                                             data.forEach(city => {
                                                 const option = document.createElement('option');
-                                                option.value = city.id;
+                                                option.value = city.name;
                                                 option.textContent = city.name;
+                                                if (city.name === selectedCity) {
+                                                    option.selected = true;
+                                                }
                                                 citySelect.appendChild(option);
                                             });
                                         },
@@ -1447,6 +1472,7 @@
                                         }
                                     });
                                 }
+
                                 $(document).ready(function() {
                                     loadCountries();
                                 });
@@ -1499,7 +1525,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="iso_certificate_attachment">ISO Ceritificate Attachment</label>
+                                    <label for="iso_certificate_attachment">ISO Certificate Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -1513,7 +1539,8 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -1684,7 +1711,8 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="supplier_detail_additional_attachment">Additional Attachment</label>
+                                    <label for="supplier_detail_additional_attachment">Supplier details Additional
+                                        Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -1699,7 +1727,8 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -2093,7 +2122,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="score_card_additional_attachment">Additional Attachment</label>
+                                    <label for="score_card_additional_attachment">Score Card Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -2108,7 +2137,8 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -2215,7 +2245,8 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -2233,7 +2264,8 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa_reviewer_additional_attachment">Additional Attachment</label>
+                                    <label for="qa_reviewer_additional_attachment">QA Reviewer Additional
+                                        Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -2248,7 +2280,8 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -2296,7 +2329,7 @@
                                     </div> --}}
                                     <div class="calenderauditee">
                                         <input type="text" id="last_audit_date" readonly placeholder="DD-MM-YYYY"
-                                            value="{{ Helpers::getdateFormat($data->last_audit_date) }}"/>
+                                            value="{{ Helpers::getdateFormat($data->last_audit_date) }}" />
                                         <input type="date" id="last_audit_date_name" name="last_audit_date"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="{{ $data->last_audit_date ? \Carbon\Carbon::parse($data->last_audit_date)->format('Y-m-d') : '' }}"
@@ -2320,13 +2353,12 @@
                                     </div> --}}
 
                                     <div class="calenderauditee">
-                                        <input type="text" id="next_audit_date"  readonly placeholder="DD-MM-YYYY"
-                                            value="{{ Helpers::getdateFormat($data->next_audit_date) }}"/>
+                                        <input type="text" id="next_audit_date" readonly placeholder="DD-MM-YYYY"
+                                            value="{{ Helpers::getdateFormat($data->next_audit_date) }}" />
                                         <input type="date" id="next_audit_date_name" name="next_audit_date"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="{{ $data->next_audit_date ? \Carbon\Carbon::parse ($data->next_audit_date)->format('Y-m-d') : '' }}"
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'next_audit_date');" />
+                                            value="{{ $data->next_audit_date ? \Carbon\Carbon::parse($data->next_audit_date)->format('Y-m-d') : '' }}"
+                                            class="hide-input" oninput="handleDateInput(this, 'next_audit_date');" />
                                     </div>
 
                                 </div>
@@ -2551,7 +2583,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="risk_assessment_additional_attachment">Additional Attachment</label>
+                                    <label for="risk_assessment_additional_attachment">Risk Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -2566,7 +2598,8 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -2657,7 +2690,8 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -2675,7 +2709,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa_head_additional_attachment">Additional Attachment</label>
+                                    <label for="qa_head_additional_attachment">Q Head Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -2689,7 +2723,8 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -2822,21 +2857,21 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Suppplier Review By">Conditionally Approved By</label>
-                                    <div class="static">{{ $data->supplier_approved_by }}</div>
+                                    <div class="static">{{ $data->conditionally_approved_by }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Suppplier Review On">Conditionally Approved On</label>
-                                    <div class="static">{{ $data->supplier_approved_on }}</div>
+                                    <div class="static">{{ $data->conditionally_approved_on }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Suppplier Review Comment">Conditionally Approved Comment</label>
-                                    <div class="static">{{ $data->supplier_approved_comment }}</div>
+                                    <div class="static">{{ $data->conditionally_approved_comments }}</div>
                                 </div>
                             </div>
 
@@ -3330,8 +3365,21 @@
         function updateEndDateMin() {
             var startDate = document.getElementById('last_audit_date_name').value;
             var endDateInput = document.getElementById('next_audit_date_name');
+
             if (startDate) {
-                endDateInput.setAttribute('min', startDate);
+                // Set the minimum date to one day after the start date
+                var minEndDate = new Date(startDate);
+                minEndDate.setDate(minEndDate.getDate() + 1);
+
+                // Format the date to match the input type date format (yyyy-mm-dd)
+                var formattedMinEndDate = minEndDate.toISOString().split('T')[0];
+                endDateInput.setAttribute('min', formattedMinEndDate);
+
+                // Ensure the next audit date is after the last audit date
+                if (endDateInput.value && endDateInput.value <= startDate) {
+                    endDateInput.value = '';
+                    // alert("The next audit date must be after the last audit date.");
+                }
             }
         }
 
@@ -3342,6 +3390,19 @@
             document.getElementById('last_audit_date_name').addEventListener('input', function() {
                 updateEndDateMin();
             });
+
+            // Validate the end date when it is changed
+            document.getElementById('next_audit_date_name').addEventListener('input', function() {
+                updateEndDateMin();
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            <?php if ($data->stage == 6 || $data->stage == 0 ) { ?>
+            $("#target :input").not(".backButton, .nextButton").prop("disabled", true);
+            <?php } ?>
         });
     </script>
 

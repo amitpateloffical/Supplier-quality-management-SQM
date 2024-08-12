@@ -223,7 +223,7 @@
                                 <div class="col-12 sub-head">
                                     Effectiveness Check Results
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
                                         <div class="relative-container">
@@ -234,7 +234,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -254,7 +254,7 @@
                                 <div class="col-12 sub-head">
                                     Reopen
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Addendum Comments"><b>Addendum Comments</b></label>
                                         <div class="relative-container">
@@ -265,7 +265,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Addendum Attachments">Addendum Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -311,7 +311,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Attachments">Attachment</label>
+                                        <label for="Attachments">Reference Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">

@@ -806,7 +806,7 @@ class SupplierSiteController extends Controller
         if(!empty($request->supplier_name)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'Supplier Name';
+            $history->activity_type = 'Supplier';
             $history->previous = "Null";
             $history->current = $supplierSite->supplier_name;
             $history->comment = "Not Applicable";
@@ -838,7 +838,7 @@ class SupplierSiteController extends Controller
         if(!empty($request->manufacturer_name)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'Manufacturer Name';
+            $history->activity_type = 'Manufacturer';
             $history->previous = "Null";
             $history->current = $supplierSite->manufacturer_name;
             $history->comment = "Not Applicable";
@@ -870,7 +870,7 @@ class SupplierSiteController extends Controller
         if(!empty($request->vendor_name)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'Vendor Name';
+            $history->activity_type = 'Vendor';
             $history->previous = "Null";
             $history->current = $supplierSite->vendor_name;
             $history->comment = "Not Applicable";
@@ -1064,7 +1064,7 @@ class SupplierSiteController extends Controller
         if (!empty($supplierSite->iso_certificate_attachment)) {
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'Certificate Attachment';
+            $history->activity_type = 'ISO Certificate Attachment';
             $history->previous = "Null";
             $history->current = $supplierSite->iso_certificate_attachment;
             $history->comment ="Not Applicable";
@@ -1242,7 +1242,7 @@ class SupplierSiteController extends Controller
         if (!empty($supplierSite->supplier_detail_additional_attachment)) {
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'Supplier detail additional attachment';
+            $history->activity_type = 'Supplier details additional attachment';
             $history->previous = "Null";
             $history->current = $supplierSite->supplier_detail_additional_attachment;
             $history->comment ="Not Applicable";
@@ -1483,7 +1483,7 @@ class SupplierSiteController extends Controller
         if(!empty($request->car_generated)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = '# of CAR generated';
+            $history->activity_type = '# of CARs generated';
             $history->previous = "Null";
             $history->current = $supplierSite->car_generated;
             $history->comment = "Not Applicable";
@@ -1499,7 +1499,7 @@ class SupplierSiteController extends Controller
         if(!empty($request->car_generated_weight)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = '# of CAR generated Weight';
+            $history->activity_type = '# of CARs generated Weight';
             $history->previous = "Null";
             $history->current = $supplierSite->car_generated_weight;
             $history->comment = "Not Applicable";
@@ -2661,7 +2661,7 @@ class SupplierSiteController extends Controller
         if($lastDocument->supplier_name != $request->supplier_name){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = 'Supplier Name';
+            $history->activity_type = 'Supplier';
             $history->previous = $lastDocument->supplier_name;
             $history->current = $request->supplier_name;
             $history->comment = "Not Applicable";
@@ -2701,7 +2701,7 @@ class SupplierSiteController extends Controller
         if($lastDocument->manufacturer_name != $request->manufacturer_name){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = 'Manufacturer Name';
+            $history->activity_type = 'Manufacturer';
             $history->previous = $lastDocument->manufacturer_name;
             $history->current = $request->manufacturer_name;
             $history->comment = "Not Applicable";
@@ -2741,7 +2741,7 @@ class SupplierSiteController extends Controller
         if($lastDocument->vendor_name != $request->vendor_name){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = 'Vendor Name';
+            $history->activity_type = 'Vendor';
             $history->previous = $lastDocument->vendor_name;
             $history->current = $request->vendor_name;
             $history->comment = "Not Applicable";
@@ -2982,7 +2982,7 @@ class SupplierSiteController extends Controller
          if($lastDocument->iso_certificate_attachment != $supplierSite->iso_certificate_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = 'Certificate Attachment';
+            $history->activity_type = 'ISO Certificate Attachment';
             $history->previous = $lastDocument->iso_certificate_attachment;
             $history->current = $supplierSite->iso_certificate_attachment;
             $history->comment = "Not Applicable";
@@ -3003,7 +3003,7 @@ class SupplierSiteController extends Controller
         if($lastDocument->suppplier_contacts != $request->suppplier_contacts){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = 'Contract';
+            $history->activity_type = 'Contracts';
             $history->previous = $lastDocument->suppplier_contacts;
             $history->current = $request->suppplier_contacts;
             $history->comment = "Not Applicable";
@@ -3208,7 +3208,7 @@ class SupplierSiteController extends Controller
         if($lastDocument->supplier_detail_additional_attachment != $supplierSite->supplier_detail_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = 'Supplier Detail Additional Attachment';
+            $history->activity_type = 'Supplier Details Additional Attachment';
             $history->previous = $lastDocument->supplier_detail_additional_attachment;
             $history->current = $supplierSite->supplier_detail_additional_attachment;
             $history->comment = "Not Applicable";
@@ -3511,7 +3511,7 @@ class SupplierSiteController extends Controller
         if($lastDocument->car_generated != $request->car_generated){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = '# of CAR generated';
+            $history->activity_type = '# of CARs generated';
             $history->previous = $lastDocument->car_generated;
             $history->current = $request->car_generated;
             $history->comment = "Not Applicable";
@@ -3531,7 +3531,7 @@ class SupplierSiteController extends Controller
         if($lastDocument->car_generated_weight != $request->car_generated_weight){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = '# of CAR generated Weight';
+            $history->activity_type = '# of CARs generated Weight';
             $history->previous = $lastDocument->car_generated_weight;
             $history->current = $request->car_generated_weight;
             $history->comment = "Not Applicable";
@@ -4346,7 +4346,7 @@ class SupplierSiteController extends Controller
             }
             if ($supplierSite->stage == 4) {
                 $supplierSite->stage = "6";
-                $supplierSite->status = "Obselete";
+                $supplierSite->status = "Obsolete";
                 $supplierSite->pending_rejection_by = Auth::user()->name;
                 $supplierSite->pending_rejection_on = Carbon::now()->format('d-M-Y H:i A');
                 $supplierSite->pending_rejection_comment = $request->comments;
@@ -4371,7 +4371,7 @@ class SupplierSiteController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Obselete";
+                    $history->change_to = "Obsolete";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
 
@@ -4491,7 +4491,7 @@ class SupplierSiteController extends Controller
             $lastDocument = SupplierSite::find($id);
 
             $supplierSite->stage = "6";
-            $supplierSite->status = "Obselete";
+            $supplierSite->status = "Obsolete";
             $supplierSite->supplier_approved_to_obselete_by = Auth::user()->name;
             $supplierSite->supplier_approved_to_obselete_on = Carbon::now()->format('d-M-Y H:i A');
             $supplierSite->supplier_approved_to_obselete_comment = $request->comments;
@@ -4517,7 +4517,7 @@ class SupplierSiteController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Obselete";
+            $history->change_to =   "Obsolete";
             $history->change_from = $lastDocument->status;
             $history->stage = 'Plan Proposed'; 
             
@@ -4764,9 +4764,9 @@ class SupplierSiteController extends Controller
                     $supplierSite->stage = "5";
                     $supplierSite->status = "Supplier Approved";
 
-                    $supplierSite->supplier_approved_by = Auth::user()->name;
-                    $supplierSite->supplier_approved_on = Carbon::now()->format('d-M-Y H:i A');
-                    $supplierSite->supplier_approved_comment = $request->comments;
+                    $supplierSite->conditionally_approved_by = Auth::user()->name;
+                    $supplierSite->conditionally_approved_on = Carbon::now()->format('d-M-Y H:i A');
+                    $supplierSite->conditionally_approved_comments = $request->comments;
 
                     $history = new SupplierSiteAuditTrail();
                     $history->supplier_site_id = $id;
@@ -4774,13 +4774,13 @@ class SupplierSiteController extends Controller
                     // $history->previous = "";
 
                     $history->activity_type = 'Conditionally Approved By, Conditionally Approved On';
-                    if (is_null($lastDocument->supplier_approved_by) || $lastDocument->supplier_approved_by === '') {
+                    if (is_null($lastDocument->conditionally_approved_by) || $lastDocument->conditionally_approved_by === '') {
                            $history->previous = "";
                         } else {
-                           $history->previous = $lastDocument->supplier_approved_by . ' , ' . $lastDocument->supplier_approved_on;
+                           $history->previous = $lastDocument->conditionally_approved_by . ' , ' . $lastDocument->conditionally_approved_on;
                       }
                     
-                    $history->current = $supplierSite->supplier_approved_by . ' , ' . $supplierSite->supplier_approved_on;
+                    $history->current = $supplierSite->conditionally_approved_by . ' , ' . $supplierSite->conditionally_approved_on;
 
                     
                     $history->action = 'Conditionally Approved';
@@ -4794,7 +4794,7 @@ class SupplierSiteController extends Controller
                     $history->change_from = $lastDocument->status;
                     // $history->stage = 'Plan Proposed';
 
-                    if (is_null($lastDocument->supplier_approved_by) || $lastDocument->supplier_approved_by === '')
+                    if (is_null($lastDocument->conditionally_approved_by) || $lastDocument->conditionally_approved_by === '')
                     {
                       $history->action_name = 'New';
                     } else {

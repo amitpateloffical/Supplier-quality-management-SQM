@@ -84,6 +84,7 @@
             if (issueDateInput && expiryDateInput) {
                 var issueDate = new Date(issueDateInput.value);
                 if (issueDate) {
+                    issueDate.setDate(issueDate.getDate() + 1);
                     expiryDateInput.min = issueDate.toISOString().split('T')[0];
                 }
             }
@@ -230,7 +231,7 @@
 
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="due-date">Date Due</label>
+                                    <label for="due-date">Due Date</label>
                                     <div><small class="text-primary">Please mention expected date of completion</small>
                                     </div>
                                     <div class="calenderauditee">
@@ -588,7 +589,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="hod_additional_attachment">Additional Attachment</label>
+                                    <label for="hod_additional_attachment">HOD Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -827,8 +828,10 @@
                                         success: function(data) {
                                             data.forEach(country => {
                                                 const option = document.createElement('option');
-                                                option.value = country.iso2;
+                                                option.value = country.name;
                                                 option.textContent = country.name;
+                                                option.dataset.code = country
+                                                    .iso2;
                                                 countrySelect.appendChild(option);
                                             });
                                         },
@@ -842,7 +845,7 @@
                                     stateSelect.disabled = false;
                                     stateSelect.innerHTML = '<option value="">Select State</option>';
 
-                                    const selectedCountryCode = countrySelect.value;
+                                    const selectedCountryCode = countrySelect.options[countrySelect.selectedIndex].dataset.code;
 
                                     $.ajax({
                                         url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
@@ -852,8 +855,10 @@
                                         success: function(data) {
                                             data.forEach(state => {
                                                 const option = document.createElement('option');
-                                                option.value = state.iso2;
+                                                option.value = state.name
                                                 option.textContent = state.name;
+                                                option.dataset.code = state
+                                                    .iso2;
                                                 stateSelect.appendChild(option);
                                             });
                                         },
@@ -867,8 +872,8 @@
                                     citySelect.disabled = false;
                                     citySelect.innerHTML = '<option value="">Select City</option>';
 
-                                    const selectedCountryCode = countrySelect.value;
-                                    const selectedStateCode = stateSelect.value;
+                                    const selectedCountryCode = countrySelect.options[countrySelect.selectedIndex].dataset.code;
+                                    const selectedStateCode = stateSelect.options[stateSelect.selectedIndex].dataset.code;
 
                                     $.ajax({
                                         url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
@@ -878,7 +883,7 @@
                                         success: function(data) {
                                             data.forEach(city => {
                                                 const option = document.createElement('option');
-                                                option.value = city.id;
+                                                option.value = city.name;
                                                 option.textContent = city.name;
                                                 citySelect.appendChild(option);
                                             });
@@ -888,11 +893,11 @@
                                         }
                                     });
                                 }
+
                                 $(document).ready(function() {
                                     loadCountries();
                                 });
                             </script>
-
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -933,7 +938,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="iso_certificate_attachment">ISO Ceritificate Attachment</label>
+                                    <label for="iso_certificate_attachment">ISO Certificate Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -1077,7 +1082,8 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="supplier_detail_additional_attachment">Additional Attachment</label>
+                                    <label for="supplier_detail_additional_attachment">Supplier Details Additional
+                                        Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -1419,7 +1425,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="score_card_additional_attachment">Additional Attachment</label>
+                                    <label for="score_card_additional_attachment">Score Card Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -1520,7 +1526,8 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa_reviewer_additional_attachment">Additional Attachment</label>
+                                    <label for="qa_reviewer_additional_attachment">QA Reviewer Additional
+                                        Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -1554,14 +1561,14 @@
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Last Audit Date</label>
-                                   {{-- <div class="calenderauditee">
+                                    {{-- <div class="calenderauditee">
                                         <input type="text" id="last_audit_date" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="last_audit_date"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                             oninput="handleDateInput(this, 'last_audit_date')" />
                                     </div> --}}
 
-                                   <div class="calenderauditee">
+                                    <div class="calenderauditee">
                                         <input type="text" id="last_audit_date" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="last_audit_date"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
@@ -1572,7 +1579,7 @@
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Last Audit Date">Next Audit Date</label>
-                                    {{--<div class="calenderauditee">
+                                    {{-- <div class="calenderauditee">
                                         <input type="text" id="next_audit_date" readonly
                                             placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_audit_date"
@@ -1580,7 +1587,7 @@
                                             oninput="handleDateInput(this, 'next_audit_date')" />
                                     </div> --}}
 
-                                   <div class="calenderauditee">
+                                    <div class="calenderauditee">
                                         <input type="text" id="next_audit_date" readonly
                                             placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_audit_date"
@@ -1729,7 +1736,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="risk_assessment_additional_attachment">Additional Attachment</label>
+                                    <label for="risk_assessment_additional_attachment">Risk Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -1819,7 +1826,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa_head_additional_attachment">Additional Attachment</label>
+                                    <label for="qa_head_additional_attachment">QA Head Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -2159,7 +2166,18 @@
 
         function updateNextAuditDateMin(lastAuditDate) {
             const nextAuditDateInput = document.querySelector('input[name="next_audit_date"]');
-            nextAuditDateInput.min = lastAuditDate;
+
+            // Create a new Date object from the lastAuditDate
+            const lastAuditDateObj = new Date(lastAuditDate);
+
+            // Add one day to the lastAuditDate
+            lastAuditDateObj.setDate(lastAuditDateObj.getDate() + 1);
+
+            // Format the date to YYYY-MM-DD format
+            const minNextAuditDate = lastAuditDateObj.toISOString().split('T')[0];
+
+            // Set the min attribute of the next audit date input
+            nextAuditDateInput.min = minNextAuditDate;
         }
     </script>
 @endsection

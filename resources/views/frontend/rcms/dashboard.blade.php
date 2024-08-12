@@ -36,15 +36,13 @@
             querySelect.options.add(new Option('Pending Actions Completion', '5'));
             querySelect.options.add(new Option('Closed - Done', '6'));
 
-        }
-        else if (scopeValue === 'audit_program') {
+        } else if (scopeValue === 'audit_program') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('Pending Approval', '2'));
             querySelect.options.add(new Option('Pending Audit', '3'));
             querySelect.options.add(new Option('Closed - Done', '4'));
 
-        }
-         else if (scopeValue === 'lab_incident') {
+        } else if (scopeValue === 'lab_incident') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('Pending Incident Review ', '2'));
             querySelect.options.add(new Option('Pending Investigation', '3'));
@@ -76,50 +74,42 @@
             querySelect.options.add(new Option('In Progress', '2'));
             querySelect.options.add(new Option('Close - Done', '3'));
 
+        } else if (scopeValue === 'extension') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Pending Approval', '2'));
+            querySelect.options.add(new Option('Close - Done', '3'));
+
+        } else if (scopeValue === 'documents') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Close - Cancel', '2'));
+            querySelect.options.add(new Option('Close - Done', '3'));
+
+        } else if (scopeValue === 'observation') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Pending CAPA Plan', '2'));
+            querySelect.options.add(new Option('Pending Approval', '3'));
+            querySelect.options.add(new Option('Pending Final Approval', '4'));
+            querySelect.options.add(new Option('Close - Done', '5'));
+        } else if (scopeValue === 'action_item') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Work in Progress', '2'));
+            querySelect.options.add(new Option('Close - Done', '3'));
+
+        } else if (scopeValue === 'effectiveness_check') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Check Effectiveness', '2'));
+            querySelect.options.add(new Option('Close - Done', '3'));
+
+        } else if (scopeValue === 'CC') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Under HOD Review', '2'));
+            querySelect.options.add(new Option('Pending QA Review', '3'));
+            querySelect.options.add(new Option('CFT Review', '4'));
+            querySelect.options.add(new Option('Pending Change Implementation', '5'));
+            querySelect.options.add(new Option('Close - Done', '6'));
         }
-        else if (scopeValue === 'extension') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Pending Approval', '2'));
-                querySelect.options.add(new Option('Close - Done', '3'));
 
-            }
-        else if (scopeValue === 'documents') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Close - Cancel', '2'));
-                querySelect.options.add(new Option('Close - Done', '3'));
 
-            }
-            else if (scopeValue === 'observation') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Pending CAPA Plan', '2'));
-                querySelect.options.add(new Option('Pending Approval', '3'));
-                querySelect.options.add(new Option('Pending Final Approval', '4'));
-                querySelect.options.add(new Option('Close - Done', '5'));
-            }
-
-            else if (scopeValue === 'action_item') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Work in Progress', '2'));
-                querySelect.options.add(new Option('Close - Done', '3'));
-
-            }
-
-            else if (scopeValue === 'effectiveness_check') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Check Effectiveness', '2'));
-                querySelect.options.add(new Option('Close - Done', '3'));
-
-            }
-            else if (scopeValue === 'CC') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Under HOD Review', '2'));
-                querySelect.options.add(new Option('Pending QA Review', '3'));
-                querySelect.options.add(new Option('CFT Review', '4'));
-                querySelect.options.add(new Option('Pending Change Implementation', '5'));
-                querySelect.options.add(new Option('Close - Done', '6'));
-            }
-
-            
         // Add more conditions based on other scope values
 
     }
@@ -128,11 +118,11 @@
     <div id="rcms-dashboard">
         <div class="container-fluid">
             <div class="dash-grid">
-                
+
                 <div>
                     <div class="inner-block scope-table" style="height: calc(100vh - 170px); padding: 0;">
-                        
-                       <div class="grid-block">
+
+                        <div class="grid-block">
                             <div class="group-input">
                                 <label for="scope">Process</label>
                                 <select id="scope" name="form">
@@ -145,7 +135,7 @@
                                     <option value="Action Item">Action Item</option>
                                     <option value="Deviation">Deviation</option>
                                     <option value="Capa">CAPA</option>
-                                    <option value="Risk Assesment">Risk Assesment</option> 
+                                    <option value="Risk Assesment">Risk Assesment</option>
                                     <option value="Root-Cause-Analysis">Root Cause Analysis</option>
                                     <option value="Effectivenss Check">Effectivenss Check</option>
 
@@ -157,7 +147,7 @@
                             </div>
                             <div class="group-input">
                                 <label for="query">Criteria</label>
-                                <select id="query" name="stage" >
+                                <select id="query" name="stage">
                                     <option value="">All Records</option>
                                     <option value="Closed">Closed Records</option>
                                     <option value="Opened">Opened Records</option>
@@ -168,7 +158,7 @@
                         </div>
                         <div class="main-scope-table">
                             <table class="table table-bordered" id="auditTable">
-                                <thead >
+                                <thead>
                                     <tr>
                                         <th>Record</th>
                                         <th>Parent ID</th>
@@ -177,7 +167,7 @@
                                         <th class="td_desc">Short Description</th>
                                         <th>Date Opened</th>
                                         <th>Originator</th>
-                                        <th> Due  Date</th>
+                                        <th> Due Date</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -201,7 +191,7 @@
                                                                 class="w-100 h-100"> --}}
                                                         </div>
                                                     </a>
-                                                    @elseif ($datas->type == 'Supplier-Audit')
+                                                @elseif ($datas->type == 'Supplier-Audit')
                                                     <a href="{{ route('showSupplierAudit', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
@@ -240,7 +230,7 @@
                                                                     alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
-                                                @endif
+                                                    @endif
                                                 @elseif ($datas->type == 'Supplier Site')
                                                     <a href="{{ url('rcms/supplier-site-show', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -254,18 +244,18 @@
                                                                     alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
-                                                @endif
-
+                                                    @endif
                                                 @elseif ($datas->type == 'SCAR')
                                                     <a href="{{ url('rcms/scar-show', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
-                                                        <a href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/internal_audit">
-                                                            <div class="icon" onclick="showChild()" data-bs-toggle="tooltip" title="Related Records"></div>
+                                                        <a
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/internal_audit">
+                                                            <div class="icon" onclick="showChild()"
+                                                                data-bs-toggle="tooltip" title="Related Records"></div>
                                                         </a>
-                                                @endif
-
+                                                    @endif
                                                 @elseif ($datas->type == 'Risk-Assesment')
                                                     <a href="{{ route('showRiskManagement', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -308,7 +298,6 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                    
                                                 @elseif ($datas->type == 'Audit-Program')
                                                     <a href="{{ route('ShowAuditProgram', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -407,7 +396,7 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                    @elseif($datas->type == 'Deviation')
+                                                @elseif($datas->type == 'Deviation')
                                                     <a href="{{ route('devshow', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
@@ -435,8 +424,7 @@
                                                             </div>
                                                         </a>
                                                     @endif
-
-                                                    @elseif($datas->type == 'MedicalDeviceRegistration')
+                                                @elseif($datas->type == 'MedicalDeviceRegistration')
                                                     <a href="{{ route('medical_edit', $datas->id) }}">
                                                         {{ str_pad($datas->id, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
@@ -450,18 +438,17 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                
                                                 @endif
                                             </td>
-                                                @if ($datas->parent != '-')
-                                                        <td>
-                                                            {{ str_pad($datas->parent, 4, '0', STR_PAD_LEFT) }}
-                                                        </td>
-                                                    @else
-                                                        <td>
-                                                            {{ $datas->parent }}
-                                                        </td>
-                                                @endif
+                                            @if ($datas->parent != '-')
+                                                <td>
+                                                    {{ str_pad($datas->parent, 4, '0', STR_PAD_LEFT) }}
+                                                </td>
+                                            @else
+                                                <td>
+                                                    {{ $datas->parent }}
+                                                </td>
+                                            @endif
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
@@ -490,7 +477,7 @@
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 {{-- {{ $datas->assign_to }} --}}
-                                            {{ Helpers::getInitiatorName($datas->initiator_id) }}
+                                                {{ Helpers::getInitiatorName($datas->initiator_id) }}
                                                 {{-- {{ $datas->initiator_id }} --}}
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
@@ -498,10 +485,10 @@
                                                 data-bs-target="#record-modal">
                                                 {{ Helpers::getdateFormat($datas->due_date) }}
                                                 <!-- @if ($datas->type == 'Deviation' || $datas->type == 'Change-Control')
-                                                    {{ Helpers::getdateFormat($datas->intiation_date, true) }}
-                                                @else
-                                                    {{ Helpers::getdateFormat($datas->due_date) }}
-                                                @endif -->
+    {{ Helpers::getdateFormat($datas->intiation_date, true) }}
+@else
+    {{ Helpers::getdateFormat($datas->due_date) }}
+    @endif -->
 
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
@@ -515,7 +502,7 @@
                                 </tbody>
                             </table>
                         </div>
-                     {{-- <div class="scope-pagination">
+                        {{-- <div class="scope-pagination">
                             {{ $datag->links() }}
                         </div>  --}}
                     </div>

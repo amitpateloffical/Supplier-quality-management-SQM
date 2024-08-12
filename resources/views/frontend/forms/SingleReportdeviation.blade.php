@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Deviation Report
+                    Deviation Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -316,14 +316,14 @@
                     </tr>
                     <tr>
 
-                        <th class="w-20"> Others</th>
+                        {{--<th class="w-20"> Others</th>
                         <td class="w-30">
                             @if ($data->others)
                                 {{ $data->others }}
                             @else
                                 Not Applicable
                             @endif
-                        </td>
+                        </td>--}}
                         <th class="w-20">Facility/ Equipment/ Instrument/ System Details Required?</th>
                         <td class="w-30">
                             @if ($data->Facility_Equipment)

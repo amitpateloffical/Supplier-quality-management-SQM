@@ -1258,8 +1258,10 @@
                                             <input name="short_description" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="docname"
                                             type="text" maxlength="255" required value="{{ $data->short_description }}">
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 11]) ])
                                             @endcomponent
+
                                         </div>
                                     </div>
 
@@ -1323,7 +1325,8 @@
                                     <div class="relative-container">
                                             <textarea id="docname" type="text" name="Delay_Justification" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>{{ $data->Delay_Justification }}</textarea>
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 11]) ])
                                             @endcomponent
                                     </div>
 
@@ -1361,7 +1364,8 @@
                                             <label for="If Other">Deviation Observed By<span class="text-danger">*</span></label>
                                             <div class="relative-container">
                                                     <input id="docname" type="text" name="Facility" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} value="{{ $data->Facility }}" placeholder="Select Facility Name">
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', [
+                                                         'disabled' => in_array($data->stage, [0, 11]) ])
                                                     @endcomponent
                                             </div>
 
@@ -1960,7 +1964,8 @@
                                         <div class="relative-container">
                                             <textarea id="summernote-1" name="Description_Deviation[]" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} placeholder="Enter Description of Deviation">{{ $data->Description_Deviation }}</textarea>
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 11]) ])
                                             @endcomponent
                                         </div>
 
@@ -1997,7 +2002,8 @@
                                         <div class="relative-container">
                                             <textarea id="summernote-2" name="Immediate_Action[]" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} placeholder="Enter Immediate Action">{{ $data->Immediate_Action }}</textarea>
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 11]) ])
                                             @endcomponent
                                         </div>
 
@@ -2030,7 +2036,8 @@
                                         <div class="relative-container">
                                             <textarea id="summernote-3" name="Preliminary_Impact[]" class="mic-input" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} placeholder="Enter Preliminary Impact of Deviation">{{ $data->Preliminary_Impact }}</textarea>
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 11]) ])
                                             @endcomponent
                                         </div>
 
@@ -2150,8 +2157,11 @@
                                             <div class="relative-container">
                                                 <textarea id="summernote-4" name="HOD_Remarks" class="mic-input" {{ $data->stage == 2 ? '' : 'disabled' }} required placeholder="Enter HOD Remarks">{{ $data->HOD_Remarks }}</textarea>
 
-                                                @component('frontend.forms.language-model')
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11])
+                                                ])
                                                 @endcomponent
+
                                             </div>
 
                                             {{-- <div style="position:relative;">
@@ -2673,8 +2683,10 @@
                                                     name="nature_of_repeat"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="nature_of_repeat"
                                                     class="nature_of_repeat">{{ $data->nature_of_repeat }}</textarea>
 
-                                                    @component('frontend.forms.language-model')
-                                                    @endcomponent
+                                                    @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11])
+                                                ])
+                                                @endcomponent
                                                 </div>
 
                                             </div>
@@ -2869,8 +2881,10 @@
                                             <textarea @if ($data->stage == 3) required @endif
                                                 name="QAInitialRemark" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-6" class="mic-input">{{ $data->QAInitialRemark }}</textarea>
 
-                                                    @component('frontend.forms.language-model')
-                                                    @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11])
+                                                ])
+                                                @endcomponent
                                         </div>
 
 
@@ -3360,8 +3374,10 @@
                                                         <textarea @if ($data1->Production_Review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Production_person || $data->stage == 11 ? 'tiny Production_assessment' : 'tiny-disable' }}
                                                             @if ($data->stage == 3 || Auth::user()->id != $data1->Production_person) readonly @endif name="Production_assessment" id="summernote-17" class="mic-input">{{ $data1->Production_assessment }}</textarea>
 
-                                                        @component('frontend.forms.language-model')
-                                                        @endcomponent
+                                                            @component('frontend.forms.language-model', [
+                                                                'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                            ])
+                                                            @endcomponent
                                                     </div>
 
 
@@ -3378,8 +3394,10 @@
                                                 <input readonly type="text" value="{{ $data1->Production_by }}"
                                                 name="production_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                                 id="production_by" class="mic-input">
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
 
 
@@ -3644,8 +3662,10 @@
                                                         <textarea @if ($data1->Warehouse_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Warehouse_assessment || $data->stage == 11 ? 'tiny Warehouse_assessment' : 'tiny-disable' }}
                                                             name="Warehouse_assessment" id="summernote-19" @if ($data->stage == 3 || Auth::user()->id != $data1->Warehouse_notification) readonly @endif class="mic-input">{{ $data1->Warehouse_assessment }}</textarea>
 
-                                                        @component('frontend.forms.language-model')
-                                                        @endcomponent
+                                                            @component('frontend.forms.language-model', [
+                                                                'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                                ])
+                                                            @endcomponent
                                                     </div>
 
 
@@ -3737,7 +3757,9 @@
                                                     <input readonly type="text" value="{{ $data1->Warehouse_by }}"
                                                     name="Warehouse_by" id="Warehouse_by">
 
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', [
+                                                        'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                        ])
                                                     @endcomponent
                                                 </div>
 
@@ -3963,8 +3985,10 @@
                                                 <textarea @if ($data1->Quality_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Quality_Control_Person || $data->stage == 11 ? 'tiny Quality_Control_assessment' : 'tiny-disable' }}
                                                     name="Quality_Control_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Quality_Control_Person) readonly @endif id="summernote-21">{{ $data1->Quality_Control_assessment }}</textarea>
 
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                    @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
 
 
@@ -4140,8 +4164,10 @@
                                             <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->QualityAssurance_person || $data->stage == 11 ? 'tiny QualityAssurance_assessment' : 'tiny-disable' }}
                                                 name="QualityAssurance_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->QualityAssurance_person) readonly @endif id="summernote-23">{{ $data1->QualityAssurance_assessment }}</textarea>
 
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
 
 
@@ -4228,8 +4254,10 @@
                                                 <input type="text" name="QualityAssurance_by" id="QualityAssurance_by"
                                                  value="{{ $data1->QualityAssurance_by }}" disabled>
 
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                 @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
 
                                     </div>
@@ -4322,8 +4350,10 @@
                                             <textarea @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Engineering_person || $data->stage == 11 ? 'tiny Engineering_assessment' : 'tiny-disable' }}
                                                 name="Engineering_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Engineering_person) readonly @endif id="summernote-25">{{ $data1->Engineering_assessment }}</textarea>
 
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
 
 
@@ -4406,7 +4436,9 @@
                                             <input disabled type="text" value="{{ $data1->Engineering_by }}"
                                             name="Engineering_by" id="Engineering_by">
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
 
@@ -4503,7 +4535,9 @@
                                             name="Analytical_Development_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Analytical_Development_person) readonly @endif
                                             id="summernote-27">{{ $data1->Analytical_Development_assessment }}</textarea>
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
 
@@ -4589,7 +4623,9 @@
                                             <input disabled type="text" value="{{ $data1->Analytical_Development_by }}"
                                             name="Analytical_Development_by" id="Analytical_Development_by">
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
 
@@ -4682,8 +4718,10 @@
                                             <textarea @if ($data1->Kilo_Lab_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Kilo_Lab_person || $data->stage == 11 ? 'tiny Analytical_Development_assessment' : 'tiny-disable' }}
                                                 name="Kilo_Lab_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Kilo_Lab_person) readonly @endif id="summernote-29">{{ $data1->Kilo_Lab_assessment }}</textarea>
 
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
 
 
@@ -4764,7 +4802,9 @@
                                                 <input disabled type="text" value="{{ $data1->Kilo_Lab_attachment_by }}"
                                             name="Kilo_Lab_attachment_by" id="Kilo_Lab_attachment_by">
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
                                         {{-- <input type="text" name="Kilo_Lab_attachment_by" id="Kilo_Lab_attachment_by" value="Kilo_Lab_attachment_by" disabled> --}}
@@ -4862,8 +4902,10 @@
                                                         <textarea @if ($data1->Technology_transfer_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Technology_transfer_person || $data->stage == 11 ? 'tiny Technology_transfer_assessment' : 'tiny-disable' }}
                                                             name="Technology_transfer_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Technology_transfer_person) readonly @endif id="summernote-31">{{ $data1->Technology_transfer_assessment }}</textarea>
 
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
 
                                     </div>
@@ -4945,8 +4987,10 @@
                                                 <input disabled type="text" value="{{ $data1->Technology_transfer_by }}"
                                                 name="Technology_transfer_by" id="Technology_transfer_by">
 
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
                                         {{-- <input type="text" name="Technology_transfer_by" id="Technology_transfer_by" value="Technology_transfer_by" disabled> --}}
 
@@ -5044,8 +5088,10 @@
                                                         <textarea @if ($data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Environment_Health_Safety_person || $data->stage == 11 ? 'tiny' : 'tiny-disable' }} name="Health_Safety_assessment"
                                                             @if ($data->stage == 3 || Auth::user()->id != $data1->Environment_Health_Safety_person) readonly @endif id="summernote-33">{{ $data1->Health_Safety_assessment }}</textarea>
 
-                                                    @component('frontend.forms.language-model')
-                                                    @endcomponent
+                                                            @component('frontend.forms.language-model', [
+                                                                'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                                ])
+                                                            @endcomponent
                                                 </div>
 
 
@@ -5129,8 +5175,9 @@
                                                 <input disabled type="text"
                                             value="{{ $data1->Environment_Health_Safety_by }}"
                                             name="Environment_Health_Safety_by" id="Environment_Health_Safety_by">
-
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
                                         {{-- <input type="text" name="Environment_Health_Safety_by" id="Environment_Health_Safety_by" value="Environment_Health_Safety_by" disabled>                                         --}}
@@ -5227,8 +5274,10 @@
                                                         <textarea @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Human_Resource_person || $data->stage == 11 ? 'tiny Human_Resource_assessment' : 'tiny-disable' }}
                                                             name="Human_Resource_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Human_Resource_person) readonly @endif id="summernote-35">{{ $data1->Human_Resource_assessment }}</textarea>
 
-                                                        @component('frontend.forms.language-model')
-                                                        @endcomponent
+                                                            @component('frontend.forms.language-model', [
+                                                                'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                                ])
+                                                            @endcomponent
                                                     </div>
 
 
@@ -5309,7 +5358,9 @@
                                                 <input disabled type="text" value="{{ $data1->Human_Resource_by }}"
                                             name="Human_Resource_by" id="Human_Resource_by">
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
                                         {{-- <input type="text" name="Human_Resource_by" id="Human_Resource_by" value="Human_Resource_by" disabled> --}}
@@ -5409,8 +5460,10 @@
                                                         name="Information_Technology_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Information_Technology_person) readonly @endif
                                                         id="summernote-37">{{ $data1->Information_Technology_assessment }}</textarea>
 
-                                                        @component('frontend.forms.language-model')
-                                                        @endcomponent
+                                                        @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                                     </div>
 
 
@@ -5491,8 +5544,10 @@
                                             <div class="relative-container">
                                                 <input disabled type="text" value="{{ $data1->Information_Technology_by }}"
                                                   name="Information_Technology_by" id="Information_Technology_by">
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                  @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
                                         {{-- <input type="text" name="Information_Technology_by" id="Information_Technology_by" value="Information_Tec/hnology_by" disabled> --}}
 
@@ -5584,8 +5639,10 @@
                                                         <textarea @if ($data1->Project_management_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Project_management_person || $data->stage == 11 ? 'tiny Project_management_assessment' : 'tiny-disable' }}
                                                             name="Project_management_assessment" id="summernote-39" @if ($data->stage == 3 || Auth::user()->id != $data1->Project_management_person) readonly @endif>{{ $data1->Project_management_assessment }}</textarea>
 
-                                                        @component('frontend.forms.language-model')
-                                                        @endcomponent
+                                                            @component('frontend.forms.language-model', [
+                                                                'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                                ])
+                                                            @endcomponent
                                                     </div>
 
                                                 </div>
@@ -5667,7 +5724,9 @@
                                                 <input disabled type="text" value="{{ $data1->Project_management_by }}"
                                                  name="Project_management_by" id="Project_management_by">
 
-                                                @component('frontend.forms.language-model')
+                                                 @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                                 @endcomponent
                                             </div>
                                         {{-- <input type="text" name="Project_management_by" id="Project_management_by" value="Project_management_by" disabled> --}}
@@ -5790,7 +5849,9 @@
                                                 <input disabled type="text" value="{{ $data1->Quality_Control_by }}"
                                             name="Quality_Control_by" id="Quality_Control_by">
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
                                         {{-- <input type="text" name="Quality_Control_by" id="Quality_Control_by" value="{{ $data1->Quality_Control_by }}" disabled> --}}
@@ -5906,8 +5967,10 @@
                                                 <input disabled type="text" value="{{ $data1->QualityAssurance_by }}"
                                                 name="QualityAssurance_by" id="QualityAssurance_by">
 
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
                                         {{-- <input type="text" name="QualityAssurance_by" id="QualityAssurance_by" value="{{$data1->QualityAssurance_by}}" disabled> --}}
 
@@ -6017,8 +6080,10 @@
                                             <div class="relative-container">
                                                 <input disabled type="text" value="{{ $data1->Engineering_by }}"
                                                 name="Engineering_by" id="Engineering_by">
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
                                         {{-- <input type="text" name="Engineering_by" id="Engineering_by" value="Engineering_by" disabled> --}}
 
@@ -6141,8 +6206,10 @@
                                                 <input disabled type="text" value="{{ $data1->Analytical_Development_by }}"
                                                 name="Analytical_Development_by" id="Analytical_Development_by">
 
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
                                         {{-- <input type="text" name="Analytical_Development_by" id="Analytical_Development_by" value="Analytical_Development_by" disabled> --}}
 
@@ -6256,8 +6323,10 @@
                                                 <input disabled type="text" value="{{ $data1->Kilo_Lab_attachment_by }}"
                                                 name="Kilo_Lab_attachment_by" id="Kilo_Lab_attachment_by">
 
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
                                         {{-- <input type="text" name="Kilo_Lab_attachment_by" id="Kilo_Lab_attachment_by" value="Kilo_Lab_attachment_by" disabled> --}}
 
@@ -6379,7 +6448,9 @@
                                                 <input disabled type="text" value="{{ $data1->Technology_transfer_by }}"
                                             name="Technology_transfer_by" id="Technology_transfer_by">
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
                                         {{-- <input type="text" name="Technology_transfer_by" id="Technology_transfer_by" value="Technology_transfer_by" disabled> --}}
@@ -6501,8 +6572,10 @@
                                                     value="{{ $data1->Environment_Health_Safety_by }}"
                                                     name="Environment_Health_Safety_by" id="Environment_Health_Safety_by">
 
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
                                         {{-- <input type="text" name="Environment_Health_Safety_by" id="Environment_Health_Safety_by" value="Environment_Health_Safety_by" disabled>                                         --}}
 
@@ -6620,7 +6693,9 @@
                                                 <input disabled type="text" value="{{ $data1->Human_Resource_by }}"
                                             name="Human_Resource_by" id="Human_Resource_by">
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
                                         {{-- <input type="text" name="Human_Resource_by" id="Human_Resource_by" value="Human_Resource_by" disabled> --}}
@@ -6745,8 +6820,10 @@
                                                 <input disabled type="text" value="{{ $data1->Information_Technology_by }}"
                                                 name="Information_Technology_by" id="Information_Technology_by">
 
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                         </div>
                                         {{-- <input type="text" name="Information_Technology_by" id="Information_Technology_by" value="Information_Tec/hnology_by" disabled> --}}
 
@@ -7002,8 +7079,10 @@
                                                         <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other1_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other1_assessment"
                                                             @if ($data->stage == 3 || Auth::user()->id != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
 
-                                                        @component('frontend.forms.language-model')
-                                                        @endcomponent
+                                                            @component('frontend.forms.language-model', [
+                                                                'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                                ])
+                                                            @endcomponent
                                                     </div>
 
 
@@ -7087,7 +7166,9 @@
                                             <input disabled type="text" value="{{ $data1->Other1_by }}"
                                             name="Other1_by" id="Other1_by">
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
 
@@ -7249,8 +7330,10 @@
                                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other2_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other2_person || $data->stage == 11? 'tiny ' : 'tiny-disable' }} name="Other2_Assessment"
                                                             @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
 
-                                                        @component('frontend.forms.language-model')
-                                                        @endcomponent
+                                                            @component('frontend.forms.language-model', [
+                                                                'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                                ])
+                                                            @endcomponent
                                                     </div>
 
 
@@ -7304,7 +7387,9 @@
                                             <input type="text" name="Other2_by" id="Other2_by"
                                             value="{{ $data1->Other2_by }}" disabled>
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
 
@@ -7467,8 +7552,10 @@
                                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other3_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other3_person || Auth::user()->id == $data1->Other3_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other3_Assessment"
                                                             @if ($data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
 
-                                                        @component('frontend.forms.language-model')
-                                                        @endcomponent
+                                                            @component('frontend.forms.language-model', [
+                                                                'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                                ])
+                                                            @endcomponent
                                                     </div>
 
 
@@ -7522,7 +7609,9 @@
                                             <input type="text" name="Other3_by" id="Other3_by"
                                             value="{{ $data1->Other3_by }}" disabled>
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
 
@@ -7682,8 +7771,10 @@
                                                     <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other4_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other4_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other4_Assessment"
                                                         @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
 
-                                                    @component('frontend.forms.language-model')
-                                                    @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                                 </div>
 
 
@@ -7737,7 +7828,9 @@
                                             <input type="text" name="Other4_by" id="Other4_by"
                                             value="{{ $data1->Other4_by }}" disabled>
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
 
@@ -7898,8 +7991,10 @@
                                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other5_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other5_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }}
                                                             name="Other5_Assessment"@if ($data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
 
-                                                        @component('frontend.forms.language-model')
-                                                        @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
+                                                @endcomponent
                                                     </div>
 
 
@@ -7923,7 +8018,9 @@
                                             <input type="text" name="Other5_by" id="Other5_by"
                                             value="{{ $data1->Other5_by }}" disabled>
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
 
@@ -8110,7 +8207,9 @@
                                             <input disabled type="text" value="{{ $data1->Other1_by }}"
                                             name="Other1_by" id="Other1_by">
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
 
@@ -8560,7 +8659,9 @@
                                             <input type="text" name="Other4_by" id="Other4_by"
                                             value="{{ $data1->Other4_by }}" disabled>
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
 
@@ -8685,7 +8786,9 @@
                                             <input type="text" name="Other5_by" id="Other5_by"
                                             value="{{ $data1->Other5_by }}" disabled>
 
-                                            @component('frontend.forms.language-model')
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
+                                                    ])
                                             @endcomponent
                                         </div>
 
@@ -8801,7 +8904,14 @@
                             <label for="Investigation Summary">Investigation summary</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea class="tiny" name="Discription_Event" id="summernote-8">{{ $data->Discription_Event }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea class="tiny" name="Discription_Event" id="summernote-8">{{ $data->Discription_Event }}</textarea>
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 11])
+                                                    ])
+                                            @endcomponent
+                                    </div>
+
                         </div>
                     </div>
 
@@ -8810,7 +8920,14 @@
                             <label for="Impact Assessment">Impact Assessment</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea class="tiny" name="objective" id="summernote-9">{{ $data->objective }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea class="tiny" name="objective" id="summernote-9">{{ $data->objective }}</textarea>
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 11])
+                                                    ])
+                                            @endcomponent
+                                    </div>
+
                         </div>
                     </div>
 
@@ -8819,7 +8936,14 @@
                             <label for="Root Cause">Corrective & Preventive Actions</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea class="tiny" name="scope" id="summernote-10">{{ $data->scope }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea class="tiny" name="scope" id="summernote-10">{{ $data->scope }}</textarea>
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 11])
+                                                    ])
+                                            @endcomponent
+                                    </div>
+
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
@@ -8827,7 +8951,14 @@
                             <label for="Root Cause">Investigation HOD remarks</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea class="tiny" name="imidiate_action" id="summernote-10">{{ $data->imidiate_action }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea class="tiny" name="imidiate_action" id="summernote-10">{{ $data->imidiate_action }}</textarea>
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 11])
+                                                    ])
+                                            @endcomponent
+                                    </div>
+
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
@@ -8835,7 +8966,14 @@
                             <label for="Root Cause">Investigation QA remarks</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea class="tiny" name="imidiate_action1" id="summernote-10">{{ $data->imidiate_action1 }}</textarea>
+                                    <div class="relative-container">
+                                        <textarea class="tiny" name="imidiate_action1" id="summernote-10">{{ $data->imidiate_action1 }}</textarea>
+                                            @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 11])
+                                                    ])
+                                            @endcomponent
+                                    </div>
+
                         </div>
                     </div>
 
@@ -9385,8 +9523,10 @@
 
                     <div class="relative-container">
                         <textarea {{ $data->stage == 8 ? 'required' : 'disabled' }} name="hod_final_remarks" id="summernote-14" class="mic-input">{{ $data->hod_final_remarks }}</textarea>
-                        @component('frontend.forms.language-model')
+                        @component('frontend.forms.language-model', [
+                            'disabled' => in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]) ])
                         @endcomponent
+
                     </div>
 
                 </div>
@@ -9473,8 +9613,11 @@
 
                     <div class="relative-container">
                         <textarea {{ $data->stage == 9 ? 'required' : 'disabled' }} name="qa_final_remarks" id="qa_final_remarks" class="mic-input">{{ $data->qa_final_remarks }}</textarea>
-                    @component('frontend.forms.language-model')
-                    @endcomponent
+                        @component('frontend.forms.language-model', [
+                            'disabled' => in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11])
+                            ])
+                        @endcomponent
+
                     </div>
 
                 </div>
@@ -10416,8 +10559,10 @@
                                     class="mic-input"
                                     {{ $data->stage == 0 || $data->stage == 11 || $data->stage != 5 ? 'disabled' : '' }}
                                 >{{ $data->Justification_for_categorization }}</textarea>
-                                @component('frontend.forms.language-model')
+                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11]) ])
                                 @endcomponent
+
                             </div>
                         </div>
                         @error('Justification_for_categorization')
@@ -10483,8 +10628,10 @@
                                             <textarea name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                 id="summernote-14" required>{{ $data->QA_Feedbacks }}</textarea>
 
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 4, 6, 7, 8, 9, 10, 11]) ])
+                                                @endcomponent
+
                                         </div>
 
                             </div>
@@ -10496,8 +10643,9 @@
                                         <div class="relative-container">
                                             <textarea readonly class={{$data->stage == 5 || $data->stage == 11? 'tiny' : 'tiny-disable' }}
                                                 name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-14">{{ $data->QA_Feedbacks }}</textarea>
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                                @component('frontend.forms.language-model', [
+                                                    'disabled' => in_array($data->stage, [0, 1, 2, 4, 6, 7, 8, 9, 10, 11]) ])
+                                                @endcomponent
                                         </div>
 
                             </div>
@@ -10599,8 +10747,10 @@
                             <div class="relative-container">
                                 <textarea name="initiator_final_remarks" id="summernote-14" class="mic-input" {{ $data->stage == 7 ? 'required' : 'disabled' }}>{{ $data->initiator_final_remarks }}</textarea>
 
-                                @component('frontend.forms.language-model')
+                                @component('frontend.forms.language-model', [
+                                    'disabled' => in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11]) ])
                                 @endcomponent
+
                             </div>
 
                         </div>
@@ -10680,7 +10830,7 @@
                     <div class="col-md-12">
                         <div class="group-input">
                             <label for="Post Categorization Of Deviation">Post Categorization Of Deviation</label>
-                            <div><small class="text-primary">Please Refer Intial deviation category before
+                            <div><small class="text-primary">Please Refer Initial deviation category before
                                     updating.</small></div>
                             <select
                                 name="Post_Categorization"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
@@ -10712,8 +10862,10 @@
                                     class="mic-input"
                                 >{{ $data->Investigation_Of_Review }}</textarea>
 
-                             @component('frontend.forms.language-model')
-                            @endcomponent
+                                @component('frontend.forms.language-model', [
+                                        'disabled' => in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11]) ])
+                                @endcomponent
+
                                         </div>
 
                         </div>
@@ -10742,7 +10894,8 @@
                                     class="mic-input"
                                 >{{ $data->Closure_Comments }}</textarea>
 
-                                @component('frontend.forms.language-model')
+                                @component('frontend.forms.language-model', [
+                                        'disabled' => in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11]) ])
                                 @endcomponent
                             </div>
 
@@ -10772,7 +10925,8 @@
                                     class="mic-input"
                                 >{{ $data->Disposition_Batch }}</textarea>
 
-                                @component('frontend.forms.language-model')
+                                @component('frontend.forms.language-model', [
+                                        'disabled' => in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11]) ])
                                 @endcomponent
                             </div>
 

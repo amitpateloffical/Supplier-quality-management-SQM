@@ -245,7 +245,7 @@
                 </div>
 
                 @php
-                $reviewer = DB::table('audit_reviewers_details')->where('doc_id', $document->id)->get();
+                $reviewer = DB::table('audit_reviewers_details')->where(['doc_id' => $document->id, 'type' => 'Deviation'])->get();
             @endphp
             <!-- Customer grid view -->
             <div class="table-responsive" style="
@@ -266,7 +266,7 @@
                             @foreach($reviewer as $review)
                             <tr>
                                 <td>{{ $review->reviewer_comment_by }}</td>
-                                <td>{{ $review->reviewer_comment_on }}</td>
+                                <td>{{ Helpers::getdateFormat($review->reviewer_comment_on) }}</td>
                                 <td>{{ $review->reviewer_comment }}</td>
                             </tr>
                             @endforeach
@@ -297,7 +297,6 @@
                         <h4 class="modal-title">Audit Reviewers</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <form action="" method="POST">
                         <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
                         @csrf
                         <!-- Modal body -->
@@ -313,8 +312,9 @@
                             </div>
                             <div class="group-input">
                                 <label for="Reviewer Completed on">Reviewer Completed On</label>
-                                <input disabled type="text" name="reviewer_completed_on" id="reviewer_completed_on" value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                <input disabled type="text" name="reviewer_completed_on" id="reviewer_completed_on" value="{{ $auditCollect ? Helpers::getdateFormat($auditCollect->reviewer_comment_on) : '' }}">
                             </div>
+                            <input type="hidden" id="type" name="type" value="Deviation">
                         </div>
                         <div class="modal-footer">
                             {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
@@ -333,8 +333,8 @@
                 Audit Trail
               </div>
 
-            <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
-            <div style="margin-bottom: 5px;  font-weight: bold;"> Originator :{{ $document->initiator }}</div>
+            <div> <strong>Record ID :</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
+            <div style="margin-bottom: 5px;  font-weight: bold;"> Originator : {{ $document->initiator }}</div>
             <div style="margin-bottom: 5px; font-weight: bold;">Short Description : {{ strip_tags($document->short_description) }}</div>
             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date :  {{$document->due_date}}</div>
 
@@ -428,7 +428,7 @@
                         <div>
                      <strong> Data Field Name :</strong><a href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type  : "Not Applicable" }}</a> </div>
                       <div style="margin-top: 5px;">
-                      <strong>Change From :</strong>{!!$dataDemo->previous ? $dataDemo->previous  : "NULL"!!}</div>
+                      <strong>Change From :</strong>{!!$dataDemo->previous ? $dataDemo->previous  : "Null"!!}</div>
                             <br>
                             <!--  -->
                       <div ><strong>Changed To :</strong>{!!$dataDemo->current ? $dataDemo->current  : "Not Applicable"!!}</div>
@@ -442,7 +442,7 @@
                         </div>
                         </td>
                         <td>
-                       <div ><strong> Peformed By :</strong>{{$dataDemo->user_name ? $dataDemo->user_name  : "Not Applicable"}}</div>
+                       <div ><strong> Performed By :</strong>{{$dataDemo->user_name ? $dataDemo->user_name  : "Not Applicable"}}</div>
                       <div style="margin-top: 5px;">  <strong>Performed On :</strong>{{$dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable'}}</div>
                        <div style="margin-top: 5px;"><strong> Comments :</strong>{{$dataDemo->comment ? $dataDemo->comment  : "Not Applicable"}}</div>
 

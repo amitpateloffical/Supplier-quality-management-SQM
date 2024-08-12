@@ -388,7 +388,7 @@
                                             :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
                                     @else
                                         <strong>Change To
-                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
+                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'NULL' }}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">
@@ -404,7 +404,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div><strong> Peformed By
+                                <div><strong> Performed By
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On

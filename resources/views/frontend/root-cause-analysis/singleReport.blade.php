@@ -248,7 +248,7 @@
 
                     <tr>
                         <th class="w-20">Others</th>
-                        <td class="w-80">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
+                        <td class="w-80" colspan="3">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
                     </tr>
                      
                     <tr>
@@ -263,13 +263,14 @@
                         <td class="w-80">@if($data->department){{ $data->department }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Description</th>
-                        <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
+                        <th class="w-20" >Description</th>
+                        <td class="w-80" colspan="3">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
                       
                     </tr>  
                     <tr>
                         <th class="w-20">Comments</th>
-                        <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
+                        <td class="w-80" colspan="3">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
+                        
                     </tr>                     
                     <tr>
 
@@ -319,12 +320,12 @@
 
                         <tr>
                             <th class="w-20">Root Cause Description</th>
-                            <td class="w-80">@if($data->root_cause_description){{ $data->root_cause_description }}@else Not Applicable @endif</td>
+                            <td class="w-80" colspan="3">@if($data->root_cause_description){{ $data->root_cause_description }}@else Not Applicable @endif</td>
                           
                         </tr>
                         <tr>
                             <th class="w-20">Investigation Summary</th>
-                            <td class="w-80">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
+                            <td class="w-80" colspan="3">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
                         </tr>
                         <!-- <tr>
                             <th class="w-20">Attachments</th>
@@ -492,7 +493,7 @@
                     - <tr>
                         <th class="w-20">Measurement</th>
                         {{-- <td class="w-80">@if($riskgrdfishbone->measurement){{ $riskgrdfishbone->measurement }}@else Not Applicable @endif</td> --}}
-                             <td class="w-80">
+                             <td class="w-80" >
                             @php
                                 $measurement = unserialize($data->measurement);
                             @endphp
@@ -600,7 +601,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Problem Statement1</th>
-                        <td class="w-80">@if($data->problem_statement){{ $data->problem_statement }}@else Not Applicable @endif</td>
+                        <td class="w-80" colspan="3">@if($data->problem_statement){{ $data->problem_statement }}@else Not Applicable @endif</td>
                       
                     </tr> 
              </table>
@@ -613,7 +614,7 @@
 
                 <tr>
                     <th class="w-20">Problem Statement</th>
-                    <td class="w-80">@if($data->why_problem_statement){{ $data->why_problem_statement }}@else Not Applicable @endif</td>
+                    <td class="w-80" colspan="3">@if($data->why_problem_statement){{ $data->why_problem_statement }}@else Not Applicable @endif</td>
     
                 </tr>
                 <tr>
@@ -696,7 +697,7 @@
               
                 <th class="w-20">Why5</th>
                 {{-- <td class="w-80">@if($data->why_4){{ $data->why_4 }}@else Not Applicable @endif</td> --}}
-                <td class="w-80">
+                <td class="w-80" colspan="3">
                     @php
                         $why_5 = unserialize($data->why_5);
                     @endphp
@@ -715,7 +716,7 @@
            
             <tr>
                 <th class="w-20">Root Cause :	</th>
-                <td class="w-80">@if($data->why_root_cause){{ $data->why_root_cause }}@else Not Applicable @endif</td>
+                <td class="w-80" colspan="3">@if($data->why_root_cause){{ $data->why_root_cause }}@else Not Applicable @endif</td>
               
             </tr> 
      </table>

@@ -2607,28 +2607,29 @@
                                     <select name="country" class="form-select country"
                                         aria-label="Default select example" onchange="loadStates()">
                                         <option value="">Select Country</option>
-                                        <option value="{{ $data->country }}" selected>{{ $data->country }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="City">State</label>
+                                    <label for="State">State</label>
                                     <select name="state" class="form-select state"
-                                        aria-label="Default select example" onchange="loadCities()">
-                                        <option value="{{ $data->state }}" selected>{{ $data->state }}</option>
+                                        aria-label="Default select example" onchange="loadCities()" disabled>
+                                        <option value="">Select State</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="State/District">City</label>
+                                    <label for="City">City</label>
                                     <select name="city" class="form-select city"
-                                        aria-label="Default select example">
-                                        <option value="{{ $data->city }}" selected>{{ $data->city }}</option>
+                                        aria-label="Default select example" disabled>
+                                        <option value="">Select City</option>
                                     </select>
                                 </div>
                             </div>
+
+
                             <script>
                                 var config = {
                                     cUrl: 'https://api.countrystatecity.in/v1',
@@ -2638,6 +2639,10 @@
                                 var countrySelect = document.querySelector('.country'),
                                     stateSelect = document.querySelector('.state'),
                                     citySelect = document.querySelector('.city');
+
+                                var selectedCountry = "{{ $data->country }}";
+                                var selectedState = "{{ $data->state }}";
+                                var selectedCity = "{{ $data->city }}";
 
                                 function loadCountries() {
                                     let apiEndPoint = `${config.cUrl}/countries`;
@@ -2650,10 +2655,15 @@
                                         success: function(data) {
                                             data.forEach(country => {
                                                 const option = document.createElement('option');
-                                                option.value = country.iso2;
-                                                option.textContent = country.name;
+                                                option.value = country.name; // Store the name in the option value
+                                                option.textContent = country.name; // Display the name
+                                                option.dataset.code = country.iso2; // Store the code in a data attribute if needed
+                                                if (country.name === selectedCountry) {
+                                                    option.selected = true;
+                                                }
                                                 countrySelect.appendChild(option);
                                             });
+                                            loadStates(); // Load states after countries are populated
                                         },
                                         error: function(xhr, status, error) {
                                             console.error('Error loading countries:', error);
@@ -2665,7 +2675,7 @@
                                     stateSelect.disabled = false;
                                     stateSelect.innerHTML = '<option value="">Select State</option>';
 
-                                    const selectedCountryCode = countrySelect.value;
+                                    const selectedCountryCode = countrySelect.options[countrySelect.selectedIndex].dataset.code;
 
                                     $.ajax({
                                         url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
@@ -2675,10 +2685,15 @@
                                         success: function(data) {
                                             data.forEach(state => {
                                                 const option = document.createElement('option');
-                                                option.value = state.iso2;
-                                                option.textContent = state.name;
+                                                option.value = state.name; // Store the name in the option value
+                                                option.textContent = state.name; // Display the name
+                                                option.dataset.code = state.iso2; // Store the code in a data attribute if needed
+                                                if (state.name === selectedState) {
+                                                    option.selected = true;
+                                                }
                                                 stateSelect.appendChild(option);
                                             });
+                                            loadCities(); // Load cities after states are populated
                                         },
                                         error: function(xhr, status, error) {
                                             console.error('Error loading states:', error);
@@ -2690,8 +2705,8 @@
                                     citySelect.disabled = false;
                                     citySelect.innerHTML = '<option value="">Select City</option>';
 
-                                    const selectedCountryCode = countrySelect.value;
-                                    const selectedStateCode = stateSelect.value;
+                                    const selectedCountryCode = countrySelect.options[countrySelect.selectedIndex].dataset.code;
+                                    const selectedStateCode = stateSelect.options[stateSelect.selectedIndex].dataset.code;
 
                                     $.ajax({
                                         url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
@@ -2701,8 +2716,11 @@
                                         success: function(data) {
                                             data.forEach(city => {
                                                 const option = document.createElement('option');
-                                                option.value = city.id;
-                                                option.textContent = city.name;
+                                                option.value = city.name; // Store the name in the option value
+                                                option.textContent = city.name; // Display the name
+                                                if (city.name === selectedCity) {
+                                                    option.selected = true;
+                                                }
                                                 citySelect.appendChild(option);
                                             });
                                         },
@@ -2711,6 +2729,7 @@
                                         }
                                     });
                                 }
+
                                 $(document).ready(function() {
                                     loadCountries();
                                 });

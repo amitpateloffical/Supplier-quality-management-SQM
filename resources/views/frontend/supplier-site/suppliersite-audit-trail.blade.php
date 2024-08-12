@@ -251,7 +251,7 @@
                                                 @foreach ($reviewer as $review)
                                                     <tr>
                                                         <td>{{ $review->reviewer_comment_by }}</td>
-                                                        <td>{{ Helpers::getdateFormat($review->reviewer_comment_on)}}</td>
+                                                        <td>{{ Helpers::getdateFormat($review->reviewer_comment_on) }}</td>
                                                         <td>{{ $review->reviewer_comment }}</td>
                                                     </tr>
                                                 @endforeach
@@ -323,11 +323,11 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID:</strong>
+                            <div> <strong>Record ID : </strong>
                                 {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
                             </div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->originator ? $document->originator : '' }}
+                                : {{ $document->originator ? $document->originator : '' }}
                             </div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
@@ -371,56 +371,26 @@
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong><a>
-                                        {{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                    <strong> Data Field Name
+                                        :</strong><a>{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')
-                                        <strong>Change From :</strong>
-                                        @if ($dataDemo->change_from)
-                                            {{-- Check if the change_from is a date --}}
-                                            @if (strtotime($dataDemo->change_from))
-                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d-M-Y') }}
-                                            @else
-                                                {{ str_replace(',', ', ', $dataDemo->change_from) }}
-                                            @endif
-                                        @elseif($dataDemo->change_from && trim($dataDemo->change_from) == '')
-                                            NULL
-                                        @else
-                                            Not Applicable
-                                        @endif
+                                        <strong>Change From
+                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
                                     @else
-                                        <strong>Change From :</strong>
-                                        @if (!empty(strip_tags($dataDemo->previous)))
-                                            {{-- Check if the previous is a date --}}
-                                            @if (strtotime($dataDemo->previous))
-                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d-M-Y') }}
-                                            @else
-                                                {!! $dataDemo->previous !!}
-                                            @endif
-                                        @elseif($dataDemo->previous == null)
-                                            Null
-                                        @else
-                                            Not Applicable
-                                        @endif
+                                        <strong>Change From
+                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
                                     @endif
                                 </div>
                                 <br>
                                 <div>
                                     @if ($dataDemo->activity_type == 'Activity Log')
-                                        <strong>Change To :</strong>
-                                        @if (strtotime($dataDemo->change_to))
-                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
-                                        @else
-                                            {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
-                                        @endif
+                                        <strong>Change To
+                                            :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
                                     @else
-                                        <strong>Change To :</strong>
-                                        @if (strtotime($dataDemo->current))
-                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
-                                        @else
-                                            {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
-                                        @endif
+                                        <strong>Change To
+                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">
@@ -436,11 +406,11 @@
                                 </div>
                             </td>
                             <td>
-                                <div><strong> Peformed By
+                                <div><strong> Performed By
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y h:i A') }}
+                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>

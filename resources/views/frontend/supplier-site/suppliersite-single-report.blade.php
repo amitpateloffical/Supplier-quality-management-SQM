@@ -1676,17 +1676,17 @@
                         <th class="w-20">Supplier Approved to Obsolete By</th>
                         <td class="w-30">
                             <div class="static">
-                                {{ $supplierData->supplier_approved_to_obsolete_by ?? 'Not Applicable' }}</div>
+                                {{ $supplierData->supplier_approved_to_obselete_by ?? 'Not Applicable' }}</div>
                         </td>
                         <th class="w-20">Supplier Approved to Obsolete On</th>
                         <td class="w-30">
                             <div class="static">
-                                {{ $supplierData->supplier_approved_to_obsolete_on ?? 'Not Applicable' }}</div>
+                                {{ $supplierData->supplier_approved_to_obselete_on ?? 'Not Applicable' }}</div>
                         </td>
                         <th class="w-20">Supplier Approved to Obsolete Comment</th>
                         <td class="w-30">
                             <div class="static">
-                                {{ $supplierData->supplier_approved_to_obsolete_comment ?? 'Not Applicable' }}</div>
+                                {{ $supplierData->supplier_approved_to_obselete_comment ?? 'Not Applicable' }}</div>
                         </td>
 
                     </tr>

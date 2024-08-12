@@ -71,15 +71,15 @@
         }
 
         /* .sub-head {
-                                                                                                                                                        margin-left: 280px;
-                                                                                                                                                        margin-right: 280px;
-                                                                                                                                                        color: #4274da;
-                                                                                                                                                        border-bottom: 2px solid #4274da;
-                                                                                                                                                        padding-bottom: 5px;
-                                                                                                                                                        margin-bottom: 20px;
-                                                                                                                                                        font-weight: bold;
-                                                                                                                                                        font-size: 1.2rem;
-                                                                                                                                                         } */
+                                                                                                                                                                            margin-left: 280px;
+                                                                                                                                                                            margin-right: 280px;
+                                                                                                                                                                            color: #4274da;
+                                                                                                                                                                            border-bottom: 2px solid #4274da;
+                                                                                                                                                                            padding-bottom: 5px;
+                                                                                                                                                                            margin-bottom: 20px;
+                                                                                                                                                                            font-weight: bold;
+                                                                                                                                                                            font-size: 1.2rem;
+                                                                                                                                                                             } */
 
         .launch_extension {
             background: #4274da;
@@ -130,12 +130,12 @@
         }
 
         /* .saveButton:disabled
-                                                                                                                                                        {
-                                                                                                                                                           background: black!important;
-                                                                                                                                                           border:  black!important;
-                                                                                                                                                         }
-                                                                                                                                                           
-                                                                                                                                                        */
+                                                                                                                                                                            {
+                                                                                                                                                                               background: black!important;
+                                                                                                                                                                               border:  black!important;
+                                                                                                                                                                             }
+                                                                                                                                                                               
+                                                                                                                                                                            */
 
         .main-danger-block {
             display: flex;
@@ -518,7 +518,9 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiation"><b>Initiation Date</b></label>
-                                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                    <input disabled type="text"
+                                        value="{{ Helpers::getdateFormat($data->intiation_date) }}"
+                                        name="intiation_date">
                                 </div>
                             </div>
 
@@ -602,6 +604,16 @@
                                 </div>
                             </div>
 
+
+
+                            @if ($data->logo_attachment)
+                                @foreach (json_decode($data->logo_attachment) as $file)
+                                    <input id="ATFIFile-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files[{{ $loop->index }}]" value="{{ $file }}">
+                                @endforeach
+                            @endif
+
+
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for=" Attachments">Logo</label>
@@ -621,6 +633,7 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
+                                                            data-remove-id="ATFIFile-{{ $loop->index }}"
                                                             data-file-name="{{ $file }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
@@ -878,6 +891,12 @@
 
                                 </div>
                             </div>
+                            @if ($data->supplier_attachment)
+                                @foreach (json_decode($data->supplier_attachment) as $file)
+                                    <input id="ATFIFile1-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files1[{{ $loop->index }}]" value="{{ $file }}">
+                                @endforeach
+                            @endif
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments">File Attachment</label>
@@ -899,6 +918,7 @@
                                                                 style="color:red; font-size:20px;"></i></a> --}}
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"
+                                                            data-remove-id="ATFIFile1-{{ $loop->index }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif">
                                                             <i class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i>
@@ -915,6 +935,13 @@
                                     </div>
                                 </div>
                             </div>
+
+                            @if ($data->gi_additional_attachment)
+                                @foreach (json_decode($data->gi_additional_attachment) as $file)
+                                    <input id="ATFIFile2-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files2[{{ $loop->index }}]" value="{{ $file }}">
+                                @endforeach
+                            @endif
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -933,6 +960,7 @@
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"
+                                                            data-remove-id="ATFIFile2-{{ $loop->index }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1019,6 +1047,14 @@
 
                                 </div>
                             </div>
+
+                            @if ($data->QA_head_attachment)
+                                @foreach (json_decode($data->QA_head_attachment) as $file)
+                                    <input id="ATFIFile3-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files3[{{ $loop->index }}]" value="{{ $file }}">
+                                @endforeach
+                            @endif
+
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD_attachment">HOD Attachment</label>
@@ -1036,6 +1072,7 @@
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"
+                                                            data-remove-id="ATFIFile3-{{ $loop->index }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1950,7 +1987,7 @@
                                             PPM
                                         </option>
                                         <option value="501 - 500 Defects PPM"
-                                            @if ($data->rejection_ppm == '501 - 500 Defects PPM') selected @endif>501 - 5000 Defects PPM
+                                            @if ($data->rejection_ppm == '501 - 500 Defects PPM') selected @endif>501 - 500 Defects PPM
                                         </option>
                                         <option value="Upto 500 Defects PPM"
                                             @if ($data->rejection_ppm == 'Upto 500 Defects PPM') selected @endif>
@@ -2468,21 +2505,18 @@
                                     <label for="Access to Technical Support">Access to Technical Support</label>
                                     <select id="technical_support" name="technical_support">
                                         <option value="">Enter Your Selection Here</option>
-
                                         <option value="Very Limited Access to Technical Experts"
-                                            @if ($data->technical_support == 'Very Limited Access to Technical Experts ') selected @endif>Very Limited Access to
-                                            Technical Exper</option>
-
+                                            @if ($data->technical_support == 'Very Limited Access to Technical Experts') selected @endif>Very Limited Access to
+                                            Technical Experts
+                                        </option>
                                         <option value="Available When Requested or Via Beacon Center"
-                                            @if ($data->technical_support == 'Available When Requested or Via Beacon Center') selected @endif> Available When Requested
+                                            @if ($data->technical_support == 'Available When Requested or Via Beacon Center') selected @endif>Available When Requested
                                             or Via Beacon Center
                                         </option>
-
                                         <option value="Regulatory Schedule Visit by Region Experts"
-                                            @if ($data->technical_support == 'Regulatory Schedule Visit by Region Experts') selected @endif>
-                                            Regulatory Schedule Visit by Region Experts
+                                            @if ($data->technical_support == 'Regulatory Schedule Visit by Region Experts') selected @endif>Regulatory Schedule Visit
+                                            by Region Experts
                                         </option>
-
                                     </select>
                                 </div>
                             </div>
@@ -2583,7 +2617,8 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="risk_assessment_additional_attachment">Risk Additional Attachment</label>
+                                    <label for="risk_assessment_additional_attachment">Risk Assessment Additional
+                                        Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -2709,7 +2744,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa_head_additional_attachment">Q Head Additional Attachment</label>
+                                    <label for="qa_head_additional_attachment">QA Head Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -3372,6 +3407,7 @@
                 minEndDate.setDate(minEndDate.getDate() + 1);
 
                 // Format the date to match the input type date format (yyyy-mm-dd)
+
                 var formattedMinEndDate = minEndDate.toISOString().split('T')[0];
                 endDateInput.setAttribute('min', formattedMinEndDate);
 
@@ -3404,6 +3440,16 @@
             $("#target :input").not(".backButton, .nextButton").prop("disabled", true);
             <?php } ?>
         });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.remove-file').click(function() {
+                const removeId = $(this).data('remove-id')
+                console.log('removeId', removeId);
+                $('#' + removeId).remove();
+            })
+        })
     </script>
 
 @endsection

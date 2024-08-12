@@ -31,7 +31,7 @@
         header {
             display: none;
         }
-       
+
         .progress-bars div {
             flex: 1 1 auto;
             border: 1px solid grey;
@@ -106,7 +106,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
-                           
+
                         @elseif($extensionNew->stage == 3 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) ))
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -143,7 +143,7 @@
                             </button> --}}
                         @endif
                          <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"><button class="button_theme1"> Exit
-                        </button>  </a> 
+                        </button>  </a>
                     </div>
                 </div>
                 <div class="status">
@@ -156,7 +156,7 @@
                         <div class="progress-bars d-flex">
                             @if ($extensionNew->stage >= 1)
                                 <div class="active">Opened</div>
-                                
+
                             @else
                                 <div class="">Opened</div>
                             @endif
@@ -169,24 +169,24 @@
 
                             @if ($extensionNew->stage >= 3)
                                 <div class="active">In Approved</div>
-                                
+
                             @else
                                 <div class="">In Approved</div>
                             @endif
                             @if ($extensionNew->stage >= 4)
                             <div class="bg-danger">Close Done</div>
-                            
+
                         @else
                             <div class="">Close Done</div>
                         @endif
                             {{-- <div style="display: none" class=""> In CQA Approval</div> --}}
-                           {{-- 
+                           {{--
                             @if ($extensionNew->stage == 4)
                                 <div class="bg-danger">Closed - Reject</div>
                                 <div style="display: none" class="">Closed - Done</div>
                                 @if ($count == 3)
                                     <div style="display: none" class=""> In CQA Approval</div>
-                                @endif 
+                                @endif
                             @elseif($extensionNew->stage == 1 || $extensionNew->stage == 2 || $extensionNew->stage == 3)
                                 <div class=""> Closed - Reject</div>
                             @else
@@ -237,13 +237,18 @@
                             <div class="group-input">
                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                 <input disabled type="text" name="record_number"
-                                value="{{ Helpers::getDivisionName($extensionNew->site_location_code) }}/Ext/{{ Helpers::year($extensionNew->created_at) }}/{{ str_pad($extensionNew->record_number, 4, '0', STR_PAD_LEFT) }}">
+                                {{-- value="{{ Helpers::getDivisionName($extensionNew->site_location_code) }}Ext/{{ Helpers::year($extensionNew->created_at) }}/{{ str_pad($extensionNew->record_number, 4, '0', STR_PAD_LEFT) }}"> --}}
+                                {{-- value="{{ Helpers::getDivisionName($extensionNew->division) }}/Ext/{{ Helpers::year($extensionNew->created_at) }}/{{ $extensionNew->record_number }}"> --}}
+                                value=" {{ Helpers::divisionNameForQMS($extensionNew->site_location_code) }}/Ext/{{ Helpers::year($extensionNew->created_at) }}/{{ str_pad($extensionNew->record_number, 4, '0', STR_PAD_LEFT) }}">
+
+
+
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Division Code"><b>Site/Location Code</b></label>
-                                <input disabled type="text" name="site_location"   id="site_location" 
+                                <input disabled type="text" name="site_location"   id="site_location"
                                     value="{{ Helpers::getDivisionName($extensionNew->site_location_code) }}">
                                 <input type="hidden" name="site_location_code"  id="site_location_code" value="{{ session()->get('division') }}">
                                 {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
@@ -275,7 +280,7 @@
                                 <label for="docname">Short Description<span class="text-danger">*</span></label>
                                 <span id="rchars">255</span> Characters remaining
                                 <div style="position:relative;">
-                                    <input id="docname" type="text" name="short_description" value="{{$extensionNew->short_description}}" maxlength="255" required class="mic-input">
+                                    <input id="docname" type="text" name="short_description" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }} value="{{$extensionNew->short_description}}" maxlength="255" required class="mic-input">
                                     <button class="mic-btn" type="button">
                                         <i class="fas fa-microphone"></i>
                                     </button>
@@ -285,7 +290,7 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror --}}
                         </div>
-                        
+
                             <script>
                                 var maxLength = 255;
                                 $('#docname').keyup(function() {
@@ -294,9 +299,9 @@
                             </script>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Assigned To">HOD review  </label>
+                                    <label for="Assigned To">HOD reviewer </label>
                                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
-                                        name="reviewers" placeholder="Select Reviewers" >
+                                        name="reviewers" placeholder="Select Reviewers" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }} >
                                         <option value="">-- Select --</option>
                                         @if (!empty(Helpers::getHODDropdown()))
                                             @foreach (Helpers::getHODDropdown() as $listHod)
@@ -308,18 +313,20 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
+
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">QA approval </label>
-                                    <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
-                                        name="approvers" placeholder="Select Approvers" >
+                                    <select id="choices-multiple-remove-but" class="choices-multiple-reviewer" name="approvers" placeholder="Select Approvers" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>
                                         <option value="">-- Select --</option>
-                                        @if (!empty(Helpers::getQADropdown()))
-                                            @foreach (Helpers::getQADropdown() as $lan)
-                                            <option value="{{ $lan['id'] }}" @if ($lan['id'] == $extensionNew->approvers) selected @endif>
-                                                {{ $lan['name'] }}
-                                            </option>
+
+                                        @if (!empty($users))
+                                            @foreach ($users as $lan)
+                                                <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->approvers) selected @endif>
+                                                    {{ $lan->name }}
+                                                </option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -331,60 +338,114 @@
                                     <div class="calenderauditee">
 
                                         <input type="text"  id="current_due_date"  value="{{  Helpers::getdateFormat($extensionNew->current_due_date) }}" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="current_due_date"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $extensionNew->current_due_date }}"
+                                        <input type="date" name="current_due_date" id="current_due_date_checkdate"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $extensionNew->current_due_date ? \Carbon\Carbon::parse($extensionNew->current_due_date)->format('Y-m-d') : '' }}"
                                         class="hide-input"
-                                        oninput="handleDateInput(this, 'current_due_date')"/>
+                                        {{-- oninput="handleDateInput(this, 'current_due_date')"/> --}}
+                                        oninput="handleDateInput(this, 'current_due_date');checkDate('proposed_due_date','current_due_date_checkdate')" />
+
+
                                     </div>
+
                                 </div>
                             </div>
-                            <div class="col-lg-6 new-date-data-field">
+
+                            {{-- <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Actual Start Date">Proposed Due Date</label>
                                     <div class="calenderauditee">
                                         <input type="text"  id="proposed_due_date"  value="{{  Helpers::getdateFormat($extensionNew->proposed_due_date) }}" readonly placeholder="DD-MMM-YYYY" />
-                                    <input type="date" name="proposed_due_date"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $extensionNew->proposed_due_date }}"
+                                    <input type="date" name="proposed_due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $extensionNew->proposed_due_date }}"
                                     class="hide-input"
-                                    oninput="handleDateInput(this, 'proposed_due_date')"/> 
+                                    {{-- oninput="handleDateInput(this, 'proposed_due_date')"/> --}}
+                                    {{-- oninput="handleDateInput(this, 'proposed_due_date');checkDate('current_due_date','proposed_due_date_checkdate')" /> --}}
+
+                                    {{-- </div> --}}
+                                {{-- </div> --}}
+                            {{-- </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Scheduled End Date">Proposed Due Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="proposed_due_date" readonly
+                                                value="{{ Helpers::getdateFormat($extensionNew->proposed_due_date) }}"
+                                                placeholder="DD-MM-YYYY" />
+                                            <input type="date" id="proposed_due_date_checkdate"
+                                                name="proposed_due_date"
+                                                value="{{ $extensionNew->proposed_due_date ? \Carbon\Carbon::parse($extensionNew->proposed_due_date)->format('Y-m-d') : ''}}"
+                                                class="hide-input"
+                                                oninput="handleDateInput(this, 'proposed_due_date');checkDate('current_due_date','proposed_due_date_checkdate')" />
+                                        </div>
+                                        {{-- <input type="date" name="schedule_end_date1" value="{{$extensionNew->schedule_end_date}}"> --}}
                                     </div>
                                 </div>
                             </div>
+                            <script>
+                                function handleDateInput(inputElement, displayElementId) {
+                                    var displayElement = document.getElementById(displayElementId);
+                                    var dateValue = new Date(inputElement.value);
+                                    displayElement.value = dateValue.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                                }
+
+                                function updateEndDateMin() {
+                                    var startDate = document.getElementById('current_due_date_checkdate').value;
+                                    var endDateInput = document.getElementById('proposed_due_date_checkdate');
+                                    if (startDate) {
+                                        endDateInput.setAttribute('min', startDate);
+                                    }
+                                }
+
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    updateEndDateMin(); // Initialize the end date min on page load
+
+                                    // Reapply the min attribute whenever the start date is changed
+                                    document.getElementById('current_due_date_checkdate').addEventListener('input', function() {
+                                        updateEndDateMin();
+                                    });
+                                });
+                            </script>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="docname">Description</label>
-                                    <div style="position:relative;">
-                                        <textarea id="docname" name="description" class="mic-input">{{$extensionNew->description}}</textarea>
+                                    <div class="relative-container">
+                                        <textarea name="description" class="mic-input" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}
+                                            id="description">{{ $extensionNew->description }}</textarea>
+                                        @component('frontend.forms.language-model', ['disabled' => $extensionNew->stage == 0 || $extensionNew->stage == 4])
+                                        @endcomponent
+                                    </div>
+                                    {{-- <div style="position:relative;">
+                                        <textarea id="docname" name="description" class="mic-input" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>{{$extensionNew->description}}</textarea>
                                         <button class="mic-btn" type="button">
                                             <i class="fas fa-microphone"></i>
                                         </button>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 {{-- @error('description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                             </div>
-                            
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="docname">Justification / Reason</label>
                                     <div style="position:relative;">
-                                        <textarea id="docname" name="justification_reason" class="mic-input">{{$extensionNew->justification_reason}}</textarea>
-                                        <button class="mic-btn" type="button">
+                                        <textarea id="docname" name="justification_reason" class="mic-input" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }} >{{$extensionNew->justification_reason}}</textarea>
+                                        {{-- <button class="mic-btn" type="button" > </button>
                                             <i class="fas fa-microphone"></i>
-                                        </button>
+                                        </button> --}}
                                     </div>
                                 </div>
                                 {{-- @error('justification_reason')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                             </div>
-                            
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments"> Extension Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
-                                        <div disabled class="file-attachment-list" id="file_attachment_extension">
+                                        <div disabled class="file-attachment-list" id="file_attachment_extension"  >
                                             @if ($extensionNew->file_attachment_extension)
                                                 @foreach (json_decode($extensionNew->file_attachment_extension) as $file)
                                                     <h6 class="file-container text-dark"
@@ -393,10 +454,12 @@
                                                         <a href="{{ asset('upload/' . $file) }}"
                                                             target="_blank"><i class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
-                                                                class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}"
+                                                                style="@if ($extensionNew->stage == 0 || $extensionNew->stage == 4) pointer-events: none; @endif">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
+                                                            </a>
                                                     </h6>
                                                 @endforeach
                                             @endif
@@ -405,17 +468,19 @@
                                             <div>Add</div>
                                             <input type="file" id="HOD_Attachments"
                                                 name="file_attachment_extension[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
+                                                oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                    Exit </a> </button>
+                            <button type="submit" class="saveButton">Save</button>
+                            {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                            Exit </a> </button>
+
                         </div>
 
                     </div>
@@ -430,14 +495,14 @@
                             <div class="group-input">
                                 <label for="reviewer_remarks">HOD Remarks</label>
                                 <div style="position:relative;">
-                                    <textarea name="reviewer_remarks" id="reviewer_remarks" class="mic-input" cols="30">{{$extensionNew->reviewer_remarks}}</textarea>
+                                    <textarea name="reviewer_remarks" id="reviewer_remarks" class="mic-input"  {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }} cols="30">{{$extensionNew->reviewer_remarks}}</textarea>
                                     <button class="mic-btn" type="button">
                                         <i class="fas fa-microphone"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        
+
                         {{-- <div class="col-12">
                             <div class="group-input">
                                 <label for="Guideline Attachment">Reviewer Attachment  </label>
@@ -468,10 +533,12 @@
                                                     <a href="{{ asset('upload/' . $file) }}"
                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                             style="font-size:20px; margin-right:-10px;"></i></a>
-                                                    <a class="remove-file"
-                                                        data-file-name="{{ $file }}"><i
-                                                            class="fa-solid fa-circle-xmark"
-                                                            style="color:red; font-size:20px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($extensionNew->stage == 0 || $extensionNew->stage == 4) pointer-events: none; @endif">
+                                                            <i class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i>
+                                                        </a>
                                                 </h6>
                                             @endforeach
                                         @endif
@@ -480,17 +547,18 @@
                                         <div>Add</div>
                                         <input type="file" id="HOD_Attachments"
                                             name="file_attachment_reviewer[]"
-                                            oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
+                                            oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                Exit </a> </button>
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                        Exit </a> </button>
                     </div>
                 </div>
             </div>
@@ -502,21 +570,21 @@
                             <div class="group-input">
                                 <label for="approver_remarks">QA Remarks</label>
                                 <div style="position:relative;">
-                                    <textarea name="approver_remarks" id="approver_remarks" class="mic-input" cols="30">{{$extensionNew->approver_remarks}}</textarea>
+                                    <textarea name="approver_remarks" id="approver_remarks" class="mic-input" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }} cols="30">{{$extensionNew->approver_remarks}}</textarea>
                                     <button class="mic-btn" type="button">
                                         <i class="fas fa-microphone"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Inv Attachments"> QA Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">
-                                    <div disabled class="file-attachment-list" id="file_attachment_approver">
+                                    <div disabled class="file-attachment-list" id="file_attachment_approver" >
                                         @if ($extensionNew->file_attachment_approver)
                                             @foreach (json_decode($extensionNew->file_attachment_approver) as $file)
                                                 <h6 class="file-container text-dark"
@@ -525,11 +593,14 @@
                                                     <a href="{{ asset('upload/' . $file) }}"
                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                             style="font-size:20px; margin-right:-10px;"></i></a>
-                                                    <a class="remove-file"
-                                                        data-file-name="{{ $file }}"><i
-                                                            class="fa-solid fa-circle-xmark"
-                                                            style="color:red; font-size:20px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"
+                                                            style="@if ($extensionNew->stage == 0 || $extensionNew->stage == 4) pointer-events: none; @endif">
+                                                            <i class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i>
+                                                        </a>
                                                 </h6>
+
                                             @endforeach
                                         @endif
                                     </div>
@@ -537,17 +608,18 @@
                                         <div>Add</div>
                                         <input type="file" id="HOD_Attachments"
                                             name="file_attachment_approver[]"
-                                            oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple>
+                                            oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                Exit </a> </button>
+                        <button type="submit" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                        Exit </a> </button>
                     </div>
                 </div>
             </div>
@@ -555,8 +627,25 @@
              <div id="CCForm6" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <div class="group-input">
+                        <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Submitted By..">Submitted By</label>
+                                    <div class="static">{{ $extensionNew->submit_by }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Submitted On">Submitted On</label>
+                                    <div class="static">{{ $extensionNew->submit_on }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Submitted Comment">Submitted Comment</label>
+                                    <div class="static">{{ $extensionNew->submit_comment }}</div>
+                                </div>
+                            </div>
+                            {{-- <div class="group-input">
                                 <label for="Activated By">Submited By</label>
                                 <div class="static">{{ $extensionNew->submit_by }}</div>
                             </div>
@@ -569,11 +658,50 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
+                                <label for="Submitted Comment">Submitted Comment</label>
+                                <div class="static">{{ $extensionNew->submitted_comment }}</div>
+                            </div>
+                        </div> --}}
+                        {{-- <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Activated On">Cancelled By</label>
+                                {{-- <div class="static">{{ $extensionNew->submit_on }}</div> --}}
+                            {{-- </div> --}}
+                        {{-- </div> --}}
+                        {{-- <div class="col-lg-3"> --}}
+                            {{-- <div class="group-input"> --}}
+                                {{-- <label for="Activated On">Cancelled On</label> --}}
+                                {{-- <div class="static">{{ $extensionNew->submit_on }}</div> --}}
+                            {{-- </div> --}}
+                        {{-- </div> --}}
+                        <div class="row">
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Cancelled By">Cancelled By</label>
+                                <div class="static">{{ $extensionNew->cancelled_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Cancelled On">Cancelled On</label>
+                                <div class="static">{{ $extensionNew->cancelled_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Cancelled Comment">Cancelled Comment</label>
+                                <div class="static">{{ $extensionNew->cancelled_comment }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="group-input">
                                 <label for=" Rejected By">Reviewed By</label>
                                 <div class="static">{{ $extensionNew->submit_by_review }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Rejected On">Reviewed On</label>
                                 <div class="static">{{ $extensionNew->submit_on_review }}</div>
@@ -581,11 +709,19 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
+                                <label for="Rejected On">Reviewed Comment</label>
+                                <div class="static">{{ $extensionNew->submit_comment_review }}</div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="row">
+                        <div class="col-lg-3">
+                            <div class="group-input">
                                 <label for=" Rejected By">More Info Required By</label>
                                 <div class="static">{{ $extensionNew->more_info_review_by }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Rejected On">More Info Required On</label>
                                 <div class="static">{{ $extensionNew->more_info_review_on }}</div>
@@ -593,17 +729,52 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
+                                <label for="Rejected On">More Info Required Comment</label>
+                                <div class="static">{{ $extensionNew->more_info_review_comment }}</div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-lg-3">
+                            <div class="group-input">
                                 <label for=" Rejected By">Approved By</label>
                                 <div class="static">{{ $extensionNew->submit_by_approved }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Rejected On">Approved On</label>
                                 <div class="static">{{ $extensionNew->submit_on_approved }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Rejected On">Approved Comment</label>
+                                <div class="static">{{ $extensionNew->submit_commen_inapproved }}</div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for=" Rejected By">More Info Required By</label>
+                                    <div class="static">{{ $extensionNew->more_info_review_by }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Rejected On">More Info Required On</label>
+                                    <div class="static">{{ $extensionNew->more_info_review_on }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Rejected On">More Info Required Comment</label>
+                                    <div class="static">{{ $extensionNew->more_info_review_comment }}</div>
+                                </div>
+                            </div>
+                            </div>
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for=" Rejected By">More Info Required By</label>
                                 <div class="static">{{ $extensionNew->more_info_inapproved_by }}</div>
@@ -612,20 +783,18 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Rejected On">More Info Required On</label>
-                                <div class="static">{{ $extensionNew->more_info_inapproved_on }}</div>
-                            </div>
-                        </div>
+                                {{-- <div class="static">{{ $extensionNew->  }}</div> --}}
+                            {{-- </div>
+                        </div> --}}
 
                     </div>
-                    {{-- <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                        <a href="/rcms/qms-dashboard">
-                            <button type="button" class="backButton">Back</button>
-                        </a>
-                        <button type="submit">Submit</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div> --}}
+                    <div class="button-block">
+                            {{-- <button type="submit" class="saveButton">Save</button> --}}
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            {{-- <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                            Exit </a> </button>
+                    </div>
                 </div>
             </div>
             </form>
@@ -880,7 +1049,7 @@
                 extensionForm.submit();
             }
 
-           
+
         });
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -923,6 +1092,7 @@
         wow.init();
     </script>
     <script>
+
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
             cctabcontent = document.getElementsByClassName("cctabcontent");
@@ -937,8 +1107,74 @@
             evt.currentTarget.className += " active";
         }
 
-        const saveButtons = document.querySelectorAll('.saveButton1');
-        const form = document.getElementById('step-form');
+
+
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
+
+        const saveButtons = document.querySelectorAll(".saveButton");
+        const nextButtons = document.querySelectorAll(".nextButton");
+        const form = document.getElementById("step-form");
+        const stepButtons = document.querySelectorAll(".cctablinks");
+        const steps = document.querySelectorAll(".cctabcontent");
+        let currentStep = 0;
+
+        function nextStep() {
+            // Check if there is a next step
+            if (currentStep < steps.length - 1) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show next step
+                steps[currentStep + 1].style.display = "block";
+
+                // Add active class to next button
+                stepButtons[currentStep + 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep++;
+            }
+        }
+
+        function previousStep() {
+            // Check if there is a previous step
+            if (currentStep > 0) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show previous step
+                steps[currentStep - 1].style.display = "block";
+
+                // Add active class to previous button
+                stepButtons[currentStep - 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep--;
+            }
+        }
     </script>
     <script>
         VirtualSelect.init({

@@ -21,6 +21,55 @@
             color: white;
         }
     </style>
+    <style>
+        .w-5 {
+            width: 5%;
+        }
+        .w-10 {
+            width: 10%;
+        }
+    
+        .w-20 {
+            width: 20%;
+        }
+    
+        .w-25 {
+            width: 25%;
+        }
+    
+        .w-30 {
+            width: 30%;
+        }
+    
+        .w-40 {
+            width: 40%;
+        }
+    
+        .w-50 {
+            width: 50%;
+        }
+    
+        .w-60 {
+            width: 60%;
+        }
+    
+        .w-70 {
+            width: 70%;
+        }
+    
+        .w-80 {
+            width: 80%;
+        }
+    
+        .w-90 {
+            width: 90%;
+        }
+    
+        .w-100 {
+            width: 100%;
+        }
+    
+    </style>
 <style>
     .mic-btn {
         background: none;
@@ -856,7 +905,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-lg-12">
+                                        {{-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Records">Reference Records</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -869,7 +918,31 @@
                                                     @endforeach
                                                 </select>
                                             </div>
+                                        </div> --}}
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="Reference Records">Reference Record</label>
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    multiple id="capa_related_record" name="capa_related_record[]">
+
+                                                    @foreach ($old_record as $new)
+                                                        @php
+                                                            $recordValue =
+                                                                Helpers::getDivisionName($new->division_id) .'/CAPA/'.date('Y') .'/' .
+                                                                Helpers::recordFormat($new->record);
+                                                                $selected = in_array($recordValue,explode(',', $data->capa_related_record),)
+                                                                ? 'selected'
+                                                                : '';
+                                                        @endphp
+                                                        <option value="{{ $recordValue }}" {{ $selected }}>
+                                                            {{ $recordValue }}
+                                                        </option>
+                                                    @endforeach
+
+                                                </select>
+                                            </div>
                                         </div>
+
                                         <div class="col-12">
                                             <div class="group-input" id="initial_observation_group">
                                                 <label for="initial_observation">Initial Observation</label>
@@ -1056,15 +1129,15 @@
                                                 <table class="table table-bordered" id="product_details">
                                                     <thead>
                                                         <tr>
-                                                            <th>Row #</th>
-                                                            <th>Product Name</th>
-                                                            <th>Batch No./Lot No./AR No.</th>
-                                                            <th>Manufacturing Date</th>
-                                                            <th>Date Of Expiry</th>
-                                                            <th>Batch Disposition Decision</th>
-                                                            <th>Remark</th>
-                                                            <th>Batch Status</th>
-                                                            <th>Action</th> 
+                                                            <th class="w-5">Row #</th>
+                                                            <th class="w-10">Product Name</th>
+                                                            <th class="w-10">Batch No./Lot No./AR No.</th>
+                                                            <th class="w-10">Manufacturing Date</th>
+                                                            <th class="w-10">Date Of Expiry</th>
+                                                            <th class="w-10">Batch Disposition Decision</th>
+                                                            <th class="w-10">Remark</th>
+                                                            <th class="w-10">Batch Status</th>
+                                                            <th class="w-5">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1185,15 +1258,15 @@
                                                 <table class="table table-bordered" id="material_details">
                                                     <thead>
                                                         <tr>
-                                                            <th>Row #</th>
-                                                            <th>Material Name</th>
-                                                            <th>Batch No./Lot No./AR No.</th>
-                                                            <th>Manufacturing Date</th>
-                                                            <th>Date Of Expiry</th>
-                                                            <th>Batch Disposition Decision</th>
-                                                            <th>Remark</th>
-                                                            <th>Batch Status</th>
-                                                            <th>Action</th>
+                                                            <th class="w-5">Row #</th>
+                                                            <th class="w-10">Material Name</th>
+                                                            <th class="w-10">Batch No./Lot No./AR No.</th>
+                                                            <th class="w-10">Manufacturing Date</th>
+                                                            <th class="w-10">Date Of Expiry</th>
+                                                            <th class="w-10">Batch Disposition Decision</th>
+                                                            <th class="w-10">Remark</th>
+                                                            <th class="w-10">Batch Status</th>
+                                                            <th class="w-5">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1262,11 +1335,11 @@
                                                 <table class="table table-bordered" id="equipment_details">
                                                     <thead>
                                                         <tr>
-                                                            <th>Row #</th>
-                                                            <th>Equipment/Instruments Name</th>
-                                                            <th>Equipment/Instruments ID</th>
-                                                            <th>Equipment/Instruments Comments</th>
-                                                            <th>Action</th>
+                                                            <th class="w-5">Row #</th>
+                                                            <th class="w-10">Equipment/Instruments Name</th>
+                                                            <th class="w-10">Equipment/Instruments ID</th>
+                                                            <th class="w-10">Equipment/Instruments Comments</th>
+                                                            <th class="w-5">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>

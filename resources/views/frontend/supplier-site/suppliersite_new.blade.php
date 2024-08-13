@@ -573,7 +573,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="HOD_attachment">HOD Attachments</label>
+                                    <label for="HOD_attachment">HOD Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -1277,7 +1277,7 @@
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="> 500001 Defects PPM">> 500001 Defects PPM</option>
                                         <option value="5001 - 50000 Defects PPM">5001 - 50000 Defects PPM</option>
-                                        <option value="501 - 500 Defects PPM">501 - 5000 Defects PPM</option>
+                                        <option value="501 - 5000 Defects PPM">501 - 5000 Defects PPM</option>
                                         <option value="Upto 500 Defects PPM">Upto 500 Defects PPM"</option>
                                     </select>
                                 </div>

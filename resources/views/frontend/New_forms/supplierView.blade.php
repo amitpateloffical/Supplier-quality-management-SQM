@@ -226,7 +226,8 @@
                 row.cells[0].innerHTML = i;
             }
         }
-    </script>
+    </script> -
+    
     <script>
         $(document).on('click', '.removeRowBtn', function() {
             $(this).closest('tr').remove();
@@ -576,25 +577,25 @@
 
                                         </div>
                                         <!-- <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="Short Description">Short Description <span
-                                                            class="text-danger">*</span></label>
-                                                            <div><small class="text-primary">Please mention brief summary</small></div>
-                                                    <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                </div>
-                                            </div>  -->
+                                                    <div class="group-input">
+                                                        <label for="Short Description">Short Description <span
+                                                                class="text-danger">*</span></label>
+                                                                <div><small class="text-primary">Please mention brief summary</small></div>
+                                                        <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                    </div>
+                                                </div>  -->
                                         <!-- <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="Short Description">Short Description<span
-                                                            class="text-danger">*</span></label><span id="rchars">255</span>
-                                                    characters remaining
-                                                    
-                                                    <textarea name="short_description" id="docname" type="text" maxlength="255" required
-                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                </div>
-                                                <p id="docnameError" style="color:red">**Short Description is required</p>
-            
-                                            </div> -->
+                                                    <div class="group-input">
+                                                        <label for="Short Description">Short Description<span
+                                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                                        characters remaining
+                                                        
+                                                        <textarea name="short_description" id="docname" type="text" maxlength="255" required
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                    </div>
+                                                    <p id="docnameError" style="color:red">**Short Description is required</p>
+                
+                                                </div> -->
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
@@ -663,45 +664,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="initiated_if_other" id="initiated_if_other" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initiated_if_other }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display: none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                        @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -764,45 +728,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="if_other" id="if_other_textarea" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_other }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display: none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                        @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -850,49 +777,12 @@
                                                 <div class="relative-container">
                                                     <textarea name="initial_comments" id="initial_comments" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_comments }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display: none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                        @endcomponent
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         @if ($data->inv_attachment)
                                             @foreach (json_decode($data->inv_attachment) as $file)
                                                 <input id="InitialFile-{{ $loop->index }}" type="hidden"
@@ -921,8 +811,8 @@
                                                                             style="font-size:20px; margin-right:-10px;"></i>
                                                                     </a>
                                                                     <a type="button" class="remove-file"
-                                                                    data-remove-id="InitialFile -{{ $loop->index }}"
-
+                                                                        data-remove-id="InitialFile-{{ $loop->index }}"
+                                                                        style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"
                                                                         data-file-name="{{ $file }}">
                                                                         <i class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i>
@@ -964,22 +854,38 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
-                                                <div class="calenderauditee">                                     
-                                                    <input type="text" id="start_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="start_date_checkdate" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->start_date ? $data->start_date->format('Y-m-d') : '' }}" class="hide-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} oninput="handleDateInput(this, 'start_date');updateEndDateMin();"/>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="start_date" readonly
+                                                        placeholder="DD-MM-YYYY"
+                                                        value="{{ Helpers::getdateFormat($data->start_date) }}"
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                    <input type="date" id="start_date_checkdate" name="start_date"
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        value="{{ $data->start_date ? $data->start_date->format('Y-m-d') : '' }}"
+                                                        class="hide-input"
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        oninput="handleDateInput(this, 'start_date');updateEndDateMin();" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit Schedule End Date">Audit Schedule End Date</label>
-                                                <div class="calenderauditee">                                     
-                                                    <input type="text" id="end_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="end_date_checkdate" name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->end_date ? $data->end_date ->format('Y-m-d') : '' }}" class="hide-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} oninput="handleDateInput(this, 'end_date');"/>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="end_date" readonly
+                                                        placeholder="DD-MM-YYYY"
+                                                        value="{{ Helpers::getdateFormat($data->end_date) }}"
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                    <input type="date" id="end_date_checkdate" name="end_date"
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        value="{{ $data->end_date ? $data->end_date->format('Y-m-d') : '' }}"
+                                                        class="hide-input"
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        oninput="handleDateInput(this, 'end_date');" />
                                                 </div>
                                             </div>
                                         </div>
-                                         <div class="col-12">
+                                        <div class="col-12">
                                             <div class="group-input">
                                                 <label for="audit-agenda-grid">
                                                     Audit Agenda
@@ -1111,45 +1017,8 @@
                                                     <input type="text" name="material_name" id="material_name"
                                                         class="mic-input" value="{{ $data->material_name }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                        @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1160,45 +1029,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="if_comments" id="if_comments" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_comments }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
+                                                        @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1235,6 +1067,15 @@
                                                 </select>
                                             </div>
                                         </div>
+
+                                        @if ($data->file_attachment)
+                                            @foreach (json_decode($data->file_attachment) as $file)
+                                                <input id="FIATFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_file_attachment[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
+
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="File Attachments">File Attachment</label>
@@ -1251,6 +1092,7 @@
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file"
+                                                                    data-remove-id="FIATFile-{{ $loop->index }}" style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"
                                                                         data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
@@ -1417,45 +1259,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="Auditor_Details" id="Auditor_Details" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Auditor_Details }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                        @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1466,45 +1271,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="External_Auditing_Agency" id="External_Auditing_Agency" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->External_Auditing_Agency }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                        @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1516,45 +1284,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="Relevant_Guidelines" id="Relevant_Guidelines" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Relevant_Guidelines }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                        @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1565,50 +1296,21 @@
                                                 <div class="relative-container">
                                                     <textarea name="QA_Comments" id="QA_Comments" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->QA_Comments }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                        @endcomponent
                                                 </div>
                                             </div>
                                         </div>
+{{--                           
+                                        @if ($data->file_attachment_guideline)
+                                        @foreach (json_decode($data->file_attachment_guideline) as $file)
+                                            <input id="ATFIFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_file_attachment_guideline[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif --}}
 
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Guideline Attachment">Guideline Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
@@ -1625,6 +1327,7 @@
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file"
+                                                                    data-remove-id="ATFIFile-{{ $loop->index }}"
                                                                         data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
@@ -1643,10 +1346,54 @@
                                                             multiple>
                                                     </div>
                                                 </div>
-
-
+                                            </div>
+                                        </div> --}}
+                                        @if ($data->file_attachment_guideline)
+                                        @foreach (json_decode($data->file_attachment_guideline) as $file)
+                                            <input id="ATFIFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_file_attachment_guideline[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Guideline Attachment">Guideline Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="file_attachment_guideline">
+                                                    @if ($data->file_attachment_guideline)
+                                                        @foreach (json_decode($data->file_attachment_guideline) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                        class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-remove-id="ATFIFile-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"
+                                                                    style="@if ($data->stage == 0 ||  $data->stage == 6) pointer-events: none; @endif"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input
+                                                        {{ $data->stage == 0 || $data->stage == 6  ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="file_attachment_guideline[]"
+                                                        oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
+                                                </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+    
+    
+                                        
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Audit Category">Audit Category</label>
@@ -1670,45 +1417,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="Supplier_Details" id="Supplier_Details" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Details }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                        @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1719,45 +1429,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="Supplier_Site" id="Supplier_Site" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Site }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                        @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1767,45 +1440,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="Comments" id="Comments" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Comments }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                        @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1933,6 +1569,14 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        @if ($data->Audit_file)
+                                        @foreach (json_decode($data->Audit_file) as $file)
+                                            <input id="ANFILE-{{ $loop->index }}" type="hidden"
+                                                name="existing_Audit_file[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Audit Attachments">Audit Attachments</label>
@@ -1953,7 +1597,10 @@
                                                                             class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
+                                                                     data-remove-id="ANFILE-{{ $loop->index }}"
+                                                                        data-file-name="{{ $file }}"
+                                                                          style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif">
+                                                                        <i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
@@ -1975,45 +1622,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="Audit_Comments1" id="Audit_Comments1" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments1 }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                        @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -2047,57 +1657,18 @@
                                                     <div class="relative-container">
                                                         <textarea name="Remarks" id="Remarks" class="mic-input"
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
-                                                        <button class="mic-btn" type="button" style="display:none;">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
-                                                        <button class="speak-btn" type="button">
-                                                            <i class="fas fa-volume-up"></i>
-                                                        </button>
-                                                        <div class="mini-modal">
-                                                            <div class="mini-modal-content">
-                                                                <span class="close">&times;</span>
-                                                                <h2>Select Language</h2>
-                                                                <select id="language-select">
-                                                                    <option value="en-us">English</option>
-                                                                    <option value="hi-in">Hindi</option>
-                                                                    <option value="te-in">Telugu</option>
-                                                                    <option value="fr-fr">French</option>
-                                                                    <option value="es-es">Spanish</option>
-                                                                    <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                    <option value="ja-jp">Japanese</option>
-                                                                    <option value="de-de">German</option>
-                                                                    <option value="ru-ru">Russian</option>
-                                                                    <option value="ko-kr">Korean</option>
-                                                                    <option value="it-it">Italian</option>
-                                                                    <option value="pt-br">Portuguese (Brazil)</option>
-                                                                    <option value="ar-sa">Arabic</option>
-                                                                    <option value="bn-in">Bengali</option>
-                                                                    <option value="pa-in">Punjabi</option>
-                                                                    <option value="mr-in">Marathi</option>
-                                                                    <option value="gu-in">Gujarati</option>
-                                                                    <option value="ur-pk">Urdu</option>
-                                                                    <option value="ta-in">Tamil</option>
-                                                                    <option value="kn-in">Kannada</option>
-                                                                    <option value="ml-in">Malayalam</option>
-                                                                    <option value="or-in">Odia</option>
-                                                                    <option value="as-in">Assamese</option>
-                                                                    <!-- Add more languages as needed -->
-                                                                </select>
-                                                                <button id="select-language-btn">Select</button>
-                                                            </div>
-                                                        </div>
+                                                            @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                            @endcomponent
                                                     </div>
                                                 </div>
                                             </div>
 
 
-                                            <div class="col-lg-12">
+                                            {{-- <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="Reference Recores">Reference Record</label>
                                                     <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        multiple id="reference_record" name="refrence_record[]"
-                                                        id="">
-                                                        {{-- <option value="">--Select---</option> --}}
+                                                        multiple id="reference_record" name="refrence_record[]">
                                                         @foreach ($old_record as $new)
                                                             <option value="{{ $new->id }}"
                                                                 {{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
@@ -2105,8 +1676,41 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
-                                                </div>
+                                                </div>--}}
+                                            </div> 
+
+
+                                      <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="Reference Recores">Reference Record</label>
+                                              <select  multiple id="reference_record" name="refrence_record[]" id=""  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                 multiple id="reference_record" name="refrence_record[]" id="">
+                                                   
+                                                    @foreach ($old_record as $new)
+                                                        @php
+                                                            $recordValue = Helpers::getDivisionName($new->division_id) .'/SA/'.date('Y') .'/' .
+                                                            Helpers::recordFormat($new->record);
+                                                                $selected = in_array($recordValue,explode(',', $data->refrence_record),)
+                                                                ? 'selected'
+                                                                : '';
+                                                        @endphp
+                                                        <option value="{{ $recordValue }}" {{ $selected }}>
+                                                            {{ $recordValue }}
+                                                        </option>
+                                                    @endforeach
+
+                                                </select>
                                             </div>
+                                        </div>
+                                            @if ($data->report_file)
+                                              @foreach (json_decode($data->report_file) as $file)
+                                                <input id="FTFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_report_file[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                           @endif
+
+
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="Report Attachments">Report Attachments</label>
@@ -2126,7 +1730,9 @@
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
-                                                                            data-file-name="{{ $file }}"><i
+                                                                         data-remove-id="FTFile-{{ $loop->index }}"
+                                                                            data-file-name="{{ $file }}"
+                                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif">><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
@@ -2144,6 +1750,14 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            @if ($data->myfile)
+                                            @foreach (json_decode($data->myfile) as $file)
+                                                <input id="ATFIFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_myfile[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Audit Attachments</label>
@@ -2164,7 +1778,9 @@
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
-                                                                            data-file-name="{{ $file }}"><i
+                                                                        data-remove-id="ATFIFile-{{ $loop->index }}"
+                                                                            data-file-name="{{ $file }}"
+                                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
@@ -2188,46 +1804,8 @@
                                                     <div class="relative-container">
                                                         <textarea name="Audit_Comments2" id="Audit_Comments2" class="mic-input"
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments2 }}</textarea>
-                                                        <button class="mic-btn" type="button" style="display:none;">
-                                                            <i class="fas fa-microphone"></i>
-                                                        </button>
-                                                        <button class="speak-btn" type="button">
-                                                            <i class="fas fa-volume-up"></i>
-                                                        </button>
-                                                        <div class="mini-modal">
-                                                            <div class="mini-modal-content">
-                                                                <span class="close">&times;</span>
-                                                                <h2>Select Language</h2>
-                                                                <select id="language-select">
-                                                                    <option value="en-us">English</option>
-                                                                    <option value="hi-in">Hindi</option>
-                                                                    <option value="te-in">Telugu</option>
-                                                                    <option value="fr-fr">French</option>
-                                                                    <option value="es-es">Spanish</option>
-                                                                    <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                    <option value="ja-jp">Japanese</option>
-                                                                    <option value="de-de">German</option>
-                                                                    <option value="ru-ru">Russian</option>
-                                                                    <option value="ko-kr">Korean</option>
-                                                                    <option value="it-it">Italian</option>
-                                                                    <option value="pt-br">Portuguese (Brazil)</option>
-                                                                    <option value="ar-sa">Arabic</option>
-                                                                    <option value="bn-in">Bengali</option>
-                                                                    <option value="pa-in">Punjabi</option>
-                                                                    <option value="mr-in">Marathi</option>
-                                                                    <option value="gu-in">Gujarati</option>
-                                                                    <option value="ur-pk">Urdu</option>
-                                                                    <option value="ta-in">Tamil</option>
-                                                                    <option value="kn-in">Kannada</option>
-                                                                    <option value="ml-in">Malayalam</option>
-                                                                    <option value="or-in">Odia</option>
-                                                                    <option value="as-in">Assamese</option>
-                                                                    <!-- Add more languages as needed -->
-                                                                </select>
-                                                                <button id="select-language-btn">Select</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                            @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                            @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -2240,46 +1818,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="due_date_extension" id="due_date_extension" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                        @endcomponent
                                             </div>
                                         </div>
                                     </div>
@@ -2296,6 +1836,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </div> 
 
                             <!-- Activity Log content -->
                             <div id="CCForm6" class="inner-block cctabcontent">
@@ -2457,45 +1998,45 @@
                                             </div>
                                         </div>
                                         <!-- <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Audit Response Completed By">Audit Response Completed
-                                                        By</label>
-                                                    <div class="static">{{ $data->audit_response_completed_by }}</div>
+                                                    <div class="group-input">
+                                                        <label for="Audit Response Completed By">Audit Response Completed
+                                                            By</label>
+                                                        <div class="static">{{ $data->audit_response_completed_by }}</div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Audit Response Completed On">Audit Response Completed
-                                                        On</label>
-                                                    <div class="static">{{ $data->audit_response_completed_on }}</div>
+                                                <div class="col-lg-6">
+                                                    <div class="group-input">
+                                                        <label for="Audit Response Completed On">Audit Response Completed
+                                                            On</label>
+                                                        <div class="static">{{ $data->audit_response_completed_on }}</div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Response Feedback Verified By">Response Feedback Verified
-                                                        By</label>
-                                                    <div class="static">{{ $data->response_feedback_verified_by }}</div>
+                                                <div class="col-lg-6">
+                                                    <div class="group-input">
+                                                        <label for="Response Feedback Verified By">Response Feedback Verified
+                                                            By</label>
+                                                        <div class="static">{{ $data->response_feedback_verified_by }}</div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Response Feedback Verified On">Response Feedback Verified
-                                                        On</label>
-                                                    <div class="static">{{ $data->response_feedback_verified_on }}</div>
-                                                </div>
-                                            </div> -->
+                                                <div class="col-lg-6">
+                                                    <div class="group-input">
+                                                        <label for="Response Feedback Verified On">Response Feedback Verified
+                                                            On</label>
+                                                        <div class="static">{{ $data->response_feedback_verified_on }}</div>
+                                                    </div>
+                                                </div> -->
 
 
                                     </div>
                                     <div class="button-block">
                                         <!-- @if ($data->stage != 0)
     <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
     @endif -->
                                         <button type="button" class="backButton"
                                             onclick="previousStep()">Back</button>
                                         <!-- <button type="submit"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button> -->
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button> -->
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
                                     </div>
@@ -2577,9 +2118,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                    <button>Close</button>
-                                </div> -->
+                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                        <button>Close</button>
+                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2625,9 +2166,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                    <button>Close</button>
-                                </div> -->
+                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                        <button>Close</button>
+                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2672,9 +2213,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                    <button>Close</button>
-                                </div> -->
+                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                        <button>Close</button>
+                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button data-bs-dismiss="modal">Close</button>
@@ -3425,7 +2966,7 @@
                     /* Ensure the text does not overlap the button */
                 }
             </style> --}}
-             
+
             <script>
                 $(document).ready(function() {
                     $('.remove-file').click(function() {
@@ -3435,7 +2976,7 @@
                     })
                 })
             </script>
-         <script>
+            <script>
                 function handleDateInput(inputElement, displayElementId) {
                     var displayElement = document.getElementById(displayElementId);
                     var dateValue = new Date(inputElement.value);

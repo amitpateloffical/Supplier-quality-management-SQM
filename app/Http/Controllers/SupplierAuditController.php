@@ -154,17 +154,40 @@ class SupplierAuditController extends Controller
         }
 
 
-        if (!empty($request->Audit_file)) {
-            $files = [];
-            if ($request->hasfile('Audit_file')) {
-                foreach ($request->file('Audit_file') as $file) {
-                    $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $internalAudit->Audit_file = json_encode($files);
-        }
+        // if (!empty($request->Audit_file)) {
+        //     $files = [];
+        //     if ($request->hasfile('Audit_file')) {
+        //         foreach ($request->file('Audit_file') as $file) {
+        //             $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $internalAudit->Audit_file = json_encode($files);
+        // }
+
+        // $files = is_array($request->existing_Audit_file) ? $request->existing_Audit_file : null;
+
+        // if (!empty($request->Audit_file)) {
+        //     if ($internalAudit->Audit_file) {
+        //         $existingFiles = json_decode($internalAudit->Audit_file, true); // Convert to associative array
+        //         if (is_array($existingFiles)) {
+        //             $files = $existingFiles;
+        //         }
+        //     }
+
+        //     if ($request->hasfile('Audit_file')) {
+        //         foreach ($request->file('Audit_file') as $file) {
+        //             $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        // }
+
+        // // If no files are attached, set to null
+        // $internalAudit->Audit_file = !empty($files) ? json_encode($files) : null;
+
 
         if (!empty($request->report_file)) {
             $files = [];
@@ -177,6 +200,8 @@ class SupplierAuditController extends Controller
             }
             $internalAudit->report_file = json_encode($files);
         }
+
+        
         if (!empty($request->myfile)) {
             $files = [];
             if ($request->hasfile('myfile')) {
@@ -1211,21 +1236,44 @@ if (!empty($internalAudit->Auditee)) {
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
         $internalAudit->refrence_record =  implode(',', $request->refrence_record);
-        if (!empty($request->file_attachment_guideline)) {
-            $files = [];
-            if ($request->hasfile('file_attachment_guideline')) {
+        // if (!empty($request->file_attachment_guideline)) {
+        //     $files = [];
+        //     if ($request->hasfile('file_attachment_guideline')) {
                 
+        //         foreach ($request->file('file_attachment_guideline') as $file) {
+        //             $name = $request->name . 'file_attachment_guideline' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $internalAudit->file_attachment_guideline = json_encode($files);
+        // }
+ 
+        $files = is_array($request->existing_file_attachment_guideline) ? $request->existing_file_attachment_guideline : null;
+
+        if (!empty($request->file_attachment_guideline)) {
+            if ($internalAudit->file_attachment_guideline) {
+                $existingFiles = json_decode($capa->file_attachment_guideline, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
+            if ($request->hasfile('file_attachment_guideline')) {
                 foreach ($request->file('file_attachment_guideline') as $file) {
                     $name = $request->name . 'file_attachment_guideline' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-
-
-            $internalAudit->file_attachment_guideline = json_encode($files);
         }
- 
+
+         //If no files are attached, set to null
+        $internalAudit->file_attachment_guideline = !empty($files) ? json_encode($files) : null;
+
+
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         if (!empty($request->audit_start_date)) {
             $internalAudit->audit_start_date = $request->audit_start_date;
@@ -1238,13 +1286,35 @@ if (!empty($internalAudit->Auditee)) {
         $internalAudit->severity_level = $request->severity_level;
 
        
+        // $files = is_array($request->existing_inv_attachment) ? $request->existing_inv_attachment : null;
+
+        // if (!empty($request->inv_attachment)) {
+        //     if ($internalAudit->inv_attachment) {
+        //         $existingInitialFiles = json_decode($internalAudit->inv_attachment, true); // Convert to associative array
+        //         if (is_array($existingInitialFiles)) {
+        //             $files = $existingInitialFiles;
+        //         }
+        //     }
+
+        //     if ($request->hasfile('inv_attachment')) {
+        //         foreach ($request->file('inv_attachment') as $file) {
+        //             $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        // }
+
+        // // If no files are attached, set to null
+        // $internalAudit->inv_attachment = !empty($files) ? json_encode($files) : null;
+
         $files = is_array($request->existing_inv_attachment) ? $request->existing_inv_attachment : null;
 
         if (!empty($request->inv_attachment)) {
             if ($internalAudit->inv_attachment) {
-                $existingInitialFiles = json_decode($internalAudit->inv_attachment, true); // Convert to associative array
-                if (is_array($existingInitialFiles)) {
-                    $files = $existingInitialFiles;
+                $existingFiles = json_decode($internalAudit->inv_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
                 }
             }
 
@@ -1260,20 +1330,23 @@ if (!empty($internalAudit->Auditee)) {
         // If no files are attached, set to null
         $internalAudit->inv_attachment = !empty($files) ? json_encode($files) : null;
 
-        if (!empty($request->file_attachment)) {
-            $files = [];
-            if ($request->hasfile('file_attachment')) {
+        // if (!empty($request->file_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('file_attachment')) {
                 
-                foreach ($request->file('file_attachment') as $file) {
-                    $name = $request->name . 'file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
+        //         foreach ($request->file('file_attachment') as $file) {
+        //             $name = $request->name . 'file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
 
 
-            $internalAudit->file_attachment = json_encode($files);
-        }
+        //     $internalAudit->file_attachment = json_encode($files);
+        // }
+
+
+        // $files = is_array($request->existing_file_attachment) ? $request->existing_file_attachment : null;
 
 
         $files = is_array($request->existing_file_attachment) ? $request->existing_file_attachment : null;
@@ -1298,11 +1371,33 @@ if (!empty($internalAudit->Auditee)) {
         // If no files are attached, set to null
         $internalAudit->file_attachment = !empty($files) ? json_encode($files) : null;
 
+        
+      
+
+        
+        // if (!empty($request->Audit_file)) {
+        //     $files = [];
+        //     if ($request->hasfile('Audit_file')) {
+        //         foreach ($request->file('Audit_file') as $file) {
+        //             $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
 
 
+        //     $internalAudit->Audit_file = json_encode($files);
+        // }
+        $files = is_array($request->existing_Audit_file) ? $request->existing_Audit_file : null;
 
         if (!empty($request->Audit_file)) {
-            $files = [];
+            if ($internalAudit->Audit_file) {
+                $existingFiles = json_decode($internalAudit->Audit_file, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('Audit_file')) {
                 foreach ($request->file('Audit_file') as $file) {
                     $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1310,13 +1405,35 @@ if (!empty($internalAudit->Auditee)) {
                     $files[] = $name;
                 }
             }
-
-
-            $internalAudit->Audit_file = json_encode($files);
         }
 
+       //  If no files are attached, set to null
+         $internalAudit->Audit_file = !empty($files) ? json_encode($files) : null;
+
+        // if (!empty($request->report_file)) {
+        //     $files = [];
+        //     if ($request->hasfile('report_file')) {
+        //         foreach ($request->file('report_file') as $file) {
+        //             $name = $request->name . 'report_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $internalAudit->report_file = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_report_file) ? $request->existing_report_file : null;
+
         if (!empty($request->report_file)) {
-            $files = [];
+            if ($internalAudit->report_file) {
+                $existingFiles = json_decode($internalAudit->report_file, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('report_file')) {
                 foreach ($request->file('report_file') as $file) {
                     $name = $request->name . 'report_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1324,12 +1441,34 @@ if (!empty($internalAudit->Auditee)) {
                     $files[] = $name;
                 }
             }
-
-
-            $internalAudit->report_file = json_encode($files);
         }
+      //  If no files are attached, set to null
+         $internalAudit->report_file = !empty($files) ? json_encode($files) : null;
+
+
+        // if (!empty($request->myfile)) {
+        //     $files = [];
+        //     if ($request->hasfile('myfile')) {
+        //         foreach ($request->file('myfile') as $file) {
+        //             $name = $request->name . 'myfile' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $internalAudit->myfile = json_encode($files);
+        // }
+        $files = is_array($request->existing_myfile) ? $request->existing_myfile : null;
+
         if (!empty($request->myfile)) {
-            $files = [];
+            if ($internalAudit->myfile) {
+                $existingFiles = json_decode($internalAudit->myfile, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('myfile')) {
                 foreach ($request->file('myfile') as $file) {
                     $name = $request->name . 'myfile' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1337,10 +1476,10 @@ if (!empty($internalAudit->Auditee)) {
                     $files[] = $name;
                 }
             }
-
-
-            $internalAudit->myfile = json_encode($files);
         }
+      //  If no files are attached, set to null
+         $internalAudit->myfile = !empty($files) ? json_encode($files) : null;
+
 
         $internalAudit->update();
         // dd($internalAudit->Auditee);
@@ -1642,6 +1781,29 @@ if (!empty($internalAudit->Auditee)) {
 
             $history->save();
         }
+
+        // if ($lastDocument->refrence_record != $internalAudit->refrence_record || !empty($request->refrence_record)) {
+        //     $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $internalAudit->id)
+        //     ->where('activity_type', 'Reference Records')
+        //     ->exists();
+        //     $history = new ExternalAuditTrailSupplier();
+        //     $history->supplier_id = $id;
+        //     $history->activity_type = 'Reference Records';
+        //     $history->previous = $lastDocument->refrence_record;
+        //     $history->current = $internalAudit->refrence_record;
+        //     $history->comment = $request->capa_related_record_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = 'Not Applicable';
+        //     $history->change_from = $lastDocument->status;
+        //     if (is_null($lastDocument->refrence_record) || $lastDocument->refrence_record === '') {
+        //         $history->action_name = 'New';
+        //     } else {
+        //         $history->action_name = 'Update';
+        //     }            $history->save();
+        // }
 
 
 

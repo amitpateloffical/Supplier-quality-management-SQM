@@ -690,7 +690,7 @@
                     
                                                     <div class="col-lg-6">
                                                         <div class="group-input">
-                                                            <label for="Initiator Group Code">Analyzed at Location</label>
+                                                            <label for="Initiator Group Code">Analyzed on Location</label>
                                                             <div class="relative-container">
                                                                 <input type="text"class="mic-input" name="analyzedLocation" id="analyzedLocation" placeholder="Enter Analyzed on Location">
                                                                 @component('frontend.forms.language-model')
@@ -1350,7 +1350,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Supplier.">Supplier</label>
+                                    <label for="Supplier.">Supplier Name</label>
                                     <div class="relative-container">
                                         <input type="text" class="mic-input" name="supplier_name" id="supplier_name" placeholder="Enter Supplier Name"> 
                                         @component('frontend.forms.language-model')                                     
@@ -1374,10 +1374,10 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="">Manufacturer</label>
+                                    <label for="">Manufacturer Name</label>
                               
                                     <div class="relative-container">
-                                        <input type="text" class="mic-input" name="manufacturer_name" placeholder="Enter Manufacturer ID"> 
+                                        <input type="text" class="mic-input" name="manufacturer_name" placeholder="Enter Manufacturer Name"> 
                                         @component('frontend.forms.language-model')
                                         @endcomponent
                                 
@@ -1396,7 +1396,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="">Vendor</label>
+                                    <label for="">Vendor Name</label>
                                     <div class="relative-container">
                                         <input type="text" class="mic-input" name="vendor_name" placeholder="Enter Vendor Name">
                                         @component('frontend.forms.language-model')

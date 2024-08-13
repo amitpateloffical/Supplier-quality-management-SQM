@@ -189,7 +189,7 @@
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    General Information
+                    Risk/Opportunity Assesment
                 </div>
                 <table>
                     <tr> {{ $data->created_at }} added by {{ $data->originator }}
@@ -1709,15 +1709,15 @@
     <footer>
         <table>
             <tr>
-                <td class="w-30">
+                <td class="w-50">
                     <strong>Printed On :</strong> {{ date('d-M-Y') }}
                 </td>
-                <td class="w-40">
+                <td class="w-50">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                <td class="w-30">
+                {{-- <td class="w-30">
                     <strong>Page :</strong> 1 of 1
-                </td>
+                </td> --}}
             </tr>
         </table>
     </footer>

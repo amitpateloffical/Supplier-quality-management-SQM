@@ -200,7 +200,7 @@
                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                         @endif
                         <div class="buttons-new">
-                            @if ($document->stage < 6)
+                            @if ($document->stage)
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                     Review
                                 </button>
@@ -234,7 +234,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['doc_id' => $document->id, 'type' => 'Supplier'])
+                                        ->where(['doc_id' => $document->id, 'type' => 'Observation'])
                                         ->get();
                                 @endphp
                                 <div class="table-responsive" style="padding: 20px;">
@@ -251,7 +251,7 @@
                                                 @foreach ($reviewer as $review)
                                                     <tr>
                                                         <td>{{ $review->reviewer_comment_by }}</td>
-                                                        <td>{{ $review->reviewer_comment_on }}</td>
+                                                        <td>{{ Helpers::getdateFormat($review->reviewer_comment_on) }}</td>
                                                         <td>{{ $review->reviewer_comment }}</td>
                                                     </tr>
                                                 @endforeach
@@ -301,9 +301,9 @@
                                             <label for="Reviewer Completed on">Reviewer Completed On</label>
                                             <input disabled type="text" class="form-control" name="reviewer_completed_on"
                                                 id="reviewer_completed_on"
-                                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                                value="{{ $auditCollect ? Helpers::getdateFormat($auditCollect->reviewer_comment_on) : '' }}">
                                         </div>
-                                        <input type="hidden" id="type" name="type" value="Supplier">
+                                        <input type="hidden" id="type" name="type" value="Observation">
                                     </div>
                                     <div class="modal-footer">
                                         {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
@@ -318,145 +318,142 @@
 
                     <table>
                         <div class="heading">
-
                             <div class="heading-new">
                                 Observation Audit Trail
                             </div>
-
-                            <div> <strong>Record ID.</strong>
+                            <div> <strong>Record ID : </strong>
                                 {{-- {{ Helpers::getDivisionName($document->division_id) }}/OBS/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }} --}}
-                                {{str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
+                                {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
                             </div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ Auth::user()->name }}
+                                : {{ Auth::user()->name }}
                             </div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
-
                         </div>
+                    </table>
+
+                </header>
+
+                <div class="inner-block">
+                    <div class="division">
+                    </div>
+                    <div class="second-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th>S.No</th>
+                                <th>Flow Changed From</th>
+                                <th>Flow Changed To</th>
+                                <th>Data Field</th>
+                                <th>Action Type</th>
+                                <th>Performer</th>
+                            </tr>
+
+                            <tr>
+                                @php
+                                    $previousItem = null;
+                                @endphp
+
+                                @foreach ($audit as $audits => $dataDemo)
+                                    <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
+                                    </td>
+
+                                    <td>
+                                        <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
+                                        {{-- :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }} --}}
+
+                                    </td>
+
+                                    <td>
+                                        <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
+
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <strong> Data Field Name
+                                                :</strong><a>{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                        </div>
+                                        <div style="margin-top: 5px;">
+                                            @if ($dataDemo->activity_type == 'Activity Log')
+                                                <strong>Change From
+                                                    :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
+                                            @else
+                                                <strong>Change From
+                                                    :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
+                                            @endif
+                                        </div>
+                                        <br>
+                                        <div>
+                                            @if ($dataDemo->activity_type == 'Activity Log')
+                                                <strong>Change To
+                                                    :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
+                                            @else
+                                                <strong>Change To
+                                                    :</strong>{{ $dataDemo->current ? $dataDemo->current : 'NULL' }}
+                                            @endif
+                                        </div>
+                                        <div style="margin-top: 5px;">
+                                            <strong>Change Type
+                                                :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <strong> Action Name
+                                                :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div><strong> Performed By
+                                                :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
+                                        </div>
+                                        <div style="margin-top: 5px;"> <strong>Performed On
+                                                :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
+                                        </div>
+                                        <div style="margin-top: 5px;"><strong> Comments
+                                                :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}
+                                        </div>
+
+                                    </td>
+                            </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                </div>
+                <div style="float: inline-end; margin: 10px;">
+                    <style>
+                        .pagination>.active>span {
+                            background-color: #0e7676cc !important;
+                            border-color: #0e7676cc !important;
+                            color: #fff !important;
+                        }
+
+                        .pagination>.active>span:hover {
+                            background-color: #0e7676cc !important;
+                            border-color: #0e7676cc !important;
+                        }
+
+                        .pagination>li>a,
+                        .pagination>li>span {
+                            color: #0e7676cc !important;
+                        }
+
+                        .pagination>li>a:hover {
+                            background-color: #0e7676cc !important;
+                            border-color: #0e7676cc !important;
+                            color: #fff !important;
+                        }
+                    </style>
+                    {{ $audit->links() }}
+                </div>
+
+            </body>
+
+            </html>
+
         </div>
-        </table>
-
-        </header>
-
-        <div class="inner-block">
-            <div class="division">
-            </div>
-            <div class="second-table">
-                <table>
-                    <tr class="table_bg">
-                        <th>S.No</th>
-                        <th>Flow Changed From</th>
-                        <th>Flow Changed To</th>
-                        <th>Data Field</th>
-                        <th>Action Type</th>
-                        <th>Performer</th>
-                    </tr>
-
-                    <tr>
-                        @php
-                            $previousItem = null;
-                        @endphp
-
-                        @foreach ($audit as $audits => $dataDemo)
-                            <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
-                            </td>
-
-                            <td>
-                                <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
-                                {{-- :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }} --}}
-
-                            </td>
-
-                            <td>
-                                <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
-
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    @if ($dataDemo->activity_type == 'Activity Log')
-                                        <strong>Change From
-                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }}
-                                    @else
-                                        <strong>Change From
-                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
-                                    @endif
-                                </div>
-                                <br>
-                                <div>
-                                    @if ($dataDemo->activity_type == 'Activity Log')
-                                        <strong>Change To
-                                            :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
-                                    @else
-                                        <strong>Change To
-                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
-                                    @endif
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    <strong>Change Type
-                                        :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
-                                </div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Action Name
-                                        :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
-
-                                </div>
-                            </td>
-                            <td>
-                                <div><strong> Peformed By
-                                        :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"><strong> Comments
-                                        :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
-
-                            </td>
-                    </tr>
-                    @endforeach
-                </table>
-            </div>
-        </div>
-        <div style="float: inline-end; margin: 10px;">
-            <style>
-                .pagination>.active>span {
-                    background-color: #0e7676cc !important;
-                    border-color: #0e7676cc !important;
-                    color: #fff !important;
-                }
-
-                .pagination>.active>span:hover {
-                    background-color: #0e7676cc !important;
-                    border-color: #0e7676cc !important;
-                }
-
-                .pagination>li>a,
-                .pagination>li>span {
-                    color: #0e7676cc !important;
-                }
-
-                .pagination>li>a:hover {
-                    background-color: #0e7676cc !important;
-                    border-color: #0e7676cc !important;
-                    color: #fff !important;
-                }
-            </style>
-            {{ $audit->links() }}
-        </div>
-
-        </body>
-
-        </html>
-
-    </div>
     </div>
 
     <div class="modal fade" id="activity-modal">

@@ -420,12 +420,13 @@
                                             <select name="type" id="type">
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="Other">Other</option>
-                                                <option value="Business_Risk">Business Risk</option>
-                                                <option value="custumer_Related">Customer-Related Risk(Complaint)</option>
+                                                <option value="Business Risk">Business Risk</option>
+                                                <option value="Customer-Related Risk(Complaint)">Customer-Related
+                                                    Risk(Complaint)</option>
                                                 <option value="Opportunity">Opportunity</option>
                                                 <option value="Market">Market</option>
-                                                <option value="Operational_Risk">Operational Risk</option>
-                                                <option value="Strategic_Risk">Strategic Risk</option>
+                                                <option value="Operational Risk">Operational Risk</option>
+                                                <option value="Strategic Risk">Strategic Risk</option>
                                             </select>
                                         </div>
                                     </div>

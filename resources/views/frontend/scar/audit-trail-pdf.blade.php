@@ -178,7 +178,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> SCAR Program No.</strong>
+                    <strong> SCAR No.</strong>
                 </td>
                 <td class="w-40">
                     {{ Helpers::getDivisionName($doc->division_id) }}/ SCAR

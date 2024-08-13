@@ -539,9 +539,9 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Expected Closure Time">Expected Closure Time</label>
-                                        <input type="time" name="expected_closure_time"
-                                            value="{{ $data->expected_closure_time }}"
+                                        <label for="expected_closure_time">Expected Closure Time</label>
+                                        <input type="time" name="expected_closure_time" id="expected_closure_time"
+                                            value="{{ $data->expected_closure_time }}" 
                                             @if ($data->stage >= 6) disabled @endif>
                                     </div>
                                 </div>

@@ -514,6 +514,14 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            @if ($data->in_attachment)
+                                            @foreach (json_decode($data->in_attachment) as $file)
+                                                <input id="initialFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_in_attachment[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
+
 
                                             <div class="col-lg-12">
                                                 <div class="group-input">
@@ -531,6 +539,7 @@
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
+                                                                          data-remove-id="initialFile-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
@@ -756,8 +765,17 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            
-                                            <div class="col-lg-12">
+                                         
+
+
+                                            @if ($data->qa_head)
+                                            @foreach (json_decode($data->qa_head) as $file)
+                                                <input id="QAFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_qa_head[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
+                                          <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="qa head">QA Attachments</label>
                                                     <div class="file-attachment-field">
@@ -772,6 +790,7 @@
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
+                                                                         data-remove-id="QAFile-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
@@ -813,6 +832,14 @@
                                             </div>
                                         </div>
 
+                                        @if ($data->qa_eval_attach)
+                                        @foreach (json_decode($data->qa_eval_attach) as $file)
+                                            <input id="EVALFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_qa_eval_attach[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
+
                                         <div class="group-input">
                                             <label for="qa-eval-attach">QA Evaluation Attachments</label>
                                             <div class="file-attachment-field">
@@ -825,6 +852,7 @@
                                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
+                                                                data-remove-id="EVALFile-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
@@ -1048,6 +1076,17 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            @if ($data->cft_attchament)
+                                            @foreach (json_decode($data->cft_attchament) as $file)
+                                                <input id="FEEDFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_cft_attchament[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
+
+
+
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="comments">Attachment</label>
@@ -1063,6 +1102,7 @@
                                                                             target="_blank"><i class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
+                                                                         data-remove-id="FEEDFile-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1175,6 +1215,14 @@
                                                 </div>
                                             </div>
 
+                                            @if ($data->group_attachments)
+                                            @foreach (json_decode($data->group_attachments) as $file)
+                                                <input id="CFIFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_group_attachments[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
+
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="group-attachments">Attachments</label>
@@ -1190,6 +1238,7 @@
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
+                                                                          data-remove-id="CFIFile-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1358,6 +1407,14 @@
                                             </div>
                                         </div>
 
+                                        @if ($data->tran_attach)
+                                        @foreach (json_decode($data->tran_attach) as $file)
+                                            <input id="TRAINFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_tran_attach[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
+
                                         <div class="group-input">
                                             <label for="tran-attach">Training Attachments</label>
                                             <div class="file-attachment-field">
@@ -1371,6 +1428,7 @@
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
+                                                                 data-remove-id="TRAINFile-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
@@ -1508,6 +1566,13 @@
                                                 </div>
                                             </div>
                                         </div> -->
+                                        @if ($data->attach_list)
+                                        @foreach (json_decode($data->attach_list) as $file)
+                                            <input id="CCFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_attach_list[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
 
                                         <div class="col-lg-12">
                                             <div class="group-input">
@@ -1525,6 +1590,7 @@
                                                                             class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file"
+                                                                      data-remove-id="CCFile-{{ $loop->index }}"
                                                                         data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
@@ -2301,5 +2367,13 @@
     </script>
 
 
-
+<script>
+    $(document).ready(function() {
+        $('.remove-file').click(function() {
+            const removeId = $(this).data('remove-id')
+            console.log('removeId', removeId);
+            $('#' + removeId).remove();
+        })
+    })
+</script>
 @endsection

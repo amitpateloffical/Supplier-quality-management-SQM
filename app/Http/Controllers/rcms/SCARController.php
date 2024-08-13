@@ -348,8 +348,10 @@ class SCARController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
+           
             $history->save();
         }
+
         if(!empty($request->expected_closure_time)){
             $history = new ScarAuditTrail;
             $history->scar_id = $scar->id;
@@ -704,6 +706,7 @@ class SCARController extends Controller
             $history = new ScarAuditTrail;
             $history->scar_id = $lastDocument->id;
             $history->activity_type = 'Expected Closure Date';
+            $history->previous = Helpers::getDateFormat($lastDocument->expected_closure_date);
             $history->current =  Helpers::getDateFormat($request->expected_closure_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -715,6 +718,7 @@ class SCARController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+
         if($lastDocument->expected_closure_time != $request->expected_closure_time){
             $lastDocumentAuditTrail = ScarAuditTrail::where('scar_id', $scar->id)
             ->where('activity_type', 'Expected Closure Time')
@@ -1028,7 +1032,7 @@ class SCARController extends Controller
                     } else {
                         $history->previous = $lastDocument->audit_schedule_by . ' , ' . $lastDocument->workin_progress_on;
                     }
-                    $history->current = $scar->audit_schedule_by . ' , ' .  $scar->workin_progress_on;
+                    $history->current = $scar->workin_progress_by . ' , ' .  $scar->workin_progress_on;
                    // $history->current = "Not Applicable";
                    $history->action = 'Work in Progress';
                     $history->comment = $request->comments;

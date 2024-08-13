@@ -1243,7 +1243,7 @@ class CCController extends Controller
             $history->cc_id = $openState->id;
             $history->activity_type = 'Training Attachments';
             $history->previous = "Null";
-            $history->current = $openState->$tran_attach;
+            $history->current = $openState->tran_attach;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1372,17 +1372,40 @@ class CCController extends Controller
         $openState->nature_Change = $request->nature_Change;
         $openState->If_Others = $request->If_Others;
         $openState->Division_Code = $request->Division_Code;
+
+        $files = is_array($request->existing_in_attachment) ? $request->existing_in_attachment : null;
+
         if (!empty($request->in_attachment)) {
-            $files = [];
+            if ($openState->in_attachment) {
+                $existingFiles = json_decode($openState->in_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('in_attachment')) {
                 foreach ($request->file('in_attachment') as $file) {
-                    $name = "CC" . '-in_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'in_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $openState->in_attachment = json_encode($files);
         }
+
+        // If no files are attached, set to null
+        $openState->in_attachment = !empty($files) ? json_encode($files) : null;
+
+        // if (!empty($request->in_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('in_attachment')) {
+        //         foreach ($request->file('in_attachment') as $file) {
+        //             $name = "CC" . '-in_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $openState->in_attachment = json_encode($files);
+        // }
         $previousAttachments = $lastDocument->in_attachment;
         $areIniAttachmentsSame = $previousAttachments == $openState->in_attachment;
 
@@ -1397,17 +1420,43 @@ class CCController extends Controller
         $json_decode = json_encode($request->related_records);
         $openState->related_records = implode(',', $request->related_records);
         $qaHeadJson = json_encode($request->qa_head);
+        // if (!empty($request->qa_head)) {
+        //     $files = [];
+        //     if ($request->hasfile('qa_head')) {
+        //         foreach ($request->file('qa_head') as $file) {
+        //             $name = "CC" . '-qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $openState->qa_head = json_encode($files);
+        // }
+       
+        // If no files are attached, set to null
+     
+
+        $files = is_array($request->existing_qa_head) ? $request->existing_qa_head : null;
+
         if (!empty($request->qa_head)) {
-            $files = [];
+            if ($openState->qa_head) {
+                $existingFiles = json_decode($openState->qa_head, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('qa_head')) {
                 foreach ($request->file('qa_head') as $file) {
-                    $name = "CC" . '-qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $openState->qa_head = json_encode($files);
         }
+
+        // If no files are attached, set to null
+        $openState->qa_head = !empty($files) ? json_encode($files) : null;
+
         $previousQaHeadAttachments = $lastDocument->qa_head;
         $areQAHeadAttachmentsSame = $previousQaHeadAttachments == $openState->qa_head;
 
@@ -1423,17 +1472,29 @@ class CCController extends Controller
                    
         $openState->qa_eval_comments = $request->qa_eval_comments;
         $json_qa_eval_attach = json_encode($request->qa_eval_attach);
+        
+
+        $files = is_array($request->existing_qa_eval_attach) ? $request->existing_qa_eval_attach : null;
+
         if (!empty($request->qa_eval_attach)) {
-            $files = [];
+            if ($openState->qa_eval_attach) {
+                $existingFiles = json_decode($openState->qa_eval_attach, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('qa_eval_attach')) {
                 foreach ($request->file('qa_eval_attach') as $file) {
-                    $name = "CC" . '-qa_eval_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_eval_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $openState->qa_eval_attach = json_encode($files);
         }
+
+        // If no files are attached, set to null
+        $openState->qa_eval_attach = !empty($files) ? json_encode($files) : null;
         $previousQaEvalAttachments = $lastDocument->qa_eval_attach;
         $areQaEvalAttachmentsSame = $previousQaEvalAttachments == $openState->qa_eval_attach;
 
@@ -1450,31 +1511,52 @@ class CCController extends Controller
         $openState->Validation_comments = $request->Validation_comments;
         $openState->Others_comments = $request->Others_comments;
         $openState->Group_comments = $request->Group_comments;
+       
+        $files = is_array($request->existing_group_attachments) ? $request->existing_group_attachments : null;
+
         if (!empty($request->group_attachments)) {
-            $files = [];
+            if ($openState->group_attachments) {
+                $existingFiles = json_decode($openState->group_attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('group_attachments')) {
                 foreach ($request->file('group_attachments') as $file) {
-                    $name = "CC" . '-group_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'group_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $openState->group_attachments = json_encode($files);
         }
+
+        // If no files are attached, set to null
+        $openState->group_attachments = !empty($files) ? json_encode($files) : null;
         $previousGroupAttachments = $lastDocument->group_attachments;
         $areGroupAttachmentsSame = $previousGroupAttachments == $openState->group_attachments;
 
+        $files = is_array($request->existing_cft_attchament) ? $request->existing_cft_attchament : null;
+
         if (!empty($request->cft_attchament)) {
-            $files = [];
+            if ($openState->cft_attchament) {
+                $existingFiles = json_decode($openState->cft_attchament, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('cft_attchament')) {
                 foreach ($request->file('cft_attchament') as $file) {
-                    $name = "CC" . '-cft_attchament' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'cft_attchament' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $openState->cft_attchament = json_encode($files);
         }
+
+        // If no files are attached, set to null
+        $openState->cft_attchament = !empty($files) ? json_encode($files) : null;
         $previousCftAttachments = $lastDocument->cft_attchament;
         $areCftAttachmentsSame = $previousCftAttachments == $openState->cft_attchament;
 
@@ -1491,33 +1573,58 @@ class CCController extends Controller
         $openState->qa_appro_comments = $request->qa_appro_comments;
         $openState->feedback = $request->feedback;
         $json_tran_attach = json_encode($request->tran_attach);
+        
+        $files = is_array($request->existing_tran_attach) ? $request->existing_tran_attach : null;
+
         if (!empty($request->tran_attach)) {
-            $files = [];
+            if ($openState->tran_attach) {
+                $existingFiles = json_decode($openState->tran_attach, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('tran_attach')) {
                 foreach ($request->file('tran_attach') as $file) {
-                    $name = "CC" . '-tran_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'tran_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $openState->tran_attach = json_encode($files);
         }
+
+        // If no files are attached, set to null
+        $openState->tran_attach = !empty($files) ? json_encode($files) : null;
+
         $previousQaApprovalAttachments = $lastDocument->tran_attach;
         $areQaApprovalAttachmentsSame = $previousQaApprovalAttachments == $openState->tran_attach;
 
         /**************** Closure Comments *************/
         $openState->qa_closure_comments = $request->qa_closure_comments;
+       
+
+        $files = is_array($request->existing_attach_list) ? $request->existing_attach_list : null;
+
         if (!empty($request->attach_list)) {
-            $files = [];
+            if ($openState->attach_list) {
+                $existingFiles = json_decode($openState->attach_list, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('attach_list')) {
                 foreach ($request->file('attach_list') as $file) {
-                    $name = "CC" . '-attach_list' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attach_list' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $openState->attach_list = json_encode($files);
         }
+
+        // If no files are attached, set to null
+        $openState->attach_list = !empty($files) ? json_encode($files) : null;
+
         $previousClosureAttachments = $lastDocument->attach_list;
         $areClosureAttachmentsSame = $previousClosureAttachments == $openState->attach_list;
 
@@ -2192,6 +2299,9 @@ class CCController extends Controller
         // }
 
         if ($areQAHeadAttachmentsSame != true) {
+            $existingHistory = RcmDocHistory::where('cc_id', $id)
+            ->where('activity_type', 'QA Attachments')
+            ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'QA Attachments';
@@ -2872,6 +2982,9 @@ class CCController extends Controller
         }
 
         if ($areQaApprovalAttachmentsSame != true) {
+            $existingHistory = RcmDocHistory::where('cc_id', $id)
+            ->where('activity_type', 'Training Attachments')
+            ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Training Attachments';

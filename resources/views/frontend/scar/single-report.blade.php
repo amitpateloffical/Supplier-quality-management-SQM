@@ -208,7 +208,11 @@
                     <tr>
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
-
+                        <th class="w-20">Recard Number</th>
+                        <td class="w-30">{{ str_pad( $data->record, 4, '0', STR_PAD_LEFT) }}</td>
+                       
+                    </tr>
+                    <tr>
                         <th class="w-20"> Initiation Date</th>
                         <td class="w-30">{{ Helpers::getDateFormat($data->initiation_date) }}</td>
                     </tr>

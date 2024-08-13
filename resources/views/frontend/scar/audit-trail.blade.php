@@ -154,7 +154,7 @@
                     padding: 10px;
                     margin-bottom: 10px;
                     margin-top: 10px;
-                    /* background: #E8A936; */
+                    /* background: ##0e7676cc; */
                     background: #0e7676cc;
                 }
 
@@ -323,9 +323,9 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong> {{ str_pad( $document->record, 4, '0', STR_PAD_LEFT) }}</div>
+                            <div> <strong>Record ID : </strong> {{ str_pad( $document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->originator ? $document->originator : '' }}
+                                : {{ $document->originator ? $document->originator : '' }}
                             </div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
@@ -372,6 +372,15 @@
                                     <strong> Data Field Name :</strong><a
                                         href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                                 </div>
+                                {{-- <div style="margin-top: 5px;">
+                                    @if ($dataDemo->activity_type == 'Activity Log')
+                                        <strong>Change From
+                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }}
+                                    @else
+                                        <strong>Change From
+                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
+                                    @endif
+                                </div> --}}
                                 <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change From
@@ -390,7 +399,9 @@
                                         <strong>Change To
                                             :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
                                     @endif
+                                   
                                 </div>
+                               
                                 <div style="margin-top: 5px;">
                                     <strong>Change Type
                                         :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
@@ -404,7 +415,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div><strong> Peformed By
+                                <div><strong> Performed By
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
@@ -422,24 +433,24 @@
         <div style="float: inline-end; margin: 10px;">
             <style>
                 .pagination>.active>span {
-                    background-color: #E8A936 !important;
-                    border-color: #E8A936 !important;
+                    background-color: #0e7676cc !important;
+                    border-color: #0e7676cc !important;
                     color: #fff !important;
                 }
 
                 .pagination>.active>span:hover {
-                    background-color: #E8A936 !important;
-                    border-color: #E8A936 !important;
+                    background-color: #0e7676cc !important;
+                    border-color: #0e7676cc !important;
                 }
 
                 .pagination>li>a,
                 .pagination>li>span {
-                    color: #E8A936 !important;
+                    color: #0e7676cc !important;
                 }
 
                 .pagination>li>a:hover {
-                    background-color: #E8A936 !important;
-                    border-color: #E8A936 !important;
+                    background-color: #0e7676cc !important;
+                    border-color: #0e7676cc !important;
                     color: #fff !important;
                 }
             </style>

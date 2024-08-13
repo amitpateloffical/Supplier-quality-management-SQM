@@ -673,11 +673,15 @@
             });
         });
     </script>
+
+    
     <script>
         $(document).on('click', '.removeRowBtn', function() {
             $(this).closest('tr').remove();
         })
     </script>
+
+    
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -2062,6 +2066,14 @@
                                     @endif
                                     {{-- EXISTING ATTACHMENTS END --}}
 
+                                    @if ($data->initial_file)
+                                            @foreach (json_decode($data->initial_file) as $file)
+                                                <input id="INATFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_initial_file[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
+
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Inv Attachments">Initial Attachments</label>
@@ -2077,8 +2089,7 @@
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a class="remove-file" style="@if ($data->stage == 0 || $data->stage == 11) pointer-events: none; @endif"
-                                                                    data-remove-id="initialFile-{{ $loop->index }}"
+                                                                <a class="remove-file" data-remove-id="INATFile-{{ $loop->index }}" style="@if ($data->stage == 0 || $data->stage == 11) pointer-events: none; @endif"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
@@ -2087,21 +2098,11 @@
                                                     @endif
                                                 </div>
 
-                                                <script>
-                                                    $(document).ready(function() {
-                                                        $('.remove-file').click(function() {
-                                                            const removeId = $(this).data('remove-id')
-                                                            console.log('removeId', removeId);
-                                                            $('#'+removeId).remove();
-                                                        })
-                                                    })
-                                                </script>
-
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input
                                                         {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                        type="file" id="HOD_Attachments"
+                                                        type="file" id="Initial_Attachments"
                                                         name="initial_file[]" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'initial_file')" multiple>
                                                 </div>
@@ -2637,7 +2638,7 @@
                                             <select
                                                 name="Investigation_required"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                 id="Investigation_required" value="{{ $data->Investigation_required }}">
-                                                <option value="select">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 <option @if ($data->Investigation_required == 'yes') selected @endif value='yes'>
                                                     Yes</option>
                                                 <option @if ($data->Investigation_required == 'no') selected @endif value='no'>
@@ -2656,24 +2657,25 @@
                                                 class="text-danger">*</span></label>
                                         <select name="short_description_required"
                                             {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                            id="short_description_required" onchange="checkRecurring(this)"
+                                            id="short_description_required" onchange="checkYes(this)"
                                             value="{{ $data->short_description_required }}">
                                             <option value="">-- Select --</option>
-                                            <option value="Recurring"
-                                                @if ($data->short_description_required == 'Recurring' || old('short_description_required') == 'Recurring') selected @endif>Yes</option>
-                                            <option value="Non_Recurring"
-                                                @if ($data->short_description_required == 'Non_Recurring' || old('short_description_required') == 'Non_Recurring') selected @endif>No</option>
+                                            <option value="Yes"
+                                                @if ($data->short_description_required == 'Yes' || old('short_description_required') == 'Yes') selected @endif>Yes</option>
+                                            <option value="No"
+                                                @if ($data->short_description_required == 'No' || old('short_description_required') == 'No') selected @endif>No</option>
                                         </select>
                                     </div>
+                                    {{-- Recurring,Non_Recurring --}}
                                     @error('short_description_required')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-lg-6" id="nature_of_repeat_block"
-                                    @if ($data->short_description_required != 'Recurring') style="display: none" @endif>
+                                    @if ($data->short_description_required != 'Yes') style="display: none" @endif>
                                     <div class="group-input" id="nature_of_repeat">
-                                        <label for="nature_of_repeat">Repeat Nature <span id="asteriskInviRecurring"
-                                                style="display: {{ $data->short_description_required == 'Recurring' ? 'inline' : 'none' }}"
+                                        <label for="nature_of_repeat">Repeat Nature <span id="asteriskInviYes"
+                                                style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
@@ -2707,7 +2709,7 @@
 
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'Recurring';
+                                            var isRequired = this.value === 'Yes';
                                             // var natureOfRepeatBlock = document.getElementsById('nature_of_repeat_block');
 
                                             inputsToToggle.forEach(function(input) {
@@ -2723,15 +2725,15 @@
                                             });
 
                                             // Show or hide the asterisk icon based on the selected value
-                                            var asteriskIcon = document.getElementById('asteriskInviRecurring');
+                                            var asteriskIcon = document.getElementById('asteriskInviYes');
                                             asteriskIcon.style.display = isRequired ? 'inline' : 'none';
                                         });
                                     });
                                 </script>
                                 <script>
-                                    function checkRecurring(selectElement) {
+                                    function checkYes(selectElement) {
                                         var repeatNatureField = document.getElementById('nature_of_repeat');
-                                        if (selectElement.value === 'Recurring') {
+                                        if (selectElement.value === 'Yes') {
                                             repeatNatureField.setAttribute('required', 'required');
                                         } else {
                                             repeatNatureField.removeAttribute('required');
@@ -2944,13 +2946,13 @@
                                                 class="text-danger">*</span></label>
                                         <select name="short_description_required"
                                             disabled
-                                            id="short_description_required" onchange="checkRecurring(this)"
+                                            id="short_description_required" onchange="checkYes(this)"
                                             value="{{ $data->short_description_required }}">
                                             <option value="">-- Select --</option>
-                                            <option value="Recurring"
-                                                @if ($data->short_description_required == 'Recurring' || old('short_description_required') == 'Recurring') selected @endif>Yes</option>
-                                            <option value="Non_Recurring"
-                                                @if ($data->short_description_required == 'Non_Recurring' || old('short_description_required') == 'Non_Recurring') selected @endif>No</option>
+                                            <option value="Yes"
+                                                @if ($data->short_description_required == 'Yes' || old('short_description_required') == 'Yes') selected @endif>Yes</option>
+                                            <option value="No"
+                                                @if ($data->short_description_required == 'No' || old('short_description_required') == 'No') selected @endif>No</option>
                                         </select>
                                     </div>
                                     @error('short_description_required')
@@ -2958,10 +2960,10 @@
                                     @enderror
                                 </div>
                                 <div class="col-lg-6" id="nature_of_repeat_block"
-                                    @if ($data->short_description_required != 'Recurring') style="display: none" @endif>
+                                    @if ($data->short_description_required != 'Yes') style="display: none" @endif>
                                     <div class="group-input" id="nature_of_repeat">
-                                        <label for="nature_of_repeat">Repeat Nature <span id="asteriskInviRecurring"
-                                                style="display: {{ $data->short_description_required == 'Recurring' ? 'inline' : 'none' }}"
+                                        <label for="nature_of_repeat">Repeat Nature <span id="asteriskInviYes"
+                                                style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <textarea class="nature_of_repeat"
                                             name="nature_of_repeat" disabled id="nature_of_repeat"
@@ -2984,7 +2986,7 @@
 
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'Recurring';
+                                            var isRequired = this.value === 'Yes';
                                             // var natureOfRepeatBlock = document.getElementsById('nature_of_repeat_block');
 
                                             inputsToToggle.forEach(function(input) {
@@ -3000,15 +3002,15 @@
                                             });
 
                                             // Show or hide the asterisk icon based on the selected value
-                                            var asteriskIcon = document.getElementById('asteriskInviRecurring');
+                                            var asteriskIcon = document.getElementById('asteriskInviYes');
                                             asteriskIcon.style.display = isRequired ? 'inline' : 'none';
                                         });
                                     });
                                 </script>
                                 <script>
-                                    function checkRecurring(selectElement) {
+                                    function checkYes(selectElement) {
                                         var repeatNatureField = document.getElementById('nature_of_repeat');
-                                        if (selectElement.value === 'Recurring') {
+                                        if (selectElement.value === 'Yes') {
                                             repeatNatureField.setAttribute('required', 'required');
                                         } else {
                                             repeatNatureField.removeAttribute('required');
@@ -3059,7 +3061,7 @@
                                         <label for="Investigation required">Investigation Required?</label>
                                         <select disabled name="Investigation_required" id="Investigation_required"
                                             value="{{ $data->Investigation_required }}">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option @if ($data->Investigation_required == 'yes') selected @endif value='yes'>Yes
                                             </option>
                                             <option @if ($data->Investigation_required == 'no') selected @endif value='no'>No
@@ -3180,6 +3182,15 @@
                                             name="QAInitialRemark"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="summernote-6">{{ $data->QAInitialRemark }}</textarea>
                                     </div>
                                 </div>
+
+                                  @if ($data->attach_files1)
+                                            @foreach (json_decode($data->attach_files1) as $file)
+                                                <input id="ATFIFile-3-{{ $loop->index }}" type="hidden"
+                                                    name="existing_attach_files[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                  @endif
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Initial Attachments">QA Initial Attachments</label>
@@ -7239,8 +7250,8 @@
                                             id="Other2_person">
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $user)
-                                                <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
-                                                    value="{{ $user->id }}">{{ $user->name }}</option>
+                                                <option value="{{ $user->id }}" {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
+                                                    >{{ $user->name }}</option>
                                             @endforeach
                                         </select>
 
@@ -8262,8 +8273,8 @@
                                             id="Other2_person">
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $user)
-                                                <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
-                                                    value="{{ $user->id }}">{{ $user->name }}</option>
+                                                <option value="{{ $user->id }}" {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
+                                                    >{{ $user->name }}</option>
                                             @endforeach
                                         </select>
 
@@ -10577,7 +10588,7 @@
                                             <select
                                                 name="Investigation_required"{{ $data->stage == 0 || $data->stage == 11 || $data->stage != 5 ? 'disabled' : '' }}
                                                 id="Investigation_required" value="{{ $data->Investigation_required }}">
-                                                <option value="select">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 <option @if ($data->Investigation_required == 'yes') selected @endif value='yes'>
                                                     Yes</option>
                                                 <option @if ($data->Investigation_required == 'no') selected @endif value='no'>
@@ -10836,11 +10847,11 @@
                                 name="Post_Categorization"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                 id="Post_Categorization" value="Post_Categorization">
                                 <option value=""> -- Select --</option>
-                                <option @if ($data->Post_Categorization == 'major') selected @endif value="major">Major
+                                <option value="major" @if ($data->Post_Categorization == 'major') selected @endif>Major
                                 </option>
-                                <option @if ($data->Post_Categorization == 'minor') selected @endif value="minor">Minor
+                                <option value="minor" @if ($data->Post_Categorization == 'minor') selected @endif>Minor
                                 </option>
-                                <option @if ($data->Post_Categorization == 'critical') selected @endif value="critical">Critical
+                                <option value="critical" @if ($data->Post_Categorization == 'critical') selected @endif>Critical
                                 </option>
                             </select>
                             {{-- @error('Post_Categorization')
@@ -11799,21 +11810,21 @@
 
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="submit by">Submited By :-</label>
+                            <label for="submit by">Submitted By :-</label>
                             <div class="static">{{ $data->submit_by }}</div>
                         </div>
                     </div>
 
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="submit on">Submited On :-</label>
+                            <label for="submit on">Submitted On :-</label>
                             <div class="static">{{ $data->submit_on }}</div>
                         </div>
                     </div>
 
                     <div class="col-lg-3">
                         <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                            <label for="submit comment">Submited Comments :-</label>
+                            <label for="submit comment">Submitted Comments :-</label>
                             <div class="static">{{ $data->submit_comment }}</div>
                         </div>
                     </div>
@@ -14836,5 +14847,14 @@
         }
     </script>
 
+    <script>
+                $(document).ready(function() {
+                    $('.remove-file').click(function() {
+                        const removeId = $(this).data('remove-id')
+                        console.log('removeId', removeId);
+                        $('#' + removeId).remove();
+                    })
+                })
+    </script>
 
 @endsection

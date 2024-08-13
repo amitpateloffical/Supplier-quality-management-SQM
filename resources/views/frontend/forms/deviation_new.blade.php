@@ -840,7 +840,7 @@
                                         <label for="deviation_time">Delay Justification</label>
 
                                         <div class="relative-container">
-                                            <textarea id="docname" id="Delay_Justification" name="Delay_Justification" maxlength="255" class="mic-input"></textarea>
+                                            <textarea id="docname" id="Delay_Justification" name="Delay_Justification" class="mic-input"></textarea>
 
                                             @component('frontend.forms.language-model')
                                             @endcomponent
@@ -5473,7 +5473,7 @@
                                     <div class="group-input">
                                         <label for="Post Categorization Of Deviation">Post Categorization Of
                                             Deviation</label>
-                                        <div><small class="text-primary">Please Refer Intial deviation category before
+                                        <div><small class="text-primary">Please Refer Initial deviation category before
                                                 updating.</small></div>
                                         <select name="Post_Categorization" id="Post_Categorization" disabled>
                                             <option value=""> -- Select --</option>

@@ -170,7 +170,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
+                                        <label for="Effectiveness check Plan"><b>Effectiveness Check Plan</b></label>
                                         <div class="relative-container">
                                             <input type="text" name="Effectiveness_check_Plan" class="mic-input">
                                             @component('frontend.forms.language-model')
@@ -181,7 +181,7 @@
                             </div>
 
                             <div class="group-input">
-                                <label for="Attachments">Attachment</label>
+                                <label for="Attachments">Attachments</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">
@@ -236,7 +236,8 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
+                                        <label for="Effectiveness Check Attachments">Effectiveness check
+                                            Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -267,7 +268,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Addendum Attachments">Addendum Attachment</label>
+                                        <label for="Addendum Attachments">Addendum Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -311,7 +312,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Attachments">Reference Attachment</label>
+                                        <label for="Attachments">Reference Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">

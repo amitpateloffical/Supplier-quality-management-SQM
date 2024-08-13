@@ -234,7 +234,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['doc_id' => $document->id, 'type' => 'Risk-Assesment'])
+                                        ->where(['doc_id' => $document->id, 'type' => 'Risk-Assessment'])
                                         ->get();
                                 @endphp
                                 <div class="table-responsive" style="padding: 20px;">
@@ -303,7 +303,7 @@
                                                 id="reviewer_completed_on"
                                                 value="{{ $auditCollect ? Helpers::getdateFormat($auditCollect->reviewer_comment_on) : '' }}">
                                         </div>
-                                        <input type="hidden" id="type" name="type" value="Risk-Assesment">
+                                        <input type="hidden" id="type" name="type" value="Risk-Assessment">
                                     </div>
                                     <div class="modal-footer">
                                         {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
@@ -320,7 +320,7 @@
                         <div class="heading">
 
                             <div class="heading-new">
-                                Risk Assesment Audit Trail
+                                Audit Trail
                             </div>
 
                             <div> <strong>Record ID : </strong>
@@ -406,7 +406,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div><strong> Peformed By
+                                <div><strong> Performed By
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On

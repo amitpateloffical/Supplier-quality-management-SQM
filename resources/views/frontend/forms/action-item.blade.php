@@ -285,7 +285,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD Person</label>
-                                        <select name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
+                                        <select name="hod_preson[]" placeholder="Select HOD Person" data-search="false"
                                             data-silent-initial-value-set="true" id="hod">
                                             <option value="">select</option>
                                             @foreach ($users as $value)

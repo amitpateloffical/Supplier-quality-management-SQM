@@ -141,7 +141,7 @@ class ActionItemController extends Controller
         //     $history->activity_type = 'Title';
         //     $history->previous = "Null";
         //     $history->current =  $openState->title;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -158,7 +158,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Parent Id';
             $history->previous = "Null";
             $history->current = $data->parent_id;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -175,7 +175,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Parent Type';
             $history->previous = "Null";
             $history->current = $data->parent_type;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -192,7 +192,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Division Code';
             $history->previous = "Null";
             $history->current =  Helpers::getDivisionName($openState->division_id);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -208,7 +208,7 @@ class ActionItemController extends Controller
         //     $history->activity_type = 'Record Number';
         //     $history->previous = "Null";
         //     $history->current = str_pad($openState->record, 4, '0', STR_PAD_LEFT) ;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -224,7 +224,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($openState->division_id) . '/AI/' . Helpers::year($openState->created_at) . '/' . str_pad($openState->record, 4, '0', STR_PAD_LEFT);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -241,7 +241,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
             $history->current =  Helpers::getInitiatorName($openState->initiator_id);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -258,7 +258,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Date of Initiation';
             $history->previous = "Null";
             $history->current =  Helpers::getdateFormat($openState->intiation_date);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -275,7 +275,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
             $history->current =  Helpers::getInitiatorName($openState->assign_to);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -289,10 +289,10 @@ class ActionItemController extends Controller
         if (!empty($openState->due_date)) {
             $history = new ActionItemHistory();
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Date Due';
+            $history->activity_type = 'Due Date';
             $history->previous = "Null";
             $history->current =  $openState->due_date;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -309,7 +309,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Short Description';
             $history->previous = "Null";
             $history->current =  $openState->short_description;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -320,13 +320,13 @@ class ActionItemController extends Controller
             $history->save();
         }
 
-        if (!empty($request->Reference_Recores1)) {
+        if (!empty($openState->Reference_Recores1)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
             $history->activity_type = 'Action Item Related Records';
             $history->previous = "Null";
-            $history->current =  implode(',',$request->Reference_Recores1);
-            $history->comment = "NA";
+            $history->current =  implode(',', $request->Reference_Recores1);
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -340,10 +340,10 @@ class ActionItemController extends Controller
         if (!empty($openState->hod_preson)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'HOD Persons';
+            $history->activity_type = 'HOD Person';
             $history->previous = "Null";
             $history->current =  implode(', ', $request->hod_preson);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -360,7 +360,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Description';
             $history->previous = "Null";
             $history->current =  $openState->description;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -377,7 +377,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Responsible Department';
             $history->previous = "Null";
             $history->current =  $openState->departments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -394,7 +394,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'File Attachments';
             $history->previous = "Null";
             $history->current =  $openState->file_attach;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -411,7 +411,7 @@ class ActionItemController extends Controller
         //     $history->activity_type = 'Action Item Related Records';
         //     $history->previous = "Null";
         //     $history->current =  implode(',',$request->Reference_Recores1);
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -430,7 +430,7 @@ class ActionItemController extends Controller
         //     $history->activity_type = 'Inititator Group';
         //     $history->previous = "Null";
         //     $history->current =  $openState->initiatorGroup;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -451,7 +451,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Action Taken';
             $history->previous = "Null";
             $history->current =  $openState->action_taken;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -467,7 +467,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Actual Start Date';
             $history->previous = "Null";
             $history->current =  Helpers::getdateFormat($openState->start_date);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -483,7 +483,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Actual End Date';
             $history->previous = "Null";
             $history->current =  Helpers::getdateFormat($openState->end_date);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -499,7 +499,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Comments';
             $history->previous = "Null";
             $history->current =  $openState->comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -515,7 +515,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'QA Review Comments';
             $history->previous = "Null";
             $history->current =  $openState->qa_comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -532,7 +532,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Due Date Extension Justification';
             $history->previous = "Null";
             $history->current =  $openState->due_date_extension;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -549,7 +549,7 @@ class ActionItemController extends Controller
         //     $history->activity_type = 'File Attachments';
         //     $history->previous = "Null";
         //     $history->current =  $openState->file_attach;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -565,7 +565,7 @@ class ActionItemController extends Controller
         //     $history->activity_type = 'Supporting Documents';
         //     $history->previous = "Null";
         //     $history->current =  $openState->Support_doc;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -649,19 +649,45 @@ class ActionItemController extends Controller
         //     }
         //     $openState->file_attach = json_encode($files);
         // }
+
+
+
+        // if (!empty($request->file_attach)) {
+        //     $files = [];
+        //     if ($request->hasfile('file_attach')) {
+        //         foreach ($request->file('file_attach') as $file) {
+        //             $name = $request->name . ' file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $openState->file_attach = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_file_attach) ? $request->existing_file_attach : null;
+
         if (!empty($request->file_attach)) {
-            $files = [];
+            if ($openState->file_attach) {
+                $existingFiles = json_decode($openState->file_attach, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('file_attach')) {
                 foreach ($request->file('file_attach') as $file) {
-                    $name = $request->name . ' file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-
-
-            $openState->file_attach = json_encode($files);
         }
+        // If no files are attached, set to null
+        $openState->file_attach = !empty($files) ? json_encode($files) : null;
+
+
         // if (!empty($request->Support_doc)) {
         //     $files = [];
         //     if ($request->hasfile('Support_doc')) {
@@ -764,11 +790,11 @@ class ActionItemController extends Controller
 
         if ($lastopenState->hod_preson != $openState->hod_preson || !empty($request->hod_preson_comment)) {
             $lastDocumentAuditTrail = ActionItemHistory::where('cc_id', $openState->id)
-            ->where('activity_type', 'HOD Persons')
+            ->where('activity_type', 'HOD Person')
             ->exists();
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'HOD Persons';
+            $history->activity_type = 'HOD Person';
             $history->previous = $lastopenState->hod_preson;
             $history->current = $openState->hod_preson;
             $history->comment = $request->hod_preson_comment;

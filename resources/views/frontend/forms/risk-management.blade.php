@@ -150,7 +150,7 @@
 
             <div class="division-bar">
                 <strong>Site Division/Project</strong> :
-                {{ Helpers::getDivisionName(session()->get('division')) }} / Risk Assesment
+                {{ Helpers::getDivisionName(session()->get('division')) }} / Risk Assessment
             </div>
         </div>
         @php
@@ -163,7 +163,8 @@
 
                 <!-- Tab links -->
                 <div class="cctab">
-                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Risk/Opportunity Assesment</button>
+                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Risk/Opportunity
+                        Assessment</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button>
@@ -1359,11 +1360,13 @@
                                     </div>
                                     <div class="col-12 sub-head"></div>
                                     <div class="col-12">
-                                        <label for="root_cause_description">Root Cause Description</label>
-                                        <div class="relative-container">
-                                            <textarea class="mic-input" name="root_cause_description"></textarea>
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
+                                        <div class="group-input">
+                                            <label for="root_cause_description">Root Cause Description</label>
+                                            <div class="relative-container">
+                                                <textarea class="mic-input" name="root_cause_description"></textarea>
+                                                @component('frontend.forms.language-model')
+                                                @endcomponent
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12">

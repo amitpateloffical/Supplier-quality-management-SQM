@@ -310,7 +310,7 @@ class EffectivenessCheckController extends Controller
         if (!empty($openState->Attachments)) {
             $history = new EffectivenessCheckAuditTrail();
             $history->effectiveness_check_id = $openState->id;
-            $history->activity_type = 'Attachment';
+            $history->activity_type = 'Attachments';
             $history->previous = "Null";
             $history->current = $openState->Attachments;
             $history->comment = "Not Applicable";
@@ -416,7 +416,7 @@ class EffectivenessCheckController extends Controller
         if (!empty($openState->Effectiveness_check_Attachment)) {
             $history = new EffectivenessCheckAuditTrail();
             $history->effectiveness_check_id = $openState->id;
-            $history->activity_type = 'Effectiveness Check Attachment';
+            $history->activity_type = 'Effectiveness Check Attachments';
             $history->previous = "Null";
             $history->current = $openState->Effectiveness_check_Attachment;
             $history->comment = "Not Applicable";
@@ -449,7 +449,7 @@ class EffectivenessCheckController extends Controller
         if (!empty($openState->Addendum_Attachment)) {
             $history = new EffectivenessCheckAuditTrail();
             $history->effectiveness_check_id = $openState->id;
-            $history->activity_type = 'Addendum Attachment';
+            $history->activity_type = 'Addendum Attachments';
             $history->previous = "Null";
             $history->current = $openState->Addendum_Attachment;
             $history->comment = "Not Applicable";
@@ -483,7 +483,7 @@ class EffectivenessCheckController extends Controller
         if (!empty($openState->Attachment)) {
             $history = new EffectivenessCheckAuditTrail();
             $history->effectiveness_check_id = $openState->id;
-            $history->activity_type = 'Reference Attachment';
+            $history->activity_type = 'Reference Attachments';
             $history->previous = "Null";
             $history->current = $openState->Attachment;
             $history->comment = "Not Applicable";
@@ -720,7 +720,7 @@ class EffectivenessCheckController extends Controller
                 $history->activity_type = 'Assigned To';
                 $history->previous = Helpers::getInitiatorName($lastopenState->assign_to);
                 $history->current = Helpers::getInitiatorName($openState->assign_to);
-                $history->comment = $request->assign_to_comment ?? 'NA';
+                $history->comment = $request->assign_to_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -788,13 +788,13 @@ class EffectivenessCheckController extends Controller
 
     if ($lastopenState->Effectiveness_check_Plan != $openState->Effectiveness_check_Plan || !empty($request->Effectiveness_check_Plan_comment)) {
         $lastDataAudittrail = EffectivenessCheckAuditTrail::where('effectiveness_check_id', $openState->id)
-            ->where('activity_type', 'Effectiveness check Plan')
+            ->where('activity_type', 'Effectiveness Check Plan')
             ->exists();
 
 
         $history = new EffectivenessCheckAuditTrail();
         $history->effectiveness_check_id = $id;
-        $history->activity_type = 'Effectiveness check Plan';
+        $history->activity_type = 'Effectiveness Check Plan';
         $history->previous = $lastopenState->Effectiveness_check_Plan;
         $history->current = $openState->Effectiveness_check_Plan;
         $history->comment = $request->Effectiveness_check_Plan_comment;
@@ -812,13 +812,13 @@ class EffectivenessCheckController extends Controller
 
     if ($lastopenState->Attachments != $openState->Attachments || !empty($request->Attachments_comment)) {
         $lastDataAudittrail = EffectivenessCheckAuditTrail::where('effectiveness_check_id', $openState->id)
-            ->where('activity_type', 'Attachment')
+            ->where('activity_type', 'Attachments')
             ->exists();
 
 
         $history = new EffectivenessCheckAuditTrail();
         $history->effectiveness_check_id = $id;
-        $history->activity_type = 'Attachment';
+        $history->activity_type = 'Attachments';
         $history->previous = $lastopenState->Attachments;
         $history->current = $openState->Attachments;
         $history->comment = $request->Attachments_comment;
@@ -936,13 +936,13 @@ class EffectivenessCheckController extends Controller
         if ($lastopenState->Effectiveness_check_Attachment != $openState->Effectiveness_check_Attachment || !empty($request->Effectiveness_check_Attachment)) {
 
             $lastDataAudittrail = EffectivenessCheckAuditTrail::where('effectiveness_check_id', $openState->id)
-                ->where('activity_type', 'Effectiveness check Attachment')
+                ->where('activity_type', 'Effectiveness Check Attachments')
                 ->exists();
 
 
             $history = new EffectivenessCheckAuditTrail();
             $history->effectiveness_check_id = $id;
-            $history->activity_type = 'Effectiveness check Attachment';
+            $history->activity_type = 'Effectiveness Check Attachments';
             $history->previous = $lastopenState->Effectiveness_check_Attachment;
             $history->current = $openState->Effectiveness_check_Attachment;
             $history->comment = $request->Effectiveness_check_Attachment_comment;
@@ -981,13 +981,13 @@ class EffectivenessCheckController extends Controller
 
         if ($lastopenState->Addendum_Attachment != $openState->Addendum_Attachment || !empty($request->Addendum_Attachment_comment)) {
             $lastDataAudittrail = EffectivenessCheckAuditTrail::where('effectiveness_check_id', $openState->id)
-                ->where('activity_type', 'Addendum Attachment')
+                ->where('activity_type', 'Addendum Attachments')
                 ->exists();
 
 
             $history = new EffectivenessCheckAuditTrail();
             $history->effectiveness_check_id = $id;
-            $history->activity_type = 'Addendum Attachment';
+            $history->activity_type = 'Addendum Attachments';
             $history->previous = $lastopenState->Addendum_Attachment;
             $history->current = $openState->Addendum_Attachment;
             $history->comment = $request->Addendum_Attachment_comment;
@@ -1031,13 +1031,13 @@ class EffectivenessCheckController extends Controller
         if ($lastopenState->Attachment != $openState->Attachment || !empty($request->Attachment_comment)) {
 
             $lastDataAudittrail = EffectivenessCheckAuditTrail::where('effectiveness_check_id', $openState->id)
-                ->where('activity_type', 'Reference Attachment')
+                ->where('activity_type', 'Reference Attachments')
                 ->exists();
 
 
             $history = new EffectivenessCheckAuditTrail();
             $history->effectiveness_check_id = $id;
-            $history->activity_type = 'Reference Attachment';
+            $history->activity_type = 'Reference Attachments';
             $history->previous = $lastopenState->Attachment;
             $history->current = $openState->Attachment;
             $history->comment = $request->Attachment_comment;

@@ -146,11 +146,11 @@ class ObservationController extends Controller
         if (!empty($request->responsible)) {
             $data1->responsible = serialize($request->responsible);
         }
-        if (!empty($request->item_status)) {
-            $data1->item_status = serialize($request->item_status);
-        }
         if (!empty($request->deadline)) {
             $data1->deadline = serialize($request->deadline);
+        }
+        if (!empty($request->item_status)) {
+            $data1->item_status = serialize($request->item_status);
         }
         $data1->save();
 
@@ -164,7 +164,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Parent Id';
             $history->previous = "Null";
             $history->current = $data->parent_id;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -181,7 +181,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Parent Type';
             $history->previous = "Null";
             $history->current = $data->parent_type;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -198,7 +198,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($data->division_id);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -215,7 +215,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
             $history->current = $data->record_no;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -233,7 +233,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($data->initiator_id);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -250,7 +250,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Date of Initiation';
             $history->previous = "Null";
             $history->current = Helpers::getdateFormat($data->intiation_date);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -267,7 +267,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($data->assign_to);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -284,7 +284,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
             $history->current = $data->due_date;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -301,7 +301,7 @@ class ObservationController extends Controller
         //     $history->activity_type = 'Grading';
         //     $history->previous = "Null";
         //     $history->current = $data->grading;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -318,7 +318,7 @@ class ObservationController extends Controller
         //     $history->activity_type = 'Category Observation';
         //     $history->previous = "Null";
         //     $history->current = $data->category_observation;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -336,7 +336,7 @@ class ObservationController extends Controller
         //     $history->activity_type = 'Reference Guideline';
         //     $history->previous = "Null";
         //     $history->current = $data->reference_guideline;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -353,7 +353,7 @@ class ObservationController extends Controller
         //     $history->activity_type = 'Parent Type';
         //     $history->previous = "Null";
         //     $history->current = $data->description;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -371,7 +371,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Short Description';
             $history->previous = "Null";
             $history->current = $data->short_description;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -389,7 +389,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Attached Files';
             $history->previous = "Null";
             $history->current = json_encode($data->attach_files1);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -406,7 +406,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Recomendation Capa Date Due';
             $history->previous = "Null";
             $history->current = $data->recomendation_capa_date_due;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -422,7 +422,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Non Compliance';
             $history->previous = "Null";
             $history->current = $data->non_compliance;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -438,7 +438,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Recommended Action';
             $history->previous = "Null";
             $history->current = $data->recommend_action;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -455,7 +455,7 @@ class ObservationController extends Controller
             $history->activity_type = 'Related Observations';
             $history->previous = "Null";
             $history->current = json_encode($data->related_observations);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -471,7 +471,7 @@ class ObservationController extends Controller
                 $history->activity_type = 'Date Response Due';
                 $history->previous = "Null";
                 $history->current = $data->date_Response_due2;
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -487,7 +487,7 @@ class ObservationController extends Controller
                 $history->activity_type = 'Due Date.';
                 $history->previous = "Null";
                 $history->current = $data->capa_date_due;
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -503,7 +503,7 @@ class ObservationController extends Controller
                 $history->activity_type = 'Assigned To.';
                 $history->previous = "Null";
                 $history->current = $data->assign_to2;
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -520,7 +520,7 @@ class ObservationController extends Controller
             //     $history->activity_type = 'Cro Vendor ';
             //     $history->previous = "Null";
             //     $history->current = $data->cro_vendor;
-            //     $history->comment = "NA";
+            //     $history->comment = "Not Applicable";
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -537,7 +537,7 @@ class ObservationController extends Controller
                 $history->activity_type = 'Comments ';
                 $history->previous = "Null";
                 $history->current = $data->comments;
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -553,7 +553,7 @@ class ObservationController extends Controller
                 $history->activity_type = 'Impact ';
                 $history->previous = "Null";
                 $history->current = $data->impact;
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -569,7 +569,7 @@ class ObservationController extends Controller
                 $history->activity_type = 'Impact Analysis ';
                 $history->previous = "Null";
                 $history->current = $data->impact_analysis;
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -595,7 +595,7 @@ class ObservationController extends Controller
                 } else {
                     $history->current = "Fatal";
                 }
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -622,7 +622,7 @@ class ObservationController extends Controller
                 } else {
                     $history->current = "Extremely Unlikely";
                 }
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -649,7 +649,7 @@ class ObservationController extends Controller
                 } else {
                     $history->current = "Impossible";
                 }
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -665,7 +665,7 @@ class ObservationController extends Controller
                 $history->activity_type = 'RPN ';
                 $history->previous = "Null";
                 $history->current = $data->analysisRPN;
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -682,7 +682,7 @@ class ObservationController extends Controller
                 $history->activity_type = 'Actual Start Date ';
                 $history->previous = "Null";
                 $history->current = Helpers::getdateFormat($data->actual_start_date);
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -699,7 +699,7 @@ class ObservationController extends Controller
                 $history->activity_type = 'Actual End Date ';
                 $history->previous = "Null";
                 $history->current = Helpers::getdateFormat($data->actual_end_date);
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -716,7 +716,7 @@ class ObservationController extends Controller
                 $history->activity_type = 'Action Taken ';
                 $history->previous = "Null";
                 $history->current = $data->action_taken;
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -733,7 +733,7 @@ class ObservationController extends Controller
             //     $history->activity_type = 'Date Response Due1 ';
             //     $history->previous = "Null";
             //     $history->current = $data->date_response_due1;
-            //     $history->comment = "NA";
+            //     $history->comment = "Not Applicable";
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -747,7 +747,7 @@ class ObservationController extends Controller
             //     $history->activity_type = 'Response Date ';
             //     $history->previous = "Null";
             //     $history->current = $data->response_date;
-            //     $history->comment = "NA";
+            //     $history->comment = "Not Applicable";
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -764,7 +764,7 @@ class ObservationController extends Controller
             //     $history->activity_type = 'Attach Files2 ';
             //     $history->previous = "Null";
             //     $history->current = json_encode($data->assign_to2);
-            //     $history->comment = "NA";
+            //     $history->comment = "Not Applicable";
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -781,7 +781,7 @@ class ObservationController extends Controller
                 $history->activity_type = 'Attachment';
                 $history->previous = "Null";
                 $history->current = json_encode($data->attach_files2);
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -797,7 +797,7 @@ class ObservationController extends Controller
                     $history->activity_type = 'Related Url ';
                     $history->previous = "Null";
                     $history->current = $data->related_url;
-                    $history->comment = "NA";
+                    $history->comment = "Not Applicable";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -814,7 +814,7 @@ class ObservationController extends Controller
                     $history->activity_type = 'Response Summary ';
                     $history->previous = "Null";
                     $history->current = $data->response_summary;
-                    $history->comment = "NA";
+                    $history->comment = "Not Applicable";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -831,7 +831,7 @@ class ObservationController extends Controller
                 // $history->activity_type = 'Parent ';
                 // $history->previous = "Null";
                 // $history->current = $data->response_summary;
-                // $history->comment = "NA";
+                // $history->comment = "Not Applicable";
                 // $history->user_id = Auth::user()->id;
                 // $history->user_name = Auth::user()->name;
                 // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -846,7 +846,7 @@ class ObservationController extends Controller
                 // $history->activity_type = 'Attach Files2 ';
                 // $history->previous = "Null";
                 // $history->current = json_encode($data->attach_files2);
-                // $history->comment = "NA";
+                // $history->comment = "Not Applicable";
                 // $history->user_id = Auth::user()->id;
                 // $history->user_name = Auth::user()->name;
                 // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1047,21 +1047,27 @@ class ObservationController extends Controller
         // }
 
         $data->update();
-        $data1 = ObservationGrid::find($id);
-        $data1->observation_id = $data->id;
-        if (!empty($request->action)) {
-            $data1->action = serialize($request->action);
+
+        $data1 = ObservationGrid::where('observation_id', $id)->first();
+
+        if (!empty($data1)) { // Check if the record exists
+            $data1->observation_id = $id;
+
+            if (!empty($request->action)) {
+                $data1->action = serialize($request->action);
+            }
+            if (!empty($request->responsible)) {
+                $data1->responsible = serialize($request->responsible);
+            }
+            if (!empty($request->deadline)) {
+                $data1->deadline = serialize($request->deadline);
+            }
+            if (!empty($request->item_status)) {
+                $data1->item_status = serialize($request->item_status);
+            }
+
+            $data1->update(); // Update the record in the database
         }
-        if (!empty($request->responsible)) {
-            $data1->responsible = serialize($request->responsible);
-        }
-        if (!empty($request->item_status)) {
-            $data1->item_status = serialize($request->item_status);
-        }
-        if (!empty($request->deadline)) {
-            $data1->deadline = serialize($request->deadline);
-        }
-        $data1->update();
 
         // if ($lastDocument->parent_id != $data->parent_id || !empty($request->parent_id_comment)) {
         //     $history = new AuditTrialObservation();

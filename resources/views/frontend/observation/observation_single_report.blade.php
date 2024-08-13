@@ -919,7 +919,7 @@
                                             {{ unserialize($griddata->deadline)[$key] ? Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) : 'N/A' }}
                                         </td>
                                         <td class="w-15">
-                                            {{ unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : 'N/A' }}
+                                            {{ unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : 'N/A' }}
                                         </td>
                                     </tr>
                                 @endforeach

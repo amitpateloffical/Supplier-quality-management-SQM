@@ -352,7 +352,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD Person</label>
-                                        <select name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
+                                        <select name="hod_preson[]" placeholder="Select HOD Person" data-search="false"
                                             data-silent-initial-value-set="true" id="hod"
                                             {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
                                             <option value="">select</option>
@@ -519,6 +519,14 @@
 
                                     </div>
                                 </div>
+
+                                @if ($data->file_attach)
+                                    @foreach (json_decode($data->file_attach) as $file)
+                                        <input id="FIATFile-{{ $loop->index }}" type="hidden"
+                                            name="existing_file_attach[{{ $loop->index }}]"
+                                            value="{{ $file }}">
+                                    @endforeach
+                                @endif
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="file_attach">File Attachments</label>
@@ -534,6 +542,7 @@
                                                                     style="font-size:20px; margin-right:-10px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file"
+                                                                data-remove-id="FIATFile-{{ $loop->index }}"
                                                                 data-file-name="{{ $file }}"
                                                                 style="@if ($data->stage == 0 || $data->stage == 3) pointer-events: none; @endif">
                                                                 <i class="fa-solid fa-circle-xmark"
@@ -1018,9 +1027,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1064,9 +1073,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                            <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1111,9 +1120,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1270,6 +1279,15 @@
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);
         });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.remove-file').click(function() {
+                const removeId = $(this).data('remove-id')
+                console.log('removeId', removeId);
+                $('#' + removeId).remove();
+            })
+        })
     </script>
 
 @endsection

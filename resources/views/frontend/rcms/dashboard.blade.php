@@ -135,9 +135,9 @@
                                     <option value="Action Item">Action Item</option>
                                     <option value="Deviation">Deviation</option>
                                     <option value="Capa">CAPA</option>
-                                    <option value="Risk Assesment">Risk Assesment</option>
+                                    <option value="Risk Assesment">Risk Assessment</option>
                                     <option value="Root-Cause-Analysis">Root Cause Analysis</option>
-                                    <option value="Effectivenss Check">Effectivenss Check</option>
+                                    <option value="Effectivenss Check">Effectiveness Check</option>
 
                                     <!-- <option value="Management Review">Management Review</option> -->
                                     <option value="Document">Document</option>

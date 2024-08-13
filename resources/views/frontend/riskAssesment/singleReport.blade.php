@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Risk Assesment Single Report
+                    Risk Assessment Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -173,7 +173,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Risk Assesment No.</strong>
+                    <strong>Risk Assessment No.</strong>
                 </td>
                 <td class="w-40">
                     {{ Helpers::divisionNameForQMS($data->division_id) }}/RA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -189,7 +189,7 @@
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    Risk/Opportunity Assesment
+                    Risk/Opportunity Assessment
                 </div>
                 <table>
                     <tr> {{ $data->created_at }} added by {{ $data->originator }}
@@ -1502,7 +1502,7 @@
                                         {{ unserialize($data5->deadline)[$key] ? Helpers::getdateFormat(unserialize($data5->deadline)[$key]) : 'N/A' }}
                                     </td>
                                     <td class="w-15">
-                                        {{ unserialize($data5->action)[$key] ? unserialize($data5->action)[$key] : 'N/A' }}
+                                        {{ unserialize($data5->item_static)[$key] ? unserialize($data5->item_static)[$key] : 'N/A' }}
                                     </td>
                                 </tr>
                             @endforeach

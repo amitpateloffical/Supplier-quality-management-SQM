@@ -166,7 +166,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Risk Assesment Audit Trail Report
+                    Risk Assessment Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -178,7 +178,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> Risk Assesment No.</strong>
+                    <strong> Risk Assessment No.</strong>
                 </td>
                 <td class="w-40">
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActionItem;
+use App\Models\Capa;
 use App\Models\RecordNumber;
 use App\Models\RiskAuditTrail;
 use App\Models\RiskManagement;
@@ -47,7 +49,7 @@ class RiskManagementController extends Controller
         }
         // return $request;
         $data = new RiskManagement();
-        $data->form_type = "risk-assesment";
+        $data->form_type = "risk-assessment";
         $data->division_id = $request->division_id;
         $data->division_code = $request->division_code;
         $data->parent_id = $request->parent_id;
@@ -1602,7 +1604,7 @@ class RiskManagementController extends Controller
         if (!empty($data->risk_analysis)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Risk  Analysis';
+            $history->activity_type = 'Risk Analysis';
             $history->previous = "Null";
             $history->current = $data->risk_analysis;
             $history->comment = "Not Applicable";
@@ -3433,7 +3435,7 @@ class RiskManagementController extends Controller
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
-                $history->activity_type = 'Submited By, Submited On';
+                $history->activity_type = 'Submitted By, Submitted On';
                 if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
                     $history->previous = "";
                 } else {
@@ -4076,7 +4078,7 @@ class RiskManagementController extends Controller
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text($width / 2.5, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
-            return $pdf->stream('Risk-assesment' . $id . '.pdf');
+            return $pdf->stream('Risk-assessment' . $id . '.pdf');
         }
     }
 
@@ -4109,8 +4111,9 @@ class RiskManagementController extends Controller
 
     public function child(Request $request, $id)
     {
+        $RM = RiskManagement::find($id);
         $parent_id = $id;
-        $parent_type = "Action-Item";
+        $parent_type = "Risk-Assessment";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -4124,6 +4127,19 @@ class RiskManagementController extends Controller
         $parent_short_description = RiskManagement::where('id', $id)->value('short_description');
         $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
 
-        return view('frontend.forms.action-item', compact('parent_id', 'parent_type', 'record_number', 'currentDate', 'formattedDate', 'due_date', 'parent_record', 'parent_record', 'parent_division_id', 'parent_initiator_id', 'parent_intiation_date', 'parent_short_description','old_record'));
+        if ($request->revision == "Action-Item") {
+            $old_record = ActionItem::all();
+            $RM->originator = User::where('id', $RM->initiator_id)->value('name');
+            return view('frontend.forms.action-item', compact('record_number','old_record', 'due_date','parent_division_id','parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+        }
+
+        if ($request->revision == "CAPA") {
+            $old_record = Capa::all();
+            $RM->originator = User::where('id', $RM->initiator_id)->value('name');
+           return view('frontend.forms.capa', compact('record_number','old_record', 'due_date','parent_division_id','parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+        }
+
     }
 }

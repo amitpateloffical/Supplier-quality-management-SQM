@@ -172,7 +172,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName($data->division_id) }} / Risk Assesment
+            {{ Helpers::getDivisionName($data->division_id) }} / Risk Assessment
         </div>
     </div>
 
@@ -213,6 +213,9 @@
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Cancel
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
                             </button>
                         @elseif($data->stage == 3 && (in_array(16, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -329,7 +332,7 @@
                     <!-- Tab links -->
                     <div class="cctab">
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Risk/Opportunity
-                            Assesment</button>
+                            Assessment</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button>
@@ -1451,11 +1454,13 @@
                                                                 <td><input disabled type="text" name="serial_number[]"
                                                                         value="{{ $key + 1 }}"></td>
                                                                 <td><input type="text" name="action[]"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                         value="{{ $temps ? $temps : ' ' }}"></td>
                                                                 {{-- <td><input type="text" name="responsible[]"
                                                                         value="{{ unserialize($action_plan->responsible)[$key] ? unserialize($action_plan->responsible)[$key] : '' }}">
                                                                 </td> --}}
                                                                 <td> <select id="select-state" placeholder="Select..."
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                         name="responsible[]">
                                                                         <option value="">Select a value</option>
                                                                         @foreach ($users as $value)
@@ -1474,12 +1479,14 @@
                                                                         <div class="input-date ">
                                                                             <div class="calenderauditee">
                                                                                 <input type="text"
+                                                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                                     placeholder="DD-MM-YYYY"
                                                                                     id="deadline{{ $key }}' + serialNumber +'"
                                                                                     readonly
                                                                                     value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) }}" />
                                                                                 <input type="date" name="deadline[]"
                                                                                     class="hide-input"
+                                                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                                     placeholder="DD-MM-YYYY"
                                                                                     value="{{ unserialize($action_plan->deadline)[$key] ? unserialize($action_plan->deadline)[$key] : ' ' }}"
                                                                                     oninput="handleDateInput(this, `deadline{{ $key }}' + serialNumber +'`)" />
@@ -1489,10 +1496,11 @@
                                                                 </td>
 
                                                                 <td><input type="text" name="item_static[]"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                         value="{{ unserialize($action_plan->item_static)[$key] ? unserialize($action_plan->item_static)[$key] : ' ' }}">
                                                                 </td>
-                                                                <td><button
-                                                                        type="text"class="removeBtnMI">Remove</button>
+                                                                <td><button type="text"class="removeBtnMI"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Remove</button>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -1642,19 +1650,24 @@
                                                                 <tr>
                                                                     <td>{{ $key + 1 }}</td>
                                                                     <td><input name="risk_factor[]" type="text"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             value="{{ $riskFactor }}"></td>
                                                                     <td><input name="risk_element[]" type="text"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             value="{{ unserialize($riskEffectAnalysis->risk_element)[$key] ?? '' }}">
                                                                     </td>
                                                                     <td><input name="problem_cause[]" type="text"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             value="{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? '' }}">
                                                                     </td>
                                                                     <td><input name="existing_risk_control[]"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             type="text"
                                                                             value="{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? '' }}">
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateInitialResult(this)"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             class="fieldR" name="initial_severity[]">
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1"
@@ -1670,6 +1683,7 @@
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateInitialResult(this)"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             class="fieldP" name="initial_probability[]">
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1"
@@ -1685,6 +1699,7 @@
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateInitialResult(this)"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             class="fieldN" name="initial_detectability[]">
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1"
@@ -1699,11 +1714,13 @@
                                                                         </select>
                                                                     </td>
                                                                     <td><input name="initial_rpn[]" type="text"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             class="initial-rpn"
                                                                             value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? '' }}"
                                                                             readonly></td>
                                                                     <td>
-                                                                        <select name="risk_acceptance[]">
+                                                                        <select name="risk_acceptance[]"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                                             <option value="">-- Select --</option>
                                                                             <option value="Y"
                                                                                 {{ (unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null) == 'Y' ? 'selected' : '' }}>
@@ -1714,11 +1731,13 @@
                                                                         </select>
                                                                     </td>
                                                                     <td><input name="risk_control_measure[]"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             type="text"
                                                                             value="{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? '' }}">
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateResidualResult(this)"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             class="residual-fieldR"
                                                                             name="residual_severity[]">
                                                                             <option value="">-- Select --</option>
@@ -1735,6 +1754,7 @@
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateResidualResult(this)"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             class="residual-fieldP"
                                                                             name="residual_probability[]">
                                                                             <option value="">-- Select --</option>
@@ -1751,6 +1771,7 @@
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateResidualResult(this)"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             class="residual-fieldN"
                                                                             name="residual_detectability[]">
                                                                             <option value="">-- Select --</option>
@@ -1766,11 +1787,13 @@
                                                                         </select>
                                                                     </td>
                                                                     <td><input name="residual_rpn[]" type="text"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             class="residual-rpn"
                                                                             value="{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? '' }}"
                                                                             readonly></td>
                                                                     <td>
-                                                                        <select name="risk_acceptance2[]">
+                                                                        <select name="risk_acceptance2[]"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                                             <option value="">-- Select --</option>
                                                                             <option value="Y"
                                                                                 {{ (unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null) == 'Y' ? 'selected' : '' }}>
@@ -1781,9 +1804,11 @@
                                                                         </select>
                                                                     </td>
                                                                     <td><input name="mitigation_proposal[]" type="text"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             value="{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? '' }}">
                                                                     </td>
                                                                     <td><button type="button"
+                                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             onclick="removeRow(this)">Remove</button></td>
                                                                 </tr>
                                                             @endforeach
@@ -2387,6 +2412,7 @@
                                                 </label> --}}
                                                 <label for="mitigation_plan_details">
                                                     Mitigation Plan Details<button type="button" name="ann"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="action_plan2">+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="action_plan_details2">
@@ -2414,6 +2440,7 @@
                                                                         name="serial_number[]"
                                                                         value="{{ $key + 1 }}"></td>
                                                                 <td><input type="text" name="mitigation_steps[]"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                         value="{{ $temps ? $temps : ' ' }}"></td>
                                                                 {{-- <td><input type="date" name="deadline2[]"
                                                                     value="{{ unserialize($mitigation_plan_details->deadline2)[$key] ? unserialize($mitigation_plan_details->deadline2)[$key] : '' }}">
@@ -2425,9 +2452,11 @@
                                                                                 <input type="text"
                                                                                     id="deadline2{{ $key }}' + serialNumber +'"
                                                                                     readonly placeholder="DD-MM-YYYY"
+                                                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                                     value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) }}" />
                                                                                 <input type="date" name="deadline2[]"
                                                                                     class="hide-input"
+                                                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                                     value="{{ unserialize($mitigation_plan_details->deadline2)[$key] }}"
                                                                                     oninput="handleDateInput(this, `deadline2{{ $key }}' + serialNumber +'`)" />
                                                                             </div>
@@ -2438,7 +2467,8 @@
                                                                     value="{{ unserialize($mitigation_plan_details->responsible_person)[$key] ? unserialize($mitigation_plan_details->responsible_person)[$key] : '' }}">
                                                             </td> --}}
                                                                 <td> <select id="select-state" placeholder="Select..."
-                                                                        name="responsible_person[]">
+                                                                        name="responsible_person[]"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                                         <option value="">Select a value</option>
                                                                         @foreach ($users as $value)
                                                                             <option
@@ -2449,12 +2479,15 @@
                                                                         @endforeach
                                                                     </select></td>
                                                                 <td><input type="text" name="status[]"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                         value="{{ unserialize($mitigation_plan_details->status)[$key] ? unserialize($mitigation_plan_details->status)[$key] : ' ' }}">
                                                                 </td>
                                                                 <td><input type="text" name="remark[]"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                         value="{{ unserialize($mitigation_plan_details->remark)[$key] ? unserialize($mitigation_plan_details->remark)[$key] : ' ' }}">
                                                                 </td>
                                                                 <td><button type="text"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                         class="removeBtnMI1">Remove</button></td>
                                                             </tr>
                                                         @endforeach
@@ -3036,9 +3069,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3083,9 +3116,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3130,9 +3163,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3154,10 +3187,30 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="group-input">
-                                    <label for="major">
-                                        <input type="radio" name="revision" id="major" value="Action-Item">
-                                        Create Action Item
-                                    </label>
+                                    @if ($data->stage == 2)
+                                        <label for="major">
+                                            <input type="radio" name="revision" id="major"
+                                                value="Action-Item">
+                                            Create Action Item
+                                        </label>
+                                    @endif
+                                    @if ($data->stage == 3)
+                                        <label for="major">
+                                            <input type="radio" name="revision" id="major" value="CAPA">
+                                            CAPA
+                                        </label>
+                                    @endif
+                                    @if ($data->stage == 5)
+                                        <label for="major">
+                                            <input type="radio" name="revision" id="major" value="CAPA">
+                                            CAPA
+                                        </label>
+                                        <label for="major">
+                                            <input type="radio" name="revision" id="major"
+                                                value="Action-Item">
+                                            Create Action Item
+                                        </label>
+                                    @endif
 
 
                                 </div>

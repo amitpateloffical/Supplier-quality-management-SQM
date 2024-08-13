@@ -258,7 +258,7 @@
                 <table>
 
                     <tr>
-                        <th class="w-20">Effectiveness check Plan</th>
+                        <th class="w-20">Effectiveness Check Plan</th>
                         <td class="w-80">
                             @if ($data->Effectiveness_check_Plan)
                                 {{ $data->Effectiveness_check_Plan }}
@@ -269,7 +269,7 @@
                     </tr>
                 </table>
                 <div class="block-head">
-                    Attachment
+                    Attachments
                 </div>
                 <div class="border-table">
                     <table>
@@ -330,7 +330,7 @@
                 </tr>
             </table>
             <div class="block-head">
-                Effectiveness check Attachment
+                Effectiveness Check Attachments
             </div>
             <div class="border-table">
                 <table>
@@ -373,7 +373,7 @@
                 </tr>
             </table>
             <div class="block-head">
-                Addendum Attachment
+                Addendum Attachments
             </div>
             <div class="border-table">
                 <table>
@@ -416,7 +416,7 @@
                 </tr>
             </table>
             <div class="block-head">
-                Reference Attachment
+                Reference Attachments
             </div>
             <div class="border-table">
                 <table>

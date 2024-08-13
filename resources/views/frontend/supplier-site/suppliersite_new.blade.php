@@ -205,7 +205,7 @@
                                 <div class="group-input">
                                     <label for="Initiation"><b>Initiation Date</b></label>
                                     <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                    <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                    <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
                                 </div>
                             </div>
 
@@ -1660,7 +1660,7 @@
                                     <label for="Access to Technical Support">Access to Technical Support</label>
                                     <select id="technical_support" name="technical_support">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Very Limited Access to Technical Experts ">Very Limited Access to
+                                        <option value="Very Limited Access to Technical Experts">Very Limited Access to
                                             Technical Experts
                                         </option>
                                         <option value="Available When Requested or Via Beacon Center">Available When
@@ -1736,7 +1736,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="risk_assessment_additional_attachment">Risk Additional Attachment</label>
+                                    <label for="risk_assessment_additional_attachment">Risk Assessment Additional Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">

@@ -30,7 +30,8 @@ SCAR,
 Supplier,
 RiskManagement,
 OpenStage,
-Capa
+Capa,
+ActionItem
 };
 
 class SupplierSiteController extends Controller
@@ -443,7 +444,7 @@ class SupplierSiteController extends Controller
         $history->supplier_site_id = $supplierSite->id;
         $history->activity_type = 'Initiation Date';
         $history->previous = "Null";
-        $history->current = $supplierSite->intiation_date;
+        $history->current = Helpers::getdateFormat($supplierSite->intiation_date);
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -772,7 +773,7 @@ class SupplierSiteController extends Controller
         if (!empty($supplierSite->HOD_attachment)) {
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'HOD Attachments';
+            $history->activity_type = 'HOD Attachment';
             $history->previous = "Null";
             $history->current = $supplierSite->HOD_attachment;
             $history->comment ="Not Applicable";
@@ -789,7 +790,7 @@ class SupplierSiteController extends Controller
         if (!empty($supplierSite->hod_additional_attachment)) {
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'HOD Additional Attachments';
+            $history->activity_type = 'HOD Additional Attachment';
             $history->previous = "Null";
             $history->current = $supplierSite->hod_additional_attachment;
             $history->comment ="Not Applicable";
@@ -886,7 +887,7 @@ class SupplierSiteController extends Controller
         if(!empty($request->vendor_id)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'Vendor Id';
+            $history->activity_type = 'Vendor ID';
             $history->previous = "Null";
             $history->current = $supplierSite->vendor_id;
             $history->comment = "Not Applicable";
@@ -1097,7 +1098,7 @@ class SupplierSiteController extends Controller
         if(!empty($request->related_non_conformance)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'Related non-conformance';
+            $history->activity_type = 'Related non-conformances';
             $history->previous = "Null";
             $history->current = $supplierSite->related_non_conformance;
             $history->comment = "Not Applicable";
@@ -1113,7 +1114,7 @@ class SupplierSiteController extends Controller
         if(!empty($request->suppplier_agreement)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'Supplier Agreement';
+            $history->activity_type = 'Supplier Contracts/Agreements';
             $history->previous = "Null";
             $history->current = $supplierSite->suppplier_agreement;
             $history->comment = "Not Applicable";
@@ -1664,7 +1665,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'Last Audit Date';
             $history->previous = "Null";
-            $history->current = $supplierSite->last_audit_date;
+            $history->current = Helpers::getdateFormat($supplierSite->last_audit_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1680,7 +1681,7 @@ class SupplierSiteController extends Controller
             $history->supplier_site_id = $supplierSite->id;
             $history->activity_type = 'Next Audit Date';
             $history->previous = "Null";
-            $history->current = $supplierSite->next_audit_date;
+            $history->current = Helpers::getdateFormat($supplierSite->next_audit_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1955,47 +1956,115 @@ class SupplierSiteController extends Controller
         $supplierSite->related_url = $request->related_url;
         $supplierSite->related_quality_events = $request->related_quality_events;
 
+        // if (!empty($request->logo_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('logo_attachment')) {
+        //         foreach ($request->file('logo_attachment') as $file) {
+        //             $name = "Supplier-Site" . '-logo_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $supplierSite->logo_attachment = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_attach_files) ? $request->existing_attach_files : null;
+
         if (!empty($request->logo_attachment)) {
-            $files = [];
+            if ($supplierSite->logo_attachment) {
+                $existingFiles = json_decode($supplierSite->logo_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('logo_attachment')) {
                 foreach ($request->file('logo_attachment') as $file) {
-                    $name = "Supplier-Site" . '-logo_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'logo_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $supplierSite->logo_attachment = json_encode($files);
         }
+
+        // If no files are attached, set to null
+        $supplierSite->logo_attachment = !empty($files) ? json_encode($files) : null;
+
+
        
 
-        if (!empty($request->supplier_attachment))
-        {
-            $files = [];
+        // if (!empty($request->supplier_attachment))
+        // {
+        //     $files = [];
+        //     if ($request->hasfile('supplier_attachment')) {
+        //         foreach ($request->file('supplier_attachment') as $file) {
+        //             $name = "Supplier-Site" . '-supplier_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $supplierSite->supplier_attachment = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_attach_files1) ? $request->existing_attach_files1 : null;
+
+        if (!empty($request->supplier_attachment)) {
+            if ($supplierSite->supplier_attachment) {
+                $existingFiles = json_decode($supplierSite->supplier_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('supplier_attachment')) {
                 foreach ($request->file('supplier_attachment') as $file) {
-                    $name = "Supplier-Site" . '-supplier_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'supplier_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $supplierSite->supplier_attachment = json_encode($files);
         }
+
+        // If no files are attached, set to null
+        $supplierSite->supplier_attachment = !empty($files) ? json_encode($files) : null;
         
         /****************** HOD Review ********************/
         $supplierSite->HOD_feedback = $request->HOD_feedback;
         $supplierSite->HOD_comment = $request->HOD_comment;
 
+        // if (!empty($request->HOD_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('HOD_attachment')) {
+        //         foreach ($request->file('HOD_attachment') as $file) {
+        //             $name = "Supplier-Site" . '-HOD_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $supplierSite->HOD_attachment = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_attach_files3) ? $request->existing_attach_files3 : null;
+
         if (!empty($request->HOD_attachment)) {
-            $files = [];
+            if ($supplierSite->HOD_attachment) {
+                $existingFiles = json_decode($supplierSite->HOD_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('HOD_attachment')) {
                 foreach ($request->file('HOD_attachment') as $file) {
-                    $name = "Supplier-Site" . '-HOD_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'HOD_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $supplierSite->HOD_attachment = json_encode($files);
         }
+
+        // If no files are attached, set to null
+        $supplierSite->HOD_attachment = !empty($files) ? json_encode($files) : null;
 
         /****************** Supplier Details ********************/
         $supplierSite->supplier_name = $request->supplier_name;
@@ -2100,6 +2169,28 @@ class SupplierSiteController extends Controller
             $supplierSite->QA_head_attachment = json_encode($files);
         }
 
+        // $files = is_array($request->existing_attach_files3) ? $request->existing_attach_files3 : null;
+
+        // if (!empty($request->QA_head_attachment)) {
+        //     if ($supplierSite->QA_head_attachment) {
+        //         $existingFiles = json_decode($supplierSite->QA_head_attachment, true); // Convert to associative array
+        //         if (is_array($existingFiles)) {
+        //             $files = $existingFiles;
+        //         }
+        //     }
+
+        //     if ($request->hasfile('QA_head_attachment')) {
+        //         foreach ($request->file('QA_head_attachment') as $file) {
+        //             $name = $request->name . 'QA_head_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        // }
+
+        // // If no files are attached, set to null
+        // $supplierSite->QA_head_attachment = !empty($files) ? json_encode($files) : null;
+
 
         /************ Additional Attchment Code ************/
         if (!empty($request->iso_certificate_attachment)) {
@@ -2114,17 +2205,39 @@ class SupplierSiteController extends Controller
             $supplierSite->iso_certificate_attachment = json_encode($files);
         }
 
+        // if (!empty($request->gi_additional_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('gi_additional_attachment')) {
+        //         foreach ($request->file('gi_additional_attachment') as $file) {
+        //             $name = "Supplier-Site" . '-gi_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $supplierSite->gi_additional_attachment = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_attach_files2) ? $request->existing_attach_files2 : null;
+
         if (!empty($request->gi_additional_attachment)) {
-            $files = [];
+            if ($supplierSite->gi_additional_attachment) {
+                $existingFiles = json_decode($supplierSite->gi_additional_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('gi_additional_attachment')) {
                 foreach ($request->file('gi_additional_attachment') as $file) {
-                    $name = "Supplier-Site" . '-gi_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'gi_additional_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $supplierSite->gi_additional_attachment = json_encode($files);
         }
+
+        // If no files are attached, set to null
+        $supplierSite->gi_additional_attachment = !empty($files) ? json_encode($files) : null;
 
         if (!empty($request->hod_additional_attachment)) {
             $files = [];
@@ -2619,7 +2732,7 @@ class SupplierSiteController extends Controller
         if($lastDocument->HOD_attachment != $supplierSite->HOD_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = 'HOD Attachments';
+            $history->activity_type = 'HOD Attachment';
             $history->previous = $lastDocument->HOD_attachment;
             $history->current = $supplierSite->HOD_attachment;
             $history->comment = "Not Applicable";
@@ -2640,7 +2753,7 @@ class SupplierSiteController extends Controller
         if($lastDocument->hod_additional_attachment != $supplierSite->hod_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = 'HOD Additional Attachments';
+            $history->activity_type = 'HOD Additional Attachment';
             $history->previous = $lastDocument->hod_additional_attachment;
             $history->current = $supplierSite->hod_additional_attachment;
             $history->comment = "Not Applicable";
@@ -2678,12 +2791,12 @@ class SupplierSiteController extends Controller
             }
             $history->save();
         }
-        if($lastDocument->supplier_id != $request->supplier_id){
+        if($lastDocument->supplier_id != $supplierSite->supplier_id){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Supplier ID';
             $history->previous = $lastDocument->supplier_id;
-            $history->current = $request->supplier_id;
+            $history->current = $supplierSite->supplier_id;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2758,12 +2871,12 @@ class SupplierSiteController extends Controller
             }
             $history->save();
         }
-        if($lastDocument->vendor_id != $request->vendor_id){
+        if($lastDocument->vendor_id != $supplierSite->vendor_id){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Vendor ID';
             $history->previous = $lastDocument->vendor_id;
-            $history->current = $request->vendor_id;
+            $history->current = $supplierSite->vendor_id;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3735,8 +3848,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Last Audit Date';
-            $history->previous = $lastDocument->last_audit_date;
-            $history->current = $request->last_audit_date;
+            $history->previous = Helpers::getdateFormat($lastDocument->last_audit_date);
+            $history->current = Helpers::getdateFormat($request->last_audit_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3755,8 +3868,8 @@ class SupplierSiteController extends Controller
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Next Audit Date';
-            $history->previous = $lastDocument->next_audit_date;
-            $history->current = $request->next_audit_date;
+            $history->previous = Helpers::getdateFormat($lastDocument->next_audit_date);
+            $history->current = Helpers::getdateFormat($request->next_audit_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4834,6 +4947,7 @@ class SupplierSiteController extends Controller
         $cc = SupplierSite::find($id);
         $cft = [];
         $parent_id = $id;
+        $parent_division_id = $cc->division_id;
         $parent_type = "Supplier Site";
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -4851,8 +4965,9 @@ class SupplierSiteController extends Controller
         if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         
         if ($request->revision == "Action-Item") {
+            $old_record = ActionItem::all();
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.forms.action-item', compact('record_number','old_record', 'due_date','parent_division_id','parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
         }
         // dd($request->revision,$request->revision == "changecontrol");

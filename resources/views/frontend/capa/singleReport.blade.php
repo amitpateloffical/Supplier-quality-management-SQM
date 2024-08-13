@@ -157,11 +157,11 @@
 
 <body>
 
-    <header class="">
+    <header>
         <table>
             <tr>
                 <td class="w-70 head">
-                   Capa Single Report
+                   CAPA Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -173,7 +173,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Capa No.</strong>
+                    <strong>CAPA No.</strong>
                 </td>
                 <td class="w-40">
                    {{ Helpers::divisionNameForQMS($data->division_id) }}/CAPA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -188,7 +188,7 @@
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
-                <div class="block-head " style="padding-top:10px ">
+                <div class="block-head">
                     General Information
                 </div>
                 <table>
@@ -234,19 +234,23 @@
                     <tr>
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
-                        <th class="w-20">Date Due</th>
+                        <th class="w-20">Due Date</th>
                         <td class="w-30"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
 
                     </tr>
-                    
+                    <tr>
+                        <th class="w-20">Repeat</th>
+                        <td class="w-30"> @if($data->repeat_nature){{ $data->repeat_nature }} @else Not Applicable @endif</td>
+                    </tr>
                 </table>
                 <div class = "inner-block" >
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Others</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->initiated_through_req ){{ $data->initiated_through_req  }} @else Not Applicable @endif</span>
                 </div>
+              
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Repeat Nature</label>
-                <span style="font-size:0.8rem; margin-left:10px">@if($data->repeat_nature ){{ $data->repeat_nature  }} @else Not Applicable @endif</span>
+                <span style="font-size:0.8rem; margin-left:10px">@if($data->repeat_nature_textarea ){{ $data->repeat_nature_textarea  }} @else Not Applicable @endif</span>
                 </div>
             
                 <div class = "inner-block">
@@ -299,8 +303,24 @@
                 </div>
                 
             </div>
+            <footer>
+                <table>
+                    <tr>
+                        <td class="w-30">
+                            <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                        </td>
+                        <td class="w-40">
+                            <strong>Printed By :</strong> {{ Auth::user()->name }}
+                        </td>
+                        {{-- <td class="w-30">
+                            <strong>Page :</strong> 1 of 1
+                        </td> --}}
+                    </tr>
+                </table>
+            </footer>
+            
             <div class="block-head">
-                Capa Attachement
+                CAPA Attachement
              </div>
                <div class="border-table">
                  <table>
@@ -324,73 +344,7 @@
 
                  </table>
                </div>
-            <!-- <div class="block">
-                <div class="head">
-
-                    <table>
-                        <tr>
-                            <th class="w-20">CAPA Related Records</th>
-                            <td class="w-80">@if($data->capa_related_record){{ $data->capa_related_record }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Reference Records</th>
-                            <td class="w-80">@if($data->reference_record){{ $data->reference_record }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Initial Observation
-                            </th>
-                            <td class="w-80">@if($data->initial_observation){{ $data->initial_observation }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Assigned To
-                            </th>
-                            <td class="w-80">@if($data->assign_id){{ $data->assign_id }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Interim Containnment
-                            </th>
-                            <td class="w-80">@if($data->interim_containnment){{ $data->interim_containnment }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Containment Comments
-                            </th>
-                            <td class="w-80">@if($data->containment_comments){{ $data->containment_comments }}@else Not Applicable @endif</td>
-                        </tr>
-
-                        <tr>
-                            <th class="w-20">CAPA QA Comments
-                            </th>
-                            <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
-                        </tr>
-                        <div class="block-head">
-                       Capa Attachement
-                    </div>
-                      <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">File </th>
-                            </tr>
-                                @if($data->capa_attachment)
-                                @foreach(json_decode($data->capa_attachment) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                    </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
-                                </tr>
-                            @endif
-
-                        </table>
-                      </div>
-                    </table>
-
-                </div>
-            </div> -->
+           
             <div class="block">
                 <div class="block-head">
                     Product Details
@@ -422,7 +376,7 @@
                         @endforeach
                         @else
                         <tr>
-                            <td>Not Applicable</td>
+                            <td>1</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
@@ -431,10 +385,8 @@
                             <td>Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
-
             </div> 
             <div class="block">
                 <div class="block-head">
@@ -443,7 +395,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                        <th class="w-20">Sr no.</th>
+                            <th class="w-20">Sr no.</th>
                             <th class="w-20">Material Name</th>
                             <th class="w-20">Batch Number</th>
                             <th class="w-20">Manu- facturing Date</th>
@@ -467,7 +419,7 @@
                         @endforeach
                         @else
                         <tr>
-                            <td>Not Applicable</td>
+                            <td>1</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
@@ -505,7 +457,7 @@
                         @endforeach
                         @else
                         <tr>
-                            <td>Not Applicable</td>
+                            <td>1</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>

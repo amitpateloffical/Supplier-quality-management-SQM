@@ -21,6 +21,13 @@
                     /* min-width: 100vw; */
                     min-height: 100vh;
                 }
+                .w-5 {
+                    width: 5%;
+                }
+
+                .w-7 {
+                    width: 7%;
+                }
 
                 .w-10 {
                     width: 10%;
@@ -200,14 +207,12 @@
                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                         @endif
                         <div class="buttons-new">
+                            @if ($document->stage)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                 Review
                             </button>
-                            {{-- @if ($document->stage < 6)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
-                                    Review
-                                </button>
-                            @endif --}}
+                            @endif
+                           
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
                                 View
                             </button>
@@ -244,9 +249,9 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Review By</th>
-                                                <th>Review On</th>
-                                                <th>Comment</th>
+                                                <th class="w-5">Review By</th>
+                                                <th class="w-5">Review On</th>
+                                                <th class="w-10">Comment</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -254,7 +259,7 @@
                                                 @foreach ($reviewer as $review)
                                                     <tr>
                                                         <td>{{ $review->reviewer_comment_by }}</td>
-                                                        <td>{{ $review->reviewer_comment_on }}</td>
+                                                        <td>{{ Helpers::getdateFormat($review->reviewer_comment_on) }}</td>
                                                         <td>{{ $review->reviewer_comment }}</td>
                                                     </tr>
                                                 @endforeach
@@ -304,9 +309,9 @@
                                                 <label for="Reviewer Completed on">Reviewer Completed On</label>
                                                 <input disabled type="text" class="form-control"
                                                     name="reviewer_completed_on" id="reviewer_completed_on"
-                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                                    value="{{ $auditCollect ? Helpers::getdateFormat($auditCollect->reviewer_comment_on) : '' }}">
                                             </div>
-                                            <input type="hidden" id="type" name="type" value="Supplier">
+                                            <input type="hidden" id="type" name="type" value="Capa">
                                         </div>
                                         <div class="modal-footer">
                                             {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}

@@ -1741,20 +1741,39 @@ class RiskManagementController extends Controller
         //$data->severity = $request->severity;
         //$data->occurance = $request->occurance;
 
+        $files = is_array($request->existing_attach_files) ? $request->existing_attach_files : null;
 
         if (!empty($request->reference)) {
-            $files = [];
+            if ($data->reference) {
+                $existingFiles = json_decode($data->reference, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('reference')) {
                 foreach ($request->file('reference') as $file) {
-                    $name = $request->name . ' reference' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'reference' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-
-
-            $data->reference = json_encode($files);
         }
+        $data->reference = !empty($files) ? json_encode($files) : null;
+
+        // if (!empty($request->reference)) {
+        //     $files = [];
+        //     if ($request->hasfile('reference')) {
+        //         foreach ($request->file('reference') as $file) {
+        //             $name = $request->name . ' reference' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $data->reference = json_encode($files);
+        // }
         // return $data;
         $data->update();
              // -----------grid=------

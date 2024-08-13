@@ -200,7 +200,7 @@
                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                         @endif
                         <div class="buttons-new">
-                            @if ($document->stage < 6)
+                            @if ($document->stage)
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                     Review
                                 </button>
@@ -323,11 +323,11 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong>
+                            <div> <strong>Record ID : </strong>
                                 {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
                             </div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->initiator ? $document->initiator : '' }}
+                                : {{ $document->initiator ? $document->initiator : '' }}
                             </div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
@@ -390,7 +390,7 @@
                                             :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
                                     @else
                                         <strong>Change To
-                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
+                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Null' }}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">
@@ -406,7 +406,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div><strong> Peformed By
+                                <div><strong> Performed By
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On

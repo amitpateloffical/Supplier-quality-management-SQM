@@ -165,6 +165,7 @@
         background: #4274da57;
     }
 </style>
+
 <body>
     <header>
         <table>
@@ -242,9 +243,17 @@
 
                     <tr>
                         <th class="w-20">Due Date</th>
-                        <td class="w-80" colspan="3">
+                        <td class="w-30">
                             @if ($data->due_date)
                                 {{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">
+                            @if ($data->record)
+                                {{ Helpers::getDivisionName($data->division_id) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                             @else
                                 Not Applicable
                             @endif
@@ -373,7 +382,7 @@
                                     Not Applicable
                                 @endif
                             </td>
-                            <th class="w-20">Due Date</th>
+                            <th class="w-20">Due Date.</th>
                             <td class="w-30">
                                 @if ($data->capa_date_due)
                                     {{ $data->capa_date_due }}
@@ -383,7 +392,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th class="w-20">Assigned To</th>
+                            <th class="w-20">Assigned To.</th>
                             <td class="w-30">
                                 @if ($data->assign_to2)
                                     {{ Helpers::getInitiatorName($data->assign_to2) }}
@@ -392,6 +401,8 @@
                                 @endif
                             </td>
                         </tr>
+                    </table>
+                    <table>
                         <tr>
                             <th class="w-20">Comments</th>
                             <td class="w-80">
@@ -442,38 +453,38 @@
                             <th class="w-20">Severity Rate</th>
                             <td class="w-30">
                                 @if ($data->severity_rate)
-                                @if ($data->severity_rate == 1)
-                                    Negligible
-                                @elseif($data->severity_rate == 2)
-                                    Moderate
-                                @elseif($data->severity_rate == 3)
-                                    Major
+                                    @if ($data->severity_rate == 1)
+                                        Negligible
+                                    @elseif($data->severity_rate == 2)
+                                        Moderate
+                                    @elseif($data->severity_rate == 3)
+                                        Major
+                                    @else
+                                        Fatal
+                                    @endif
                                 @else
-                                    Fatal
+                                    Not Applicable
                                 @endif
-                            @else
-                                Not Applicable
-                            @endif
 
                             </td>
 
                             <th class="w-20">Occurrence</th>
                             <td class="w-30">
                                 @if ($data->occurrence)
-                                @if ($data->occurrence == 1)
-                                    Very Likely
-                                @elseif($data->occurrence == 2)
-                                    Likely
-                                @elseif($data->occurrence == 3)
-                                    Unlikely
-                                @elseif($data->occurrence == 4)
-                                    Rare
+                                    @if ($data->occurrence == 1)
+                                        Very Likely
+                                    @elseif($data->occurrence == 2)
+                                        Likely
+                                    @elseif($data->occurrence == 3)
+                                        Unlikely
+                                    @elseif($data->occurrence == 4)
+                                        Rare
+                                    @else
+                                        Extremely Unlikely
+                                    @endif
                                 @else
-                                    Extremely Unlikely
+                                    Not Applicable
                                 @endif
-                            @else
-                                Not Applicable
-                            @endif
 
                             </td>
                         </tr>
@@ -481,20 +492,20 @@
                             <th class="w-20">Detection</th>
                             <td class="w-30">
                                 @if ($data->detection)
-                                @if ($data->detection == 1)
-                                    Very Likely
-                                @elseif($data->detection == 2)
-                                    Likely
-                                @elseif($data->detection == 3)
-                                    Unlikely
-                                @elseif($data->detection == 4)
-                                    Rare
+                                    @if ($data->detection == 1)
+                                        Very Likely
+                                    @elseif($data->detection == 2)
+                                        Likely
+                                    @elseif($data->detection == 3)
+                                        Unlikely
+                                    @elseif($data->detection == 4)
+                                        Rare
+                                    @else
+                                        Impossible
+                                    @endif
                                 @else
-                                    Impossible
+                                    Not Applicable
                                 @endif
-                            @else
-                                Not Applicable
-                            @endif
 
                             </td>
                             <th class="w-20">RPN</th>
@@ -531,6 +542,8 @@
                                 @endif
                             </td>
                         </tr>
+                    </table>
+                    <table>
                         <tr>
                             <th class="w-20">Action Taken</th>
                             <td class="w-80">
@@ -548,7 +561,7 @@
             <div class="block">
                 <div class="head">
                     <div class="block-head"> Response Summary </div>
-                    <div class="block-head">Attached Files</div>
+                    <div class="block-head">Attachment</div>
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
@@ -899,11 +912,11 @@
                                         </td>
 
                                         <td class="w-15">
-                                            {{ unserialize($griddata->responsible)[$key] ? unserialize($griddata->responsible)[$key] : 'N/A' }}
+                                            {{ unserialize($griddata->responsible)[$key] ? Helpers::getInitiatorName(unserialize($griddata->responsible)[$key]) : 'N/A' }}
                                         </td>
 
                                         <td class="w-15">
-                                            {{ unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : 'N/A' }}
+                                            {{ unserialize($griddata->deadline)[$key] ? Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) : 'N/A' }}
                                         </td>
                                         <td class="w-15">
                                             {{ unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : 'N/A' }}

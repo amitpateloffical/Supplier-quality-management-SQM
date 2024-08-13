@@ -165,7 +165,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
-                                        <input readonly type="text" name="division_id" value="{{ Helpers::getDivisionName($divisionId) }}">
+                                        <input readonly type="text" name="division_id"
+                                            value="{{ Helpers::getDivisionName($divisionId) }}">
                                         <input type="hidden" name="division_id" value="{{ $divisionId }}">
                                     </div>
                                 </div>
@@ -186,9 +187,9 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="assign_to">Assigned To <span class="text-danger"></span></label>
-                                         <select id="assign_to" name="assign_to">
+                                        <select id="assign_to" name="assign_to">
                                             <option value="">-- Select --</option>
-                                             @if (!empty($users))
+                                            @if (!empty($users))
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                 @endforeach
@@ -270,12 +271,17 @@
                                 </script>
 
                                 <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Short Description">Short Description  <span
-                                        class="text-danger">*</span></b></label>
-                                    <input type="text" name="short_description" id="short_description" maxlength="255" required>
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description <span
+                                                class="text-danger">*</span></b></label>
+                                        <div class="relative-container">
+                                            <input type="text" class="mic-input" name="short_description"
+                                                id="short_description" maxlength="255" required>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description"><b>Short Description <span
@@ -481,8 +487,9 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="related_observations">Related Obsevations</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="related_observations">Related Observations</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="related_observations"></div>
                                         <div class="add-btn">
@@ -528,9 +535,10 @@
 
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
-                                        <label for="date_due"> Due Date</label>
+                                        <label for="date_due"> Due Date.</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="capa_date_due" id="date_due" readonly placeholder="DD-MM-YYYY" />
+                                            <input type="text" name="capa_date_due" id="date_due" readonly
+                                                placeholder="DD-MM-YYYY" />
                                             <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 id="date_due_checkdate" class="hide-input"
                                                 oninput="handleDateInput(this, 'date_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
@@ -547,7 +555,7 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="assign_to2">Assigned To <span class="text-danger"></span>
+                                        <label for="assign_to2">Assigned To. <span class="text-danger"></span>
                                         </label>
                                         <select id="assign_to2" name="assign_to2">
                                             <option value="">Select a value</option>
@@ -707,7 +715,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Severity Rate">Severity Rate</label>
-                                        <select name="severity_rate" id="analysisR" onchange='calculateRiskAnalysis(this)'>
+                                        <select name="severity_rate" id="analysisR"
+                                            onchange='calculateRiskAnalysis(this)'>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="1">Negligible</option>
                                             <option value="2">Moderate</option>
@@ -840,7 +849,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="attach_files2">Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="attach_files2"></div>
                                             <div class="add-btn">
@@ -854,7 +864,11 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="related_url">Related URL</label>
-                                        <input type="url" name="related_url">
+                                        <div class="relative-container">
+                                            <input type="url" name="related_url">
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">

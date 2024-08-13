@@ -1038,17 +1038,16 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">On Time Delivery</th>
+                        <th class="w-20">On-Time Delivery</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) && !empty($supplierData->ontime_delivery))
                                 {{ $supplierData->ontime_delivery }}
                             @else
                                 Not Applicable
                             @endif
-                            f
                         </td>
 
-                        <th class="w-20">On Time Delivery Weight</th>
+                        <th class="w-20">On-Time Delivery Weight</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) && !empty($supplierData->ontime_delivery_weight))
                                 {{ $supplierData->ontime_delivery_weight }}
@@ -1106,7 +1105,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Quality System</th>
+                        <th class="w-20">Quality Systems</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) && !empty($supplierData->quality_system))
                                 {{ $supplierData->quality_system }}
@@ -1116,7 +1115,7 @@
 
                         </td>
 
-                        <th class="w-20">Quality System Weight</th>
+                        <th class="w-20">Quality Systems Weight</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) && !empty($supplierData->quality_system_ranking))
                                 {{ $supplierData->quality_system_ranking }}
@@ -1128,7 +1127,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">CAR's Generated</th>
+                        <th class="w-20"># of CAR's generated</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) && !empty($supplierData->car_generated))
                                 {{ $supplierData->car_generated }}
@@ -1138,7 +1137,7 @@
 
                         </td>
 
-                        <th class="w-20"> CAR's Generated Weight</th>
+                        <th class="w-20"># of CAR's generated Weight</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) && !empty($supplierData->car_generated_weight))
                                 {{ $supplierData->car_generated_weight }}
@@ -1171,7 +1170,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">End User Satisfaction</th>
+                        <th class="w-20">End-User Satisfaction</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) && !empty($supplierData->end_user_satisfaction))
                                 {{ $supplierData->end_user_satisfaction }}
@@ -1181,7 +1180,7 @@
 
                         </td>
 
-                        <th class="w-20">End User Satisfaction Weight</th>
+                        <th class="w-20">End-User Satisfaction Weight</th>
                         <td class="w-30">
                             @if ($supplierData && is_object($supplierData) && !empty($supplierData->end_user_satisfaction_weight))
                                 {{ $supplierData->end_user_satisfaction_weight }}
@@ -1457,7 +1456,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                   Risk Additional Attachments
+                   Risk Assessment Additional Attachments
                 </div>
                 <table>
                     <tr class="table_bg">

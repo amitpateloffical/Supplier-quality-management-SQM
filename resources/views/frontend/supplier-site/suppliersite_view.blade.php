@@ -1048,8 +1048,8 @@
                                 </div>
                             </div>
 
-                            @if ($data->QA_head_attachment)
-                                @foreach (json_decode($data->QA_head_attachment) as $file)
+                            @if ($data->HOD_attachment)
+                                @foreach (json_decode($data->HOD_attachment) as $file)
                                     <input id="ATFIFile3-{{ $loop->index }}" type="hidden"
                                         name="existing_attach_files3[{{ $loop->index }}]" value="{{ $file }}">
                                 @endforeach
@@ -1089,6 +1089,13 @@
                                 </div>
                             </div>
 
+                            @if ($data->hod_additional_attachment)
+                                @foreach (json_decode($data->hod_additional_attachment) as $file)
+                                    <input id="ATFIFile4-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files4[{{ $loop->index }}]" value="{{ $file }}">
+                                @endforeach
+                            @endif
+
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="hod_additional_attachment">HOD Additional Attachment</label>
@@ -1106,6 +1113,7 @@
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"
+                                                            data-remove-id="ATFIFile4-{{ $loop->index }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1560,6 +1568,14 @@
                                 </div>
                             </div>
 
+                            
+                            @if ($data->iso_certificate_attachment)
+                                @foreach (json_decode($data->iso_certificate_attachment) as $file)
+                                    <input id="ATFIFile5-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files5[{{ $loop->index }}]" value="{{ $file }}">
+                                @endforeach
+                            @endif
+
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="iso_certificate_attachment">ISO Certificate Attachment</label>
@@ -1577,6 +1593,7 @@
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"
+                                                            data-remove-id="ATFIFile5-{{ $loop->index }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1746,9 +1763,16 @@
                                 </div>
                             </div>
 
+                            @if ($data->supplier_detail_additional_attachment)
+                                @foreach (json_decode($data->supplier_detail_additional_attachment) as $file)
+                                    <input id="ATFIFile6-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files6[{{ $loop->index }}]" value="{{ $file }}">
+                                @endforeach
+                            @endif
+
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="supplier_detail_additional_attachment">Supplier details Additional
+                                    <label for="supplier_detail_additional_attachment">Supplier Details Additional
                                         Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
@@ -1765,6 +1789,7 @@
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"
+                                                            data-remove-id="ATFIFile6-{{ $loop->index }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1986,8 +2011,8 @@
                                             @if ($data->rejection_ppm == '5001 - 50000 Defects PPM') selected @endif>5001 - 50000 Defects
                                             PPM
                                         </option>
-                                        <option value="501 - 500 Defects PPM"
-                                            @if ($data->rejection_ppm == '501 - 500 Defects PPM') selected @endif>501 - 500 Defects PPM
+                                        <option value="501 - 5000 Defects PPM"
+                                            @if ($data->rejection_ppm == '501 - 5000 Defects PPM') selected @endif>501 - 5000 Defects PPM
                                         </option>
                                         <option value="Upto 500 Defects PPM"
                                             @if ($data->rejection_ppm == 'Upto 500 Defects PPM') selected @endif>
@@ -2156,6 +2181,13 @@
                                     </select>
                                 </div>
                             </div>
+                            @if ($data->score_card_additional_attachment)
+                                @foreach (json_decode($data->score_card_additional_attachment) as $file)
+                                    <input id="ATFIFile7-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files7[{{ $loop->index }}]" value="{{ $file }}">
+                                @endforeach
+                            @endif
+
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -2175,6 +2207,7 @@
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"
+                                                            data-remove-id="ATFIFile7-{{ $loop->index }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -2266,6 +2299,13 @@
 
                                 </div>
                             </div>
+
+                            @if ($data->QA_reviewer_attachment)
+                                @foreach (json_decode($data->QA_reviewer_attachment) as $file)
+                                    <input id="ATFIFile8-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files8[{{ $loop->index }}]" value="{{ $file }}">
+                                @endforeach
+                            @endif
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_reviewer_attachment">QA Reviewer Attachment</label>
@@ -2283,6 +2323,7 @@
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"
+                                                            data-remove-id="ATFIFile8-{{ $loop->index }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -2298,6 +2339,13 @@
                                     </div>
                                 </div>
                             </div>
+
+                            @if ($data->qa_reviewer_additional_attachment)
+                                @foreach (json_decode($data->qa_reviewer_additional_attachment) as $file)
+                                    <input id="ATFIFile9-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files9[{{ $loop->index }}]" value="{{ $file }}">
+                                @endforeach
+                            @endif
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -2318,6 +2366,7 @@
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"
+                                                            data-remove-id="ATFIFile9-{{ $loop->index }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -2478,8 +2527,7 @@
                                         </option>
 
                                         <option value="Operation Only, Stock Point Only"
-                                            @if ($data->facility_type == 'Operation Only, Stock Point Only1') selected @endif>Operation Only, Stock
-                                            Point Only</option>
+                                            @if ($data->facility_type == 'Operation Only, Stock Point Only') selected @endif>Operation Only, Stock Point Only</option>
                                     </select>
                                 </div>
                             </div>
@@ -2614,6 +2662,12 @@
                                     </select>
                                 </div>
                             </div>
+                            @if ($data->risk_assessment_additional_attachment)
+                                @foreach (json_decode($data->risk_assessment_additional_attachment) as $file)
+                                    <input id="ATFIFile10-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files10[{{ $loop->index }}]" value="{{ $file }}">
+                                @endforeach
+                            @endif
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -2634,6 +2688,7 @@
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"
+                                                            data-remove-id="ATFIFile10-{{ $loop->index }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -2709,6 +2764,13 @@
 
                                 </div>
                             </div>
+
+                            @if ($data->QA_head_attachment)
+                                @foreach (json_decode($data->QA_head_attachment) as $file)
+                                    <input id="ATFIFile11-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files11[{{ $loop->index }}]" value="{{ $file }}">
+                                @endforeach
+                            @endif
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA_head_attachment">QA Head Attachment</label>
@@ -2726,6 +2788,7 @@
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"
+                                                            data-remove-id="ATFIFile11-{{ $loop->index }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -2741,6 +2804,12 @@
                                     </div>
                                 </div>
                             </div>
+                            @if ($data->qa_head_additional_attachment)
+                                @foreach (json_decode($data->qa_head_additional_attachment) as $file)
+                                    <input id="ATFIFile12-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files12[{{ $loop->index }}]" value="{{ $file }}">
+                                @endforeach
+                            @endif
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -2759,6 +2828,7 @@
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"
+                                                            data-remove-id="ATFIFile12-{{ $loop->index }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>

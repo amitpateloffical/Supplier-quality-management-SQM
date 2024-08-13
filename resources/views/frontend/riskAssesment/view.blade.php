@@ -611,20 +611,22 @@
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->type == 'Other' ? 'selected' : '' }} value="Other">
                                                         Other</option>
-                                                    <option {{ $data->type == 'Business_Risk' ? 'selected' : '' }}
-                                                        value="Business_Risk">Business Risk</option>
-                                                    <option {{ $data->type == 'custumer_Related' ? 'selected' : '' }}
-                                                        value="custumer_Related">Customer-Related Risk(Complaint)
+                                                    <option {{ $data->type == 'Business Risk' ? 'selected' : '' }}
+                                                        value="Business Risk">Business Risk</option>
+                                                    <option
+                                                        {{ $data->type == 'Customer-Related Risk(Complaint)' ? 'selected' : '' }}
+                                                        value="Customer-Related Risk(Complaint)">Customer-Related
+                                                        Risk(Complaint)
                                                     </option>
                                                     <option {{ $data->type == 'Opportunity' ? 'selected' : '' }}
                                                         value="Opportunity">Opportunity
                                                     </option>
                                                     <option {{ $data->type == 'Market' ? 'selected' : '' }}
                                                         value="Market">Market</option>
-                                                    <option {{ $data->type == 'Operational_Risk' ? 'selected' : '' }}
-                                                        value="Operational_Risk">Operational Risk</option>
-                                                    <option {{ $data->type == 'Strategic_Rick' ? 'selected' : '' }}
-                                                        value="Strategic_Risk">Strategic Risk</option>
+                                                    <option {{ $data->type == 'Operational Risk' ? 'selected' : '' }}
+                                                        value="Operational Risk">Operational Risk</option>
+                                                    <option {{ $data->type == 'Strategic Risk' ? 'selected' : '' }}
+                                                        value="Strategic Risk">Strategic Risk</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1241,7 +1243,7 @@
                                                         id="estimated_man_hours"
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         value="{{ $data->estimated_man_hours }}">
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -1254,7 +1256,7 @@
                                                         id="estimated_cost"
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         value="{{ $data->estimated_cost }}">
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -1416,7 +1418,7 @@
                                                 <div class="relative-container">
                                                     <textarea name="justification" class='mic-input' {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="justification">{{ $data->justification }} </textarea>
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -1512,6 +1514,14 @@
                                                 </div>
                                             </div>
                                         </div> --}}
+
+                                        @if ($data->reference)
+                                            @foreach (json_decode($data->reference) as $file)
+                                                <input id="REFEFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_attach_files[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="File Attachments">Work Group Attachments</label>
@@ -1528,7 +1538,9 @@
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
+                                                                        data-remove-id="REFEFile-{{ $loop->index }}"
+                                                                        data-file-name="{{ $file }}"
+                                                                        style="@if ($data->stage == 0 || $data->stage == 7) pointer-events: none; @endif"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
@@ -1893,7 +1905,7 @@
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="why_problem_statement"
                                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $whyChart->why_problem_statement }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
@@ -1984,7 +1996,7 @@
                                                                 <td>
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="why_root_cause" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $whyChart->why_root_cause }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
@@ -2021,21 +2033,21 @@
                                                                 <td>
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="what_will_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->what_will_be }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="what_will_not_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->what_will_not_be }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="what_rationable" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->what_rationable }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
@@ -2045,21 +2057,21 @@
                                                                 <td>
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="where_will_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->where_will_be }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="where_will_not_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->where_will_not_be }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="where_rationable" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->where_rationable }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
@@ -2069,21 +2081,21 @@
                                                                 <td>
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="when_will_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->when_will_be }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="when_will_not_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->when_will_not_be }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="when_rationable" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->when_rationable }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
@@ -2093,7 +2105,7 @@
                                                                 <td>
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="coverage_will_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->coverage_will_be }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
@@ -2101,7 +2113,7 @@
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="coverage_will_not_be"
                                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->coverage_will_not_be }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
@@ -2109,7 +2121,7 @@
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="coverage_rationable"
                                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->coverage_rationable }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
@@ -2119,14 +2131,14 @@
                                                                 <td>
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="who_will_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->who_will_be }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="relative-container">
                                                                         <textarea class="mic-input" name="who_will_not_be" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $what_who_where->who_will_not_be }}</textarea>
-                                                                        @component('frontend.forms.language-model')
+                                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                                         @endcomponent
                                                                     </div>
                                                                 </td>
@@ -2150,7 +2162,7 @@
                                                 <div class="relative-container">
                                                     <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         name="root_cause_description">{{ $data->root_cause_description }}</textarea>
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -2161,7 +2173,7 @@
                                                 <div class="relative-container">
                                                     <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         name="investigation_summary">{{ $data->investigation_summary }}</textarea>
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -2263,7 +2275,7 @@
                                                         id="residual_risk"
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         value="{{ $data->residual_risk }}">
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -2345,7 +2357,7 @@
                                                 <div class="relative-container">
                                                     <textarea class="mic-input" name="comments2" id="comments2"
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $data->comments2 }}</textarea>
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -2492,7 +2504,7 @@
                                                 <label for="mitigation-plan">Mitigation Plan</label>
                                                 <div class="relative-container">
                                                     <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="mitigation_plan">{{ $data->mitigation_plan }}</textarea>
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -2541,7 +2553,7 @@
                                                 <div class="relative-container">
                                                     <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         name="mitigation_status_comments">{{ $data->mitigation_status_comments }}</textarea>
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -2587,7 +2599,7 @@
                                                 <label for="impact-analysis">Impact Analysis</label>
                                                 <div class="relative-container">
                                                     <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="impact_analysis">{{ $data->impact_analysis }}</textarea>
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -2597,7 +2609,7 @@
                                                 <label for="risk-analysis">Risk Analysis</label>
                                                 <div class="relative-container">
                                                     <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="risk_analysis">{{ $data->risk_analysis }}</textarea>
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
@@ -2683,14 +2695,15 @@
                                                 <div class="relative-container">
                                                     <textarea class="mic-input" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         name="due_date_extension">{{ $data->due_date_extension }}</textarea>
-                                                    @component('frontend.forms.language-model')
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 7])
                                                     @endcomponent
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton">Save</button>
+                                        <button type="submit" class="saveButton"
+                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton"
                                             onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -3023,9 +3036,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3070,9 +3083,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3117,9 +3130,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3425,6 +3438,15 @@
                         });
                     });
                 });
+            </script>
+            <script>
+                $(document).ready(function() {
+                    $('.remove-file').click(function() {
+                        const removeId = $(this).data('remove-id')
+                        console.log('removeId', removeId);
+                        $('#' + removeId).remove();
+                    })
+                })
             </script>
             {{-- <script>
                 document.addEventListener('DOMContentLoaded', function() {

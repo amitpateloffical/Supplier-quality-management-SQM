@@ -1238,7 +1238,7 @@
 
                         <div class="button-block mt-4">
                             <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                         </div>
@@ -1462,27 +1462,33 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Country">Country</label>
-                                    <select name="country" class="form-select country" aria-label="Default select example" onchange="loadStates()">
+                                    <select name="country" class="form-select country"
+                                        aria-label="Default select example" onchange="loadStates()">
                                         <option value="">Select Country</option>
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="City">State</label>
-                                    <select name="state" class="form-select state" aria-label="Default select example" onchange="loadCities()">
-                                        <option value="">Select State/District</option>
+                                    <label for="State">State</label>
+                                    <select name="state" class="form-select state"
+                                        aria-label="Default select example" onchange="loadCities()" disabled>
+                                        <option value="">Select State</option>
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="State/District">City</label>
-                                    <select name="city" class="form-select city" aria-label="Default select example">
+                                    <label for="City">City</label>
+                                    <select name="city" class="form-select city"
+                                        aria-label="Default select example" disabled>
                                         <option value="">Select City</option>
                                     </select>
                                 </div>
                             </div>
+
                             <script>
                                 var config = {
                                     cUrl: 'https://api.countrystatecity.in/v1',
@@ -1504,8 +1510,9 @@
                                         success: function(data) {
                                             data.forEach(country => {
                                                 const option = document.createElement('option');
-                                                option.value = country.iso2;
-                                                option.textContent = country.name;
+                                                option.value = country.name; // Store the name in the option value
+                                                option.textContent = country.name; // Display the name
+                                                option.dataset.code = country.iso2; // Store the code in a data attribute if needed
                                                 countrySelect.appendChild(option);
                                             });
                                         },
@@ -1519,7 +1526,7 @@
                                     stateSelect.disabled = false;
                                     stateSelect.innerHTML = '<option value="">Select State</option>';
 
-                                    const selectedCountryCode = countrySelect.value;
+                                    const selectedCountryCode = countrySelect.options[countrySelect.selectedIndex].dataset.code;
 
                                     $.ajax({
                                         url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
@@ -1529,8 +1536,9 @@
                                         success: function(data) {
                                             data.forEach(state => {
                                                 const option = document.createElement('option');
-                                                option.value = state.iso2;
-                                                option.textContent = state.name;
+                                                option.value = state.name; // Store the name in the option value
+                                                option.textContent = state.name; // Display the name
+                                                option.dataset.code = state.iso2; // Store the code in a data attribute if needed
                                                 stateSelect.appendChild(option);
                                             });
                                         },
@@ -1544,8 +1552,8 @@
                                     citySelect.disabled = false;
                                     citySelect.innerHTML = '<option value="">Select City</option>';
 
-                                    const selectedCountryCode = countrySelect.value;
-                                    const selectedStateCode = stateSelect.value;
+                                    const selectedCountryCode = countrySelect.options[countrySelect.selectedIndex].dataset.code;
+                                    const selectedStateCode = stateSelect.options[stateSelect.selectedIndex].dataset.code;
 
                                     $.ajax({
                                         url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
@@ -1555,8 +1563,8 @@
                                         success: function(data) {
                                             data.forEach(city => {
                                                 const option = document.createElement('option');
-                                                option.value = city.id;
-                                                option.textContent = city.name;
+                                                option.value = city.name; // Store the name in the option value
+                                                option.textContent = city.name; // Display the name
                                                 citySelect.appendChild(option);
                                             });
                                         },
@@ -1565,10 +1573,12 @@
                                         }
                                     });
                                 }
+
                                 $(document).ready(function() {
-                                    loadCountries();
+                                    loadCountries(); // Load countries when the page is ready
                                 });
                             </script>
+
 
 
                             <div class="col-lg-6">

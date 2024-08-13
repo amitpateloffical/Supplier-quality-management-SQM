@@ -391,27 +391,27 @@
                                         </div>
 
                                         <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="Assign To">Assigned To <span class="text-danger"></span>
-                                        </label>
-                                        <select id="assign_to" name="assign_to"
-                                            @if ($data->stage >= 6) disabled @endif>
-                                            <option value="">Select a value</option>
-                                            @if (!empty($users))
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($data->assign_to == $user->id) selected @endif>
-                                                        {{ $user->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
+                                            <div class="group-input">
+                                                <label for="Assign To">Assigned To <span class="text-danger"></span>
+                                                </label>
+                                                <select id="assign_to" name="assign_to"
+                                                    @if ($data->stage >= 6) disabled @endif>
+                                                    <option value="">Select a value</option>
+                                                    @if (!empty($users))
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->id }}"
+                                                                @if ($data->assign_to == $user->id) selected @endif>
+                                                                {{ $user->name }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
 
                                         <!-- <div class="col-lg-6">
-                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                      </div>
-                                                                                                                                                                                                                                                                                                                        </div>  -->
+                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                  </div>
+                                                                                                                                                                                                                                                                                                                                                                                    </div>  -->
                                         {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="date_due">Due Date<span class="text-danger"></span></label>
@@ -443,15 +443,17 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
-                                                        class="text-danger">*</span></label><span id="rchars">255</span> characters remaining
+                                                        class="text-danger">*</span></label><span
+                                                    id="rchars">255</span> characters remaining
 
                                                 <div class="relative-container">
-                                            <input id="docname" type="text" name="short_description"
-                                                class="mic-input"value="{{ $data->short_description }}" maxlength="255"
-                                                required @if ($data->stage >= 6) disabled @endif>
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
-                                        </div>
+                                                    <input id="docname" type="text" name="short_description"
+                                                        class="mic-input"value="{{ $data->short_description }}"
+                                                        maxlength="255" required
+                                                        @if ($data->stage >= 6) disabled @endif>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
+                                                </div>
                                             </div>
                                             {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
                                         </div>
@@ -587,6 +589,14 @@
                                         <input type="file" name="attach_files1" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{ $data->attach_files1 }}"/>
                                     </div>
                                 </div> --}}
+                                        @if ($data->attach_files1)
+                                            @foreach (json_decode($data->attach_files1) as $file)
+                                                <input id="ATFIFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_attach_files[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="attach_files1">Attached Files</label>
@@ -603,7 +613,9 @@
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
+                                                                        data-remove-id="ATFIFile-{{ $loop->index }}"
+                                                                        data-file-name="{{ $file }}"
+                                                                        style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
@@ -654,24 +666,27 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="non_compliance">Non Compliance</label>
-                                               <div class="relative-container">
-                                            <input id="docname" type="text" name="non_compliance"
-                                                class="mic-input"value="{{ $data->non_compliance }}" maxlength="255" @if ($data->stage >= 6) disabled @endif>
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
-                                        </div>
+                                                <div class="relative-container">
+                                                    <input id="docname" type="text" name="non_compliance"
+                                                        class="mic-input"value="{{ $data->non_compliance }}"
+                                                        maxlength="255"
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="recommend_action">Recommended Action</label>
                                                 <div class="relative-container">
-                                            <input id="docname" type="text" name="recommend_action"
-                                                class="mic-input"value="{{ $data->recommend_action }}" maxlength="255"
-                                                @if ($data->stage >= 6) disabled @endif>
-                                            @component('frontend.forms.language-model')
-                                            @endcomponent
-                                        </div>
+                                                    <input id="docname" type="text" name="recommend_action"
+                                                        class="mic-input"value="{{ $data->recommend_action }}"
+                                                        maxlength="255"
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
+                                                </div>
                                             </div>
                                         </div>
                                         {{-- <div class="col-12">
@@ -681,9 +696,16 @@
                                     </div>
                                 </div> --}}
                                     </div>
+                                    @if ($data->related_observations)
+                                        @foreach (json_decode($data->related_observations) as $file)
+                                            <input id="REOBFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_related_observations[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="related_observations">Related Obsevations</label>
+                                            <label for="related_observations">Related Observations</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             <div class="file-attachment-field">
@@ -697,7 +719,9 @@
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
+                                                                    data-remove-id="REOBFile-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"
+                                                                    style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
                                                             </h6>
@@ -764,7 +788,7 @@
                                         </div>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="date_due"> Due Date</label>
+                                                <label for="date_due"> Due Date.</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" name="capa_date_due11" id="date_due" readonly
                                                         placeholder="DD-MM-YYYY"
@@ -792,23 +816,23 @@
 
                                     </div>
                                 </div> --}}
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="Assign To">Assigned To <span class="text-danger"></span>
-                                        </label>
-                                        <select id="assign_to2" name="assign_to2"
-                                            @if ($data->stage >= 6) disabled @endif>
-                                            <option value="">Select a value</option>
-                                            @if (!empty($users))
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($data->assign_to == $user->id) selected @endif>
-                                                        {{ $user->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="Assign To">Assigned To. <span class="text-danger"></span>
+                                                </label>
+                                                <select id="assign_to2" name="assign_to2"
+                                                    @if ($data->stage >= 6) disabled @endif>
+                                                    <option value="">Select a value</option>
+                                                    @if (!empty($users))
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->id }}"
+                                                                @if ($data->assign_to == $user->id) selected @endif>
+                                                                {{ $user->name }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
 
                                         {{-- <div class="col-lg-6">
                                     <div class="group-input">
@@ -851,7 +875,8 @@
                                 </div> --}}
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="action-plan-grid"> Action Plan<button type="button" name="action-plan-grid"
+                                                <label for="action-plan-grid"> Action Plan<button type="button"
+                                                        name="action-plan-grid"
                                                         id="observation_table"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="observation">
@@ -870,7 +895,8 @@
                                                         @foreach (unserialize($griddata->action) as $key => $temps)
                                                             <tr>
                                                                 <!-- <td><input type="text" name="serial_number[]" value="{{ $key + 1 }}"></td> -->
-                                                                <td><input disabled type="text" name="serial_number[]"  value="{{ $key + 1 }}">
+                                                                <td><input disabled type="text" name="serial_number[]"
+                                                                        value="{{ $key + 1 }}">
                                                                 </td>
                                                                 <td><input type="text" name="action[]"
                                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -913,16 +939,16 @@
                                                                 </td>
 
                                                                 <!-- <td>
-                                                                                                                                                                                                                                                                                                                                                <div class="group-input new-date-data-field mb-0">
-                                                                                                                                                                                                                                                                                                                                                    <div class="input-date ">
-                                                                                                                                                                                                                                                                                                                                                        <div class="calenderauditee">
-                                                                                                                                                                                                                                                                                                                                                            {{-- <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /> --}}
-                                                                                                                                                                                                                                                                                                                                                            <input type="date" name="deadline[]" class="hide-input"
-                                                                                                                                                                                                                                                                                                                                                            oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
-                                                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                            </td>  -->
+                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input new-date-data-field mb-0">
+                                                                                                                                                                                                                                                                                                                                                                                                                <div class="input-date ">
+                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="calenderauditee">
+                                                                                                                                                                                                                                                                                                                                                                                                                        {{-- <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                        <input type="date" name="deadline[]" class="hide-input"
+                                                                                                                                                                                                                                                                                                                                                                                                                        oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
+                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                        </td>  -->
                                                                 {{-- <td><input type="text" name="deadline[]"{{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : "" }}"></td> --}}
                                                                 {{-- <td><input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>  --}}
                                                                 <td><input type="text" name="item_status[]"
@@ -949,18 +975,17 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="comments">Comments</label>
-                                                <div style="position: relative;">
+                                                <div class="relative-container">
                                                     <textarea class="mic-input" name="comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
-                                                    <button class="mic-btn" type="button">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
-                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -998,12 +1023,11 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="impact_analysis">Impact Analysis</label>
-                                                <div style="position: relative;">
+                                                <div class="relative-container">
                                                     <textarea class="mic-input" type name="impact_analysis"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->impact_analysis }}</textarea>
-                                                    <button class="mic-btn" type="button">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1162,11 +1186,10 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="action_taken">Action Taken</label>
-                                                <div style="position: relative;">
+                                                <div class="relative-container">
                                                     <textarea class="mic-input" name="action_taken" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->action_taken }}</textarea>
-                                                    <button class="mic-btn" type="button">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1210,6 +1233,13 @@
                                         <input type="file" name="attach_files2" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->attach_files2 }}">
                                     </div>
                                 </div> --}}
+                                        @if ($data->attach_files2)
+                                            @foreach (json_decode($data->attach_files2) as $file)
+                                                <input id="ATFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_attach_files2[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="attach_files2">Attachment</label>
@@ -1226,7 +1256,9 @@
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
+                                                                        data-remove-id="ATFile-{{ $loop->index }}"
+                                                                        data-file-name="{{ $file }}"
+                                                                        style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
@@ -1247,19 +1279,23 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="related_url">Related URL</label>
-                                                <input type="url" name="related_url"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    value="{{ $data->related_url }}">
+                                                <div class="relative-container">
+                                                    <input type="url" name="related_url" class="mic-input"
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        value="{{ $data->related_url }}">
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
+                                                </div>
+
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="response_summary">Response Summary</label>
-                                                <div style="position: relative;">
+                                                <div class="relative-container">
                                                     <textarea class="mic-input" name="response_summary" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->response_summary }}</textarea>
-                                                    <button class="mic-btn" type="button">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1534,9 +1570,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1581,9 +1617,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1627,9 +1663,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1791,5 +1827,14 @@
                     var textlen = maxLength - $(this).val().length;
                     $('#rchars').text(textlen);
                 });
+            </script>
+            <script>
+                $(document).ready(function() {
+                    $('.remove-file').click(function() {
+                        const removeId = $(this).data('remove-id')
+                        console.log('removeId', removeId);
+                        $('#' + removeId).remove();
+                    })
+                })
             </script>
         @endsection

@@ -879,8 +879,29 @@ $history->save();
          $root->who_will_not_be = ($request->who_will_not_be);
          $root->who_rationable = ($request->who_rationable);
          
+        // if (!empty($request->root_cause_initial_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('root_cause_initial_attachment')) {
+        //         foreach ($request->file('root_cause_initial_attachment') as $file) {
+        //             $name = $request->name . 'root_cause_initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $root->root_cause_initial_attachment = json_encode($files);
+        // }
+
+
+        $files = is_array($request->existing_root_cause_initial_attachment) ? $request->existing_root_cause_initial_attachment : null;
+
         if (!empty($request->root_cause_initial_attachment)) {
-            $files = [];
+            if ($root->root_cause_initial_attachment) {
+                $existinginitialFiles = json_decode($root->root_cause_initial_attachment, true); // Convert to associative array
+                if (is_array($existinginitialFiles )) {
+                    $files = $existinginitialFiles ;
+                }
+            }
+
             if ($request->hasfile('root_cause_initial_attachment')) {
                 foreach ($request->file('root_cause_initial_attachment') as $file) {
                     $name = $request->name . 'root_cause_initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -888,21 +909,42 @@ $history->save();
                     $files[] = $name;
                 }
             }
-            $root->root_cause_initial_attachment = json_encode($files);
         }
 
+        // If no files are attached, set to null
+        $root->root_cause_initial_attachment = !empty($files) ? json_encode($files) : null;
+
+        // if (!empty($request->cft_attchament_new)) {
+        //     $files = [];
+        //     if ($request->hasfile('cft_attchament_new')) {
+        //         foreach ($request->file('cft_attchament_new') as $file) {
+        //             $name = $request->name . 'cft_attchament_new' . rand(1, 100) . '.' . $file->getClientOriginalExtension() ;
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $root->cft_attchament_new = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_cft_attchament_new) ? $request->existing_cft_attchament_new : null;
+
         if (!empty($request->cft_attchament_new)) {
-            $files = [];
+            if ($root->cft_attchament_new) {
+                $existingCFTFiles = json_decode($root->cft_attchament_new, true); // Convert to associative array
+                if (is_array($existingCFTFiles)) {
+                    $files = $existingCFTFiles;
+                }
+            }
+
             if ($request->hasfile('cft_attchament_new')) {
                 foreach ($request->file('cft_attchament_new') as $file) {
-                    $name = $request->name . 'cft_attchament_new' . rand(1, 100) . '.' . $file->getClientOriginalExtension() ;
+                    $name = $request->name . 'cft_attchament_new' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $root->cft_attchament_new = json_encode($files);
         }
-
+        $root->cft_attchament_new = !empty($files) ? json_encode($files) : null;
         
         // $root->investigators = json_encode($request->investigators);
         $root->submitted_by = $request->submitted_by;
@@ -1604,26 +1646,26 @@ $history->save();
                 }
 
                 $history->save();
-                $list = Helpers::getQAUserList();
-                foreach ($list as $u) {
-                    if($u->q_m_s_divisions_id == $root->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                         if ($email !== null) {
-                          try {
-                            Mail::send(
-                                'mail.view-mail',
-                                 ['data' => $root],
-                              function ($message) use ($email) {
-                                  $message->to($email)
-                                      ->subject("Document sent ".Auth::user()->name);
-                              }
-                            );
-                          } catch (\Throwable $e) {
-                            //throw $th;
-                          }
-                        }
-                 } 
-              }
+            //     $list = Helpers::getQAUserList();
+            //     foreach ($list as $u) {
+            //         if($u->q_m_s_divisions_id == $root->division_id){
+            //             $email = Helpers::getInitiatorEmail($u->user_id);
+            //              if ($email !== null) {
+            //               try {
+            //                 Mail::send(
+            //                     'mail.view-mail',
+            //                      ['data' => $root],
+            //                   function ($message) use ($email) {
+            //                       $message->to($email)
+            //                           ->subject("Document sent ".Auth::user()->name);
+            //                   }
+            //                 );
+            //               } catch (\Throwable $e) {
+            //                 //throw $th;
+            //               }
+            //             }
+            //      } 
+            //   }
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();

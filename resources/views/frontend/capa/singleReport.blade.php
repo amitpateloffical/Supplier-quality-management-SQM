@@ -234,7 +234,7 @@
                     <tr>
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
-                        <th class="w-20">Due Date</th>
+                        <th class="w-20">Date Due</th>
                         <td class="w-30"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
 
                     </tr>
@@ -267,12 +267,10 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Reference Records</th>
-                        <td class="w-30">
-                            @if($data->capa_related_record)
-                                @foreach (explode(',', $data->capa_related_record) as $Key => $value)
-                                    <li>{{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($value) }}</li>
-                                @endforeach
+                        <th class="w-20">Reference Record</th>
+                        <td class="w-80">
+                            @if ($data->capa_related_record)
+                                {{ $data->capa_related_record }}
                             @else
                                 Not Applicable
                             @endif

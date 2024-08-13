@@ -423,6 +423,11 @@
                     </div>
                 </div>
             </div> -->
+            @php
+                $users = DB::table('users')->select('id', 'name')->get();
+                $requestNUmber = 'RV/RP/' . str_pad($data->record, 4, '0', STR_PAD_LEFT) . '/' . date('Y');
+                $formStatus = $data->stage;
+            @endphp
 
             <div class="block">
                 <div class="head">
@@ -434,6 +439,13 @@
                             Initiating Department
                         </div> -->
                         <table>
+                        <tr>
+                                <th class="w-20">Request Number</th>
+                                <td class="w-30">{{ $requestNUmber }}</td>
+        
+                                <th class="w-20">Division</th>
+                                <td class="w-30">{{ Helpers::getDivisionName($data->division_id) }}</td>
+                            </tr>
                             <tr>
                                 <th class="w-20">Initiator</th>
                                 <td class="w-30">{{ $data->originator }}</td>
@@ -937,7 +949,7 @@
                             @endif
                         </td>
                     </tr> -->
-                    <label style="margin-left:10px;" class="Summer" for="">Justification</label>
+                    <label style="margin-left:10px;" class="Summer" for="">Sample Justification</label>
                         <div style="margin-left:10px;" class="imageContainer">
                         @if ($data->sample_order_justification)
                             {!! $data->sample_order_justification !!}
@@ -1450,8 +1462,9 @@
                                 @endif
                             </td>
                         </tr>
+                        </table>
 
-                        <tr>
+                        <!-- <tr>
                             <th class="w-20">Address</th>
                             <td class="w-80" colspan="3">
                                 @if ($data->address)
@@ -1461,7 +1474,19 @@
                                 @endif
                             </td>
                         </tr>
-                        <tr>
+                        <tr> -->
+
+                        <label style="margin-left:10px;" class="Summer" for="">Address</label>
+                        <div style="margin-left:10px; font-size:14px;">
+                        @if ($data->address)
+                            {!! $data->address !!}
+                        @else
+                            Not Applicable
+                        @endif
+                        </div>
+
+                            
+                        <table>
                             <th class="w-20">Supplier Web Site</th>
                             <td class="w-30">
                                 @if ($data->suppplier_web_site)
@@ -1489,8 +1514,8 @@
                 <tr>
                     <th class="w-20">Contracts</th>
                     <td class="w-30">
-                        @if ($data->address)
-                            {{ $data->address }}
+                        @if ($data->suppplier_contacts)
+                            {{ $data->suppplier_contacts }}
                         @else
                             Not Applicable
                         @endif
@@ -1508,8 +1533,8 @@
                     <th class="w-20">Supplier Contracts/Agreements
                     </th>
                     <td class="w-30">
-                        @if ($data->address)
-                            {{ $data->address }}
+                        @if ($data->suppplier_agreement)
+                            {{ $data->suppplier_agreement }}
                         @else
                             Not Applicable
                         @endif
@@ -1526,8 +1551,8 @@
                 <tr>
                     <th class="w-20">Distribution Sites</th>
                     <td class="w-30">
-                        @if ($data->address)
-                            {{ $data->address }}
+                        @if ($data->distribution_sites)
+                            {{ $data->distribution_sites }}
                         @else
                             Not Applicable
                         @endif
@@ -2008,194 +2033,7 @@
 
 
         <!--  Score Card -->
-        <div class="block" style="margin-top: 15px;">
-            <div class="block-head">
-                Score Card
-            </div>
-            <table>
-                <tr>
-                    <th class="w-20">Cost Reduction</th>
-                    <td class="w-30">
-                        @if ($data->cost_reduction)
-                            {{ $data->cost_reduction }}
-                        @else
-                            Not Applicable
-                        @endif                        
-                    </td>
-                    <th class="w-20">Cost Reduction Weight</th>
-                    <td class="w-30">
-                        @if ($data->cost_reduction_weight)
-                            {{ $data->cost_reduction_weight }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Payment Terms</th>
-                    <td class="w-30">
-                        @if ($data->payment_term)
-                            {{ $data->payment_term }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                    <th class="w-20">Payment Terms Weight</th>
-                    <td class="w-30">
-                        @if ($data->payment_term_weight)
-                            {{ $data->payment_term_weight }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Lead Time Days</th>
-                    <td class="w-30">
-                        @if ($data->lead_time_days)
-                            {{ $data->lead_time_days }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                    <th class="w-20">Lead Time Days Weight</th>
-                    <td class="w-30">
-                        @if ($data->lead_time_days_weight)
-                            {{ $data->lead_time_days_weight }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">On-Time Delivery
-                    </th>
-                    <td class="w-30">
-                        @if ($data->ontime_delivery)
-                            {{ $data->ontime_delivery }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                    <th class="w-20">On-Time Delivery Weight</th>
-                    <td class="w-30">
-                        @if ($data->ontime_delivery_weight)
-                            {{ $data->ontime_delivery_weight }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Supplier Business Planning</th>
-                    <td class="w-30">
-                        @if ($data->supplier_bussiness_planning)
-                            {{ $data->supplier_bussiness_planning }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                    <th class="w-20">Supplier Business Weight</th>
-                    <td class="w-30">
-                        @if ($data->supplier_bussiness_planning_weight)
-                            {{ $data->supplier_bussiness_planning_weight }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Rejection in PPM</th>
-                    <td class="w-30">
-                        @if ($data->rejection_ppm)
-                            {{ $data->rejection_ppm }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                    <th class="w-20">Rejection in PPM Weight</th>
-                    <td class="w-30">
-                        @if ($data->rejection_ppm_weight)
-                            {{ $data->rejection_ppm_weight }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Quality Systems</th>
-                    <td class="w-30">
-                        @if ($data->quality_system)
-                            {{ $data->quality_system }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                    <th class="w-20">Quality Systems Weight</th>
-                    <td class="w-30">
-                        @if ($data->quality_system_ranking)
-                            {{ $data->quality_system_ranking }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20"># of CAR's generated</th>
-                    <td class="w-30">
-                        @if ($data->car_generated)
-                            {{ $data->car_generated }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                    <th class="w-20"># of CAR's generated Weight</th>
-                    <td class="w-30">
-                        @if ($data->car_generated_weight)
-                            {{ $data->car_generated_weight }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">CAR Closure Time</th>
-                    <td class="w-30">
-                        @if ($data->closure_time)
-                            {{ $data->closure_time }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                    <th class="w-20">CAR Closure Time Weight</th>
-                    <td class="w-30">
-                        @if ($data->closure_time_weight)
-                            {{ $data->closure_time_weight }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">End-User Satisfaction</th>
-                    <td class="w-30">
-                        @if ($data->end_user_satisfaction)
-                            {{ $data->end_user_satisfaction }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                    <th class="w-20">End-User Satisfaction Weight</th>
-                    <td class="w-30">
-                        @if ($data->end_user_satisfaction_weight)
-                            {{ $data->end_user_satisfaction_weight }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-            </table>
-        </div>
+       
         <!-- <div class="border-table">
             <div class="block-head">
                 Additional Attachments
@@ -2267,7 +2105,14 @@
                         @endif
                     </td>
                 </tr>
+                </table>
+        </div>
+        <div class="block" style="margin-top: 15px;">
+            <div class="block-head">
+                Risk Factors
+            </div>
 
+            <table>
                 <tr>
                     <th class="w-20">Facility Type
                     </th>
@@ -2552,15 +2397,15 @@
                     </td>
                 </tr>             
                 <tr>
-                    <th class="w-20">>Purchase Sample Request Ack. by Dep. By</th>
+                    <th class="w-20">Purchase Sample Request Ack. by Dep. By</th>
                     <td class="w-30">
                         <div class="static">{{ $data->pendigPurchaseSampleRequested_by }}</div>
                     </td>
-                    <th class="w-20">>Purchase Sample Request Ack. by Dep. On</th>
+                    <th class="w-20">Purchase Sample Request Ack. by Dep. On</th>
                     <td class="w-30">
                         <div class="static">{{ $data->pendigPurchaseSampleRequested_on }}</div>
                     </td>
-                    <th class="w-20">>Purchase Sample Request Ack. by Dep. Comment</th>
+                    <th class="w-20">Purchase Sample Request Ack. by Dep. Comment</th>
                     <td class="w-30">
                         <div class="static">{{ $data->pendigPurchaseSampleRequested_comment }}</div>
                     </td>

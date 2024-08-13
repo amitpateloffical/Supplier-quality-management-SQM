@@ -1,3 +1,4 @@
+
 @extends('frontend.layout.main')
 @section('container')
     <div id="audit-trial">
@@ -353,90 +354,57 @@
                         <th>Action Type</th>
                         <th>Performer</th>
                     </tr>
-    
+
                     <tr>
                         @php
                             $previousItem = null;
                         @endphp
-    
+
                         @foreach ($audit as $audits => $dataDemo)
                             <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
                             </td>
-    
+
                             <td>
-                                <div><strong>Changed From :</strong>{!! str_replace(',', ', ', $dataDemo->change_from) !!}</div>
+                                <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
                             </td>
-    
+
                             <td>
-                                <div><strong>Changed To :</strong>{!! str_replace(',', ', ', $dataDemo->change_to) !!}</div>
+                                <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong>
-                                    {{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
+                                    <strong> Data Field Name
+                                        :</strong><a>{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                                 </div>
-    
-                                <div style="margin-top: 5px;" class="imageContainer">
+                                <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')
-                                        <strong>Change From :</strong>
-                                        @if ($dataDemo->change_from)
-                                            @if (strtotime($dataDemo->change_from))
-                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d-M-Y') }}
-                                            @else
-                                                {{ str_replace(',', ', ', $dataDemo->change_from) }}
-                                            @endif
-                                        @elseif($dataDemo->change_from && trim($dataDemo->change_from) == '')
-                                            NULL
-                                        @else
-                                            Not Applicable
-                                        @endif
+                                        <strong>Change From
+                                            :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
                                     @else
-                                        <strong>Change From :</strong>
-                                        @if (!empty(strip_tags($dataDemo->previous)))
-                                            @if (strtotime($dataDemo->previous))
-                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d-M-Y') }}
-                                            @else
-                                                {!! $dataDemo->previous !!}
-                                            @endif
-                                        @elseif($dataDemo->previous == null)
-                                            Null
-                                        @else
-                                            Not Applicable
-                                        @endif
+                                        <strong>Change From
+                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
                                     @endif
                                 </div>
                                 <br>
-    
-                                <div class="imageContainer">
+                                <div>
                                     @if ($dataDemo->activity_type == 'Activity Log')
-                                        <strong>Change To :</strong>
-                                        @if (strtotime($dataDemo->change_to))
-                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
-                                        @else
-                                            {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
-                                        @endif
+                                        <strong>Change To
+                                            :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
                                     @else
-                                        <strong>Change To :</strong>
-                                        @if (strtotime($dataDemo->current))
-                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
-                                        @else
-                                            {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
-                                        @endif
+                                        <strong>Change To
+                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
                                     @endif
                                 </div>
-    
                                 <div style="margin-top: 5px;">
                                     <strong>Change Type
                                         :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
                                 </div>
-    
-    
                             </td>
                             <td>
                                 <div>
                                     <strong> Action Name
                                         :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
-    
+
                                 </div>
                             </td>
                             <td>
@@ -444,20 +412,43 @@
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>
-                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
-    
-                                    {{-- {{ $dataDemo->created_at ? $dataDemo->created_at : 'Not Applicable' }} --}}
+                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
-    
+
                             </td>
                     </tr>
                     @endforeach
                 </table>
             </div>
-        </div>                 <!-- Pagination links -->
+        </div>
+        <div style="float: inline-end; margin: 10px;">
+            <style>
+                .pagination>.active>span {
+                    background-color: #0e7676cc !important;
+                    border-color: #0e7676cc !important;
+                    color: #fff !important;
+                }
+
+                .pagination>.active>span:hover {
+                    background-color: #0e7676cc !important;
+                    border-color: #0e7676cc !important;
+                }
+
+                .pagination>li>a,
+                .pagination>li>span {
+                    color: #0e7676cc !important;
+                }
+
+                .pagination>li>a:hover {
+                    background-color: #0e7676cc !important;
+                    border-color: #0e7676cc !important;
+                    color: #fff !important;
+                }
+            </style>
+            {{ $audit->links() }}
+        </div>               <!-- Pagination links -->
         <div style="float: inline-end; margin: 10px;">
             <style>
                 .pagination>.active>span {
@@ -485,9 +476,9 @@
             {{ $audit->links() }}
         </div>
             </div>
-            
+
         </div>
-       
+
 
         </body>
 

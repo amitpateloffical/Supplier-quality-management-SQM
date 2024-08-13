@@ -31,8 +31,8 @@
         header {
             display: none;
         }
-       
-        
+
+
     </style>
     </style>
 
@@ -68,7 +68,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / 
+            {{ Helpers::getDivisionName(session()->get('division')) }} /
             {{-- {{ Helpers::getDivisionName($data->division_id) }} / --}}
             Extension
         </div>
@@ -83,7 +83,7 @@
     ======================================= --}}
     <div id="change-control-fields">
         <div class="container-fluid">
-        
+
             <!-- Tab links -->
             <div class="cctab">
 
@@ -111,17 +111,19 @@
                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                 <input disabled type="text" name="record_number"
                                 value="{{ Helpers::getDivisionName($parentDivisionId) }}/Ext/{{ date('y') }}/{{ $record_number }}">
+                                                                                    {{-- value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ Helpers::year($data->created_at) }}/{{ $data->record }}"> --}}
+
                                 {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Division Code"><b>Site/Location Code</b></label>
-                                <input readonly type="text" value="{{ Helpers::getDivisionName($parentDivisionId) }}"> 
+                                <input readonly type="text" value="{{ Helpers::getDivisionName($parentDivisionId) }}">
                                 <input type="hidden" name="site_location_code" value="{{ $parentDivisionId }}">
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"><b>Initiator</b></label>
@@ -146,30 +148,24 @@
                                 <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date">
                             </div>
                         </div>
-                            
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="short_description">Short Description <span class="text-danger">*</span></label>
                                 <span id="rchars">255</span> Characters remaining
                                 <div style="position:relative;">
-                                    <input 
-                                        id="short_description" 
-                                        type="text" 
-                                        name="short_description" 
-                                        maxlength="255"
-                                        required
-                                        class="mic-input"
-                                    >
+                                    <input id="short_description" type="text" name="short_description" maxlength="255" required class="mic-input">
                                     <button class="mic-btn" type="button">
                                         <i class="fas fa-microphone"></i>
                                     </button>
                                 </div>
                             </div>
+
                             {{-- @error('short_description')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror --}}
                         </div>
-                        
+
                             <script>
                                 var maxLength = 255;
                                 $('#docname').keyup(function() {
@@ -183,7 +179,7 @@
                                         name="reviewers" placeholder="Select Reviewers"  >
                                         <option value="">-- Select --</option>
                                         @if (!empty($users))
-                                        
+
                                             @foreach ($users as $lan)
                                                 @if(Helpers::checkUserRolesreviewer($lan))
                                                     <option value="{{ $lan->id }}">
@@ -195,30 +191,32 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">QA approval </label>
                                     <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
-                                        name="approvers" placeholder="Select Approvers" >
+                                        name="approvers" id="approvers" placeholder="Select approvers" >
                                         <option value="">-- Select --</option>
+
 
                                         @if (!empty($users))
                                             @foreach ($users as $lan)
-                                                @if(Helpers::checkUserRolesApprovers($lan))
                                                     <option value="{{ $lan->id }}">
                                                         {{ $lan->name }}
                                                     </option>
-                                                @endif
                                             @endforeach
                                         @endif
                                     </select>
                                 </div>
                             </div>
-                           
-                            <div class="col-lg-6 new-date-data-field">
+
+
+
+
+                            {{-- <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="Actual Start Date">Current Due Date (Parent)</label>
+                                    <label for="Actual Start Date"></label>
                                     <div class="calenderauditee">
                                         <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="current_due_date"
@@ -227,10 +225,10 @@
                                     </div>
                                 </div>
                             </div>
-                           
-                            <div class="col-lg-6 new-date-data-field">
+
+                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="Actual Start Date">Proposed Due Date</label>
+                                    <label for="Actual Start Date"></label>
                                     <div class="calenderauditee">
                                         <input type="text" id="test_date" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="proposed_due_date"
@@ -238,7 +236,68 @@
                                             class="hide-input" oninput="handleDateInput(this, 'test_date')" />
                                     </div>
                                 </div>
+                            </div> --}}
+
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Audit Schedule Start Date">Current Due Date (Parent)</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="start_date" name="current_due_date" readonly
+                                            placeholder="DD-MM-YYYY" />
+                                        <input type="date" id="current_due_date" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
+                                            oninput="handleDateInput(this, 'start_date');checkDate('current_due_date','proposed_due_date')" />
+                                    </div>
+
+                                </div>
                             </div>
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Audit Schedule End Date">Proposed Due Date</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="end_date" name="proposed_due_date" readonly
+                                            placeholder="DD-MM-YYYY" />
+                                        <input type="date" id="proposed_due_date" name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'end_date');checkDate('current_due_date','proposed_due_date')" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <script>
+                                function handleDateInput(inputElement, displayElementId) {
+                                    var displayElement = document.getElementById(displayElementId);
+                                    var dateValue = new Date(inputElement.value);
+                                    displayElement.value = dateValue.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                                }
+
+                                function updateEndDateMin() {
+                                    var startDate = document.getElementById('current_due_date').value;
+                                    var endDateInput = document.getElementById('proposed_due_date');
+                                    if (startDate) {
+                                        endDateInput.setAttribute('min', startDate);
+                                    }
+                                }
+
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    updateEndDateMin(); // Initialize the end date min on page load
+
+                                    // Reapply the min attribute whenever the start date is changed
+                                    document.getElementById('current_due_date').addEventListener('input', function() {
+                                        updateEndDateMin();
+                                    });
+                                });
+                            </script>
+                            {{-- <div class="col-md-6 new-date-data-field">
+                                <div class="group-input input-date ">
+                                    <label for="date_due"> Due Date</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" name="capa_date_due" id="date_due" readonly placeholder="DD-MM-YYYY" />
+                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                            id="date_due_checkdate" class="hide-input"
+                                            oninput="handleDateInput(this, 'date_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
+                                    </div>
+                                </div>
+                            </div> --}}
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="description">Description</label>
@@ -253,7 +312,7 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                             </div>
-                            
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="justification_reason">Justification / Reason</label>
@@ -264,11 +323,12 @@
                                         </button>
                                     </div>
                                 </div>
+
                                 {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                             </div>
-                            
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Guideline Attachment"> Attachment Extension </label>
@@ -287,10 +347,10 @@
                         </div>
 
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                    Exit </a> </button>
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                Exit </a> </button>
                         </div>
 
                     </div>
@@ -312,11 +372,11 @@
                                 </div>
                             </div>
                         </div>
-                        
-                       
+
+
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Guideline Attachment">HOD Attachment  </label>
+                                <label for="Guideline Attachment">HOD Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">
@@ -331,10 +391,11 @@
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                Exit </a> </button>
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                            Exit </a> </button>
                     </div>
                 </div>
             </div>
@@ -353,11 +414,11 @@
                                 </div>
                             </div>
                         </div>
-                        
-                       
+
+
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Guideline Attachment">QA Attachment  </label>
+                                <label for="Guideline Attachment">QA Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">
@@ -372,24 +433,27 @@
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
+                </div>
                 </div>
             </div>
              <!-- Activity Log content -->
              <div id="CCForm6" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Activated By">Submited By</label>
                                 <div class="static"></div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Activated On">Submited On</label>
                                 <div class="static"></div>
@@ -397,11 +461,35 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for=" Rejected By">Reviewed By</label>
+                                <label for="Activated By">Submited Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Activated By">Cancelled By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Activated On">Cancelled  On</label>
                                 <div class="static"></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Activated By">Cancelled  Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for=" Rejected By">Reviewed By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Rejected On">Reviewed On</label>
                                 <div class="static"></div>
@@ -409,11 +497,17 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
+                                <label for="Activated By">Reviewed Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
                                 <label for=" Rejected By">More Info Required By</label>
                                 <div class="static"></div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Rejected On">More Info Required  On</label>
                                 <div class="static"></div>
@@ -421,11 +515,17 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
+                                <label for="Activated By"> More Info Required Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
                                 <label for=" Rejected By">Approved By</label>
                                 <div class="static"></div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Rejected On">Approved On</label>
                                 <div class="static"></div>
@@ -433,27 +533,37 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
+                                <label for="Activated By">Approved Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
                                 <label for=" Rejected By">More Info Required By</label>
                                 <div class="static"></div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Rejected On">More Info Required  On</label>
                                 <div class="static"></div>
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Rejected On">More Info Required Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
 
                     </div>
-                    {{-- <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                        <a href="/rcms/qms-dashboard">
-                            <button type="button" class="backButton">Back</button>
-                        </a>
-                        <button type="submit">Submit</button>
+                    <div class="button-block">
+                        {{-- <button type="submit" class="saveButton">Save</button> --}}
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        {{-- <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div> --}}
+                        Exit </a> </button>
+                    </div>
                 </div>
             </div>
             </form>
@@ -461,6 +571,7 @@
     </div>
 
     <script>
+
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
             cctabcontent = document.getElementsByClassName("cctabcontent");
@@ -475,8 +586,75 @@
             evt.currentTarget.className += " active";
         }
 
-        const saveButtons = document.querySelectorAll('.saveButton1');
-        const form = document.getElementById('step-form');
+
+
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
+
+        const saveButtons = document.querySelectorAll(".saveButton");
+        const nextButtons = document.querySelectorAll(".nextButton");
+        const form = document.getElementById("step-form");
+        const stepButtons = document.querySelectorAll(".cctablinks");
+        const steps = document.querySelectorAll(".cctabcontent");
+        let currentStep = 0;
+
+        function nextStep() {
+            // Check if there is a next step
+            if (currentStep < steps.length - 1) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show next step
+                steps[currentStep + 1].style.display = "block";
+
+                // Add active class to next button
+                stepButtons[currentStep + 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep++;
+            }
+        }
+
+        function previousStep() {
+            // Check if there is a previous step
+            if (currentStep > 0) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show previous step
+                steps[currentStep - 1].style.display = "block";
+
+                // Add active class to previous button
+                stepButtons[currentStep - 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep--;
+            }
+        }
+    </script>
     </script>
     <script>
         VirtualSelect.init({
@@ -549,6 +727,7 @@
                 }
             }
         });
+
 
         document.querySelectorAll('.mic-input').forEach(input => {
             input.addEventListener('focus', function() {

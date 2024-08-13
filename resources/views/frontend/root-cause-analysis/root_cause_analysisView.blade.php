@@ -659,6 +659,17 @@
                                                 </div>                 
                                             </div>
                                         </div>
+
+
+                                        
+                                          @if ($data->root_cause_initial_attachment)
+                                            @foreach (json_decode($data->root_cause_initial_attachment) as $file)
+                                                <input id="initialFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_root_cause_initial_attachment[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
+
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Inv Attachments">Initial Attachment</label>
@@ -667,7 +678,7 @@
                                                     Please Attach all relevant or supporting documents
                                                 </small>
                                             </div>
-                                            <div class="file-attachment-field">
+                                              <div class="file-attachment-field">
                                                 <div disabled class="file-attachment-list" id="root_cause_initial_attachment">
                                                     @if ($data->root_cause_initial_attachment)
                                                     @foreach(json_decode($data->root_cause_initial_attachment) as $file)
@@ -675,6 +686,7 @@
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
+                                                        data-remove-id="initialFile-{{ $loop->index }}"
                                                                 data-file-name="{{ $file }}"
                                                                 style="@if ($data->stage == 0 || $data->stage == 4) pointer-events: none; @endif">
                                                                 <i class="fa-solid fa-circle-xmark"
@@ -1434,6 +1446,16 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    @if ($data->cft_attchament_new)
+                                            @foreach (json_decode($data->cft_attchament_new) as $file)
+                                                <input id="FinalFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_cft_attchament_new[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
+
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="comments">Final Attachment</label>
@@ -1448,6 +1470,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
                                                             <a type="button" class="remove-file"
+                                                             data-remove-id="FinalFile-{{ $loop->index }}"
                                                                 data-file-name="{{ $file }}"
                                                                 style="@if ($data->stage == 0 || $data->stage == 4) pointer-events: none; @endif">
                                                                 <i class="fa-solid fa-circle-xmark"
@@ -1630,6 +1653,7 @@
                                         <div class="group-input">
                                             <label for="QA_Review_Complete_On">QA Review Completed On</label>
                                             <div class="static">  {{  $data->qA_review_complete_on }}</div>
+                                         
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -2094,6 +2118,14 @@ function add4Input_case(tableId) {
             </script>
     
 
-
+            <script>
+                $(document).ready(function() {
+                    $('.remove-file').click(function() {
+                        const removeId = $(this).data('remove-id')
+                        console.log('removeId', removeId);
+                        $('#' + removeId).remove();
+                    })
+                })
+            </script>
     @endsection
 

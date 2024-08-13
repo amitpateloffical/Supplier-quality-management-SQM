@@ -545,7 +545,7 @@
 
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="due-date">Date Due</label>
+                                    <label for="due-date">Due Date</label>
                                     <div><small class="text-primary">Please mention expected date of completion</small></div>
                                     <div class="calenderauditee">
                                     <div class="calenderauditee">
@@ -1018,12 +1018,12 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="CAPA Attachments">CAPA Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 {{-- <input type="file" id="myfile" name="capa_attachment"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> 
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="capa_attachment">
 
@@ -1052,7 +1052,49 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div> --}}
+                                        @if ($data->capa_attachment)
+                                        @foreach (json_decode($data->capa_attachment) as $file)
+                                            <input id="ATFIFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_capa_attachment[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="CAPA Attachments">CAPA Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="capa_attachment">
+                                                    @if ($data->capa_attachment)
+                                                        @foreach (json_decode($data->capa_attachment) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                        class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-remove-id="ATFIFile-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"
+                                                                    style="@if ($data->stage == 0 || $data->stage == 4 || $data->stage == 6) pointer-events: none; @endif"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="capa_attachment[]"
+                                                        oninput="addMultipleFiles(this, 'capa_attachment')" multiple>
+                                                </div>
+                                            </div>
                                         </div>
+                                    </div>
                                         <div class="col-12">
                                             <div class="group-input" id="capa_qa_comments_group">
                                                 <label for="capa_qa_comments">Comments</label>
@@ -1214,7 +1256,7 @@
                                                                 }
                                                                 $value = isset($batchdespositionArray[$key]) ? $batchdespositionArray[$key] : '';
                                                                 ?>
-                                                                <input type="text" name="batch_desposition[]" value="<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); ?>">
+                                                                <input type="text" name="batch_desposition[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); ?>">
                                                             </td>
 
                                                             <td>
@@ -1225,7 +1267,7 @@
                                                                 }
                                                                 $value = isset($remarkArray[$key]) ? $remarkArray[$key] : '';
                                                                 ?>
-                                                                <input type="text" name="remark[]" value="<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); ?>">
+                                                                <input type="text" name="remark[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); ?>">
                                                             </td>
 
                                                             <td>
@@ -1237,7 +1279,7 @@
                                                                         <option value="quarantine"{{ isset(unserialize($data1->batch_status)[$key]) && unserialize($data1->batch_status)[$key] == 'quarantine' ? ' selected' : '' }}>Quarantine</option>
                                                                     </select>                                                               
                                                             </td>
-                                                             <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                             <td><button type="text" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Remove</button></td>
                                                         </tr>
                                                         @endforeach
                                                         @endif
@@ -1314,7 +1356,7 @@
                                                                 <option value="quarantine"{{ isset(unserialize($data2->material_batch_status)[$key]) && unserialize($data2->material_batch_status)[$key] == 'quarantine' ? ' selected' : '' }}>Quarantine</option>
                                                             </select>
                                                         </td>
-                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                        <td><button type="text" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Remove</button></td>
 
                                                         </tr>
                                                     @endforeach
@@ -1358,7 +1400,7 @@
                                                             <td><input type="text" name="equipment_comments[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data3->equipment_comments)[$key] ? unserialize($data3->equipment_comments)[$key] : '' }}">
                                                             </td>
-                                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                            <td><button type="text" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Remove</button></td>
 
                                                             </tr>
                                                     @endforeach
@@ -1718,12 +1760,12 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Closure Attachments">Closure Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 {{-- <input type="file" id="myfile" name="closure_attachment"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> 
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="closure_attachment1">
                                                         @if ($data->closure_attachment)
@@ -1752,7 +1794,52 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div> --}}
+
+                                        @if ($data->closure_attachment)
+                                        @foreach (json_decode($data->closure_attachment) as $file)
+                                            <input id="EFCHATFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_closure_attachment[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Closure Attachments">Closure Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="closure_attachment1">
+                                                    @if ($data->closure_attachment)
+                                                        @foreach (json_decode($data->closure_attachment) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                        class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-remove-id="EFCHATFile-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"
+                                                                    style="@if ($data->stage == 0 || $data->stage == 4 || $data->stage == 6) pointer-events: none; @endif"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="closure_attachment[]"
+                                                        oninput="addMultipleFiles(this, 'closure_attachment1')" multiple>
+                                                </div>
+                                            </div>
                                         </div>
+                                    </div>
+
+
                                          <!-- <div class="col-12 sub-head">
                                     Effectiveness Check Details -->
                                 </div>
@@ -2406,6 +2493,16 @@
                     border-radius: 5px;
                 }
             </style>
+
+            <script>
+                $(document).ready(function() {
+                    $('.remove-file').click(function() {
+                        const removeId = $(this).data('remove-id')
+                        console.log('removeId', removeId);
+                        $('#' + removeId).remove();
+                    })
+                })
+            </script>
 
             <script>
                 VirtualSelect.init({

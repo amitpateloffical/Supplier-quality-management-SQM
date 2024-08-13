@@ -1153,8 +1153,18 @@ class CapaController extends Controller
         $capa->bd_domestic= $request->bd_domestic;
         $capa->Bd_Person= $request->Bd_Person;
         $capa->Production_Person= $request->Production_Person;
+        
+
+        $files = is_array($request->existing_capa_attachment) ? $request->existing_capa_attachment : null;
+
         if (!empty($request->capa_attachment)) {
-            $files = [];
+            if ($capa->capa_attachment) {
+                $existingFiles = json_decode($capa->capa_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('capa_attachment')) {
                 foreach ($request->file('capa_attachment') as $file) {
                     $name = $request->name . 'capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1162,10 +1172,33 @@ class CapaController extends Controller
                     $files[] = $name;
                 }
             }
-            $capa->capa_attachment = json_encode($files);
         }
+
+         //If no files are attached, set to null
+        $capa->capa_attachment = !empty($files) ? json_encode($files) : null;
+
+        // if (!empty($request->closure_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('closure_attachment')) {
+        //         foreach ($request->file('closure_attachment') as $file) {
+        //             $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $capa->closure_attachment = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_closure_attachment) ? $request->existing_closure_attachment : null;
+
         if (!empty($request->closure_attachment)) {
-            $files = [];
+            if ($capa->closure_attachment) {
+                $existingFiles = json_decode($capa->closure_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('closure_attachment')) {
                 foreach ($request->file('closure_attachment') as $file) {
                     $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1173,8 +1206,10 @@ class CapaController extends Controller
                     $files[] = $name;
                 }
             }
-            $capa->closure_attachment = json_encode($files);
         }
+        // If no files are attached, set to null
+        $capa->closure_attachment = !empty($files) ? json_encode($files) : null;
+
         $capa->update();
 
 

@@ -8,6 +8,7 @@
 
         $userIds = DB::table('user_roles')
             ->where('q_m_s_roles_id', 4)
+
             ->distinct()
             ->pluck('user_id');
 
@@ -104,7 +105,7 @@
                               Review
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                More Info Required
+                                More Information Required
                             </button>
 
                         @elseif($extensionNew->stage == 3 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) ))
@@ -131,7 +132,7 @@
                                 Reject
                             </button> --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                More Info Required
+                                More Information  Required
                             </button>
                         {{-- @elseif($extensionNew->stage == 5 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds))) --}}
 
@@ -279,12 +280,18 @@
                             <div class="group-input">
                                 <label for="docname">Short Description<span class="text-danger">*</span></label>
                                 <span id="rchars">255</span> Characters remaining
-                                <div style="position:relative;">
+                                <div class="relative-container">
+                                    <textarea name="short_description" class="mic-input" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}
+                                        id="short_description">{{ $extensionNew->short_description }}</textarea>
+                                    @component('frontend.forms.language-model', ['disabled' => $extensionNew->stage == 0 || $extensionNew->stage == 4])
+                                    @endcomponent
+                                </div>
+                                {{-- <div style="position:relative;">
                                     <input id="docname" type="text" name="short_description" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }} value="{{$extensionNew->short_description}}" maxlength="255" required class="mic-input">
                                     <button class="mic-btn" type="button">
                                         <i class="fas fa-microphone"></i>
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                             {{-- @error('short_description')
                                 <div class="text-danger">{{ $message }}</div>
@@ -341,7 +348,7 @@
                                         <input type="date" name="current_due_date" id="current_due_date_checkdate"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $extensionNew->current_due_date ? \Carbon\Carbon::parse($extensionNew->current_due_date)->format('Y-m-d') : '' }}"
                                         class="hide-input"
                                         {{-- oninput="handleDateInput(this, 'current_due_date')"/> --}}
-                                        oninput="handleDateInput(this, 'current_due_date');checkDate('proposed_due_date','current_due_date_checkdate')" />
+                                        oninput="handleDateInput(this, 'current_due_date');checkDate('proposed_due_date','current_due_date_checkdate')"  multiple {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>
 
 
                                     </div>
@@ -373,7 +380,7 @@
                                                 name="proposed_due_date"
                                                 value="{{ $extensionNew->proposed_due_date ? \Carbon\Carbon::parse($extensionNew->proposed_due_date)->format('Y-m-d') : ''}}"
                                                 class="hide-input"
-                                                oninput="handleDateInput(this, 'proposed_due_date');checkDate('current_due_date','proposed_due_date_checkdate')" />
+                                                oninput="handleDateInput(this, 'proposed_due_date');checkDate('current_due_date','proposed_due_date_checkdate')"  multiple {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>
                                         </div>
                                         {{-- <input type="date" name="schedule_end_date1" value="{{$extensionNew->schedule_end_date}}"> --}}
                                     </div>
@@ -427,23 +434,20 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="docname">Justification / Reason</label>
-                                    <div style="position:relative;">
-                                        <textarea id="docname" name="justification_reason" class="mic-input" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }} >{{$extensionNew->justification_reason}}</textarea>
-                                        {{-- <button class="mic-btn" type="button" > </button>
-                                            <i class="fas fa-microphone"></i>
-                                        </button> --}}
+                                    <div class="relative-container">
+                                        <textarea name="justification_reason" class="mic-input" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}
+                                            id="justification_reason">{{ $extensionNew->justification_reason }}</textarea>
+                                        @component('frontend.forms.language-model', ['disabled' => $extensionNew->stage == 0 || $extensionNew->stage == 4])
+                                        @endcomponent
                                     </div>
                                 </div>
-                                {{-- @error('justification_reason')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror --}}
                             </div>
+
 
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments"> Extension Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div disabled class="file-attachment-list" id="file_attachment_extension"  >
                                             @if ($extensionNew->file_attachment_extension)
@@ -475,7 +479,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>Save</button>
                             {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -494,12 +498,18 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="reviewer_remarks">HOD Remarks</label>
-                                <div style="position:relative;">
+                                <div class="relative-container">
+                                    <textarea name="reviewer_remarks" class="mic-input" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}
+                                        id="reviewer_remarks">{{ $extensionNew->reviewer_remarks }}</textarea>
+                                    @component('frontend.forms.language-model', ['disabled' => $extensionNew->stage == 0 || $extensionNew->stage == 4])
+                                    @endcomponent
+                                </div>
+                                {{-- <div style="position:relative;">
                                     <textarea name="reviewer_remarks" id="reviewer_remarks" class="mic-input"  {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }} cols="30">{{$extensionNew->reviewer_remarks}}</textarea>
                                     <button class="mic-btn" type="button">
                                         <i class="fas fa-microphone"></i>
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
 
@@ -554,7 +564,7 @@
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
+                        <button type="submit" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -569,12 +579,18 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="approver_remarks">QA Remarks</label>
-                                <div style="position:relative;">
+                                <div class="relative-container">
+                                    <textarea name="approver_remarks" class="mic-input" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}
+                                        id="approver_remarks">{{ $extensionNew->approver_remarks }}</textarea>
+                                    @component('frontend.forms.language-model', ['disabled' => $extensionNew->stage == 0 || $extensionNew->stage == 4])
+                                    @endcomponent
+                                </div>
+                                {{-- <div style="position:relative;">
                                     <textarea name="approver_remarks" id="approver_remarks" class="mic-input" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }} cols="30">{{$extensionNew->approver_remarks}}</textarea>
                                     <button class="mic-btn" type="button">
                                         <i class="fas fa-microphone"></i>
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
 
@@ -618,8 +634,7 @@
                         <button type="submit" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                        Exit </a> </button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                     </div>
                 </div>
             </div>
@@ -629,19 +644,19 @@
                     <div class="row">
                         <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Submitted By..">Submitted By</label>
+                                    <label for="Submitted By..">Submited By</label>
                                     <div class="static">{{ $extensionNew->submit_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Submitted On">Submitted On</label>
+                                    <label for="Submitted On">Submited On</label>
                                     <div class="static">{{ $extensionNew->submit_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Submitted Comment">Submitted Comment</label>
+                                    <label for="Submitted Comment">Submited Comment</label>
                                     <div class="static">{{ $extensionNew->submit_comment }}</div>
                                 </div>
                             </div>
@@ -678,19 +693,19 @@
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Cancelled By">Cancelled By</label>
-                                <div class="static">{{ $extensionNew->cancelled_by }}</div>
+                                <div class="static">{{ $extensionNew->reject_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Cancelled On">Cancelled On</label>
-                                <div class="static">{{ $extensionNew->cancelled_on }}</div>
+                                <div class="static">{{ $extensionNew->reject_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Cancelled Comment">Cancelled Comment</label>
-                                <div class="static">{{ $extensionNew->cancelled_comment }}</div>
+                                <div class="static">{{ $extensionNew->reject_comment }}</div>
                             </div>
                         </div>
                     </div>
@@ -750,7 +765,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Rejected On">Approved Comment</label>
-                                <div class="static">{{ $extensionNew->submit_commen_inapproved }}</div>
+                                <div class="static">{{ $extensionNew->submit_comment_inapproved }}</div>
                             </div>
                         </div>
                         </div>
@@ -758,19 +773,19 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for=" Rejected By">More Info Required By</label>
-                                    <div class="static">{{ $extensionNew->more_info_review_by }}</div>
+                                    <div class="static">{{ $extensionNew->more_info_inapproved_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Rejected On">More Info Required On</label>
-                                    <div class="static">{{ $extensionNew->more_info_review_on }}</div>
+                                    <div class="static">{{ $extensionNew->more_info_inapproved_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Rejected On">More Info Required Comment</label>
-                                    <div class="static">{{ $extensionNew->more_info_review_comment }}</div>
+                                    <div class="static">{{ $extensionNew->more_info_inapproved_comment }}</div>
                                 </div>
                             </div>
                             </div>
@@ -1183,89 +1198,5 @@
     </script>
 
 
-<style>
-    .mic-btn {
-        background: none;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        box-shadow: none;
-        color: black;
-        display: none;
-        /* Hide the button initially */
-    }
-
-    .relative-container textarea {
-        width: 100%;
-        padding-right: 40px;
-    }
-
-    .relative-container input:focus+.mic-btn {
-        display: inline-block;
-        /* Show the button when input is focused */
-    }
-
-    .mic-btn:focus,
-    .mic-btn:hover,
-    .mic-btn:active {
-        box-shadow: none;
-    }
-</style>
-
-<script>
-    < link rel = "stylesheet"
-    href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
-
-        function startRecognition(targetElement) {
-            recognition.start();
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                targetElement.value += transcript;
-            };
-            recognition.onerror = function(event) {
-                console.error(event.error);
-            };
-        }
-
-        document.addEventListener('click', function(event) {
-            if (event.target.closest('.mic-btn')) {
-                const button = event.target.closest('.mic-btn');
-                const inputField = button.previousElementSibling;
-                if (inputField && inputField.classList.contains('mic-input')) {
-                    startRecognition(inputField);
-                }
-            }
-        });
-
-        document.querySelectorAll('.mic-input').forEach(input => {
-            input.addEventListener('focus', function() {
-                const micBtn = this.nextElementSibling;
-                if (micBtn && micBtn.classList.contains('mic-btn')) {
-                    micBtn.style.display = 'inline-block';
-                }
-            });
-
-            input.addEventListener('blur', function() {
-                const micBtn = this.nextElementSibling;
-                if (micBtn && micBtn.classList.contains('mic-btn')) {
-                    setTimeout(() => {
-                        micBtn.style.display = 'none';
-                    }, 200); // Delay to prevent button from hiding immediately when clicked
-                }
-            });
-        });
-    });
-</script>
+{{--  --}}
 @endsection

@@ -151,7 +151,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                     Audit Trial Report
+                     Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -174,7 +174,7 @@
             </tr>
         </table>
     </header>
-    
+
     <footer>
         <table>
             <tr>
@@ -189,8 +189,6 @@
         </table>
     </footer>
     <div class="inner-block">
-
-
         <div class="second-table">
             <table>
                 <thead>

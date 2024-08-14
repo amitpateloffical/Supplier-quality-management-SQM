@@ -75,7 +75,7 @@ class DashboardController extends Controller
         $supplier = Supplier::orderByDesc('id')->get();
         $supplierAudit =  SupplierAudit::orderByDesc('id')->get();
         $scarData =  SCAR::orderByDesc('id')->get();
-        
+
         foreach ($supplierAudit as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -145,7 +145,7 @@ class DashboardController extends Controller
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_id ? $data->parent_id : "-",
-                "record" => $data->record_number,
+                "record" => $data->record,
                 "type" => "Extension",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
@@ -837,7 +837,7 @@ class DashboardController extends Controller
             $parent = "#";
         } elseif ($type == "Observation") {
             $data = Observation::find($id);
-            $single = "ObservationSingleReport/" .$data->id;            
+            $single = "ObservationSingleReport/" .$data->id;
             $audit = "showaudittrialobservation/" .$data->id;
             $parent = "#". $data->id;
         } elseif ($type == "Effectiveness-Check") {

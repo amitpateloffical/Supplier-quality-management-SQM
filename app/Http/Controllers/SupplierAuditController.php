@@ -153,20 +153,22 @@ class SupplierAuditController extends Controller
             $internalAudit->file_attachment = json_encode($files);
         }
 
+        $files = is_array($request->existing_Audit_file) ? $request->existing_Audit_file : null;
+        if (!empty($request->Audit_file)) {
+            // $files = [];
+            if ($request->hasfile('Audit_file')) {
+                foreach ($request->file('Audit_file') as $file) {
+                    $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+        $internalAudit->Audit_file = json_encode($files);
 
-        // if (!empty($request->Audit_file)) {
-        //     $files = [];
-        //     if ($request->hasfile('Audit_file')) {
-        //         foreach ($request->file('Audit_file') as $file) {
-        //             $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $internalAudit->Audit_file = json_encode($files);
-        // }
 
-        // $files = is_array($request->existing_Audit_file) ? $request->existing_Audit_file : null;
+        }
+
+      
 
         // if (!empty($request->Audit_file)) {
         //     if ($internalAudit->Audit_file) {
@@ -245,8 +247,8 @@ class SupplierAuditController extends Controller
         if (!empty($request->auditee)) {
             $data3->auditee = serialize($request->auditee);
         }
-        if (!empty($request->remarks)) {
-            $data3->remark = serialize($request->remarks);
+        if (!empty($request->remark)) {
+            $data3->remark = serialize($request->remark);
         }
 
         $data3->save();
@@ -324,7 +326,7 @@ if (!empty($internalAudit->initiator_id)) {
     $history->activity_type = 'Initiator';
     $history->previous = "Null";
     $history->current = $currentName?$currentName->name:'Null';
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -344,7 +346,7 @@ if (!empty($internalAudit->intiation_date)) {
     $history->activity_type = 'Initiation Date';
     $history->previous = "Null";
     $history->current = $internalAudit->intiation_date->format('d-M-Y');
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -359,7 +361,7 @@ if (!empty($internalAudit->intiation_date)) {
     $history->activity_type = 'Record Number';
     $history->previous = "Null";
     $history->current = $internalAudit->recordNumber;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -375,7 +377,7 @@ if (!empty($internalAudit->severity_level)) {
     $history->activity_type = 'Severity Level';
     $history->previous = "Null";
     $history->current = $internalAudit->severity_level;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -392,7 +394,7 @@ if (!empty($internalAudit->refrence_record)) {
     $history->activity_type = 'Reference Record';
     $history->previous = "Null";
     $history->current = $internalAudit->refrence_record;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -411,7 +413,7 @@ if (!empty($internalAudit->initiated_if_other)) {
     $history->activity_type = 'Others';
     $history->previous = "Null";
     $history->current = $internalAudit->initiated_if_other;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -428,7 +430,7 @@ if (!empty($internalAudit->others)) {
     $history->activity_type = 'Supplier Agencies Others';
     $history->previous = "Null";
     $history->current = $internalAudit->others;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -445,7 +447,7 @@ if (!empty($internalAudit->external_agencies)) {
     $history->activity_type = 'Supplier Agencies';
     $history->previous = "Null";
     $history->current = $internalAudit->external_agencies;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -463,7 +465,7 @@ if (!empty($internalAudit->initiated_through)) {
     $history->activity_type = 'Initiated Through';
     $history->previous = "Null";
     $history->current = $internalAudit->initiated_through;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -480,7 +482,7 @@ if (!empty($internalAudit->initial_comments)) {
     $history->activity_type = 'Description';
     $history->previous = "Null";
     $history->current = $internalAudit->initial_comments;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -497,7 +499,7 @@ if (!empty($internalAudit->if_comments)) {
     $history->activity_type = 'If Comments';
     $history->previous = "Null";
     $history->current = $internalAudit->if_comments;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -514,7 +516,7 @@ if (!empty($internalAudit->External_Auditing_Agency)) {
     $history->activity_type = 'Supplier Auditing Agency';
     $history->previous = "Null";
     $history->current = $internalAudit->External_Auditing_Agency;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -531,7 +533,7 @@ if (!empty($internalAudit->Relevant_Guidelines)) {
     $history->activity_type = 'Relevant Guidelines';
     $history->previous = "Null";
     $history->current = $internalAudit->Relevant_Guidelines;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -548,7 +550,7 @@ if (!empty($internalAudit->QA_Comments)) {
     $history->activity_type = 'QA Comments';
     $history->previous = "Null";
     $history->current = $internalAudit->QA_Comments;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -576,7 +578,7 @@ if (!empty($internalAudit->Audit_Category)) {
     $history->activity_type = 'Audit Category';
     $history->previous = "Null";
     $history->current = $currentAuditCategory;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -594,7 +596,7 @@ if (!empty($internalAudit->file_attachment_guideline)) {
     $history->activity_type = 'Guideline Attachment';
     $history->previous = "Null";
     $history->current = $internalAudit->file_attachment_guideline;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -611,7 +613,7 @@ if (!empty($internalAudit->Supplier_Details)) {
     $history->activity_type = 'Supplier/Vendor/Manufacturer Details';
     $history->previous = "Null";
     $history->current = $internalAudit->Supplier_Details;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -628,7 +630,7 @@ if (!empty($internalAudit->Supplier_Site)) {
     $history->activity_type = 'Supplier/Vendor/Manufacturer Site';
     $history->previous = "Null";
     $history->current = $internalAudit->Supplier_Site;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -645,7 +647,7 @@ if (!empty($internalAudit->due_date_extension)) {
     $history->activity_type = 'Due Date Extension';
     $history->previous = "Null";
     $history->current = $internalAudit->due_date_extension;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -662,7 +664,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->activity_type = 'Date of Initiator';
             $history->previous = "Null";
             $history->current = $internalAudit->date;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -682,7 +684,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->activity_type = 'Assigned to';
             $history->previous = $previousAssignedToName ? $previousAssignedToName->name : 'Null';
             $history->current = $currentAssignedToName ? $currentAssignedToName->name : 'Null';
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -723,7 +725,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
             $history->current = $initiatorGroupFullName; // Use the full name here
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -741,7 +743,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->activity_type = 'Short Description';
             $history->previous = "Null";
             $history->current = $internalAudit->short_description;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -758,7 +760,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->activity_type = 'Type of Audit';
             $history->previous = "Null";
             $history->current = $internalAudit->audit_type;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -775,7 +777,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->activity_type = 'If Other';
             $history->previous = "Null";
             $history->current = $internalAudit->if_other;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -792,7 +794,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->activity_type = 'Description';
             $history->previous = "Null";
             $history->current = $internalAudit->initial_comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -826,7 +828,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->activity_type = 'Audit Schedule End Date';
             $history->previous = "Null";
             $history->current = $internalAudit->end_date->format('d-M-Y');
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -843,7 +845,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->activity_type = 'Audit Agenda';
             $history->previous = "Null";
             $history->current = $internalAudit->audit_agenda;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -861,7 +863,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->activity_type = 'Product/Material Name';
             $history->previous = "Null";
             $history->current = $internalAudit->material_name;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -882,7 +884,7 @@ if (!empty($internalAudit->due_date_extension)) {
             $history->current = $currentleadauditor ? $currentleadauditor->name : 'Null';
             // $history->previous = "Null";
             // $history->current = $internalAudit->lead_auditor;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -908,7 +910,7 @@ if (!empty($internalAudit->Audit_team)) {
     $history->activity_type = 'Audit Team';
     $history->previous = $previousauditteam;
     $history->current = $currentauditteam;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -934,7 +936,7 @@ if (!empty($internalAudit->Auditee)) {
     $history->activity_type = 'Auditee';
     $history->previous = $previousauditee;
     $history->current = $currentaudittee;
-    $history->comment = "NA";
+    $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -951,7 +953,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->activity_type = 'Supplier Auditor Details';
             $history->previous = "Null";
             $history->current = $internalAudit->Auditor_Details;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -968,7 +970,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->activity_type = 'Comments';
             $history->previous = "Null";
             $history->current = $internalAudit->Comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -985,7 +987,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->activity_type = 'Audit Comments';
             $history->previous = "Null";
             $history->current = $internalAudit->Audit_Comments1;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1002,7 +1004,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->activity_type = 'Remarks';
             $history->previous = "Null";
             $history->current = $internalAudit->Remarks;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1022,7 +1024,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->activity_type = 'Audit Comments';
             $history->previous = "Null";
             $history->current = $internalAudit->Audit_Comments2;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1039,7 +1041,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->activity_type = 'Initial Attachment';
             $history->previous = "Null";
             $history->current = $internalAudit->inv_attachment;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1056,7 +1058,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->activity_type = 'File Attachment';
             $history->previous = "Null";
             $history->current = $internalAudit->file_attachment;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1073,7 +1075,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->activity_type = 'Audit Attachments';
             $history->previous = "Null";
             $history->current = $internalAudit->Audit_file;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1090,7 +1092,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->activity_type = 'Report Attachments';
             $history->previous = "Null";
             $history->current = $internalAudit->report_file;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1108,7 +1110,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->activity_type = 'Audit Attachment';
             $history->previous = "Null";
             $history->current = $internalAudit->myfile;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1125,7 +1127,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
             $history->current = $internalAudit->due_date;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1142,7 +1144,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->activity_type = 'Audit Start Date';
             $history->previous = "Null";
             $history->current = $internalAudit->audit_start_date->format('d-M-Y');
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1159,7 +1161,7 @@ if (!empty($internalAudit->Auditee)) {
             $history->activity_type = 'Audit End Date';
             $history->previous = "Null";
             $history->current = $internalAudit->audit_end_date->format('d-M-Y');
-            $history->comment = "NA";
+            $history->comment = "Not Applicable ";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1328,7 +1330,7 @@ if (!empty($internalAudit->Auditee)) {
         }
 
         // If no files are attached, set to null
-        $internalAudit->inv_attachment = !empty($files) ? json_encode($files) : null;
+        // $internalAudit->inv_attachment = !empty($files) ? json_encode($files) : null;
 
         // if (!empty($request->file_attachment)) {
         //     $files = [];
@@ -1961,8 +1963,8 @@ if ((!is_null($lastStartDate) && !is_null($internalStartDate) && $lastStartDate-
     $history = new ExternalAuditTrailSupplier();
     $history->supplier_id = $id;
     $history->activity_type = 'Audit Schedule Start Date';
-    $history->previous = !is_null($lastStartDate) ? $lastStartDate->format('d-M-Y') : 'N/A';
-    $history->current = !is_null($internalStartDate) ? $internalStartDate->format('d-M-Y') : 'N/A';
+    $history->previous = !is_null($lastStartDate) ? $lastStartDate->format('d-M-Y') : 'Null';
+    $history->current = !is_null($internalStartDate) ? $internalStartDate->format('d-M-Y') : 'Null';
     $history->comment = $request->start_date_comment ?? ''; // Ensure to use the correct comment field
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -1991,8 +1993,8 @@ if (!empty($request->end_date) != $lastDocument->end_date) {
     $history = new ExternalAuditTrailSupplier();
     $history->supplier_id = $id;
     $history->activity_type = 'Audit Schedule End Date';
-    $history->previous = !is_null($lastEndDate) ? $lastEndDate->format('d-M-Y') : 'N/A';
-    $history->current = !is_null($internalEndDate) ? $internalEndDate->format('d-M-Y') : 'N/A';
+    $history->previous = !is_null($lastEndDate) ? $lastEndDate->format('d-M-Y') : 'Null';
+    $history->current = !is_null($internalEndDate) ? $internalEndDate->format('d-M-Y') : 'Null';
     $history->comment = $request->end_date_comment ?? ''; // Ensure to use the correct comment field
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -2528,8 +2530,8 @@ if (!empty($request->end_date) != $lastDocument->end_date) {
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $id;
             $history->activity_type = 'Audit Start Date';
-            $history->previous = !is_null($lastAuditStartDate) ? $lastAuditStartDate->format('d-M-Y') : 'N/A';
-            $history->current = !is_null($requestAuditStartDate) ? $requestAuditStartDate->format('d-M-Y') : 'N/A';
+            $history->previous = !is_null($lastAuditStartDate) ? $lastAuditStartDate->format('d-M-Y') : 'Null';
+            $history->current = !is_null($requestAuditStartDate) ? $requestAuditStartDate->format('d-M-Y') : 'Null';
             $history->comment = $request->audit_start_date_comment ?? ''; // Ensure to use the correct comment field
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2559,8 +2561,8 @@ if (!empty($request->audit_end_date) != $lastDocument->audit_end_date) {
     $history = new ExternalAuditTrailSupplier();
     $history->supplier_id = $id;
     $history->activity_type = 'Audit End Date';
-    $history->previous = !is_null($lastAuditEndDate) ? $lastAuditEndDate->format('d-M-Y') : 'N/A';
-    $history->current = !is_null($requestAuditEndDate) ? $requestAuditEndDate->format('d-M-Y') : 'N/A';
+    $history->previous = !is_null($lastAuditEndDate) ? $lastAuditEndDate->format('d-M-Y') : 'Null';
+    $history->current = !is_null($requestAuditEndDate) ? $requestAuditEndDate->format('d-M-Y') : 'Null';
     $history->comment = $request->audit_end_date_comment ?? ''; // Ensure to use the correct comment field
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -2925,7 +2927,7 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
 
                         $history = new ExternalAuditTrailSupplier();
                         $history->supplier_id = $id;
-                        $history->activity_type = 'Activity Log';
+                      //  $history->activity_type = 'Activity Log';
                         $history->activity_type = 'Submit by,Submit on ';
                         if (is_null($lastDocument->audit_schedule_by) || $lastDocument->audit_schedule_by === '') {
                             $history->previous = "";
@@ -2990,7 +2992,7 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                         if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $lastDocument->audit_preparation_completed_by . ' , ' . $lastDocument->audit_observation_submitted_on;
+                            $history->previous = $lastDocument->audit_preparation_completed_by . ' , ' . $lastDocument->audit_preparation_completed_on;
                         }
                         $history->current =  $changeControl->audit_preparation_completed_by . ' , ' .  $changeControl->audit_preparation_completed_on ;
                         // $history->activity_type = 'Activity Log';
@@ -3217,7 +3219,7 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
 
                         $history = new ExternalAuditTrailSupplier();
                         $history->supplier_id = $id;
-                        $history->activity_type = 'rejected by, Submitted On';
+                        $history->activity_type = 'rejected by, rejected On';
                         if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
                             $history->previous = "";
                         } else {
@@ -3255,8 +3257,14 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
 
                 $history = new ExternalAuditTrailSupplier();
                         $history->supplier_id = $id;
-                        $history->activity_type = 'Activity Log';
-                        $history->current = $changeControl->rejected_by;
+                        if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->rejected_by . ' , ' . $lastDocument->rejected_on;
+                        }
+                        $history->current =  $changeControl->rejected_by . ' , ' .  $changeControl->rejected_on;
+                       $history->activity_type = 'Reject By,Reject On';
+                       // $history->current = $changeControl->rejected_by;
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -3266,6 +3274,11 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                         $history->change_from = $lastDocument->status;
                         $history->change_to = 'Opened';
                         $history->action = 'Reject';
+                        if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
 
                 

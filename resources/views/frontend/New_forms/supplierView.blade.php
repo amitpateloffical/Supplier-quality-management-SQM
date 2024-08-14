@@ -399,7 +399,7 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                     </div>
 
-                    <form action="{{ route('updateSupplierAudit', $data->id) }}" method="post"
+                    <form class="formforward" action="{{ route('updateSupplierAudit', $data->id) }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
                         <div id="step-form">
@@ -603,7 +603,7 @@
                                                 <span id="rchars">255</span> characters remaining
                                                 <div class="relative-container">
                                                     <textarea name="short_description" class="mic-input" id="docname" type="text" maxlength="255" required
-                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                        {{ $data->stage == 0 || $data->stage == 6? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                                     @component('frontend.forms.language-model')
                                                     @endcomponent
 
@@ -837,7 +837,7 @@
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         @endif
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
@@ -1038,7 +1038,7 @@
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         @endif
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1449,7 +1449,7 @@
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         @endif
                                         <button type="button" class="backButton"
@@ -1582,9 +1582,7 @@
                                                 <label for="Audit Attachments">Audit Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
-                                                {{-- <input type="file" id="myfile" name="Audit_file"
-                                                    value="{{ $data->Audit_file }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
+                                                
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="Audit_file">
                                                         @if ($data->Audit_file)
@@ -1616,6 +1614,12 @@
                                                 </div>
                                             </div>
                                         </div>
+                                     
+
+
+
+
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Audit_Comments1">Audit Comments</label>
@@ -1631,7 +1635,7 @@
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         @endif
                                         <button type="button" class="backButton"
@@ -1760,7 +1764,7 @@
                                         @endif
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="Audit Attachments">Audit Attachments</label>
+                                                    <label for="Audit Attachments">Audit Attachments *</label>
                                                     <div><small class="text-primary">Please Attach all relevant or
                                                             supporting documents</small></div>
                                                     {{-- <input type="file" id="myfile" name="myfile"
@@ -1825,7 +1829,7 @@
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         @endif
                                         <button type="button" class="backButton"
@@ -2093,7 +2097,7 @@
                             <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form action="{{ route('SupplierAuditStateChange_view', $data->id) }}" method="POST">
+                        <form class="formforward" action="{{ route('SupplierAuditStateChange_view', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -2122,7 +2126,7 @@
                                         <button>Close</button>
                                     </div> -->
                             <div class="modal-footer">
-                                <button type="submit">Submit</button>
+                                <button class="on-submit-disable-button" type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -2141,7 +2145,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
-                        <form action="{{ url('RejectStateAuditee', $data->id) }}" method="POST">
+                        <form id="rejectform" action="{{ url('RejectStateAuditee', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -2170,7 +2174,7 @@
                                         <button>Close</button>
                                     </div> -->
                             <div class="modal-footer">
-                                <button type="submit">Submit</button>
+                                <button type="submit" class="on-submit-disable-button">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -2188,7 +2192,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
-                        <form action="{{ route('CancelStateSupplierAudit', $data->id) }}" method="POST">
+                        <form class="formforward" action="{{ route('CancelStateSupplierAudit', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -2217,7 +2221,7 @@
                                         <button>Close</button>
                                     </div> -->
                             <div class="modal-footer">
-                                <button type="submit">Submit</button>
+                                <button class="on-submit-disable-button" type="submit">Submit</button>
                                 <button data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -3031,6 +3035,22 @@
                     });
                 });
             </script> --}}
+           <script>
+            $(document).ready(function() {
+                
+                $('.formforward').on('submit', function(e) {
+                    $('.on-submit-disable-button').prop('disabled', true);
+                });
+            })
+        </script>
+        <script>
+            $(document).ready(function() {
+                
+                $('#rejectform').on('submit', function(e) {
+                    $('.on-submit-disable-button').prop('disabled', true);
+                });
+            })
+        </script>
 
 
         @endsection

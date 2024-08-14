@@ -371,7 +371,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
-            <form id="auditform" action="{{ route('supplier_audit_store') }}" method="post" enctype="multipart/form-data">
+            <form id="auditform" class="mainform" action="{{ route('supplier_audit_store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -715,7 +715,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button ">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -897,7 +897,7 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1071,7 +1071,7 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -1139,7 +1139,7 @@
                                         </div>
                                     </div> 
                                 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments">Audit Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -1152,6 +1152,22 @@
                                                     oninput="addMultipleFiles(this, 'audit_attachment')" multiple>
                                             </div>
                                         </div>
+                                    </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">Audit Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Audit_file"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Audit_file[]"
+                                                    oninput="addMultipleFiles(this, 'Audit_file')" multiple>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -1167,7 +1183,7 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -1251,38 +1267,39 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-    <div class="group-input">
-        <label for="Audit_Comments2">Audit Comments</label>
-        <div class="relative-container">
-            <textarea name="Audit_Comments2" id="Audit_Comments2" class="mic-input"></textarea>
-            @component('frontend.forms.language-model')
-            @endcomponent
-        </div>
-    </div>
-</div>
- </div>
+                                <div class="group-input">
+                                    <label for="Audit_Comments2">Audit Comments</label>
+                                    <div class="relative-container">
+                                        <textarea name="Audit_Comments2" id="Audit_Comments2" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                </div>
+                            </div>
+                           
 
                                         <div class="col-12">
-    <div class="group-input">
-        <label for="due_date_extension">Due Date Extension Justification</label>
-        <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-        <div class="relative-container">
-            <textarea name="due_date_extension" id="due_date_extension" class="mic-input"></textarea>
-            @component('frontend.forms.language-model')
-            @endcomponent
-            </div>
-        </div>
-    </div>
-</div>
+                                            <div class="group-input">
+                                                <label for="due_date_extension">Due Date Extension Justification</label>
+                                                <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
+                                                <div class="relative-container">
+                                                    <textarea name="due_date_extension" id="due_date_extension" class="mic-input"></textarea>
+                                                    @component('frontend.forms.language-model')
+                                                    @endcomponent
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
 
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                             </div>
+                        </div>
                         </div>
                     </div>
 
@@ -1615,7 +1632,7 @@
         }
     </script>
 
-    <script>
+    {{-- <script>
         // document.addEventListener('DOMContentLoaded', function() {
         //     document.getElementById('type_of_audit').addEventListener('change', function() {
         //         var typeOfAuditReqInput = document.getElementById('type_of_audit_req');
@@ -1631,7 +1648,7 @@
         //         }
         //     });
         // });
-    </script>
+    </script> --}}
     <script>
         document.getElementById('initiator_group').addEventListener('change', function() {
             var selectedValue = this.value;
@@ -1702,10 +1719,11 @@
 <script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-    </script>
+</script>
 
 
-    <script>
+  
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize speech recognition
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
@@ -1725,18 +1743,10 @@
             };
         }
 
-        // Event delegation for all mic buttons
-//         document.addEventListener('click', function(event) {
-//             if (event.target.closest('.mic-btn')) {
-//                 const button = event.target.closest('.mic-btn');
-//                 const inputField = button.previousElementSibling;
-//                 if (inputField && inputField.classList.contains('mic-input')) {
-//                     startRecognition(inputField);
-//                 }
-//             }
-//         });
-//     });
-// </script>
+          
+          });
+</script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -1778,7 +1788,7 @@
         } else {
             container.classList.add('d-none');
         }
-    }
+    }})
 </script>
 
 <script>
@@ -1833,8 +1843,7 @@
     //             }
     //         });
     //     });
-    // });
-
+    // 
     // Show/hide the container based on user selection
     function toggleOthersField(selectedValue) {
         const container = document.getElementById('external_agencies_req');
@@ -1843,180 +1852,19 @@
         } else {
             container.classList.add('d-none');
         }
-    }
+    }});
+
 </script>
 
 
-// <style>
-//     .mic-btn {
-//         background: none;
-//         border: none;
-//         outline: none;
-//         cursor: pointer;
-//         position: absolute;
-//         right: 10px; /* Position the button at the right corner */
-//         top: 50%; /* Center the button vertically */
-//         transform: translateY(-50%); /* Adjust for the button's height */
-//         box-shadow: none; /* Remove shadow */
-//     }
-//     .mic-btn i {
-//         color: black; /* Set the color of the icon */
-//         box-shadow: none; /* Remove shadow */
-//     }
-//     .mic-btn:focus,
-//     .mic-btn:hover,
-//     .mic-btn:active {
-//         box-shadow: none; /* Remove shadow on hover/focus/active */
-//     }
-
-//     .relative-container {
-//         position: relative;
-//     }
-
-//     .relative-container textarea {
-//         width: 100%;
-//         padding-right: 40px; /* Ensure the text does not overlap the button */
-//     }
-// </style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    // <style>
-    //     .group-input {
-    //         margin-bottom: 20px;
-    //     }
-    //     .mic-btn, .speak-btn {
-    //         background: none;
-    //         border: none;
-    //         outline: none;
-    //         cursor: pointer;
-    //         position: absolute;
-    //         right: 10px;
-    //         top: 50%;
-    //         transform: translateY(-50%);
-    //         box-shadow: none;
-    //     }
-    //     .mic-btn i, .speak-btn i {
-    //         color: black;
-    //     }
-    //     .mic-btn:focus,
-    //     .mic-btn:hover,
-    //     .mic-btn:active,
-    //     .speak-btn:focus,
-    //     .speak-btn:hover,
-    //     .speak-btn:active {
-    //         box-shadow: none;
-    //     }
-    //     .relative-container {
-    //         position: relative;
-    //     }
-    //     .relative-container input {
-    //         width: 100%;
-    //         padding-right: 80px; /* Adjust padding to accommodate both buttons */
-    //     }
-    //     .mic-btn {
-    //         right: 40px; /* Adjust position to accommodate both buttons */
-    //     }
-    // </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    // <style>
-    //     .group-input {
-    //         margin-bottom: 20px;
-    //     }
-    //     .mic-btn, .speak-btn {
-    //         background: none;
-    //         border: none;
-    //         outline: none;
-    //         cursor: pointer;
-    //         position: absolute;
-    //         right: 16px;
-    //         top: 50%;
-    //         transform: translateY(-50%);
-    //         box-shadow: none;
-    //     }
-    //     .mic-btn i, .speak-btn i {
-    //         color: black;
-    //     }
-    //     .mic-btn:focus,
-    //     .mic-btn:hover,
-    //     .mic-btn:active,
-    //     .speak-btn:focus,
-    //     .speak-btn:hover,
-    //     .speak-btn:active {
-    //         box-shadow: none;
-    //     }
-    //     .relative-container {
-    //         position: relative;
-    //     }
-    //     .relative-container input {
-    //         width: 100%;
-    //         padding-right: 40px;
-    //     }
-    // </style>
-
-//  <style>
-//     #start-record-btn {
-//         background: none;
-//         border: none;
-//         outline: none;
-//         cursor: pointer;
-//     }
-//     #start-record-btn i {
-//         color: black; /* Set the color of the icon */
-//         box-shadow: none; /* Remove shadow */
-//     }
-//     #start-record-btn:focus,
-//     #start-record-btn:hover,
-//     #start-record-btn:active {
-//         box-shadow: none; /* Remove shadow on hover/focus/active */
-//     }
-// </style>
-// <style>
-//     .mic-btn {
-//         background: none;
-//         border: none;
-//         outline: none;
-//         cursor: pointer;
-//         position: absolute;
-//         right: 10px; /* Position the button at the right corner */
-//         top: 50%; /* Center the button vertically */
-//         transform: translateY(-50%); /* Adjust for the button's height */
-//         box-shadow: none;
-//          /* Remove shadow */
-//     }
-//     .mic-btn {
-//             right: 50px; /* Adjust position to avoid overlap with speaker button */
-//         }
-
-//         .speak-btn {
-//             right: 16px;
-//         }
-//     .mic-btn i {
-//         color: black; /* Set the color of the icon */
-//         // box-shadow: none; /* Remove shadow */
-//     }
-//     .mic-btn:focus,
-//     .mic-btn:hover,
-//     .mic-btn:active {
-//         box-shadow: none; /* Remove shadow on hover/focus/active */
-//         // display: none;
-//     }
-
-//     .relative-container {
-//         position: relative;
-//     }
-
-//     .relative-container textarea {
-//         width: 100%;
-//         padding-right: 40px; /* Ensure the text does not overlap the button */
-//     }
-// </style>
-
-
+   
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 <script>
-$(document).ready(function(){
+    $(document).ready(function(){
     let audio = null;
     let selectedLanguage = 'en-us'; // Default language
     let inputText = '';
@@ -2089,60 +1937,58 @@ $(document).ready(function(){
         };
     }
 
-    // $(document).on('click', '.mic-btn', function() {
-    //     const inputField = $(this).siblings('textarea, input');
-    //     startRecognition(inputField[0]);
-    // });
 
-    // // Show mic button on hover
-    // $('.relative-container').hover(
-    //     function() {
-    //         $(this).find('.mic-btn').show();
-    //     }, 
-    //     function() {
-    //         $(this).find('.mic-btn').hide();
-    //     }
-    // );
+                async function translateText(text, targetLanguage) {
+                    const url = 'https://text-translator2.p.rapidapi.com/translate';
+                    const data = new FormData();
+                    data.append('source_language', 'en');
+                    data.append('target_language', targetLanguage);
+                    data.append('text', text);
 
-    // Function to translate text using RapidAPI
-    async function translateText(text, targetLanguage) {
-        const url = 'https://text-translator2.p.rapidapi.com/translate';
-        const data = new FormData();
-        data.append('source_language', 'en');
-        data.append('target_language', targetLanguage);
-        data.append('text', text);
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'x-rapidapi-key': '5246c9098fmshc966ee7f6cea588p14a110jsn3979434fe858',
+                            'x-rapidapi-host': 'text-translator2.p.rapidapi.com'
+                        },
+                        body: data
+                    };
 
-        const options = {
-            method: 'POST',
-            headers: {
-                'x-rapidapi-key': '5246c9098fmshc966ee7f6cea588p14a110jsn3979434fe858',
-                'x-rapidapi-host': 'text-translator2.p.rapidapi.com'
-            },
-            body: data
-        };
+                    const response = await fetch(url, options);
+                    const result = await response.json();
+                    return result.data.translatedText;
+                }
 
-        const response = await fetch(url, options);
-        const result = await response.json();
-        return result.data.translatedText;
-    }
+                // Update remaining characters
+                $('#docname').on('input', function() {
+                    const remaining = 255 - $(this).val().length;
+                    $('#rchars').text(remaining);
+                });
 
-    // Update remaining characters
-    $('#docname').on('input', function() {
-        const remaining = 255 - $(this).val().length;
-        $('#rchars').text(remaining);
-    });
+                // Initialize remaining characters count
+                const remaining = 255 - $('#docname').val().length;
+                $('#rchars').text(remaining);
+   });
 
-    // Initialize remaining characters count
-    const remaining = 255 - $('#docname').val().length;
-    $('#rchars').text(remaining);
-});
 
 </script>
 
 
-    <style>
+
+
+
+
+ <style>
     #external_agencies_req {
         display: none;
     }
 </style>
+<script>
+                $(document).ready(function() {
+                    
+                    $('.mainform').on('submit', function(e) {
+                        $('.on-submit-disable-button').prop('disabled', true);
+                    });
+                })
+            </script>
 @endsection

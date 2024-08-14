@@ -18,8 +18,16 @@
         min-height: 100vh;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
     .w-10 {
         width: 10%;
+    }
+
+    .w-15 {
+        width: 15%;
     }
 
     .w-20 {
@@ -68,6 +76,8 @@
         border: 1px solid black;
         border-collapse: collapse;
         font-size: 0.9rem;
+        overflow: hidden;
+        vertical-align: middle;
     }
 
     table {
@@ -143,6 +153,11 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -165,7 +180,7 @@
                     <strong>Supplier Audit No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($doc->division_id) }}/SA/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -173,118 +188,6 @@
             </tr>
         </table>
 </header>
-
-<div class="inner-block">
-
-
-<div class="second-table">
-
-       
-    </header>
-
-    <div class="inner-block">
-
-        <div class="head">Audit Trial Histroy Configuration Report</div>
-
-
-
-        <div class="first-table">
-            <table>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>Start Date (GMT) :</strong> {{ Helpers::getDateFormat($doc->created_at) }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Sub Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>End Date (GMT) :</strong>
-                        @if ($doc->stage >= 9)
-                            {{ Helpers::getDateFormat($doc->updated_at) }}
-                        @endif
-                    </td>
-                </tr>
-               
-            </table>
-        </div>
-
-        <div class="second-table">
-            <table>
-                <tr class="table_bg">
-                    <th>Flow Changed From</th>
-                    <th>Flow Changed To</th>
-                    <th>Data Field</th>
-                    <th>Action Type</th>
-                    <th>Performer</th>
-                </tr>
-                @foreach ($data as $datas)
-                    <tr>
-
-                            <td>
-                                <div><strong>Changed From :</strong>{{ $datas->change_from }}</div>
-                            </td>
-
-                            <td>
-                                <div><strong>Changed To :</strong>{{ $datas->change_to }}</div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Data Field Name :</strong>
-                                        {{ $datas->activity_type ? $datas->activity_type : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    @if ($datas->activity_type == 'Activity Log')
-                                        <strong>Change From
-                                            :</strong>{{ $datas->change_from ? $datas->change_from : 'Not Applicable' }}
-                                    @else
-                                        <strong>Change From
-                                            :</strong>{{ $datas->previous ? $datas->previous : 'Not Applicable' }}
-                                    @endif
-                                </div>
-                                <br>
-                                <div>
-                                    @if ($datas->activity_type == 'Activity Log')
-                                        <strong>Change To
-                                            :</strong>{{ $datas->change_to ? $datas->change_to : 'Not Applicable' }}
-                                    @else
-                                        <strong>Change To
-                                            :</strong>{{ $datas->current ? $datas->current : 'Not Applicable' }}
-                                    @endif
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    <strong>Change Type
-                                        :</strong>{{ $datas->action_name ? $datas->action_name : 'Not Applicable' }}
-                                </div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Action Name
-                                        :</strong>{{ $datas->action ? $datas->action : 'Not Applicable' }}
-
-                                </div>
-                            </td>
-                            <td>
-                                <div><strong> Peformed By
-                                        :</strong>{{ $datas->user_name ? $datas->user_name : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $datas->created_at ? Helpers::getdateFormat($datas->created_at) : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"><strong> Comments
-                                        :</strong>{{ $datas->comment ? $datas->comment : 'Not Applicable' }}</div>
-
-                            </td>
-                    </tr>
-                @endforeach
-            </table>
-</div>
-
-</div>
 
     <footer>
         <table>
@@ -301,6 +204,111 @@
             </tr>
         </table>
     </footer>
+
+    <div class="inner-block">
+        <div class="second-table">
+            <table class="allow-wb" style="table-layout: fixed; width: 700px;">
+                <thead style="max-width: 100px;">
+                    <tr class="table_bg">
+                        <th class="w-5">S.No</th>
+                        <th class="w-15">Flow Changed From</th>
+                        <th class="w-15">Flow Changed To</th>
+                        <th class="w-30">Data Field</th>
+                        <th class="w-15" style="word-break: break-all;">Action Type</th>
+                        <th class="w-15" style="word-break: break-all;">Performer</th>
+                    </tr>
+                </thead>
+                <tbody style="max-width: 100px;">
+                    @foreach ($data as $index => $dataDemo)
+                        <tr>
+                            <td class="w-10">{{ $loop->iteration }}</td>
+                            <td class="w-20">
+                                <div><strong>Changed From :</strong>
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->change_from, 600) }}
+                                </div>
+                            </td>
+                            <td class="w-20">
+                                <div><strong>Changed To :</strong>
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->change_to, 600) }}
+                                </div>
+                            </td>
+                            <td class="w-30">
+                                <div class="allow-wb">
+                                    <strong>Data Field Name :</strong>
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->activity_type ?: 'Not Applicable', 600) }}
+                                </div>
+                                <div style="margin-top: 5px;" class="imageContainer allow-wb">
+                                    @if ($dataDemo->activity_type == 'Activity Log')
+                                        <strong>Change From :</strong>
+                                        @if ($dataDemo->change_from)
+                                            @if (strtotime($dataDemo->change_from))
+                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d-M-Y') }}
+                                            @else
+                                                {{ \Illuminate\Support\Str::limit(str_replace(',', ', ', $dataDemo->change_from), 600) }}
+                                            @endif
+                                        @elseif($dataDemo->change_from && trim($dataDemo->change_from) == '')
+                                            NULL
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    @else
+                                        <strong>Change From :</strong>
+                                        @if (!empty(strip_tags($dataDemo->previous)))
+                                            @if (strtotime($dataDemo->previous))
+                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d-M-Y') }}
+                                            @else
+                                                {!! \Illuminate\Support\Str::limit($dataDemo->previous, 600) !!}
+                                            @endif
+                                        @elseif($dataDemo->previous == null)
+                                            Null
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    @endif
+                                </div>
+                                <br>
+                                <div class="allow-wb">
+                                    @if ($dataDemo->activity_type == 'Activity Log')
+                                        <strong>Change To :</strong>
+                                        <span style="word-break: break-all; max-width: 20px;">
+                                            {{ \Illuminate\Support\Str::limit($dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable', 600) }}
+                                        </span>
+                                    @else
+                                        <strong>Change To :</strong>
+                                        <span style="word-break: break-all; width: 20px; word-wrap: break-word;">
+                                            {{ \Illuminate\Support\Str::limit($dataDemo->current ? $dataDemo->current : 'Not Applicable', 600) }}
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="allow-wb" style="margin-top: 5px;">
+                                    <strong>Change Type :</strong>
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable', 600) }}
+                                </div>
+                            </td>
+                            <td class="w-10">
+                                <div><strong>Action Name :</strong>
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->action ? $dataDemo->action : 'Not Applicable', 600) }}
+                                </div>
+                            </td>
+                            <td class="w-15">
+                                <div><strong>Performed By :</strong>
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable', 600) }}
+                                </div>
+                                <div style="margin-top: 5px;">
+                                    <strong>Performed On :</strong>
+                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
+                                </div>
+                                <div style="margin-top: 5px;">
+                                    <strong>Comments :</strong>
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->comment ? $dataDemo->comment : 'Not Applicable', 600) }}
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </body>
 

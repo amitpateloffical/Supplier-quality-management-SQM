@@ -674,14 +674,14 @@
         });
     </script>
 
-    
+
     <script>
         $(document).on('click', '.removeRowBtn', function() {
             $(this).closest('tr').remove();
         })
     </script>
 
-    
+
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -1095,7 +1095,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                 </div>
 
-                <form  id="auditForm" action="{{ route('deviationupdate', $data->id) }}" method="post"
+                <form  id="auditForm" class="formSubmit" action="{{ route('deviationupdate', $data->id) }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="form_name" id="formNameField" value="">
@@ -2059,11 +2059,12 @@
                                 </div>
 
                                     {{-- EXISTING ATTACHMENTS START --}}
-                                    @if ($data->initial_file)
+                                    {{-- @if ($data->initial_file)
                                         @foreach (json_decode($data->initial_file) as $file)
                                             <input id="initialFile-{{ $loop->index  }}" type="hidden" name="existing_initial_file[{{ $loop->index  }}]" value="{{ $file }}">
                                         @endforeach
-                                    @endif
+                                    @endif --}}
+
                                     {{-- EXISTING ATTACHMENTS END --}}
 
                                     @if ($data->initial_file)
@@ -2127,7 +2128,7 @@
                                 </div>
                                 <div class="button-block">
                                     <button  type="submit"{{ $data->stage == 0 ||  $data->stage == 11 ? 'disabled' : '' }}
-                                        id="ChangesaveButton01" class="saveButton saveAuditFormBtn d-flex"
+                                        id="ChangesaveButton01" class="saveButton saveAuditFormBtn d-flex on-submit-disable-button"
                                         style="align-items: center;">
                                         <div class="spinner-border spinner-border-sm auditFormSpinner"
                                             style="display: none" role="status">
@@ -2178,12 +2179,16 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                       {{-- EXISTING ATTACHMENTS START --}}
-                                       @if ($data->Audit_file)
-                                       @foreach (json_decode($data->Audit_file) as $file)
-                                           <input id="AuditFile-{{ $loop->index  }}" type="hidden" name="existing_Audit_file[{{ $loop->index  }}]" value="{{ $file }}">
-                                       @endforeach
-                                   @endif
+
+                                    @if ($data->Audit_file)
+                                            @foreach (json_decode($data->Audit_file) as $file)
+                                                <input id="ATFIFile_1-{{ $loop->index }}" type="hidden"
+                                                    name="existing_hod_files[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                    @endif
+
+
                                    {{-- EXISTING ATTACHMENTS END --}}
                                     <div class="col-12">
                                         @if ($data->stage == 2)
@@ -2202,7 +2207,7 @@
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a class="remove-file" style="@if ($data->stage == 0 || $data->stage == 3) pointer-events: none; @endif"
-                                                                     data-remove-id="AuditFile-{{ $loop->index }}"
+                                                                      data-remove-id="ATFIFile_1-{{ $loop->index }}"
                                                                         data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
@@ -2273,7 +2278,7 @@
                                 <div class="button-block">
 
                                     <button style=" justify-content: center; width: 4rem; " type="submit"{{ $data->stage == 0 ||  $data->stage == 11 ? 'disabled' : '' }}
-                                        class="saveButton saveAuditFormBtn d-flex" style="align-items: center;"
+                                        class="saveButton saveAuditFormBtn d-flex on-submit-disable-button" style="align-items: center;"
                                         id="ChangesaveButton02">
                                         <div class="spinner-border spinner-border-sm auditFormSpinner"
                                             style="display: none" role="status">
@@ -2896,12 +2901,16 @@
                                     @enderror
                                 </div>
 
-                                       {{-- EXISTING ATTACHMENTS START --}}
-                                       @if ($data->Initial_attachment)
+
+                                  @if ($data->Initial_attachment)
                                             @foreach (json_decode($data->Initial_attachment) as $file)
-                                                <input id="Initial_attachmentFile-{{ $loop->index  }}" type="hidden" name="existing_Initial_attachment[{{ $loop->index  }}]" value="{{ $file }}">
+                                                <input id="ATFIFile_2-{{ $loop->index }}" type="hidden"
+                                                    name="existing_qa_initial_files[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
                                             @endforeach
-                                        @endif
+                                  @endif
+
+
                                    {{-- EXISTING ATTACHMENTS END --}}
                                     <div class="col-12">
                                         <div class="group-input">
@@ -2919,7 +2928,7 @@
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
-                                                                data-remove-id="Initial_attachmentFile-{{ $loop->index }}"
+                                                                data-remove-id="ATFIFile_2-{{ $loop->index }}"
 
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
@@ -3183,13 +3192,13 @@
                                     </div>
                                 </div>
 
-                                  @if ($data->attach_files1)
-                                            @foreach (json_decode($data->attach_files1) as $file)
-                                                <input id="ATFIFile-3-{{ $loop->index }}" type="hidden"
-                                                    name="existing_attach_files[{{ $loop->index }}]"
+                                  {{-- @if ($data->Initial_attachment)
+                                            @foreach (json_decode($data->Initial_attachment) as $file)
+                                                <input id="ATFIFile_2-{{ $loop->index }}" type="hidden"
+                                                    name="existing_qa_initial_files[{{ $loop->index }}]"
                                                     value="{{ $file }}">
                                             @endforeach
-                                  @endif
+                                  @endif --}}
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -3207,7 +3216,7 @@
                                                                     class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
                                                             <a type="button" class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11]) ? 'pointer-events: none;' : '' }}"
-                                                                data-remove-id="Initial_attachmentFile-{{ $loop->index }}"
+                                                                {{-- data-remove-id="ATFIFile_2-{{ $loop->index }}" --}}
 
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -3230,7 +3239,7 @@
 
                             <div class="button-block">
                                 <button style=" justify-content: center; width: 4rem; " type="submit"{{ $data->stage == 0 ||  $data->stage == 11 ? 'disabled' : '' }}
-                                    id="ChangesaveButton03" class="saveAuditFormBtn d-flex" style="align-items: center;">
+                                    id="ChangesaveButton03" class="saveAuditFormBtn d-flex on-submit-disable-button" style="align-items: center;">
                                     <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
                                         role="status">
                                         <span class="sr-only">Loading...</span>
@@ -3304,12 +3313,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Production_Review !== 'yes')
+                                        @if($data1->Production_Review !== 'Yes')
 
                                         $('.p_erson').hide();
 
                                         $('[name="Production_Review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.p_erson').show();
                                                 $('.p_erson span').show();
                                             } else {
@@ -3334,11 +3343,11 @@
                                                 @if ($data->stage == 4) disabled @endif
                                                 @if ($data->stage == 3) required @endif>
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->Production_Review == 'yes') selected @endif value='yes'>
+                                                <option @if ($data1->Production_Review == 'Yes') selected @endif value='Yes'>
                                                     Yes</option>
-                                                <option @if ($data1->Production_Review == 'no') selected @endif value='no'>
+                                                <option @if ($data1->Production_Review == 'No') selected @endif value='No'>
                                                     No</option>
-                                                <option @if ($data1->Production_Review == 'na') selected @endif value='na'>
+                                                <option @if ($data1->Production_Review == 'NA') selected @endif value='NA'>
                                                     NA</option>
                                             </select>
 
@@ -3358,7 +3367,7 @@
                                         <div class="group-input">
                                             <label for="Production notification">Production Person <span
                                                     id="asteriskProduction"
-                                                    style="display: {{ $data1->Production_Review == 'yes' ? 'inline' : 'none' }}"
+                                                    style="display: {{ $data1->Production_Review == 'Yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
                                             <select @if ($data->stage == 4) disabled @endif
@@ -3376,13 +3385,13 @@
                                     <div class="col-md-12 mb-3 p_erson">
                                         <div class="group-input">
                                             <label for="Production assessment">Impact Assessment (By Production) <span
-                                                    style="display: {{ $data1->Production_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                    style="display: {{ $data1->Production_Review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
 
                                                     <div class="relative-container">
-                                                        <textarea @if ($data1->Production_Review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Production_person || $data->stage == 11 ? 'tiny Production_assessment' : 'tiny-disable' }}
+                                                        <textarea @if ($data1->Production_Review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Production_person || $data->stage == 11 ? 'tiny Production_assessment' : 'tiny-disable' }}
                                                             @if ($data->stage == 3 || Auth::user()->id != $data1->Production_person) readonly @endif name="Production_assessment" id="summernote-17" class="mic-input">{{ $data1->Production_assessment }}</textarea>
 
                                                             @component('frontend.forms.language-model', [
@@ -3436,7 +3445,7 @@
                                             }
 
                                             selectField.addEventListener('change', function() {
-                                                var isRequired = this.value === 'yes';
+                                                var isRequired = this.value === 'Yes';
                                                 console.log(this.value, isRequired, 'value');
                                                 inputsToToggle.forEach(function(input) {
                                                     input.required = isRequired;
@@ -3456,11 +3465,11 @@
                                             <label for="Production Review">Production Review Required ?</label>
                                             <select name="Production_Review" disabled id="Production_Review">
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->Production_Review == 'yes') selected @endif value='yes'>
+                                                <option @if ($data1->Production_Review == 'Yes') selected @endif value='Yes'>
                                                     Yes</option>
-                                                <option @if ($data1->Production_Review == 'no') selected @endif value='no'>
+                                                <option @if ($data1->Production_Review == 'No') selected @endif value='No'>
                                                     No</option>
-                                                <option @if ($data1->Production_Review == 'na') selected @endif value='na'>
+                                                <option @if ($data1->Production_Review == 'Na') selected @endif value='Na'>
                                                     NA</option>
                                             </select>
                                         </div>
@@ -3595,12 +3604,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Warehouse_review !== 'yes')
+                                        @if($data1->Warehouse_review !== 'Yes')
 
                                         $('.warehouse').hide();
 
                                         $('[name="Warehouse_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.warehouse').show();
                                                 $('.warehouse span').show();
                                             } else {
@@ -3620,12 +3629,12 @@
                                                 name="Warehouse_review" id="Warehouse_review"
                                                 @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->Warehouse_review == 'yes') selected @endif
-                                                    value="yes">Yes</option>
-                                                <option @if ($data1->Warehouse_review == 'no') selected @endif
-                                                    value="no">No</option>
-                                                <option @if ($data1->Warehouse_review == 'na') selected @endif
-                                                    value="na">NA</option>
+                                                <option @if ($data1->Warehouse_review == 'Yes') selected @endif
+                                                    value="Yes">Yes</option>
+                                                <option @if ($data1->Warehouse_review == 'No') selected @endif
+                                                    value="No">No</option>
+                                                <option @if ($data1->Warehouse_review == 'Na') selected @endif
+                                                    value="Na">NA</option>
 
                                             </select>
 
@@ -3644,7 +3653,7 @@
                                     <div class="col-lg-6 warehouse">
                                         <div class="group-input">
                                             <label for="Warehouse Person">Warehouse Person <span id="asteriskware"
-                                                    style="display: {{ $data1->Warehouse_review == 'yes' ? 'inline' : 'none' }}"
+                                                    style="display: {{ $data1->Warehouse_review == 'Yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <select name="Warehouse_notification" class="Warehouse_notification"
                                                 id="Warehouse_notification"
@@ -3664,13 +3673,13 @@
                                         <div class="group-input">
                                             <label for="Impact Assessment1">Impact Assessment(By Warehouse) <span
                                                     id="asteriskware2"
-                                                    style="display: {{ $data1->Warehouse_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                    style="display: {{ $data1->Warehouse_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
 
                                                     <div class="relative-container">
-                                                        <textarea @if ($data1->Warehouse_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Warehouse_assessment || $data->stage == 11 ? 'tiny Warehouse_assessment' : 'tiny-disable' }}
+                                                        <textarea @if ($data1->Warehouse_review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Warehouse_assessment || $data->stage == 11 ? 'tiny Warehouse_assessment' : 'tiny-disable' }}
                                                             name="Warehouse_assessment" id="summernote-19" @if ($data->stage == 3 || Auth::user()->id != $data1->Warehouse_notification) readonly @endif class="mic-input">{{ $data1->Warehouse_assessment }}</textarea>
 
                                                             @component('frontend.forms.language-model', [
@@ -3747,7 +3756,7 @@
                                             // }
 
                                             selectField.addEventListener('change', function() {
-                                                var isRequired = this.value === 'yes';
+                                                var isRequired = this.value === 'Yes';
 
                                                 inputsToToggle.forEach(function(input) {
                                                     input.required = isRequired;
@@ -3793,12 +3802,12 @@
                                             <label for="Warehouse Review Required">Warehouse Review Required ?</label>
                                             <select disabled name="Warehouse_review" id="Warehouse_review">
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->Warehouse_review == 'yes') selected @endif
-                                                    value="yes">Yes</option>
-                                                <option @if ($data1->Warehouse_review == 'no') selected @endif
-                                                    value="no">No</option>
-                                                <option @if ($data1->Warehouse_review == 'na') selected @endif
-                                                    value="na">NA</option>
+                                                <option @if ($data1->Warehouse_review == 'Yes') selected @endif
+                                                    value="Yes">Yes</option>
+                                                <option @if ($data1->Warehouse_review == 'No') selected @endif
+                                                    value="No">No</option>
+                                                <option @if ($data1->Warehouse_review == 'NA') selected @endif
+                                                    value="NA">NA</option>
 
                                             </select>
 
@@ -3922,12 +3931,12 @@
                             </div>
                             <script>
                                 $(document).ready(function() {
-                                    @if($data1->Quality_review !== 'yes')
+                                    @if($data1->Quality_review !== 'Yes')
 
                                     $('.quality_control').hide();
 
                                     $('[name="Quality_review"]').change(function() {
-                                        if ($(this).val() === 'yes') {
+                                        if ($(this).val() === 'Yes') {
                                             $('.quality_control').show();
                                             $('.quality_control span').show();
                                         } else {
@@ -3946,11 +3955,11 @@
                                         <select @if ($data->stage == 3) required @endif name="Quality_review"
                                             id="Quality_review" @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Quality_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Quality_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Quality_review == 'no') selected @endif value="no">No
+                                            <option @if ($data1->Quality_review == 'No') selected @endif value="No">No
                                             </option>
-                                            <option @if ($data1->Quality_review == 'na') selected @endif value="na">NA
+                                            <option @if ($data1->Quality_review == 'NA') selected @endif value="NA">NA
                                             </option>
 
                                         </select>
@@ -3967,7 +3976,7 @@
                                 <div class="col-lg-6 quality_control">
                                     <div class="group-input">
                                         <label for="Quality Control Person">Quality Control Person <span id="asteriskQC"
-                                                style="display: {{ $data1->Quality_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Quality_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Quality_Control_Person" class="Quality_Control_Person"
                                             id="Quality_Control_Person"
@@ -3987,13 +3996,13 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment2">Impact Assessment (By Quality Control) <span
                                                 id="asteriskQC1"
-                                                style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Quality_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
 
                                             <div class="relative-container">
-                                                <textarea @if ($data1->Quality_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Quality_Control_Person || $data->stage == 11 ? 'tiny Quality_Control_assessment' : 'tiny-disable' }}
+                                                <textarea @if ($data1->Quality_review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Quality_Control_Person || $data->stage == 11 ? 'tiny Quality_Control_assessment' : 'tiny-disable' }}
                                                     name="Quality_Control_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Quality_Control_Person) readonly @endif id="summernote-21">{{ $data1->Quality_Control_assessment }}</textarea>
 
                                                     @component('frontend.forms.language-model', [
@@ -4029,7 +4038,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -4103,12 +4112,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Quality_Assurance_Review !== 'yes')
+                                        @if($data1->Quality_Assurance_Review !== 'Yes')
 
                                         $('.quality_assurance').hide();
 
                                         $('[name="Quality_Assurance_Review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.quality_assurance').show();
                                                 $('.quality_assurance span').show();
                                             } else {
@@ -4128,11 +4137,11 @@
                                             name="Quality_Assurance_Review" id="Quality_Assurance_Review"
                                             @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Quality_Assurance_Review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value="no">No
+                                            <option @if ($data1->Quality_Assurance_Review == 'No') selected @endif value="No">No
                                             </option>
-                                            <option @if ($data1->Quality_Assurance_Review == 'na') selected @endif value="na">NA
+                                            <option @if ($data1->Quality_Assurance_Review == 'NA') selected @endif value="NA">NA
                                             </option>
                                         </select>
                                     </div>
@@ -4148,7 +4157,7 @@
                                     <div class="group-input">
                                         <label for="Quality Assurance Person">Quality Assurance Person <span
                                                 id="asteriskQQA"
-                                                style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Quality_Assurance_Review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="QualityAssurance_person" class="QualityAssurance_person"
                                             id="QualityAssurance_person"
@@ -4166,13 +4175,13 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment3">Impact Assessment (By Quality Assurance) <span
                                                 id="asteriskQQA1"
-                                                style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Quality_Assurance_Review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
 
                                         <div class="relative-container">
-                                            <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->QualityAssurance_person || $data->stage == 11 ? 'tiny QualityAssurance_assessment' : 'tiny-disable' }}
+                                            <textarea @if ($data1->Quality_Assurance_Review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->QualityAssurance_person || $data->stage == 11 ? 'tiny QualityAssurance_assessment' : 'tiny-disable' }}
                                                 name="QualityAssurance_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->QualityAssurance_person) readonly @endif id="summernote-23">{{ $data1->QualityAssurance_assessment }}</textarea>
 
                                                 @component('frontend.forms.language-model', [
@@ -4209,7 +4218,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -4287,12 +4296,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Engineering_review !== 'yes')
+                                        @if($data1->Engineering_review !== 'Yes')
 
                                         $('.engineering').hide();
 
                                         $('[name="Engineering_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.engineering').show();
                                                 $('.engineering span').show();
                                             } else {
@@ -4316,11 +4325,11 @@
                                             name="Engineering_review" id="Engineering_review"
                                             @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Engineering_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Engineering_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Engineering_review == 'no') selected @endif value="no">No
+                                            <option @if ($data1->Engineering_review == 'No') selected @endif value="No">No
                                             </option>
-                                            <option @if ($data1->Engineering_review == 'na') selected @endif value="na">NA
+                                            <option @if ($data1->Engineering_review == 'NA') selected @endif value="NA">NA
                                             </option>
                                         </select>
 
@@ -4336,7 +4345,7 @@
                                 <div class="col-lg-6 engineering">
                                     <div class="group-input">
                                         <label for="Customer notification">Engineering Person <span id="asteriskEP"
-                                                style="display: {{ $data1->Engineering_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Engineering_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Engineering_person" class="Engineering_person"
                                             id="Engineering_person" @if ($data->stage == 4) disabled @endif>
@@ -4352,13 +4361,13 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment4">Impact Assessment (By Engineering) <span
                                                 id="asteriskEP1"
-                                                style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Engineering_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
 
                                         <div class="relative-container">
-                                            <textarea @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Engineering_person || $data->stage == 11 ? 'tiny Engineering_assessment' : 'tiny-disable' }}
+                                            <textarea @if ($data1->Engineering_review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Engineering_person || $data->stage == 11 ? 'tiny Engineering_assessment' : 'tiny-disable' }}
                                                 name="Engineering_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Engineering_person) readonly @endif id="summernote-25">{{ $data1->Engineering_assessment }}</textarea>
 
                                                 @component('frontend.forms.language-model', [
@@ -4393,7 +4402,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -4469,12 +4478,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Analytical_Development_review!== 'yes')
+                                        @if($data1->Analytical_Development_review!== 'Yes')
 
                                         $('.analytical_development').hide();
 
                                         $('[name="Analytical_Development_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.analytical_development').show();
                                                 $('.analytical_development span').show();
                                             } else {
@@ -4495,11 +4504,11 @@
                                             name="Analytical_Development_review" id="Analytical_Development_review"
                                             @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Analytical_Development_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Analytical_Development_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Analytical_Development_review == 'no') selected @endif value="no">No
+                                            <option @if ($data1->Analytical_Development_review == 'No') selected @endif value="No">No
                                             </option>
-                                            <option @if ($data1->Analytical_Development_review == 'na') selected @endif value="na">NA
+                                            <option @if ($data1->Analytical_Development_review == 'NA') selected @endif value="Na">NA
                                             </option>
 
                                         </select>
@@ -4517,7 +4526,7 @@
                                     <div class="group-input">
                                         <label for="Analytical Development Laboratory Person"> Analytical Development
                                             Laboratory Person <span id="asteriskAD"
-                                                style="display: {{ $data1->Analytical_Development_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Analytical_Development_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Analytical_Development_person"
                                             class="Analytical_Development_person" id="Analytical_Development_person"
@@ -4536,13 +4545,13 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment5">Impact Assessment (By Analytical Development
                                             Laboratory) <span id="asteriskAD1"
-                                                style="display: {{ $data1->Analytical_Development_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Analytical_Development_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
 
                                         <div class="relative-container">
-                                            <textarea @if ($data1->Analytical_Development_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Analytical_Development_person || $data->stage == 11? 'tiny Analytical_Development_assessment' : 'tiny-disable' }}
+                                            <textarea @if ($data1->Analytical_Development_review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Analytical_Development_person || $data->stage == 11? 'tiny Analytical_Development_assessment' : 'tiny-disable' }}
                                             name="Analytical_Development_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Analytical_Development_person) readonly @endif
                                             id="summernote-27">{{ $data1->Analytical_Development_assessment }}</textarea>
 
@@ -4577,7 +4586,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -4656,12 +4665,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Kilo_Lab_review !== 'yes')
+                                        @if($data1->Kilo_Lab_review !== 'Yes')
 
                                         $('.kilo_lab').hide();
 
                                         $('[name="Kilo_Lab_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.kilo_lab').show();
                                                 $('.kilo_lab span').show();
                                             } else {
@@ -4681,11 +4690,11 @@
                                             name="Kilo_Lab_review" id="Kilo_Lab_review"
                                             @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Kilo_Lab_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Kilo_Lab_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Kilo_Lab_review == 'no') selected @endif value="no">No
+                                            <option @if ($data1->Kilo_Lab_review == 'No') selected @endif value="No">No
                                             </option>
-                                            <option @if ($data1->Kilo_Lab_review == 'na') selected @endif value="na">NA
+                                            <option @if ($data1->Kilo_Lab_review == 'NA') selected @endif value="NA">NA
                                             </option>
 
                                         </select>
@@ -4703,7 +4712,7 @@
                                     <div class="group-input">
                                         <label for="Process Development Laboratory"> Process Development Laboratory / Kilo
                                             Lab Person <span id="asteriskPDL"
-                                                style="display: {{ $data1->Kilo_Lab_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Kilo_Lab_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Kilo_Lab_person" class="Kilo_Lab_person" id="Kilo_Lab_person"
                                             @if ($data->stage == 4) disabled @endif>
@@ -4720,13 +4729,13 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment6">Impact Assessment (By Process Development
                                             Laboratory / Kilo Lab) <span id="asteriskPDL1"
-                                                style="display: {{ $data1->Kilo_Lab_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Kilo_Lab_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
 
                                         <div class="relative-container">
-                                            <textarea @if ($data1->Kilo_Lab_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Kilo_Lab_person || $data->stage == 11 ? 'tiny Analytical_Development_assessment' : 'tiny-disable' }}
+                                            <textarea @if ($data1->Kilo_Lab_review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Kilo_Lab_person || $data->stage == 11 ? 'tiny Analytical_Development_assessment' : 'tiny-disable' }}
                                                 name="Kilo_Lab_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Kilo_Lab_person) readonly @endif id="summernote-29">{{ $data1->Kilo_Lab_assessment }}</textarea>
 
                                                 @component('frontend.forms.language-model', [
@@ -4760,7 +4769,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -4837,12 +4846,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Technology_transfer_review !== 'yes')
+                                        @if($data1->Technology_transfer_review !== 'Yes')
 
                                         $('.technology_transfer').hide();
 
                                         $('[name="Technology_transfer_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.technology_transfer').show();
                                                 $('.technology_transfer span').show();
                                             } else {
@@ -4862,11 +4871,11 @@
                                             name="Technology_transfer_review" id="Technology_transfer_review"
                                             @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Technology_transfer_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Technology_transfer_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Technology_transfer_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Technology_transfer_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Technology_transfer_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Technology_transfer_review == 'NA') selected @endif value="NA">
                                                 NA</option>
 
                                         </select>
@@ -4884,7 +4893,7 @@
                                     <div class="group-input">
                                         <label for="Design Person"> Technology Transfer / Design Person <span
                                                 id="asteriskTT"
-                                                style="display: {{ $data1->Technology_transfer_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Technology_transfer_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Technology_transfer_person" class="Technology_transfer_person"
                                             id="Technology_transfer_person"
@@ -4904,13 +4913,13 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment7">Impact Assessment (By Technology Transfer /
                                             Design) <span id="asteriskTT1"
-                                                style="display: {{ $data1->Technology_transfer_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Technology_transfer_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
 
                                             <div class="relative-container">
-                                                        <textarea @if ($data1->Technology_transfer_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Technology_transfer_person || $data->stage == 11 ? 'tiny Technology_transfer_assessment' : 'tiny-disable' }}
+                                                        <textarea @if ($data1->Technology_transfer_review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Technology_transfer_person || $data->stage == 11 ? 'tiny Technology_transfer_assessment' : 'tiny-disable' }}
                                                             name="Technology_transfer_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Technology_transfer_person) readonly @endif id="summernote-31">{{ $data1->Technology_transfer_assessment }}</textarea>
 
                                                 @component('frontend.forms.language-model', [
@@ -4943,7 +4952,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -5023,12 +5032,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Environment_Health_review !== 'yes')
+                                        @if($data1->Environment_Health_review !== 'Yes')
 
                                         $('.environmental_health').hide();
 
                                         $('[name="Environment_Health_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.environmental_health').show();
                                                 $('.environmental_health span').show();
                                             } else {
@@ -5048,11 +5057,11 @@
                                             name="Environment_Health_review" id="Environment_Health_review"
                                             @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Environment_Health_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Environment_Health_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Environment_Health_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Environment_Health_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Environment_Health_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Environment_Health_review == 'NA') selected @endif value="NA">
                                                 NA</option>
 
                                         </select>
@@ -5070,7 +5079,7 @@
                                     <div class="group-input">
                                         <label for="Safety Person"> Environment, Health & Safety Person <span
                                                 id="asteriskEH"
-                                                style="display: {{ $data1->Environment_Health_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Environment_Health_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Environment_Health_Safety_person"
                                             class="Environment_Health_Safety_person"
@@ -5090,13 +5099,13 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment8">Impact Assessment (By Environment, Health &
                                             Safety) <span id="asteriskEH1"
-                                                style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Environment_Health_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
 
                                                 <div class="relative-container">
-                                                        <textarea @if ($data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Environment_Health_Safety_person || $data->stage == 11 ? 'tiny' : 'tiny-disable' }} name="Health_Safety_assessment"
+                                                        <textarea @if ($data1->Environment_Health_review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Environment_Health_Safety_person || $data->stage == 11 ? 'tiny' : 'tiny-disable' }} name="Health_Safety_assessment"
                                                             @if ($data->stage == 3 || Auth::user()->id != $data1->Environment_Health_Safety_person) readonly @endif id="summernote-33">{{ $data1->Health_Safety_assessment }}</textarea>
 
                                                             @component('frontend.forms.language-model', [
@@ -5130,7 +5139,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -5212,12 +5221,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Human_Resource_review !== 'yes')
+                                        @if($data1->Human_Resource_review !== 'Yes')
 
                                         $('.human_resources').hide();
 
                                         $('[name="Human_Resource_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.human_resources').show();
                                                 $('.human_resources span').show();
                                             } else {
@@ -5237,11 +5246,11 @@
                                             name="Human_Resource_review" id="Human_Resource_review"
                                             @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Human_Resource_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Human_Resource_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Human_Resource_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Human_Resource_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Human_Resource_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Human_Resource_review == 'NA') selected @endif value="NA">
                                                 NA</option>
                                         </select>
 
@@ -5258,7 +5267,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification"> Human Resource & Administration Person <span
                                                 id="asteriskHR"
-                                                style="display: {{ $data1->Human_Resource_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Human_Resource_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Human_Resource_person" class="Human_Resource_person"
                                             id="Human_Resource_person"
@@ -5276,13 +5285,13 @@
                                     <div class="group-input">
                                         <label for="productionfeedback">Impact Assessment (By Human Resource &
                                             Administration ) <span id="asteriskHR1"
-                                                style="display: {{ $data1->Human_Resource_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Human_Resource_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
 
                                                     <div class="relative-container">
-                                                        <textarea @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Human_Resource_person || $data->stage == 11 ? 'tiny Human_Resource_assessment' : 'tiny-disable' }}
+                                                        <textarea @if ($data1->Human_Resource_review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Human_Resource_person || $data->stage == 11 ? 'tiny Human_Resource_assessment' : 'tiny-disable' }}
                                                             name="Human_Resource_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Human_Resource_person) readonly @endif id="summernote-35">{{ $data1->Human_Resource_assessment }}</textarea>
 
                                                             @component('frontend.forms.language-model', [
@@ -5316,7 +5325,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -5394,12 +5403,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Information_Technology_review !== 'yes')
+                                        @if($data1->Information_Technology_review !== 'Yes')
 
                                         $('.information_technology').hide();
 
                                         $('[name="Information_Technology_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.information_technology').show();
                                                 $('.information_technology span').show();
                                             } else {
@@ -5419,11 +5428,11 @@
                                             name="Information_Technology_review" id="Information_Technology_review"
                                             @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Information_Technology_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Information_Technology_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Information_Technology_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Information_Technology_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Information_Technology_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Information_Technology_review == 'NA') selected @endif value="NA">
                                                 NA</option>
                                         </select>
 
@@ -5442,7 +5451,7 @@
                                     <div class="group-input">
                                         <label for="Information Technology Person"> Information Technology Person <span
                                                 id="asteriskITP"
-                                                style="display: {{ $data1->Information_Technology_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Information_Technology_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name=" Information_Technology_person"
                                             class="Information_Technology_person" id=" Information_Technology_person"
@@ -5461,13 +5470,13 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment10">Impact Assessment (By Information Technology)
                                             <span id="asteriskITP"
-                                                style="display: {{ $data1->Information_Technology_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Information_Technology_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
 
                                                     <div class="relative-container">
-                                                        <textarea @if ($data1->Information_Technology_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Information_Technology_person || $data->stage == 11 ? 'tiny Information_Technology_assessment' : 'tiny-disable' }}
+                                                        <textarea @if ($data1->Information_Technology_review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Information_Technology_person || $data->stage == 11 ? 'tiny Information_Technology_assessment' : 'tiny-disable' }}
                                                         name="Information_Technology_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->Information_Technology_person) readonly @endif
                                                         id="summernote-37">{{ $data1->Information_Technology_assessment }}</textarea>
 
@@ -5501,7 +5510,7 @@
                                             inputsToToggle.push(facilityNameInputs[i]);
                                         }
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -5578,12 +5587,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Project_management_review !== 'yes')
+                                        @if($data1->Project_management_review !== 'Yes')
 
                                         $('.project_management').hide();
 
                                         $('[name="Project_management_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.project_management').show();
                                                 $('.project_management span').show();
                                             } else {
@@ -5603,11 +5612,11 @@
                                             name="Project_management_review" id="Project_management_review"
                                             @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Project_management_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Project_management_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Project_management_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Project_management_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Project_management_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Project_management_review == 'NA') selected @endif value="NA">
                                                 NA</option>
                                         </select>
                                     </div>
@@ -5623,7 +5632,7 @@
                                     <div class="group-input">
                                         <label for="Project management Person"> Project management Person <span
                                                 id="asteriskPMP"
-                                                style="display: {{ $data1->Project_management_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Project_management_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Project_management_person" class="Project_management_person"
                                             id="Project_management_person"
@@ -5641,13 +5650,13 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment11">Impact Assessment (By Project management ) <span
                                                 id="asteriskPMP"
-                                                style="display: {{ $data1->Project_management_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Project_management_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
 
                                                     <div class="relative-container">
-                                                        <textarea @if ($data1->Project_management_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Project_management_person || $data->stage == 11 ? 'tiny Project_management_assessment' : 'tiny-disable' }}
+                                                        <textarea @if ($data1->Project_management_review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Project_management_person || $data->stage == 11 ? 'tiny Project_management_assessment' : 'tiny-disable' }}
                                                             name="Project_management_assessment" id="summernote-39" @if ($data->stage == 3 || Auth::user()->id != $data1->Project_management_person) readonly @endif>{{ $data1->Project_management_assessment }}</textarea>
 
                                                             @component('frontend.forms.language-model', [
@@ -5680,7 +5689,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -5766,11 +5775,11 @@
                                             Required?</label>
                                         <select disabled name="Quality_review" id="Quality_review">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Quality_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Quality_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Quality_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Quality_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Quality_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Quality_review == 'NA') selected @endif value="NA">
                                                 NA</option>
 
                                         </select>
@@ -5886,11 +5895,11 @@
                                         <label for="Quality Assurance Review Required">Quality Assurance Review Required
                                             ?</label>
                                         <select disabled name="Quality_Assurance_Review" id="Quality_Assurance_Review">
-                                            <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Quality_Assurance_Review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Quality_Assurance_Review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Quality_Assurance_Review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Quality_Assurance_Review == 'NA') selected @endif value="NA">
                                                 NA</option>
                                         </select>
                                     </div>
@@ -6004,11 +6013,11 @@
                                         <label for="Customer notification">Engineering Review Required ?</label>
                                         <select disabled name="Engineering_review" id="Engineering_review">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Engineering_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Engineering_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Engineering_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Engineering_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Engineering_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Engineering_review == 'NA') selected @endif value="NA">
                                                 NA</option>
                                         </select>
 
@@ -6120,11 +6129,11 @@
                                         <select disabled name="Analytical_Development_review"
                                             id="Analytical_Development_review">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Analytical_Development_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Analytical_Development_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Analytical_Development_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Analytical_Development_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Analytical_Development_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Analytical_Development_review == 'NA') selected @endif value="NA">
                                                 NA</option>
 
                                         </select>
@@ -6244,11 +6253,11 @@
                                             Lab Review Required ?</label>
                                         <select disabled name="Kilo_Lab_review" id="Kilo_Lab_review">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Kilo_Lab_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Kilo_Lab_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Kilo_Lab_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Kilo_Lab_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Kilo_Lab_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Kilo_Lab_review == 'NA') selected @endif value="NA">
                                                 NA</option>
 
                                         </select>
@@ -6363,11 +6372,11 @@
                                         <select disabled name="Technology_transfer_review"
                                             id="Technology_transfer_review">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Technology_transfer_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Technology_transfer_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Technology_transfer_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Technology_transfer_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Technology_transfer_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Technology_transfer_review == 'NA') selected @endif value="NA">
                                                 NA</option>
 
                                         </select>
@@ -6487,11 +6496,11 @@
                                         <select disabled name="Environment_Health_review"
                                             id="Environment_Health_review">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Environment_Health_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Environment_Health_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Environment_Health_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Environment_Health_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Environment_Health_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Environment_Health_review == 'NA') selected @endif value="NA">
                                                 NA</option>
 
                                         </select>
@@ -6510,7 +6519,7 @@
                                         <label for="Safety Person"> Environment, Health & Safety Person</label>
                                         <select disabled name="Environment_Health_Safety_person"
                                             id="Environment_Health_Safety_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option
                                                     {{ $data1->Environment_Health_Safety_person == $user->id ? 'selected' : '' }}
@@ -6613,11 +6622,11 @@
                                             ?</label>
                                         <select disabled name="Human_Resource_review" id="Human_Resource_review">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Human_Resource_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Human_Resource_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Human_Resource_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Human_Resource_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Human_Resource_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Human_Resource_review == 'NA') selected @endif value="NA">
                                                 NA</option>
                                         </select>
 
@@ -6733,11 +6742,11 @@
                                         <select disabled name=" Information_Technology_review"
                                             id=" Information_Technology_review">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Information_Technology_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Information_Technology_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Information_Technology_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Information_Technology_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Information_Technology_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Information_Technology_review == 'NA') selected @endif value="NA">
                                                 NA</option>
                                         </select>
 
@@ -6860,11 +6869,11 @@
                                         <select disabled name="Project_management_review"
                                             id="Project_management_review">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Project_management_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Project_management_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Project_management_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Project_management_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Project_management_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Project_management_review == 'NA') selected @endif value="NA">
                                                 NA</option>
                                         </select>
                                     </div>
@@ -6975,12 +6984,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Other1_review !== 'yes')
+                                        @if($data1->Other1_review !== 'Yes')
 
                                         $('.other1_reviews').hide();
 
                                         $('[name="Other1_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.other1_reviews').show();
                                                 $('.other1_reviews span').show();
                                             } else {
@@ -6999,11 +7008,11 @@
                                         <select name="Other1_review" @if ($data->stage == 4) disabled @endif
                                             id="Other1_review" value="{{ $data1->Other1_review }}">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Other1_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Other1_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Other1_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Other1_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Other1_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Other1_review == 'NA') selected @endif value="NA">
                                                 NA</option>
 
                                         </select>
@@ -7020,7 +7029,7 @@
                                 <div class="col-lg-6 other1_reviews ">
                                     <div class="group-input">
                                         <label for="Person1"> Other's 1 Person <span id="asterisko1"
-                                                style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other1_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Other1_person" @if ($data->stage == 4) disabled @endif
                                             id="Other1_person">
@@ -7038,7 +7047,7 @@
 
                                     <div class="group-input">
                                         <label for="Department1"> Other's 1 Department <span id="asteriskod1"
-                                                style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other1_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Other1_Department_person"
                                             @if ($data->stage == 4) disabled @endif
@@ -7081,13 +7090,13 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment12">Impact Assessment (By Other's 1) <span
                                                 id=""
-                                                style="display: {{ $data1->Other1_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other1_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
 
                                                     <div class="relative-container">
-                                                        <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other1_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other1_assessment"
+                                                        <textarea @if ($data1->Other1_review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other1_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other1_assessment"
                                                             @if ($data->stage == 3 || Auth::user()->id != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
 
                                                             @component('frontend.forms.language-model', [
@@ -7124,7 +7133,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -7200,12 +7209,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Other2_review !== 'yes')
+                                        @if($data1->Other2_review !== 'Yes')
 
                                         $('.Other2_reviews').hide();
 
                                         $('[name="Other2_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.Other2_reviews').show();
                                                 $('.Other2_reviews span').show();
                                             } else {
@@ -7223,11 +7232,11 @@
                                         <select name="Other2_review" @if ($data->stage == 4) disabled @endif
                                             id="Other2_review" value="{{ $data1->Other2_review }}">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Other2_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Other2_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Other2_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Other2_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Other2_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Other2_review == 'NA') selected @endif value="NA">
                                                 NA</option>
                                         </select>
 
@@ -7244,7 +7253,7 @@
                                 <div class="col-lg-6 Other2_reviews">
                                     <div class="group-input">
                                         <label for="Person2"> Other's 2 Person <span id="asterisko2"
-                                                style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other2_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Other2_person" @if ($data->stage == 4) disabled @endif
                                             id="Other2_person">
@@ -7260,7 +7269,7 @@
                                 <div class="col-lg-12 Other2_reviews">
                                     <div class="group-input">
                                         <label for="Department2"> Other's 2 Department <span id="asteriskod2"
-                                                style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other2_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Other2_Department_person"
                                             @if ($data->stage == 4) disabled @endif
@@ -7314,7 +7323,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -7332,14 +7341,14 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment13">Impact Assessment (By Other's 2) <span
                                                 id=""
-                                                style="display: {{ $data1->Other2_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other2_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
 
                                                     <div class="relative-container">
                                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other2_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other2_person || $data->stage == 11? 'tiny ' : 'tiny-disable' }} name="Other2_Assessment"
-                                                            @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
+                                                            @if ($data1->Other2_review == 'Yes' && $data->stage == 4) required @endif id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
 
                                                             @component('frontend.forms.language-model', [
                                                                 'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
@@ -7421,12 +7430,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Other3_review !== 'yes')
+                                        @if($data1->Other3_review !== 'Yes')
 
                                         $('.Other3_reviews').hide();
 
                                         $('[name="Other3_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.Other3_reviews').show();
                                                 $('.Other3_reviews span').show();
                                             } else {
@@ -7444,11 +7453,11 @@
                                         <select name="Other3_review" @if ($data->stage == 4) disabled @endif
                                             id="Other3_review" value="{{ $data1->Other3_review }}">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Other3_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Other3_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Other3_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Other3_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Other3_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Other3_review == 'NA') selected @endif value="NA">
                                                 NA</option>
                                         </select>
 
@@ -7467,7 +7476,7 @@
                                 <div class="col-lg-6 Other3_reviews">
                                     <div class="group-input">
                                         <label for="Person3">Other's 3 Person <span id="asterisko3"
-                                                style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other3_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Other3_person" @if ($data->stage == 4) disabled @endif
                                             id="Other3_person">
@@ -7484,7 +7493,7 @@
                                 <div class="col-lg-12 Other3_reviews">
                                     <div class="group-input">
                                         <label for="Department3">Other's 3 Department <span id="asteriskod3"
-                                                style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other3_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Other3_Department_person"
                                             @if ($data->stage == 4) disabled @endif
@@ -7537,7 +7546,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -7555,13 +7564,13 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment14">Impact Assessment (By Other's 3) <span
                                                 id=""
-                                                style="display: {{ $data1->Other3_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other3_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label><div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
 
                                                     <div class="relative-container">
                                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other3_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other3_person || Auth::user()->id == $data1->Other3_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other3_Assessment"
-                                                            @if ($data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
+                                                            @if ($data1->Other3_review == 'Yes' && $data->stage == 4) required @endif id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
 
                                                             @component('frontend.forms.language-model', [
                                                                 'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
@@ -7642,12 +7651,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Other4_review !== 'yes')
+                                        @if($data1->Other4_review !== 'Yes')
 
                                         $('.Other4_reviews').hide();
 
                                         $('[name="Other4_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.Other4_reviews').show();
                                                 $('.Other4_reviews span').show();
                                             } else {
@@ -7664,11 +7673,11 @@
                                         <select name="Other4_review" @if ($data->stage == 4) disabled @endif
                                             id="Other4_review" value="{{ $data1->Other4_review }}">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Other4_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Other4_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Other4_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Other4_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Other4_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Other4_review == 'NA') selected @endif value="NA">
                                                 NA</option>
 
                                         </select>
@@ -7686,7 +7695,7 @@
                                 <div class="col-lg-6 Other4_reviews">
                                     <div class="group-input">
                                         <label for="Person4"> Other's 4 Person <span id="asterisko4"
-                                                style="display: {{ $data1->Other4_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other4_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Other4_person" @if ($data->stage == 4) disabled @endif
                                             id="Other4_person">
@@ -7702,7 +7711,7 @@
                                 <div class="col-lg-12 Other4_reviews">
                                     <div class="group-input">
                                         <label for="Department4"> Other's 4 Department <span id="asteriskod4"
-                                                style="display: {{ $data1->Other4_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other4_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Other4_Department_person"
                                             @if ($data->stage == 4) disabled @endif
@@ -7755,7 +7764,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -7773,14 +7782,14 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment15">Impact Assessment (By Other's 4) <span
                                                 id=""
-                                                style="display: {{ $data1->Other4_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other4_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
 
                                                 <div class="relative-container">
                                                     <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other4_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other4_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }} name="Other4_Assessment"
-                                                        @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
+                                                        @if ($data1->Other4_review == 'Yes' && $data->stage == 4) required @endif id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
 
                                                 @component('frontend.forms.language-model', [
                                                     'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
@@ -7863,12 +7872,12 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Other5_review !== 'yes')
+                                        @if($data1->Other5_review !== 'Yes')
 
                                         $('.Other5_reviews').hide();
 
                                         $('[name="Other5_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
+                                            if ($(this).val() === 'Yes') {
                                                 $('.Other5_reviews').show();
                                                 $('.Other5_reviews span').show();
                                             } else {
@@ -7885,11 +7894,11 @@
                                         <select name="Other5_review" @if ($data->stage == 4) disabled @endif
                                             id="Other5_review" value="{{ $data1->Other5_review }}">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Other5_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Other5_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Other5_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Other5_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Other5_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Other5_review == 'NA') selected @endif value="NA">
                                                 NA</option>
 
                                         </select>
@@ -7906,7 +7915,7 @@
                                 <div class="col-lg-6 Other5_reviews">
                                     <div class="group-input">
                                         <label for="Person5">Other's 5 Person <span id="asterisko5"
-                                                style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other5_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Other5_person" @if ($data->stage == 4) disabled @endif
                                             id="Other5_person">
@@ -7922,7 +7931,7 @@
                                 <div class="col-lg-12 Other5_reviews">
                                     <div class="group-input">
                                         <label for="Department5"> Other's 5 Department <span id="asteriskod5"
-                                                style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other5_review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <select name="Other5_Department_person"
                                             @if ($data->stage == 4) disabled @endif
@@ -7975,7 +7984,7 @@
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 input.required = isRequired;
@@ -7993,14 +8002,14 @@
                                     <div class="group-input">
                                         <label for="Impact Assessment16">Impact Assessment (By Other's 5) <span
                                                 id=""
-                                                style="display: {{ $data1->Other5_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Other5_review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
 
                                                     <div class="relative-container">
                                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other5_person) readonly @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Other5_person || $data->stage == 11 ? 'tiny ' : 'tiny-disable' }}
-                                                            name="Other5_Assessment"@if ($data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
+                                                            name="Other5_Assessment"@if ($data1->Other5_review == 'Yes' && $data->stage == 4) required @endif id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
 
                                                 @component('frontend.forms.language-model', [
                                                     'disabled' => in_array($data->stage, [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11])
@@ -8046,6 +8055,15 @@
                                                 value="{{ $data1->Other5_on ? \Carbon\Carbon::parse($data1->Other5_on)->format('d-m-Y') : ''}}">
                                     </div>
                                 </div>
+
+                                   @if ($data->Other5_attachment)
+                                            @foreach (json_decode($data->Other5_attachment) as $file)
+                                                <input id="ATFIFile_3-{{ $loop->index }}" type="hidden"
+                                                    name="existing_Other5_attachment[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                   @endif
+
                                 <div class="col-12 ">
                                     <div class="group-input">
                                         <label for="Audit Attachments">CFT Attachments</label>
@@ -8062,6 +8080,7 @@
                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
                                                             <a type="button" class="remove-file"
+                                                            data-remove-id="ATFIFile_3-{{ $loop->index }}"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
                                                                     style="color:red; font-size:20px;"></i></a>
@@ -8089,11 +8108,11 @@
                                             name="Other1_review"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="Other1_review" value="{{ $data1->Other1_review }}">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Other1_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Other1_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Other1_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Other1_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Other1_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Other1_review == 'NA') selected @endif value="NA">
                                                 NA</option>
 
                                         </select>
@@ -8247,11 +8266,11 @@
                                             name="Other2_review"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="Other2_review" value="{{ $data1->Other2_review }}">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Other2_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Other2_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Other2_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Other2_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Other2_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Other2_review == 'NA') selected @endif value="NA">
                                                 NA</option>
                                         </select>
 
@@ -8395,11 +8414,11 @@
                                             name="Other3_review"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="Other3_review" value="{{ $data1->Other3_review }}">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Other3_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Other3_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Other3_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Other3_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Other3_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Other3_review == 'NA') selected @endif value="NA">
                                                 NA</option>
                                         </select>
 
@@ -8421,7 +8440,7 @@
                                         <select disabled
                                             name="Other3_person"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="Other3_person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
                                                     value="{{ $user->id }}">{{ $user->name }}</option>
@@ -8543,11 +8562,11 @@
                                             name="Other4_review"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="Other4_review" value="{{ $data1->Other4_review }}">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Other4_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Other4_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Other4_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Other4_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Other4_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Other4_review == 'NA') selected @endif value="NA">
                                                 NA</option>
 
                                         </select>
@@ -8701,11 +8720,11 @@
                                             name="Other5_review"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                             id="Other5_review" value="{{ $data1->Other5_review }}">
                                             <option value="">-- Select --</option>
-                                            <option @if ($data1->Other5_review == 'yes') selected @endif value="yes">
+                                            <option @if ($data1->Other5_review == 'Yes') selected @endif value="Yes">
                                                 Yes</option>
-                                            <option @if ($data1->Other5_review == 'no') selected @endif value="no">
+                                            <option @if ($data1->Other5_review == 'No') selected @endif value="No">
                                                 No</option>
-                                            <option @if ($data1->Other5_review == 'na') selected @endif value="na">
+                                            <option @if ($data1->Other5_review == 'NA') selected @endif value="NA">
                                                 NA</option>
 
                                         </select>
@@ -8814,6 +8833,10 @@
                                                 value="{{ $data1->Other5_on ? \Carbon\Carbon::parse($data1->Other5_on)->format('d-m-Y') : ''}}">
                                     </div>
                                 </div>
+
+
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments">CFT Attachments</label>
@@ -8830,6 +8853,7 @@
                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
                                                             <a type="button" class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 5, 6, 7, 8, 9, 10, 11]) ? 'pointer-events: none;' : '' }}"
+
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
                                                                     style="color:red; font-size:20px;"></i></a>
@@ -8853,7 +8877,7 @@
                         </div>
                         <div class="button-block">
                             <button style=" justify-content: center; width: 4rem; " type="submit"{{ $data->stage == 0 ||  $data->stage == 11 ? 'disabled' : '' }}
-                                id="ChangesaveButton" class="saveButton saveAuditFormBtn d-flex"
+                                id="ChangesaveButton" class="saveButton saveAuditFormBtn d-flex on-submit-disable-button"
                                 style="align-items: center;">
                                 <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
                                     role="status">
@@ -9510,7 +9534,7 @@
                 </div>
 
                 <div class="button-block">
-                    <button  type="submit" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="" class="saveButton saveAuditFormBtn d-flex" style="align-items: center;">
+                    <button  type="submit" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }} id="" class="saveButton saveAuditFormBtn d-flex on-submit-disable-button" style="align-items: center;">
                     <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>Save</button>
@@ -9591,7 +9615,7 @@
         <div class="button-block">
             {{-- <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save</button>--}}
             <button  type="submit" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                        id="ChangesaveButton132" class="saveButton saveAuditFormBtn d-flex"
+                                        id="ChangesaveButton132" class="saveButton saveAuditFormBtn d-flex on-submit-disable-button"
                                         style="align-items: center;">
                                         <div class="spinner-border spinner-border-sm auditFormSpinner"
                                             style="display: none" role="status">
@@ -10506,7 +10530,7 @@
 
             <div class="button-block">
                 <button  type="submit" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                        id="ChangesaveButton444" class="saveButton saveAuditFormBtn d-flex"
+                                        id="ChangesaveButton444" class="saveButton saveAuditFormBtn d-flex on-submit-disable-button"
                                         style="align-items: center;">
                                         <div class="spinner-border spinner-border-sm auditFormSpinner"
                                             style="display: none" role="status">
@@ -10710,7 +10734,7 @@
 
                 <div class="button-block">
                     <button style=" justify-content: center; width: 4rem;" type="submit"{{ $data->stage == 0 ||  $data->stage == 11 ? 'disabled' : '' }}
-                        id="ChangesaveButton05" class="saveAuditFormBtn d-flex" style="align-items: center;">
+                        id="ChangesaveButton05" class="saveAuditFormBtn d-flex on-submit-disable-button" style="align-items: center;">
                         <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
                             role="status">
                             <span class="sr-only">Loading...</span>
@@ -10816,7 +10840,7 @@
                     <div class="button-block">
 
                                     <button style=" justify-content: center; width: 4rem; " type="submit"{{ $data->stage == 0 ||  $data->stage == 11 ? 'disabled' : '' }}
-                                        class="saveButton saveAuditFormBtn d-flex" style="align-items: center;"
+                                        class="saveButton saveAuditFormBtn d-flex on-submit-disable-button" style="align-items: center;"
                                         id="ChangesaveButton123">
                                         <div class="spinner-border spinner-border-sm auditFormSpinner"
                                             style="display: none" role="status">
@@ -10989,7 +11013,7 @@
                 </div>
                 <div class="button-block">
                     <button style=" justify-content: center; width: 4rem; " type="submit"{{ $data->stage == 0 ||  $data->stage == 11 ? 'disabled' : '' }}
-                        id="ChangesaveButton06" class=" saveAuditFormBtn d-flex" style="align-items: center;">
+                        id="ChangesaveButton06" class=" saveAuditFormBtn d-flex on-submit-disable-button" style="align-items: center;">
                         <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
                             role="status">
                             <span class="sr-only">Loading...</span>
@@ -14077,7 +14101,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Child</h4>
                 </div>
-                <form action="{{ route('deviation_child_1', $data->id) }}" method="POST">
+                <form action="{{ route('deviation_child_1', $data->id) }}" method="POST" class="formSubmit">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -14112,7 +14136,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" data-bs-dismiss="modal">Close</button>
-                        <button type="submit">Continue</button>
+                        <button type="submit" class="on-submit-disable-button">Continue</button>
                     </div>
                 </form>
 
@@ -14168,7 +14192,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('deviation_reject', $data->id) }}" method="POST">
+                <form action="{{ route('deviation_reject', $data->id) }}" method="POST" class="formSubmit">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -14197,7 +14221,7 @@
                             <button>Close</button>
                         </div> --}}
                     <div class="modal-footer">
-                        <button type="submit">
+                        <button type="submit" class="on-submit-disable-button">
                             Submit
                         </button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -14217,7 +14241,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('deviationCancel', $data->id) }}" method="POST">
+                <form action="{{ route('deviationCancel', $data->id) }}" method="POST" class="formSubmit">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -14246,7 +14270,7 @@
                             <button>Close</button>
                         </div> -->
                     <div class="modal-footer">
-                        <button type="submit">Submit</button>
+                        <button type="submit" class="on-submit-disable-button">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -14265,7 +14289,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('deviationIsCFTRequired', $data->id) }}" method="POST">
+                <form action="{{ url('deviationIsCFTRequired', $data->id) }}" method="POST" class="formSubmit">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -14294,7 +14318,7 @@
                             <button>Close</button>
                         </div> -->
                     <div class="modal-footer">
-                        <button type="submit">Submit</button>
+                        <button type="submit" class="on-submit-disable-button">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -14311,7 +14335,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('check', $data->id) }}" method="POST">
+                <form action="{{ route('check', $data->id) }}" method="POST" class="formSubmit">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -14340,7 +14364,7 @@
                             <button>Close</button>
                         </div> -->
                     <div class="modal-footer">
-                        <button type="submit">Submit</button>
+                        <button type="submit" class="on-submit-disable-button">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -14357,7 +14381,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('check2', $data->id) }}" method="POST">
+                <form action="{{ route('check2', $data->id) }}" method="POST" class="formSubmit">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -14386,7 +14410,7 @@
                             <button>Close</button>
                         </div> -->
                     <div class="modal-footer">
-                        <button type="submit">Submit</button>
+                        <button type="submit" class="on-submit-disable-button">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -14403,7 +14427,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('check3', $data->id) }}" method="POST">
+                <form action="{{ route('check3', $data->id) }}" method="POST" class="formSubmit">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -14432,7 +14456,7 @@
                             <button>Close</button>
                         </div> -->
                     <div class="modal-footer">
-                        <button type="submit">Submit</button>
+                        <button type="submit" class="on-submit-disable-button">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -14449,7 +14473,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form action="{{ route('pending_initiator_update', $data->id) }}" method="POST"
-                    id="pendingInitiatorForm">
+                    id="pendingInitiatorForm" class="formSubmit">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -14471,7 +14495,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="pendingInitiatorModalButton">
+                        <button type="submit" class="pendingInitiatorModalButton on-submit-disable-button">
                             <div class="spinner-border spinner-border-sm pendingInitiatorModalSpinner" style="display: none"
                                 role="status">
                                 <span class="sr-only">Loading...</span>
@@ -14493,7 +14517,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form action="{{ route('deviation_send_stage', $data->id) }}" method="POST"
-                    id="signatureModalForm">
+                    id="signatureModalForm" class="formSubmit">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -14501,6 +14525,8 @@
                             and password for this task. You are performing an electronic signature,
                             which is legally binding equivalent of a hand written signature.
                         </div>
+
+
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
                             <input type="text" name="username" required>
@@ -14515,7 +14541,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="signatureModalButton">
+                        <button type="submit" class="signatureModalButton on-submit-disable-button">
                             <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
                                 role="status">
                                 <span class="sr-only">Loading...</span>
@@ -14537,7 +14563,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('cftnotreqired', $data->id) }}" method="POST">
+                <form action="{{ route('cftnotreqired', $data->id) }}" method="POST" class="formSubmit">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -14582,7 +14608,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('deviation_qa_more_info', $data->id) }}" method="POST">
+                <form action="{{ route('deviation_qa_more_info', $data->id) }}" method="POST" class="formSubmit">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -14856,5 +14882,16 @@
                     })
                 })
     </script>
+
+           <script>
+                $(document).ready(function() {
+
+                    $('.formSubmit').on('submit', function(e) {
+                        $('.on-submit-disable-button').prop('disabled', true);
+                    });
+                })
+
+
+            </script>
 
 @endsection

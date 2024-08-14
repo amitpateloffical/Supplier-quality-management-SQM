@@ -597,7 +597,7 @@
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
-            <form id="auditform" action="{{ route('deviationstore') }}" method="post" enctype="multipart/form-data">
+            <form id="auditform" action="{{ route('deviationstore') }}" method="post" enctype="multipart/form-data" class="formSubmit">
                 @csrf
                 <input type="hidden" name="form_name" id="formNameField" value="">
                 <div id="step-form">
@@ -1482,9 +1482,9 @@
                             </div>
                             <div class="button-block">
 
-                                <button style="  justify-content: center; width: 4rem; margin-left: auto;" type="submit"
+                                <button style="justify-content: center; width: 4rem; margin-left: auto;" type="submit"
                                     id="ChangesaveButton0011" onclick="submitForm()"
-                                    class="saveButton saveAuditFormBtn d-flex " style="align-items: center;">
+                                    class="saveButton saveAuditFormBtn d-flex on-submit-disable-button" style="align-items: center;">
                                     <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
                                         role="status">
                                         <span class="sr-only">Loading...</span>
@@ -1535,7 +1535,7 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save </button>
+                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton on-submit-disable-button">Save </button>
                                 <button type="button" style=" justify-content: center; width: 4rem; " class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; " class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; "> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -1808,7 +1808,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" onclick="previousStep()" class="backButton">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;"  class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -3992,7 +3992,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+                                <button type="submit" id="ChangesaveButton" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" onclick="previousStep()" class="backButton">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;" id="ChangeNextButton" class="nextButton"
                                     onclick="nextStep()">Next</button>
@@ -5126,7 +5126,7 @@
                                 </div>
 
                                 <div class="button-block">
-                                    <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+                                    <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" onclick="previousStep()" class="backButton">Back</button>
                                     <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button" style=" justify-content: center; width: 4rem;" > <a href="{{ url('rcms/qms-dashboard') }}"
@@ -5334,7 +5334,7 @@
 
         </div>
         <div class="button-block">
-            <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+            <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
             <button type="button" onclick="previousStep()" class="backButton">Back</button>
             <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -5374,7 +5374,7 @@
 
         </div>
         <div class="button-block">
-            <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+            <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
             <button type="button" onclick="previousStep()" class="backButton">Back</button>
             <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -5414,7 +5414,7 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" onclick="previousStep()" class="backButton">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -5455,7 +5455,7 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" onclick="previousStep()" class="backButton">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -6210,7 +6210,7 @@
                                 </div>
 
                                 <div class="button-block">
-                                    <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton">Save</button>
+                                    <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" onclick="previousStep()" class="backButton">Back</button>
                                     <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}"
@@ -8065,5 +8065,17 @@
                 });
             }
         </script>
+
+    <script>
+        $(document).ready(function() {
+
+            $('.formSubmit').on('submit', function(e) {
+                $('.on-submit-disable-button').prop('disabled', true);
+            });
+        })
+
+
+    </script>
+
 
 @endsection

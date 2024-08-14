@@ -1904,7 +1904,7 @@ class DeviationController extends Controller
                 }
 
                 $Cft->Warehouse_review = $request->Warehouse_review;
-//dd($Cft->Warehouse_review = $request->Warehouse_review);
+                 //dd($Cft->Warehouse_review = $request->Warehouse_review);
                 if ($getCft->Warehouse_review != $Cft->Warehouse_review) {
                     // return 'history';
                     $history = new DeviationAuditTrail;
@@ -3454,24 +3454,48 @@ class DeviationController extends Controller
                 $Cft->Other4_attachment = json_encode($files);
             }
 
-            if (!empty ($request->Other5_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other5_attachment')) {
-                    foreach ($request->file('Other5_attachment') as $file) {
-                        $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
+             //new code navneet
 
-                if (!empty($files)) {
-                    $Cft->Other5_attachment = json_encode($files);
-                } else {
-                    $Cft->Other5_attachment = null;
-                }
+             $files = is_array($request->existing_Other5_attachment) ? $request->existing_Other5_attachment : null;
 
-                $Cft->Other5_attachment = json_encode($files);
-            }
+             if (!empty($request->Other5_attachment)) {
+                 if ($Cft->Other5_attachment) {
+                     $existingFiles = json_decode($Cft->Other5_attachment, true); // Convert to associative array
+                     if (is_array($existingFiles)) {
+                         $files = $existingFiles;
+                     }
+                 }
+
+                 if ($request->hasfile('Other5_attachment')) {
+                     foreach ($request->file('Other5_attachment') as $file) {
+                         $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $file->move('upload/', $name);
+                         $files[] = $name;
+                     }
+                 }
+             }
+
+             // If no files are attached, set to null
+             $Cft->Other5_attachment = !empty($files) ? json_encode($files) : null;
+
+            //if (!empty ($request->Other5_attachment)) {
+            //    $files = [];
+            //    if ($request->hasfile('Other5_attachment')) {
+            //        foreach ($request->file('Other5_attachment') as $file) {
+            //            $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //            $file->move('upload/', $name);
+            //            $files[] = $name;
+            //        }
+            //    }
+
+            //    if (!empty($files)) {
+            //        $Cft->Other5_attachment = json_encode($files);
+            //    } else {
+            //        $Cft->Other5_attachment = null;
+            //    }
+
+            //    $Cft->Other5_attachment = json_encode($files);
+            //}
 
 
             //if (!empty ($request->Other5_attachment)) {
@@ -3529,30 +3553,40 @@ class DeviationController extends Controller
                     }
                 }
 
-                //$files = is_array($request->existing_Initial_attachment) ? $request->existing_Initial_attachment : [];
 
-                //if (!empty ($request->Initial_attachment)) {
-                //    if ($deviation->Initial_attachment) {
-                //        $existingFiles = json_decode($deviation->Initial_attachment, true); // Convert to associative array
-                //        if (is_array($existingFiles)) {
-                //            $files = $existingFiles;
-                //        }
-                //        // $files = is_array(json_decode($deviation->Initial_attachment)) ? $deviation->Initial_attachment : [];
-                //    }
-
-                //    if ($request->hasfile('Initial_attachment')) {
-                //        foreach ($request->file('Initial_attachment') as $file) {
-                //            $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                //            $file->move('upload/', $name);
-                //            $files[] = $name;
-                //        }
-                //    }
-                //}
-                //$deviation->Initial_attachment = json_encode($files);
         }
 
-        if (!empty ($request->Initial_attachment)) {
-            $files = [];
+        //if (!empty ($request->Initial_attachment)) {
+        //    $files = [];
+        //    if ($request->hasfile('Initial_attachment')) {
+        //        foreach ($request->file('Initial_attachment') as $file) {
+        //            $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //            $file->move('upload/', $name);
+        //            $files[] = $name;
+        //        }
+        //    }
+
+        //    if (!empty($files)) {
+        //        $deviation->Initial_attachment = json_encode($files);
+        //    } else {
+        //        $deviation->Initial_attachment = null;
+        //    }
+
+        //    $deviation->Initial_attachment = json_encode($files);
+        //}
+
+        //New Code navneet
+
+        $files = is_array($request->existing_qa_initial_files) ? $request->existing_qa_initial_files : null;
+
+        if (!empty($request->Initial_attachment)) {
+            if ($deviation->Initial_attachment) {
+                $existingFiles = json_decode($deviation->Initial_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('Initial_attachment')) {
                 foreach ($request->file('Initial_attachment') as $file) {
                     $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -3560,19 +3594,43 @@ class DeviationController extends Controller
                     $files[] = $name;
                 }
             }
-
-            if (!empty($files)) {
-                $deviation->Initial_attachment = json_encode($files);
-            } else {
-                $deviation->Initial_attachment = null;
-            }
-
-            $deviation->Initial_attachment = json_encode($files);
         }
 
+        // If no files are attached, set to null
+        $deviation->Initial_attachment = !empty($files) ? json_encode($files) : null;
 
-        if (!empty ($request->Audit_file)) {
-            $files = [];
+
+        //if (!empty ($request->Audit_file)) {
+        //    $files = [];
+        //    if ($request->hasfile('Audit_file')) {
+        //        foreach ($request->file('Audit_file') as $file) {
+        //            $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //            $file->move('upload/', $name);
+        //            $files[] = $name;
+        //        }
+        //    }
+
+        //    if (!empty($files)) {
+        //        $deviation->Audit_file = json_encode($files);
+        //    } else {
+        //        $deviation->Audit_file = null;
+        //    }
+
+        //    $deviation->Audit_file = json_encode($files);
+        //}
+
+        //New Code navneet
+
+        $files = is_array($request->existing_hod_files) ? $request->existing_hod_files : null;
+
+        if (!empty($request->Audit_file)) {
+            if ($deviation->Audit_file) {
+                $existingFiles = json_decode($deviation->Audit_file, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('Audit_file')) {
                 foreach ($request->file('Audit_file') as $file) {
                     $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -3580,15 +3638,10 @@ class DeviationController extends Controller
                     $files[] = $name;
                 }
             }
-
-            if (!empty($files)) {
-                $deviation->Audit_file = json_encode($files);
-            } else {
-                $deviation->Audit_file = null;
-            }
-
-            $deviation->Audit_file = json_encode($files);
         }
+
+        // If no files are attached, set to null
+        $deviation->Audit_file = !empty($files) ? json_encode($files) : null;
 
         //New Code navneet
 
@@ -4796,28 +4849,56 @@ class DeviationController extends Controller
 
          //Cfttabend
 
+         $QaIniattachments = $lastDeviation->Initial_attachment;
+         $areIniAttachments = $QaIniattachments == $deviation->Initial_attachment;
 
-        if ($lastDeviation->Initial_attachment != $deviation->Initial_attachment || !empty ($request->comment)) {
-            // return 'history';
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'QA Initial Attachments';
-            $history->previous = $lastDeviation->Initial_attachment;
-            $history->current = $deviation->Initial_attachment;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-            if (is_null($lastDeviation->Initial_attachment) || $lastDeviation->Initial_attachment === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->save();
-        }
+         if ($areIniAttachments != true) {
+
+             $existingHistory = DeviationAuditTrail::where('deviation_id', $id)
+             ->where('activity_type', 'QA Initial Attachments')
+             ->exists();
+
+                     $history = new DeviationAuditTrail;
+                     $history->deviation_id = $id;
+                     $history->activity_type = 'QA Initial Attachments';
+                     $history->previous = $QaIniattachments;
+                     $history->current = $deviation->Initial_attachment;
+                     $history->comment = "Not Applicable";
+                     $history->user_id = Auth::user()->id;
+                     $history->user_name = Auth::user()->name;
+                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                     $history->origin_state = $lastDeviation->status;
+                     $history->change_to =   "Not Applicable";
+                     $history->change_from = $lastDeviation->status;
+                     if ($existingHistory) {
+                         $history->action_name = "Update";
+                     } else {
+                         $history->action_name = "New";
+                     }
+                     $history->save();
+                 }
+
+        //if ($lastDeviation->Initial_attachment != $deviation->Initial_attachment || !empty ($request->comment)) {
+        //    // return 'history';
+        //    $history = new DeviationAuditTrail;
+        //    $history->deviation_id = $id;
+        //    $history->activity_type = 'QA Initial Attachments';
+        //    $history->previous = $lastDeviation->Initial_attachment;
+        //    $history->current = $deviation->Initial_attachment;
+        //    $history->comment = "Not Applicable";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDeviation->status;
+        //    $history->change_to =   "Not Applicable";
+        //    $history->change_from = $lastDeviation->status;
+        //    if (is_null($lastDeviation->Initial_attachment) || $lastDeviation->Initial_attachment === '') {
+        //        $history->action_name = 'New';
+        //    } else {
+        //        $history->action_name = 'Update';
+        //    }
+        //    $history->save();
+        //}
 
         if ($lastDeviation->Root_cause != $deviation->Root_cause || !empty ($request->comment)) {
             // return 'history';
@@ -5374,11 +5455,21 @@ class DeviationController extends Controller
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'QA initial review / CFT Mandatory Tab is yet to be filled!'
+                        'message' => 'QA initial review / CFT Mandatory Tab is yet to be filled!',
                     ]);
 
                     return redirect()->back();
-                } else {
+
+                }
+                //else if($deviation->Production_Review != 'yes'){
+                //    Session::flash('swal', [
+                //        'type' => 'warning',
+                //        'title' => 'Mandatory Fields!',
+                //        'message'=>'If you select QA Initial Review Complete, it is mandatory to choose Yes for at least one field. Otherwise, select CFT Review Not Required.'
+                //    ]);
+                //}
+
+                else {
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
@@ -5605,14 +5696,14 @@ class DeviationController extends Controller
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for Investigation and CAPA review state'
+                        'message' => 'Sent for QA Secondary Review state'
                     ]);
                 }
 
-            
+
                 $getCft = DeviationCft::find($id);
-                $Cft = DeviationCft::withoutTrashed()->where('deviation_id', $id)->first(); 
-                
+                $Cft = DeviationCft::withoutTrashed()->where('deviation_id', $id)->first();
+
                 $IsCFTRequired = DeviationCftsResponse::withoutTrashed()->where(['is_required' => 1, 'deviation_id' => $id])->latest()->first();
                 $cftUsers = DB::table('deviationcfts')->where(['deviation_id' => $id])->first();
                 // Define the column names
@@ -5757,7 +5848,7 @@ class DeviationController extends Controller
                             }
                             $history->save();
                         }
-                
+
                         $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
 
                         if ($getCft->Quality_Control_on != $updateCFT->Quality_Control_on) {
@@ -5781,7 +5872,7 @@ class DeviationController extends Controller
                             }
                             $history->save();
                         }
-                
+
 
                     }
                     if($index == 3 && $cftUsers->$column == Auth::user()->id){
@@ -5809,7 +5900,7 @@ class DeviationController extends Controller
                             }
                             $history->save();
                         }
-                
+
                         $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d');
 
                         if ($getCft->QualityAssurance_on != $updateCFT->QualityAssurance_on) {
@@ -5833,7 +5924,7 @@ class DeviationController extends Controller
                             }
                             $history->save();
                         }
-                
+
                     }
                     if($index == 4 && $cftUsers->$column == Auth::user()->id){
 

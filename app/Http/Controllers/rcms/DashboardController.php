@@ -145,7 +145,7 @@ class DashboardController extends Controller
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_id ? $data->parent_id : "-",
-                "record" => $data->record,
+                "record" => $data->record_number,
                 "type" => "Extension",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
@@ -226,7 +226,7 @@ class DashboardController extends Controller
                 "id" => $data->id,
                 "parent" => $data->parent_id ? $data->parent_id : "-",
                 "record" => $data->record,
-                "type" => "Risk-Assesment",
+                "type" => "Risk-Assessment",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -808,7 +808,7 @@ class DashboardController extends Controller
             $data = InternalAudit::find($id);
             $single = "internalSingleReport/" . $data->id;
             $audit = "internalauditReport/" . $data->id;
-        } elseif ($type == "Risk-Assesment") {
+        } elseif ($type == "Risk-Assessment") {
             $data = RiskManagement::find($id);
             $single = "riskSingleReport/" . $data->id;
             $audit = "riskAuditReport/" . $data->id;

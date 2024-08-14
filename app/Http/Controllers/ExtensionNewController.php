@@ -480,10 +480,10 @@ class ExtensionNewController extends Controller
         $extensionNew = extension_new::find($id);
         $lastextensionNew = extension_new::find($id);
         // $extensionNew->site_location_code = $request->site_location_code;
-        $extensionNew->initiator = Auth::user()->id;
+        // $extensionNew->initiator = Auth::user()->id;
 
         // dd($request->initiator);
-        $extensionNew->initiation_date = $request->initiation_date;
+        // $extensionNew->initiation_date = $request->initiation_date;
         $extensionNew->short_description = $request->short_description;
         $extensionNew->reviewers = $request->reviewers;
         $extensionNew->approvers = $request->approvers;

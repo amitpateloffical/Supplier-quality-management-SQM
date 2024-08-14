@@ -149,7 +149,7 @@
                                 <label for="short_description">Short Description <span class="text-danger">*</span></label>
                                 <span id="rchars">255</span> Characters remaining
                                 <div class="relative-container">
-                                    <textarea name="short_description" id="short_description" cols="30" class="mic-input"></textarea>
+                                    <input id="docname" maxlength="255" name="short_description"   class="mic-input">
                                     @component('frontend.forms.language-model')
                                     @endcomponent
                                 </div>
@@ -160,7 +160,13 @@
                                     </button>
                                 </div> --}}
                             </div>
-
+                            <script>
+                                var maxLength = 255;
+                                $('#docname').keyup(function() {
+                                    var textlen = maxLength - $(this).val().length;
+                                    $('#rchars').text(textlen);
+                                });
+                            </script>
                             {{-- @error('short_description')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror --}}

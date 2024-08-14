@@ -1340,134 +1340,6 @@
         </div>
 
         <div class="block">
-            <div class="block-head">
-                Activity Log
-            </div>
-            <table>
-                <tr>
-                    <th class="w-20">Submitted By</th>
-                    <td class="w-80">{{ $data->submitted_by }}</td>
-                    <th class="w-20">Submitted On</th>
-                    <td class="w-80">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Submitted Comment</th>
-                    <td class="w-80">{{ $data->submitted_comment }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">More Information Required By</th>
-                    <td class="w-80">{{ $data->analysis_more_info_by }}</td>
-                    <th class="w-20">More Information Required On</th>
-                    <td class="w-80">{{ Helpers::getdateFormat($data->analysis_more_info_on) }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">More Information Required Comment</th>
-                    <td class="w-80">{{ $data->analysis_more_info_comment }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Evaluation Complete By</th>
-                    <td class="w-80">{{ $data->evaluated_by }}</td>
-                    <th class="w-20">Evaluation Complete On</th>
-                    <td class="w-80">{{ Helpers::getdateFormat($data->evaluated_on) }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Evaluation Complete Comment</th>
-                    <td class="w-80">{{ $data->evaluated_comment }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Request More Info By</th>
-                    <td class="w-80">{{ $data->request_more_info_by }}</td>
-                    <th class="w-20">Request More Info On</th>
-                    <td class="w-80">{{ Helpers::getdateFormat($data->request_more_info_on) }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Request More Info Comment</th>
-                    <td class="w-80">{{ $data->request_more_info_comment }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Action Plan Completed By</th>
-                    <td class="w-80">{{ $data->plan_approved_by }}</td>
-                    <th class="w-20">Action Plan Completed On</th>
-                    <td class="w-80">{{ Helpers::getdateFormat($data->plan_approved_on) }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Action Plan Completed Comment</th>
-                    <td class="w-80">{{ $data->plan_approved_comment }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Reject Action Plan By</th>
-                    <td class="w-80">{{ $data->reject_action_by }}</td>
-                    <th class="w-20">Reject Action Plan On</th>
-                    <td class="w-80">{{ Helpers::getdateFormat($data->reject_action_on) }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Reject Action Plan Comment</th>
-                    <td class="w-80">{{ $data->reject_action_comment }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Action Plan Approved By</th>
-                    <td class="w-80">{{ $data->action_plan_approved_by }}</td>
-                    <th class="w-20">Action Plan Approved On</th>
-                    <td class="w-80">{{ Helpers::getdateFormat($data->action_plan_approved_on) }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Action Plan Approved Comment</th>
-                    <td class="w-80">{{ $data->action_plan_approved_comment }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">All Actions Completed By</th>
-                    <td class="w-80">{{ $data->all_action_completed_by }}</td>
-                    <th class="w-20">All Actions Completed On</th>
-                    <td class="w-80">{{ Helpers::getdateFormat($data->all_action_completed_on) }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">All Actions Completed Comment</th>
-                    <td class="w-80">{{ $data->all_action_completed_comment }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Request More Info By</th>
-                    <td class="w-80">{{ $data->action_request_action_by }}</td>
-                    <th class="w-20">Request More Info On</th>
-                    <td class="w-80">{{ Helpers::getdateFormat($data->action_request_action_on) }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Request More Info Comment</th>
-                    <td class="w-80">{{ $data->action_request_action_comment }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">More Actions Needed By</th>
-                    <td class="w-80">{{ $data->more_action_needed_by }}</td>
-                    <th class="w-20">More Actions Needed On</th>
-                    <td class="w-80">{{ Helpers::getdateFormat($data->more_action_needed_on) }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">More Actions Needed Comment</th>
-                    <td class="w-80">{{ $data->more_action_needed_comment }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Residual Risk Evaluation Completed By</th>
-                    <td class="w-80">{{ $data->residual_risk_completed_by }}</td>
-                    <th class="w-20">Residual Risk Evaluation Completed On</th>
-                    <td class="w-80">{{ Helpers::getdateFormat($data->residual_risk_completed_on) }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Residual Risk Evaluation Completed Comment</th>
-                    <td class="w-80">{{ $data->residual_risk_completed_comment }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Cancelled By</th>
-                    <td class="w-80">{{ $data->cancelled_by }}</td>
-                    <th class="w-20">Cancelled On</th>
-                    <td class="w-80">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Cancelled Comment</th>
-                    <td class="w-80">{{ $data->cancelled_comment }}</td>
-                </tr>
-
-            </table>
-        </div>
-        <div class="block">
             <div class="head">
                 <div class="block-head">
                     Action Plan
@@ -1702,6 +1574,135 @@
                     </table>
                 </div>
             </div>
+        </div>
+
+        <div class="block">
+            <div class="block-head">
+                Activity Log
+            </div>
+            <table>
+                <tr>
+                    <th class="w-20">Submitted By</th>
+                    <td class="w-80">{{ $data->submitted_by }}</td>
+                    <th class="w-20">Submitted On</th>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Submitted Comment</th>
+                    <td class="w-80">{{ $data->submitted_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">More Information Required By</th>
+                    <td class="w-80">{{ $data->analysis_more_info_by }}</td>
+                    <th class="w-20">More Information Required On</th>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->analysis_more_info_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">More Information Required Comment</th>
+                    <td class="w-80">{{ $data->analysis_more_info_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Evaluation Complete By</th>
+                    <td class="w-80">{{ $data->evaluated_by }}</td>
+                    <th class="w-20">Evaluation Complete On</th>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->evaluated_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Evaluation Complete Comment</th>
+                    <td class="w-80">{{ $data->evaluated_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Request More Info By</th>
+                    <td class="w-80">{{ $data->request_more_info_by }}</td>
+                    <th class="w-20">Request More Info On</th>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->request_more_info_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Request More Info Comment</th>
+                    <td class="w-80">{{ $data->request_more_info_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Action Plan Completed By</th>
+                    <td class="w-80">{{ $data->plan_approved_by }}</td>
+                    <th class="w-20">Action Plan Completed On</th>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->plan_approved_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Action Plan Completed Comment</th>
+                    <td class="w-80">{{ $data->plan_approved_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Reject Action Plan By</th>
+                    <td class="w-80">{{ $data->reject_action_by }}</td>
+                    <th class="w-20">Reject Action Plan On</th>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->reject_action_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Reject Action Plan Comment</th>
+                    <td class="w-80">{{ $data->reject_action_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Action Plan Approved By</th>
+                    <td class="w-80">{{ $data->action_plan_approved_by }}</td>
+                    <th class="w-20">Action Plan Approved On</th>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->action_plan_approved_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Action Plan Approved Comment</th>
+                    <td class="w-80">{{ $data->action_plan_approved_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">All Actions Completed By</th>
+                    <td class="w-80">{{ $data->all_action_completed_by }}</td>
+                    <th class="w-20">All Actions Completed On</th>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->all_action_completed_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">All Actions Completed Comment</th>
+                    <td class="w-80">{{ $data->all_action_completed_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Request More Info By</th>
+                    <td class="w-80">{{ $data->action_request_action_by }}</td>
+                    <th class="w-20">Request More Info On</th>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->action_request_action_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Request More Info Comment</th>
+                    <td class="w-80">{{ $data->action_request_action_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">More Actions Needed By</th>
+                    <td class="w-80">{{ $data->more_action_needed_by }}</td>
+                    <th class="w-20">More Actions Needed On</th>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->more_action_needed_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">More Actions Needed Comment</th>
+                    <td class="w-80">{{ $data->more_action_needed_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Residual Risk Evaluation Completed By</th>
+                    <td class="w-80">{{ $data->residual_risk_completed_by }}</td>
+                    <th class="w-20">Residual Risk Evaluation Completed On</th>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->residual_risk_completed_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Residual Risk Evaluation Completed Comment</th>
+                    <td class="w-80">{{ $data->residual_risk_completed_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Cancelled By</th>
+                    <td class="w-80">{{ $data->cancelled_by }}</td>
+                    <th class="w-20">Cancelled On</th>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Cancelled Comment</th>
+                    <td class="w-80">{{ $data->cancelled_comment }}</td>
+                </tr>
+
+            </table>
         </div>
 
     </div>

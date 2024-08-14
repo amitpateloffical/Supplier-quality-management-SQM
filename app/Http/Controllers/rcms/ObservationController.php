@@ -2548,7 +2548,7 @@ class ObservationController extends Controller
             $height / 2,
             $doc->status,
             null,
-            60,
+            25,
             [0, 0, 0],
             2,
             6,

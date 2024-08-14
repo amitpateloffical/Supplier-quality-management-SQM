@@ -341,7 +341,8 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Signatures</button>
                     </div>
 
-                    <form action="{{ route('riskUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
+                    <form class="formSubmit" action="{{ route('riskUpdate', $data->id) }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         <div id="step-form">
 
@@ -723,7 +724,8 @@
 
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" id="ChangeSaveButton" class="saveButton"
+                                        <button type="submit" id="ChangeSaveButton"
+                                            class="saveButton on-submit-disable-button"
                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -1187,7 +1189,7 @@
                                         </div>
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"
+                                        <button type="submit" class="saveButton on-submit-disable-button"
                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1567,7 +1569,7 @@
                                         </div>
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"
+                                        <button type="submit" class="saveButton on-submit-disable-button"
                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -2278,7 +2280,7 @@
                                         </div>
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"
+                                        <button type="submit" class="saveButton on-submit-disable-button"
                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -2390,7 +2392,7 @@
                                     </div>
                                     {{-- ----------------------------------------------- --}}
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"
+                                        <button type="submit" class="saveButton on-submit-disable-button"
                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton"
                                             onclick="previousStep()">Back</button>
@@ -2735,7 +2737,7 @@
                                         </div>
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"
+                                        <button type="submit" class="saveButton on-submit-disable-button"
                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton"
                                             onclick="previousStep()">Back</button>
@@ -3044,7 +3046,8 @@
                             <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form action="{{ route('riskAssesmentStateChangeshow', $data->id) }}" method="POST">
+                        <form class="formSubmit" action="{{ route('riskAssesmentStateChangeshow', $data->id) }}"
+                            method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -3069,11 +3072,11 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                             <div class="modal-footer">
-                                <button type="submit">Submit</button>
+                                <button class="on-submit-disable-button" type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -3091,7 +3094,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
-                        <form action="{{ url('reject_Risk', $data->id) }}" method="POST">
+                        <form class="formSubmit" action="{{ url('reject_Risk', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -3116,11 +3119,11 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                             <div class="modal-footer">
-                                <button type="submit">Submit</button>
+                                <button class="on-submit-disable-button" type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -3138,7 +3141,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
-                        <form action="{{ url('more_info_model', $data->id) }}" method="POST">
+                        <form class="formSubmit" action="{{ url('more_info_model', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -3163,11 +3166,11 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                             <div class="modal-footer">
-                                <button type="submit">Submit</button>
+                                <button class="on-submit-disable-button" type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -3499,6 +3502,14 @@
                         console.log('removeId', removeId);
                         $('#' + removeId).remove();
                     })
+                })
+            </script>
+            <script>
+                $(document).ready(function() {
+
+                    $('.formSubmit').on('submit', function(e) {
+                        $('.on-submit-disable-button').prop('disabled', true);
+                    });
                 })
             </script>
             {{-- <script>

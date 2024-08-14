@@ -142,7 +142,8 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Signatures</button>
             </div>
 
-            <form action="{{ url('rcms/observationstore') }}" method="post" enctype="multipart/form-data">
+            <form class="formSubmit" action="{{ url('rcms/observationstore') }}" method="post"
+                enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
                     @if (!empty($parent_id))
@@ -501,7 +502,8 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                <button type="submit" id="ChangesaveButton"
+                                    class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
                             </div>
@@ -671,7 +673,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
@@ -759,7 +761,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
@@ -883,7 +885,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
@@ -1277,5 +1279,13 @@
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);
         });
+    </script>
+    <script>
+        $(document).ready(function() {
+
+            $('.formSubmit').on('submit', function(e) {
+                $('.on-submit-disable-button').prop('disabled', true);
+            });
+        })
     </script>
 @endsection

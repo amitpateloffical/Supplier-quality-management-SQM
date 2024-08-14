@@ -623,6 +623,52 @@
 
             <div class="block">
                 <div class="head">
+                    <div class="block-head">
+                        Action Plan
+                    </div>
+                    <div class="border-table">
+                        <table style="margin-top: 20px; width: 100%; table-layout: fixed;">
+                            <tr class="table_bg">
+
+                                <th style="width: 10%">Row#</th>
+                                <th>Remarks</th>
+                                <th>Responsible</th>
+                                <th>Deadline</th>
+                                <th>Item Status</th>
+
+                            </tr>
+
+                            <tbody>
+                                @foreach (unserialize($griddata->action) as $key => $temps)
+                                    <tr>
+                                        <td class="w-15">
+                                            {{ $key + 1 }}
+                                        </td>
+                                        <td class="w-15">
+                                            {{ unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : 'N/A' }}
+                                        </td>
+
+                                        <td class="w-15">
+                                            {{ unserialize($griddata->responsible)[$key] ? Helpers::getInitiatorName(unserialize($griddata->responsible)[$key]) : 'N/A' }}
+                                        </td>
+
+                                        <td class="w-15">
+                                            {{ unserialize($griddata->deadline)[$key] ? Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) : 'N/A' }}
+                                        </td>
+                                        <td class="w-15">
+                                            {{ unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : 'N/A' }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="head">
                     <div class="block-head"> Activity Log </div>
                     <table>
                         <tr>
@@ -884,51 +930,7 @@
                 </div>
             </div>
 
-            <div class="block">
-                <div class="head">
-                    <div class="block-head">
-                        Action Plan
-                    </div>
-                    <div class="border-table">
-                        <table style="margin-top: 20px; width: 100%; table-layout: fixed;">
-                            <tr class="table_bg">
 
-                                <th style="width: 10%">Row#</th>
-                                <th>Remarks</th>
-                                <th>Responsible</th>
-                                <th>Deadline</th>
-                                <th>Item Status</th>
-
-                            </tr>
-
-                            <tbody>
-                                @foreach (unserialize($griddata->action) as $key => $temps)
-                                    <tr>
-                                        <td class="w-15">
-                                            {{ $key + 1 }}
-                                        </td>
-                                        <td class="w-15">
-                                            {{ unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : 'N/A' }}
-                                        </td>
-
-                                        <td class="w-15">
-                                            {{ unserialize($griddata->responsible)[$key] ? Helpers::getInitiatorName(unserialize($griddata->responsible)[$key]) : 'N/A' }}
-                                        </td>
-
-                                        <td class="w-15">
-                                            {{ unserialize($griddata->deadline)[$key] ? Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) : 'N/A' }}
-                                        </td>
-                                        <td class="w-15">
-                                            {{ unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : 'N/A' }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 

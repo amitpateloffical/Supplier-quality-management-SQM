@@ -1260,7 +1260,7 @@ class EffectivenessCheckController extends Controller
 
                 $history = new EffectivenessCheckAuditTrail();
                 $history->effectiveness_check_id = $id;
-                $history->activity_type = 'not_effective_by, Effective Approval Completed On';
+                $history->activity_type = 'Effective Approval Completed By, Effective Approval Completed On';
                 if (is_null($lastopenState->effective_approval_complete_by) || $lastopenState->effective_approval_complete_by === '') {
                     $history->previous = "";
                 } else {

@@ -172,7 +172,7 @@
             </div>
 
             <!--  Contract Tab content -->
-            <form action="{{ route('supplier-site-store') }}" method="POST" enctype="multipart/form-data">
+            <form class="formSubmit" action="{{ route('supplier-site-store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -533,7 +533,7 @@
                         </div>
 
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
@@ -604,7 +604,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
@@ -1102,7 +1102,7 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
@@ -1336,7 +1336,7 @@
                                     <label for="# of CAR's generated"># of CAR's generated</label>
                                     <select id="car_generated" name="car_generated">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="0">0</option>
+                                        <option value="0.">0</option>
                                         <option value="> 8">> 8</option>
                                         <option value="2-7">2-7</option>
                                         <option value="0-1">0-1</option>
@@ -1470,7 +1470,7 @@
                             </div> --}}
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
@@ -1544,7 +1544,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
@@ -1736,7 +1736,8 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="risk_assessment_additional_attachment">Risk Assessment Additional Attachment</label>
+                                    <label for="risk_assessment_additional_attachment">Risk Assessment Additional
+                                        Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -1783,7 +1784,7 @@
                             </div> --}}
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -1843,7 +1844,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -2180,4 +2181,13 @@
             nextAuditDateInput.min = minNextAuditDate;
         }
     </script>
+
+    {{--<script>
+        $(document).ready(function() {
+
+            $('.formSubmit').on('submit', function(e) {
+                $('.on-submit-disable-button').prop('disabled', true);
+            });
+        })
+    </script>--}}
 @endsection

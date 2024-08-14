@@ -71,15 +71,15 @@
         }
 
         /* .sub-head {
-                                                                                                                                                                            margin-left: 280px;
-                                                                                                                                                                            margin-right: 280px;
-                                                                                                                                                                            color: #4274da;
-                                                                                                                                                                            border-bottom: 2px solid #4274da;
-                                                                                                                                                                            padding-bottom: 5px;
-                                                                                                                                                                            margin-bottom: 20px;
-                                                                                                                                                                            font-weight: bold;
-                                                                                                                                                                            font-size: 1.2rem;
-                                                                                                                                                                             } */
+                                                                                                                                                                                            margin-left: 280px;
+                                                                                                                                                                                            margin-right: 280px;
+                                                                                                                                                                                            color: #4274da;
+                                                                                                                                                                                            border-bottom: 2px solid #4274da;
+                                                                                                                                                                                            padding-bottom: 5px;
+                                                                                                                                                                                            margin-bottom: 20px;
+                                                                                                                                                                                            font-weight: bold;
+                                                                                                                                                                                            font-size: 1.2rem;
+                                                                                                                                                                                             } */
 
         .launch_extension {
             background: #4274da;
@@ -130,12 +130,12 @@
         }
 
         /* .saveButton:disabled
-                                                                                                                                                                            {
-                                                                                                                                                                               background: black!important;
-                                                                                                                                                                               border:  black!important;
-                                                                                                                                                                             }
-                                                                                                                                                                               
-                                                                                                                                                                            */
+                                                                                                                                                                                            {
+                                                                                                                                                                                               background: black!important;
+                                                                                                                                                                                               border:  black!important;
+                                                                                                                                                                                             }
+                                                                                                                                                                                               
+                                                                                                                                                                                            */
 
         .main-danger-block {
             display: flex;
@@ -484,8 +484,8 @@
 
 
             <!--  Contract Tab content -->
-            <form id="target" action="{{ route('supplier-site-update', $data->id) }} }}" method="POST"
-                enctype="multipart/form-data">
+            <form id="target" class="formSubmit" action="{{ route('supplier-site-update', $data->id) }} }}"
+                method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div id="CCForm1" class="inner-block cctabcontent">
@@ -1002,7 +1002,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -1132,7 +1132,7 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -1403,7 +1403,7 @@
                                 <div class="group-input">
                                     <label for="City">State</label>
                                     <select name="state" class="form-select state" aria-label="Default select example"
-                                        onchange="loadCities()">
+                                        onchange="loadCities()" {{ $data->stage == 6 ? '' : 'disabled' }}>
                                         <option value="{{ $data->state }}" selected>{{ $data->state }}</option>
                                     </select>
                                 </div>
@@ -1568,11 +1568,12 @@
                                 </div>
                             </div>
 
-                            
+
                             @if ($data->iso_certificate_attachment)
                                 @foreach (json_decode($data->iso_certificate_attachment) as $file)
                                     <input id="ATFIFile5-{{ $loop->index }}" type="hidden"
-                                        name="existing_attach_files5[{{ $loop->index }}]" value="{{ $file }}">
+                                        name="existing_attach_files5[{{ $loop->index }}]"
+                                        value="{{ $file }}">
                                 @endforeach
                             @endif
 
@@ -1766,7 +1767,8 @@
                             @if ($data->supplier_detail_additional_attachment)
                                 @foreach (json_decode($data->supplier_detail_additional_attachment) as $file)
                                     <input id="ATFIFile6-{{ $loop->index }}" type="hidden"
-                                        name="existing_attach_files6[{{ $loop->index }}]" value="{{ $file }}">
+                                        name="existing_attach_files6[{{ $loop->index }}]"
+                                        value="{{ $file }}">
                                 @endforeach
                             @endif
 
@@ -1809,7 +1811,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -2080,7 +2082,9 @@
                                     <label for="# of CAR's generated"># of CAR's generated</label>
                                     <select id="car_generated" name="car_generated">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="0" @if ($data->car_generated == '0') selected @endif>0
+
+                                        <option value="0." @if ($data->car_generated == '0.') selected @endif>
+                                            0
                                         </option>
                                         <option value="> 8" @if ($data->car_generated == '> 8')
                                             selected
@@ -2184,7 +2188,8 @@
                             @if ($data->score_card_additional_attachment)
                                 @foreach (json_decode($data->score_card_additional_attachment) as $file)
                                     <input id="ATFIFile7-{{ $loop->index }}" type="hidden"
-                                        name="existing_attach_files7[{{ $loop->index }}]" value="{{ $file }}">
+                                        name="existing_attach_files7[{{ $loop->index }}]"
+                                        value="{{ $file }}">
                                 @endforeach
                             @endif
 
@@ -2255,7 +2260,7 @@
                             </div> --}}
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -2303,7 +2308,8 @@
                             @if ($data->QA_reviewer_attachment)
                                 @foreach (json_decode($data->QA_reviewer_attachment) as $file)
                                     <input id="ATFIFile8-{{ $loop->index }}" type="hidden"
-                                        name="existing_attach_files8[{{ $loop->index }}]" value="{{ $file }}">
+                                        name="existing_attach_files8[{{ $loop->index }}]"
+                                        value="{{ $file }}">
                                 @endforeach
                             @endif
                             <div class="col-lg-12">
@@ -2343,7 +2349,8 @@
                             @if ($data->qa_reviewer_additional_attachment)
                                 @foreach (json_decode($data->qa_reviewer_additional_attachment) as $file)
                                     <input id="ATFIFile9-{{ $loop->index }}" type="hidden"
-                                        name="existing_attach_files9[{{ $loop->index }}]" value="{{ $file }}">
+                                        name="existing_attach_files9[{{ $loop->index }}]"
+                                        value="{{ $file }}">
                                 @endforeach
                             @endif
 
@@ -2386,7 +2393,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -2527,7 +2534,8 @@
                                         </option>
 
                                         <option value="Operation Only, Stock Point Only"
-                                            @if ($data->facility_type == 'Operation Only, Stock Point Only') selected @endif>Operation Only, Stock Point Only</option>
+                                            @if ($data->facility_type == 'Operation Only, Stock Point Only') selected @endif>Operation Only, Stock
+                                            Point Only</option>
                                     </select>
                                 </div>
                             </div>
@@ -2665,7 +2673,8 @@
                             @if ($data->risk_assessment_additional_attachment)
                                 @foreach (json_decode($data->risk_assessment_additional_attachment) as $file)
                                     <input id="ATFIFile10-{{ $loop->index }}" type="hidden"
-                                        name="existing_attach_files10[{{ $loop->index }}]" value="{{ $file }}">
+                                        name="existing_attach_files10[{{ $loop->index }}]"
+                                        value="{{ $file }}">
                                 @endforeach
                             @endif
 
@@ -2736,7 +2745,7 @@
                             </div> --}}
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -2768,7 +2777,8 @@
                             @if ($data->QA_head_attachment)
                                 @foreach (json_decode($data->QA_head_attachment) as $file)
                                     <input id="ATFIFile11-{{ $loop->index }}" type="hidden"
-                                        name="existing_attach_files11[{{ $loop->index }}]" value="{{ $file }}">
+                                        name="existing_attach_files11[{{ $loop->index }}]"
+                                        value="{{ $file }}">
                                 @endforeach
                             @endif
                             <div class="col-lg-12">
@@ -2807,7 +2817,8 @@
                             @if ($data->qa_head_additional_attachment)
                                 @foreach (json_decode($data->qa_head_additional_attachment) as $file)
                                     <input id="ATFIFile12-{{ $loop->index }}" type="hidden"
-                                        name="existing_attach_files12[{{ $loop->index }}]" value="{{ $file }}">
+                                        name="existing_attach_files12[{{ $loop->index }}]"
+                                        value="{{ $file }}">
                                 @endforeach
                             @endif
 
@@ -2848,7 +2859,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="on-submit-disable-button saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -3078,7 +3089,8 @@
                             <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form action="{{ url('rcms/supplier-site-send-stage', $data->id) }}" method="POST">
+                        <form class="formSubmit" action="{{ url('rcms/supplier-site-send-stage', $data->id) }}"
+                            method="POST">
                             @csrf
                             <div class="modal-body">
                                 <div class="mb-3 text-justify">
@@ -3100,7 +3112,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button type="submit" class="on-submit-disable-button"
+                                    data-bs-dismiss="modal">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -3116,7 +3129,8 @@
                             <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form action="{{ url('rcms/supplier-site-approved-to-obselete', $data->id) }}" method="POST">
+                        <form class="formSubmit"
+                            action="{{ url('rcms/supplier-site-approved-to-obselete', $data->id) }}" method="POST">
                             @csrf
                             <div class="modal-body">
                                 <div class="mb-3 text-justify">
@@ -3138,7 +3152,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button type="submit" class="on-submit-disable-button"
+                                    data-bs-dismiss="modal">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -3154,7 +3169,8 @@
                             <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form action="{{ url('rcms/sendToPendingSupplierSiteAudit', $data->id) }}" method="POST">
+                        <form class="formSubmit" action="{{ url('rcms/sendToPendingSupplierSiteAudit', $data->id) }}"
+                            method="POST">
                             @csrf
                             <div class="modal-body">
                                 <div class="mb-3 text-justify">
@@ -3176,7 +3192,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button type="submit" class="on-submit-disable-button"
+                                    data-bs-dismiss="modal">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -3192,7 +3209,8 @@
                             <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form action="{{ url('rcms/sendTo-supplier-site-approved', $data->id) }}" method="POST">
+                        <form class="formSubmit" action="{{ url('rcms/sendTo-supplier-site-approved', $data->id) }}"
+                            method="POST">
                             @csrf
                             <div class="modal-body">
                                 <div class="mb-3 text-justify">
@@ -3214,7 +3232,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button type="submit" class="on-submit-disable-button"
+                                    data-bs-dismiss="modal">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -3230,7 +3249,8 @@
                             <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form action="{{ url('rcms/supplier-site-close-cancelled', $data->id) }}" method="POST">
+                        <form class="formSubmit" action="{{ url('rcms/supplier-site-close-cancelled', $data->id) }}"
+                            method="POST">
                             @csrf
                             <div class="modal-body">
                                 <div class="mb-3 text-justify">
@@ -3252,7 +3272,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button type="submit" class="on-submit-disable-button"
+                                    data-bs-dismiss="modal">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -3511,6 +3532,16 @@
             <?php } ?>
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+
+            $('.formSubmit').on('submit', function(e) {
+                $('.on-submit-disable-button').prop('disabled', true);
+            });
+        })
+    </script>
+
 
     <script>
         $(document).ready(function() {

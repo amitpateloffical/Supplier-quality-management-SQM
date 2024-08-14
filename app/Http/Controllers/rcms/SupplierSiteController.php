@@ -492,7 +492,7 @@ class SupplierSiteController extends Controller
         if(!empty($supplierSite->logo_attachment)){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'Logo Attachment';
+            $history->activity_type = 'Logo';
             $history->previous = "Null";
             $history->current = $supplierSite->logo_attachment;
             $history->comment = "Not Applicable";
@@ -3818,7 +3818,7 @@ class SupplierSiteController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->car_generated) || $lastDocument->car_generated === '') {
                 $history->action_name = 'New';

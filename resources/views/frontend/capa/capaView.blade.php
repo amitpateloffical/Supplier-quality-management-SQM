@@ -470,7 +470,7 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
                     </div>
 
-                    <form action="{{ route('capaUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
+                    <form id="mainform" action="{{ route('capaUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div id="step-form">
 
@@ -666,7 +666,7 @@
                                                 <span id="rchars">255</span> characters remaining
                                                <div class="relative-container">
                                                         <input type="text" name="short_description" id="docname" class="mic-input" maxlength="255" required {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->short_description }}">
-                                                        @component('frontend.forms.language-model')
+                                                        @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                                         @endcomponent
                                                     
                                                     </div>
@@ -731,46 +731,8 @@
                                                 <label for="initiated_through">Others<span class="text-danger d-none">*</span></label>
                                                 <div class="relative-container">
                                                     <textarea name="initiated_through_req" id="initiated_through_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initiated_through_req }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -796,46 +758,8 @@
                                                 <label for="repeat_nature">Repeat Nature<span class="text-danger d-none">*</span></label>
                                                 <div class="relative-container">
                                                     <textarea name="repeat_nature" id="repeat_nature_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->repeat_nature }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -845,45 +769,8 @@
                                                 <label for="problem_description">Problem Description</label>
                                                 <div class="relative-container">
                                                     <textarea name="problem_description" id="problem_description_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->problem_description }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -948,46 +835,8 @@
                                                 <label for="initial_observation">Initial Observation</label>
                                                 <div class="relative-container">
                                                     <textarea name="initial_observation" id="initial_observation_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_observation }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1100,52 +949,15 @@
                                                 <label for="capa_qa_comments">Comments</label>
                                                 <div class="relative-container">
                                                     <textarea name="capa_qa_comments" id="capa_qa_comments_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->capa_qa_comments }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
 
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" id="ChangesaveButton" class="saveButton"
+                                        <button type="submit"  id="ChangesaveButton" class="saveButton on-submit-disable-button"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -1417,45 +1229,8 @@
                                                 <label for="details_new">Details</label>
                                                 <div class="relative-container">
                                                     <input type="text" name="details_new" id="details_new_input" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->details_new }}">
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1465,55 +1240,15 @@
                                                 <label for="capa_qa_comments2">CAPA QA Comments</label>
                                                 <div class="relative-container">
                                                     <textarea name="capa_qa_comments2" id="capa_qa_comments2_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->capa_qa_comments2 }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-
-
-
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
 
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"
+                                        <button type="submit" class="saveButton on-submit-disable-button"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1556,45 +1291,8 @@
                                         <label for="corrective_action">Corrective Action</label>
                                         <div class="relative-container">
                                             <textarea name="corrective_action" id="corrective_action_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->corrective_action }}</textarea>
-                                            <button class="mic-btn" type="button" style="display:none;">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
-                                            <button class="speak-btn" type="button">
-                                                <i class="fas fa-volume-up"></i>
-                                            </button>
-                                            <div class="mini-modal">
-                                                <div class="mini-modal-content">
-                                                    <span class="close">&times;</span>
-                                                    <h2>Select Language</h2>
-                                                    <select id="language-select">
-                                                        <option value="en-us">English</option>
-                                                        <option value="hi-in">Hindi</option>
-                                                        <option value="te-in">Telugu</option>
-                                                        <option value="fr-fr">French</option>
-                                                        <option value="es-es">Spanish</option>
-                                                        <option value="zh-cn">Chinese (Mandarin)</option>
-                                                        <option value="ja-jp">Japanese</option>
-                                                        <option value="de-de">German</option>
-                                                        <option value="ru-ru">Russian</option>
-                                                        <option value="ko-kr">Korean</option>
-                                                        <option value="it-it">Italian</option>
-                                                        <option value="pt-br">Portuguese (Brazil)</option>
-                                                        <option value="ar-sa">Arabic</option>
-                                                        <option value="bn-in">Bengali</option>
-                                                        <option value="pa-in">Punjabi</option>
-                                                        <option value="mr-in">Marathi</option>
-                                                        <option value="gu-in">Gujarati</option>
-                                                        <option value="ur-pk">Urdu</option>
-                                                        <option value="ta-in">Tamil</option>
-                                                        <option value="kn-in">Kannada</option>
-                                                        <option value="ml-in">Malayalam</option>
-                                                        <option value="or-in">Odia</option>
-                                                        <option value="as-in">Assamese</option>
-                                                        <!-- Add more languages as needed -->
-                                                    </select>
-                                                    <button id="select-language-btn">Select</button>
-                                                </div>
-                                            </div>
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
@@ -1604,45 +1302,8 @@
                                         <label for="preventive_action">Preventive Action</label>
                                         <div class="relative-container">
                                             <textarea name="preventive_action" id="preventive_action_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->preventive_action }}</textarea>
-                                            <button class="mic-btn" type="button" style="display:none;">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
-                                            <button class="speak-btn" type="button">
-                                                <i class="fas fa-volume-up"></i>
-                                            </button>
-                                            <div class="mini-modal">
-                                                <div class="mini-modal-content">
-                                                    <span class="close">&times;</span>
-                                                    <h2>Select Language</h2>
-                                                    <select id="language-select">
-                                                        <option value="en-us">English</option>
-                                                        <option value="hi-in">Hindi</option>
-                                                        <option value="te-in">Telugu</option>
-                                                        <option value="fr-fr">French</option>
-                                                        <option value="es-es">Spanish</option>
-                                                        <option value="zh-cn">Chinese (Mandarin)</option>
-                                                        <option value="ja-jp">Japanese</option>
-                                                        <option value="de-de">German</option>
-                                                        <option value="ru-ru">Russian</option>
-                                                        <option value="ko-kr">Korean</option>
-                                                        <option value="it-it">Italian</option>
-                                                        <option value="pt-br">Portuguese (Brazil)</option>
-                                                        <option value="ar-sa">Arabic</option>
-                                                        <option value="bn-in">Bengali</option>
-                                                        <option value="pa-in">Punjabi</option>
-                                                        <option value="mr-in">Marathi</option>
-                                                        <option value="gu-in">Gujarati</option>
-                                                        <option value="ur-pk">Urdu</option>
-                                                        <option value="ta-in">Tamil</option>
-                                                        <option value="kn-in">Kannada</option>
-                                                        <option value="ml-in">Malayalam</option>
-                                                        <option value="or-in">Odia</option>
-                                                        <option value="as-in">Assamese</option>
-                                                        <!-- Add more languages as needed -->
-                                                    </select>
-                                                    <button id="select-language-btn">Select</button>
-                                                </div>
-                                            </div>
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
@@ -1652,53 +1313,15 @@
                                         <label for="supervisor_review_comments">Supervisor Review Comments</label>
                                         <div class="relative-container">
                                             <textarea name="supervisor_review_comments" id="supervisor_review_comments_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->supervisor_review_comments }}</textarea>
-                                            <button class="mic-btn" type="button" style="display:none;">
-                                                <i class="fas fa-microphone"></i>
-                                            </button>
-
-                                            <button class="speak-btn" type="button">
-                                                <i class="fas fa-volume-up"></i>
-                                            </button>
-                                            <div class="mini-modal">
-                                                <div class="mini-modal-content">
-                                                    <span class="close">&times;</span>
-                                                    <h2>Select Language</h2>
-                                                    <select id="language-select">
-                                                        <option value="en-us">English</option>
-                                                        <option value="hi-in">Hindi</option>
-                                                        <option value="te-in">Telugu</option>
-                                                        <option value="fr-fr">French</option>
-                                                        <option value="es-es">Spanish</option>
-                                                        <option value="zh-cn">Chinese (Mandarin)</option>
-                                                        <option value="ja-jp">Japanese</option>
-                                                        <option value="de-de">German</option>
-                                                        <option value="ru-ru">Russian</option>
-                                                        <option value="ko-kr">Korean</option>
-                                                        <option value="it-it">Italian</option>
-                                                        <option value="pt-br">Portuguese (Brazil)</option>
-                                                        <option value="ar-sa">Arabic</option>
-                                                        <option value="bn-in">Bengali</option>
-                                                        <option value="pa-in">Punjabi</option>
-                                                        <option value="mr-in">Marathi</option>
-                                                        <option value="gu-in">Gujarati</option>
-                                                        <option value="ur-pk">Urdu</option>
-                                                        <option value="ta-in">Tamil</option>
-                                                        <option value="kn-in">Kannada</option>
-                                                        <option value="ml-in">Malayalam</option>
-                                                        <option value="or-in">Odia</option>
-                                                        <option value="as-in">Assamese</option>
-                                                        <!-- Add more languages as needed -->
-                                                    </select>
-                                                    <button id="select-language-btn">Select</button>
-                                                </div>
-                                            </div>
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                            @endcomponent
                                         </div>
                                     </div>
                                 </div>
 
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"
+                                        <button type="submit" class="saveButton on-submit-disable-button"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1717,45 +1340,8 @@
                                                 <label for="qa_review">QA Review & Closure</label>
                                                 <div class="relative-container">
                                                     <textarea name="qa_review" id="qa_review_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->qa_review }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1916,52 +1502,15 @@
                                                 <div><small class="text-primary">Please mention justification if due date is crossed</small></div>
                                                 <div class="relative-container">
                                                     <textarea name="due_date_extension" id="due_date_extension_textarea" class="mic-input" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
-                                                    <button class="mic-btn" type="button" style="display:none;">
-                                                        <i class="fas fa-microphone"></i>
-                                                    </button>
-                                                    <button class="speak-btn" type="button">
-                                                        <i class="fas fa-volume-up"></i>
-                                                    </button>
-                                                    <div class="mini-modal">
-                                                        <div class="mini-modal-content">
-                                                            <span class="close">&times;</span>
-                                                            <h2>Select Language</h2>
-                                                            <select id="language-select">
-                                                                <option value="en-us">English</option>
-                                                                <option value="hi-in">Hindi</option>
-                                                                <option value="te-in">Telugu</option>
-                                                                <option value="fr-fr">French</option>
-                                                                <option value="es-es">Spanish</option>
-                                                                <option value="zh-cn">Chinese (Mandarin)</option>
-                                                                <option value="ja-jp">Japanese</option>
-                                                                <option value="de-de">German</option>
-                                                                <option value="ru-ru">Russian</option>
-                                                                <option value="ko-kr">Korean</option>
-                                                                <option value="it-it">Italian</option>
-                                                                <option value="pt-br">Portuguese (Brazil)</option>
-                                                                <option value="ar-sa">Arabic</option>
-                                                                <option value="bn-in">Bengali</option>
-                                                                <option value="pa-in">Punjabi</option>
-                                                                <option value="mr-in">Marathi</option>
-                                                                <option value="gu-in">Gujarati</option>
-                                                                <option value="ur-pk">Urdu</option>
-                                                                <option value="ta-in">Tamil</option>
-                                                                <option value="kn-in">Kannada</option>
-                                                                <option value="ml-in">Malayalam</option>
-                                                                <option value="or-in">Odia</option>
-                                                                <option value="as-in">Assamese</option>
-                                                                <!-- Add more languages as needed -->
-                                                            </select>
-                                                            <button id="select-language-btn">Select</button>
-                                                        </div>
-                                                    </div>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
 
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton">Save</button>
+                                        <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -2305,7 +1854,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
-                        <form action="{{ route('capa_reject', $data->id) }}" method="POST">
+                        <form id="formreject" action="{{ route('capa_reject', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -2334,7 +1883,7 @@
                                 <button>Close</button>
                             </div> -->
                             <div class="modal-footer">
-                              <button type="submit">Submit</button>
+                              <button class=" on-submit-disable-button" type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -2352,7 +1901,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
-                        <form action="{{ route('capaCancel', $data->id) }}" method="POST">
+                        <form id="formcancel" action="{{ route('capaCancel', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -2381,7 +1930,7 @@
                                 <button>Close</button>
                             </div> -->
                             <div class="modal-footer">
-                              <button type="submit">Submit</button>
+                              <button class=" on-submit-disable-button" type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -2397,7 +1946,7 @@
                             <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form action="{{ route('capa_send_stage', $data->id) }}" method="POST">
+                        <form id="formforword" action="{{ route('capa_send_stage', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -2426,7 +1975,7 @@
                                 <button>Close</button>
                             </div> -->
                             <div class="modal-footer">
-                              <button type="submit">Submit</button>
+                              <button class=" on-submit-disable-button" type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -2442,7 +1991,7 @@
                             <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form action="{{ route('capa_qa_more_info', $data->id) }}" method="POST">
+                        <form id="formSubmit" action="{{ route('capa_qa_more_info', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -2471,7 +2020,7 @@
                                 <button>Close</button>
                             </div> -->
                             <div class="modal-footer">
-                              <button type="submit">Submit</button>
+                              <button class=" on-submit-disable-button" type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -2493,6 +2042,50 @@
                     border-radius: 5px;
                 }
             </style>
+            <script>
+                $(document).ready(function() {
+                    
+                    $('#mainform').on('submit', function(e) {
+                        $('.on-submit-disable-button').prop('disabled', true);
+                    });
+                })
+            </script>
+
+            <script>
+                $(document).ready(function() {
+                    
+                    $('#formSubmit').on('submit', function(e) {
+                        $('.on-submit-disable-button').prop('disabled', true);
+                    });
+                })
+            </script>
+
+            <script>
+                $(document).ready(function() {
+                    
+                    $('#formforword').on('submit', function(e) {
+                        $('.on-submit-disable-button').prop('disabled', true);
+                    });
+                })
+            </script>
+
+            <script>
+                $(document).ready(function() {
+                    
+                    $('#formreject').on('submit', function(e) {
+                        $('.on-submit-disable-button').prop('disabled', true);
+                    });
+                })
+            </script>
+
+            <script>
+                $(document).ready(function() {
+                    
+                    $('#formcancel').on('submit', function(e) {
+                        $('.on-submit-disable-button').prop('disabled', true);
+                    });
+                })
+            </script>
 
             <script>
                 $(document).ready(function() {

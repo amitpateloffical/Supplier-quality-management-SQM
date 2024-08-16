@@ -538,7 +538,7 @@
                                     @endif
                                 </td>
 
-                                <th class="w-20">Attach Three Batch COAs</th>
+                                <th class="w-20">Attach Three Batch CQAs</th>
                                 <td class="w-30">
                                     @if ($data->attach_batch)
                                         {{ $data->attach_batch }}
@@ -612,7 +612,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Availability of Manufacturer COAs</th>
+                        <th class="w-20">Availability of Manufacturer CQAs</th>
                         <td class="w-30">
                             @if ($data->manufacturer_availability)
                                 {{ $data->manufacturer_availability }}
@@ -715,7 +715,7 @@
                     </tr>
                     
                     <tr>
-                        <th class="w-20">Availability of COAS After Analysis</th>
+                        <th class="w-20">Availability of CQAS After Analysis</th>
                         <td class="w-30">
                             @if ($data->availability_od_coa)
                                 {{ $data->availability_od_coa }}
@@ -821,7 +821,7 @@
 
                 <div class="border-table">
                     <div class="block-head">
-                        COA's Attachment
+                        CQA's Attachment
                     </div>
                     <table>
                         <tr class="table_bg">

@@ -6021,22 +6021,22 @@ class SupplierController extends Controller
                     // $history->stage = 'Plan Proposed';
                     // $history->save();
 
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $supplier],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+                    // $list = Helpers::getInitiatorUserList();
+                    // foreach ($list as $u) {
+                    //     if($u->q_m_s_divisions_id == $supplier->division_id){
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //           if ($email !== null) {
+                    //            Mail::send(
+                    //                'mail.view-mail',
+                    //                 ['data' => $supplier],
+                    //              function ($message) use ($email) {
+                    //                $message->to($email)
+                    //                    ->subject("Document is Send By".Auth::user()->name);
+                    //            }
+                    //          );
+                    //        }
+                    //     }
+                    // }
                     $supplier->update();
 
                     toastr()->success('Sent to Pending Initiating Department Update');
@@ -6626,8 +6626,8 @@ class SupplierController extends Controller
                 return back();
             }
             if ($supplier->stage == 14) {
-                $supplier->stage = "12";
-                $supplier->status = "Approved Manufacturer/Supplier";
+                $supplier->stage = "9";
+                $supplier->status = "Manufacturer Rejected";
                 $supplier->pendingManufacturerAuditFailed_by = Auth::user()->name;
                 $supplier->pendingManufacturerAuditFailed_on = Carbon::now()->format('d-M-Y');
                 $supplier->pendingManufacturerAuditFailed_comment = $request->comments;
@@ -6642,13 +6642,12 @@ class SupplierController extends Controller
                     }
                     $history->current = $supplier->pendingManufacturerAuditFailed_by . ' , ' . $supplier->pendingManufacturerAuditFailed_on;
                     $history->action = 'Manufacturer Audit Failed';
-                    // $history->current = $supplier->submit_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Approved Manufacturer/Supplier";
+                    $history->change_to = "Manufacturer Rejected";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     if (is_null($lastDocument->pendingManufacturerAuditFailed_by) || $lastDocument->pendingManufacturerAuditFailed_by === '') {
@@ -6675,7 +6674,7 @@ class SupplierController extends Controller
                 //   }
                 $supplier->update();
                 
-                toastr()->success('Document Sent');
+                toastr()->success('Document Sent to Manufacturer Rejected');
                 return back();
             }
         } else {

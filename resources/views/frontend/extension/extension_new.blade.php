@@ -6,21 +6,13 @@
         $departments = DB::table('departments')->select('id', 'name')->get();
         $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
 
-        $userIds = DB::table('user_roles')
-            ->where('q_m_s_roles_id', 4)
-            ->distinct()
-            ->pluck('user_id');
+        $userIds = DB::table('user_roles')->where('q_m_s_roles_id', 4)->distinct()->pluck('user_id');
 
         // Step 3: Use the plucked user_id values to get the names from the users table
-        $userNames = DB::table('users')
-            ->whereIn('id', $userIds)
-            ->pluck('name');
+        $userNames = DB::table('users')->whereIn('id', $userIds)->pluck('name');
 
         // If you need both id and name, use the select method and get
-        $userDetails = DB::table('users')
-            ->whereIn('id', $userIds)
-            ->select('id', 'name')
-            ->get();
+        $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')->get();
         // dd ($userIds,$userNames, $userDetails);
     @endphp
     <style>
@@ -31,7 +23,6 @@
         header {
             display: none;
         }
-
     </style>
     </style>
 
@@ -91,132 +82,138 @@
 
             </div>
             <form action="{{ route('extension_new.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <!-- Tab content -->
-            <div id="step-form">
-                <div id="CCForm1" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                        @if (!empty($parent_id))
+                @csrf
+                <!-- Tab content -->
+                <div id="step-form">
+                    <div id="CCForm1" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                @if (!empty($parent_id))
                                     <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                                     <input type="hidden" name="parent_type" value="{{ $parent_type }}">
-                                    <input type="hidden" name="parent_record" id="parent_record" value="{{ $parent_record }}">
+                                    <input type="hidden" name="parent_record" id="parent_record"
+                                        value="{{ $parent_record }}">
                                 @endif
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="RLS Record Number"><b>Record Number</b></label>
-                                <input disabled type="text" name="record_number"
-                                value="{{ Helpers::getDivisionName($parentDivisionId) }}/Ext/{{ date('y') }}/{{ $record_number }}">
-                                {{-- value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ Helpers::year($data->created_at) }}/{{ $data->record }}"> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RLS Record Number"><b>Record Number</b></label>
+                                        <input disabled type="text" name="record_number"
+                                            value="{{ Helpers::getDivisionName($parentDivisionId) }}/Ext/{{ date('y') }}/{{ $record_number }}">
+                                        {{-- value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ Helpers::year($data->created_at) }}/{{ $data->record }}"> --}}
 
-                                {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Division Code"><b>Site/Location Code</b></label>
-                                <input readonly type="text" value="{{ Helpers::getDivisionName($parentDivisionId) }}">
-                                <input type="hidden" name="site_location_code" value="{{ $parentDivisionId }}">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator"><b>Initiator</b></label>
-                                <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
-
-                            </div>
-                        </div>
-
-                        @php
-                            // Calculate the due date (30 days from the initiation date)
-                            $initiationDate = date('Y-m-d'); // Current date as initiation date
-                            $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
-                        @endphp
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                <input readonly type="text" value="{{ date('d-M-Y') }}" name="initiation_date_new"
-                                    id="initiation_date"
-                                    style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date">
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="short_description">Short Description <span class="text-danger">*</span></label>
-                                <span id="rchars">255</span> Characters remaining
-                                <div class="relative-container">
-                                    <input id="docname" maxlength="255" name="short_description"   class="mic-input">
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
+                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                    </div>
                                 </div>
-                                {{-- <div style="position:relative;">
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
+                                        <input readonly type="text"
+                                            value="{{ Helpers::getDivisionName($parentDivisionId) }}">
+                                        <input type="hidden" name="site_location_code" value="{{ $parentDivisionId }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiator</b></label>
+                                        <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
+
+                                    </div>
+                                </div>
+
+                                @php
+                                    // Calculate the due date (30 days from the initiation date)
+                                    $initiationDate = date('Y-m-d'); // Current date as initiation date
+                                    $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                                @endphp
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Date of Initiation"><b>Date of Initiation</b></label>
+                                        <input readonly type="text" value="{{ date('d-M-Y') }}"
+                                            name="initiation_date_new" id="initiation_date"
+                                            style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date">
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="short_description">Short Description <span
+                                                class="text-danger">*</span></label>
+                                        <span id="rchars">255</span> Characters remaining
+                                        <div class="relative-container">
+                                            <input id="docname" maxlength="255" name="short_description"
+                                                class="mic-input">
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                        {{-- <div style="position:relative;">
                                     <input id="short_description" type="text" name="short_description" maxlength="255" required class="mic-input">
                                     <button class="mic-btn" type="button">
                                         <i class="fas fa-microphone"></i>
                                     </button>
                                 </div> --}}
-                            </div>
-                            <script>
-                                var maxLength = 255;
-                                $('#docname').keyup(function() {
-                                    var textlen = maxLength - $(this).val().length;
-                                    $('#rchars').text(textlen);
-                                });
-                            </script>
-                            {{-- @error('short_description')
+                                    </div>
+                                    <script>
+                                        var maxLength = 255;
+                                        $('#docname').keyup(function() {
+                                            var textlen = maxLength - $(this).val().length;
+                                            $('#rchars').text(textlen);
+                                        });
+                                    </script>
+                                    {{-- @error('short_description')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror --}}
-                        </div>
+                                </div>
 
-                            <script>
-                                var maxLength = 255;
-                                $('#docname').keyup(function() {
-                                    var textlen = maxLength - $(this).val().length;
-                                    $('#rchars').text(textlen);});
-                            </script>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Assigned To">HOD review  </label>
-                                    <select id="choices-multiple-remove" class="choices-multiple-reviewe"
-                                        name="reviewers" placeholder="Select Reviewers"  >
-                                        <option value="">-- Select --</option>
-                                        @if (!empty($users))s
+                                <script>
+                                    var maxLength = 255;
+                                    $('#docname').keyup(function() {
+                                        var textlen = maxLength - $(this).val().length;
+                                        $('#rchars').text(textlen);
+                                    });
+                                </script>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Assigned To">HOD review </label>
+                                        <select id="choices-multiple-remove" class="choices-multiple-reviewe"
+                                            name="reviewers" placeholder="Select Reviewers">
+                                            <option value="">-- Select --</option>
+                                            @if (!empty($users))
+                                                s
 
-                                            @foreach ($users as $lan)
-                                                @if(Helpers::checkUserRolesreviewer($lan))
+                                                @foreach ($users as $lan)
+                                                    @if (Helpers::checkUserRolesreviewer($lan))
+                                                        <option value="{{ $lan->id }}">
+                                                            {{ $lan->name }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Assigned To">QA approval </label>
+                                        <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
+                                            name="approvers" id="approvers" placeholder="Select approvers">
+                                            <option value="">-- Select --</option>
+
+
+                                            @if (!empty($users))
+                                                @foreach ($users as $lan)
                                                     <option value="{{ $lan->id }}">
                                                         {{ $lan->name }}
                                                     </option>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </select>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Assigned To">QA approval </label>
-                                    <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
-                                        name="approvers" id="approvers" placeholder="Select approvers" >
-                                        <option value="">-- Select --</option>
-
-
-                                        @if (!empty($users))
-                                            @foreach ($users as $lan)
-                                                    <option value="{{ $lan->id }}">
-                                                        {{ $lan->name }}
-                                                    </option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                            </div>
-                             {{-- <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Actual Start Date"></label>
                                     <div class="calenderauditee">
@@ -240,54 +237,60 @@
                                 </div>
                             </div> --}}
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="Audit Schedule Start Date">Current Due Date (Parent)</label>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="start_date" name="current_due_date" readonly
-                                            placeholder="DD-MM-YYYY" />
-                                        <input type="date" id="current_due_date" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
-                                            oninput="handleDateInput(this, 'start_date');checkDate('current_due_date','proposed_due_date')" />
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Schedule Start Date">Current Due Date (Parent)</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="start_date" name="current_due_date" readonly
+                                                placeholder="DD-MM-YYYY" />
+                                            <input type="date" id="current_due_date" name="start_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'start_date');checkDate('current_due_date','proposed_due_date')" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="Audit Schedule End Date">Proposed Due Date</label>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="end_date" name="proposed_due_date" readonly
-                                            placeholder="DD-MM-YYYY" />
-                                        <input type="date" id="proposed_due_date" name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'end_date');checkDate('current_due_date','proposed_due_date')" />
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Schedule End Date">Proposed Due Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="end_date" name="proposed_due_date" readonly
+                                                placeholder="DD-MM-YYYY" />
+                                            <input type="date" id="proposed_due_date" name="end_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'end_date');checkDate('current_due_date','proposed_due_date')" />
+                                        </div>
+
                                     </div>
-
                                 </div>
-                            </div>
-                            <script>
-                                function handleDateInput(inputElement, displayElementId) {
-                                    var displayElement = document.getElementById(displayElementId);
-                                    var dateValue = new Date(inputElement.value);
-                                    displayElement.value = dateValue.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                                }
-
-                                function updateEndDateMin() {
-                                    var startDate = document.getElementById('current_due_date').value;
-                                    var endDateInput = document.getElementById('proposed_due_date');
-                                    if (startDate) {
-                                        endDateInput.setAttribute('min', startDate);
+                                <script>
+                                    function handleDateInput(inputElement, displayElementId) {
+                                        var displayElement = document.getElementById(displayElementId);
+                                        var dateValue = new Date(inputElement.value);
+                                        displayElement.value = dateValue.toLocaleDateString('en-GB', {
+                                            day: '2-digit',
+                                            month: '2-digit',
+                                            year: 'numeric'
+                                        });
                                     }
-                                }
 
-                                document.addEventListener("DOMContentLoaded", function() {
-                                    updateEndDateMin(); // Initialize the end date min on page load
+                                    function updateEndDateMin() {
+                                        var startDate = document.getElementById('current_due_date').value;
+                                        var endDateInput = document.getElementById('proposed_due_date');
+                                        if (startDate) {
+                                            endDateInput.setAttribute('min', startDate);
+                                        }
+                                    }
 
-                                    // Reapply the min attribute whenever the start date is changed
-                                    document.getElementById('current_due_date').addEventListener('input', function() {
-                                        updateEndDateMin();
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        updateEndDateMin(); // Initialize the end date min on page load
+
+                                        // Reapply the min attribute whenever the start date is changed
+                                        document.getElementById('current_due_date').addEventListener('input', function() {
+                                            updateEndDateMin();
+                                        });
                                     });
-                                });
-                            </script>
-                            {{-- <div class="col-md-6 new-date-data-field">
+                                </script>
+                                {{-- <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date ">
                                     <label for="date_due"> Due Date</label>
                                     <div class="calenderauditee">
@@ -299,294 +302,294 @@
                                 </div>
                             </div> --}}
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="description">Description</label>
-                                    <div class="relative-container">
-                                        <textarea name="description" id="description" cols="30" class="mic-input"></textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="description">Description</label>
+                                        <div class="relative-container">
+                                            <textarea name="description" id="description" cols="30" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
                                     </div>
-                                </div>
-                                {{-- @error('short_description')
+                                    {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
-                            </div>
+                                </div>
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="justification_reason">Justification / Reason</label>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="justification_reason">Justification / Reason</label>
 
-                                    <div class="relative-container">
-                                        <textarea name="justification_reason" id="justification_reason" cols="30" class="mic-input"></textarea>
-                                        @component('frontend.forms.language-model')
-                                        @endcomponent
-                                    </div>
-                                    {{-- <div style="position:relative;">
+                                        <div class="relative-container">
+                                            <textarea name="justification_reason" id="justification_reason" cols="30" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                        {{-- <div style="position:relative;">
                                         <textarea name="justification_reason" id="justification_reason" cols="30" class="mic-input"></textarea>
                                         <button class="mic-btn" type="button">
                                             <i class="fas fa-microphone"></i>
                                         </button>
                                     </div> --}}
-                                </div>
+                                    </div>
 
-                                {{-- @error('short_description')
+                                    {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Guideline Attachment"> Attachment Extension </label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="file_attachment_extension"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="file_attachment_extension[]"
+                                                    oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- reviewer content -->
+                <div id="CCForm2" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="reviewer_remarks">HOD Remarks</label>
+                                    <div class="relative-container">
+                                        <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                    {{-- <div style="position:relative;">
+                                    <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30" class="mic-input"></textarea>
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                </div> --}}
+                                </div>
+                            </div>
+
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Guideline Attachment"> Attachment Extension </label>
+                                    <label for="Guideline Attachment">HOD Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attachment_extension"></div>
+                                        <div class="file-attachment-list" id="file_attachment_reviewer"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attachment_extension[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
+                                            <input type="file" id="myfile" name="file_attachment_reviewer[]"
+                                                oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- reviewer content -->
-            <div id="CCForm2" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="reviewer_remarks">HOD Remarks</label>
-                                <div class="relative-container">
-                                    <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30" class="mic-input"></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
-                                </div>
-                                {{-- <div style="position:relative;">
-                                    <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30" class="mic-input"></textarea>
-                                    <button class="mic-btn" type="button">
-                                        <i class="fas fa-microphone"></i>
-                                    </button>
-                                </div> --}}
-                            </div>
-                        </div>
-
-
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="Guideline Attachment">HOD Attachment</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                        documents</small></div>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attachment_reviewer"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attachment_reviewer[]"
-                                            oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                            Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-            <!-- Approver-->
-            <div id="CCForm3" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="approver_remarks">QA Remarks</label>
-                                <div class="relative-container">
-                                    <textarea name="approver_remarks" id="approver_remarks" cols="30" class="mic-input"></textarea>
-                                    @component('frontend.forms.language-model')
-                                    @endcomponent
-                                </div>
-                                {{-- <div style="position:relative;">
-                                    <textarea name="approver_remarks" id="approver_remarks" cols="30" class="mic-input"></textarea>
-                                    <button class="mic-btn" type="button">
-                                        <i class="fas fa-microphone"></i>
-                                    </button>
-                                </div> --}}
-                            </div>
-                        </div>
-
-
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="Guideline Attachment">QA Attachment</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                        documents</small></div>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attachment_approver"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attachment_approver[]"
-                                            oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="button-block">
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
                     </div>
                 </div>
-                </div>
-            </div>
-             <!-- Activity Log content -->
-             <div id="CCForm6" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Activated By">Submited By</label>
-                                <div class="static"></div>
+                <!-- Approver-->
+                <div id="CCForm3" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="approver_remarks">QA Remarks</label>
+                                    <div class="relative-container">
+                                        <textarea name="approver_remarks" id="approver_remarks" cols="30" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                    {{-- <div style="position:relative;">
+                                    <textarea name="approver_remarks" id="approver_remarks" cols="30" class="mic-input"></textarea>
+                                    <button class="mic-btn" type="button">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                </div> --}}
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Activated On">Submited On</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Activated By">Submited Comment</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Activated By">Cancelled By</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Activated On">Cancelled  On</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Activated By">Cancelled Comment</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for=" Rejected By">Reviewed By</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Rejected On">Reviewed On</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Activated By">Reviewed Comment</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for=" Rejected By">More Info Required By</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Rejected On">More Info Required  On</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Activated By"> More Info Required Comment</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for=" Rejected By">Approved By</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Rejected On">Approved On</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Activated By">Approved Comment</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for=" Rejected By">More Info Required By</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="Rejected On">More Info Required  On</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Rejected On">More Info Required Comment</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
 
-                    </div>
-                    <div class="button-block">
-                        {{-- <button type="submit" class="saveButton">Save</button> --}}
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        {{-- <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                        Exit </a> </button>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Guideline Attachment">QA Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attachment_approver"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attachment_approver[]"
+                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <!-- Activity Log content -->
+                <div id="CCForm6" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Activated By">Submitted By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Activated On">Submitted On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Activated By">Submitted Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Activated By">Cancelled By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Activated On">Cancelled On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Activated By">Cancelled Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for=" Rejected By">Reviewed By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Rejected On">Reviewed On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Activated By">Reviewed Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for=" Rejected By">More Info Required By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Rejected On">More Info Required On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Activated By"> More Info Required Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for=" Rejected By">Approved By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Rejected On">Approved On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Activated By">Approved Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for=" Rejected By">More Info Required By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Rejected On">More Info Required On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Rejected On">More Info Required Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="button-block">
+                            {{-- <button type="submit" class="saveButton">Save</button> --}}
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            {{-- <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
 
     <script>
-
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
             cctabcontent = document.getElementsByClassName("cctabcontent");
@@ -677,7 +680,7 @@
         });
     </script>
 
-{{-- <style>
+    {{-- <style>
     .mic-btn {
         background: none;
         border: none;
@@ -710,56 +713,56 @@
     }
 </style> --}}
 
-<script>
-    < link rel = "stylesheet"
-    href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
-</script>
+    <script>
+        < link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+    </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
 
-        function startRecognition(targetElement) {
-            recognition.start();
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                targetElement.value += transcript;
-            };
-            recognition.onerror = function(event) {
-                console.error(event.error);
-            };
-        }
-
-        document.addEventListener('click', function(event) {
-            if (event.target.closest('.mic-btn')) {
-                const button = event.target.closest('.mic-btn');
-                const inputField = button.previousElementSibling;
-                if (inputField && inputField.classList.contains('mic-input')) {
-                    startRecognition(inputField);
-                }
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
             }
-        });
 
-        document.querySelectorAll('.mic-input').forEach(input => {
-            input.addEventListener('focus', function() {
-                const micBtn = this.nextElementSibling;
-                if (micBtn && micBtn.classList.contains('mic-btn')) {
-                    micBtn.style.display = 'inline-block';
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
                 }
             });
 
-            input.addEventListener('blur', function() {
-                const micBtn = this.nextElementSibling;
-                if (micBtn && micBtn.classList.contains('mic-btn')) {
-                    setTimeout(() => {
-                        micBtn.style.display = 'none';
-                    }, 200); // Delay to prevent button from hiding immediately when clicked
-                }
+            document.querySelectorAll('.mic-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        micBtn.style.display = 'inline-block';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    const micBtn = this.nextElementSibling;
+                    if (micBtn && micBtn.classList.contains('mic-btn')) {
+                        setTimeout(() => {
+                            micBtn.style.display = 'none';
+                        }, 200); // Delay to prevent button from hiding immediately when clicked
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 @endsection

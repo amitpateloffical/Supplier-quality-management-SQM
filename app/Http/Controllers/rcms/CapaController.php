@@ -224,9 +224,9 @@ class CapaController extends Controller
         if (!empty($request->batch_status)) {
             $data1->batch_status = serialize($request->batch_status);
         }
-        
+
         $data1->save();
-    
+
 
         $data2 = new CapaGrid();
         $data2->capa_id = $capa->id;
@@ -269,7 +269,7 @@ class CapaController extends Controller
             $data3->equipment_comments = serialize($request->equipment_comments);
         }
         $data3->save();
-        
+
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -397,12 +397,12 @@ class CapaController extends Controller
         $currentAssignedUser = User::find($capa->assign_to)->name ?? 'Null';
 
         if (!empty($capa->assign_to)) {
-            
+
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
             $history->activity_type = 'Assigned To';
             $history->previous = $previousAssignedUser; // Previous assigned user name
-            $history->current = $currentAssignedUser; 
+            $history->current = $currentAssignedUser;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -523,7 +523,7 @@ class CapaController extends Controller
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
             $history->activity_type = 'CAPA Team';
-            $history->previous = implode(', ', $previousTeamMembers); // Convert array to comma-separated string
+            $history->previous = "Null"; // Convert array to comma-separated string
             $history->current = implode(', ', $currentTeamMembers);   // Convert array to comma-separated string
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -1052,7 +1052,7 @@ class CapaController extends Controller
         $capa->bd_domestic= $request->bd_domestic;
         $capa->Bd_Person= $request->Bd_Person;
         $capa->Production_Person= $request->Production_Person;
-        
+
 
         $files = is_array($request->existing_capa_attachment) ? $request->existing_capa_attachment : null;
 
@@ -1139,7 +1139,7 @@ class CapaController extends Controller
             if (!empty($request->batch_status)) {
                 $data1->batch_status = serialize($request->batch_status);
             }
-            
+
           $data1->update();
         }
 
@@ -1197,12 +1197,12 @@ class CapaController extends Controller
             if (!empty($request->equipment_comments)) {
                 $data3->equipment_comments = serialize($request->equipment_comments);
             }
-            
+
             $data3->update();
 
         }
-           
-                 
+
+
 
         //     $record = RecordNumber::first();
         //     $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -1294,7 +1294,7 @@ class CapaController extends Controller
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Initiator Group Code';
-            $history->previous = $lastDocument->initiator_group_code; 
+            $history->previous = $lastDocument->initiator_group_code;
             $history->current = $capa->initiator_group_code;
             $history->comment = $request->initiator_group_code_comment;
             $history->user_id = Auth::user()->id;
@@ -1413,7 +1413,7 @@ class CapaController extends Controller
     }
 
 
-    
+
                 if ($lastDocument->severity_level_form  !=  $capa->severity_level_form  || ! empty($request->severity_level_form_comment)) {
                     $lastDataAudittrail  = CapaAuditTrial::where('capa_id', $capa->id)
                         ->where('activity_type', '  Severity Level')
@@ -2291,7 +2291,7 @@ class CapaController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
             if ($capa->stage == 3) {
                 $capa->stage = "4";
                 $capa->status = "QA Review";
@@ -2429,7 +2429,7 @@ class CapaController extends Controller
                         $history->previous = "";
                     } else {
                         $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
-                    }       
+                    }
                     $history->previous ="";
                     $history->action = 'Cancelled';
                     $history->current = $capa->all_actions_completed_by . ' , ' . $capa->all_actions_completed_on;
@@ -2534,7 +2534,7 @@ class CapaController extends Controller
         $capa->qa_more_info_required_by = Auth::user()->name;
         $capa->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
         $capa->qa_more_info_required_comment = $request->comment;
-        
+
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'QA More Info Required By, QA More Info Required On';
@@ -2542,7 +2542,7 @@ class CapaController extends Controller
                         $history->previous = "";
                     } else {
                         $history->previous = $lastDocument->qa_more_info_required_by . ' , ' . $lastDocument->qa_more_info_required_on;
-                    }                  
+                    }
                     //$history->previous = "";
                     $history->action = 'QA More Info Required';
                     $history->current = $capa->qa_more_info_required_by . ' , ' . $capa->qa_more_info_required_on;
@@ -2587,7 +2587,7 @@ class CapaController extends Controller
                         $history->previous = "";
                     } else {
                         $history->previous = $lastDocument->reject_more_info_requierd_by . ' , ' . $lastDocument->reject_more_info_requierd_on;
-                    }                     
+                    }
                     //  $history->previous = "";
                     $history->action = 'Reject';
                     $history->current = $capa->reject_more_info_requierd_by . ' , ' . $capa->reject_more_info_requierd_on;

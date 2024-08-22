@@ -254,26 +254,40 @@ class RiskManagementController extends Controller
 
         if (!empty($request->measurement)) {
             $data2->measurement = serialize($request->measurement);
+        } else {
+            $data2->measurement = serialize([]);
         }
         if (!empty($request->materials)) {
             $data2->materials = serialize($request->materials);
+        } else {
+            $data2->materials = serialize([]);
         }
         if (!empty($request->methods)) {
             $data2->methods = serialize($request->methods);
+        } else {
+            $data2->methods = serialize([]);
         }
         if (!empty($request->environment)) {
             $data2->environment = serialize($request->environment);
+        } else {
+            $data2->environment = serialize([]);
         }
         if (!empty($request->manpower)) {
             $data2->manpower = serialize($request->manpower);
+        } else {
+            $data2->manpower = serialize([]);
         }
 
         if (!empty($request->machine)) {
             $data2->machine = serialize($request->machine);
+        } else {
+            $data2->machine = serialize([]);
         }
 
         if (!empty($request->problem_statement)) {
             $data2->problem_statement = $request->problem_statement;
+        } else {
+            $data2->problem_statement = serialize([]);
         }
         $data2->save();
         // =-------------------------------
@@ -1842,28 +1856,42 @@ class RiskManagementController extends Controller
             //  $data2->type = "fishbone";
                  $data2 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','fishbone')->first();
 
-             if (!empty($request->measurement)) {
-                 $data2->measurement = serialize($request->measurement);
-             }
-             if (!empty($request->materials)) {
-                 $data2->materials = serialize($request->materials);
-             }
-             if (!empty($request->methods)) {
-                 $data2->methods = serialize($request->methods);
-             }
-             if (!empty($request->environment)) {
-                 $data2->environment = serialize($request->environment);
-             }
-             if (!empty($request->manpower)) {
-                 $data2->manpower = serialize($request->manpower);
-             }
-             if (!empty($request->machine)) {
-                 $data2->machine = serialize($request->machine);
-             }
-             if (!empty($request->problem_statement)) {
-                 $data2->problem_statement = $request->problem_statement;
-             }
-             $data2->save();
+                 if (!empty($request->measurement)) {
+                    $data2->measurement = serialize($request->measurement);
+                } else {
+                    $data2->measurement = serialize([]);
+                }
+                if (!empty($request->materials)) {
+                    $data2->materials = serialize($request->materials);
+                } else {
+                   $data2->materials = serialize([]);
+               }
+                if (!empty($request->methods)) {
+                    $data2->methods = serialize($request->methods);
+                } else {
+                   $data2->methods = serialize([]);
+               }
+                if (!empty($request->environment)) {
+                    $data2->environment = serialize($request->environment);
+                } else {
+                   $data2->environment = serialize([]);
+               }
+                if (!empty($request->manpower)) {
+                    $data2->manpower = serialize($request->manpower);
+                } else {
+                   $data2->manpower = serialize([]);
+               }
+                if (!empty($request->machine)) {
+                    $data2->machine = serialize($request->machine);
+                } else {
+                   $data2->machine = serialize([]);
+               }
+                if (!empty($request->problem_statement)) {
+                    $data2->problem_statement = $request->problem_statement;
+                } else {
+                   $data2->problem_statement = serialize([]);
+               }
+                $data2->save();
              // =-------------------------------
                $data3 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','why_chart')->first();
             //  $data3 = new RiskAssesmentGrid();

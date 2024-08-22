@@ -185,7 +185,7 @@
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         $auditCollect = DB::table('audit_reviewers_details')
-                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
+                            ->where(['doc_id' => $document->id, 'type' => 'Extension', 'user_id' => Auth::user()->id])
                             ->latest()
                             ->first();
                     @endphp
@@ -387,21 +387,21 @@
                                 <br>
                                 <div>
                                     @if ($dataDemo->activity_type == 'Activity Log')
-                                    <strong>Change To :</strong>
+                                        <strong>Change To :</strong>
 
-                                    @if (strtotime($dataDemo->change_to))
-                                        {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
+                                        @if (strtotime($dataDemo->change_to))
+                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
+                                        @else
+                                            {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
+                                        @endif
                                     @else
-                                        {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
+                                        <strong>Change To :</strong>
+                                        @if (strtotime($dataDemo->current))
+                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
+                                        @else
+                                            {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
+                                        @endif
                                     @endif
-                                @else
-                                    <strong>Change To :</strong>
-                                    @if (strtotime($dataDemo->current))
-                                        {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
-                                    @else
-                                        {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
-                                    @endif
-                                @endif
 
                                     {{-- @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change To:</strong>

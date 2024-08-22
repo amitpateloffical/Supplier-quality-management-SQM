@@ -229,8 +229,8 @@
                     <tr>
                         <th class="w-20">Initiator Group</th>
                         <td class="w-30">
-                            @if ($data->initiator_group_code)
-                                {{ Helpers::getFullDepartmentName($data->initiator_group_code) }}
+                            @if ($data->Initiator_Group)
+                                {{ Helpers::getInitiatorGroupFullName($data->Initiator_Group) }}
                             @else
                                 Not Applicable
                             @endif

@@ -215,7 +215,7 @@
                         <th class="w-5">S.No</th>
                         <th class="w-15">Flow Changed From</th>
                         <th class="w-15">Flow Changed To</th>
-                        <th class="w-30">Data Field</th>
+                        <th class="w-20">Data Field</th>
                         <th class="w-15" style="word-break: break-all;">Action Type</th>
                         <th class="w-15" style="word-break: break-all;">Performer</th>
                     </tr>

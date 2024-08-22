@@ -314,7 +314,7 @@ class CCController extends Controller
         $history = new RcmDocHistory;
         $history->cc_id = $openState->id;
        
-        $history->activity_type = 'Division Code';
+        $history->activity_type = 'Site/location Code';
         $history->previous = "Null";
         $history->current = Helpers::getDivisionName($request->division_id);
         $history->comment = "Not Applicable";

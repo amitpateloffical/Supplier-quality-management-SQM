@@ -371,7 +371,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Logo Attachments
+                    Logo 
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -398,7 +398,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    File Attachments
+                    File Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -425,7 +425,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Additional Attachments
+                    Additional Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -483,7 +483,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    HOD Attachments
+                    HOD Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -510,7 +510,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                  HOD Additional Attachments
+                  HOD Additional Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -907,7 +907,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    ISO Certificate Attachments
+                    ISO Certificate Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -936,7 +936,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Supplier Details Additional Attachments
+                    Supplier Details Additional Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1195,7 +1195,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Score Card Additional Attachments
+                    Score Card Additional Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1257,7 +1257,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    QA Reviewer Attachments
+                    QA Reviewer Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1287,7 +1287,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    QA Reviewer Additional Attachments
+                    QA Reviewer Additional Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1456,7 +1456,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                   Risk Assessment Additional Attachments
+                   Risk Assessment Additional Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1504,7 +1504,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    QA Head Attachments
+                    QA Head Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1531,7 +1531,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    QA Head Additional Attachments
+                    QA Head Additional Attachment
                 </div>
                 <table>
                     <tr class="table_bg">

@@ -70,16 +70,16 @@
         }
 
         /* .sub-head {
-                                                                        margin-left: 280px;
-                                                                        margin-right: 280px;
-                                                                        color: #4274da;
-                                                                        border-bottom: 2px solid #4274da;
-                                                                        padding-bottom: 5px;
-                                                                        margin-bottom: 20px;
-                                                                        font-weight: bold;
-                                                                        font-size: 1.2rem;
+                                                                                    margin-left: 280px;
+                                                                                    margin-right: 280px;
+                                                                                    color: #4274da;
+                                                                                    border-bottom: 2px solid #4274da;
+                                                                                    padding-bottom: 5px;
+                                                                                    margin-bottom: 20px;
+                                                                                    font-weight: bold;
+                                                                                    font-size: 1.2rem;
 
-                                                                    } */
+                                                                                } */
         .launch_extension {
             background: #4274da;
             color: white;
@@ -129,10 +129,10 @@
         }
 
         /* .saveButton:disabled{
-                                                                            background: black!important;
-                                                                            border:  black!important;
+                                                                                        background: black!important;
+                                                                                        border:  black!important;
 
-                                                                        } */
+                                                                                    } */
 
         .main-danger-block {
             display: flex;
@@ -263,7 +263,8 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Activity Log</button>
             </div>
 
-            <form action="{{ route('scar-update', $data->id) }}" method="POST" enctype="multipart/form-data">
+            <form class="formSubmit" action="{{ route('scar-update', $data->id) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
                     <div id="CCForm1" class="inner-block cctabcontent">
@@ -343,8 +344,8 @@
                                         <div class="relative-container">
                                             <input id="docname" type="text" name="short_description"
                                                 class="mic-input"value="{{ $data->short_description }}" maxlength="255"
-                                                required {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} >
-                                            @component('frontend.forms.language-model', [ 'disabled' => $data->stage == 0 || $data->stage == 6 ])
+                                                required {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </div>
 
@@ -365,7 +366,7 @@
                                             <input type="text" value="{{ $data->scar_name }}"class="mic-input"
                                                 name="scar_name" placeholder="Enter SCAR Name"
                                                 @if ($data->stage >= 6) disabled @endif>
-                                            @component('frontend.forms.language-model', [ 'disabled' => $data->stage == 0 || $data->stage == 6  ])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </div>
 
@@ -379,7 +380,7 @@
                                             <input type="text" value="{{ $data->owner_name }}"
                                                 class="mic-input"name="owner_name" placeholder="Enter Owner Name"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                            @component('frontend.forms.language-model', [ 'disabled' => $data->stage == 0 || $data->stage == 6  ])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </div>
 
@@ -393,12 +394,12 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="followup_date" placeholder="DD-MM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->followup_date) }}"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                             <input type="date" name="followup_date"
                                                 value="{{ $data->followup_date }}"
                                                 min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'followup_date')"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                         </div>
                                     </div>
                                 </div>
@@ -432,8 +433,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Supplier Product">Supplier Product</label>
-                                        <select name="supplier_product"
-                                            @if ($data->stage >= 6) disabled @endif>
+                                        <select name="supplier_product" @if ($data->stage >= 6) disabled @endif>
                                             <option value="">Enter your selection</option>
                                             <option value="supplier-product-1"
                                                 @if ($data->supplier_product == 'supplier-product-1') selected @endif>Supplier Product-1
@@ -468,7 +468,7 @@
                                             <input type="text" class="mic-input" name="supplier_site_contact_email"
                                                 value="{{ $data->supplier_site_contact_email }}"
                                                 @if ($data->stage >= 6) disabled @endif>
-                                            @component('frontend.forms.language-model', [ 'disabled' => $data->stage == 0 || $data->stage == 6  ])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </div>
 
@@ -482,7 +482,7 @@
                                             <div class="relative-container">
                                                 <textarea name="description" id="description" cols="30"class="mic-input" value="{{ $data->description }}"
                                                     @if ($data->stage >= 6) disabled @endif>{{ $data->description }}</textarea>
-                                                @component('frontend.forms.language-model', [ 'disabled' => $data->stage == 0 || $data->stage == 6  ])
+                                                @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                                 @endcomponent
                                             </div>
 
@@ -494,9 +494,10 @@
                                     <div class="group-input">
                                         <label for="Recommended Action">Recommended Action</label>
                                         <div class="relative-container">
-                                            <textarea id="recommended_action" cols="30" class="mic-input"name="recommended_action" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                value="{{ $data->recommended_action }}" @if ($data->stage >= 6) disabled @endif>{{ $data->recommended_action }}</textarea>
-                                            @component('frontend.forms.language-model', [ 'disabled' => $data->stage == 0 || $data->stage == 6  ])
+                                            <textarea id="recommended_action" cols="30" class="mic-input"name="recommended_action"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->recommended_action }}"
+                                                @if ($data->stage >= 6) disabled @endif>{{ $data->recommended_action }}</textarea>
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </div>
 
@@ -512,7 +513,7 @@
                                         <div class="relative-container">
                                             <textarea id="non_conformance" cols="30" class="mic-input"name="non_conformance"
                                                 value="{{ $data->non_conformance }}" @if ($data->stage >= 6) disabled @endif>{{ $data->non_conformance }}</textarea>
-                                            @component('frontend.forms.language-model', [ 'disabled' => $data->stage == 0 || $data->stage == 6  ])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </div>
 
@@ -526,13 +527,13 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="expected_closure_date" placeholder="DD-MM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->expected_closure_date) }}"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                             <input type="date" name="expected_closure_date"
                                                 value="{{ $data->expected_closure_date }}"
                                                 min="{{ $data->created_at ? $data->created_at->format('Y-m-d') : '' }}"
                                                 class="hide-input"
                                                 oninput="handleDateInput(this, 'expected_closure_date')"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                         </div>
                                     </div>
                                 </div>
@@ -541,7 +542,7 @@
                                     <div class="group-input">
                                         <label for="expected_closure_time">Expected Closure Time</label>
                                         <input type="time" name="expected_closure_time" id="expected_closure_time"
-                                            value="{{ $data->expected_closure_time }}" 
+                                            value="{{ $data->expected_closure_time }}"
                                             @if ($data->stage >= 6) disabled @endif>
                                     </div>
                                 </div>
@@ -551,8 +552,8 @@
                                         <label for="Root Cause">Root Cause</label>
                                         <div class="relative-container">
                                             <textarea id="root_cause" cols="30" class="mic-input" name="root_cause" value="{{ $data->root_cause }}"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  @if ($data->stage >= 6) disabled @endif>{{ $data->root_cause }}</textarea>
-                                            @component('frontend.forms.language-model', [ 'disabled' => $data->stage == 0 || $data->stage == 6  ])
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} @if ($data->stage >= 6) disabled @endif>{{ $data->root_cause }}</textarea>
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </div>
 
@@ -565,7 +566,7 @@
                                         <div class="relative-container">
                                             <textarea cols="30" id="risk_analysis" name="risk_analysis"
                                                 class="mic-input"value="{{ $data->risk_analysis }}" @if ($data->stage >= 6) disabled @endif>{{ $data->risk_analysis }}</textarea>
-                                            @component('frontend.forms.language-model', [ 'disabled' => $data->stage == 0 || $data->stage == 6  ])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </div>
 
@@ -579,7 +580,7 @@
                                             <textarea cols="30" name="effectiveness_check_summary"class="mic-input"
                                                 value="{{ $data->effectiveness_check_summary }}" id="effectiveness_check_summary"
                                                 @if ($data->stage >= 6) disabled @endif>{{ $data->effectiveness_check_summary }}</textarea>
-                                            @component('frontend.forms.language-model', [ 'disabled' => $data->stage == 0 || $data->stage == 6  ])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </div>
 
@@ -592,7 +593,7 @@
                                         <div class="relative-container">
                                             <textarea id="capa_plan" cols="30" name="capa_plan" class="mic-input"value="{{ $data->capa_plan }}"
                                                 @if ($data->stage >= 6) disabled @endif>{{ $data->capa_plan }}</textarea>
-                                            @component('frontend.forms.language-model', [ 'disabled' => $data->stage == 0 || $data->stage == 6  ])
+                                            @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
                                             @endcomponent
                                         </div>
 
@@ -601,7 +602,7 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white"
                                         href="{{ url('rcms/qms-dashboard') }}">Exit</a></button>
@@ -749,7 +750,7 @@
                             </div>
 
                             <div class="button-block">
-                                {{-- <button type="submit" class="saveButton">Save</button> --}}
+                                {{-- <button type="submit" class="saveButton on-submit-disable-button">Save</button> --}}
                                 <button type="button" class="nextButton" onclick="previousStep()">Back</button>
                                 <button type="button"> <a class="text-white"
                                         href="{{ url('rcms/qms-dashboard') }}">Exit</a></button>
@@ -769,7 +770,7 @@
                         <h4 class="modal-title">E-Signature</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <form action="{{ url('rcms/scar-send-stage', $data->id) }}" method="POST">
+                    <form class="formSubmit" action="{{ url('rcms/scar-send-stage', $data->id) }}" method="POST">
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3 text-justify">
@@ -791,7 +792,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                            <button class="on-submit-disable-button" type="submit"
+                                data-bs-dismiss="modal">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
                         </div>
                     </form>
@@ -807,7 +809,7 @@
                         <h4 class="modal-title">E-Signature</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <form action="{{ url('rcms/scar-close-cancelled', $data->id) }}" method="POST">
+                    <form class="formSubmit" action="{{ url('rcms/scar-close-cancelled', $data->id) }}" method="POST">
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3 text-justify">
@@ -829,7 +831,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                            <button class="on-submit-disable-button" type="submit"
+                                data-bs-dismiss="modal">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
                         </div>
                     </form>
@@ -845,7 +848,7 @@
                         <h4 class="modal-title">E-Signature</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <form action="{{ url('rcms/scar-reject-stage', $data->id) }}" method="POST">
+                    <form class="formSubmit" action="{{ url('rcms/scar-reject-stage', $data->id) }}" method="POST">
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3 text-justify">
@@ -867,7 +870,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                            <button class="on-submit-disable-button" type="submit"
+                                data-bs-dismiss="modal">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
                         </div>
                     </form>
@@ -940,5 +944,14 @@
                 var textlen = maxLength - $(this).val().length;
                 $('#rchars').text(textlen);
             });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+
+                $('.formSubmit').on('submit', function(e) {
+                    $('.on-submit-disable-button').prop('disabled', true);
+                });
+            })
         </script>
     @endsection

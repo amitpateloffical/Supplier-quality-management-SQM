@@ -757,7 +757,7 @@ class RiskManagementController extends Controller
         if (!empty($data->departments2)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Department(s)';
+            $history->activity_type = 'Department(s.)';
             $history->previous = "Null";
             $history->current = $data->departments2;
             $history->comment = "Not Applicable";
@@ -2302,11 +2302,11 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->departments2 != $data->departments2 || !empty($request->departments2_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Department(s)')
+            ->where('activity_type', 'Department(s.)')
             ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Department(s)';
+            $history->activity_type = 'Department(s.)';
             $history->previous = $lastDocument->departments2;
             $history->current = $data->departments2;
             $history->comment = $request->departments2_comment;
@@ -3397,7 +3397,7 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        toastr()->success("Record is update Successfully");
+        toastr()->success("Record is updated Successfully");
         return redirect()->back();
     }
 
@@ -3482,7 +3482,7 @@ class RiskManagementController extends Controller
             //   }
                 $changeControl->update();
 
-                toastr()->success('document send');
+                toastr()->success('Document Sent');
                 return back();
         }
             if ($changeControl->stage == 2) {
@@ -3590,7 +3590,7 @@ class RiskManagementController extends Controller
                 //   }
                 $changeControl->update();
 
-                toastr()->success('document send');
+                toastr()->success('Document Sent');
                 return back();
         }
 
@@ -3887,13 +3887,13 @@ class RiskManagementController extends Controller
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
-                $history->activity_type = 'Request More Info By, Request More Info On';
+                $history->activity_type = 'Request More-Info By, Request More-Info On';
                 if (is_null($lastDocument->request_more_info_by) || $lastDocument->request_more_info_by === '') {
                     $history->previous = "";
                 } else {
                     $history->previous = $lastDocument->request_more_info_by . ' , ' . $lastDocument->request_more_info_on;
                 }
-                $history->action = 'More Information Required';
+                $history->action = 'Request More-Info';
                 $history->current = $changeControl->request_more_info_by . ' , ' . $changeControl->request_more_info_on;
 
                 $history->comment = $request->comment;
@@ -3901,7 +3901,7 @@ class RiskManagementController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='More Information Required';
+                $history->stage='Request More-Info';
                 $history->change_to = 'Risk Analysis & Work Group Assignment';
                 $history->change_from = 'Risk Processing & Action Plan';
                 if (is_null($lastDocument->request_more_info_by) || $lastDocument->request_more_info_by === '') {

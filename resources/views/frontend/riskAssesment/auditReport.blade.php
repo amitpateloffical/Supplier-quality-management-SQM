@@ -260,10 +260,8 @@
                                             @else
                                                 {!! \Illuminate\Support\Str::limit($dataDemo->previous, 600) !!}
                                             @endif
-                                        @elseif($dataDemo->previous == null)
-                                            Null
                                         @else
-                                            Not Applicable
+                                            Null
                                         @endif
                                     @endif
                                 </div>

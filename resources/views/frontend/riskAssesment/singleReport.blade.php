@@ -349,7 +349,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Department(s)</th>
+                        <th class="w-20">Department(s.)</th>
                         <td class="w-80">
                             @if ($data->departments2)
                                 {{ $data->departments2 }}
@@ -362,8 +362,8 @@
                     <tr>
                         <th class="w-20">Source of Risk</th>
                         <td class="w-80">
-                            @if ($data->source_of_risk)
-                                {{ $data->source_of_risk }}
+                            @if ($data->source_of_risk2)
+                                {{ $data->source_of_risk2 }}
                             @else
                                 Not Applicable
                             @endif
@@ -1612,13 +1612,13 @@
                     <td class="w-80">{{ $data->evaluated_comment }}</td>
                 </tr>
                 <tr>
-                    <th class="w-20">Request More Info By</th>
+                    <th class="w-20">Request More-Info By</th>
                     <td class="w-80">{{ $data->request_more_info_by }}</td>
-                    <th class="w-20">Request More Info On</th>
+                    <th class="w-20">Request More-Info On</th>
                     <td class="w-80">{{ Helpers::getdateFormat($data->request_more_info_on) }}</td>
                 </tr>
                 <tr>
-                    <th class="w-20">Request More Info Comment</th>
+                    <th class="w-20">Request More-Info Comment</th>
                     <td class="w-80">{{ $data->request_more_info_comment }}</td>
                 </tr>
                 <tr>

@@ -71,15 +71,15 @@
         }
 
         /* .sub-head {
-                                                                                                                                                                                            margin-left: 280px;
-                                                                                                                                                                                            margin-right: 280px;
-                                                                                                                                                                                            color: #4274da;
-                                                                                                                                                                                            border-bottom: 2px solid #4274da;
-                                                                                                                                                                                            padding-bottom: 5px;
-                                                                                                                                                                                            margin-bottom: 20px;
-                                                                                                                                                                                            font-weight: bold;
-                                                                                                                                                                                            font-size: 1.2rem;
-                                                                                                                                                                                             } */
+                                                                                                                                                                                                                                                                                            margin-left: 280px;
+                                                                                                                                                                                                                                                                                            margin-right: 280px;
+                                                                                                                                                                                                                                                                                            color: #4274da;
+                                                                                                                                                                                                                                                                                            border-bottom: 2px solid #4274da;
+                                                                                                                                                                                                                                                                                            padding-bottom: 5px;
+                                                                                                                                                                                                                                                                                            margin-bottom: 20px;
+                                                                                                                                                                                                                                                                                            font-weight: bold;
+                                                                                                                                                                                                                                                                                            font-size: 1.2rem;
+                                                                                                                                                                                                                                                                                             } */
 
         .launch_extension {
             background: #4274da;
@@ -130,12 +130,12 @@
         }
 
         /* .saveButton:disabled
-                                                                                                                                                                                            {
-                                                                                                                                                                                               background: black!important;
-                                                                                                                                                                                               border:  black!important;
-                                                                                                                                                                                             }
-                                                                                                                                                                                               
-                                                                                                                                                                                            */
+                                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                               background: black!important;
+                                                                                                                                                                                                                                                                                               border:  black!important;
+                                                                                                                                                                                                                                                                                             }
+                                                                                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                                                                            */
 
         .main-danger-block {
             display: flex;
@@ -207,7 +207,7 @@
             let certificateIndex =
                 {{ isset($certificationData) && is_array($certificationData) ? count($certificationData) : 1 }};
 
-            $('#certificationData').click(function(e) {
+            $('#certificationData').on('click', function(e) {
                 e.preventDefault();
 
                 function generateTableRow(index) {
@@ -1301,8 +1301,6 @@
                                             @endcomponent
                                         </button>
                                     </div>
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -1403,7 +1401,7 @@
                                 <div class="group-input">
                                     <label for="City">State</label>
                                     <select name="state" class="form-select state" aria-label="Default select example"
-                                        onchange="loadCities()" {{ $data->stage == 6 ? '' : 'disabled' }}>
+                                        onchange="loadCities()">
                                         <option value="{{ $data->state }}" selected>{{ $data->state }}</option>
                                     </select>
                                 </div>
@@ -1481,6 +1479,7 @@
                                                 }
                                                 stateSelect.appendChild(option);
                                             });
+
                                             loadCities();
                                         },
                                         error: function(xhr, status, error) {
@@ -1511,6 +1510,13 @@
                                                 }
                                                 citySelect.appendChild(option);
                                             });
+
+                                            // Apply disabling logic based on stage after all data is loaded
+                                            if ({{ $data->stage }} == 6 || {{ $data->stage }} == 0) {
+                                                $("#target :input").not(".backButton, .nextButton").prop("disabled", true);
+                                            }
+
+
                                         },
                                         error: function(xhr, status, error) {
                                             console.error('Error loading cities:', error);
@@ -1736,7 +1742,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Performance History ">Performance History </label>
+                                    <label for="Performance History">Performance History </label>
                                     <div class="relative-container">
                                         <textarea id="performance_history" name="performance_history" placeholder="Enter Performance History"
                                             class="mic-input">{{ $data->performance_history }}</textarea>
@@ -1974,12 +1980,11 @@
                                             @if ($data->supplier_bussiness_planning == 'Not Information at All') selected @endif>Not Information at All
                                         </option>
                                         <option value="No Formal Information About"
-                                            @if ($data->supplier_bussiness_planning == 'No Formal Information About') selected @endif>No Formal Information
-                                            About
+                                            @if ($data->supplier_bussiness_planning == 'No Formal Information About') selected @endif>
+                                            No Formal Information About
                                         </option>
                                         <option value="Yes - Partially Aligned With"
-                                            @if ($data->supplier_bussiness_planning == 'Yes - Partially Aligned With') selected @endif>Yes - Partially Aligned
-                                            With</option>
+                                            @if ($data->supplier_bussiness_planning == 'Yes - Partially Aligned With') selected @endif>Yes - Partially Aligned With</option>
                                         <option value="Yes - Completely Aligns"
                                             @if ($data->supplier_bussiness_planning == 'Yes - Completely Aligns') selected @endif>Yes - Completely Aligns
                                         </option>

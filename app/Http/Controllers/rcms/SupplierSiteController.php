@@ -1048,7 +1048,7 @@ class SupplierSiteController extends Controller
         if(!empty($request->iso_certified_date)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'ISO Certification date';
+            $history->activity_type = 'ISO Certification Date';
             $history->previous = "Null";
             $history->current = Helpers::getdateFormat($supplierSite->iso_certified_date);
             $history->comment = "Not Applicable";
@@ -1098,7 +1098,7 @@ class SupplierSiteController extends Controller
         if(!empty($request->related_non_conformance)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'Related non-conformances';
+            $history->activity_type = 'Related Non Conformances';
             $history->previous = "Null";
             $history->current = $supplierSite->related_non_conformance;
             $history->comment = "Not Applicable";
@@ -1178,7 +1178,7 @@ class SupplierSiteController extends Controller
         if(!empty($request->quality_management)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
-            $history->activity_type = 'Quality  Management';
+            $history->activity_type = 'Quality Management';
             $history->previous = "Null";
             $history->current = $supplierSite->quality_management;
             $history->comment = "Not Applicable";
@@ -2592,7 +2592,7 @@ class SupplierSiteController extends Controller
         if($lastDocument->supplier_contact_person != $request->supplier_contact_person){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = 'Supplier Contact Person';
+            $history->activity_type = 'Contact Person';
             $history->previous = Helpers::getInitiatorName($lastDocument->supplier_contact_person);
             $history->current = Helpers::getInitiatorName($request->supplier_contact_person);
             $history->comment = "Not Applicable";
@@ -2712,7 +2712,7 @@ class SupplierSiteController extends Controller
         if($lastDocument->supply_from != $request->supply_from){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = 'Supply from';
+            $history->activity_type = 'Supply From';
             $history->previous = $lastDocument->supply_from;
             $history->current = $request->supply_from;
             $history->comment = "Not Applicable";
@@ -3020,7 +3020,7 @@ class SupplierSiteController extends Controller
         if($lastDocument->manufacturer_id != $request->manufacturer_id){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = 'Manufacturer Id';
+            $history->activity_type = 'Manufacturer ID';
             $history->previous = $lastDocument->manufacturer_id;
             $history->current = $request->manufacturer_id;
             $history->comment = "Not Applicable";
@@ -3260,7 +3260,7 @@ class SupplierSiteController extends Controller
         if($lastDocument->iso_certified_date != $request->iso_certified_date){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
-            $history->activity_type = 'ISO Certification date';
+            $history->activity_type = 'ISO Certification Date';
             $history->previous = Helpers::getdateFormat($lastDocument->iso_certified_date);
             $history->current =  Helpers::getdateFormat($request->iso_certified_date);
             $history->comment = "Not Applicable";

@@ -49,7 +49,7 @@
         $(document).ready(function() {
             let certificateIndex = 1;
 
-            $('#certificationData').click(function(e) {
+            $('#certificationData').on('click', function(e) {
                 e.preventDefault();
 
                 function generateTableRow(index) {

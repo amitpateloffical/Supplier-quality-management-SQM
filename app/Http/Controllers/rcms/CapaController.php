@@ -4,6 +4,7 @@ namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActionItem;
+use App\Models\EffectivenessCheck;
 use App\Models\Capa;
 use App\Models\CapaHistory;
 use App\Models\RecordNumber;
@@ -2814,6 +2815,7 @@ class CapaController extends Controller
     {
         $parentId = $id;
         $parentType = "CAPA";
+        $old_record = EffectivenessCheck::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -2821,7 +2823,7 @@ class CapaController extends Controller
         $due_date= $formattedDate->format('Y-m-d');
         $division = Capa::find($id);
         $divisionId = $division->division_id;
-        return view("frontend.forms.effectiveness-check", compact('due_date','parentId','parentType', 'record_number', 'divisionId'));
+        return view("frontend.forms.effectiveness-check", compact('due_date','parentId','parentType', 'record_number', 'divisionId', 'old_record'));
     }
 
 

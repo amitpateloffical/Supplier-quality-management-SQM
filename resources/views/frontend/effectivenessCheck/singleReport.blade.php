@@ -441,7 +441,7 @@
 
                 </table>
             </div>
-            <div class="block-head">
+            {{-- <div class="block-head">
                 Reference Records
             </div>
             <div class="border-table">
@@ -466,7 +466,21 @@
                     @endif
 
                 </table>
-            </div>
+            </div> --}}
+
+<table>
+    <tr>
+        <th class="w-20">Reference Records</th>
+        <td class="w-80">
+            @if ($data->refer_record)
+                {{ $data->refer_record }}
+            @else
+                Not Applicable
+            @endif
+        </td>
+    </tr>
+</table>
+          
             <div class="block">
                 <div class="block-head">
                     Activity Log

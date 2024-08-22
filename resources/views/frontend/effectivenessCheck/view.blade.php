@@ -738,55 +738,39 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="col-lg-6">
-                                                        <div class="group-input">
-                                                            <label for="Reference Records"><b>Reference Records</b></label>
-                                                            <input type="file" id="myfile" name="refer_record">
-                                                             <div class="static">Ref.Record</div>
-                                                        </div>
-                                                    </div> -->
-                            @if ($data->refer_record)
-                                @foreach (json_decode($data->refer_record) as $file)
-                                    <input id="REREATFile-{{ $loop->index }}" type="hidden"
-                                        name="existing_refer_record[{{ $loop->index }}]" value="{{ $file }}">
-                                @endforeach
-                            @endif
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Reference Records">Reference Records</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    <div class="file-attachment-field">
-                                        <div disabled class="file-attachment-list" id="refer_record">
-                                            @if ($data->refer_record)
-                                                @foreach (json_decode($data->refer_record) as $file)
-                                                    <h6 type="button" class="file-container text-dark"
-                                                        style="background-color: rgb(243, 242, 240);">
-                                                        <b>{{ $file }}</b>
-                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
-                                                            data-remove-id="REREATFile-{{ $loop->index }}"
-                                                            data-file-name="{{ $file }}"
-                                                            style="@if ($data->stage == 0 || $data->stage == 6 || $data->stage == 4) pointer-events: none; @endif"><i
-                                                                class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
-                                                    </h6>
-                                                @endforeach
-                                            @endif
+                          
+
+                            <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="Reference Records">Reference Record</label>
+                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                    multiple id="refer_record" name="refer_record[]">
+
+                                                    @foreach ($old_record as $new)
+                                                        @php
+                                                            $recordValue =
+                                                                Helpers::getDivisionName($new->division_id) .
+                                                                '/EC/' .
+                                                                date('Y') .
+                                                                '/' .
+                                                                Helpers::recordFormat($new->record);
+                                                            $selected = in_array(
+                                                                $recordValue,
+                                                                explode(',', $data->refer_record),
+                                                            )
+                                                                ? 'selected'
+                                                                : '';
+                                                        @endphp
+                                                        <option value="{{ $recordValue }}" {{ $selected }}>
+                                                            {{ $recordValue }}
+                                                        </option>
+                                                    @endforeach
+
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input
-                                                {{ $data->stage == 0 || $data->stage == 6 || $data->stage == 4 ? 'disabled' : '' }}
-                                                value="{{ $data->refer_record }}" type="file" id="myfile"
-                                                name="refer_record[]" oninput="addMultipleFiles(this, 'refer_record')"
-                                                multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+
                         </div>
                         <div class="button-block">
                             @if ($data->stage != 0)
@@ -1544,6 +1528,9 @@
             });
         </script>
         <script>
+             VirtualSelect.init({
+            ele:'#refer_record'
+        });
             function openCity(evt, cityName) {
                 var i, cctabcontent, cctablinks;
                 cctabcontent = document.getElementsByClassName("cctabcontent");

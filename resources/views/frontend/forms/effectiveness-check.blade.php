@@ -329,20 +329,21 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Reference Records">Reference Records</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="refer_record"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="refer_record[]"
-                                                    oninput="addMultipleFiles(this, 'refer_record')" multiple>
-                                            </div>
-                                        </div>
+                              
 
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Reference Records">Reference Record</label>
+                                        <select multiple id="refer_record" name="refer_record[]">
+
+                                            @foreach ($old_record as $new)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/EC/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/EC/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -522,6 +523,10 @@
 
 
     <script>
+        VirtualSelect.init({
+            ele:'#refer_record'
+        });
+        
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
             cctabcontent = document.getElementsByClassName("cctabcontent");

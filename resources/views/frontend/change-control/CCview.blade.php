@@ -1310,7 +1310,7 @@
                                                 <div class="group-input">
                                                     <label for="Occurance">Occurance</label>
                                                     <select name="Occurance" id="analysisP"
-                                                        onchange='calculateRiskAnalysis(this)' {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                        onchange='deleteFishBone' {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option
                                                             {{ $data->Occurance == '1' ? 'selected' : '' }}
@@ -1506,9 +1506,9 @@
                                                                 <div class="group-input new-date-data-field mb-0">
                                                                     <div class="input-date ">
                                                                         <div class="calenderauditee">
-                                                                            <input type="" id="implementation_date"
-                                                                                placeholder="DD-MM-YYYY"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                                            <input type="date" name="implementation_date[]" class="hide-input"
+                                                                            <input type="text"  id="implementation_date" 
+                                                                                placeholder="DD-MM-YYYY"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} readonly />
+                                                                            <input type="date" name="implementation_date[]" class="hide-input" placeholder="DD-MM-YYYY"  value="{{ Helpers::getdateFormat($closure->implementation_date)[$key] }}"
                                                                                 oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" 
                                                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}   value="{{ unserialize($closure->implementation_date)[$key] ? unserialize($closure->implementation_date)[$key] : '' }}"/>
                                                                         </div>

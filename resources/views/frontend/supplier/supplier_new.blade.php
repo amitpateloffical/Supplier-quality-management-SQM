@@ -430,7 +430,7 @@
                     
                                                     <div class="col-lg-6">
                                                         <div class="group-input">
-                                                            <label for="Initiator Group Code">Attach Three Batch COAs</label>
+                                                            <label for="Initiator Group Code">Attach Three Batch CQAs</label>
                                                             <select id="attach_batch" name="attach_batch">
                                                                 <option value="">---- Select ----</option>
                                                                 <option value="Yes">Yes</option>
@@ -469,7 +469,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="group-input">
-                                                            <label for="Initiator Group Code">Availability of Manufacturer COAs</label>
+                                                            <label for="Initiator Group Code">Availability of Manufacturer CQAs</label>
                                                             <select id="manufacturer_availability" name="manufacturer_availability">
                                                                 <option value="">---- Select ----</option>
                                                                 <option value="Yes">Yes</option>
@@ -624,7 +624,7 @@
                     
                                                     <div class="col-lg-6">
                                                         <div class="group-input">
-                                                            <label for="Initiator Group Code">Availability of COAs After Analysis</label>
+                                                            <label for="Initiator Group Code">Availability of CQAs After Analysis</label>
                                                             <select id="availability_od_coa" name="availability_od_coa">
                                                                 <option value="">---- Select ----</option>
                                                                 <option value="Yes">Yes</option>
@@ -725,7 +725,7 @@
                     
                                                     <div class="col-lg-12">
                                                         <div class="group-input">
-                                                            <label for="Initiator Group Code">COAs Attachment</label>
+                                                            <label for="Initiator Group Code">CQAs Attachment</label>
                                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                             <div class="file-attachment-field">
                                                                 <div class="file-attachment-list" id="coa_attachment"></div>

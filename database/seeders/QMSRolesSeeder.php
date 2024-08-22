@@ -248,5 +248,26 @@ class QMSRolesSeeder extends Seeder
         $group->description = "Project Management";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
         $group->save();
+
+        $group  = new QMSRoles();
+        $group->id = 34;
+        $group->name = "Purchase Department";
+        $group->description = "Purchase Department";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group  = new QMSRoles();
+        $group->id = 35;
+        $group->name = "CQA";
+        $group->description = "CQA";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+
+        $group  = new QMSRoles();
+        $group->id = 36;
+        $group->name = "F&D/MS&T";
+        $group->description = "F&D/MS&T";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
     }
 }

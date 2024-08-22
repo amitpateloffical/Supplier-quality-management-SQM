@@ -75,7 +75,7 @@ class DashboardController extends Controller
         $supplier = Supplier::orderByDesc('id')->get();
         $supplierAudit =  SupplierAudit::orderByDesc('id')->get();
         $scarData =  SCAR::orderByDesc('id')->get();
-        
+
         foreach ($supplierAudit as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -226,7 +226,7 @@ class DashboardController extends Controller
                 "id" => $data->id,
                 "parent" => $data->parent_id ? $data->parent_id : "-",
                 "record" => $data->record,
-                "type" => "Risk-Assesment",
+                "type" => "Risk-Assessment",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -808,7 +808,7 @@ class DashboardController extends Controller
             $data = InternalAudit::find($id);
             $single = "internalSingleReport/" . $data->id;
             $audit = "internalauditReport/" . $data->id;
-        } elseif ($type == "Risk-Assesment") {
+        } elseif ($type == "Risk-Assessment") {
             $data = RiskManagement::find($id);
             $single = "riskSingleReport/" . $data->id;
             $audit = "riskAuditReport/" . $data->id;
@@ -837,7 +837,7 @@ class DashboardController extends Controller
             $parent = "#";
         } elseif ($type == "Observation") {
             $data = Observation::find($id);
-            $single = "ObservationSingleReport/" .$data->id;            
+            $single = "ObservationSingleReport/" .$data->id;
             $audit = "showaudittrialobservation/" .$data->id;
             $parent = "#". $data->id;
         } elseif ($type == "Effectiveness-Check") {

@@ -188,7 +188,7 @@
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         $auditCollect = DB::table('audit_reviewers_details')
-                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
+                            ->where(['doc_id' => $document->id, 'type'=>'Supplier Site', 'user_id' => Auth::user()->id])
                             ->latest()
                             ->first();
                     @endphp

@@ -256,7 +256,7 @@
                                                                 data-bs-toggle="tooltip" title="Related Records"></div>
                                                         </a>
                                                     @endif
-                                                @elseif ($datas->type == 'Risk-Assesment')
+                                                @elseif ($datas->type == 'Risk-Assessment')
                                                     <a href="{{ route('showRiskManagement', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>

@@ -1,4 +1,3 @@
-
 @extends('frontend.layout.main')
 @section('container')
     <div id="audit-trial">
@@ -170,7 +169,6 @@
             </style>
 
             <body>
-
                 <header>
                     <table>
                         <tr>
@@ -234,7 +232,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['doc_id' => $document->id, 'type' => 'Failure Investigation'])
+                                        ->where(['doc_id' => $document->id, 'type' => 'Extension'])
                                         ->get();
                                 @endphp
                                 <!-- Customer grid view -->
@@ -254,7 +252,7 @@
                                                 @foreach ($reviewer as $review)
                                                     <tr>
                                                         <td>{{ $review->reviewer_comment_by }}</td>
-                                                        <td>{{ $review->reviewer_comment_on }}</td>
+                                                        <td>{{ Helpers::getdateFormat($review->reviewer_comment_on) }}</td>
                                                         <td>{{ $review->reviewer_comment }}</td>
                                                     </tr>
                                                 @endforeach
@@ -286,36 +284,36 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- <form action="" method="POST"> -->
-                                    <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
-                                        @csrf
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                            <div class="group-input">
-                                                <label for="Reviewer commnet">Reviewer Comment <span id=""
-                                                        class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                        does not require completion</small></div>
-                                                <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
-                                            </div>
-                                            <div class="group-input">
-                                                <label for="Reviewer Completed By">Reviewer Completed By</label>
-                                                <input disabled type="text" class="form-control"
-                                                    name="reviewer_completed_by" id="reviewer_completed_by"
-                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
-                                            </div>
-                                            <div class="group-input">
-                                                <label for="Reviewer Completed on">Reviewer Completed On</label>
-                                                <input disabled type="text" class="form-control"
-                                                    name="reviewer_completed_on" id="reviewer_completed_on"
-                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
-                                            </div>
-                                            <input type="hidden" id="type" name="type" value="Failure Investigation">
+                                <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
+                                    @csrf
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="group-input">
+                                            <label for="Reviewer commnet">Reviewer Comment <span id=""
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
                                         </div>
-                                        <div class="modal-footer">
-                                            {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
-                                            <button type="button" data-bs-dismiss="modal">Close</button>
+                                        <div class="group-input">
+                                            <label for="Reviewer Completed By">Reviewer Completed By</label>
+                                            <input disabled type="text" class="form-control" name="reviewer_completed_by"
+                                                id="reviewer_completed_by"
+                                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
                                         </div>
-                                    </form>
+                                        <div class="group-input">
+                                            <label for="Reviewer Completed on">Reviewer Completed On</label>
+                                            <input disabled type="text" class="form-control" name="reviewer_completed_on"
+                                                id="reviewer_completed_on"
+                                                value="{{ $auditCollect ? Helpers::getdateFormat($auditCollect->reviewer_comment_on) : '' }}">
+                                        </div>
+                                        <input type="hidden" id="type" name="type" value="Extension">
+                                    </div>
+                                    <div class="modal-footer">
+                                        {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
+                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
 
                             </div>
                         </div>
@@ -328,13 +326,14 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong> {{ str_pad($document->record_number, 4, '0', STR_PAD_LEFT) }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->initiator }}</div>
-                            <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
+                            <div> <strong>Record ID : </strong>
+                                {{ str_pad($document->record_number, 4, '0', STR_PAD_LEFT) }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;"> Originator : {{ $document->initiator }}
+                            </div>
+                            <div style="margin-bottom: 5px; font-weight: bold;"> Short Description :
                                 {{ $document->short_description }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
-
+                            <div style="margin-bottom: 5px;  font-weight: bold;"> Due Date : {{ $document->due_date }}
+                            </div>
                         </div>
         </div>
         </table>
@@ -388,12 +387,30 @@
                                 <br>
                                 <div>
                                     @if ($dataDemo->activity_type == 'Activity Log')
-                                        <strong>Change To
-                                            :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
+                                    <strong>Change To :</strong>
+
+                                    @if (strtotime($dataDemo->change_to))
+                                        {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
+                                    @else
+                                        {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
+                                    @endif
+                                @else
+                                    <strong>Change To :</strong>
+                                    @if (strtotime($dataDemo->current))
+                                        {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
+                                    @else
+                                        {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
+                                    @endif
+                                @endif
+
+                                    {{-- @if ($dataDemo->activity_type == 'Activity Log')
+                                        <strong>Change To:</strong>
+
+                                        {{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
                                     @else
                                         <strong>Change To
-                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
-                                    @endif
+                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Null' }}
+                                    @endif --}}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     <strong>Change Type
@@ -408,7 +425,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div><strong> Peformed By
+                                <div><strong> Performed By
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
@@ -448,44 +465,12 @@
                 }
             </style>
             {{ $audit->links() }}
-        </div>               <!-- Pagination links -->
-        <div style="float: inline-end; margin: 10px;">
-            <style>
-                .pagination>.active>span {
-                    background-color: #4274da !important;
-                    border-color: #4274da !important;
-                    color: #fff !important;
-                }
-
-                .pagination>.active>span:hover {
-                    background-color: #4274da !important;
-                    border-color: #4274da !important;
-                }
-
-                .pagination>li>a,
-                .pagination>li>span {
-                    color: #4274da !important;
-                }
-
-                .pagination>li>a:hover {
-                    background-color: #4274da !important;
-                    border-color: #4274da !important;
-                    color: #fff !important;
-                }
-            </style>
-            {{ $audit->links() }}
         </div>
-            </div>
-
-        </div>
-
-
-        </body>
-
-        </html>
-
     </div>
-    </div>
+
+    </body>
+
+    </html>
 
     <div class="modal fade" id="activity-modal">
         <div class="modal-dialog modal-dialog-centered modal-lg">

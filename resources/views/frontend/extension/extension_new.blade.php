@@ -32,7 +32,6 @@
             display: none;
         }
 
-
     </style>
     </style>
 
@@ -75,9 +74,6 @@
     </div>
 
 
-
-
-
     {{-- ======================================
                     DATA FIELDS
     ======================================= --}}
@@ -111,7 +107,7 @@
                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                 <input disabled type="text" name="record_number"
                                 value="{{ Helpers::getDivisionName($parentDivisionId) }}/Ext/{{ date('y') }}/{{ $record_number }}">
-                                                                                    {{-- value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ Helpers::year($data->created_at) }}/{{ $data->record }}"> --}}
+                                {{-- value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ Helpers::year($data->created_at) }}/{{ $data->record }}"> --}}
 
                                 {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                             </div>
@@ -127,11 +123,10 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"><b>Initiator</b></label>
-                                <input disabled type="text" value="{{ Auth::user()->name }}">
+                                <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
 
                             </div>
                         </div>
-
 
                         @php
                             // Calculate the due date (30 days from the initiation date)
@@ -153,14 +148,25 @@
                             <div class="group-input">
                                 <label for="short_description">Short Description <span class="text-danger">*</span></label>
                                 <span id="rchars">255</span> Characters remaining
-                                <div style="position:relative;">
+                                <div class="relative-container">
+                                    <input id="docname" maxlength="255" name="short_description"   class="mic-input">
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
+                                </div>
+                                {{-- <div style="position:relative;">
                                     <input id="short_description" type="text" name="short_description" maxlength="255" required class="mic-input">
                                     <button class="mic-btn" type="button">
                                         <i class="fas fa-microphone"></i>
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
-
+                            <script>
+                                var maxLength = 255;
+                                $('#docname').keyup(function() {
+                                    var textlen = maxLength - $(this).val().length;
+                                    $('#rchars').text(textlen);
+                                });
+                            </script>
                             {{-- @error('short_description')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror --}}
@@ -178,7 +184,7 @@
                                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                         name="reviewers" placeholder="Select Reviewers"  >
                                         <option value="">-- Select --</option>
-                                        @if (!empty($users))
+                                        @if (!empty($users))s
 
                                             @foreach ($users as $lan)
                                                 @if(Helpers::checkUserRolesreviewer($lan))
@@ -210,11 +216,7 @@
                                     </select>
                                 </div>
                             </div>
-
-
-
-
-                            {{-- <div class="col-lg-6 new-date-data-field">
+                             {{-- <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Actual Start Date"></label>
                                     <div class="calenderauditee">
@@ -247,7 +249,6 @@
                                         <input type="date" id="current_due_date" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
                                             oninput="handleDateInput(this, 'start_date');checkDate('current_due_date','proposed_due_date')" />
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-lg-6 new-date-data-field">
@@ -301,11 +302,10 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="description">Description</label>
-                                    <div style="position:relative;">
+                                    <div class="relative-container">
                                         <textarea name="description" id="description" cols="30" class="mic-input"></textarea>
-                                        <button class="mic-btn" type="button">
-                                            <i class="fas fa-microphone"></i>
-                                        </button>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
                                     </div>
                                 </div>
                                 {{-- @error('short_description')
@@ -316,12 +316,18 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="justification_reason">Justification / Reason</label>
-                                    <div style="position:relative;">
+
+                                    <div class="relative-container">
+                                        <textarea name="justification_reason" id="justification_reason" cols="30" class="mic-input"></textarea>
+                                        @component('frontend.forms.language-model')
+                                        @endcomponent
+                                    </div>
+                                    {{-- <div style="position:relative;">
                                         <textarea name="justification_reason" id="justification_reason" cols="30" class="mic-input"></textarea>
                                         <button class="mic-btn" type="button">
                                             <i class="fas fa-microphone"></i>
                                         </button>
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                                 {{-- @error('short_description')
@@ -364,12 +370,17 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="reviewer_remarks">HOD Remarks</label>
-                                <div style="position:relative;">
+                                <div class="relative-container">
+                                    <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30" class="mic-input"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
+                                </div>
+                                {{-- <div style="position:relative;">
                                     <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30" class="mic-input"></textarea>
                                     <button class="mic-btn" type="button">
                                         <i class="fas fa-microphone"></i>
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
 
@@ -406,12 +417,17 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="approver_remarks">QA Remarks</label>
-                                <div style="position:relative;">
+                                <div class="relative-container">
+                                    <textarea name="approver_remarks" id="approver_remarks" cols="30" class="mic-input"></textarea>
+                                    @component('frontend.forms.language-model')
+                                    @endcomponent
+                                </div>
+                                {{-- <div style="position:relative;">
                                     <textarea name="approver_remarks" id="approver_remarks" cols="30" class="mic-input"></textarea>
                                     <button class="mic-btn" type="button">
                                         <i class="fas fa-microphone"></i>
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
 
@@ -437,8 +453,7 @@
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                     </div>
                 </div>
                 </div>
@@ -479,7 +494,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Activated By">Cancelled  Comment</label>
+                                <label for="Activated By">Cancelled Comment</label>
                                 <div class="static"></div>
                             </div>
                         </div>
@@ -662,7 +677,7 @@
         });
     </script>
 
-<style>
+{{-- <style>
     .mic-btn {
         background: none;
         border: none;
@@ -693,7 +708,7 @@
     .mic-btn:active {
         box-shadow: none;
     }
-</style>
+</style> --}}
 
 <script>
     < link rel = "stylesheet"
@@ -727,7 +742,6 @@
                 }
             }
         });
-
 
         document.querySelectorAll('.mic-input').forEach(input => {
             input.addEventListener('focus', function() {

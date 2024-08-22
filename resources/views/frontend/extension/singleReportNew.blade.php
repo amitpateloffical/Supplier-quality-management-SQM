@@ -244,12 +244,10 @@
         <div class="block">
             <div class="block-head">QA Approval</div>
             <table>
-
                 <tr>
                     <th class="w-20">QA Remarks</th>
                     <td class="w-80">@if($data->approver_remarks){{ $data->approver_remarks }}@else Not Applicable @endif</td>
                 </tr>
-
             </table>
         </div>
         <div class="block">
@@ -285,15 +283,15 @@
                     <th class="w-20">Submitted On</th>
                     <td class="w-30">{{ $data->submit_on }}</td>
                     <th class="w-20">Submitted Comment</th>
-                    <td class="w-80">{{ $data->submitted_comment }}</td>
+                    <td class="w-80">{{ $data->submit_comment }}</td>
                 </tr>
                 <tr>
                     <th class="w-20">Cancelled By</th>
-                    <td class="w-30">{{ $data->cancel_by }}</td>
+                    <td class="w-30">{{ $data->reject_by }}</td>
                     <th class="w-20">Cancelled On</th>
-                    <td class="w-30">{{ $data->cancel_on }}</td>
+                    <td class="w-30">{{ $data->reject_on }}</td>
                     <th class="w-20">Cancelled Comment</th>
-                    <td class="w-80">{{ $data->cancelled_comment }}</td>
+                    <td class="w-80">{{ $data->reject_comment }}</td>
                     {{-- <td class="w-30">{{ $data->submit_on }}</td> --}}
                 </tr>
                 <tr>
@@ -302,7 +300,23 @@
                     <th class="w-20">Reviewed On</th>
                     <td class="w-30">{{ $data->submit_on_review }}</td>
                     <th class="w-20">Reviewed Comment</th>
-                    <td class="w-30">{{ $data->submit_on_comment }}</td>
+                    <td class="w-30">{{ $data->submit_comment_review }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">More Info Required By</th>
+                    <td class="w-30">{{ $data->more_info_review_by }}</td>
+                    <th class="w-20">More Info Required On</th>
+                    <td class="w-30">{{ $data->more_info_review_on }}</td>
+                    <th class="w-20">More Info Required Comment</th>
+                    <td class="w-30">{{ $data->more_info_review_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Approved By</th>
+                    <td class="w-30">{{ $data->submit_by_approved }}</td>
+                    <th class="w-20">Approved On</th>
+                    <td class="w-30">{{ $data->submit_on_approved }}</td>
+                    <th class="w-20">Approved Comment</th>
+                    <td class="w-30">{{ $data->submit_comment_inapproved }}</td>
                 </tr>
                 <tr>
                     <th class="w-20">More Info Required By</th>
@@ -312,22 +326,9 @@
                     <th class="w-20">More Info Required Comment</th>
                     <td class="w-30">{{ $data->more_info_inapproved_comment }}</td>
                 </tr>
-                <tr>
-                    <th class="w-20">Approved By</th>
-                    <td class="w-30">{{ $data->submit_by_approved }}</td>
-                    <th class="w-20">Approved On</th>
-                    <td class="w-30">{{ $data->submit_on_approved }}</td>
-                    <th class="w-20">Approved Comment</th>
-                    <td class="w-30">{{ $data->comment_on_approved }}</td>
-                </tr>
-
-
             </table>
         </div>
     </div>
 </div>
-
-
-
 </body>
 </html>

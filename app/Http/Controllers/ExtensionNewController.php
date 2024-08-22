@@ -33,7 +33,7 @@ class ExtensionNewController extends Controller
                 ->where('user_roles.q_m_s_roles_id', 2)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
-        $approvers = DB::table('user_roles')
+                $approvers = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
                 ->where('user_roles.q_m_s_processes_id', 89)
@@ -46,30 +46,13 @@ class ExtensionNewController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
-        //     'site_location_code' => 'required|string',
-        //     'initiator' => 'required|string',
-        //     'initiation_date' => 'required|date',
-            'short_description' => 'required|string',
-        //     'reviewers' => 'required|json',
-        //     'approvers' => 'required|json',
-        //     'current_due_date' => 'required|date',
-        //     'proposed_due_date' => 'required|date',
-            // 'description' => 'required|string',
-        //     'file_attachment_extension' => 'required|string',
-        //     'reviewer_remarks' => 'nullable|string',
-        //     'file_attachment_reviewer' => 'nullable|string',
-        //     'approver_remarks' => 'nullable|string',
-        //     'file_attachment_approver' => 'nullable|string',
-        ]);
-
         $extensionNew = new extension_new();
         $extensionNew->type = "Extension";
         $extensionNew->stage = "1";
         $extensionNew->status = "Opened";
 
         $extensionNew->record_number = DB::table('record_numbers')->value('counter') + 1;
-//   dd($extensionNew->record_number);
+//      dd($extensionNew->record_number);
         $extensionNew->site_location_code = $request->site_location_code;
         // dd($request->site_location_code);
         $extensionNew->initiator = Auth::user()->id;
@@ -124,7 +107,6 @@ class ExtensionNewController extends Controller
                 }
             }
 
-
             $extensionNew->file_attachment_reviewer = json_encode($files);
         }
 
@@ -138,7 +120,6 @@ class ExtensionNewController extends Controller
                 }
             }
 
-
             $extensionNew->file_attachment_approver = json_encode($files);
         }
 
@@ -146,10 +127,8 @@ class ExtensionNewController extends Controller
         // $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         // $record->update();
 
-
-
-
         $extensionNew->save();
+        // dd($extensionNew);
         if (!empty ($request->reviewers)){
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -167,20 +146,38 @@ class ExtensionNewController extends Controller
             $history->save();
         }
 
-        if (!empty ($request->initiator)){
+        // if (!empty ($request->initiator)){
+        //     $history = new ExtensionNewAuditTrail();
+        //     $history->extension_id = $extensionNew->id;
+        //     $history->activity_type = 'Initiator';
+        //     $history->previous = "Null";
+        //     $history->current = Helpers::getInitiatorName($request->initiator);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $extensionNew->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
+
+        if ($extensionNew->initiator != null) {
+            // dd($extensionNew->initiator);
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
-            $history->current = $extensionNew->initiator;
-            $history->comment = "Not Applicable";
+            $history->current = Helpers::getInitiatorName($extensionNew->initiator);
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
             $history->change_from = "Initiation";
-            $history->action_name = 'Create';
+            $history->change_to = "Opened";
+            $history->action_name = "Create";
             $history->save();
         }
 
@@ -200,12 +197,13 @@ class ExtensionNewController extends Controller
         //     $history->action_name = 'Create';
         //     $history->save();
         // }
-        if (!empty ($request->record_number)){
+        if (!empty ($extensionNew->record_number)){
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'Record number';
             $history->previous = "Null";
-            $history->current = $extensionNew->record_number;
+            // $history->current = $extensionNew->record_number;
+            $history->current =  Helpers::getDivisionName($request->site_location_code).'/EXT/'. date('Y') .'/'. str_pad( $extensionNew->record_number, 4, '0', STR_PAD_LEFT);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -482,10 +480,10 @@ class ExtensionNewController extends Controller
         $extensionNew = extension_new::find($id);
         $lastextensionNew = extension_new::find($id);
         // $extensionNew->site_location_code = $request->site_location_code;
-        $extensionNew->initiator = Auth::user()->id;
+        // $extensionNew->initiator = Auth::user()->id;
 
         // dd($request->initiator);
-        $extensionNew->initiation_date = $request->initiation_date;
+        // $extensionNew->initiation_date = $request->initiation_date;
         $extensionNew->short_description = $request->short_description;
         $extensionNew->reviewers = $request->reviewers;
         $extensionNew->approvers = $request->approvers;
@@ -879,44 +877,87 @@ class ExtensionNewController extends Controller
             $history->save();
         }
 
-
-
-
         toastr()->success("Record is created Successfully");
         return redirect()->back();
     }
 
     public function reject(Request $request,$id){
-        try {
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-                $extensionNew = extension_new::find($id);
-                $lastDocument = extension_new::find($id);
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $extensionNew = ExtensionNewAuditTrail::find($id);
+            $lastDocument = ExtensionNewAuditTrail::find($id);
 
-                if ($extensionNew->stage == 1) {
+            $extensionNew->stage = "0";
+            $extensionNew->status = "Close - Cancelled";
+            $extensionNew->cancelled_by = Auth::user()->name;
+            $extensionNew->cancelled_on = Carbon::now()->format('d-M-Y');
+            $extensionNew->cancelled_comment = $request->comments;
 
-                    $extensionNew->stage = "0";
-                    $extensionNew->status = "Closed Cancelled";
-                    $extensionNew->reject_by = Auth::user()->name;
-                    $extensionNew->reject_on = Carbon::now()->format('d-M-Y');
-                    $extensionNew->reject_comment = $request->comment;
-
-
-                    $extensionNew->update();
-                    return back();
-                }
-
-
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $id;
+            // $history->activity_type = 'Activity Log';
+            // $history->previous = "";
+            $history->activity_type = 'Cancelled By, Cancelled  On';
+            if (is_null($lastDocument->Cancelled_by) || $lastDocument->Cancelled_by === '') {
+                $history->previous = "";
             } else {
-                toastr()->error('E-signature Not match');
-                return back();
+                $history->previous = $lastDocument->Cancelled_by . ' , ' . $lastDocument->Cancelled_on;
             }
-        } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'message' => $th->getMessage()
-            ], 500);
+            $history->current =  $extensionNew->cancelled_bys . ' , ' .  $extensionNew->cancelled_on;
+            // $history->action = 'Cancel';
+            // $history->current = "";
+            $history->comment = $request->comments;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =  "Close - Cancelled";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->Cancelled) || $lastDocument->Cancelled === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+            // $extensionNew->update();
+            toastr()->success('Document Sent to Close Cancelled');
+            return back();
+
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
         }
     }
+    //     try {
+    //         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+    //             $extensionNew = extension_new::find($id);
+    //             $lastDocument = extension_new::find($id);
+
+    //             if ($extensionNew->stage == 1) {
+
+    //                 $extensionNew->stage = "0";
+    //                 $extensionNew->status = "Closed Cancelled";
+    //                 $extensionNew->reject_by = Auth::user()->name;
+    //                 $extensionNew->reject_on = Carbon::now()->format('d-M-Y');
+    //                 $extensionNew->reject_comment = $request->comment;
+
+
+    //                 $extensionNew->update();
+    //                 return back();
+    //             }
+
+
+    //         } else {
+    //             toastr()->error('E-signature Not match');
+    //             return back();
+    //         }
+    //     } catch (\Throwable $th) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => $th->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
     public function moreinfoStateChange(Request $request,$id){
         try {
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -924,33 +965,83 @@ class ExtensionNewController extends Controller
                 $lastDocument = extension_new::find($id);
 
                 if ($extensionNew->stage == 2) {
-
                     $extensionNew->stage = "1";
                     $extensionNew->status = "Opened";
                     $extensionNew->more_info_review_by = Auth::user()->name;
                     $extensionNew->more_info_review_on = Carbon::now()->format('d-M-Y');
                     $extensionNew->more_info_review_comment = $request->comment;
 
-
+                    $history = new ExtensionNewAuditTrail();
+                    $history->extension_id = $id;
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = "";
+                    $history->activity_type = 'More Info Required By, More Info Required On';
+                    if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->more_info_review_by . ' , ' . $lastDocument->more_info_review_on;
+                    }
+                    $history->current = $extensionNew->more_info_review_by . ' , ' . $extensionNew->more_info_review_on;
+                    $history->comment = $request->comment;
+                    $history->action='Submit';
+                    // $history->current = $extensionNew->more_info_review_by;
+                    // $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    // $history->stage = 'Plan Proposed';
+                    $history->change_to =   "Opened";
+                    $history->change_from = "In Review";
+                    if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
                     $extensionNew->update();
-                    toastr()->success('Document Sent');
                     return back();
                 }
+
                 if ($extensionNew->stage == 3) {
-
-
                     $extensionNew->stage = "2";
                     $extensionNew->status = "In Review";
                     $extensionNew->more_info_inapproved_by = Auth::user()->name;
                     $extensionNew->more_info_inapproved_on = Carbon::now()->format('d-M-Y');
                     $extensionNew->more_info_inapproved_comment = $request->comment;
 
-
-
+                    $history = new ExtensionNewAuditTrail();
+                    $history->extension_id = $id;
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = "";
+                    $history->activity_type = 'More Info Inapproved By, More Info Inapproved On';
+                    if (is_null($lastDocument->more_info_inapproved_by) || $lastDocument->more_info_inapproved_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->more_info_inapproved_by . ' , ' . $lastDocument->more_info_inapproved_on;
+                    }
+                    $history->current = $extensionNew->more_info_inapproved_by . ' , ' . $extensionNew->more_info_inapproved_on;
+                    $history->comment = $request->comment;
+                    $history->action='Submit';
+                    // $history->current = $extensionNew->more_info_inapproved_by;
+                    // $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    // $history->stage = 'Plan Proposed';
+                    $history->change_to =   "In Review";
+                    $history->change_from = "In Approved";
+                    if (is_null($lastDocument->more_info_inapproved_by) || $lastDocument->more_info_inapproved_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
                     $extensionNew->update();
-                    toastr()->success('Document Sent');
                     return back();
                 }
+
 
             } else {
                 toastr()->error('E-signature Not match');
@@ -970,7 +1061,6 @@ class ExtensionNewController extends Controller
                 $lastDocument = extension_new::find($id);
 
                 if ($extensionNew->stage == 1) {
-
                     $extensionNew->stage = "2";
                     $extensionNew->status = "In Review";
                     $extensionNew->submit_by = Auth::user()->name;
@@ -979,20 +1069,35 @@ class ExtensionNewController extends Controller
 
                     $history = new ExtensionNewAuditTrail();
                     $history->extension_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action='Submit';
-                    $history->current = $extensionNew->submit_by;
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = "";
+                    $history->activity_type = 'Submitted By, Submitted On';
+                    if (is_null($lastDocument->submit_by) || $lastDocument->submit_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->submit_by . ' , ' . $lastDocument->submit_on;
+                    }
+                    $history->current = $extensionNew->submit_by . ' , ' . $extensionNew->submit_on;
                     $history->comment = $request->comment;
+                    $history->action='Submit';
+                    // $history->current = $extensionNew->submit_by;
+                    // $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "In Review";
-                    $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
+                    $history->change_to =   "In Review";
+                    $history->change_from = "Opened";
+                    if (is_null($lastDocument->submit_by) || $lastDocument->submit_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
-
+                    $extensionNew->update();
+                    return back();
+                }
 
                     // $list = Helpers::getHodUserList();
                     // foreach ($list as $u) {
@@ -1034,9 +1139,7 @@ class ExtensionNewController extends Controller
                     //     }
                     // }
                     // dd($extensionNew);
-                    $extensionNew->update();
-                    return back();
-                }
+
                 if ($extensionNew->stage == 2) {
                     $extensionNew->stage = "3";
                     $extensionNew->status = "In Approved";
@@ -1046,18 +1149,31 @@ class ExtensionNewController extends Controller
 
                     $history = new ExtensionNewAuditTrail();
                     $history->extension_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->current = $extensionNew->HOD_Review_Complete_By;
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = "";
+                    $history->activity_type = 'Reviewed By, Reviewed  On';
+                    if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->submit_by_review . ' , ' . $lastDocument->submit_on_review;
+                    }
+                    // $history->current = $extensionNew->HOD_Review_Complete_By;
+                    $history->current = $extensionNew->submit_by_review . ' , ' . $extensionNew->submit_on_review;
                     $history->comment = $request->comment;
                     $history->action= 'Review';
+
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
+                    $history->stage = 'Plan Approved';
                     $history->change_to =   "In Approved";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Approved';
+                    if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
 
                     // dd($history->action);
@@ -1094,26 +1210,26 @@ class ExtensionNewController extends Controller
 
                     $extensionNew->submit_by_approved = Auth::user()->name;
                     $extensionNew->submit_on_approved = Carbon::now()->format('d-M-Y');
-                    $extensionNew->submit_commen_inapproved = $request->comment;
+                    $extensionNew->submit_comment_inapproved = $request->comment;
 
                     $history = new ExtensionNewAuditTrail();
                     $history->extension_id = $id;
                     // $history->activity_type = 'Activity Log';
-                    $history->activity_type = 'QA_Initial_Review_Complete_By, QA_Initial_Review_Complete_On';
-                    if (is_null($lastDocument->qa_initial_review_complete_by) || $lastDocument->qa_initial_review_complete_by === '') {
+                    $history->activity_type = 'Approved By, Approved On';
+                    if (is_null($lastDocument->submit_by_approved) || $lastDocument->submit_by_approved === '') {
                         $history->previous = "";
                     } else {
-                        $history->previous = $lastDocument->qa_initial_review_complete_by . ' , ' . $lastDocument->qa_initial_review_complete_on;
+                        $history->previous = $lastDocument->submit_by_approved . ' , ' . $lastDocument->submit_on_approved;
                     }
-                    $history->previous = "";
+                    // $history->previous = "";
                     $history->action= 'Approved';
-                    $history->current = $extensionNew->QA_Initial_Review_Complete_By;
+                    $history->current = $extensionNew->submit_by_approved . ' , ' . $extensionNew->submit_on_approved;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->change_to =   "Closed - Reject";
                     $history->change_from = $lastDocument->status;
-                    if (is_null($lastDocument->qa_initial_review_complete_by) || $lastDocument->qa_initial_review_complete_by === '') {
+                    if (is_null($lastDocument->submit_by_approved) || $lastDocument->submit_by_approved === '') {
                         $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
@@ -1340,6 +1456,7 @@ public function sendCQA(Request $request,$id)
         $today = Carbon::now()->format('d-m-y');
         $document = extension_new::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator)->value('name');
+
         return view('frontend.extension.audit_trailNew', compact('audit', 'document', 'today'));
     }
 
@@ -1349,6 +1466,7 @@ public function sendCQA(Request $request,$id)
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
             $data = ExtensionNewAuditTrail::where('extension_id', $doc->id)->orderByDesc('id')->get();
+            $audit = ExtensionNewAuditTrail::where('extension_id', $id)->get();
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();

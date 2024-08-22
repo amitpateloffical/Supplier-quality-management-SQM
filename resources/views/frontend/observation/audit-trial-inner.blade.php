@@ -188,7 +188,7 @@
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         $auditCollect = DB::table('audit_reviewers_details')
-                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
+                            ->where(['doc_id' => $document->id, 'type' => 'Observation', 'user_id' => Auth::user()->id])
                             ->latest()
                             ->first();
                     @endphp
@@ -319,7 +319,7 @@
                     <table>
                         <div class="heading">
                             <div class="heading-new">
-                                Observation Audit Trail
+                                Audit Trail
                             </div>
                             <div> <strong>Record ID : </strong>
                                 {{-- {{ Helpers::getDivisionName($document->division_id) }}/OBS/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }} --}}

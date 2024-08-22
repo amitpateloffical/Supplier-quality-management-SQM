@@ -105,7 +105,7 @@
 
     header {
         position: fixed;
-        top: -170px;
+        top: -140px;
         left: 0;
         width: 100%;
         display: block;
@@ -210,7 +210,12 @@
                         <td class="w-30">@if($data->initiator_Group){{ Helpers::getInitiatorGroupFullName($data->initiator_Group) }} @else Not Applicable @endif</td>
                         {{-- <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td> --}}
                         <th class="w-20">Initiator Group Code</th>
-                        <td class="w-30">{{ $data->initiator_group_code }}</td>
+                        <td class="w-30">  
+                        @if ($data->initiator_group_code)
+                            {{ $data->initiator_group_code }}
+                        @else
+                            Not Applicable
+                        @endif</td>
 
                      </tr>
                 </table>
@@ -227,7 +232,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Severity Level</th>
-                        <td class="w-30">{{ $data->severity_level_form }}</td>
+                        <td class="w-30">@if($data->severity_level_form){{ $data->severity_level_form }}@else Not Applicable @endif</td> 
                         <th class="w-20">Initiated Through</th>
                         <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
                     </tr>
@@ -240,7 +245,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Repeat</th>
-                        <td class="w-30"> @if($data->repeat_nature){{ $data->repeat_nature }} @else Not Applicable @endif</td>
+                        <td class="w-30"> @if($data->repeat_nature_textarea){{ $data->repeat_nature_textarea }} @else Not Applicable @endif</td>
                     </tr>
                 </table>
                 <div class = "inner-block" >
@@ -250,7 +255,7 @@
               
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Repeat Nature</label>
-                <span style="font-size:0.8rem; margin-left:10px">@if($data->repeat_nature_textarea ){{ $data->repeat_nature_textarea  }} @else Not Applicable @endif</span>
+                <span style="font-size:0.8rem; margin-left:10px">@if($data->repeat_nature ){{ $data->repeat_nature  }} @else Not Applicable @endif</span>
                 </div>
             
                 <div class = "inner-block">
@@ -280,6 +285,22 @@
                             @endif
                         </td>
                     </tr>
+                    <footer>
+                        <table>
+                            <tr>
+                                <td class="w-30">
+                                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                                </td>
+                                <td class="w-40">
+                                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                                </td>
+                                {{-- <td class="w-30">
+                                    <strong>Page :</strong> 1 of 1
+                                </td> --}}
+                            </tr>
+                        </table>
+                    </footer>
+                    
                     
                     <tr >
                         <th class="w-20">Interim Containnment</th>
@@ -345,7 +366,7 @@
                  </table>
                </div>
            
-            <div class="block">
+            {{-- <div class="block">
                 <div class="block-head">
                     Product Details
                 </div>
@@ -377,6 +398,50 @@
                         @else
                         <tr>
                             <td>1</td>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
+                        </tr>
+                        @endif
+                    </table>
+                </div>
+            </div> --}}
+            <div class="block">
+                <div class="block-head">
+                    Product Details
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">Sr no.</th>
+                            <th class="w-20">Product Name</th>
+                            <th class="w-20">Batch No</th>
+                            <th class="w-20">Manu- facturing Date</th>
+                            <th class="w-20">Date Of Expiry</th>
+                            <th class="w-20">Batch Disposition Decision</th>
+                            <th class="w-20">Remark</th>
+                            <th class="w-20">Batch Status</th>
+                        </tr>
+                        @if($data->Product_Details->product_name)
+                        @foreach (unserialize($data->Product_Details->product_name) as $key => $dataDemo)
+                        <tr>
+                            <td class="w-15">{{$dataDemo ? $key + 1  : "Not Applicable" }}</td>
+                            <td class="w-15">{{unserialize($data->Product_Details->product_name)[$key] ?  unserialize($data->Product_Details->product_name)[$key]: "Not Applicable"}}</td>
+                            <td class="w-15">{{unserialize($data->Product_Details->batch_no)[$key] ?  unserialize($data->Product_Details->batch_no)[$key] : "Not Applicable" }}</td>
+                            <td class="w-15">{{unserialize($data->Product_Details->mfg_date)[$key] ?  unserialize($data->Product_Details->mfg_date)[$key] : "Not Applicable" }}</td>
+                            <td class="w-15">{{unserialize($data->Product_Details->expiry_date)[$key] ?  unserialize($data->Product_Details->expiry_date)[$key] : "Not Applicable" }}</td>
+                            <td class="w-15">{{unserialize($data->Product_Details->batch_desposition)[$key] ?  unserialize($data->Product_Details->batch_desposition)[$key] : "Not Applicable" }}</td>
+                            <td class="w-15">{{unserialize($data->Product_Details->remark)[$key] ?  unserialize($data->Product_Details->remark)[$key] : "Not Applicable" }}</td>
+                            <td class="w-15">{{unserialize($data->Product_Details->batch_status)[$key] ?  unserialize($data->Product_Details->batch_status)[$key] : "Not Applicable" }}</td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td>1</td>
+                            <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
@@ -528,13 +593,16 @@
                 <div class="block-head">
                     CAPA Details
                 </div>
-
-                <table>
+                <div class = "inner-block">
+                    <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">CAPA Type</label>
+                <span style="font-size:0.8rem; margin-left:10px">@if($data->capa_type){{ $data->capa_type }}@else Not Applicable @endif</span>
+                </div>
+                {{-- <table>
                     <tr>
                         <th class="w-20">CAPA Type</th>
                         <td class="w-30">@if($data->capa_type){{ $data->capa_type }}@else Not Applicable @endif</td>
                     </tr>
-                </table>    
+                </table> --}}
 
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Corrective Action</label>

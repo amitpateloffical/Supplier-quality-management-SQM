@@ -23,7 +23,7 @@ class RoleGroupSeeder extends Seeder
         ];
 
         $processes_roles = [
-            'Supplier' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
+            'Supplier' => ['Initiator','Purchase Department','CQA','F&D/MS&T', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
             'Supplier Audit' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
             'Risk Assessment' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
             'Change Control' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],

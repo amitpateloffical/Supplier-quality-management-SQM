@@ -125,6 +125,26 @@ static function getFullDepartmentName($code)
         }
 
     }
+
+    /************* Get Purchase Department Roles Starts ***************/
+
+    public static function getPurchaseDeptList(){
+
+        return $getPurchaseDeptList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'34'])->get();
+    }
+
+    public static function getCQAList(){
+
+        return $getCQAList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'35'])->get();
+    }
+
+    public static function getFandD(){
+
+        return $getFandD = DB::table('user_roles')->where(['q_m_s_roles_id' =>'36'])->get();
+    }
+    
+    /************* Get Purchase Department Roles Ends ***************/
+
     public static function getHodUserList(){
 
         return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();

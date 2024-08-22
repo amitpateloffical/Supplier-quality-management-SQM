@@ -309,7 +309,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
             </div>
 
-            <form action="{{ route('capastore') }}" method="post" enctype="multipart/form-data">
+            <form id="mainform" action="{{ route('capastore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -439,7 +439,7 @@
                                                 Corporate Quality Assurance</option>
                                             <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>Quality
                                                 Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>Central
+                                            <option value="CQC" @if (old('initiator_Group') == 'CQC') selected @endif>Central
                                                 Quality Control</option>
                                             <option value="MANU" @if (old('initiator_Group') == 'MANU') selected @endif>
                                                 Manufacturing</option>
@@ -978,7 +978,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
 
@@ -1129,7 +1129,7 @@
                                 </div>
                     
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button">
@@ -1247,7 +1247,7 @@
                             </div>
                     
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1473,7 +1473,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1707,7 +1707,14 @@
             }
         }
     </script>
-
+ <script>
+    $(document).ready(function() {
+        
+        $('#mainform').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    })
+</script>
     <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee , #capa_related_record,#cft_reviewer'

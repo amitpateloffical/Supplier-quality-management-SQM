@@ -317,7 +317,7 @@
                         <div class="heading">
 
                             <div class="heading-new">
-                                Audit Trail 12334
+                                Audit Trail 
                             </div>
 
                             <div> <strong>Record ID : </strong>{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>

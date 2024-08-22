@@ -835,7 +835,7 @@
                             @endforeach
                         </select>
                     </td>
-                    <td><input type="text" name="remarks[]"></td>
+                    <td><input type="text" name="remark[]"></td>
                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                 </tr>
             </tbody>

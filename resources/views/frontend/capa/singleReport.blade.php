@@ -245,7 +245,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Repeat</th>
-                        <td class="w-30"> @if($data->repeat_nature_textarea){{ $data->repeat_nature_textarea }} @else Not Applicable @endif</td>
+                        <td class="w-80"> @if($data->repeat_nature_textarea){{ $data->repeat_nature_textarea }} @else Not Applicable @endif</td>
                     </tr>
                 </table>
                 <div class = "inner-block" >

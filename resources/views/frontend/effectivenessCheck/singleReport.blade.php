@@ -255,7 +255,19 @@
                 <div class="block-head">
                     Effectiveness Planning Information
                 </div>
-                <table>
+
+                <div class="inner-block">
+                    <label class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                       Effectiveness Check Plan </label>
+                    <span style="font-size: 0.8rem; margin-left: 60px;">
+                        @if ($data->Effectiveness_check_Plan)
+                            {{ $data->Effectiveness_check_Plan }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </span>
+                </div>
+                {{-- <table>
 
                     <tr>
                         <th class="w-20">Effectiveness Check Plan</th>
@@ -267,7 +279,7 @@
                             @endif
                         </td>
                     </tr>
-                </table>
+                </table> --}}
                 <div class="block-head">
                     Attachments
                 </div>
@@ -296,12 +308,23 @@
                 </div>
                 </table>
             </div>
-
-
-            <div class="block-head">
-                Effectiveness Summary
+            <div class="inner-block">
+                <label class="Summer"
+                    style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                    Effectiveness Summary </label>
+                <span style="font-size: 0.8rem; margin-left: 60px;">
+                    @if ($data->effect_summary)
+                        {{ $data->effect_summary }}
+                    @else
+                        Not Applicable
+                    @endif
+                </span>
             </div>
-            <table>
+
+            {{-- <div class="block-head">
+                Effectiveness Summary
+            </div> --}}
+            {{-- <table>
                 <tr>
                     <th class="w-20">Effectiveness Summary</th>
                     <td class="w-80">
@@ -312,8 +335,23 @@
                         @endif
                     </td>
                 </tr>
-            </table>
-            <div class="block-head">
+            </table> --}}
+
+
+            <div class="inner-block">
+                <label class="Summer"
+                    style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                    Effectiveness Check Results </label>
+                <span style="font-size: 0.8rem; margin-left: 60px;">
+                    @if ($data->Effectiveness_Results)
+                        {{ $data->Effectiveness_Results }}
+                    @else
+                        Not Applicable
+                    @endif
+                </span>
+            </div>
+
+            {{-- <div class="block-head">
                 Effectiveness Check Results
             </div>
             <table>
@@ -328,7 +366,7 @@
                     </td>
 
                 </tr>
-            </table>
+            </table> --}}
             <div class="block-head">
                 Effectiveness Check Attachments
             </div>
@@ -359,7 +397,19 @@
             <div class="block-head">
                 Reopen
             </div>
-            <table>
+            <div class="inner-block">
+                <label class="Summer"
+                    style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                    Addendum Comments </label>
+                <span style="font-size: 0.8rem; margin-left: 60px;">
+                    @if ($data->Addendum_Comments)
+                        {{ $data->Addendum_Comments }}
+                    @else
+                        Not Applicable
+                    @endif
+                </span>
+            </div>
+            {{-- <table>
                 <tr>
                     <th class="w-20">Addendum Comments</th>
                     <td class="w-80">
@@ -371,7 +421,7 @@
                     </td>
 
                 </tr>
-            </table>
+            </table> --}}
             <div class="block-head">
                 Addendum Attachments
             </div>
@@ -398,8 +448,24 @@
 
                 </table>
             </div>
-
             <div class="block-head">
+                Reference Info comments
+            </div>
+
+            <div class="inner-block">
+                <label class="Summer"
+                    style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                    Comments</label>
+                <span style="font-size: 0.8rem; margin-left: 60px;">
+                    @if ($data->Comments)
+                        {{ $data->Comments }}
+                    @else
+                        Not Applicable
+                    @endif
+                </span>
+            </div>
+
+            {{-- <div class="block-head">
                 Reference Info comments
             </div>
             <table>
@@ -414,7 +480,7 @@
                     </td>
 
                 </tr>
-            </table>
+            </table> --}}
             <div class="block-head">
                 Reference Attachments
             </div>
@@ -470,7 +536,7 @@
 
 <table>
     <tr>
-        <th class="w-20">Reference Records</th>
+        <th class="w-20">Reference Record</th>
         <td class="w-80">
             @if ($data->refer_record)
                 {{ $data->refer_record }}

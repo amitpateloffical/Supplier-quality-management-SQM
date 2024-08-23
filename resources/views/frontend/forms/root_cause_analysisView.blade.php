@@ -117,17 +117,39 @@
             bottomBlock.append(bottomField)
         }
 
-        function deleteFishBone(top, bottom) {
-            let mainBlock = document.querySelector('.fishbone-ishikawa-diagram');
-            let topBlock = mainBlock.querySelector(top)
-            let bottomBlock = mainBlock.querySelector(bottom)
-            if (topBlock.firstChild) {
-                topBlock.removeChild(topBlock.firstChild);
-            }
-            if (bottomBlock.lastChild) {
-                bottomBlock.removeChild(bottomBlock.lastChild);
-            }
+        // function deleteFishBone(top, bottom) {
+        //     let mainBlock = document.querySelector('.fishbone-ishikawa-diagram');
+        //     let topBlock = mainBlock.querySelector(top)
+        //     let bottomBlock = mainBlock.querySelector(bottom)
+        //     if (topBlock.firstChild) {
+        //         topBlock.removeChild(topBlock.firstChild);
+        //     }
+        //     if (bottomBlock.lastChild) {
+        //         bottomBlock.removeChild(bottomBlock.lastChild);
+        //     }
+
+        function deleteFishBone(topSelector, bottomSelector) {
+    let mainBlock = document.querySelector('.fishbone-ishikawa-diagram');
+    let topBlock = mainBlock.querySelector(topSelector);
+    let bottomBlock = mainBlock.querySelector(bottomSelector);
+
+    // Ensure both topBlock and bottomBlock are found
+    if (topBlock && bottomBlock) {
+        // Remove the last child from the top section if it exists
+        if (topBlock.children.length > 0) {
+            topBlock.removeChild(topBlock.lastElementChild);
         }
+        
+        // Remove the last child from the bottom section if it exists
+        if (bottomBlock.children.length > 0) {
+            bottomBlock.removeChild(bottomBlock.lastElementChild);
+        }
+    } else {
+        console.error('Top or bottom block not found');
+    }
+}
+}
+        
     </script>
      <script>
         function addWhyField(con_class, name) {

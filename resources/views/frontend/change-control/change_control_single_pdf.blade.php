@@ -201,7 +201,7 @@
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    General Information
+                    General Information kawhp983u98o
                 </div>
                 <table>
                     <tr> On {{ Helpers::getDateFormat($data->created_at) }} added by {{ $data->originator }}

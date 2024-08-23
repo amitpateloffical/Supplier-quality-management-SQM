@@ -83,7 +83,20 @@
 {{-- @toastr_js @toastr_render @jquery --}}
 <script src="https://cdn.tiny.cloud/1/5vbh0y1nq5y6uokc071mjvy9n4fnss5ctasrjft7x7ajm9fl/tinymce/7/tinymce.min.js"
     referrerpolicy="origin"></script>
-
+{{-- JQUERY DATEPICKER SCRIPT START --}}
+<script>
+    function initializeDatepicker()
+    {
+        $('.agenda-dates').datepicker({
+            dateFormat: 'dd M yy',
+        });
+    }
+    
+    $(document).ready(function() {
+        initializeDatepicker();
+    });
+</script>
+{{-- JQUERY DATEPICKER SCRIPT END --}}
 
 <script>
     $(document).ready(function() {
@@ -836,10 +849,12 @@
                     '<td><input type="number" name="document_no[]"></td>' +
                     '<td><input type="text" name="version_no[]"></td>' +
                     // '<td><input type="date" name="implementation_date[]"></td>' 
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="implementation_date' +
-                    serialNumber +
-                    '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="implementation_date[]" class="hide-input" oninput="handleDateInput(this, `implementation_date' +
-                    serialNumber + '`)" /></div></div></div></td>' +
+                    // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="implementation_date' +
+                    // serialNumber +
+                    // '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="implementation_date[]" class="hide-input" oninput="handleDateInput(this, `implementation_date' +
+                    // serialNumber + '`)" /></div></div></div></td>' +
+
+                    '<td><input type="text" name="implementation_date[]" class="agenda-dates" placeholder="DD-MM-YYYY"></td>'+
 
                     '<td><input type="text" name="new_document_no[]"></td>' +
                     '<td><input type="text" name="new_version_no[]"></td>' +
@@ -852,11 +867,17 @@
             var rowCount = tableBody.children('tr').length;
             var newRow = generateTableRow(rowCount + 1);
             tableBody.append(newRow);
+
+            initializeDatepicker();
+
         });
         $(document).on('click', '.removeaddAffectedDocumentsbtn', function() {
             $(this).closest('tr').remove();
         })
-
+       
+               
+                
+                
         $('#addProductDetail').click(function(e) {
             @php
                 $product = DB::table('products')->get();

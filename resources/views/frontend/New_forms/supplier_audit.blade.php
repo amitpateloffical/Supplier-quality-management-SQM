@@ -686,15 +686,15 @@
                                     </div>
                                 </div> --}}
                                 <div class="col-12">
-    <div class="group-input">
-        <label for="initial_comments">Description</label>
-        <div class="relative-container">
-            <textarea name="initial_comments" id="initial_comments" class="mic-input"></textarea>
-            @component('frontend.forms.language-model')
-             @endcomponent
-        </div>
-    </div>
-</div>
+                                    <div class="group-input">
+                                        <label for="initial_comments">Description</label>
+                                        <div class="relative-container">
+                                            <textarea name="initial_comments" id="initial_comments" class="mic-input"></textarea>
+                                            @component('frontend.forms.language-model')
+                                            @endcomponent
+                                        </div>
+                                    </div>
+                                </div>
 
                                
                                 <div class="col-12">
@@ -714,6 +714,27 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            {{-- <div class="col-12">
+                                <div class="group-input">
+                                    <label for="inv Attachments">Initial Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="audit_file_attachment"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="inv_attachment[]"
+                                                oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+
+
+
+
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button ">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>

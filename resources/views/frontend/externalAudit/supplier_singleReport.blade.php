@@ -364,6 +364,7 @@
                         <th class="w-20">Remarks</th>
                         <td class="w-80" colspan="3">@if($data->Remarks){{ $data->Remarks }}@else Not Applicable @endif</td>
                     </tr>
+                    
                 </table>
             </div>
             <div class="border-table">

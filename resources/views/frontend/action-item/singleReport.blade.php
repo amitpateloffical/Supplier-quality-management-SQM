@@ -196,12 +196,12 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-80">
                             @if ($data->record)
-                                {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                                {{ Helpers::divisionNameForQMS($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Site/Location Code</th>
+                        <th class="w-20">Division Code</th>
                         <td class="w-80">
                             @if ($data->division_id)
                                 {{ Helpers::getDivisionName($data->division_id) }}
@@ -242,7 +242,7 @@
                         <th class="w-20">Action Item Related Records</th>
                         <td class="w-80">
                             @if ($data->Reference_Recores1)
-                                {{ Helpers::getDivisionName($data->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}
+                                {{ $data->Reference_Recores1 }}
                             @else
                                 Not Applicable
                             @endif
@@ -344,12 +344,12 @@ Not Applicable
 @endif
 </td>
                         </tr>
-                    
+
 
                         </table>
                       </div>
                     </table>
-                   
+
                 </div>
             </div> -->
 

@@ -18,8 +18,16 @@
         min-height: 100vh;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
     .w-10 {
         width: 10%;
+    }
+
+    .w-15 {
+        width: 15%;
     }
 
     .w-20 {
@@ -68,6 +76,8 @@
         border: 1px solid black;
         border-collapse: collapse;
         font-size: 0.9rem;
+        overflow: hidden;
+        vertical-align: middle;
     }
 
     table {
@@ -143,6 +153,11 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -151,11 +166,11 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                     Audit Trail Report
+                    Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="" class="w-100" >
+                        <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -166,7 +181,8 @@
                     <strong>Extension No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($doc->site_location_code) }}/Extension/{{ Helpers::year($doc->created_at)}}/ {{ str_pad($doc->record_number, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::getDivisionName($doc->site_location_code) }}/Extension/{{ Helpers::year($doc->created_at) }}/
+                    {{ str_pad($doc->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record_number, 4, '0', STR_PAD_LEFT) }}
@@ -190,48 +206,44 @@
     </footer>
     <div class="inner-block">
         <div class="second-table">
-            <table>
-                <thead>
+            <table class="allow-wb" style="table-layout: fixed; width: 700px;">
+                <thead style="max-width: 100px;">
                     <tr class="table_bg">
-                        <th>S.No</th>
-                        <th>Flow Changed From</th>
-                        <th>Flow Changed To</th>
-                        <th>Data Field</th>
-                        <th>Action Type</th>
-                        <th>Performer</th>
+                        <th class="w-5">S.No</th>
+                        <th class="w-15">Flow Changed From</th>
+                        <th class="w-15">Flow Changed To</th>
+                        <th class="w-30">Data Field</th>
+                        <th class="w-15" style="word-break: break-all;">Action Type</th>
+                        <th class="w-15" style="word-break: break-all;">Performer</th>
                     </tr>
                 </thead>
-                {{-- @foreach ($data as $datas)
-                    <tr>
-                        @php
-                            $previousItem = null;
-                        @endphp --}}
-
-                <tbody>
+                <tbody style="max-width: 100px;">
                     @foreach ($data as $index => $dataDemo)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>
-                                <div><strong>Changed From :</strong> {{ $dataDemo->change_from }}</div>
-                            </td>
-                            <td>
-                                <div><strong>Changed To :</strong> {{ $dataDemo->change_to }}</div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong>Data Field Name :</strong>
-                                    {{ $dataDemo->activity_type ?: 'Not Applicable' }}
+                            <td class="w-10">{{ $loop->iteration }}</td>
+                            <td class="w-20">
+                                <div><strong>Changed From :</strong>
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->change_from, 600) }}
                                 </div>
-                                <div style="margin-top: 5px;" class="imageContainer">
-                                    <!-- Assuming $dataDemo->image_url contains the URL of your image -->
+                            </td>
+                            <td class="w-20">
+                                <div><strong>Changed To :</strong>
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->change_to, 600) }}
+                                </div>
+                            </td>
+                            <td class="w-30">
+                                <div class="allow-wb">
+                                    <strong>Data Field Name :</strong>
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->activity_type ?: 'Not Applicable', 600) }}
+                                </div>
+                                <div style="margin-top: 5px;" class="imageContainer allow-wb">
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change From :</strong>
                                         @if ($dataDemo->change_from)
-                                            {{-- Check if the change_from is a date --}}
                                             @if (strtotime($dataDemo->change_from))
                                                 {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d-M-Y') }}
                                             @else
-                                                {{ str_replace(',', ', ', $dataDemo->change_from) }}
+                                                {{ \Illuminate\Support\Str::limit(str_replace(',', ', ', $dataDemo->change_from), 600) }}
                                             @endif
                                         @elseif($dataDemo->change_from && trim($dataDemo->change_from) == '')
                                             NULL
@@ -241,64 +253,58 @@
                                     @else
                                         <strong>Change From :</strong>
                                         @if (!empty(strip_tags($dataDemo->previous)))
-                                            {{-- Check if the previous is a date --}}
                                             @if (strtotime($dataDemo->previous))
                                                 {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d-M-Y') }}
                                             @else
-                                                {!! $dataDemo->previous !!}
+                                                {!! \Illuminate\Support\Str::limit($dataDemo->previous, 600) !!}
                                             @endif
-                                        @elseif($dataDemo->previous == null)
-                                            Null
                                         @else
-                                            Not Applicable
+                                            Null
                                         @endif
                                     @endif
                                 </div>
                                 <br>
-
-                                <div class="imageContainer">
+                                <div class="allow-wb">
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change To :</strong>
-                                        @if (strtotime($dataDemo->change_to))
-                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
-                                        @else
-                                            {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
-                                        @endif
+                                        <span style="word-break: break-all; max-width: 20px;">
+                                            {{ \Illuminate\Support\Str::limit($dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable', 600) }}
+                                        </span>
                                     @else
                                         <strong>Change To :</strong>
-                                        @if (strtotime($dataDemo->current))
-                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
-                                        @else
-                                            {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
-                                        @endif
+                                        <span style="word-break: break-all; width: 20px; word-wrap: break-word;">
+                                            {{ \Illuminate\Support\Str::limit($dataDemo->current ? $dataDemo->current : 'Not Applicable', 600) }}
+                                        </span>
                                     @endif
                                 </div>
-                                <div style="margin-top: 5px;">
+                                <div class="allow-wb" style="margin-top: 5px;">
                                     <strong>Change Type :</strong>
-                                    {{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable', 600) }}
                                 </div>
                             </td>
-                            <td>
+                            <td class="w-10">
                                 <div><strong>Action Name :</strong>
-                                    {{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}</div>
-                            </td>
-                            <td>
-                                <div><strong>Performed By :</strong>
-                                    {{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}</div>
-                                <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->action ? $dataDemo->action : 'Not Applicable', 600) }}
                                 </div>
-                                <div style="margin-top: 5px;"><strong>Comments :</strong>
-                                    {{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
+                            </td>
+                            <td class="w-15">
+                                <div><strong>Performed By :</strong>
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable', 600) }}
+                                </div>
+                                <div style="margin-top: 5px;">
+                                    <strong>Performed On :</strong>
+                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
+                                </div>
+                                <div style="margin-top: 5px;">
+                                    <strong>Comments :</strong>
+                                    {{ \Illuminate\Support\Str::limit($dataDemo->comment ? $dataDemo->comment : 'Not Applicable', 600) }}
+                                </div>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-
-            </table>
         </div>
-
     </div>
 
 </body>

@@ -155,7 +155,7 @@ static function getFullDepartmentName($code)
     }
     public static function getInitiatorUserList(){
 
-        return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'3'])->get();
+        return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'3'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
     }
     public static function getApproverUserList(){
 

@@ -29,12 +29,13 @@ class EffectivenessCheckController extends Controller
 
     public function effectiveness_check()
     {
+        $old_record = EffectivenessCheck::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view('frontend.forms.effectiveness-check', compact('due_date', 'record_number'));
+        return view('frontend.forms.effectiveness-check', compact('due_date', 'record_number', 'old_record'));
     }
 
     public function index()
@@ -86,6 +87,8 @@ class EffectivenessCheckController extends Controller
         $openState->Quality_Reviewer = $request->Quality_Reviewer;
         $openState->Effectiveness_Results = $request->Effectiveness_Results;
         $openState->Addendum_Comments = $request->Addendum_Comments;
+        $openState->refer_record = implode(',', $request->refer_record);
+
 
        // $openState->Cancellation_Category = $request->Cancellation_Category;
         //$openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
@@ -141,19 +144,19 @@ class EffectivenessCheckController extends Controller
 
             $openState->Attachments = json_encode($files);
         }
-       // $openState->refer_record = $request->refer_record;
-       if (!empty($request->refer_record)) {
-            $files = [];
-            if ($request->hasfile('refer_record')) {
-                foreach ($request->file('refer_record') as $file) {
-                    $name = $request->name . 'refer_record' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
+        // $openState->refer_record = $request->refer_record;
+    //    if (!empty($request->refer_record)) {
+    //         $files = [];
+    //         if ($request->hasfile('refer_record')) {
+    //             foreach ($request->file('refer_record') as $file) {
+    //                 $name = $request->name . 'refer_record' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+    //                 $file->move('upload/', $name);
+    //                 $files[] = $name;
+    //             }
+    //         }
 
-            $openState->refer_record = json_encode($files);
-        }
+    //         $openState->refer_record = json_encode($files);
+    //     }
         $openState->Comments = $request->Comments;
         $openState->status = "Opened";
         $openState->stage = 1;
@@ -504,7 +507,8 @@ class EffectivenessCheckController extends Controller
     public function show($id)
     {
         $data = EffectivenessCheck::find($id);
-        return view('frontend.effectivenessCheck.view', compact('data'));
+        $old_record = EffectivenessCheck::select('id', 'division_id', 'record')->get();
+        return view('frontend.effectivenessCheck.view', compact('data', 'old_record'));
     }
 
     public function edit($id)
@@ -524,6 +528,8 @@ class EffectivenessCheckController extends Controller
         $openState->effect_summary = $request->effect_summary;
         $openState->Effectiveness_Results = $request->Effectiveness_Results;
         $openState->Addendum_Comments = $request->Addendum_Comments;
+        $openState->refer_record = implode(',', $request->refer_record);
+
      //   $openState->Cancellation_Category = $request->Cancellation_Category;
         //$openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
 
@@ -676,30 +682,30 @@ class EffectivenessCheckController extends Controller
         //         }
         //     }
 
-        //     $openState->refer_record = json_encode($files);
+            // $openState->refer_record = json_encode($files);
         // }
-        $files = is_array($request->existing_refer_record) ? $request->existing_refer_record : null;
+        // $files = is_array($request->existing_refer_record) ? $request->existing_refer_record : null;
 
-        if (!empty($request->refer_record)) {
-            if ($openState->refer_record) {
-                $existingFiles = json_decode($openState->refer_record, true); // Convert to associative array
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
-                }
-            }
+        // if (!empty($request->refer_record)) {
+        //     if ($openState->refer_record) {
+        //         $existingFiles = json_decode($openState->refer_record, true); // Convert to associative array
+        //         if (is_array($existingFiles)) {
+        //             $files = $existingFiles;
+        //         }
+        //     }
 
-            if ($request->hasfile('refer_record')) {
-                foreach ($request->file('refer_record') as $file) {
-                    $name = $request->name . 'refer_record' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-        }
-        // If no files are attached, set to null
-        $openState->refer_record = !empty($files) ? json_encode($files) : null;
+        //     if ($request->hasfile('refer_record')) {
+        //         foreach ($request->file('refer_record') as $file) {
+        //             $name = $request->name . 'refer_record' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        // }
+        // // If no files are attached, set to null
+        // $openState->refer_record = !empty($files) ? json_encode($files) : null;
 
-
+        // $openState->refer_record = $request->refer_record;
         $openState->Comments = $request->Comments;
         $openState->update();
 

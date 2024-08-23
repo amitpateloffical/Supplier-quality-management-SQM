@@ -741,7 +741,7 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Department(s)">Department(s)</label>
+                                                <label for="Department(s.)">Department(s.)</label>
                                                 <select multiple name="departments2[]" placeholder="Select Departments"
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="departments"
@@ -2810,19 +2810,19 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="group-input">
-                                                <label for="Request More Info By">Request More Info By</label>
+                                                <label for="Request More-Info By">Request More-Info By</label>
                                                 <div class="static">{{ $data->request_more_info_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="group-input">
-                                                <label for="Request More Info On">Request More Info On</label>
+                                                <label for="Request More-Info On">Request More-Info On</label>
                                                 <div class="static">{{ $data->request_more_info_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Request More Info Comment">Request More Info
+                                                <label for="Request More-Info Comment">Request More-Info
                                                     Comment</label>
                                                 <div class="static">{{ $data->request_more_info_comment }}</div>
                                             </div>
@@ -3072,9 +3072,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button class="on-submit-disable-button" type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3119,9 +3119,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button class="on-submit-disable-button" type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3166,9 +3166,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                             <div class="modal-footer">
                                 <button class="on-submit-disable-button" type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>

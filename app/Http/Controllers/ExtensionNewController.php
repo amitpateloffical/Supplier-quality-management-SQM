@@ -140,7 +140,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -157,7 +157,7 @@ class ExtensionNewController extends Controller
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         //     $history->origin_state = $extensionNew->status;
-        //     $history->change_to =   "Opened";
+        //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
         //     $history->action_name = 'Create';
         //     $history->save();
@@ -170,7 +170,7 @@ class ExtensionNewController extends Controller
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($extensionNew->initiator);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -192,7 +192,7 @@ class ExtensionNewController extends Controller
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         //     $history->origin_state = $extensionNew->status;
-        //     $history->change_to =   "Opened";
+        //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
         //     $history->action_name = 'Create';
         //     $history->save();
@@ -209,7 +209,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to =  "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -226,7 +226,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -243,7 +243,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -252,7 +252,7 @@ class ExtensionNewController extends Controller
         if (!empty ($request->site_location_code)){
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'Site Location Code';
+            $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($extensionNew->site_location_code);
             $history->comment = "Not Applicable";
@@ -260,7 +260,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -277,7 +277,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -293,7 +293,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -309,7 +309,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -325,7 +325,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -341,7 +341,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -357,7 +357,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -373,7 +373,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -390,7 +390,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -406,7 +406,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -423,7 +423,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -439,7 +439,7 @@ class ExtensionNewController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $extensionNew->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
@@ -580,11 +580,11 @@ class ExtensionNewController extends Controller
 
         if ($lastextensionNew->current_due_date != $extensionNew->current_due_date || !empty ($request->comment)) {
             $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
-            ->where('activity_type', 'Current Due Date')
+            ->where('activity_type', 'Current Due Date (Parent)')
             ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
-            $history->activity_type = 'Current Due Date';
+            $history->activity_type = 'Current Due Date (Parent)';
              $history->previous = Helpers::getDateFormat($lastextensionNew->current_due_date);
             $history->current =  Helpers::getDateFormat($extensionNew->current_due_date);
             $history->comment = $extensionNew->comment;
@@ -859,11 +859,11 @@ class ExtensionNewController extends Controller
 
         if ($lastextensionNew->file_attachment_approver != $extensionNew->file_attachment_approver || !empty ($request->comment)) {
             $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
-            ->where('activity_type', 'QA Attachmentt')
+            ->where('activity_type', 'QA Attachment')
             ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
-            $history->activity_type = 'QA Attachmentt';
+            $history->activity_type = 'QA Attachment';
              $history->previous = $lastextensionNew->file_attachment_approver;
             $history->current = $extensionNew->file_attachment_approver;
             $history->comment = $extensionNew->comment;
@@ -991,7 +991,7 @@ class ExtensionNewController extends Controller
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
                     // $history->stage = 'Plan Proposed';
-                    $history->change_to =   "Opened";
+                    $history->change_to = "Opened";
                     $history->change_from = "In Review";
                     if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
                         $history->action_name = 'New';
@@ -1210,7 +1210,7 @@ class ExtensionNewController extends Controller
 
                     $extensionNew->submit_by_approved = Auth::user()->name;
                     $extensionNew->submit_on_approved = Carbon::now()->format('d-M-Y');
-                    $extensionNew->submit_comment_inapproved = $request->comment;
+                    $extensionNew->submit_commen_inapproved = $request->comment;
 
                     $history = new ExtensionNewAuditTrail();
                     $history->extension_id = $id;

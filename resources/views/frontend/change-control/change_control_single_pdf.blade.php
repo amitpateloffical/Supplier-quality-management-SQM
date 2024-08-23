@@ -184,7 +184,19 @@
             </tr>
         </table>
     </header>
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
 
+            </tr>
+        </table>
+    </footer>
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
@@ -198,6 +210,24 @@
 
                         <th class="w-20">Date Initiation</th>
                         <td class="w-30">{{ $data->intiation_date }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">
+                            @if ($data->division_id)
+                                {{ $data->division_id }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-80">
+                            @if ($data->record)
+                                {{ Helpers::divisionNameForQMS($data->division_id) }}//{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
 
                     <tr>
@@ -1123,19 +1153,7 @@
     </div>
     </div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-
-            </tr>
-        </table>
-    </footer>
+   
 
 </body>
 

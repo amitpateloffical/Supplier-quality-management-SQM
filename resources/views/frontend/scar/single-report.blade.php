@@ -208,11 +208,15 @@
                     <tr>
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
-                        <th class="w-20">Recard Number</th>
-                        <td class="w-30">{{ str_pad( $data->record, 4, '0', STR_PAD_LEFT) }}</td>
-                       
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">
+                            {{ Helpers::getDivisionName($data->division_id) }}/SCAR/{{ date('Y') }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
+                        </td>
+
                     </tr>
                     <tr>
+                        <th class="w-20">Division</th>
+                        <td class="w-30">{{ Helpers::getDivisionName($data->division_id) }}</td>
                         <th class="w-20"> Initiation Date</th>
                         <td class="w-30">{{ Helpers::getDateFormat($data->initiation_date) }}</td>
                     </tr>
@@ -439,89 +443,101 @@ Not Applicable
             <table>
                 <tr>
                     <th class="w-20">Submitted By</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->submitted_by }}</div>
                     </td>
                     <th class="w-20">Submitted On</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->submitted_on }}</div>
                     </td>
+                </tr>
+                <tr>
                     <th class="w-20">Submitted Comment</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->submitted_comment }}</div>
                     </td>
                 </tr>
                 <tr>
                     <th class="w-20">Acknowledge By</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->acknowledge_by }}</div>
                     </td>
                     <th class="w-20">Acknowledge On</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->acknowledge_on }}</div>
                     </td>
+                </tr>
+                <tr>
                     <th class="w-20">Acknowledge Comment</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->acknowledge_comment }}</div>
                     </td>
                 </tr>
 
                 <tr>
                     <th class="w-20">Work in Progress By</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->workin_progress_by }}</div>
                     </td>
                     <th class="w-20">Work in Progress On</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->workin_progress_on }}</div>
                     </td>
+                </tr>
+                <tr>
                     <th class="w-20">Work in Progress Comment</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->workin_progress_comment }}</div>
                     </td>
                 </tr>
 
                 <tr>
                     <th class="w-20">Response Submitted By</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->response_submitted_by }}</div>
                     </td>
                     <th class="w-20">Response Submitted On</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->response_submitted_on }}</div>
                     </td>
+                </tr>
+                <tr>
                     <th class="w-20">Response Submitted Comment</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->response_submitted_comment }}</div>
                     </td>
                 </tr>
 
                 <tr>
                     <th class="w-20">Rejected By</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->rejected_by }}</div>
                     </td>
                     <th class="w-20">Rejected On</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->rejected_on }}</div>
                     </td>
+                </tr>
+                <tr>
                     <th class="w-20">Rejected Comment</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->rejected_comment }}</div>
                     </td>
                 </tr>
 
                 <tr>
                     <th class="w-20">Approved By</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->approved_by }}</div>
                     </td>
                     <th class="w-20">Approved On</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->approved_on }}</div>
                     </td>
+                </tr>
+                <tr>
                     <th class="w-20">Approved Comment</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div class="static">{{ $data->approved_comment }}</div>
                     </td>
                 </tr>

@@ -6005,38 +6005,28 @@ class SupplierController extends Controller
                     }
                     $history->save();
 
-                    // $history = new SupplierAuditTrail();
-                    // $history->supplier_id = $id;
-                    // $history->activity_type = 'Need for Sourcing of Starting Material On';
-                    // $history->previous = "";
-                    // $history->action = 'Need for Sourcing of Starting Material';
-                    // $history->current = "Not Applicable";
-                    // $history->comment = $request->comments;
-                    // $history->user_id = Auth::user()->id;
-                    // $history->user_name = Auth::user()->name;
-                    // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    // $history->origin_state = $lastDocument->status;
-                    // $history->change_to =   "Pending Initiating Department Update";
-                    // $history->change_from = $lastDocument->status;
-                    // $history->stage = 'Plan Proposed';
-                    // $history->save();
+                    $list = Helpers::getInitiatorUserList();
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $supplier->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $supplier],
+                                        function ($message) use ($email) {
+                                            // dd("test rty",$email);
+                                            $message->to("gaurav.vidyagxp@gmail.com")
+                                                    ->subject("Document is Sent By " . Auth::user()->name);
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                                // }
+                            }
 
-                    // $list = Helpers::getInitiatorUserList();
-                    // foreach ($list as $u) {
-                    //     if($u->q_m_s_divisions_id == $supplier->division_id){
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //           if ($email !== null) {
-                    //            Mail::send(
-                    //                'mail.view-mail',
-                    //                 ['data' => $supplier],
-                    //              function ($message) use ($email) {
-                    //                $message->to($email)
-                    //                    ->subject("Document is Send By".Auth::user()->name);
-                    //            }
-                    //          );
-                    //        }
-                    //     }
-                    // }
                     $supplier->update();
 
                     toastr()->success('Sent to Pending Initiating Department Update');

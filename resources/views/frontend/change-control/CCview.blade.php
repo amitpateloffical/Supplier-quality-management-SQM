@@ -208,7 +208,7 @@
                             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Change Closure</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
                         </div>
-                        <form id="CCFormInput" action="{{ route('CC.update', $data->id) }}" method="POST" enctype="multipart/form-data">
+                        <form id="CCFormInput" class="formSubmit" {{ route('CC.update', $data->id) }} method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -229,7 +229,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Division Code"><b>Division Code</b></label>
+                                                    <label for="Division Code"><b>Site/location Code</b></label>
                                                     <input disabled type="text" name="division_code" value=" {{ Helpers::getDivisionName($data->division_id) }}">
                                                 </div>
                                             </div>
@@ -558,7 +558,7 @@
                                             </div>
                                         </div>
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
+                                            <button type="submit" class="saveButton on-submit-disable-button" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit</a> </button>
                                         </div>
@@ -687,7 +687,7 @@
                                         </div>
 
                                         <div class="button-block">
-                                            <button type="submit"id="ChangesaveButton" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
+                                            <button type="submit"id="ChangesaveButton" class="saveButton on-submit-disable-button" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -808,7 +808,7 @@
                                             </div>
                                         </div>
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
+                                            <button type="submit" class="saveButton on-submit-disable-button" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -892,7 +892,7 @@
                                         </div>
 
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
+                                            <button type="submit" class="saveButton on-submit-disable-button" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1258,7 +1258,7 @@
                                             </div>
                                         </div>
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
+                                            <button type="submit" class="saveButton on-submit-disable-button" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1310,7 +1310,7 @@
                                                 <div class="group-input">
                                                     <label for="Occurance">Occurance</label>
                                                     <select name="Occurance" id="analysisP"
-                                                        onchange='calculateRiskAnalysis(this)' {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                        onchange='deleteFishBone' {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option
                                                             {{ $data->Occurance == '1' ? 'selected' : '' }}
@@ -1377,7 +1377,7 @@
                                         </div>
 
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
+                                            <button type="submit" class="saveButton on-submit-disable-button" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1445,7 +1445,7 @@
                                         </div>
 
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
+                                            <button type="submit" class="saveButton on-submit-disable-button" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1506,9 +1506,9 @@
                                                                 <div class="group-input new-date-data-field mb-0">
                                                                     <div class="input-date ">
                                                                         <div class="calenderauditee">
-                                                                            <input type="" id="implementation_date"
-                                                                                placeholder="DD-MM-YYYY"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                                            <input type="date" name="implementation_date[]" class="hide-input"
+                                                                            <input type="text"  id="implementation_date" 
+                                                                                placeholder="DD-MM-YYYY"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} readonly />
+                                                                            <input type="date" name="implementation_date[]" class="hide-input" placeholder="DD-MM-YYYY"  value="{{ Helpers::getdateFormat($closure->implementation_date)[$key] }}"
                                                                                 oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" 
                                                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}   value="{{ unserialize($closure->implementation_date)[$key] ? unserialize($closure->implementation_date)[$key] : '' }}"/>
                                                                         </div>
@@ -1670,7 +1670,7 @@
                                             </div>
                                         </div>
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton" @if($data->stage == 6) disabled @endif>Save</button>
+                                            <button type="submit" class="saveButton on-submit-disable-button" @if($data->stage == 6) disabled @endif>Save</button>
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1900,7 +1900,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ url('rcms/send-cc', $cc_lid) }}" method="POST">
+                <form class="formSubmit" action="{{ url('rcms/send-cc', $cc_lid) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -1925,7 +1925,7 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="submit" class="formsubmit" data-bs-dismiss="modal">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                         {{-- <button>Close</button> --}}
                     </div>
@@ -2033,7 +2033,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('rcms/send-rejection-field', $cc_lid) }}" method="POST">
+                <form class="formSubmit" action="{{ url('rcms/send-rejection-field', $cc_lid) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -2077,7 +2077,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('rcms/send-cft-field', $cc_lid) }}" method="POST">
+                <form class="formSubmit" action="{{ url('rcms/send-cft-field', $cc_lid) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -2120,7 +2120,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('rcms/send-cancel', $cc_lid) }}" method="POST">
+                <form class="formSubmit" action="{{ url('rcms/send-cancel', $cc_lid) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -2375,6 +2375,14 @@
             console.log('removeId', removeId);
             $('#' + removeId).remove();
         })
+    })
+</script>
+<script>
+    $(document).ready(function() {
+
+        $('.formSubmit').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
     })
 </script>
 @endsection

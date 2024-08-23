@@ -76,20 +76,33 @@ use Illuminate\Support\Facades\Hash;
         if (!empty($request->measurement  )) {
             $root->measurement = serialize($request->measurement);
         }
+        else {
+            $data2->measurement = serialize([]);
+        }
         if (!empty($request->materials  )) {
             $root->materials = serialize($request->materials);
+        } else {
+            $data2->materials = serialize([]);
         }
         if (!empty($request->environment  )) {
             $root->environment = serialize($request->environment);
+        } else {
+            $data2->environment = serialize([]);
         }
         if (!empty($request->manpower  )) {
             $root->manpower = serialize($request->manpower);
+        } else {
+            $data2->manpower = serialize([]);
         }
         if (!empty($request->machine  )) {
             $root->machine = serialize($request->machine);
+        } else {
+            $data2->machine = serialize([]);
         }
         if (!empty($request->methods)) {
             $root->methods = serialize($request->methods);
+        } else {
+            $data2->methods = serialize([]);
         }
         $root->problem_statement = ($request->problem_statement);
         // Why-Why Chart (Launch Instruction) Problem Statement 
@@ -1006,24 +1019,38 @@ $history->save();
 
         if (!empty($request->measurement)) {
             $root->measurement = serialize($request->measurement);
+        }else {
+            $data2->measurement = serialize([]);
         }
         if (!empty($request->materials)) {
             $root->materials = serialize($request->materials);
+        }else {
+            $data2->materials = serialize([]);
         }
         if (!empty($request->methods)) {
             $root->methods = serialize($request->methods);
+        }else {
+            $data2->methods = serialize([]);
         }
         if (!empty($request->environment)) {
             $root->environment = serialize($request->environment);
+        }else {
+            $data2->environment = serialize([]);
         }
         if (!empty($request->manpower)) {
             $root->manpower = serialize($request->manpower);
+        }else {
+            $data2->manpower = serialize([]);
         }
         if (!empty($request->machine)) {
             $root->machine = serialize($request->machine);
+        }else {
+            $data2->machine = serialize([]);
         }
         if (!empty($request->problem_statement)) {
             $root->problem_statement = $request->problem_statement;
+        }else {
+            $data2->problem_statement = serialize([]);
         }
         $root->update(); 
 

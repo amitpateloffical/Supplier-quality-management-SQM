@@ -1166,7 +1166,9 @@
                                         {{-- <td><input type="date" name="implementation_date[]">
                                             </td> --}}
                                         <td>
-                                            <div class="group-input new-date-data-field mb-0">
+                                            <input type="text" name="implementation_date[]" class="agenda-dates" placeholder="DD-MM-YYYY">
+
+                                            {{-- <div class="group-input new-date-data-field mb-0">
                                                 <div class="input-date ">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="implementation_date' + serialNumber +'"
@@ -1176,7 +1178,7 @@
                                                             oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" />
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </td>
                                         <td><input type="text" name="new_document_no[]">
                                         </td>
@@ -1667,6 +1669,20 @@
             $('#rchars').text(textlen);
         });
     </script>
+    {{-- JQUERY DATEPICKER SCRIPT START --}}
+<script>
+    function initializeDatepicker()
+    {
+        $('.agenda-dates').datepicker({
+            dateFormat: 'dd M yy',
+        });
+    }
+    
+    $(document).ready(function() {
+        initializeDatepicker();
+    });
+</script>
+{{-- JQUERY DATEPICKER SCRIPT END --}}
 
 
 

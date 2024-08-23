@@ -1501,20 +1501,23 @@
                                                                 <input type="text" name="version_no[]" value="" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                 @endif
                                                             </td> 
-                                                            
                                                             <td>
-                                                                <div class="group-input new-date-data-field mb-0">
-                                                                    <div class="input-date ">
+                                                                <input type="text" name="implementation_date[]" class="agenda-dates" value="{{ unserialize($closure->implementation_date)[$key] ? unserialize($closure->implementation_date)[$key] : '' }}" placeholder="DD-MM-YYYY">
+                                                                {{-- <div class="group-input new-date-data-field mb-0">
+                                                                    <div class="input-date">
                                                                         <div class="calenderauditee">
-                                                                            <input type="text"  id="implementation_date" 
-                                                                                placeholder="DD-MM-YYYY"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} readonly />
-                                                                            <input type="date" name="implementation_date[]" class="hide-input" placeholder="DD-MM-YYYY"  value="{{ Helpers::getdateFormat($closure->implementation_date)[$key] }}"
-                                                                                oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" 
-                                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}   value="{{ unserialize($closure->implementation_date)[$key] ? unserialize($closure->implementation_date)[$key] : '' }}"/>
+                                                                            <input type="date" id="implementation_date' + serialNumber +'"  
+                                                                                name="implementation_date[]" 
+                                                                                placeholder="DD-MM-YYYY"
+                                                                                value="{{  unserialize($closure->implementation_date)[$key] ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : '' }}"
+                                                                                oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)"
+                                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div> --}}
                                                             </td>
+                                                            
+                                                            
                                                            
                                                            
                                                             <td><input type="text" name="new_document_no[]"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -2385,4 +2388,18 @@
         });
     })
 </script>
+{{-- JQUERY DATEPICKER SCRIPT START --}}
+<script>
+    function initializeDatepicker()
+    {
+        $('.agenda-dates').datepicker({
+            dateFormat: 'dd M yy',
+        });
+    }
+    
+    $(document).ready(function() {
+        initializeDatepicker();
+    });
+</script>
+{{-- JQUERY DATEPICKER SCRIPT END --}}
 @endsection

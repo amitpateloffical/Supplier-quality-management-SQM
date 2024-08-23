@@ -399,7 +399,7 @@
                                         @if (strtotime($dataDemo->current))
                                             {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
                                         @else
-                                            {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
+                                            {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Null' !!}
                                         @endif
                                     @endif
 

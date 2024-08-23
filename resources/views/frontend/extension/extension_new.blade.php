@@ -340,7 +340,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Guideline Attachment"> Attachment Extension </label>
+                                        <label for="Guideline Attachment">Extension Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -558,19 +558,19 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for=" Rejected By">More Info Required By</label>
+                                    <label for=" Rejected By">More Info Required By (In Approval)</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Rejected On">More Info Required On</label>
+                                    <label for="Rejected On">More Info Required On (In Approval)</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Rejected On">More Info Required Comment</label>
+                                    <label for="Rejected On">More Info Required Comment (In Approval)</label>
                                     <div class="static"></div>
                                 </div>
                             </div>

@@ -74,7 +74,7 @@ class ExtensionNewController extends Controller
         $extensionNew->reviewer_remarks = $request->reviewer_remarks;
         // $extensionNew->file_attachment_reviewer = $request->file_attachment_reviewer;
         $extensionNew->approver_remarks = $request->approver_remarks;
-        $extensionNew->file_attachment_approver = $request->file_attachment_approver;
+        // $extensionNew->file_attachment_approver = $request->file_attachment_approver;
 
         $counter = DB::table('record_numbers')->value('counter');
         // Generate the record number with leading zeros
@@ -495,10 +495,19 @@ class ExtensionNewController extends Controller
         $extensionNew->reviewer_remarks = $request->reviewer_remarks;
         // $extensionNew->file_attachment_reviewer = $request->file_attachment_reviewer;
         $extensionNew->approver_remarks = $request->approver_remarks;
-        $extensionNew->file_attachment_approver = $request->file_attachment_approver;
+        // $extensionNew->file_attachment_approver = $request->file_attachment_approver;
 
-        if (!empty ($request->file_attachment_extension)) {
-            $files = [];
+
+        $files = is_array($request->existing_file_attachment_extension) ? $request->existing_file_attachment_extension : null;
+
+        if (!empty($request->file_attachment_extension)) {
+            if ($extensionNew->file_attachment_extension) {
+                $existingFiles = json_decode($extensionNew->file_attachment_extension, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('file_attachment_extension')) {
                 foreach ($request->file('file_attachment_extension') as $file) {
                     $name = $request->name . 'file_attachment_extension' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -506,13 +515,33 @@ class ExtensionNewController extends Controller
                     $files[] = $name;
                 }
             }
-
-
-            $extensionNew->file_attachment_extension = json_encode($files);
         }
+        $extensionNew->file_attachment_extension = !empty($files) ? json_encode($files) : null;
 
-        if (!empty ($request->file_attachment_reviewer)) {
-            $files = [];
+        // if (!empty ($request->file_attachment_extension)) {
+        //     $files = [];
+        //     if ($request->hasfile('file_attachment_extension')) {
+        //         foreach ($request->file('file_attachment_extension') as $file) {
+        //             $name = $request->name . 'file_attachment_extension' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $extensionNew->file_attachment_extension = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_file_attachment_reviewer) ? $request->existing_file_attachment_reviewer : null;
+
+        if (!empty($request->file_attachment_reviewer)) {
+            if ($extensionNew->file_attachment_reviewer) {
+                $existingFiles = json_decode($extensionNew->file_attachment_reviewer, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('file_attachment_reviewer')) {
                 foreach ($request->file('file_attachment_reviewer') as $file) {
                     $name = $request->name . 'file_attachment_reviewer' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -520,13 +549,33 @@ class ExtensionNewController extends Controller
                     $files[] = $name;
                 }
             }
-
-
-            $extensionNew->file_attachment_reviewer = json_encode($files);
         }
+        $extensionNew->file_attachment_reviewer = !empty($files) ? json_encode($files) : null;
 
-        if (!empty ($request->file_attachment_approver)) {
-            $files = [];
+        // if (!empty ($request->file_attachment_reviewer)) {
+        //     $files = [];
+        //     if ($request->hasfile('file_attachment_reviewer')) {
+        //         foreach ($request->file('file_attachment_reviewer') as $file) {
+        //             $name = $request->name . 'file_attachment_reviewer' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $extensionNew->file_attachment_reviewer = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_file_attachment_approver) ? $request->existing_file_attachment_approver : null;
+
+        if (!empty($request->file_attachment_approver)) {
+            if ($extensionNew->file_attachment_approver) {
+                $existingFiles = json_decode($extensionNew->file_attachment_approver, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+            }
+
             if ($request->hasfile('file_attachment_approver')) {
                 foreach ($request->file('file_attachment_approver') as $file) {
                     $name = $request->name . 'file_attachment_approver' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -534,10 +583,23 @@ class ExtensionNewController extends Controller
                     $files[] = $name;
                 }
             }
-
-
-            $extensionNew->file_attachment_approver = json_encode($files);
         }
+        $extensionNew->file_attachment_approver = !empty($files) ? json_encode($files) : null;
+
+
+        // if (!empty ($request->file_attachment_approver)) {
+        //     $files = [];
+        //     if ($request->hasfile('file_attachment_approver')) {
+        //         foreach ($request->file('file_attachment_approver') as $file) {
+        //             $name = $request->name . 'file_attachment_approver' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $extensionNew->file_attachment_approver = json_encode($files);
+        // }
         $extensionNew->save();
 
         if ($lastextensionNew->short_description != $extensionNew->short_description || !empty ($request->comment)) {
@@ -1014,7 +1076,7 @@ class ExtensionNewController extends Controller
                     $history->extension_id = $id;
                     // $history->activity_type = 'Activity Log';
                     // $history->previous = "";
-                    $history->activity_type = 'More Info Inapproved By, More Info Inapproved On';
+                    $history->activity_type = 'More Info Required By (In Approval), More Info Required On (In Approval)';
                     if (is_null($lastDocument->more_info_inapproved_by) || $lastDocument->more_info_inapproved_by === '') {
                         $history->previous = "";
                     } else {

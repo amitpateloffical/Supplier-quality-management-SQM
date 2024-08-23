@@ -152,34 +152,34 @@ class ActionItemController extends Controller
         //     $history->save();
         // }
 
-        if (! empty($data->parent_id)) {
+        if (! empty($openState->parent_id)) {
             $history = new ActionItemHistory();
-            $history->cc_id = $data->id;
+            $history->cc_id = $openState->id;
             $history->activity_type = 'Parent Id';
             $history->previous = "Null";
-            $history->current = $data->parent_id;
+            $history->current = $openState->parent_id;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
+            $history->origin_state = $openState->status;
             $history->change_from = "Initiation";
             $history->change_to = "Opened";
             $history->action_name = "Create";
             $history->save();
         }
 
-        if (! empty($data->parent_type)) {
+        if (! empty($openState->parent_type)) {
             $history = new ActionItemHistory();
-            $history->cc_id = $data->id;
+            $history->cc_id = $openState->id;
             $history->activity_type = 'Parent Type';
             $history->previous = "Null";
-            $history->current = $data->parent_type;
+            $history->current = $openState->parent_type;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
+            $history->origin_state = $openState->status;
             $history->change_from = "Initiation";
             $history->change_to = "Opened";
             $history->action_name = "Create";

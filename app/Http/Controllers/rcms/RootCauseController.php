@@ -911,7 +911,7 @@ $history->save();
             if ($root->root_cause_initial_attachment) {
                 $existinginitialFiles = json_decode($root->root_cause_initial_attachment, true); // Convert to associative array
                 if (is_array($existinginitialFiles )) {
-                    $files = $existinginitialFiles ;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -925,8 +925,7 @@ $history->save();
         }
 
         // If no files are attached, set to null
-        $root->root_cause_initial_attachment = !empty($files) ? json_encode($files) : null;
-
+        $root->root_cause_initial_attachment = !empty($files) ? json_encode(array_values($files)) : null;
         // if (!empty($request->cft_attchament_new)) {
         //     $files = [];
         //     if ($request->hasfile('cft_attchament_new')) {
@@ -945,7 +944,7 @@ $history->save();
             if ($root->cft_attchament_new) {
                 $existingCFTFiles = json_decode($root->cft_attchament_new, true); // Convert to associative array
                 if (is_array($existingCFTFiles)) {
-                    $files = $existingCFTFiles;
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
                 }
             }
 
@@ -957,7 +956,8 @@ $history->save();
                 }
             }
         }
-        $root->cft_attchament_new = !empty($files) ? json_encode($files) : null;
+        $root->cft_attchament_new = !empty($files) ?  json_encode(array_values($files)) : null; // Re-index again before encoding
+
         
         // $root->investigators = json_encode($request->investigators);
         $root->submitted_by = $request->submitted_by;
@@ -1049,8 +1049,6 @@ $history->save();
         }
         if (!empty($request->problem_statement)) {
             $root->problem_statement = $request->problem_statement;
-        }else {
-            $data2->problem_statement = serialize([]);
         }
         $root->update(); 
 

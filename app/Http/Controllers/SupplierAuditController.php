@@ -1259,7 +1259,7 @@ if (!empty($internalAudit->Auditee)) {
             if ($internalAudit->file_attachment_guideline) {
                 $existingFiles = json_decode($internalAudit->file_attachment_guideline, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -1273,7 +1273,7 @@ if (!empty($internalAudit->Auditee)) {
         }
 
          //If no files are attached, set to null
-        $internalAudit->file_attachment_guideline = !empty($files) ? json_encode($files) : null;
+        $internalAudit->file_attachment_guideline = !empty($files) ? json_encode(array_values($files)) : null;
 
 
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
@@ -1316,7 +1316,7 @@ if (!empty($internalAudit->Auditee)) {
             if ($internalAudit->inv_attachment) {
                 $existingFiles = json_decode($internalAudit->inv_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -1329,7 +1329,7 @@ if (!empty($internalAudit->Auditee)) {
             }
         }
 
-        $internalAudit->inv_attachment = !empty($files) ? json_encode($files) : null;
+        $internalAudit->inv_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
         // if (!empty($request->inv_attachment)) {
         //     if ($internalAudit->inv_attachment) {
@@ -1376,7 +1376,7 @@ if (!empty($internalAudit->Auditee)) {
             if ($internalAudit->file_attachment) {
                 $existingFiles = json_decode($internalAudit->file_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -1390,7 +1390,7 @@ if (!empty($internalAudit->Auditee)) {
         }
 
         // If no files are attached, set to null
-        $internalAudit->file_attachment = !empty($files) ? json_encode($files) : null;
+        $internalAudit->file_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
         
       
@@ -1415,7 +1415,7 @@ if (!empty($internalAudit->Auditee)) {
             if ($internalAudit->Audit_file) {
                 $existingFiles = json_decode($internalAudit->Audit_file, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -1429,7 +1429,7 @@ if (!empty($internalAudit->Auditee)) {
         }
 
        //  If no files are attached, set to null
-         $internalAudit->Audit_file = !empty($files) ? json_encode($files) : null;
+         $internalAudit->Audit_file = !empty($files) ? json_encode(array_values($files)) : null;
 
         // if (!empty($request->report_file)) {
         //     $files = [];
@@ -1451,7 +1451,7 @@ if (!empty($internalAudit->Auditee)) {
             if ($internalAudit->report_file) {
                 $existingFiles = json_decode($internalAudit->report_file, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles); 
                 }
             }
 
@@ -1464,7 +1464,7 @@ if (!empty($internalAudit->Auditee)) {
             }
         }
       //  If no files are attached, set to null
-         $internalAudit->report_file = !empty($files) ? json_encode($files) : null;
+         $internalAudit->report_file = !empty($files) ? json_encode(array_values($files)) : null;
 
 
         // if (!empty($request->myfile)) {
@@ -1486,7 +1486,7 @@ if (!empty($internalAudit->Auditee)) {
             if ($internalAudit->myfile) {
                 $existingFiles = json_decode($internalAudit->myfile, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles); 
                 }
             }
 
@@ -1499,8 +1499,7 @@ if (!empty($internalAudit->Auditee)) {
             }
         }
       //  If no files are attached, set to null
-         $internalAudit->myfile = !empty($files) ? json_encode($files) : null;
-
+         $internalAudit->myfile = !empty($files) ? json_encode(array_values($files)) : null;
 
         $internalAudit->update();
         // dd($internalAudit->Auditee);
@@ -2401,42 +2400,13 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->save();
         }
 
-        
-        // if ($lastDocument->file_attachment != $internalAudit->file_attachment || !empty($request->file_attachment_comment)) {
-        //     $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
-        //     ->where('activity_type', 'File Attachments')
-        //     ->exists()
-        //     $history = new ExternalAuditTrailSupplier();
-        //     $history->supplier_id = $id;
-        //     $history->activity_type = 'File Attachments';
-        //     $history->previous = $lastDocument->file_attachment;
-        //     $history->current = $internalAudit->file_attachment;
-        //     $history->comment = $request->date_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to = "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     $history->action_name = "Update";
-
-        //     if ($existingHistory) {
-        //         $history->action_name = "Update";
-        //     } else {
-        //         $history->action_name = "New";
-        //     }
-        //     $history->save();
-        // }
-
         if ($lastDocument->file_attachment != $internalAudit->file_attachment || !empty($request->file_attachment_comment)) {
-
             $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
-            ->where('activity_type', 'File Attachments')
+            ->where('activity_type', 'File Attachment')
             ->exists();
-
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $id;
-            $history->activity_type = 'File Attachments';
+            $history->activity_type = 'File Attachment';
             $history->previous = $lastDocument->file_attachment;
             $history->current = $internalAudit->file_attachment;
             $history->comment = $request->date_comment;
@@ -2446,16 +2416,16 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            //$history->action_name = "Update";
+           // $history->action_name = "Update";
 
             if ($existingHistory) {
                 $history->action_name = "Update";
             } else {
                 $history->action_name = "New";
-            }   
+            }
             $history->save();
-        } 
-
+        }
+    
         if ($lastDocument->Audit_file != $internalAudit->Audit_file || !empty($request->Audit_file_comment)) {
             $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
             ->where('activity_type', 'Audit Attachments')
@@ -2481,6 +2451,7 @@ if ((!is_null($lastEndDate) && !is_null($internalEndDate) && $lastEndDate->forma
             }
             $history->save();
         }
+        
         if ($lastDocument->report_file != $internalAudit->report_file || !empty($request->report_file_comment)) {
 
             $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)

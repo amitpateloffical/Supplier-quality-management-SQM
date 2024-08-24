@@ -653,15 +653,15 @@
         <label for="supplier_agencies">Supplier Agencies</label>
         <select name="external_agencies" id="supplier_agencies" onchange="toggleOthersField(this.value)">
             <option value="">-- Select --</option>
-            <option value="jordan_fda">Jordan FDA</option>
-            <option value="us_fda">USFDA</option>
-            <option value="mhra">MHRA</option>
-            <option value="anvisa">ANVISA</option>
-            <option value="iso">ISO</option>
-            <option value="who">WHO</option>
-            <option value="local_fda">Local FDA</option>
-            <option value="tga">TGA</option>
-            <option value="others">Others</option>
+            <option value="Jordan FDA">Jordan FDA</option>
+            <option value="USFDA">USFDA</option>
+            <option value="MHRA">MHRA</option>
+            <option value="ANVISA">ANVISA</option>
+            <option value="ISO">ISO</option>
+            <option value="WHO"></option>
+            <option value="Local FDA">Local FDA</option>
+            <option value="TGA">TGA</option>
+            <option value="Others">Others</option>
         </select>
     </div>
 </div>

@@ -363,7 +363,24 @@
                     <tr>
                         <th class="w-20">Remarks</th>
                         <td class="w-80" colspan="3">@if($data->Remarks){{ $data->Remarks }}@else Not Applicable @endif</td>
+
+                        
                     </tr>
+                    <tr>
+                        <th class="w-20">Reference Record</th>
+                        <td class="w-80">
+                            @if ($data->refrence_record)
+                                {{ $data->refrence_record }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                    {{-- <tr>
+                        <th class="w-20">Reference Record </th>
+                       {{-- <td class="w-80" colspan="3">@if($data->Remarks){{ $data->Remarks }}@else Not Applicable @endif</td> --}}
+                    
                     
                 </table>
             </div>

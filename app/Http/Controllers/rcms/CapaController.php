@@ -1060,7 +1060,7 @@ class CapaController extends Controller
             if ($capa->capa_attachment) {
                 $existingFiles = json_decode($capa->capa_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -1074,7 +1074,7 @@ class CapaController extends Controller
         }
 
          //If no files are attached, set to null
-        $capa->capa_attachment = !empty($files) ? json_encode($files) : null;
+        $capa->capa_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
         // if (!empty($request->closure_attachment)) {
         //     $files = [];
@@ -1094,7 +1094,7 @@ class CapaController extends Controller
             if ($capa->closure_attachment) {
                 $existingFiles = json_decode($capa->closure_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
                 }
             }
 
@@ -1107,7 +1107,7 @@ class CapaController extends Controller
             }
         }
         // If no files are attached, set to null
-        $capa->closure_attachment = !empty($files) ? json_encode($files) : null;
+        $capa->closure_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
         $capa->update();
 

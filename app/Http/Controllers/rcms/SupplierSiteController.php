@@ -1974,7 +1974,7 @@ class SupplierSiteController extends Controller
             if ($supplierSite->logo_attachment) {
                 $existingFiles = json_decode($supplierSite->logo_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -1988,7 +1988,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->logo_attachment = !empty($files) ? json_encode($files) : null;
+        $supplierSite->logo_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
 
 
        
@@ -2012,7 +2012,7 @@ class SupplierSiteController extends Controller
             if ($supplierSite->supplier_attachment) {
                 $existingFiles = json_decode($supplierSite->supplier_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2026,7 +2026,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->supplier_attachment = !empty($files) ? json_encode($files) : null;
+        $supplierSite->supplier_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
         
         /****************** HOD Review ********************/
         $supplierSite->HOD_feedback = $request->HOD_feedback;
@@ -2050,7 +2050,7 @@ class SupplierSiteController extends Controller
             if ($supplierSite->HOD_attachment) {
                 $existingFiles = json_decode($supplierSite->HOD_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2064,7 +2064,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->HOD_attachment = !empty($files) ? json_encode($files) : null;
+        $supplierSite->HOD_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
 
         /****************** Supplier Details ********************/
         $supplierSite->supplier_name = $request->supplier_name;
@@ -2142,7 +2142,7 @@ class SupplierSiteController extends Controller
             if ($supplierSite->QA_reviewer_attachment) {
                 $existingFiles = json_decode($supplierSite->QA_reviewer_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2156,7 +2156,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->QA_reviewer_attachment = !empty($files) ? json_encode($files) : null;
+        $supplierSite->QA_reviewer_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
 
 
         /****************** Risk Assessment Content ********************/
@@ -2198,7 +2198,7 @@ class SupplierSiteController extends Controller
             if ($supplierSite->QA_head_attachment) {
                 $existingFiles = json_decode($supplierSite->QA_head_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2212,7 +2212,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->QA_head_attachment = !empty($files) ? json_encode($files) : null;
+        $supplierSite->QA_head_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
 
 
         /************ Additional Attchment Code ************/
@@ -2234,7 +2234,7 @@ class SupplierSiteController extends Controller
             if ($supplierSite->iso_certificate_attachment) {
                 $existingFiles = json_decode($supplierSite->iso_certificate_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2248,7 +2248,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->iso_certificate_attachment = !empty($files) ? json_encode($files) : null;
+        $supplierSite->iso_certificate_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
 
 
         // if (!empty($request->gi_additional_attachment)) {
@@ -2269,7 +2269,7 @@ class SupplierSiteController extends Controller
             if ($supplierSite->gi_additional_attachment) {
                 $existingFiles = json_decode($supplierSite->gi_additional_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2283,7 +2283,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->gi_additional_attachment = !empty($files) ? json_encode($files) : null;
+        $supplierSite->gi_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
 
         // if (!empty($request->hod_additional_attachment)) {
         //     $files = [];
@@ -2303,7 +2303,7 @@ class SupplierSiteController extends Controller
             if ($supplierSite->hod_additional_attachment) {
                 $existingFiles = json_decode($supplierSite->hod_additional_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2317,7 +2317,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->hod_additional_attachment = !empty($files) ? json_encode($files) : null;
+        $supplierSite->hod_additional_attachment =!empty($files) ? json_encode(array_values($files)) : null; 
 
 
         
@@ -2340,7 +2340,7 @@ class SupplierSiteController extends Controller
             if ($supplierSite->supplier_detail_additional_attachment) {
                 $existingFiles = json_decode($supplierSite->supplier_detail_additional_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2354,7 +2354,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->supplier_detail_additional_attachment = !empty($files) ? json_encode($files) : null;
+        $supplierSite->supplier_detail_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
 
 
         // if (!empty($request->score_card_additional_attachment)) {
@@ -2375,7 +2375,7 @@ class SupplierSiteController extends Controller
             if ($supplierSite->score_card_additional_attachment) {
                 $existingFiles = json_decode($supplierSite->score_card_additional_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2389,7 +2389,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->score_card_additional_attachment = !empty($files) ? json_encode($files) : null;
+        $supplierSite->score_card_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
 
 
         // if (!empty($request->qa_reviewer_additional_attachment)) {
@@ -2410,7 +2410,7 @@ class SupplierSiteController extends Controller
             if ($supplierSite->qa_reviewer_additional_attachment) {
                 $existingFiles = json_decode($supplierSite->qa_reviewer_additional_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2424,7 +2424,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->qa_reviewer_additional_attachment = !empty($files) ? json_encode($files) : null;
+        $supplierSite->qa_reviewer_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
 
 
         // if (!empty($request->risk_assessment_additional_attachment)) {
@@ -2445,7 +2445,7 @@ class SupplierSiteController extends Controller
             if ($supplierSite->risk_assessment_additional_attachment) {
                 $existingFiles = json_decode($supplierSite->risk_assessment_additional_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2459,7 +2459,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->risk_assessment_additional_attachment = !empty($files) ? json_encode($files) : null;
+        $supplierSite->risk_assessment_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
 
 
         // if (!empty($request->qa_head_additional_attachment)) {
@@ -2480,7 +2480,7 @@ class SupplierSiteController extends Controller
             if ($supplierSite->qa_head_additional_attachment) {
                 $existingFiles = json_decode($supplierSite->qa_head_additional_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2494,7 +2494,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->qa_head_additional_attachment = !empty($files) ? json_encode($files) : null;
+        $supplierSite->qa_head_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
 
         
         $supplierSite->update();

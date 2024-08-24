@@ -672,7 +672,7 @@ class ActionItemController extends Controller
             if ($openState->file_attach) {
                 $existingFiles = json_decode($openState->file_attach, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -685,7 +685,7 @@ class ActionItemController extends Controller
             }
         }
         // If no files are attached, set to null
-        $openState->file_attach = !empty($files) ? json_encode($files) : null;
+        $openState->file_attach = !empty($files) ? json_encode(array_values($files)) : null;
 
 
         // if (!empty($request->Support_doc)) {

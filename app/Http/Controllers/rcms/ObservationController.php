@@ -910,7 +910,7 @@ class ObservationController extends Controller
             if ($data->attach_files1) {
                 $existingFiles = json_decode($data->attach_files1, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -923,7 +923,7 @@ class ObservationController extends Controller
             }
         }
         // If no files are attached, set to null
-        $data->attach_files1 = !empty($files) ? json_encode($files) : null;
+        $data->attach_files1 = !empty($files) ? json_encode(array_values($files)) : null;
 
 
         // if (!empty($request->attach_files1)) {
@@ -977,7 +977,7 @@ class ObservationController extends Controller
             if ($data->related_observations) {
                 $existingFiles = json_decode($data->related_observations, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -990,7 +990,7 @@ class ObservationController extends Controller
             }
         }
         // If no files are attached, set to null
-        $data->related_observations = !empty($files) ? json_encode($files) : null;
+        $data->related_observations = !empty($files) ? json_encode(array_values($files)) : null;
 
         // if (!empty($request->related_observations)) {
         //     $files = [];
@@ -1018,7 +1018,7 @@ class ObservationController extends Controller
             if ($data->attach_files2) {
                 $existingFiles = json_decode($data->attach_files2, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -1031,7 +1031,7 @@ class ObservationController extends Controller
             }
         }
         // If no files are attached, set to null
-        $data->attach_files2 = !empty($files) ? json_encode($files) : null;
+        $data->attach_files2 = !empty($files) ? json_encode(array_values($files)) : null;
 
         // if (!empty($request->attach_files2)) {
         //     $files = [];

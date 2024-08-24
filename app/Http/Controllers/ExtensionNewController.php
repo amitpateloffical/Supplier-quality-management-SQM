@@ -504,7 +504,7 @@ class ExtensionNewController extends Controller
             if ($extensionNew->file_attachment_extension) {
                 $existingFiles = json_decode($extensionNew->file_attachment_extension, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -516,7 +516,7 @@ class ExtensionNewController extends Controller
                 }
             }
         }
-        $extensionNew->file_attachment_extension = !empty($files) ? json_encode($files) : null;
+        $extensionNew->file_attachment_extension = !empty($files) ? json_encode(array_values($files)) : null;
 
         // if (!empty ($request->file_attachment_extension)) {
         //     $files = [];
@@ -538,7 +538,7 @@ class ExtensionNewController extends Controller
             if ($extensionNew->file_attachment_reviewer) {
                 $existingFiles = json_decode($extensionNew->file_attachment_reviewer, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -550,7 +550,7 @@ class ExtensionNewController extends Controller
                 }
             }
         }
-        $extensionNew->file_attachment_reviewer = !empty($files) ? json_encode($files) : null;
+        $extensionNew->file_attachment_reviewer = !empty($files) ? json_encode(array_values($files)) : null;
 
         // if (!empty ($request->file_attachment_reviewer)) {
         //     $files = [];
@@ -572,7 +572,7 @@ class ExtensionNewController extends Controller
             if ($extensionNew->file_attachment_approver) {
                 $existingFiles = json_decode($extensionNew->file_attachment_approver, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -584,7 +584,7 @@ class ExtensionNewController extends Controller
                 }
             }
         }
-        $extensionNew->file_attachment_approver = !empty($files) ? json_encode($files) : null;
+        $extensionNew->file_attachment_approver = !empty($files) ? json_encode(array_values($files)) : null;
 
 
         // if (!empty ($request->file_attachment_approver)) {

@@ -552,7 +552,7 @@ class EffectivenessCheckController extends Controller
             if ($openState->Effectiveness_check_Attachment) {
                 $existingFiles = json_decode($openState->Effectiveness_check_Attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -565,7 +565,7 @@ class EffectivenessCheckController extends Controller
             }
         }
         // If no files are attached, set to null
-        $openState->Effectiveness_check_Attachment = !empty($files) ? json_encode($files) : null;
+        $openState->Effectiveness_check_Attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
 
@@ -589,7 +589,7 @@ class EffectivenessCheckController extends Controller
             if ($openState->Addendum_Attachment) {
                 $existingFiles = json_decode($openState->Addendum_Attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -602,7 +602,7 @@ class EffectivenessCheckController extends Controller
             }
         }
         // If no files are attached, set to null
-        $openState->Addendum_Attachment = !empty($files) ? json_encode($files) : null;
+        $openState->Addendum_Attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
      //   $openState->Attachment = $request->Attachment;
         // if (!empty($request->Attachment)) {
@@ -624,7 +624,7 @@ class EffectivenessCheckController extends Controller
             if ($openState->Attachment) {
                 $existingFiles = json_decode($openState->Attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -637,7 +637,7 @@ class EffectivenessCheckController extends Controller
             }
         }
         // If no files are attached, set to null
-        $openState->Attachment = !empty($files) ? json_encode($files) : null;
+        $openState->Attachment = !empty($files) ? json_encode(array_values($files)) : null;
         // if (!empty($request->Attachments)) {
         //     $files = [];
         //     if ($request->hasfile('Attachments')) {
@@ -657,7 +657,7 @@ class EffectivenessCheckController extends Controller
             if ($openState->Attachments) {
                 $existingFiles = json_decode($openState->Attachments, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -670,7 +670,7 @@ class EffectivenessCheckController extends Controller
             }
         }
         // If no files are attached, set to null
-        $openState->Attachments = !empty($files) ? json_encode($files) : null;
+        $openState->Attachments = !empty($files) ? json_encode(array_values($files)) : null;
 
         // if (!empty($request->refer_record)) {
         //     $files = [];
@@ -690,7 +690,7 @@ class EffectivenessCheckController extends Controller
         //     if ($openState->refer_record) {
         //         $existingFiles = json_decode($openState->refer_record, true); // Convert to associative array
         //         if (is_array($existingFiles)) {
-        //             $files = $existingFiles;
+        //             $files = array_values($existingFiles);
         //         }
         //     }
 
@@ -703,7 +703,7 @@ class EffectivenessCheckController extends Controller
         //     }
         // }
         // // If no files are attached, set to null
-        // $openState->refer_record = !empty($files) ? json_encode($files) : null;
+        // $openState->refer_record = !empty($files) ? json_encode(array_values($files)) : null;
 
         // $openState->refer_record = $request->refer_record;
         $openState->Comments = $request->Comments;

@@ -37,7 +37,7 @@ SupplierChecklist
 
 class SupplierController extends Controller
 {
-    public function index(Request $request){        
+    public function index(Request $request){
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_numbers = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -128,8 +128,8 @@ class SupplierController extends Controller
         $supplier->risk_rating = $request->risk_rating;
         $supplier->manufacturer_audit_planned = $request->manufacturer_audit_planned;
         $supplier->manufacturer_audit_conducted = $request->manufacturer_audit_conducted;
-        $supplier->manufacturer_can_be = $request->manufacturer_can_be;  
-        $supplier->supplierJustification = $request->supplierJustification;     
+        $supplier->manufacturer_can_be = $request->manufacturer_can_be;
+        $supplier->supplierJustification = $request->supplierJustification;
 
         if (!empty($request->cep_attachment)) {
             $files = [];
@@ -153,7 +153,7 @@ class SupplierController extends Controller
                 }
             }
             $supplier->coa_attachment = json_encode($files);
-        } 
+        }
 
         /****************** HOD Review ********************/
         $supplier->HOD_feedback = $request->HOD_feedback;
@@ -173,7 +173,7 @@ class SupplierController extends Controller
 
         /****************** Supplier Details ********************/
         $supplier->supplier_name = $request->supplier_name;
-        $supplier->supplier_id = $request->supplier_id;        
+        $supplier->supplier_id = $request->supplier_id;
         $supplier->manufacturer_name = $request->manufacturer_name;
         $supplier->manufacturer_id = $request->manufacturer_id;
         $supplier->vendor_name = $request->vendor_name;
@@ -201,7 +201,7 @@ class SupplierController extends Controller
 
         /****************** Score Card Content ********************/
         $supplier->cost_reduction = $request->cost_reduction;
-        $supplier->cost_reduction_weight = $request->cost_reduction_weight;        
+        $supplier->cost_reduction_weight = $request->cost_reduction_weight;
         $supplier->payment_term = $request->payment_term;
         $supplier->payment_term_weight = $request->payment_term_weight;
         $supplier->lead_time_days = $request->lead_time_days;
@@ -243,7 +243,7 @@ class SupplierController extends Controller
 
         /****************** Risk Assessment Content ********************/
         $supplier->last_audit_date = $request->last_audit_date;
-        $supplier->next_audit_date = $request->next_audit_date;        
+        $supplier->next_audit_date = $request->next_audit_date;
         $supplier->audit_frequency = $request->audit_frequency;
         $supplier->last_audit_result = $request->last_audit_result;
         $supplier->facility_type = $request->facility_type;
@@ -378,7 +378,7 @@ class SupplierController extends Controller
         $supplier->status = 'Opened';
         $supplier->stage = 1;
         $supplier->save();
-        
+
         /******************** Supplier Checklist ******************/
         $supplierId = $supplier->id;
         $types = ['tse', 'residual_solvent','melamine','gmo','gluten','manufacturer_evaluation','who','gmp','ISO','manufacturing_license','CEP','risk_assessment','elemental_impurity','azido_impurities'];
@@ -427,7 +427,7 @@ class SupplierController extends Controller
 
         /******************* Audit Trail Code ***********************/
 
-        
+
             // $history = new SupplierAuditTrail();
             // $history->supplier_id = $record->id;
             // $history->activity_type = 'Record Number';
@@ -457,7 +457,7 @@ class SupplierController extends Controller
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
         $history->action_name = 'Create';
-        $history->save(); 
+        $history->save();
 
         $history = new SupplierAuditTrail;
         $history->supplier_id = $supplier->id;
@@ -747,7 +747,7 @@ class SupplierController extends Controller
             $history->save();
         }
 
-    
+
         if(!empty($request->cqa_remark)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -1663,7 +1663,7 @@ class SupplierController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        
+
         if(!empty($request->lead_time_days_weight)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -2164,7 +2164,7 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        
+
 
         if(!empty($request->HOD_attachment)){
             $history = new SupplierAuditTrail;
@@ -2183,7 +2183,7 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        
+
         if(!empty($request->hod_additional_attachment)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -2201,7 +2201,7 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        
+
         if(!empty($request->iso_certificate_attachment)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -2219,7 +2219,7 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        
+
         if(!empty($request->supplier_detail_additional_attachment)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -2237,7 +2237,7 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        
+
         if(!empty($request->score_card_additional_attachment)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -2255,7 +2255,7 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        
+
         if(!empty($request->QA_reviewer_attachment)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -2273,7 +2273,7 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        
+
         if(!empty($request->qa_reviewer_additional_attachment)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -2291,7 +2291,7 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        
+
         if(!empty($request->risk_assessment_additional_attachment)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -2309,7 +2309,7 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        
+
         if(!empty($request->QA_head_attachment)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -2327,7 +2327,7 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        
+
         if(!empty($request->qa_head_additional_attachment)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -2345,7 +2345,7 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        
+
 
 
         toastr()->success("Record is created Successfully");
@@ -2360,7 +2360,7 @@ class SupplierController extends Controller
         return view('frontend.supplier.supplier_view', compact('data', 'certificationData', 'supplierChecklist'));
     }
 
-    public function update(Request $request, $id){       
+    public function update(Request $request, $id){
         $lastDocument = Supplier::find($id);
         $supplier = Supplier::find($id);
 
@@ -2439,7 +2439,7 @@ class SupplierController extends Controller
         $supplier->manufacturer_audit_conducted = $request->manufacturer_audit_conducted;
         $supplier->manufacturer_can_be = $request->manufacturer_can_be;
         $supplier->supplierJustification = $request->supplierJustification;
-    
+
 
         // if (!empty($request->cep_attachment)) {
         //     $files = [];
@@ -2458,7 +2458,7 @@ class SupplierController extends Controller
             if ($supplier->cep_attachment) {
                 $existingFiles = json_decode($supplier->cep_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2470,7 +2470,7 @@ class SupplierController extends Controller
                 }
             }
         }
-        $supplier->cep_attachment = !empty($files) ? json_encode($files) : null;
+        $supplier->cep_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
         // if (!empty($request->coa_attachment)) {
         //     $files = [];
@@ -2488,7 +2488,7 @@ class SupplierController extends Controller
             if ($supplier->coa_attachment) {
                 $existingFiles = json_decode($supplier->coa_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2500,8 +2500,8 @@ class SupplierController extends Controller
                 }
             }
         }
-        $supplier->coa_attachment = !empty($files) ? json_encode($files) : null;
-        // } 
+        $supplier->coa_attachment = !empty($files) ? json_encode(array_values($files)) : null;
+        // }
 
         /****************** HOD Review ********************/
         $supplier->HOD_feedback = $request->HOD_feedback;
@@ -2513,7 +2513,7 @@ class SupplierController extends Controller
             if ($supplier->HOD_attachment) {
                 $existingFiles = json_decode($supplier->HOD_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2525,11 +2525,11 @@ class SupplierController extends Controller
                 }
             }
         }
-        $supplier->HOD_attachment = !empty($files) ? json_encode($files) : null;
+        $supplier->HOD_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
         /****************** Supplier Details ********************/
         $supplier->supplier_name = $request->supplier_name;
-        $supplier->supplier_id = $request->supplier_id;        
+        $supplier->supplier_id = $request->supplier_id;
         $supplier->manufacturer_name = $request->manufacturer_name;
         $supplier->manufacturer_id = $request->manufacturer_id;
         $supplier->vendor_name = $request->vendor_name;
@@ -2554,13 +2554,13 @@ class SupplierController extends Controller
         $supplier->bussiness_history = $request->bussiness_history;
         $supplier->performance_history = $request->performance_history;
         $supplier->compliance_risk = $request->compliance_risk;
-        $supplier->supplier_website = $request->supplier_website;        
+        $supplier->supplier_website = $request->supplier_website;
         $supplier->suppplier_web_site = $request->suppplier_web_site;
         // dd($request->supplier_website);
-        
+
         /****************** Score Card Content ********************/
         $supplier->cost_reduction = $request->cost_reduction;
-        $supplier->cost_reduction_weight = $request->cost_reduction_weight;        
+        $supplier->cost_reduction_weight = $request->cost_reduction_weight;
         $supplier->payment_term = $request->payment_term;
         $supplier->payment_term_weight = $request->payment_term_weight;
         $supplier->lead_time_days = $request->lead_time_days;
@@ -2602,8 +2602,8 @@ class SupplierController extends Controller
 
         /****************** Risk Assessment Content ********************/
         $supplier->last_audit_date = $request->last_audit_date;
-        $supplier->next_audit_date = $request->next_audit_date;        
-        $supplier->audit_frequency = $request->audit_frequency; 
+        $supplier->next_audit_date = $request->next_audit_date;
+        $supplier->audit_frequency = $request->audit_frequency;
         $supplier->last_audit_result = $request->last_audit_result;
         $supplier->facility_type = $request->facility_type;
         $supplier->nature_of_employee = $request->nature_of_employee;
@@ -2628,7 +2628,7 @@ class SupplierController extends Controller
             if ($supplier->QA_head_attachment) {
                 $existingFiles = json_decode($supplier->QA_head_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2640,7 +2640,7 @@ class SupplierController extends Controller
                 }
             }
         }
-        $supplier->QA_head_attachment = !empty($files) ? json_encode($files) : null;
+        $supplier->QA_head_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
         /************ Additional Attchment Code ************/
         // if (!empty($request->iso_certificate_attachment)) {
@@ -2660,7 +2660,7 @@ class SupplierController extends Controller
             if ($supplier->iso_certificate_attachment) {
                 $existingFiles = json_decode($supplier->iso_certificate_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2673,7 +2673,7 @@ class SupplierController extends Controller
             }
         }
 
-        $supplier->iso_certificate_attachment = !empty($files) ? json_encode($files) : null;
+        $supplier->iso_certificate_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
         if (!empty($request->gi_additional_attachment)) {
             $files = [];
@@ -2693,7 +2693,7 @@ class SupplierController extends Controller
             if ($supplier->hod_additional_attachment) {
                 $existingFiles = json_decode($supplier->hod_additional_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2705,7 +2705,7 @@ class SupplierController extends Controller
                 }
             }
         }
-        $supplier->hod_additional_attachment = !empty($files) ? json_encode($files) : null;
+        $supplier->hod_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
         $files = is_array($request->existing_attach_files_g) ? $request->existing_attach_files_g : null;
@@ -2713,7 +2713,7 @@ class SupplierController extends Controller
             if ($supplier->supplier_detail_additional_attachment) {
                 $existingFiles = json_decode($supplier->supplier_detail_additional_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2725,7 +2725,7 @@ class SupplierController extends Controller
                 }
             }
         }
-        $supplier->supplier_detail_additional_attachment = !empty($files) ? json_encode($files) : null;
+        $supplier->supplier_detail_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
 
@@ -2735,7 +2735,7 @@ class SupplierController extends Controller
             if ($supplier->score_card_additional_attachment) {
                 $existingFiles = json_decode($supplier->score_card_additional_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2747,7 +2747,7 @@ class SupplierController extends Controller
                 }
             }
         }
-        $supplier->score_card_additional_attachment = !empty($files) ? json_encode($files) : null;
+        $supplier->score_card_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
 
@@ -2757,7 +2757,7 @@ class SupplierController extends Controller
             if ($supplier->QA_reviewer_attachment) {
                 $existingFiles = json_decode($supplier->QA_reviewer_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2769,7 +2769,7 @@ class SupplierController extends Controller
                 }
             }
         }
-        $supplier->QA_reviewer_attachment = !empty($files) ? json_encode($files) : null;
+        $supplier->QA_reviewer_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
 
@@ -2779,7 +2779,7 @@ class SupplierController extends Controller
             if ($supplier->qa_reviewer_additional_attachment) {
                 $existingFiles = json_decode($supplier->qa_reviewer_additional_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2791,7 +2791,7 @@ class SupplierController extends Controller
                 }
             }
         }
-        $supplier->qa_reviewer_additional_attachment = !empty($files) ? json_encode($files) : null;
+        $supplier->qa_reviewer_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
         // if (!empty($request->risk_assessment_additional_attachment)) {
         //     $files = [];
@@ -2811,7 +2811,7 @@ class SupplierController extends Controller
             if ($supplier->risk_assessment_additional_attachment) {
                 $existingFiles = json_decode($supplier->risk_assessment_additional_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2823,7 +2823,7 @@ class SupplierController extends Controller
                 }
             }
         }
-        $supplier->risk_assessment_additional_attachment = !empty($files) ? json_encode($files) : null;
+        $supplier->risk_assessment_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
 
@@ -2833,7 +2833,7 @@ class SupplierController extends Controller
             if ($supplier->qa_head_additional_attachment) {
                 $existingFiles = json_decode($supplier->qa_head_additional_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles);
                 }
             }
 
@@ -2845,13 +2845,13 @@ class SupplierController extends Controller
                 }
             }
         }
-        $supplier->qa_head_additional_attachment = !empty($files) ? json_encode($files) : null;
-        
+        $supplier->qa_head_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null;
+
         $supplier->update();
 
         /***************** Certificate Checklist *************************/
 
-        
+
         $types = ['tse', 'residual_solvent','melamine','gmo','gluten','manufacturer_evaluation','who','gmp','ISO','manufacturing_license','CEP','risk_assessment','elemental_impurity','azido_impurities'];
 
         $supplierID = $supplier->id;
@@ -2943,7 +2943,7 @@ class SupplierController extends Controller
             } else{
                 $history->previous = $lastDocument->short_description;
             }
-            
+
             $history->current = $request->short_description;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -2955,8 +2955,8 @@ class SupplierController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        
-        
+
+
         if($lastDocument->initiation_group != $supplier->initiation_group){
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
             ->where('activity_type', 'Initiation Department')
@@ -3646,7 +3646,7 @@ class SupplierController extends Controller
                 $history->previous = "NULL";
             } else{
                 $history->previous = Helpers::getInitiatorName($lastDocument->acknowledge_by);
-            } 
+            }
             $history->current = Helpers::getInitiatorName($request->acknowledge_by);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -3716,7 +3716,7 @@ class SupplierController extends Controller
             } else{
                 $history->previous = $lastDocument->supply_chain_availability;
             }
-            
+
             $history->current = $request->supply_chain_availability;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -4608,7 +4608,7 @@ class SupplierController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        
+
         if($lastDocument->lead_time_days != $supplier->lead_time_days){
             $lastDocumentAuditTrail = SupplierAuditTrail::where('supplier_id', $supplier->id)
             ->where('activity_type', 'Lead Time Days')
@@ -4616,7 +4616,7 @@ class SupplierController extends Controller
             $history = new SupplierAuditTrail;
             $history->supplier_id = $lastDocument->id;
             $history->activity_type = 'Lead Time Days';
-            if($lastDocument->lead_time_days == null){ 
+            if($lastDocument->lead_time_days == null){
                 $history->previous = "NULL";
             } else{
                 $history->previous = $lastDocument->lead_time_days;
@@ -5328,7 +5328,7 @@ class SupplierController extends Controller
         //=======================================UPDATE ATTACHMENTS==========================================
 
 
-        
+
         $previousAttachments_cp = $lastDocument->coa_attachment;
         $areIniAttachmentsSame_cp = $previousAttachments_cp == $supplier->coa_attachment;
         // dd($previousAttachments);
@@ -5734,12 +5734,12 @@ class SupplierController extends Controller
         $data = Supplier::find($id);
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
-            $gridData = SupplierGrid::where('supplier_id', $data->id)->first();            
+            $gridData = SupplierGrid::where('supplier_id', $data->id)->first();
             $supplierChecklist = SupplierChecklist::where('supplier_id', $id)->get();
 
             $gridData = SupplierGrid::where(['supplier_id' => $id, 'identifier' => "CertificationData"])->first();
             $certificationData = json_decode($gridData->data, true);
-            
+
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.supplier.supplier-single-report', compact(
@@ -5779,7 +5779,7 @@ class SupplierController extends Controller
 
             if (!File::isDirectory($directoryPath)) {
                 File::makeDirectory($directoryPath, 0755, true, true); // Recursive creation with read/write permissions
-            }  
+            }
 
             $pdf->save($filePath);
 
@@ -5801,7 +5801,7 @@ class SupplierController extends Controller
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
             $data = SupplierAuditTrail::where('supplier_id', $doc->id)->orderByDesc('id')->get();
-    
+
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.supplier.supplier-audit-trail-pdf', compact('data', 'doc'))
@@ -5816,9 +5816,9 @@ class SupplierController extends Controller
             $canvas = $pdf->getDomPDF()->getCanvas();
             $height = $canvas->get_height();
             $width = $canvas->get_width();
-    
+
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-    
+
             $canvas->page_text(
                 $width / 3,
                 $height / 2,
@@ -5842,7 +5842,7 @@ class SupplierController extends Controller
             $supplier->approvedBy_contract_giver_by = Auth::user()->name;
             $supplier->approvedBy_contract_giver_on = Carbon::now()->format('d-M-Y');
             $supplier->approvedBy_contract_giver_comment = $request->comments;
-        
+
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
             $history->activity_type = 'Approved By Contract Giver By, Approved By Contract Giver On';
@@ -5861,12 +5861,12 @@ class SupplierController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;    
+            $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->approvedBy_contract_giver_by) || $lastDocument->approvedBy_contract_giver_by === '') {
                 $history->action_name = 'New';
             } else {
                 $history->action_name = 'Update';
-            }    
+            }
             $history->save();
             $supplier->update();
 
@@ -5897,7 +5897,7 @@ class SupplierController extends Controller
         } else {
             toastr()->error('E-signature Not match');
             return back();
-        } 
+        }
     }
 
     public function linkManufacturerToApprovedManufacturer(Request $request, $id){
@@ -5910,7 +5910,7 @@ class SupplierController extends Controller
             $supplier->manufacture_code_linked_by = Auth::user()->name;
             $supplier->manufacture_code_linked_on = Carbon::now()->format('d-M-Y');
             $supplier->manufacture_code_linked_comment = $request->comments;
-        
+
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
             $history->activity_type = 'Link Manufacturer Code to Material Code through MPN in SAP By, Link Manufacturer Code to Material Code through MPN in SAP On';
@@ -5928,12 +5928,12 @@ class SupplierController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Approved Manufacturer/Supplier";
-            $history->change_from = $lastDocument->status;      
+            $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->manufacture_code_linked_by) || $lastDocument->manufacture_code_linked_by === '') {
                 $history->action_name = 'New';
             } else {
                 $history->action_name = 'Update';
-            }      
+            }
             $history->save();
             $supplier->update();
 
@@ -6081,7 +6081,7 @@ class SupplierController extends Controller
                     //      }
                     //   }
                     $supplier->update();
-                    
+
                     toastr()->success('Document Sent');
                     return back();
             }
@@ -6154,7 +6154,7 @@ class SupplierController extends Controller
                     }
                     $history->current = $supplier->pendigPurchaseSampleRequested_by . ' , ' . $supplier->pendigPurchaseSampleRequested_on;
                     $history->action = 'Purchase Sample Request Initiated & Acknowledgement By PD';
-                    
+
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -6186,7 +6186,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -6240,7 +6240,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -6252,7 +6252,7 @@ class SupplierController extends Controller
                 $supplier->FdReviewCompleted_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;                    
+                    $history->supplier_id = $id;
                     $history->activity_type = 'F&D Review Completed By , F&D Review Completed On';
                     if (is_null($lastDocument->FdReviewCompleted_by) || $lastDocument->FdReviewCompleted_by === '') {
                         $history->previous = "Null";
@@ -6293,7 +6293,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -6346,7 +6346,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -6399,7 +6399,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -6452,7 +6452,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -6505,7 +6505,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -6558,7 +6558,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -6611,7 +6611,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -6663,7 +6663,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent to Manufacturer Rejected');
                 return back();
             }
@@ -6688,7 +6688,7 @@ class SupplierController extends Controller
 
                     $history = new SupplierAuditTrail();
                     $history->supplier_id = $id;
-                    
+
                     $history->activity_type = 'Risk Rating Observed as Low By , Risk Rating Observed as Low On';
                     if (is_null($lastDocument->riskRatingObservedLow_by) || $lastDocument->riskRatingObservedLow_by === '') {
                         $history->previous = "Null";
@@ -6782,7 +6782,7 @@ class SupplierController extends Controller
                     //      }
                     //   }
                     $supplier->update();
-                    
+
                     toastr()->success('Document Sent');
                     return back();
             }
@@ -6888,7 +6888,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -6941,7 +6941,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -6994,7 +6994,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -7047,7 +7047,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -7100,7 +7100,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -7153,7 +7153,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -7206,7 +7206,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -7259,7 +7259,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -7312,7 +7312,7 @@ class SupplierController extends Controller
                 //      }
                 //   }
                 $supplier->update();
-                
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -7332,7 +7332,7 @@ class SupplierController extends Controller
             $supplier->prepurchase_sample_notRequired_by = Auth::user()->name;
             $supplier->prepurchase_sample_notRequired_on = Carbon::now()->format('d-M-Y');
             $supplier->prepurchase_sample_notRequired_comment = $request->comments;
-        
+
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
             $history->activity_type = 'Pre-Purchase Sample Not Required By , Pre-Purchase Sample Not Required On';
@@ -7350,12 +7350,12 @@ class SupplierController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Pending CQA Review After Purchase Sample Request";
-            $history->change_from = $lastDocument->status;  
+            $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->prepurchase_sample_notRequired_by) || $lastDocument->prepurchase_sample_notRequired_by === '') {
                 $history->action_name = 'New';
             } else {
                 $history->action_name = 'Update';
-            }      
+            }
             $history->save();
             $supplier->update();
 
@@ -7399,7 +7399,7 @@ class SupplierController extends Controller
             $supplier->prepurchase_sample_notRequired_by = Auth::user()->name;
             $supplier->prepurchase_sample_notRequired_on = Carbon::now()->format('d-M-Y');
             $supplier->prepurchase_sample_notRequired_comment = $request->comments;
-        
+
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
             $history->activity_type = 'Risk Rating Observed as Low By , Risk Rating Observed as Low On';
@@ -7418,12 +7418,12 @@ class SupplierController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Approved Manufacturer/Supplier";
-            $history->change_from = $lastDocument->status; 
+            $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->prepurchase_sample_notRequired_by) || $lastDocument->prepurchase_sample_notRequired_by === '') {
                 $history->action_name = 'New';
             } else {
                 $history->action_name = 'Update';
-            }       
+            }
             $history->save();
             $supplier->update();
 
@@ -7463,13 +7463,13 @@ class SupplierController extends Controller
             $supplier = Supplier::find($id);
             $lastDocument = Supplier::find($id);
 
-            
+
             $supplier->stage = "9";
             $supplier->status = "Manufacturer Rejected";
             $supplier->requiredNotFulfilled_by = Auth::user()->name;
             $supplier->requiredNotFulfilled_on = Carbon::now()->format('d-M-Y');
             $supplier->requiredNotFulfilled_comment = $request->comments;
-        
+
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
             $history->activity_type = 'All Requirements Not Fulfilled By , All Requirements Not Fulfilled On';
@@ -7488,12 +7488,12 @@ class SupplierController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Manufacturer Rejected";
-            $history->change_from = $lastDocument->status;    
+            $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->requiredNotFulfilled_by) || $lastDocument->requiredNotFulfilled_by === '') {
                 $history->action_name = 'New';
             } else {
                 $history->action_name = 'Update';
-            }    
+            }
             $history->save();
             $supplier->update();
 
@@ -7537,7 +7537,7 @@ class SupplierController extends Controller
             $supplier->cancelled_by = Auth::user()->name;
             $supplier->cancelled_on = Carbon::now()->format('d-M-Y');
             $supplier->cancelled_comment = $request->comments;
-        
+
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
             $history->activity_type = 'Cancel By , Cancel On';
@@ -7555,12 +7555,12 @@ class SupplierController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to =  "Close - Cancelled";
-            $history->change_from = $lastDocument->status;       
+            $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                 $history->action_name = 'New';
             } else {
                 $history->action_name = 'Update';
-            } 
+            }
             $history->save();
             $supplier->update();
 
@@ -7658,7 +7658,7 @@ class SupplierController extends Controller
     //    $pre = Deviation::all();
         return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre'));
     }
-    if ($request->revision == "RA") { 
+    if ($request->revision == "RA") {
         $supplierA->originator = User::where('id', $supplierA->initiator_id)->value('name');
     //    $pre = Deviation::all();
     $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
@@ -7680,5 +7680,5 @@ class SupplierController extends Controller
         return view('frontend.scar.scar_new', compact('record_number','supplierName','supplierProduct','distributionSites', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
     }
 
-    } 
+    }
 }

@@ -3,6 +3,7 @@
 use App\Models\ActionItem;
 use App\Models\Division;
 use App\Models\QMSDivision;
+use App\Models\QMSProcess;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -142,7 +143,7 @@ static function getFullDepartmentName($code)
 
         return $getFandD = DB::table('user_roles')->where(['q_m_s_roles_id' =>'36'])->get();
     }
-    
+
     /************* Get Purchase Department Roles Ends ***************/
 
     public static function getHodUserList(){
@@ -515,5 +516,23 @@ public static function getInitiatorGroupFullName($shortName)
         }
 
         return $dropdown;
+    }
+
+    public static function check_roles($division_id, $process_name, $role_id, $user_id = null)
+    {
+
+        $process = QMSProcess::where([
+            'division_id' => $division_id,
+            'process_name' => $process_name
+        ])->first();
+
+        $roleExists = DB::table('user_roles')->where([
+            'user_id' => $user_id ? $user_id : Auth::user()->id,
+            'q_m_s_divisions_id' => $division_id,
+            'q_m_s_processes_id' => $process ? $process->id : 0,
+            'q_m_s_roles_id' => $role_id
+        ])->first();
+
+        return $roleExists ? true : false;
     }
 }

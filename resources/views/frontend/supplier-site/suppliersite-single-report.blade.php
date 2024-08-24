@@ -185,6 +185,20 @@
         </table>
     </header>
 
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+
+            </tr>
+        </table>
+    </footer>
+
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
@@ -192,6 +206,15 @@
                     Supplier/Manufacturer/Vendor
                 </div>
                 <table>
+                    <tr>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">
+                            {{ Helpers::getDivisionName($data->division_id) }}/SS/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                        </td>
+
+                        <th class="w-20">Division</th>
+                        <td class="w-30">{{ Helpers::getDivisionName(session()->get('division')) }}</td>
+                    </tr>
                     <tr>
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
@@ -362,16 +385,12 @@
                         </td>
 
                     </tr>
-
-
-                   
-
                 </table>
             </div>
 
             <div class="border-table">
                 <div class="block-head">
-                    Logo 
+                    Logo
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -510,7 +529,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                  HOD Additional Attachment
+                    HOD Additional Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1456,7 +1475,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                   Risk Assessment Additional Attachment
+                    Risk Assessment Additional Attachment
                 </div>
                 <table>
                     <tr class="table_bg">
@@ -1556,9 +1575,6 @@
                 </table>
             </div>
 
-
-
-
             <div class="block">
                 <div class="block-head">
                     Activity Log
@@ -1656,15 +1672,18 @@
                     <tr>
                         <th class="w-20">Conditionally Approved By</th>
                         <td class="w-30">
-                            <div class="static">{{ $supplierData->conditionally_approved_by ?? 'Not Applicable' }}</div>
+                            <div class="static">{{ $supplierData->conditionally_approved_by ?? 'Not Applicable' }}
+                            </div>
                         </td>
                         <th class="w-20">Conditionally Approved On</th>
                         <td class="w-30">
-                            <div class="static">{{ $supplierData->conditionally_approved_on ?? 'Not Applicable' }}</div>
+                            <div class="static">{{ $supplierData->conditionally_approved_on ?? 'Not Applicable' }}
+                            </div>
                         </td>
                         <th class="w-20">Conditionally Approved Comment</th>
                         <td class="w-30">
-                            <div class="static">{{ $supplierData->conditionally_approved_comments ?? 'Not Applicable' }}
+                            <div class="static">
+                                {{ $supplierData->conditionally_approved_comments ?? 'Not Applicable' }}
                             </div>
                         </td>
 
@@ -1747,19 +1766,7 @@
         </div>
     </div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
 
-            </tr>
-        </table>
-    </footer>
 
 </body>
 

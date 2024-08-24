@@ -70,16 +70,16 @@
         }
 
         /* .sub-head {
-                                                                                    margin-left: 280px;
-                                                                                    margin-right: 280px;
-                                                                                    color: #4274da;
-                                                                                    border-bottom: 2px solid #4274da;
-                                                                                    padding-bottom: 5px;
-                                                                                    margin-bottom: 20px;
-                                                                                    font-weight: bold;
-                                                                                    font-size: 1.2rem;
+                                                                                                        margin-left: 280px;
+                                                                                                        margin-right: 280px;
+                                                                                                        color: #4274da;
+                                                                                                        border-bottom: 2px solid #4274da;
+                                                                                                        padding-bottom: 5px;
+                                                                                                        margin-bottom: 20px;
+                                                                                                        font-weight: bold;
+                                                                                                        font-size: 1.2rem;
 
-                                                                                } */
+                                                                                                    } */
         .launch_extension {
             background: #4274da;
             color: white;
@@ -129,10 +129,10 @@
         }
 
         /* .saveButton:disabled{
-                                                                                        background: black!important;
-                                                                                        border:  black!important;
+                                                                                                            background: black!important;
+                                                                                                            border:  black!important;
 
-                                                                                    } */
+                                                                                                        } */
 
         .main-danger-block {
             display: flex;
@@ -602,7 +602,8 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
+                                <button type="submit" class="on-submit-disable-button saveButton"
+                                    @if ($data->stage >= 6) disabled @endif>Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white"
                                         href="{{ url('rcms/qms-dashboard') }}">Exit</a></button>
@@ -945,6 +946,9 @@
                 $('#rchars').text(textlen);
             });
         </script>
+
+
+
 
         <script>
             $(document).ready(function() {

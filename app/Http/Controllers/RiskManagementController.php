@@ -286,8 +286,6 @@ class RiskManagementController extends Controller
 
         if (!empty($request->problem_statement)) {
             $data2->problem_statement = $request->problem_statement;
-        } else {
-            $data2->problem_statement = serialize([]);
         }
         $data2->save();
         // =-------------------------------
@@ -1763,7 +1761,7 @@ class RiskManagementController extends Controller
             if ($data->reference) {
                 $existingFiles = json_decode($data->reference, true); // Convert to associative array
                 if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
                 }
             }
 
@@ -1775,7 +1773,11 @@ class RiskManagementController extends Controller
                 }
             }
         }
-        $data->reference = !empty($files) ? json_encode($files) : null;
+
+        $data->reference = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
+
+
 
         // if (!empty($request->reference)) {
         //     $files = [];
@@ -1888,9 +1890,7 @@ class RiskManagementController extends Controller
                }
                 if (!empty($request->problem_statement)) {
                     $data2->problem_statement = $request->problem_statement;
-                } else {
-                   $data2->problem_statement = serialize([]);
-               }
+                }
                 $data2->save();
              // =-------------------------------
                $data3 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','why_chart')->first();

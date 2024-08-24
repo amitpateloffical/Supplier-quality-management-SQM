@@ -466,7 +466,13 @@
                                 </div>
                             </div>
 
-
+                            @if ($extensionNew->file_attachment_extension)
+                                @foreach (json_decode($extensionNew->file_attachment_extension) as $file)
+                                    <input id="FIEXATFile-{{ $loop->index }}" type="hidden"
+                                        name="existing_file_attachment_extension[{{ $loop->index }}]"
+                                        value="{{ $file }}">
+                                @endforeach
+                            @endif
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments"> Extension Attachment</label>
@@ -483,6 +489,7 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
+                                                            data-remove-id="FIEXATFile-{{ $loop->index }}"
                                                             data-file-name="{{ $file }}"
                                                             style="@if ($extensionNew->stage == 0 || $extensionNew->stage == 4) pointer-events: none; @endif">
                                                             <i class="fa-solid fa-circle-xmark"
@@ -555,6 +562,14 @@
                                 </div>
                             </div>
                         </div> --}}
+
+                    @if ($extensionNew->file_attachment_reviewer)
+                        @foreach (json_decode($extensionNew->file_attachment_reviewer) as $file)
+                            <input id="FIATREFile-{{ $loop->index }}" type="hidden"
+                                name="existing_file_attachment_reviewer[{{ $loop->index }}]"
+                                value="{{ $file }}">
+                        @endforeach
+                    @endif
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Inv Attachments">HOD Attachment </label>
@@ -571,6 +586,7 @@
                                                         class="fa fa-eye text-primary"
                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                 <a type="button" class="remove-file"
+                                                    data-remove-id="FIATREFile-{{ $loop->index }}"
                                                     data-file-name="{{ $file }}"
                                                     style="@if ($extensionNew->stage == 0 || $extensionNew->stage == 4) pointer-events: none; @endif">
                                                     <i class="fa-solid fa-circle-xmark"
@@ -623,7 +639,13 @@
                                 </div> --}}
                         </div>
                     </div>
-
+                    @if ($extensionNew->file_attachment_approver)
+                        @foreach (json_decode($extensionNew->file_attachment_approver) as $file)
+                            <input id="FIATAPFile-{{ $loop->index }}" type="hidden"
+                                name="existing_file_attachment_approver[{{ $loop->index }}]"
+                                value="{{ $file }}">
+                        @endforeach
+                    @endif
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Inv Attachments"> QA Attachment</label>
@@ -640,6 +662,7 @@
                                                         class="fa fa-eye text-primary"
                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                 <a type="button" class="remove-file"
+                                                    data-remove-id="FIATAPFile-{{ $loop->index }}"
                                                     data-file-name="{{ $file }}"
                                                     style="@if ($extensionNew->stage == 0 || $extensionNew->stage == 4) pointer-events: none; @endif">
                                                     <i class="fa-solid fa-circle-xmark"
@@ -804,19 +827,19 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="group-input">
-                            <label for=" Rejected By">More Info Required By</label>
+                            <label for=" Rejected By">More Info Required By (In Approval)</label>
                             <div class="static">{{ $extensionNew->more_info_inapproved_by }}</div>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="group-input">
-                            <label for="Rejected On">More Info Required On</label>
+                            <label for="Rejected On">More Info Required On (In Approval)</label>
                             <div class="static">{{ $extensionNew->more_info_inapproved_on }}</div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Rejected On">More Info Required Comment</label>
+                            <label for="Rejected On">More Info Required Comment (In Approval)</label>
                             <div class="static">{{ $extensionNew->more_info_inapproved_comment }}</div>
                         </div>
                     </div>
@@ -1009,9 +1032,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                            <button>Close</button>
-                                                        </div> -->
+                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                    <button>Close</button>
+                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -1057,9 +1080,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                            <button>Close</button>
-                                                        </div> -->
+                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                    <button>Close</button>
+                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -1226,6 +1249,34 @@
         });
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const removeButtons = document.querySelectorAll('.remove-file');
 
-    {{--  --}}
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const fileName = this.getAttribute('data-file-name');
+                    const fileContainer = this.closest('.file-container');
+
+                    // Hide the file container
+                    if (fileContainer) {
+                        fileContainer.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.remove-file').click(function() {
+                const removeId = $(this).data('remove-id')
+                console.log('removeId', removeId);
+                $('#' + removeId).remove();
+            })
+        })
+    </script>
+
+
+
 @endsection

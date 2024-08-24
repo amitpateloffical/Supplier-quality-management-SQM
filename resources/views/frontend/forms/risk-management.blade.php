@@ -815,23 +815,13 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Estimated Man-Hours">Estimated Man-Hours</label>
-                                            <div class="relative-container">
-                                                <input class="mic-input" type="text" name="estimated_man_hours"
-                                                    id="estimated_man_hours">
-                                                @component('frontend.forms.language-model')
-                                                @endcomponent
-                                            </div>
+                                            <input type="number" name="estimated_man_hours" id="estimated_man_hours" min="0">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Estimated Cost">Estimated Cost</label>
-                                            <div class="relative-container">
-                                                <input class="mic-input" type="text" name="estimated_cost"
-                                                    id="estimated_cost">
-                                                @component('frontend.forms.language-model')
-                                                @endcomponent
-                                            </div>
+                                            <input type="number" name="estimated_cost" id="estimated_cost" min="0">
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-6">

@@ -140,25 +140,25 @@
                         <a class="text-white" href="{{ url('rcms/effective-audit-trial-show', $data->id) }}"> <button
                                 class="button_theme1"> Audit Trail </button> </a>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Effectiveness Check', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 2 && (in_array(14, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Effectiveness Check', 14))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Effective
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Not Effective
                             </button>
-                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Effectiveness Check', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Effective Approval Completed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
-                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Effectiveness Check', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Not Effective Approval Completed
                             </button>
@@ -359,11 +359,11 @@
                                     </div>
 
                                     <!-- <div class="col-12">
-                                                                                                                                                                    <div class="group-input">
-                                                                                                                                                                        <label for="Short Description">Short Description</label>
-                                                                                                                                                                        <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div> -->
+                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                            <label for="Short Description">Short Description</label>
+                                                                                                                                                                                            <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div> -->
 
 
                                     {{-- <div class="col-lg-6">
@@ -497,11 +497,11 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-12">
-                                                                                                                                                                    <div class="group-input">
-                                                                                                                                                                        <label for="Short Description">Short Description</label>
-                                                                                                                                                                        <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div> -->
+                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                            <label for="Short Description">Short Description</label>
+                                                                                                                                                                                            <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div> -->
                                 <div class="col-12 sub-head">
                                     Effectiveness Check Results
                                 </div>
@@ -524,13 +524,13 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
-                                                                                    <div class="group-input">
-                                                                                        <label for="Effectiveness check Attachments"><b>Effectiveness check
-                                                                                                Attachment</b></label>
-                                                                                        <input type="file" id="myfile" name="Effectiveness_check_Attachment"
-                                                                                            value="{{ $data->Effectiveness_check_Attachment }}">
-                                                                                    </div>
-                                                                                </div> -->
+                                                                                                        <div class="group-input">
+                                                                                                            <label for="Effectiveness check Attachments"><b>Effectiveness check
+                                                                                                                    Attachment</b></label>
+                                                                                                            <input type="file" id="myfile" name="Effectiveness_check_Attachment"
+                                                                                                                value="{{ $data->Effectiveness_check_Attachment }}">
+                                                                                                        </div>
+                                                                                                    </div> -->
                                 @if ($data->Effectiveness_check_Attachment)
                                     @foreach (json_decode($data->Effectiveness_check_Attachment) as $file)
                                         <input id="EFCHATFile-{{ $loop->index }}" type="hidden"
@@ -599,12 +599,12 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
-                                                                            <div class="group-input">
-                                                                                <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
-                                                                                <input type="file" id="myfile" name="Addendum_Attachment"
-                                                                                    value="{{ $data->Addendum_Attachment }}">
-                                                                            </div>
-                                                                        </div> -->
+                                                                                                <div class="group-input">
+                                                                                                    <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
+                                                                                                    <input type="file" id="myfile" name="Addendum_Attachment"
+                                                                                                        value="{{ $data->Addendum_Attachment }}">
+                                                                                                </div>
+                                                                                            </div> -->
                                 @if ($data->Addendum_Attachment)
                                     @foreach (json_decode($data->Addendum_Attachment) as $file)
                                         <input id="ADATFile-{{ $loop->index }}" type="hidden"
@@ -689,11 +689,11 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
-                                                                    <div class="group-input">
-                                                                        <label for="Attachments"><b>Attachment</b></label>
-                                                                        <input type="file" id="myfile" name="Attachment">
-                                                                    </div>
-                                                                </div> -->
+                                                                                        <div class="group-input">
+                                                                                            <label for="Attachments"><b>Attachment</b></label>
+                                                                                            <input type="file" id="myfile" name="Attachment">
+                                                                                        </div>
+                                                                                    </div> -->
                                 @if ($data->Attachment)
                                     @foreach (json_decode($data->Attachment) as $file)
                                         <input id="REATFile-{{ $loop->index }}" type="hidden"
@@ -738,37 +738,34 @@
                                     </div>
                                 </div>
                             </div>
-                          
+
 
                             <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="Reference Records">Reference Record</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                    multiple id="refer_record" name="refer_record[]">
+                                <div class="group-input">
+                                    <label for="Reference Records">Reference Record</label>
+                                    <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} multiple
+                                        id="refer_record" name="refer_record[]">
 
-                                                    @foreach ($old_record as $new)
-                                                        @php
-                                                            $recordValue =
-                                                                Helpers::getDivisionName($new->division_id) .
-                                                                '/EC/' .
-                                                                date('Y') .
-                                                                '/' .
-                                                                Helpers::recordFormat($new->record);
-                                                            $selected = in_array(
-                                                                $recordValue,
-                                                                explode(',', $data->refer_record),
-                                                            )
-                                                                ? 'selected'
-                                                                : '';
-                                                        @endphp
-                                                        <option value="{{ $recordValue }}" {{ $selected }}>
-                                                            {{ $recordValue }}
-                                                        </option>
-                                                    @endforeach
+                                        @foreach ($old_record as $new)
+                                            @php
+                                                $recordValue =
+                                                    Helpers::getDivisionName($new->division_id) .
+                                                    '/EC/' .
+                                                    date('Y') .
+                                                    '/' .
+                                                    Helpers::recordFormat($new->record);
+                                                $selected = in_array($recordValue, explode(',', $data->refer_record))
+                                                    ? 'selected'
+                                                    : '';
+                                            @endphp
+                                            <option value="{{ $recordValue }}" {{ $selected }}>
+                                                {{ $recordValue }}
+                                            </option>
+                                        @endforeach
 
-                                                </select>
-                                            </div>
-                                        </div>
+                                    </select>
+                                </div>
+                            </div>
 
 
                         </div>
@@ -936,184 +933,184 @@
                                 </div>
                             </div>
                             <!--   Data History
-                                                                                                                                                                </div>
-                                                                                                                                                                <div class="col-lg-6">
-                                                                                                                                                                    <div class="group-input">
-                                                                                                                                                                        <label for="Actual Closure Date"><b>Actual Closure Date</b></label>
-                                                                                                                                                                        <div class="static">{{ $data->due_date }}</div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-                                                                                                                                                                <div class="col-lg-6">
-                                                                                                                                                                    <div class="group-input">
-                                                                                                                                                                        <label for="Original Date Due"><b>Original Date Due</b></label>
-                                                                                                                                                                        <div class="static">{{ $data->due_date }}</div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-                                                                                                                                                                <div class="col-12 sub-head">
-                                                                                                                                                                    Record Signature
-                                                                                                                                                                </div>
-                                                                                                                                                                <div class="col-lg-6">
-                                                                                                                                                                    <div class="group-input">
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <div class="col-lg-6">
+                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                            <label for="Actual Closure Date"><b>Actual Closure Date</b></label>
+                                                                                                                                                                                            <div class="static">{{ $data->due_date }}</div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <div class="col-lg-6">
+                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                            <label for="Original Date Due"><b>Original Date Due</b></label>
+                                                                                                                                                                                            <div class="static">{{ $data->due_date }}</div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <div class="col-12 sub-head">
+                                                                                                                                                                                        Record Signature
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <div class="col-lg-6">
+                                                                                                                                                                                        <div class="group-input">
 
-                                                                                                                                                                        @php
-                                                                                                                                                                            $submit = DB::table(
-                                                                                                                                                                                'c_c_stage_histories',
-                                                                                                                                                                            )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'type',
-                                                                                                                                                                                    'Effectiveness-Check',
-                                                                                                                                                                                )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'doc_id',
-                                                                                                                                                                                    $data->id,
-                                                                                                                                                                                )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'stage_id',
-                                                                                                                                                                                    2,
-                                                                                                                                                                                )
-                                                                                                                                                                                ->get();
-                                                                                                                                                                        @endphp
-                                                                                                                                                                        <label for="Original Due Date">Submitted By</label>
-                                                                                                                                                                        @foreach ($submit as $temp)
+                                                                                                                                                                                            @php
+                                                                                                                                                                                                $submit = DB::table(
+                                                                                                                                                                                                    'c_c_stage_histories',
+                                                                                                                                                                                                )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'type',
+                                                                                                                                                                                                        'Effectiveness-Check',
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'doc_id',
+                                                                                                                                                                                                        $data->id,
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'stage_id',
+                                                                                                                                                                                                        2,
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->get();
+                                                                                                                                                                                            @endphp
+                                                                                                                                                                                            <label for="Original Due Date">Submitted By</label>
+                                                                                                                                                                                            @foreach ($submit as $temp)
     <div class="static">{{ $temp->user_name }}</div>
     @endforeach
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-                                                                                                                                                                <div class="col-lg-6">
-                                                                                                                                                                    <div class="group-input">
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <div class="col-lg-6">
+                                                                                                                                                                                        <div class="group-input">
 
-                                                                                                                                                                        @php
-                                                                                                                                                                            $submit = DB::table(
-                                                                                                                                                                                'c_c_stage_histories',
-                                                                                                                                                                            )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'type',
-                                                                                                                                                                                    'Effectiveness-Check',
-                                                                                                                                                                                )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'doc_id',
-                                                                                                                                                                                    $data->id,
-                                                                                                                                                                                )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'stage_id',
-                                                                                                                                                                                    2,
-                                                                                                                                                                                )
-                                                                                                                                                                                ->get();
-                                                                                                                                                                        @endphp
-                                                                                                                                                                        <label for="Original Due Date">Submitted ON</label>
-                                                                                                                                                                        @foreach ($submit as $temp)
+                                                                                                                                                                                            @php
+                                                                                                                                                                                                $submit = DB::table(
+                                                                                                                                                                                                    'c_c_stage_histories',
+                                                                                                                                                                                                )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'type',
+                                                                                                                                                                                                        'Effectiveness-Check',
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'doc_id',
+                                                                                                                                                                                                        $data->id,
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'stage_id',
+                                                                                                                                                                                                        2,
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->get();
+                                                                                                                                                                                            @endphp
+                                                                                                                                                                                            <label for="Original Due Date">Submitted ON</label>
+                                                                                                                                                                                            @foreach ($submit as $temp)
     <div class="static">{{ $temp->created_at }}</div>
     @endforeach
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-                                                                                                                                                                <div class="col-lg-6">
-                                                                                                                                                                    <div class="group-input">
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <div class="col-lg-6">
+                                                                                                                                                                                        <div class="group-input">
 
-                                                                                                                                                                        @php
-                                                                                                                                                                            $submit = DB::table(
-                                                                                                                                                                                'c_c_stage_histories',
-                                                                                                                                                                            )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'type',
-                                                                                                                                                                                    'Effectiveness-Check',
-                                                                                                                                                                                )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'doc_id',
-                                                                                                                                                                                    $data->id,
-                                                                                                                                                                                )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'stage_id',
-                                                                                                                                                                                    3,
-                                                                                                                                                                                )
-                                                                                                                                                                                ->get();
-                                                                                                                                                                        @endphp
-                                                                                                                                                                        <label for="Original Due Date">Complete By</label>
-                                                                                                                                                                        @foreach ($submit as $temp)
+                                                                                                                                                                                            @php
+                                                                                                                                                                                                $submit = DB::table(
+                                                                                                                                                                                                    'c_c_stage_histories',
+                                                                                                                                                                                                )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'type',
+                                                                                                                                                                                                        'Effectiveness-Check',
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'doc_id',
+                                                                                                                                                                                                        $data->id,
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'stage_id',
+                                                                                                                                                                                                        3,
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->get();
+                                                                                                                                                                                            @endphp
+                                                                                                                                                                                            <label for="Original Due Date">Complete By</label>
+                                                                                                                                                                                            @foreach ($submit as $temp)
     <div class="static">{{ $temp->user_name }}</div>
     @endforeach
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-                                                                                                                                                                <div class="col-lg-6">
-                                                                                                                                                                    <div class="group-input">
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <div class="col-lg-6">
+                                                                                                                                                                                        <div class="group-input">
 
-                                                                                                                                                                        @php
-                                                                                                                                                                            $submit = DB::table(
-                                                                                                                                                                                'c_c_stage_histories',
-                                                                                                                                                                            )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'type',
-                                                                                                                                                                                    'Effectiveness-Check',
-                                                                                                                                                                                )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'doc_id',
-                                                                                                                                                                                    $data->id,
-                                                                                                                                                                                )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'stage_id',
-                                                                                                                                                                                    3,
-                                                                                                                                                                                )
-                                                                                                                                                                                ->get();
-                                                                                                                                                                        @endphp
-                                                                                                                                                                        <label for="Complete On"><b>Complete On</b></label>
-                                                                                                                                                                        @foreach ($submit as $temp)
+                                                                                                                                                                                            @php
+                                                                                                                                                                                                $submit = DB::table(
+                                                                                                                                                                                                    'c_c_stage_histories',
+                                                                                                                                                                                                )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'type',
+                                                                                                                                                                                                        'Effectiveness-Check',
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'doc_id',
+                                                                                                                                                                                                        $data->id,
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'stage_id',
+                                                                                                                                                                                                        3,
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->get();
+                                                                                                                                                                                            @endphp
+                                                                                                                                                                                            <label for="Complete On"><b>Complete On</b></label>
+                                                                                                                                                                                            @foreach ($submit as $temp)
     <div class="static">{{ $temp->created_at }}</div>
     @endforeach
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-                                                                                                                                                                <div class="col-lg-6">
-                                                                                                                                                                    <div class="group-input">
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <div class="col-lg-6">
+                                                                                                                                                                                        <div class="group-input">
 
-                                                                                                                                                                        @php
-                                                                                                                                                                            $submit = DB::table(
-                                                                                                                                                                                'c_c_stage_histories',
-                                                                                                                                                                            )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'type',
-                                                                                                                                                                                    'Effectiveness-Check',
-                                                                                                                                                                                )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'doc_id',
-                                                                                                                                                                                    $data->id,
-                                                                                                                                                                                )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'stage_id',
-                                                                                                                                                                                    4,
-                                                                                                                                                                                )
-                                                                                                                                                                                ->get();
-                                                                                                                                                                        @endphp
-                                                                                                                                                                        <label for="Quality Approal On"><b>Quality Approal On</b></label>
-                                                                                                                                                                        @foreach ($submit as $temp)
+                                                                                                                                                                                            @php
+                                                                                                                                                                                                $submit = DB::table(
+                                                                                                                                                                                                    'c_c_stage_histories',
+                                                                                                                                                                                                )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'type',
+                                                                                                                                                                                                        'Effectiveness-Check',
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'doc_id',
+                                                                                                                                                                                                        $data->id,
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'stage_id',
+                                                                                                                                                                                                        4,
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->get();
+                                                                                                                                                                                            @endphp
+                                                                                                                                                                                            <label for="Quality Approal On"><b>Quality Approal On</b></label>
+                                                                                                                                                                                            @foreach ($submit as $temp)
     <div class="static">{{ $temp->user_name }}</div>
     @endforeach
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-                                                                                                                                                                <div class="col-lg-6">
-                                                                                                                                                                    <div class="group-input">
-                                                                                                                                                                        @php
-                                                                                                                                                                            $submit = DB::table(
-                                                                                                                                                                                'c_c_stage_histories',
-                                                                                                                                                                            )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'type',
-                                                                                                                                                                                    'Effectiveness-Check',
-                                                                                                                                                                                )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'doc_id',
-                                                                                                                                                                                    $data->id,
-                                                                                                                                                                                )
-                                                                                                                                                                                ->where(
-                                                                                                                                                                                    'stage_id',
-                                                                                                                                                                                    4,
-                                                                                                                                                                                )
-                                                                                                                                                                                ->get();
-                                                                                                                                                                        @endphp
-                                                                                                                                                                        <label for="Quality Approal On"><b>Quality Approal On</b></label>
-                                                                                                                                                                        @foreach ($submit as $temp)
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <div class="col-lg-6">
+                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                            @php
+                                                                                                                                                                                                $submit = DB::table(
+                                                                                                                                                                                                    'c_c_stage_histories',
+                                                                                                                                                                                                )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'type',
+                                                                                                                                                                                                        'Effectiveness-Check',
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'doc_id',
+                                                                                                                                                                                                        $data->id,
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->where(
+                                                                                                                                                                                                        'stage_id',
+                                                                                                                                                                                                        4,
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ->get();
+                                                                                                                                                                                            @endphp
+                                                                                                                                                                                            <label for="Quality Approal On"><b>Quality Approal On</b></label>
+                                                                                                                                                                                            @foreach ($submit as $temp)
     <div class="static">{{ $temp->created_at }}</div>
     @endforeach
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div> --}}
-                                                                                                                                                                {{--  <div class="col-lg-6">
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div> --}}
+                                                                                                                                                                                    {{--  <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Complete By"><b>Addendum Complete By</b></label>
                                         <div class="static">Shaleen Mishra</div>
@@ -1125,7 +1122,7 @@
                                         <div class="static">17-04-2023 11:12PM</div>
                                     </div>
                                 </div>  --}}
-                                                                                                                                                                {{-- <div class="col-lg-6">
+                                                                                                                                                                                    {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         @php
                                             $submit = DB::table('c_c_stage_histories')
@@ -1148,7 +1145,7 @@
                                         @endforeach
                                     </div>
                                 </div> --}}
-                                                                                                                                                                {{--  <div class="col-lg-6">
+                                                                                                                                                                                    {{--  <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Re Open For Addendum By"><b>Re Open For Addendum By</b></label>
                                         <div class="static">Shaleen Mishra</div>
@@ -1172,7 +1169,7 @@
                                         <div class="static">17-04-2023 11:12PM</div>
                                     </div>
                                 </div>  --}}
-                                                                                                                                                                {{-- <div class="col-12 sub-head">
+                                                                                                                                                                                    {{-- <div class="col-12 sub-head">
                                     Cancellation Details
                                 </div>
                                 <div class="col-lg-6">
@@ -1259,9 +1256,9 @@
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                        <button>Close</button>
-                                                                                                                                                    </div> -->
+                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                        </div> -->
                         <div class="modal-footer">
                             <button class="on-submit-disable-button" type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1305,9 +1302,9 @@
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                        <button>Close</button>
-                                                                                                                                                    </div> -->
+                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                        </div> -->
                         <div class="modal-footer">
                             <button class="on-submit-disable-button" type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1352,9 +1349,9 @@
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                        <button>Close</button>
-                                                                                                                                                    </div> -->
+                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                        </div> -->
                         <div class="modal-footer">
                             <button class="on-submit-disable-button" type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1444,9 +1441,9 @@
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                                                                                                                        <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                        <button type="submit">Submit</button>
-                                                                                                                                                    </div> -->
+                                                                                                                                                                            <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                            <button type="submit">Submit</button>
+                                                                                                                                                                        </div> -->
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1528,9 +1525,10 @@
             });
         </script>
         <script>
-             VirtualSelect.init({
-            ele:'#refer_record'
-        });
+            VirtualSelect.init({
+                ele: '#refer_record'
+            });
+
             function openCity(evt, cityName) {
                 var i, cctabcontent, cctablinks;
                 cctabcontent = document.getElementsByClassName("cctabcontent");

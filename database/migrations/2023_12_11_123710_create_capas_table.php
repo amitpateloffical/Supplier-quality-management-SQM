@@ -52,10 +52,10 @@ return new class extends Migration
             $table->string('cft_attchament_new')->nullable();
             $table->string('group_attachments_new')->nullable();
             $table->longText('details_new')->nullable();
-          
-            $table->string('capa_team')->nullable();
+
+            $table->longText('capa_team')->nullable();
             $table->text('initiator_Group')->nullable();
-            $table->string('capa_related_record')->nullable();
+            $table->longText('capa_related_record')->nullable();
             // $table->string('reference_record')->nullable();
             $table->longText('initial_observation')->nullable();
             $table->string('interim_containnment')->nullable();
@@ -73,7 +73,7 @@ return new class extends Migration
             $table->text('bd_domestic')->nullable();
             $table->text('Bd_Person')->nullable();
             $table->string('additional_attachments')->nullable();
-            
+
             $table->string('project_details_application')->nullable();
             $table->text('project_initiator_group')->nullable();
             $table->string('site_number')->nullable();

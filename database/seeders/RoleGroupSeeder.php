@@ -23,16 +23,19 @@ class RoleGroupSeeder extends Seeder
         ];
 
         $processes_roles = [
-            'Supplier' => ['Initiator','Purchase Department','CQA','F&D/MS&T', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
-            'Supplier Audit' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
-            'Risk Assessment' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
-            'Change Control' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
-            'Action Item' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
-            'Root Cause Analysis' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
-            'CAPA' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
-            'SCAR' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
-            'Supplier Site' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP'],
-            'Deviation' => ['Initiator', 'HOD/Designee', 'Approver', 'Reviewer' ,'QA', 'View Only', 'FP']
+            'Supplier' => ['Purchase Department','Initiator','CQA','F&D/MS&T', 'View Only', 'FP'],
+            'Supplier Site' => ['Initiator', 'Supplier Auditor', 'Supplier Contact Department', 'View Only', 'FP'],
+            'Supplier Audit' => ['Audit Manager', 'Supplier Auditor', 'Auditee', 'Business Rule Engine', 'View Only', 'FP'],
+            'Risk Assessment' => ['Initiator', 'HOD/Designee', 'Work Group','QA', 'View Only', 'FP'],
+            'Change Control' => ['Initiator', 'HOD/Designee', 'CFT/SME','View Only', 'FP'],
+            'CAPA' => ['Initiator', 'HOD/Designee', 'QA Head Designee','QA', 'View Only', 'FP'],
+            'Observation' => ['Auditors', 'Business Rule Engine', 'Auditees','Quality', 'View Only', 'FP'],
+            'Deviation' => ['Initiator', 'HOD/Designee', 'QA', 'CFT/SME' ,'QA Head Designee','QA Reviewer', 'View Only', 'FP'],
+            'Action Item' => ['Initiator', 'Action Owner','View Only', 'FP'],
+            'Extension' => ['Initiator', 'HOD/Designee', 'QA Approver', 'View Only', 'FP'],
+            'Effectiveness Check' => ['Initiator', 'Supervisor', 'QA', 'View Only', 'FP'],
+            'Root Cause Analysis' => ['Initiator', 'QA', 'View Only', 'FP'],
+            'SCAR' => ['SCAR Initiator', 'Vendors', 'SCAR Initiator', 'View Only', 'FP'],
         ];
 
         $start_from_id = 1; // Initialize your starting ID
@@ -79,7 +82,10 @@ class RoleGroupSeeder extends Seeder
             'CAPA',
             'SCAR',
             'Supplier Site',
-            'Deviation'
+            'Deviation',
+            'Extension',
+            'Observation',
+            'Effectiveness Check',
         ];
 
         $incrementCount = $start_from_id;

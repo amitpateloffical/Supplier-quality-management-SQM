@@ -3450,16 +3450,16 @@ class RiskManagementController extends Controller
     public function riskAssesmentStateChange(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $changeControl = RiskManagement::find($id);
+            $riskAssessment = RiskManagement::find($id);
             $lastDocument =  RiskManagement::find($id);
             $data =  RiskManagement::find($id);
 
-            if ($changeControl->stage == 1) {
-                $changeControl->stage = "2";
-                $changeControl->status = 'Risk Analysis & Work Group Assignment';
-                $changeControl->submitted_by = Auth::user()->name;
-                $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
-                $changeControl->submitted_comment = $request->comments;
+            if ($riskAssessment->stage == 1) {
+                $riskAssessment->stage = "2";
+                $riskAssessment->status = 'Risk Analysis & Work Group Assignment';
+                $riskAssessment->submitted_by = Auth::user()->name;
+                $riskAssessment->submitted_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->submitted_comment = $request->comments;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3470,7 +3470,7 @@ class RiskManagementController extends Controller
                     $history->previous = $lastDocument->submitted_by . ' , ' . $lastDocument->submitted_on;
                 }
                 $history->action = 'Submit';
-                $history->current = $changeControl->submitted_by . ' , ' . $changeControl->submitted_on;
+                $history->current = $riskAssessment->submitted_by . ' , ' . $riskAssessment->submitted_on;
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3485,40 +3485,40 @@ class RiskManagementController extends Controller
                     $history->action_name = 'Update';
                 }
 
-
                 $history->save();
-            //      $list = Helpers::getHodUserList();
-            //      return $list;
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-            //                 try {
-            //                     Mail::send(
-            //                         'mail.view-mail',
-            //                          ['data' => $changeControl],
-            //                       function ($message) use ($email) {
-            //                           $message->to($email)
-            //                               ->subject("Document is Send By".Auth::user()->name);
-            //                       }
-            //                     );
-            //                 } catch (\Exception $e) {
-            //                     //
-            //                 }
-            //             }
-            //      }
-            //   }
-                $changeControl->update();
+
+                 $list = Helpers::getHodUserList($riskAssessment->division_id);
+                //  return $list;
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        // }
+                 }
+              }
+                $riskAssessment->update();
 
                 toastr()->success('Document Sent');
                 return back();
         }
-            if ($changeControl->stage == 2) {
-                $changeControl->stage = "3";
-                $changeControl->status = 'Risk Processing & Action Plan';
-                $changeControl->evaluated_by = Auth::user()->name;
-                $changeControl->evaluated_on = Carbon::now()->format('d-M-Y');
-                $changeControl->evaluated_comment = $request->comments;
+            if ($riskAssessment->stage == 2) {
+                $riskAssessment->stage = "3";
+                $riskAssessment->status = 'Risk Processing & Action Plan';
+                $riskAssessment->evaluated_by = Auth::user()->name;
+                $riskAssessment->evaluated_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->evaluated_comment = $request->comments;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3529,7 +3529,7 @@ class RiskManagementController extends Controller
                     $history->previous = $lastDocument->evaluated_by . ' , ' . $lastDocument->evaluated_on;
                 }
                 $history->action = 'Evaluation Complete';
-                $history->current = $changeControl->evaluated_by . ' , ' . $changeControl->evaluated_on;
+                $history->current = $riskAssessment->evaluated_by . ' , ' . $riskAssessment->evaluated_on;
 
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
@@ -3545,36 +3545,37 @@ class RiskManagementController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-            //     $list = Helpers::getWorkGroupUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-            //                 try {
-            //                     Mail::send(
-            //                         'mail.view-mail',
-            //                          ['data' => $changeControl],
-            //                       function ($message) use ($email) {
-            //                           $message->to($email)
-            //                               ->subject("Document is Send By".Auth::user()->name);
-            //                       }
-            //                     );
-            //                 } catch (\Exception $e) {
-            //                     //
-            //                 }
-            //             }
-            //      }
+
+                $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                 }
             //   }
-                $changeControl->update();
+                $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 3) {
-                $changeControl->stage = "4";
-                $changeControl->status = 'Pending HOD Approval';
-                $changeControl->plan_approved_by = Auth::user()->name;
-                $changeControl->plan_approved_on = Carbon::now()->format('d-M-Y');
-                $changeControl->plan_approved_comment = $request->comments;
+            if ($riskAssessment->stage == 3) {
+                $riskAssessment->stage = "4";
+                $riskAssessment->status = 'Pending HOD Approval';
+                $riskAssessment->plan_approved_by = Auth::user()->name;
+                $riskAssessment->plan_approved_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->plan_approved_comment = $request->comments;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3585,7 +3586,7 @@ class RiskManagementController extends Controller
                     $history->previous = $lastDocument->plan_approved_by . ' , ' . $lastDocument->plan_approved_on;
                 }
                 $history->action = 'Action Plan Complete';
-                $history->current = $changeControl->plan_approved_by . ' , ' . $changeControl->plan_approved_on;
+                $history->current = $riskAssessment->plan_approved_by . ' , ' . $riskAssessment->plan_approved_on;
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3600,34 +3601,40 @@ class RiskManagementController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
-                $changeControl->update();
+
+                 $list = Helpers::getHodUserList($riskAssessment->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            if (!empty($email)) {
+                                try{
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' => $riskAssessment],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Sent By".Auth::user()->name);
+                                }
+                              );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                    //  }
+                  }
+                }
+
+                $riskAssessment->update();
 
                 toastr()->success('Document Sent');
                 return back();
         }
 
-            if ($changeControl->stage == 4) {
-                $changeControl->stage = "5";
-                $changeControl->status = 'Actions Items in Progress';
-                $changeControl->action_plan_approved_by = Auth::user()->name;
-                $changeControl->action_plan_approved_on = Carbon::now()->format('d-M-Y');
-                $changeControl->action_plan_approved_comment = $request->comments;
+            if ($riskAssessment->stage == 4) {
+                $riskAssessment->stage = "5";
+                $riskAssessment->status = 'Actions Items in Progress';
+                $riskAssessment->action_plan_approved_by = Auth::user()->name;
+                $riskAssessment->action_plan_approved_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->action_plan_approved_comment = $request->comments;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3639,7 +3646,7 @@ class RiskManagementController extends Controller
                 }
 
                 $history->action = 'Action Plan Approved';
-                $history->current = $changeControl->action_plan_approved_by . ' , ' . $changeControl->action_plan_approved_on;
+                $history->current = $riskAssessment->action_plan_approved_by . ' , ' . $riskAssessment->action_plan_approved_on;
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3654,37 +3661,39 @@ class RiskManagementController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-            //     $list = Helpers::getQAHeadUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-            //                 try {
-            //                     Mail::send(
-            //                         'mail.view-mail',
-            //                          ['data' => $changeControl],
-            //                       function ($message) use ($email) {
-            //                           $message->to($email)
-            //                               ->subject("Document is Send By".Auth::user()->name);
-            //                       }
-            //                     );
-            //                 } catch (\Exception $e) {
-            //                     //
-            //                 }
-            //             }
-            //      }
-            //   }
-                $changeControl->update();
+
+                $list = Helpers::getQAUserList($riskAssessment->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                //  }
+              }
+
+                $riskAssessment->update();
 
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 5) {
-                $changeControl->stage = "6";
-                $changeControl->status = 'Residual Risk Evaluation';
-                $changeControl->all_action_completed_by = Auth::user()->name;
-                $changeControl->all_action_completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->all_action_completed_comment = $request->comments;
+            if ($riskAssessment->stage == 5) {
+                $riskAssessment->stage = "6";
+                $riskAssessment->status = 'Residual Risk Evaluation';
+                $riskAssessment->all_action_completed_by = Auth::user()->name;
+                $riskAssessment->all_action_completed_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->all_action_completed_comment = $request->comments;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3695,7 +3704,7 @@ class RiskManagementController extends Controller
                     $history->previous = $lastDocument->all_action_completed_by . ' , ' . $lastDocument->all_action_completed_on;
                 }
                 $history->action = 'All Actions Completed';
-                $history->current = $changeControl->all_action_completed_by . ' , ' . $changeControl->all_action_completed_on;
+                $history->current = $riskAssessment->all_action_completed_by . ' , ' . $riskAssessment->all_action_completed_on;
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3710,38 +3719,62 @@ class RiskManagementController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-            //     $list = Helpers::getHodUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
 
-            //                 try {
-            //                     Mail::send(
-            //                         'mail.view-mail',
-            //                          ['data' => $changeControl],
-            //                       function ($message) use ($email) {
-            //                           $message->to($email)
-            //                               ->subject("Document is Send By".Auth::user()->name);
-            //                       }
-            //                     );
-            //                 } catch (\Exception $e) {
-            //                     //
-            //                 }
-            //             }
-            //      }
-            //   }
-                $changeControl->update();
+                $list = Helpers::getInitiatorUserList($riskAssessment->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                //  }
+              }
+
+                $list = Helpers::getHodUserList($riskAssessment->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                //  }
+              }
+
+                $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
             }
 
-            if ($changeControl->stage == 6) {
-                $changeControl->stage = "7";
-                $changeControl->status = 'Closed - Done';
-                $changeControl->residual_risk_completed_by = Auth::user()->name;
-                $changeControl->residual_risk_completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->residual_risk_completed_comment = $request->comments;
+            if ($riskAssessment->stage == 6) {
+                $riskAssessment->stage = "7";
+                $riskAssessment->status = 'Closed - Done';
+                $riskAssessment->residual_risk_completed_by = Auth::user()->name;
+                $riskAssessment->residual_risk_completed_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->residual_risk_completed_comment = $request->comments;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3752,7 +3785,7 @@ class RiskManagementController extends Controller
                     $history->previous = $lastDocument->residual_risk_completed_by . ' , ' . $lastDocument->residual_risk_completed_on;
                 }
                 $history->action = 'Residual Risk Evaluation Completed';
-                $history->current = $changeControl->residual_risk_completed_by . ' , ' . $changeControl->residual_risk_completed_on;
+                $history->current = $riskAssessment->residual_risk_completed_by . ' , ' . $riskAssessment->residual_risk_completed_on;
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3767,7 +3800,7 @@ class RiskManagementController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                $changeControl->update();
+                $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -3781,15 +3814,15 @@ class RiskManagementController extends Controller
     public function RejectStateChange(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $changeControl = RiskManagement::find($id);
+            $riskAssessment = RiskManagement::find($id);
             $lastDocument =  RiskManagement::find($id);
             $data =  RiskManagement::find($id);
-            if ($changeControl->stage == 1) {
-                $changeControl->stage = "0";
-                $changeControl->status = "Closed - Cancelled";
-                $changeControl->cancelled_by = Auth::user()->name;
-                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-                $changeControl->cancelled_comment = $request->comment;
+            if ($riskAssessment->stage == 1) {
+                $riskAssessment->stage = "0";
+                $riskAssessment->status = "Closed - Cancelled";
+                $riskAssessment->cancelled_by = Auth::user()->name;
+                $riskAssessment->cancelled_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->cancelled_comment = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3800,7 +3833,7 @@ class RiskManagementController extends Controller
                     $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
                 }
                 $history->action = 'Cancel';
-                $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
+                $history->current = $riskAssessment->cancelled_by . ' , ' . $riskAssessment->cancelled_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3816,16 +3849,38 @@ class RiskManagementController extends Controller
                 }
                 $history->save();
 
-                $changeControl->update();
+            //     $list = Helpers::getHodUserList($riskAssessment->division_id);
+            //     //  return $list;
+            //     foreach ($list as $u) {
+            //         // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+            //             $email = Helpers::getInitiatorEmail($u->user_id);
+            //             if (!empty($email)) {
+            //                 try {
+            //                     Mail::send(
+            //                         'mail.view-mail',
+            //                          ['data' => $riskAssessment],
+            //                       function ($message) use ($email) {
+            //                           $message->to($email)
+            //                               ->subject("Document is Sent By".Auth::user()->name);
+            //                       }
+            //                     );
+            //                 } catch (\Exception $e) {
+            //                     \log::error('Mail failed to send: ' . $e->getMessage());
+            //                 }
+            //             // }
+            //      }
+            //   }
+
+                $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 2) {
-                $changeControl->stage = "0";
-                $changeControl->status = "Closed - Cancelled";
-                $changeControl->cancelled_by = Auth::user()->name;
-                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-                $changeControl->cancelled_comment = $request->comment;
+            if ($riskAssessment->stage == 2) {
+                $riskAssessment->stage = "0";
+                $riskAssessment->status = "Closed - Cancelled";
+                $riskAssessment->cancelled_by = Auth::user()->name;
+                $riskAssessment->cancelled_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->cancelled_comment = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3836,7 +3891,7 @@ class RiskManagementController extends Controller
                     $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
                 }
                 $history->action = 'Cancel';
-                $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
+                $history->current = $riskAssessment->cancelled_by . ' , ' . $riskAssessment->cancelled_on;
 
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -3852,7 +3907,30 @@ class RiskManagementController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                $changeControl->update();
+
+            //     $list = Helpers::getHodUserList($riskAssessment->division_id);
+            //     //  return $list;
+            //     foreach ($list as $u) {
+            //         // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+            //             $email = Helpers::getInitiatorEmail($u->user_id);
+            //             if (!empty($email)) {
+            //                 try {
+            //                     Mail::send(
+            //                         'mail.view-mail',
+            //                          ['data' => $riskAssessment],
+            //                       function ($message) use ($email) {
+            //                           $message->to($email)
+            //                               ->subject("Document is Sent By".Auth::user()->name);
+            //                       }
+            //                     );
+            //                 } catch (\Exception $e) {
+            //                     \log::error('Mail failed to send: ' . $e->getMessage());
+            //                 }
+            //             // }
+            //      }
+            //   }
+
+                $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -3866,15 +3944,15 @@ class RiskManagementController extends Controller
     public function MoreInfoCAPA(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $changeControl = RiskManagement::find($id);
+            $riskAssessment = RiskManagement::find($id);
             $lastDocument =  RiskManagement::find($id);
             $data =  RiskManagement::find($id);
-            if ($changeControl->stage == 2) {
-                $changeControl->stage = "1";
-                $changeControl->status = "Opened";
-                $changeControl->analysis_more_info_by = Auth::user()->name;
-                $changeControl->analysis_more_info_on = Carbon::now()->format('d-M-Y');
-                $changeControl->analysis_more_info_comment = $request->comment;
+            if ($riskAssessment->stage == 2) {
+                $riskAssessment->stage = "1";
+                $riskAssessment->status = "Opened";
+                $riskAssessment->analysis_more_info_by = Auth::user()->name;
+                $riskAssessment->analysis_more_info_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->analysis_more_info_comment = $request->comment;
 
 
                 $history = new RiskAuditTrail();
@@ -3886,7 +3964,7 @@ class RiskManagementController extends Controller
                     $history->previous = $lastDocument->analysis_more_info_by . ' , ' . $lastDocument->analysis_more_info_on;
                 }
                 $history->action = 'More Information Required';
-                $history->current = $changeControl->analysis_more_info_by . ' , ' . $changeControl->analysis_more_info_on;
+                $history->current = $riskAssessment->analysis_more_info_by . ' , ' . $riskAssessment->analysis_more_info_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3902,16 +3980,38 @@ class RiskManagementController extends Controller
                 }
                 $history->save();
 
-                $changeControl->update();
+                $list = Helpers::getInitiatorUserList($riskAssessment->division_id);
+                //  return $list;
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        // }
+                 }
+              }
+
+                $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 3) {
-                $changeControl->stage = "2";
-                $changeControl->status = "Risk Analysis & Work Group Assignment";
-                $changeControl->request_more_info_by = Auth::user()->name;
-                $changeControl->request_more_info_on = Carbon::now()->format('d-M-Y');
-                $changeControl->request_more_info_comment = $request->comment;
+            if ($riskAssessment->stage == 3) {
+                $riskAssessment->stage = "2";
+                $riskAssessment->status = "Risk Analysis & Work Group Assignment";
+                $riskAssessment->request_more_info_by = Auth::user()->name;
+                $riskAssessment->request_more_info_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->request_more_info_comment = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3922,7 +4022,7 @@ class RiskManagementController extends Controller
                     $history->previous = $lastDocument->request_more_info_by . ' , ' . $lastDocument->request_more_info_on;
                 }
                 $history->action = 'Request More-Info';
-                $history->current = $changeControl->request_more_info_by . ' , ' . $changeControl->request_more_info_on;
+                $history->current = $riskAssessment->request_more_info_by . ' , ' . $riskAssessment->request_more_info_on;
 
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -3938,16 +4038,39 @@ class RiskManagementController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                $changeControl->update();
+
+                $list = Helpers::getHodUserList($riskAssessment->division_id);
+                //  return $list;
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        // }
+                 }
+              }
+
+                $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 4) {
-                $changeControl->stage = "3";
-                $changeControl->status = "Risk Processing & Action Plan";
-                $changeControl->reject_action_by = Auth::user()->name;
-                $changeControl->reject_action_on = Carbon::now()->format('d-M-Y');
-                $changeControl->reject_action_comment = $request->comment;
+            if ($riskAssessment->stage == 4) {
+                $riskAssessment->stage = "3";
+                $riskAssessment->status = "Risk Processing & Action Plan";
+                $riskAssessment->reject_action_by = Auth::user()->name;
+                $riskAssessment->reject_action_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->reject_action_comment = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3958,7 +4081,7 @@ class RiskManagementController extends Controller
                     $history->previous = $lastDocument->reject_action_by . ' , ' . $lastDocument->reject_action_on;
                 }
                 $history->action = 'Reject Action Plan';
-                $history->current = $changeControl->reject_action_by . ' , ' . $changeControl->reject_action_on;
+                $history->current = $riskAssessment->reject_action_by . ' , ' . $riskAssessment->reject_action_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3973,16 +4096,39 @@ class RiskManagementController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                $changeControl->update();
+
+                $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
+                //  return $list;
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        // }
+                 }
+              }
+
+                $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 5) {
-                $changeControl->stage = "4";
-                $changeControl->status = "Pending HOD Approval";
-                $changeControl->action_request_action_by = Auth::user()->name;
-                $changeControl->action_request_action_on = Carbon::now()->format('d-M-Y');
-                $changeControl->action_request_action_comment = $request->comment;
+            if ($riskAssessment->stage == 5) {
+                $riskAssessment->stage = "4";
+                $riskAssessment->status = "Pending HOD Approval";
+                $riskAssessment->action_request_action_by = Auth::user()->name;
+                $riskAssessment->action_request_action_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->action_request_action_comment = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3993,7 +4139,7 @@ class RiskManagementController extends Controller
                     $history->previous = $lastDocument->action_request_action_by . ' , ' . $lastDocument->action_request_action_on;
                 }
                 $history->action = 'Request More Info';
-                $history->current = $changeControl->action_request_action_by . ' , ' . $changeControl->action_request_action_on;
+                $history->current = $riskAssessment->action_request_action_by . ' , ' . $riskAssessment->action_request_action_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4008,16 +4154,39 @@ class RiskManagementController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                $changeControl->update();
+
+                $list = Helpers::getHodUserList($riskAssessment->division_id);
+                //  return $list;
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        // }
+                 }
+              }
+
+                $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 6) {
-                $changeControl->stage = "5";
-                $changeControl->status = "Actions Items in Progress";
-                $changeControl->more_action_needed_by = Auth::user()->name;
-                $changeControl->more_action_needed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->more_action_needed_comment = $request->comment;
+            if ($riskAssessment->stage == 6) {
+                $riskAssessment->stage = "5";
+                $riskAssessment->status = "Actions Items in Progress";
+                $riskAssessment->more_action_needed_by = Auth::user()->name;
+                $riskAssessment->more_action_needed_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->more_action_needed_comment = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -4028,7 +4197,7 @@ class RiskManagementController extends Controller
                     $history->previous = $lastDocument->more_action_needed_by . ' , ' . $lastDocument->more_action_needed_on;
                 }
                 $history->action = 'More Actions Needed';
-                $history->current = $changeControl->more_action_needed_by . ' , ' . $changeControl->more_action_needed_on;
+                $history->current = $riskAssessment->more_action_needed_by . ' , ' . $riskAssessment->more_action_needed_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4043,7 +4212,7 @@ class RiskManagementController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                $changeControl->update();
+                $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
             }

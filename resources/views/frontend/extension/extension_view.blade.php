@@ -94,21 +94,21 @@
                             class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/audit_trailNew', $extensionNew->id) }}"> Audit Trail </a> </button>
-                        @if ($extensionNew->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($extensionNew->stage == 1 && Helpers::check_roles($extensionNew->division_id, 'Extension', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-required-modal">
                                 Cancel
                             </button>
-                        @elseif($extensionNew->stage == 2 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($extensionNew->stage == 2 && Helpers::check_roles($extensionNew->division_id, 'Extension', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Review
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button>
-                        @elseif($extensionNew->stage == 3 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($extensionNew->stage == 3 && Helpers::check_roles($extensionNew->division_id, 'Extension', 45))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approved
                             </button>
@@ -1032,9 +1032,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                    <button>Close</button>
-                                                                                                </div> -->
+                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                    <button>Close</button>
+                                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -1080,9 +1080,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                    <button>Close</button>
-                                                                                                </div> -->
+                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                    <button>Close</button>
+                                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit

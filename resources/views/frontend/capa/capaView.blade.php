@@ -339,11 +339,11 @@
                         <button class="button_theme1"> <a class="text-white" href="{{ url('CapaAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'CAPA', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Propose Plan
                             </button>
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'CAPA', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#capa_more_info">
                                 More Info Required
                             </button>
@@ -356,7 +356,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'CAPA', 7))
                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#capa_more_info">
                               QA More Info Required
                             </button>
@@ -370,7 +370,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'CAPA', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve
 
@@ -381,11 +381,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#capa_more_info">
                                 Reject
                             </button>
-                        @elseif($data->stage == 5)
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'CAPA', 9))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All Actions Completed
                             </button>
-                        @elseif($data->stage == 6)
+                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'CAPA', 9))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button>

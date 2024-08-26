@@ -461,16 +461,16 @@
                         @endphp
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/supplier-audit-trail', $data->id) }}"> Audit Trail </a> </button>
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Supplier', 34))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
                             @if ($data->approvedBy_contract_giver_by == null)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#contract-giver-modal">
-                                    Approved By Contract Giver
-                                </button>
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Need for Sourcing of Starting Material
+                                </button>
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#contract-giver-modal">
+                                    Approved By Contract Giver
                                 </button>
                             @endif
                             @if (!empty($data->approvedBy_contract_giver_by))
@@ -481,14 +481,14 @@
                                     Initiate Periodic Revaluation
                                 </button>
                             @endif
-                        @elseif($data->stage == 2 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Supplier', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Request Justified
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request Not Justified
                             </button>
-                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Supplier', 35))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Pre-Purchase Sample Required
                             </button>
@@ -498,35 +498,35 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Supplier', 34))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Purchase Sample Request Initiated & Acknowledgement By Purchase Department
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 5 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Supplier', 35))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Purchase Sample Analysis Satisfactory
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Purchase Sample Analysis Not Satisfactory
                             </button>
-                        @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Supplier', 36))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 F&D Review Completed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 7 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 7 && Helpers::check_roles($data->division_id, 'Supplier', 34))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledgement By Purchase Departament
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 8 && Helpers::check_roles($data->division_id, 'Supplier', 35))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All Requirements Fulfilled
                             </button>
@@ -537,7 +537,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 10 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 10 && Helpers::check_roles($data->division_id, 'Supplier', 35))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Risk Rating Observed as High/Medium
                             </button>
@@ -547,7 +547,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 11 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 11 && Helpers::check_roles($data->division_id, 'Supplier', 35))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Manufacturer Audit Passed
                             </button>
@@ -557,7 +557,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 12 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 12 && Helpers::check_roles($data->division_id, 'Supplier', 35))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Initiate Periodic Revaluation
                             </button>
@@ -567,14 +567,14 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 13 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 13 && Helpers::check_roles($data->division_id, 'Supplier', 35))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Risk Rating Observed as High/Medium
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Risk Rating Observed as Low
                             </button>
-                        @elseif($data->stage == 14 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 14 && Helpers::check_roles($data->division_id, 'Supplier', 35))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Manufacturer Audit Failed
                             </button>

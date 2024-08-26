@@ -6005,7 +6005,7 @@ class SupplierController extends Controller
                     }
                     $history->save();
 
-                    $list = Helpers::getInitiatorUserList();
+                    $list = Helpers::getInitiatorUserList($supplier->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $supplier->division_id){
                             $email = Helpers::getInitiatorEmail($u->user_id);
@@ -6015,8 +6015,7 @@ class SupplierController extends Controller
                                         'mail.view-mail',
                                         ['data' => $supplier],
                                         function ($message) use ($email) {
-                                            // dd("test rty",$email);
-                                            $message->to("gaurav.vidyagxp@gmail.com")
+                                            $message->to($email)
                                                     ->subject("Document is Sent By " . Auth::user()->name);
                                         }
                                     );
@@ -6024,8 +6023,8 @@ class SupplierController extends Controller
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             }
-                                // }
-                            }
+                        // }
+                    }
 
                     $supplier->update();
 
@@ -6064,22 +6063,27 @@ class SupplierController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $supplier],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+
+                    $list = Helpers::getCqaDepartmentList($supplier->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $supplier->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $supplier],
+                                        function ($message) use ($email) {
+                                            $message->to($email)
+                                                    ->subject("Document is Sent By " . Auth::user()->name);
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        // }
+                    }
                     $supplier->update();
 
                     toastr()->success('Document Sent');
@@ -6092,46 +6096,53 @@ class SupplierController extends Controller
                 $supplier->prepurchase_sample_on = Carbon::now()->format('d-M-Y');
                 $supplier->prepurchase_sample_comment = $request->comments;
 
-                $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Pre-Purchase Sample Required By, Pre-Purchase Sample Required On';
-                    if (is_null($lastDocument->prepurchase_sample_by) || $lastDocument->prepurchase_sample_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->prepurchase_sample_by . ' , ' . $lastDocument->prepurchase_sample_on;
-                    }
-                    $history->current = $supplier->prepurchase_sample_by . ' , ' . $supplier->prepurchase_sample_on;
-                    $history->action = 'Pre-Purchase Sample Required';
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to =  "Pending Purchase Sample Request";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->prepurchase_sample_by) || $lastDocument->prepurchase_sample_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $hitory = new SupplierAuditTrail();
+                $history->supplier_id = $id;
+
+                $history->activity_type = 'Pre-Purchase Sample Required By, Pre-Purchase Sample Required On';
+                if (is_null($lastDocument->prepurchase_sample_by) || $lastDocument->prepurchase_sample_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->prepurchase_sample_by . ' , ' . $lastDocument->prepurchase_sample_on;
+                }                
+                $history->current = $supplier->prepurchase_sample_by . ' , ' . $supplier->prepurchase_sample_on;
+
+                $history->action = 'Pre-Purchase Sample Required';
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =  "Pending Purchase Sample Request";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->prepurchase_sample_by) || $lastDocument->prepurchase_sample_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                
+                $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
                 $supplier->update();
 
                 toastr()->success('Document Sent');
@@ -6145,46 +6156,51 @@ class SupplierController extends Controller
                 $supplier->pendigPurchaseSampleRequested_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Purchase Sample Request Initiated & Acknowledgement By PD By , Purchase Sample Request Initiated & Acknowledgement By PD On';
-                    if (is_null($lastDocument->pendigPurchaseSampleRequested_by) || $lastDocument->pendigPurchaseSampleRequested_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->pendigPurchaseSampleRequested_by . ' , ' . $lastDocument->pendigPurchaseSampleRequested_on;
-                    }
-                    $history->current = $supplier->pendigPurchaseSampleRequested_by . ' , ' . $supplier->pendigPurchaseSampleRequested_on;
-                    $history->action = 'Purchase Sample Request Initiated & Acknowledgement By PD';
+                $history->supplier_id = $id;
+                $history->activity_type = 'Purchase Sample Request Initiated & Acknowledgement By PD By , Purchase Sample Request Initiated & Acknowledgement By PD On';
+                if (is_null($lastDocument->pendigPurchaseSampleRequested_by) || $lastDocument->pendigPurchaseSampleRequested_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->pendigPurchaseSampleRequested_by . ' , ' . $lastDocument->pendigPurchaseSampleRequested_on;
+                }
+                $history->current = $supplier->pendigPurchaseSampleRequested_by . ' , ' . $supplier->pendigPurchaseSampleRequested_on;
+                $history->action = 'Purchase Sample Request Initiated & Acknowledgement By PD';
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Pending CQA Review After Purchase Sample Request";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->pendigPurchaseSampleRequested_by) || $lastDocument->pendigPurchaseSampleRequested_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
 
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending CQA Review After Purchase Sample Request";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->pendigPurchaseSampleRequested_by) || $lastDocument->pendigPurchaseSampleRequested_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $list = Helpers::getCqaDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
+                    
                 $supplier->update();
 
                 toastr()->success('Document Sent');
@@ -6198,47 +6214,52 @@ class SupplierController extends Controller
                 $supplier->purchaseSampleanalysis_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->activity_type = 'Purchase Sample Analysis Satisfactory By , Purchase Sample Analysis Satisfactory On';
-                    if (is_null($lastDocument->purchaseSampleanalysis_by) || $lastDocument->purchaseSampleanalysis_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->purchaseSampleanalysis_by . ' , ' . $lastDocument->purchaseSampleanalysis_on;
-                    }
-                    $history->current = $supplier->purchaseSampleanalysis_by . ' , ' . $supplier->purchaseSampleanalysis_on;
-                    $history->action = 'Purchase Sample Analysis Satisfactory';
-                    // $history->current = $supplier->submit_by;
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending F&D Review";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->purchaseSampleanalysis_by) || $lastDocument->purchaseSampleanalysis_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $history->supplier_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Purchase Sample Analysis Satisfactory By , Purchase Sample Analysis Satisfactory On';
+                if (is_null($lastDocument->purchaseSampleanalysis_by) || $lastDocument->purchaseSampleanalysis_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->purchaseSampleanalysis_by . ' , ' . $lastDocument->purchaseSampleanalysis_on;
+                }
+                $history->current = $supplier->purchaseSampleanalysis_by . ' , ' . $supplier->purchaseSampleanalysis_on;
+                $history->action = 'Purchase Sample Analysis Satisfactory';
+                // $history->current = $supplier->submit_by;
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Pending F&D Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->purchaseSampleanalysis_by) || $lastDocument->purchaseSampleanalysis_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                
+                $list = Helpers::getFormulationDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
                 $supplier->update();
 
                 toastr()->success('Document Sent');
@@ -6252,46 +6273,51 @@ class SupplierController extends Controller
                 $supplier->FdReviewCompleted_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'F&D Review Completed By , F&D Review Completed On';
-                    if (is_null($lastDocument->FdReviewCompleted_by) || $lastDocument->FdReviewCompleted_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->FdReviewCompleted_by . ' , ' . $lastDocument->FdReviewCompleted_on;
-                    }
-                    $history->current = $supplier->FdReviewCompleted_by . ' , ' . $supplier->FdReviewCompleted_on;
-                    $history->action = 'F&D Review Completed';
-                    // $history->current = $supplier->submit_by;
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending Acknowledgement By Purchase Department";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->FdReviewCompleted_by) || $lastDocument->FdReviewCompleted_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $history->supplier_id = $id;
+                $history->activity_type = 'F&D Review Completed By , F&D Review Completed On';
+                if (is_null($lastDocument->FdReviewCompleted_by) || $lastDocument->FdReviewCompleted_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->FdReviewCompleted_by . ' , ' . $lastDocument->FdReviewCompleted_on;
+                }
+                $history->current = $supplier->FdReviewCompleted_by . ' , ' . $supplier->FdReviewCompleted_on;
+                $history->action = 'F&D Review Completed';
+                // $history->current = $supplier->submit_by;
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Pending Acknowledgement By Purchase Department";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->FdReviewCompleted_by) || $lastDocument->FdReviewCompleted_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                
+                $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
                 $supplier->update();
 
                 toastr()->success('Document Sent');
@@ -6305,46 +6331,52 @@ class SupplierController extends Controller
                 $supplier->acknowledgByPD_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Acknowledgement By Purchase Department By , Acknowledgement By Purchase Department On';
-                    if (is_null($lastDocument->acknowledgByPD_by) || $lastDocument->acknowledgByPD_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->acknowledgByPD_by . ' , ' . $lastDocument->acknowledgByPD_on;
-                    }
-                    $history->current = $supplier->acknowledgByPD_by . ' , ' . $supplier->acknowledgByPD_on;
-                    $history->action = 'Acknowledgement By Purchase Department';
-                    // $history->current = $supplier->submit_by;
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending CQA Final Review";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->acknowledgByPD_by) || $lastDocument->acknowledgByPD_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $history->supplier_id = $id;
+                $history->activity_type = 'Acknowledgement By Purchase Department By , Acknowledgement By Purchase Department On';
+                if (is_null($lastDocument->acknowledgByPD_by) || $lastDocument->acknowledgByPD_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->acknowledgByPD_by . ' , ' . $lastDocument->acknowledgByPD_on;
+                }
+                $history->current = $supplier->acknowledgByPD_by . ' , ' . $supplier->acknowledgByPD_on;
+                $history->action = 'Acknowledgement By Purchase Department';
+                // $history->current = $supplier->submit_by;
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Pending CQA Final Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->acknowledgByPD_by) || $lastDocument->acknowledgByPD_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                
+                $list = Helpers::getCqaDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
+
                 $supplier->update();
 
                 toastr()->success('Document Sent');
@@ -6623,45 +6655,92 @@ class SupplierController extends Controller
                 $supplier->pendingManufacturerAuditFailed_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Manufacturer Audit Failed By , Manufacturer Audit Failed On';
-                    if (is_null($lastDocument->pendingManufacturerAuditFailed_by) || $lastDocument->pendingManufacturerAuditFailed_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->pendingManufacturerAuditFailed_by . ' , ' . $lastDocument->pendingManufacturerAuditFailed_on;
-                    }
-                    $history->current = $supplier->pendingManufacturerAuditFailed_by . ' , ' . $supplier->pendingManufacturerAuditFailed_on;
-                    $history->action = 'Manufacturer Audit Failed';
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Manufacturer Rejected";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->pendingManufacturerAuditFailed_by) || $lastDocument->pendingManufacturerAuditFailed_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $history->supplier_id = $id;
+                $history->activity_type = 'Manufacturer Audit Failed By , Manufacturer Audit Failed On';
+                if (is_null($lastDocument->pendingManufacturerAuditFailed_by) || $lastDocument->pendingManufacturerAuditFailed_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->pendingManufacturerAuditFailed_by . ' , ' . $lastDocument->pendingManufacturerAuditFailed_on;
+                }
+                $history->current = $supplier->pendingManufacturerAuditFailed_by . ' , ' . $supplier->pendingManufacturerAuditFailed_on;
+                $history->action = 'Manufacturer Audit Failed';
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Manufacturer Rejected";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->pendingManufacturerAuditFailed_by) || $lastDocument->pendingManufacturerAuditFailed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+
+                $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
+
+                $list = Helpers::getFormulationDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
+
+                $list = Helpers::getInitiatorUserList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }                
                 $supplier->update();
 
                 toastr()->success('Document Sent to Manufacturer Rejected');
@@ -7495,28 +7574,71 @@ class SupplierController extends Controller
                 $history->action_name = 'Update';
             }
             $history->save();
-            $supplier->update();
 
-            // foreach ($list as $u) {
-            //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-            //         $email = Helpers::getInitiatorEmail($u->user_id);
-            //         if ($email !== null) {
+            $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $supplier->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $supplier],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                // }
+            }
 
-            //             try {
-            //                 Mail::send(
-            //                     'mail.view-mail',
-            //                     ['data' => $deviation],
-            //                     function ($message) use ($email) {
-            //                         $message->to($email)
-            //                             ->subject("Activity Performed By " . Auth::user()->name);
-            //                     }
-            //                 );
-            //             } catch (\Exception $e) {
-            //                 //log error
-            //             }
-            //         }
-            //     }
-            // }
+            $list = Helpers::getFormulationDepartmentList($supplier->division_id);
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $supplier->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $supplier],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                // }
+            }
+
+            $list = Helpers::getInitiatorUserList($supplier->division_id);
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $supplier->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $supplier],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                // }
+            }
+
+            
             $supplier->update();
             toastr()->success('Document Sent');
             return back();

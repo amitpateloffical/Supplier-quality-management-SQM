@@ -127,37 +127,207 @@ static function getFullDepartmentName($code)
 
     }
 
-    /************* Get Purchase Department Roles Starts ***************/
+     /************* Get Roles List Ends ***************/
 
-    public static function getPurchaseDeptList(){
-
-        return $getPurchaseDeptList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'34'])->get();
+    public static function getHodUserList($division = null){
+        if (!$division) {
+            return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' => '4'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '4', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+    public static function getQAUserList($division = null){
+        if (!$division) {
+            return $QAUserList = DB::table('user_roles')->where(['q_m_s_roles_id' => '7'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '7', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
     }
 
-    public static function getCQAList(){
-
-        return $getCQAList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'35'])->get();
+    public static function getInitiatorUserList($division = null){        
+        if (!$division) {
+            return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' => '3'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '3', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
     }
 
-    public static function getFandD(){
-
-        return $getFandD = DB::table('user_roles')->where(['q_m_s_roles_id' =>'36'])->get();
+    public static function getCqaDepartmentList($division = null) {
+        if (!$division) {
+            return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' => '35'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '35', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
     }
 
-    /************* Get Purchase Department Roles Ends ***************/
-
-    public static function getHodUserList(){
-
-        return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
+    public static function getPurchaseDepartmentList($division = null) {
+        if (!$division) {
+            return $PurchaseDepartmentList = DB::table('user_roles')->where(['q_m_s_roles_id' => '34'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '34', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
     }
-    public static function getQAUserList(){
 
-        return $QAUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'7'])->get();
+    public static function getFormulationDepartmentList($division = null) {
+        if (!$division) {
+            return $FormulationDepartmentList = DB::table('user_roles')->where(['q_m_s_roles_id' => '36'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '36', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
     }
-    public static function getInitiatorUserList(){
 
-        return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'3'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+    public static function getSupplierAuditorDepartmentList($division = null) {
+        if (!$division) {
+            return $SupplierAuditorDepartmentList = DB::table('user_roles')->where(['q_m_s_roles_id' => '37'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '37', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
     }
+
+    public static function getSupplierContactDepartmentList($division = null) {
+        if (!$division) {
+            return $SupplierContactDepartmentList = DB::table('user_roles')->where(['q_m_s_roles_id' => '38'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '38', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getAuditManagerDepartmentList($division = null) {
+        if (!$division) {
+            return $AuditManagerDepartmentList = DB::table('user_roles')->where(['q_m_s_roles_id' => '13'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '13', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getAuditeeDepartmentList($division = null) {
+        if (!$division) {
+            return $AuditeeDepartmentList = DB::table('user_roles')->where(['q_m_s_roles_id' => '39'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '39', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getBusinessRuleengineDeptList($division = null) {
+        if (!$division) {
+            return $BusinessRuleengineDeptList = DB::table('user_roles')->where(['q_m_s_roles_id' => '40'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '40', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getWorkGroupUserList($division = null){
+        if (!$division) {
+            return $WorkGroupUserList = DB::table('user_roles')->where(['q_m_s_roles_id' => '16'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '16', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getCFTUserList($division = null){
+        if (!$division) {
+            return $CFTUserList = DB::table('user_roles')->where(['q_m_s_roles_id' => '5'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '5', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getQAHeadUserList($division = null){
+        if (!$division) {
+            return $QAHeadUserList = DB::table('user_roles')->where(['q_m_s_roles_id' => '9'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '9', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getAuditorsList($division = null){
+        if (!$division) {
+            return $AuditorsList = DB::table('user_roles')->where(['q_m_s_roles_id' => '41'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '41', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getAuditeesList($division = null){
+        if (!$division) {
+            return $AuditeesList = DB::table('user_roles')->where(['q_m_s_roles_id' => '42'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '42', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getQualityList($division = null){
+        if (!$division) {
+            return $QualityList = DB::table('user_roles')->where(['q_m_s_roles_id' => '43'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '43', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getQaReviewerList($division = null){
+        if (!$division) {
+            return $QaReviewerList = DB::table('user_roles')->where(['q_m_s_roles_id' => '44'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '44', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getActionOwnerUserList($division = null){
+        if (!$division) {
+            return $ActionOwnerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' => '8'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '8', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getQaApproverList($division = null){
+        if (!$division) {
+            return $QaApproverList = DB::table('user_roles')->where(['q_m_s_roles_id' => '45'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '45', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getSupervisorUserList($division = null){
+        if (!$division) {
+            return $SupervisorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' => '14'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '14', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getScarInitiatorList($division = null){
+        if (!$division) {
+            return $ScarInitiatorList = DB::table('user_roles')->where(['q_m_s_roles_id' => '46'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '46', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getVendorList($division = null){
+        if (!$division) {
+            return $VendorList = DB::table('user_roles')->where(['q_m_s_roles_id' => '47'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '47', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getViewUserList($division = null){
+        if (!$division) {
+            return $ViewUserList = DB::table('user_roles')->where(['q_m_s_roles_id' => '17'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '17', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getFPUserList($division = null){
+        if (!$division) {
+            return $FPUserList = DB::table('user_roles')->where(['q_m_s_roles_id' => '18'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '18', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
     public static function getApproverUserList(){
 
         return $ApproverUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'1'])->get();
@@ -166,22 +336,12 @@ static function getFullDepartmentName($code)
 
         return $ReviewerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'2'])->get();
     }
-    public static function getCFTUserList(){
-
-        return $CFTUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'5'])->get();
-    }
+    
     public static function getTrainerUserList(){
 
         return $TrainerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'6'])->get();
-    }
-    public static function getActionOwnerUserList(){
-
-        return $ActionOwnerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'8'])->get();
-    }
-    public static function getQAHeadUserList(){
-
-        return $QAHeadUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'9'])->get();
-    }
+    }  
+    
     public static function getQCHeadUserList(){
 
         return $QCHeadUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'10'])->get();
@@ -193,31 +353,12 @@ static function getFullDepartmentName($code)
     public static function getLeadAuditorUserList(){
 
         return $LeadAuditorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'12'])->get();
-    }
-    public static function getAuditManagerUserList(){
-
-        return $AuditManagerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'13'])->get();
-    }
-    public static function getSupervisorUserList(){
-
-        return $SupervisorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'14'])->get();
-    }
+    }    
     public static function getResponsibleUserList(){
 
         return $ResponsibleUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'15'])->get();
     }
-    public static function getWorkGroupUserList(){
-
-        return $WorkGroupUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'16'])->get();
-    }
-    public static function getViewUserList(){
-
-        return $ViewUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'17'])->get();
-    }
-    public static function getFPUserList(){
-
-        return $FPUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'18'])->get();
-    }
+    
 
     public static function checkRoles($role)
     {

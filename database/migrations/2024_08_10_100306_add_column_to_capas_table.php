@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('capas', function (Blueprint $table) {
-            $table->string('all_actions_completed_by')->nullable();
-            $table->string('all_actions_completed_on')->nullable();
+            // $table->string('all_actions_completed_by')->nullable();
+            // $table->string('all_actions_completed_on')->nullable();
         });
     }
 

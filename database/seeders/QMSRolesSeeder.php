@@ -281,7 +281,7 @@ class QMSRolesSeeder extends Seeder
         $group->save();
 
         $group  = new QMSRoles();
-        $group->id = 37;
+        $group->id = 38;
         $group->name = "Supplier Contact Department";
         $group->description = "Supplier Contact Department";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
@@ -289,14 +289,14 @@ class QMSRolesSeeder extends Seeder
 
         /********** Supplier Audit ********/
         $group  = new QMSRoles();
-        $group->id = 38;
+        $group->id = 39;
         $group->name = "Auditee";
         $group->description = "Auditee";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
         $group->save();
 
         $group  = new QMSRoles();
-        $group->id = 39;
+        $group->id = 40;
         $group->name = "Business Rule Engine";
         $group->description = "Business Rule Engine";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
@@ -304,21 +304,21 @@ class QMSRolesSeeder extends Seeder
 
         /********** Observations ********/
         $group  = new QMSRoles();
-        $group->id = 40;
+        $group->id = 41;
         $group->name = "Auditors";
         $group->description = "Auditors";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
         $group->save();
 
         $group  = new QMSRoles();
-        $group->id = 41;
+        $group->id = 42;
         $group->name = "Auditees";
         $group->description = "Auditees";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
         $group->save();
 
         $group  = new QMSRoles();
-        $group->id = 42;
+        $group->id = 43;
         $group->name = "Quality";
         $group->description = "Quality";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
@@ -326,7 +326,7 @@ class QMSRolesSeeder extends Seeder
 
         /********** Deviation ********/
         $group  = new QMSRoles();
-        $group->id = 43;
+        $group->id = 44;
         $group->name = "QA Reviewer";
         $group->description = "QA Reviewer";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
@@ -334,7 +334,7 @@ class QMSRolesSeeder extends Seeder
 
         /********** Extension ********/
         $group  = new QMSRoles();
-        $group->id = 44;
+        $group->id = 45;
         $group->name = "QA Approver";
         $group->description = "QA Approver";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
@@ -342,21 +342,21 @@ class QMSRolesSeeder extends Seeder
 
         /********** SCAR ********/
         $group  = new QMSRoles();
-        $group->id = 45;
+        $group->id = 46;
         $group->name = "SCAR Initiator";
         $group->description = "SCAR Initiator";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
         $group->save();
 
         $group  = new QMSRoles();
-        $group->id = 46;
+        $group->id = 47;
         $group->name = "Vendors";
         $group->description = "Vendors";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
         $group->save();
 
         $group  = new QMSRoles();
-        $group->id = 47;
+        $group->id = 48;
         $group->name = "SCAR Initiator";
         $group->description = "SCAR Initiator";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);

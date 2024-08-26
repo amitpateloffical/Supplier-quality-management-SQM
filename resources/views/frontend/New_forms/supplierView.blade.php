@@ -264,7 +264,7 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowexternalAuditTrials', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(13, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 &&  Helpers::check_roles($data->division_id,'Supplier Audit',13))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Schedule Audit
                             </button>
@@ -274,7 +274,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id,'Supplier Audit',18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete Audit Preparation
                             </button>
@@ -285,7 +285,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id,'Supplier Audit',18))
                             </button> <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">
                                 Reject
@@ -301,7 +301,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 4 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id,'Supplier Audit',18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CAPA Plan Proposed
                             </button>
@@ -309,7 +309,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 No CAPAs Required
                             </button>
-                        @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(11, $userRoleIds)))
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id,'Supplier Audit',18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
                             </button>
@@ -435,7 +435,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Date Due">Date of Initiation</label>
+                                                <label for="Due Date">Date of Initiation</label>
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->intiation_date) }}"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
@@ -463,7 +463,7 @@
 
                                         <div class="col-md-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="due-date">Date Due</label>
+                                                <label for="due-date">Due Date</label>
                                                 <div><small class="text-primary">Please mention expected date of
                                                         completion</small></div>
                                                 <div class="calenderauditee">

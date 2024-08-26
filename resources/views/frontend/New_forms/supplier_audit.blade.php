@@ -411,7 +411,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input ">
-                                        <label for="Date Due"><b>Date of Initiation</b></label>
+                                        <label for="Due Date"><b>Date of Initiation</b></label>
                                         <input readonly type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                     </div>
@@ -440,7 +440,7 @@
 
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="due-date">Date Due</label>
+                                    <label for="due-date"> Due Date</label>
                                     <div><small class="text-primary">Please mention expected date of completion</small></div>
                                     <!-- <div class="calenderauditee"> -->
                                     <div class="calenderauditee">

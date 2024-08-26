@@ -63,7 +63,7 @@ class UserManagementController extends Controller
             'departmentid' => 'required',
             'roles' => 'required|array',
         ]);
-        
+
         // $user = new User();
         // $user->name = $request->name;
         // $user->email = $request->email;
@@ -72,7 +72,7 @@ class UserManagementController extends Controller
         // $usertableRole = '';
         // if ($user->save()) {
         //     foreach ($request->roles as $roleId) {
-        //     $userRole = new UserRole();                
+        //     $userRole = new UserRole();
         //     $checkRole = Roles::find($roleId);
 
         //     // Split the string using the '-' delimiter
@@ -91,7 +91,7 @@ class UserManagementController extends Controller
         //     $q_m_s_processes_id = $process->id;
         //     $q_m_s_roles_id = $qmsroles->id;
 
-        //     $usertableRole = //concatinate the $q_m_s_roles_id by comma seprated 
+        //     $usertableRole = //concatinate the $q_m_s_roles_id by comma seprated
         //     $userRole->user_id = $user->id;
         //     $userRole->role_id = $roleId;
         //     $userRole->q_m_s_divisions_id = $q_m_s_divisions_id;
@@ -106,10 +106,11 @@ class UserManagementController extends Controller
         $user->password = Hash::make($request->password);
         $user->departmentid = $request->departmentid;
         $usertableRole = ''; // Initialize the variable to store concatenated role IDs
+        //dd($request->roles);
 
         if ($user->save()) {
             foreach ($request->roles as $roleId) {
-                $userRole = new UserRole();                
+                $userRole = new UserRole();
                 $checkRole = Roles::find($roleId);
 
                 // Split the string using the '-' delimiter
@@ -122,7 +123,7 @@ class UserManagementController extends Controller
 
                 // Assuming you have models for q_m_s_divisions and q_m_s_process
                 $division = QMSDivision::where('name', $q_m_s_divisions_name)->first();
-                $process = QMSProcess::where('process_name', $q_m_s_processes_name)->first();
+                $process = QMSProcess::where(['division_id'=> $division->id, 'process_name'=> $q_m_s_processes_name])->first();
                 $qmsroles = QMSRoles::where('name', $q_m_s_roles_name)->first();
                 $q_m_s_divisions_id = $division->id;
                 $q_m_s_processes_id = $process->id;
@@ -218,7 +219,7 @@ class UserManagementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::with('userRoles')->find($id);    
+        $user = User::with('userRoles')->find($id);
     $user->name = $request->name;
     $user->email = $request->email;
     if (!empty($request->password)) {
@@ -241,7 +242,7 @@ class UserManagementController extends Controller
 
         // Attach new roles
         foreach ($request->roles as $roleId) {
-            $userRole = new UserRole();                
+            $userRole = new UserRole();
             $checkRole = Roles::find($roleId);
 
             // Split the string using the '-' delimiter

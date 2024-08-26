@@ -362,14 +362,14 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/supplier-site-audit-trail', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id,'Supplier Site',3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit Supplier Details
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id,'Supplier Site',3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
@@ -379,7 +379,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id,'Supplier Site',18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-supplier-approve">
                                 Audit Passed
                             </button>
@@ -393,7 +393,7 @@
                                 data-bs-target="#sendToPendingSupplierAudit">
                                 Conditionally Approved
                             </button>
-                        @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id,'Supplier Site',18))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#sendToPendingSupplierAudit">
                                 Re-Audit
@@ -401,7 +401,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Supplier Obsolete
                             </button>
-                        @elseif($data->stage == 5 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id,'Supplier Site',18))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#supplierApprovedToObselete">
                                 Supplier Obsolete

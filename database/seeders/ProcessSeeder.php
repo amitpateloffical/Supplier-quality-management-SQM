@@ -70,7 +70,10 @@ class ProcessSeeder extends Seeder
             'CAPA',
             'SCAR',
             'Supplier Site',
-            'Deviation'
+            'Deviation',
+            'Extension',
+            'Observation',
+            'Effectiveness Check',
         ];
 
         // Loop through each process name

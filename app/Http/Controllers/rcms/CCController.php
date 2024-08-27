@@ -331,7 +331,7 @@ class CCController extends Controller
         $history->cc_id = $openState->id;
         $history->activity_type = 'Initiator';
         $history->previous = "Null";
-        $history->current = Helpers::getInitiatorName($request->initiator_id);
+        $history->current = Helpers::getInitiatorName($openState->initiator_id);
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -374,30 +374,13 @@ class CCController extends Controller
             $history->save();
         }
 
-        $cftPerson = json_encode($request->cft_reviewer_person);
-        if(!empty($cftPerson) && is_array($cftPerson)){
-            $history = new RcmDocHistory;
-            $history->cc_id = $openState->id;
-            $history->activity_type = 'CFT Reviewer';
-            $history->previous = "Null";
-            $history->current = $openState->cftPerson;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $openState->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-        
-        // if(!empty($request->cft_reviewer_person)){
+        // $cftPerson = json_encode($request->cft_reviewer_person);
+        // if(!empty($cftPerson) && is_array($cftPerson)){
         //     $history = new RcmDocHistory;
         //     $history->cc_id = $openState->id;
-        //     $history->activity_type = 'CFT Reviewer Person ';
+        //     $history->activity_type = 'CFT Reviewer';
         //     $history->previous = "Null";
-        //     $history->current = $openState->cft_reviewer_person;
+        //     $history->current = $openState->cftPerson;
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
@@ -408,6 +391,23 @@ class CCController extends Controller
         //     $history->action_name = 'Create';
         //     $history->save();
         // }
+        
+        if(!empty($openState->cft_reviewer_person)){
+            $history = new RcmDocHistory;
+            $history->cc_id = $openState->id;
+            $history->activity_type = 'CFT Reviewer Person ';
+            $history->previous = "Null";
+            $history->current = $openState->cft_reviewer_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
         if(!empty($request->cft_reviewer)){
             $history = new RcmDocHistory;
@@ -810,7 +810,7 @@ class CCController extends Controller
             $history->cc_id = $openState->id;
             $history->activity_type = 'Related Records';
             $history->previous = "Null";
-            $history->current = $$openState->related_records;
+            $history->current = $openState->related_records;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1748,29 +1748,29 @@ class CCController extends Controller
             $history->save();
         }
 
-        // if ($lastDocument->cft_reviewer_person != $request->cft_reviewer_person) {
-        //     $existingHistory = RcmDocHistory::where('cc_id', $id)
-        //     ->where('activity_type', 'CFT Reviewer Person')
-        //     ->exists();
-        //     $history = new RcmDocHistory;
-        //     $history->cc_id = $id;
-        //     $history->activity_type = 'CFT Reviewer Person';
-        //     $history->previous = $lastDocument->cft_reviewer_person;
-        //     $history->current = $request->cft_reviewer_person;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     if ($existingHistory) {
-        //         $history->action_name = "Update";
-        //     } else {
-        //         $history->action_name = "New";
-        //     }
-        //     $history->save();
-        // }
+        if ($lastDocument->cft_reviewer_person != $openState->cft_reviewer_person) {
+            $existingHistory = RcmDocHistory::where('cc_id', $id)
+            ->where('activity_type', 'CFT Reviewer Person')
+            ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'CFT Reviewer Person';
+            $history->previous = $lastDocument->cft_reviewer_person;
+            $history->current = $openState->cft_reviewer_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($existingHistory) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
 
         if ($lastDocument->short_description != $openState->short_description) {
             $existingHistory = RcmDocHistory::where('cc_id', $id)
@@ -2278,7 +2278,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->related_records != $request->$related_records) {
+        if ($lastDocument->related_records != $openState->related_records) {
             $existingHistory = RcmDocHistory::where('cc_id', $id)
             ->where('activity_type', 'Related Records')
             ->exists();
@@ -2286,13 +2286,13 @@ class CCController extends Controller
             $history->cc_id = $id;
             $history->activity_type = 'Related Records';
             $history->previous = $lastDocument->related_records;
-            $history->current = $request->related_records;
+            $history->current = $openState->related_records;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
             if ($existingHistory) {
                 $history->action_name = "Update";

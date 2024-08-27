@@ -2207,26 +2207,28 @@ class CapaController extends Controller
                     }
                     $history->save();
 
+                    $list = Helpers::getHodUserList($capa->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $capa->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                             if ($email !== null) {
+                                try {
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' => $capa],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is sent By ".Auth::user()->name);
+                                }
+                              );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                    //  }
+                  }
 
-
-                //     $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $capa->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $capa],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Submitted By ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
-
+ 
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2269,23 +2271,27 @@ class CapaController extends Controller
 
 
 
-                //     $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $capa->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
+                    $list = Helpers::getQAUserList($capa->division_id);
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $capa->division_id){
+                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                if ($email !== null) {
+                                    try {
 
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $capa],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Submitted By ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $capa],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("Document is sent By ".Auth::user()->name);
+                                    }
+                                );
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                    }
+                                }
+                            // }
+                        }
 
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2362,10 +2368,33 @@ class CapaController extends Controller
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                $capa->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
+
+                        $list = Helpers::getQAHeadUserList($capa->division_id);
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $capa->division_id){
+                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                 if ($email !== null) {
+                                    try {
+    
+                                  Mail::send(
+                                      'mail.view-mail',
+                                       ['data' => $capa],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("Document is sent By ".Auth::user()->name);
+                                    }
+                                  );
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                    }
+                                }
+                            // }
+                        }
+    
+                    $capa->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
 
             if ($capa->stage == 5) {
                 $capa->stage = "6";
@@ -2399,15 +2428,82 @@ class CapaController extends Controller
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                $capa->update();
-                toastr()->success('Document Sent');
+                                $list = Helpers::getQAUserList($capa->division_id);
+                                foreach ($list as $u) {
+                                    // if($u->q_m_s_divisions_id == $capa->division_id){
+                                        $email = Helpers::getInitiatorEmail($u->user_id);
+                                        if ($email !== null) {
+                                            try {
+            
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $capa],
+                                            function ($message) use ($email) {
+                                                $message->to($email)
+                                                    ->subject("Document is sent By ".Auth::user()->name);
+                                            }
+                                        );
+                                        } catch (\Exception $e) {
+                                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                                            }
+                                        }
+                                    // }
+                                }
+
+                                $list = Helpers::getHodUserList($capa->division_id);
+                                foreach ($list as $u) {
+                                    // if($u->q_m_s_divisions_id == $capa->division_id){
+                                        $email = Helpers::getInitiatorEmail($u->user_id);
+                                        if ($email !== null) {
+                                            try {
+            
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $capa],
+                                            function ($message) use ($email) {
+                                                $message->to($email)
+                                                    ->subject("Document is sent By ".Auth::user()->name);
+                                            }
+                                        );
+                                        } catch (\Exception $e) {
+                                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                                            }
+                                        }
+                                    // }
+                                }
+
+                                $list = Helpers::getInitiatorUserList($capa->division_id);
+                                foreach ($list as $u) {
+                                    // if($u->q_m_s_divisions_id == $capa->division_id){
+                                        $email = Helpers::getInitiatorEmail($u->user_id);
+                                        if ($email !== null) {
+                                            try {
+            
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $capa],
+                                            function ($message) use ($email) {
+                                                $message->to($email)
+                                                    ->subject("Document is sent By ".Auth::user()->name);
+                                            }
+                                        );
+                                        } catch (\Exception $e) {
+                                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                                            }
+                                        }
+                                    // }
+                                }
+                        
+                    $capa->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }else {
+                toastr()->error('E-signature Not match');
                 return back();
             }
-        } else {
-            toastr()->error('E-signature Not match');
-            return back();
-        }
-    }
+            
+         }
+     }
 
 
     public function capaCancel(Request $request, $id)
@@ -2445,6 +2541,51 @@ class CapaController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
+
+                    $list = Helpers::getInitiatorUserList($capa->division_id);
+                                foreach ($list as $u) {
+                                    // if($u->q_m_s_divisions_id == $capa->division_id){
+                                        $email = Helpers::getInitiatorEmail($u->user_id);
+                                        if ($email !== null) {
+                                            try {
+
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $capa],
+                                            function ($message) use ($email) {
+                                                $message->to($email)
+                                                    ->subject("Document is Sent By ".Auth::user()->name);
+                                            }
+                                        );
+                                        } catch (\Exception $e) {
+                                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                                            }
+                                        }
+                                    // }
+                                }
+                    $list = Helpers::getQAHeadUserList($capa->division_id);
+                                foreach ($list as $u) {
+                                    // if($u->q_m_s_divisions_id == $capa->division_id){
+                                        $email = Helpers::getInitiatorEmail($u->user_id);
+                                        if ($email !== null) {
+                                            try {
+            
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $capa],
+                                            function ($message) use ($email) {
+                                                $message->to($email)
+                                                    ->subject("Document is Sent By ".Auth::user()->name);
+                                            }
+                                        );
+                                        } catch (\Exception $e) {
+                                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                                            }
+                                        }
+                                    // }
+                                }
+                                
+
             $capa->update();
             $history = new CapaHistory();
             $history->type = "Capa";
@@ -2521,7 +2662,28 @@ class CapaController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
+                     
+                    $list = Helpers::getInitiatorUserList($capa->division_id);
+                            foreach ($list as $u) {
+                                // if($u->q_m_s_divisions_id == $capa->division_id){
+                                    $email = Helpers::getInitiatorEmail($u->user_id);
+                                        if ($email !== null) {
+                                        try {
 
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $capa],
+                                        function ($message) use ($email) {
+                                            $message->to($email)
+                                                ->subject("Document is sent By ".Auth::user()->name);
+                                        }
+                                        );
+                                    } catch (\Exception $e) {
+                                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                                        }
+                                    }
+                                // }
+                            }
 
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2560,7 +2722,32 @@ class CapaController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
+
+                    $list = Helpers::getHodUserList($capa->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $capa->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                             if ($email !== null) {
+                                try {
+
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' => $capa],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is sent By ".Auth::user()->name);
+                                }
+                              );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        // }
+                    }
+
+
         $capa->update();
+
         $history = new CapaHistory();
         $history->type = "Capa";
         $history->doc_id = $id;

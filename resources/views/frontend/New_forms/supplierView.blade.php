@@ -274,7 +274,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id,'Supplier Audit',18))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Supplier Audit', 37))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete Audit Preparation
                             </button>
@@ -285,14 +285,14 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id,'Supplier Audit',18))
+                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Supplier Audit', 37))
                             </button> <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">
                                 Reject
                             </button>
-                            <!-- {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
-                            </button> --}} -->
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Issue Report</button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
@@ -301,25 +301,21 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id,'Supplier Audit',18))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Supplier Audit', 39))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CAPA Plan Proposed
                             </button>
-
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 No CAPAs Required
                             </button>
-                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id,'Supplier Audit',18))
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Supplier Audit', 40))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
                             </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
-
-
                     </div>
-
                 </div>
                 <div class="status">
                     <div class="head">Current Status</div>

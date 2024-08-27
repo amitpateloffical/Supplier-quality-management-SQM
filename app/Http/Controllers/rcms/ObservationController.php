@@ -1911,8 +1911,7 @@ class ObservationController extends Controller
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                // $history->activity_type = 'Activity Log';
-                // $history->current = $changestage->Completed_By;
+                
                 $history->activity_type = 'Report Issued By, Report Issued On';
                 if (is_null($lastDocument->Report_Issued_By) || $lastDocument->Report_Issued_By === '') {
                     $history->previous = "";
@@ -1920,6 +1919,7 @@ class ObservationController extends Controller
                     $history->previous = $lastDocument->Report_Issued_By . ' , ' . $lastDocument->Report_Issued_On;
                 }
                 $history->current = $changestage->Report_Issued_By . ' , ' . $changestage->Report_Issued_On;
+
                 $history->comment = $request->comment;
                 $history->action = 'Report Issued';
                 $history->user_id = Auth::user()->id;
@@ -1929,7 +1929,6 @@ class ObservationController extends Controller
                 $history->stage = "Report Issued";
                 $history->change_to = 'Pending CAPA Plan';
                 $history->change_from = 'Opened';
-                // $history->action_name = 'Not Applicable';
                 if (is_null($lastDocument->Report_Issued_By) || $lastDocument->Report_Issued_By === '') {
                     $history->action_name = 'New';
                 } else {
@@ -1937,27 +1936,27 @@ class ObservationController extends Controller
                 }
                 $history->save();
 
-                //     $list = Helpers::getLeadAuditeeUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changestage->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
+                $list = Helpers::getAuditeeDepartmentList($changestage->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changestage],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
 
-                //           try {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changestage],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document sent ".Auth::user()->name);
-                //                 }
-                //               );
-                //             } catch (\Exception $e) {
-                //                 //
-                //             }
-                //         }
-                //      }
-                //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1971,15 +1970,15 @@ class ObservationController extends Controller
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
+
                 $history->activity_type = 'Completed By, Completed On';
-                // $history->activity_type = 'Activity Log';
-                // $history->current = $changestage->Completed_By;
                 if (is_null($lastDocument->Completed_By) || $lastDocument->Completed_By === '') {
                     $history->previous = "";
                 } else {
                     $history->previous = $lastDocument->Completed_By . ' , ' . $lastDocument->Completed_on;
                 }
                 $history->current = $changestage->Completed_By . ' , ' . $changestage->Completed_on;
+
                 $history->comment = $request->comment;
                 $history->action = 'Complete';
                 $history->user_id = Auth::user()->id;
@@ -1989,7 +1988,6 @@ class ObservationController extends Controller
                 $history->stage = "Complete";
                 $history->change_to = 'Pending Approval';
                 $history->change_from = 'Pending CAPA Plan';
-                // $history->action_name = 'Not Applicable';
                 if (is_null($lastDocument->Completed_By) || $lastDocument->Completed_By === '') {
                     $history->action_name = 'New';
                 } else {
@@ -1997,23 +1995,27 @@ class ObservationController extends Controller
                 }
                 $history->save();
 
-                // $list = Helpers::getQAUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $changestage->division_id){
-                //         $email = Helpers::getInitiatorEmail($u->user_id);
-                //          if ($email !== null) {
+                $list = Helpers::getQualityList($changestage->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changestage],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
 
-                //           Mail::send(
-                //               'mail.view-mail',
-                //                ['data' => $changestage],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Document sent ".Auth::user()->name);
-                //             }
-                //           );
-                //         }
-                //      }
-                //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2081,8 +2083,7 @@ class ObservationController extends Controller
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                // $history->activity_type = 'Activity Log';
-                // $history->current = $changestage->Completed_By;
+
                 $history->activity_type = 'All CAPA Closed By, All CAPA Closed On';
 
                 if (is_null($lastDocument->All_CAPA_Closed_By) || $lastDocument->All_CAPA_Closed_By === '') {
@@ -2091,6 +2092,7 @@ class ObservationController extends Controller
                     $history->previous = $lastDocument->All_CAPA_Closed_By . ' , ' . $lastDocument->All_CAPA_Closed_On;
                 }
                 $history->current = $changestage->All_CAPA_Closed_By . ' , ' . $changestage->All_CAPA_Closed_On;
+
                 $history->comment = $request->comment;
                 $history->action = 'All CAPA Closed';
                 $history->user_id = Auth::user()->id;
@@ -2100,7 +2102,7 @@ class ObservationController extends Controller
                 $history->stage = "All CAPA Closed";
                 $history->change_to = 'Pending Final Approval';
                 $history->change_from = 'CAPA Execution in Progress';
-                // $history->action_name = 'Not Applicable';
+                
                 if (is_null($lastDocument->All_CAPA_Closed_By) || $lastDocument->All_CAPA_Closed_By === '') {
                     $history->action_name = 'New';
                 } else {
@@ -2108,23 +2110,27 @@ class ObservationController extends Controller
                 }
                 $history->save();
 
-                //     $list = Helpers::getLeadAuditeeUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changestage->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
+                $list = Helpers::getQualityList($changestage->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changestage],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
 
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changestage],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document sent ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2136,10 +2142,10 @@ class ObservationController extends Controller
                 $changestage->Final_Approval_By = Auth::user()->name;
                 $changestage->Final_Approval_on = Carbon::now()->format('d-M-Y');
                 $changestage->Final_Approval_Comment = $request->comment;
+
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                // $history->activity_type = 'Activity Log';
-                // $history->current = $changestage->Final_Approval_By;
+
                 $history->activity_type = 'Final Approval By, Final Approval On';
                 if (is_null($lastDocument->Final_Approval_By) || $lastDocument->Final_Approval_By === '') {
                     $history->previous = "";
@@ -2147,6 +2153,7 @@ class ObservationController extends Controller
                     $history->previous = $lastDocument->Final_Approval_By . ' , ' . $lastDocument->Final_Approval_on;
                 }
                 $history->current = $changestage->Final_Approval_By . ' , ' . $changestage->Final_Approval_on;
+
                 $history->comment = $request->comment;
                 $history->action = 'Final Approval';
                 $history->user_id = Auth::user()->id;
@@ -2156,30 +2163,76 @@ class ObservationController extends Controller
                 $history->stage = "Final Approval";
                 $history->change_to = 'Closed - Done';
                 $history->change_from = 'Pending Final Approval';
-                // $history->action_name = 'Not Applicable';
                 if (is_null($lastDocument->Final_Approval_By) || $lastDocument->Final_Approval_By === '') {
                     $history->action_name = 'New';
                 } else {
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                //     $list = Helpers::getLeadAuditeeUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changestage->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
+                
+                $list = Helpers::getAuditeesList($changestage->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changestage],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
 
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changestage],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document sent ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $list = Helpers::getQualityList($changestage->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changestage],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
+
+
+                $list = Helpers::getAuditorsList($changestage->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changestage],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2206,9 +2259,8 @@ class ObservationController extends Controller
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                // $history->activity_type = 'Activity Log';
-                // $history->current = $changeControl->Completed_By;
-                $history->activity_type = 'Final Approval By, Final Approval On';
+                
+                $history->activity_type = 'Cancelled By, Cancelled On';
                 if (is_null($lastDocument->Cancelled_By) || $lastDocument->Cancelled_By === '') {
                     $history->previous = "";
                 } else {
@@ -2224,13 +2276,56 @@ class ObservationController extends Controller
                 $history->stage = "Cancel";
                 $history->change_to = 'Closed - Cancelled';
                 $history->change_from = 'Opened';
-                // $history->action_name = 'Not Applicable';
+
                 if (is_null($lastDocument->Cancelled_By) || $lastDocument->Cancelled_By === '') {
                     $history->action_name = 'New';
                 } else {
                     $history->action_name = 'Update';
                 }
                 $history->save();
+
+                $list = Helpers::getQualityList($changestage->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changestage],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
+
+                $list = Helpers::getAuditeesList($changestage->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changestage],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2312,8 +2407,7 @@ class ObservationController extends Controller
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                // $history->activity_type = 'Activity Log';
-                // $history->current = $changeControl->Completed_By;
+
                 $history->activity_type = 'Final Approval By, Final Approval On';
                 if (is_null($lastDocument->Reject_CAPA_Plan_By) || $lastDocument->Reject_CAPA_Plan_By === '') {
                     $history->previous = "";
@@ -2321,6 +2415,7 @@ class ObservationController extends Controller
                     $history->previous = $lastDocument->Reject_CAPA_Plan_By . ' , ' . $lastDocument->Reject_CAPA_Plan_On;
                 }
                 $history->current = $changeControl->Reject_CAPA_Plan_By . ' , ' . $changeControl->Reject_CAPA_Plan_On;
+
                 $history->comment = $request->comment;
                 $history->action = 'Reject CAPA Plan';
                 $history->user_id = Auth::user()->id;
@@ -2330,7 +2425,6 @@ class ObservationController extends Controller
                 $history->stage = "Reject CAPA Plan";
                 $history->change_to = 'Pending CAPA Plan';
                 $history->change_from = 'Pending Approval';
-                // $history->action_name = 'Not Applicable';
                 if (is_null($lastDocument->Reject_CAPA_Plan_By) || $lastDocument->Reject_CAPA_Plan_By === '') {
                     $history->action_name = 'New';
                 } else {
@@ -2339,23 +2433,28 @@ class ObservationController extends Controller
                 $history->save();
 
                 $changeControl->update();
-                //     $list = Helpers::getLeadAuditeeUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
+                
+                $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
 
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document sent ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -2368,8 +2467,7 @@ class ObservationController extends Controller
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                // $history->activity_type = 'Activity Log';
-                // $history->current = $changeControl->Completed_By;
+
                 $history->activity_type = 'Final Approval By, Final Approval On';
                 if (is_null($lastDocument->Reject_CAPA_Plan_By1) || $lastDocument->Reject_CAPA_Plan_By1 === '') {
                     $history->previous = "";
@@ -2377,6 +2475,7 @@ class ObservationController extends Controller
                     $history->previous = $lastDocument->Reject_CAPA_Plan_By1 . ' , ' . $lastDocument->Reject_CAPA_Plan_On1;
                 }
                 $history->current = $changeControl->Reject_CAPA_Plan_By1 . ' , ' . $changeControl->Reject_CAPA_Plan_On1;
+
                 $history->comment = $request->comment;
                 $history->action = 'Reject CAPA Plan';
                 $history->user_id = Auth::user()->id;
@@ -2386,7 +2485,7 @@ class ObservationController extends Controller
                 $history->stage = "Reject CAPA Plan";
                 $history->change_to = 'Pending CAPA Plan';
                 $history->change_from = 'Pending Final Approval';
-                // $history->action_name = 'Not Applicable';
+                
                 if (is_null($lastDocument->Reject_CAPA_Plan_By1) || $lastDocument->Reject_CAPA_Plan_By1 === '') {
                     $history->action_name = 'New';
                 } else {

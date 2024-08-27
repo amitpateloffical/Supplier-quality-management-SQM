@@ -2949,56 +2949,54 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->audit_schedule_on = Carbon::now()->format('d-M-Y');
                 $changeControl->comment = $request->comment;
 
-                        $history = new ExternalAuditTrailSupplier();
-                        $history->supplier_id = $id;
-                      //  $history->activity_type = 'Activity Log';
-                        $history->activity_type = 'Submit by,Submit on ';
-                        if (is_null($lastDocument->audit_schedule_by) || $lastDocument->audit_schedule_by === '') {
-                            $history->previous = "";
-                        } else {
-                            $history->previous = $lastDocument->audit_schedule_by . ' , ' . $lastDocument->audit_schedule_on ;
-                        }
-                        $history->current = $changeControl->audit_schedule_by . ' , ' .  $changeControl->audit_schedule_on;
-                        // $history->activity_type = 'Activity Log';
-                        //$history->current = $changeControl->audit_schedule_by;
-                        $history->comment = $request->comment;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastDocument->status;
-                        $history->stage = "Audit Schedule";
-                        $history->change_from = $lastDocument->status;
-                        $history->change_to = 'Audit Preparation';
-                        $history->action = 'Submit';
-                        if (is_null($lastDocument->audit_schedule_by) || $lastDocument->audit_schedule_ons === '') {
-                            $history->action_name = 'New';
-                        } else {
-                            $history->action_name = 'Update';
-                        }
+                $history = new ExternalAuditTrailSupplier();
+                $history->supplier_id = $id;
 
-                        $history->save();
-                        
-                    //     $list = Helpers::getLeadAuditorUserList();
-                        
+                $history->activity_type = 'Submit by,Submit on ';
+                if (is_null($lastDocument->audit_schedule_by) || $lastDocument->audit_schedule_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->audit_schedule_by . ' , ' . $lastDocument->audit_schedule_on ;
+                }
+                $history->current = $changeControl->audit_schedule_by . ' , ' .  $changeControl->audit_schedule_on;
 
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                                
-                    //              if ($email !== null) {
-                                   
-                              
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document sent ".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      } 
-                    //   }
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Audit Schedule";
+                $history->change_from = $lastDocument->status;
+                $history->change_to = 'Audit Preparation';
+                $history->action = 'Submit';
+                if (is_null($lastDocument->audit_schedule_by) || $lastDocument->audit_schedule_ons === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                    
+                $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
+                    
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3010,49 +3008,32 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->audit_preparation_completed_on = Carbon::now()->format('d-M-Y');
                 $changeControl->audit_preparation_comment = $request->comment;
 
-                        $history = new ExternalAuditTrailSupplier();
-                        $history->supplier_id = $id;
-                        $history->activity_type = 'Complete Audit Preparation By,Complete Audit Preparation On';
-                        if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
-                            $history->previous = "";
-                        } else {
-                            $history->previous = $lastDocument->audit_preparation_completed_by . ' , ' . $lastDocument->audit_preparation_completed_on;
-                        }
-                        $history->current =  $changeControl->audit_preparation_completed_by . ' , ' .  $changeControl->audit_preparation_completed_on ;
-                        // $history->activity_type = 'Activity Log';
-                        //$history->current = $changeControl->audit_preparation_completed_by;
-                        $history->comment = $request->comment;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastDocument->status;
-                        $history->stage = "Audit Preparation Completed";
-                        $history->change_from = $lastDocument->status;
-                        $history->change_to = 'Pending Audit';
-                        $history->action = 'Complete Audit Preparation';
-                        if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
-                            $history->action_name = 'New';
-                        } else {
-                            $history->action_name = 'Update';
-                        }
-                        $history->save();
-                    //     $list = Helpers::getAuditManagerUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                              
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document sent ".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      } 
-                    //   }
+                $history = new ExternalAuditTrailSupplier();
+                $history->supplier_id = $id;
+                $history->activity_type = 'Complete Audit Preparation By,Complete Audit Preparation On';
+                if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->audit_preparation_completed_by . ' , ' . $lastDocument->audit_preparation_completed_on;
+                }
+                $history->current =  $changeControl->audit_preparation_completed_by . ' , ' .  $changeControl->audit_preparation_completed_on ;
+                
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Audit Preparation Completed";
+                $history->change_from = $lastDocument->status;
+                $history->change_to = 'Pending Audit';
+                $history->action = 'Complete Audit Preparation';
+                if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3064,49 +3045,53 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->audit_mgr_more_info_reqd_on = Carbon::now()->format('d-M-Y');
                 $changeControl->pending_response_comment = $request->comment;
 
-                        $history = new ExternalAuditTrailSupplier();
-                        $history->supplier_id = $id;
-                        $history->activity_type = 'Issue Report by,Issue Report on';
-                        if (is_null($lastDocument->audit_mgr_more_info_reqd_by) || $lastDocument->audit_mgr_more_info_reqd_by === '') {
-                            $history->previous = "";
-                        } else {
-                            $history->previous = $lastDocument->audit_mgr_more_info_reqd_by . ' , ' . $lastDocument->audit_mgr_more_info_reqd_on  ;
+                $history = new ExternalAuditTrailSupplier();
+                $history->supplier_id = $id;
+                $history->activity_type = 'Issue Report by,Issue Report on';
+                if (is_null($lastDocument->audit_mgr_more_info_reqd_by) || $lastDocument->audit_mgr_more_info_reqd_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->audit_mgr_more_info_reqd_by . ' , ' . $lastDocument->audit_mgr_more_info_reqd_on  ;
+                }
+                $history->current =  $changeControl->audit_mgr_more_info_reqd_by . ' , ' .  $changeControl->audit_mgr_more_info_reqd_on  ;
+                
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Audit Mgr More Info Reqd";
+                $history->change_from = $lastDocument->status;
+                $history->change_to = 'Pending Response';
+                $history->action = 'Issue Report';
+                if (is_null($lastDocument->audit_mgr_more_info_reqd_by) || $lastDocument->audit_mgr_more_info_reqd_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();                
+                
+                $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
                         }
-                        $history->current =  $changeControl->audit_mgr_more_info_reqd_by . ' , ' .  $changeControl->audit_mgr_more_info_reqd_on  ;
-                        // $history->activity_type = 'Activity Log';
-                        // $history->current = $changeControl->audit_mgr_more_info_reqd_by;
-                        $history->comment = $request->comment;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastDocument->status;
-                        $history->stage = "Audit Mgr More Info Reqd";
-                        $history->change_from = $lastDocument->status;
-                        $history->change_to = 'Pending Response';
-                        $history->action = 'Issue Report';
-                        if (is_null($lastDocument->audit_mgr_more_info_reqd_by) || $lastDocument->audit_mgr_more_info_reqd_by === '') {
-                            $history->action_name = 'New';
-                        } else {
-                            $history->action_name = 'Update';
-                        }
-                        $history->save();
-                    //     $list = Helpers::getLeadAuditeeUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                              
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document sent ".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      } 
-                    //   }
+                    // }
+                }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3161,35 +3146,97 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->comment_closed_done_by_comment = $request->comment;
 
                 $history = new ExternalAuditTrailSupplier();
-                        $history->supplier_id = $id;
-                        $history->activity_type = 'All Capa Closed by,All Capa Closed on';
-                        if (is_null($lastDocument->audit_lead_more_info_reqd_by) || $lastDocument->audit_lead_more_info_reqd_by === '') {
-                            $history->previous = "";
-                        } else {
-                            $history->previous = $lastDocument->audit_lead_more_info_reqd_by . ' , ' . $lastDocument->audit_lead_more_info_reqd_on  ;
-                        }
-                        $history->current =  $changeControl->audit_lead_more_info_reqd_by . ' , ' .  $changeControl->audit_lead_more_info_reqd_on  ;
+                $history->supplier_id = $id;
+                $history->activity_type = 'All Capa Closed by,All Capa Closed on';
+                if (is_null($lastDocument->audit_lead_more_info_reqd_by) || $lastDocument->audit_lead_more_info_reqd_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->audit_lead_more_info_reqd_by . ' , ' . $lastDocument->audit_lead_more_info_reqd_on  ;
+                }
+                $history->current =  $changeControl->audit_lead_more_info_reqd_by . ' , ' .  $changeControl->audit_lead_more_info_reqd_on; 
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Audit Lead More Info Reqd";
+                $history->change_from = $lastDocument->status;
+                $history->change_to = 'Closed Done';
+                $history->action = 'All Capa Closed';
+                if (is_null($lastDocument->audit_lead_more_info_reqd_by) || $lastDocument->audit_lead_more_info_reqd_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
 
-                        // $history->activity_type = 'Activity Log';
-                        // $history->current =$changeControl->audit_lead_more_info_reqd_by;
-                        $history->comment = $request->comment;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastDocument->status;
-                        $history->stage = "Audit Lead More Info Reqd";
-                        $history->change_from = $lastDocument->status;
-                        $history->change_to = 'Closed Done';
-                        $history->action = 'All Capa Closed';
-                        if (is_null($lastDocument->audit_lead_more_info_reqd_by) || $lastDocument->audit_lead_more_info_reqd_by === '') {
-                            $history->action_name = 'New';
-                        } else {
-                            $history->action_name = 'Update';
+                $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
                         }
-                        $history->save();
-            $changeControl->update();
-            toastr()->success('Document Sent');
-            return back();
+                    // }
+                }
+
+                $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
+
+                $list = Helpers::getAuditManagerDepartmentList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
+
+
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
             }
         } else {
             toastr()->error('E-signature Not match');
@@ -3243,34 +3290,54 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
                 $changeControl->comment_rejected_comment = $request->comment;
 
-                        $history = new ExternalAuditTrailSupplier();
-                        $history->supplier_id = $id;
-                        $history->activity_type = 'rejected by, rejected On';
-                        if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
-                            $history->previous = "";
-                        } else {
-                            $history->previous = $lastDocument->rejected_by . ' , ' . $lastDocument->rejected_on;
+                $history = new ExternalAuditTrailSupplier();
+                $history->supplier_id = $id;
+                $history->activity_type = 'rejected by, rejected On';
+                if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->rejected_by . ' , ' . $lastDocument->rejected_on;
+                }
+                $history->current =  $changeControl->rejected_by . ' , ' .  $changeControl->rejected_on;
+                
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Rejected";
+                $history->change_from = $lastDocument->status;
+                $history->change_to = 'Opened';
+                $history->action = 'Reject';
+                if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+
+                $list = Helpers::getAuditManagerDepartmentList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
                         }
-                        $history->current =  $changeControl->rejected_by . ' , ' .  $changeControl->rejected_on;
-                        // $history->activity_type = 'Activity Log';
-                        // $history->current = $changeControl->rejected_by;
-                        $history->comment = $request->comment;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastDocument->status;
-                        $history->stage = "Rejected";
-                        $history->change_from = $lastDocument->status;
-                        $history->change_to = 'Opened';
-                        $history->action = 'Reject';
-                        if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
-                            $history->action_name = 'New';
-                        } else {
-                            $history->action_name = 'Update';
-                        }
-                        // $history->action = "";
-                        $history->save();
-                  $changeControl->update();
+                    // }
+                }
+
+                $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -3332,35 +3399,73 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
                 $changeControl->capa_execution_in_progress_comment = $request->comment;
 
-                        $history = new ExternalAuditTrailSupplier();
-                        $history->supplier_id = $id;
-                      //  $history->activity_type = 'Activity Log';
-                        $history->activity_type = 'Cancel By, Cancel On';
-                        if (is_null($lastDocument->cancelled_by ) || $lastDocument->cancelled_by  === '') {
-                            $history->previous = "";
-                        } else {
-                            $history->previous = $lastDocument->cancelled_by  . ' , ' . $lastDocument->cancelled_on ;
+                $history = new ExternalAuditTrailSupplier();
+                $history->supplier_id = $id;
+                $history->activity_type = 'Cancel By, Cancel On';
+                if (is_null($lastDocument->cancelled_by ) || $lastDocument->cancelled_by  === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->cancelled_by  . ' , ' . $lastDocument->cancelled_on ;
+                }
+                $history->current = $changeControl->cancelled_by  . ' , ' .  $changeControl->cancelled_on;
+                
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Audit Schedule";
+                $history->change_from = $lastDocument->status;
+                $history->change_to = 'Closed Cancelled';
+                $history->action = 'Cancel';
+                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                       
+                $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
                         }
-                        $history->current = $changeControl->cancelled_by  . ' , ' .  $changeControl->cancelled_on;
-                        // $history->activity_type = 'Activity Log';
-                        //$history->current = $changeControl->rejected_by ;
-                        $history->comment = $request->comment;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastDocument->status;
-                        $history->stage = "Audit Schedule";
-                        $history->change_from = $lastDocument->status;
-                        $history->change_to = 'Closed Cancelled';
-                        $history->action = 'Cancel';
-                        if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
-                            $history->action_name = 'New';
-                        } else {
-                            $history->action_name = 'Update';
-                        }
+                    // }
+                }
 
-                        $history->save();
-                        
+                $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
                     
                 $changeControl->update();
                 toastr()->success('Document Sent');

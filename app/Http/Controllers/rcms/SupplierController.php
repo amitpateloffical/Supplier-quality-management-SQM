@@ -6979,46 +6979,52 @@ class SupplierController extends Controller
                 $supplier->requestedToPD_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Request More Info By , Request More Info On';
-                    if (is_null($lastDocument->requestedToPD_by) || $lastDocument->requestedToPD_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->requestedToPD_by . ' , ' . $lastDocument->requestedToPD_on;
-                    }
-                    $history->current = $supplier->requestedToPD_by . ' , ' . $supplier->requestedToPD_on;
-                    $history->action = 'Request More Info';
-                    // $history->current = $supplier->submit_by;
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending Acknowledgement By Purchase Department";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->requestedToPD_by) || $lastDocument->requestedToPD_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $history->supplier_id = $id;
+
+                $history->activity_type = 'Request More Info By , Request More Info On';
+                if (is_null($lastDocument->requestedToPD_by) || $lastDocument->requestedToPD_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->requestedToPD_by . ' , ' . $lastDocument->requestedToPD_on;
+                }
+                $history->current = $supplier->requestedToPD_by . ' , ' . $supplier->requestedToPD_on;
+
+                $history->action = 'Request More Info';
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Pending Acknowledgement By Purchase Department";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->requestedToPD_by) || $lastDocument->requestedToPD_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                
+                $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
                 $supplier->update();
 
                 toastr()->success('Document Sent');
@@ -7032,46 +7038,52 @@ class SupplierController extends Controller
                 $supplier->reqquestedToFD_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Request More Info By , Request More Info On';
-                    if (is_null($lastDocument->reqquestedToFD_by) || $lastDocument->reqquestedToFD_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->reqquestedToFD_by . ' , ' . $lastDocument->reqquestedToFD_on;
-                    }
-                    $history->current = $supplier->reqquestedToFD_by . ' , ' . $supplier->reqquestedToFD_on;
-                    $history->action = 'Request More Info';
-                    // $history->current = $supplier->submit_by;
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending F&D Review";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->reqquestedToFD_by) || $lastDocument->reqquestedToFD_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $history->supplier_id = $id;
+
+                $history->activity_type = 'Request More Info By , Request More Info On';
+                if (is_null($lastDocument->reqquestedToFD_by) || $lastDocument->reqquestedToFD_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->reqquestedToFD_by . ' , ' . $lastDocument->reqquestedToFD_on;
+                }
+                $history->current = $supplier->reqquestedToFD_by . ' , ' . $supplier->reqquestedToFD_on;
+
+                $history->action = 'Request More Info';
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Pending F&D Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->reqquestedToFD_by) || $lastDocument->reqquestedToFD_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                
+                $list = Helpers::getFormulationDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
                 $supplier->update();
 
                 toastr()->success('Document Sent');
@@ -7085,46 +7097,52 @@ class SupplierController extends Controller
                 $supplier->requestedToCQA_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Request More Info By , Request More Info On';
-                    if (is_null($lastDocument->requestedToCQA_by) || $lastDocument->requestedToCQA_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->requestedToCQA_by . ' , ' . $lastDocument->requestedToCQA_on;
-                    }
-                    $history->current = $supplier->requestedToCQA_by . ' , ' . $supplier->requestedToCQA_on;
-                    $history->action = 'Request More Info';
-                    // $history->current = $supplier->submit_by;
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending CQA Review After Purchase Sample Request";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->requestedToCQA_by) || $lastDocument->requestedToCQA_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $history->supplier_id = $id;
+
+                $history->activity_type = 'Request More Info By , Request More Info On';
+                if (is_null($lastDocument->requestedToCQA_by) || $lastDocument->requestedToCQA_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->requestedToCQA_by . ' , ' . $lastDocument->requestedToCQA_on;
+                }
+                $history->current = $supplier->requestedToCQA_by . ' , ' . $supplier->requestedToCQA_on;
+
+                $history->action = 'Request More Info';
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Pending CQA Review After Purchase Sample Request";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->requestedToCQA_by) || $lastDocument->requestedToCQA_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                
+                $list = Helpers::getCqaDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
                 $supplier->update();
 
                 toastr()->success('Document Sent');
@@ -7138,6 +7156,8 @@ class SupplierController extends Controller
                 $supplier->purchaseSampleanalysisNotSatisfactory_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
+                $history->supplier_id = $id;
+
                 $history->activity_type = 'Purchase Sample Analysis Not Satisfactory By , Purchase Sample Analysis Not Satisfactory On';
                 if (is_null($lastDocument->purchaseSampleanalysisNotSatisfactory_by) || $lastDocument->purchaseSampleanalysisNotSatisfactory_by === '') {
                     $history->previous = "Null";
@@ -7145,39 +7165,43 @@ class SupplierController extends Controller
                     $history->previous = $lastDocument->purchaseSampleanalysisNotSatisfactory_by . ' , ' . $lastDocument->requirementFullfilled_on;
                 }
                 $history->current = $supplier->purchaseSampleanalysisNotSatisfactory_by . ' , ' . $supplier->requirementFullfilled_on;
-                    // $history->previous = "";
-                    $history->action = 'Purchase Sample Analysis Not Satisfactory';
-                    // $history->current = $supplier->submit_by;
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending Purchase Sample Request";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->purchaseSampleanalysisNotSatisfactory_by) || $lastDocument->purchaseSampleanalysisNotSatisfactory_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+
+                $history->action = 'Purchase Sample Analysis Not Satisfactory';
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Pending Purchase Sample Request";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->purchaseSampleanalysisNotSatisfactory_by) || $lastDocument->purchaseSampleanalysisNotSatisfactory_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+
+                $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
                 $supplier->update();
 
                 toastr()->success('Document Sent');
@@ -7191,46 +7215,51 @@ class SupplierController extends Controller
                 $supplier->requestedToPendingCQA_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Request More Info By , Request More Info On';
-                    if (is_null($lastDocument->requestedToPendingCQA_by) || $lastDocument->requestedToPendingCQA_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->requestedToPendingCQA_by . ' , ' . $lastDocument->requestedToPendingCQA_on;
-                    }
-                    $history->current = $supplier->requestedToPendingCQA_by . ' , ' . $supplier->requestedToPendingCQA_on;
-                    $history->action = 'Request More Info';
-                    // $history->current = $supplier->submit_by;
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending Update FROM CQA";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->requestedToPendingCQA_by) || $lastDocument->requestedToPendingCQA_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $history->supplier_id = $id;
+                $history->activity_type = 'Request More Info By , Request More Info On';
+                if (is_null($lastDocument->requestedToPendingCQA_by) || $lastDocument->requestedToPendingCQA_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->requestedToPendingCQA_by . ' , ' . $lastDocument->requestedToPendingCQA_on;
+                }
+                $history->current = $supplier->requestedToPendingCQA_by . ' , ' . $supplier->requestedToPendingCQA_on;
+                $history->action = 'Request More Info';
+                // $history->current = $supplier->submit_by;
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Pending Update FROM CQA";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->requestedToPendingCQA_by) || $lastDocument->requestedToPendingCQA_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+
+                $list = Helpers::getCqaDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
                 $supplier->update();
 
                 toastr()->success('Document Sent');
@@ -7244,46 +7273,51 @@ class SupplierController extends Controller
                 $supplier->requestedTo_initiating_department_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Request More Info By , Request More Info On';
-                    if (is_null($lastDocument->requestedTo_initiating_department_by) || $lastDocument->requestedTo_initiating_department_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->requestedTo_initiating_department_by . ' , ' . $lastDocument->requestedTo_initiating_department_on;
-                    }
-                    $history->current = $supplier->requestedTo_initiating_department_by . ' , ' . $supplier->requestedTo_initiating_department_on;
-                    $history->action = 'Request More Info';
-                    // $history->current = $supplier->submit_by;
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending Initiating Department Update";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->requestedTo_initiating_department_by) || $lastDocument->requestedTo_initiating_department_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $history->supplier_id = $id;
+                $history->activity_type = 'Request More Info By , Request More Info On';
+                if (is_null($lastDocument->requestedTo_initiating_department_by) || $lastDocument->requestedTo_initiating_department_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->requestedTo_initiating_department_by . ' , ' . $lastDocument->requestedTo_initiating_department_on;
+                }
+                $history->current = $supplier->requestedTo_initiating_department_by . ' , ' . $supplier->requestedTo_initiating_department_on;
+                $history->action = 'Request More Info';
+                // $history->current = $supplier->submit_by;
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Pending Initiating Department Update";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->requestedTo_initiating_department_by) || $lastDocument->requestedTo_initiating_department_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                
+                $list = Helpers::getInitiatorUserList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
                 $supplier->update();
 
                 toastr()->success('Document Sent');
@@ -7297,48 +7331,53 @@ class SupplierController extends Controller
                 $supplier->request_justified_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Request Not Justified By , Request Not Justified On';
-                    if (is_null($lastDocument->request_justified_by) || $lastDocument->request_justified_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->request_justified_by . ' , ' . $lastDocument->request_justified_on;
-                    }
-                    $history->current = $supplier->request_justified_by . ' , ' . $supplier->request_justified_on;
-                    $history->action = 'Request Not Justified';
-                    // $history->current = $supplier->submit_by;
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Opened";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->request_justified_by) || $lastDocument->request_justified_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
-                $supplier->update();
+                $history->supplier_id = $id;
+                $history->activity_type = 'Request Not Justified By , Request Not Justified On';
+                if (is_null($lastDocument->request_justified_by) || $lastDocument->request_justified_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->request_justified_by . ' , ' . $lastDocument->request_justified_on;
+                }
+                $history->current = $supplier->request_justified_by . ' , ' . $supplier->request_justified_on;
+                $history->action = 'Request Not Justified';
+                // $history->current = $supplier->submit_by;
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Opened";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->request_justified_by) || $lastDocument->request_justified_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                
+                $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
 
+                $supplier->update();
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -7414,6 +7453,7 @@ class SupplierController extends Controller
 
             $history = new SupplierAuditTrail();
             $history->supplier_id = $id;
+
             $history->activity_type = 'Pre-Purchase Sample Not Required By , Pre-Purchase Sample Not Required On';
             if (is_null($lastDocument->prepurchase_sample_notRequired_by) || $lastDocument->prepurchase_sample_notRequired_by === '') {
                 $history->previous = "Null";
@@ -7421,8 +7461,8 @@ class SupplierController extends Controller
                 $history->previous = $lastDocument->prepurchase_sample_notRequired_by . ' , ' . $lastDocument->prepurchase_sample_notRequired_on;
             }
             $history->current = $supplier->prepurchase_sample_notRequired_by . ' , ' . $supplier->prepurchase_sample_notRequired_on;
+
             $history->action = 'Pre-Purchase Sample Not Required';
-            // $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7436,28 +7476,28 @@ class SupplierController extends Controller
                 $history->action_name = 'Update';
             }
             $history->save();
-            $supplier->update();
+           
+            $list = Helpers::getCqaDepartmentList($supplier->division_id);
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $supplier->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $supplier],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                // }
+            }
 
-            // foreach ($list as $u) {
-            //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-            //         $email = Helpers::getInitiatorEmail($u->user_id);
-            //         if ($email !== null) {
-
-            //             try {
-            //                 Mail::send(
-            //                     'mail.view-mail',
-            //                     ['data' => $deviation],
-            //                     function ($message) use ($email) {
-            //                         $message->to($email)
-            //                             ->subject("Activity Performed By " . Auth::user()->name);
-            //                     }
-            //                 );
-            //             } catch (\Exception $e) {
-            //                 //log error
-            //             }
-            //         }
-            //     }
-            // }
             $supplier->update();
             toastr()->success('Document Sent');
             return back();
@@ -7655,7 +7695,7 @@ class SupplierController extends Controller
             $lastDocument = Supplier::find($id);
 
             $supplier->stage = "0";
-            $supplier->status = "Close - Cancelled";
+            $supplier->status = "Closed - Cancelled";
             $supplier->cancelled_by = Auth::user()->name;
             $supplier->cancelled_on = Carbon::now()->format('d-M-Y');
             $supplier->cancelled_comment = $request->comments;
@@ -7670,13 +7710,12 @@ class SupplierController extends Controller
             }
             $history->current = $supplier->cancelled_by . ' , ' . $supplier->cancelled_on;
             $history->action = 'Cancel';
-            // $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =  "Close - Cancelled";
+            $history->change_to =  "Closed - Cancelled";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                 $history->action_name = 'New';
@@ -7684,28 +7723,70 @@ class SupplierController extends Controller
                 $history->action_name = 'Update';
             }
             $history->save();
-            $supplier->update();
+            
+            $list = Helpers::getCqaDepartmentList($supplier->division_id);
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $supplier->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $supplier],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                // }
+            }
 
-            // foreach ($list as $u) {
-            //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-            //         $email = Helpers::getInitiatorEmail($u->user_id);
-            //         if ($email !== null) {
+            $list = Helpers::getInitiatorUserList($supplier->division_id);
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $supplier->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $supplier],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                // }
+            }
 
-            //             try {
-            //                 Mail::send(
-            //                     'mail.view-mail',
-            //                     ['data' => $deviation],
-            //                     function ($message) use ($email) {
-            //                         $message->to($email)
-            //                             ->subject("Activity Performed By " . Auth::user()->name);
-            //                     }
-            //                 );
-            //             } catch (\Exception $e) {
-            //                 //log error
-            //             }
-            //         }
-            //     }
-            // }
+            $list = Helpers::getFormulationDepartmentList($supplier->division_id);
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $supplier->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $supplier],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                // }
+            }
+            
             $supplier->update();
             toastr()->success('Document Sent');
             return back();

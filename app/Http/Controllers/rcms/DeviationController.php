@@ -5708,41 +5708,43 @@ class DeviationController extends Controller
             if ($deviation->stage == 4) {
 
                 // CFT review state update form_progress
-                if ($deviation->form_progress !== 'cft')
-                {
-                    Session::flash('swal', [
-                        'type' => 'warning',
-                        'title' => 'Mandatory Fields!',
-                        'message' => 'CFT Tab is yet to be filled'
-                    ]);
+//                if ($deviation->form_progress !== 'cft')
+//                {
+//dd("test");
+//                    Session::flash('swal', [
+//                        'type' => 'warning',
+//                        'title' => 'Mandatory Fields!',
+//                        'message' => 'CFT Tab is yet to be filled'
+//                    ]);
 
-                    return redirect()->back();
-                } else {
-                    Session::flash('swal', [
-                        'type' => 'success',
-                        'title' => 'Success',
-                        'message' => 'Sent for QA Secondary Review state'
-                    ]);
-                }
+//                    return redirect()->back();
+//                } else {
+//dd("test");
+//                    Session::flash('swal', [
+//                        'type' => 'success',
+//                        'title' => 'Success',
+//                        'message' => 'Sent for QA Secondary Review state'
+//                    ]);
+//                }
 
 
-                $getCft = DeviationCft::find($id);
-                $Cft = DeviationCft::withoutTrashed()->where('deviation_id', $id)->first();
+$getCft = DeviationCft::find($id);
+$Cft = DeviationCft::withoutTrashed()->where('deviation_id', $id)->first();
 
-                $IsCFTRequired = DeviationCftsResponse::withoutTrashed()->where(['is_required' => 1, 'deviation_id' => $id])->latest()->first();
-                $cftUsers = DB::table('deviationcfts')->where(['deviation_id' => $id])->first();
-                // Define the column names
-                $columns = ['Production_person','Warehouse_notification','Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person'];
-                // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
+$IsCFTRequired = DeviationCftsResponse::withoutTrashed()->where(['is_required' => 1, 'deviation_id' => $id])->latest()->first();
+$cftUsers = DB::table('deviationcfts')->where(['deviation_id' => $id])->first();
+// Define the column names
+$columns = ['Production_person','Warehouse_notification','Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person'];
+// $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
 
-                // Initialize an array to store the values
-                $valuesArray = [];
+// Initialize an array to store the values
+$valuesArray = [];
 
-                // Iterate over the columns and retrieve the values
-                foreach ($columns as $index => $column) {
-                    $value = $cftUsers->$column;
-                    $counter = 0;
-                    //if($column == 'Production_person' && $cftUsers->$column == Auth::user()->id){
+// Iterate over the columns and retrieve the values
+foreach ($columns as $index => $column) {
+    $value = $cftUsers->$column;
+    $counter = 0;
+    //if($column == 'Production_person' && $cftUsers->$column == Auth::user()->id){
                     if($index == 0 && $cftUsers->$column == Auth::user()->id){
                         $counter++;
 
@@ -6651,44 +6653,46 @@ class DeviationController extends Controller
                 // dd(count(array_unique($valuesArray)), $checkCFTCount);
 
 
-                if (!$IsCFTRequired || $checkCFTCount) {
+                //if ($checkCFTCount) {
+                    //dd("test");
 
-                $deviation->stage = "5";
-                $deviation->status = "QA Secondary Review";
-                $deviation->CFT_Review_Complete_By = Auth::user()->name;
-                $deviation->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y H:i A');
-                $deviation->CFT_Review_Comments = $request->comment;
+                    $deviation->stage = "5";
+                    $deviation->status = "QA Secondary Review";
+                    $deviation->CFT_Review_Complete_By = Auth::user()->name;
+                    $deviation->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y H:i A');
+                    $deviation->CFT_Review_Comments = $request->comment;
 
-                $history = new DeviationAuditTrail();
-                $history->deviation_id = $id;
-                $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
+                    $history = new DeviationAuditTrail();
+                    $history->deviation_id = $id;
+                    $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
 
-                if (is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_By === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->CFT_Review_Complete_By . ' , ' . $lastDocument->CFT_Review_Complete_On;
+                    if (is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_By === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->CFT_Review_Complete_By . ' , ' . $lastDocument->CFT_Review_Complete_On;
 
-                }
-                $history->current = $deviation->CFT_Review_Complete_By . ' , ' . $deviation->CFT_Review_Complete_On;
+                    }
+                    $history->current = $deviation->CFT_Review_Complete_By . ' , ' . $deviation->CFT_Review_Complete_On;
 
-                $history->action = 'CFT Review Complete';
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to =   "QA Secondary Review";
-                $history->change_from = $lastDocument->status;
-                $history->stage = 'Complete';
+                    $history->action = 'CFT Review Complete';
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "QA Secondary Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Complete';
 
-                if (is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_By === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                $history->save();
+                    if (is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_By === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
 
-                 $list = Helpers::getQAUserList($deviation->division_id);
+
+                    $list = Helpers::getQAUserList($deviation->division_id);
                      foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $deviation->division_id) {
                              $email = Helpers::getInitiatorEmail($u->user_id);
@@ -6708,10 +6712,11 @@ class DeviationController extends Controller
                              }
                         // }
                      }
-                $deviation->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
+
+                    $deviation->update();
+                    toastr()->success('Document Sent');
+                    return back();
+            //}
         }
 
             if ($deviation->stage == 5) {

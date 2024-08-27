@@ -348,7 +348,7 @@ class SCARController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-           
+
             $history->save();
         }
 
@@ -942,22 +942,30 @@ class SCARController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $scar->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $scar],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+
+                    $list = Helpers::getVendorList($scar->division_id);
+                    //  return $list;
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $scar->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                         ['data' => $scar],
+                                      function ($message) use ($email) {
+                                          $message->to($email)
+                                              ->subject("Document is Sent By".Auth::user()->name);
+                                      }
+                                    );
+                                } catch (\Exception $e) {
+                                    \log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            // }
+                     }
+                  }
+
+
                     $scar->update();
 
                     toastr()->success('Sent to Submitted to Supplier');
@@ -995,22 +1003,29 @@ class SCARController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $scar->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $scar],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+
+                //     $list = Helpers::getScarInitiatorList($scar->division_id);
+                //     //  return $list;
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $scar->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //             if (!empty($email)) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                          ['data' => $scar],
+                //                       function ($message) use ($email) {
+                //                           $message->to($email)
+                //                               ->subject("Document is Sent By".Auth::user()->name);
+                //                       }
+                //                     );
+                //                 } catch (\Exception $e) {
+                //                     \log::error('Mail failed to send: ' . $e->getMessage());
+                //                 }
+                //             // }
+                //      }
+                //   }
+
                     $scar->update();
 
                     toastr()->success('Sent to Acknowleged by Supplier');
@@ -1103,22 +1118,29 @@ class SCARController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $scar->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $scar],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+
+                    $list = Helpers::getScarInitiatorList($scar->division_id);
+                    //  return $list;
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $scar->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                         ['data' => $scar],
+                                      function ($message) use ($email) {
+                                          $message->to($email)
+                                              ->subject("Document is Sent By".Auth::user()->name);
+                                      }
+                                    );
+                                } catch (\Exception $e) {
+                                    \log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            // }
+                     }
+                  }
+
                 $scar->update();
                 toastr()->success('Sent to Response Received');
                 return back();
@@ -1155,22 +1177,51 @@ class SCARController extends Controller
                     }
 
                     $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $scar->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $scar],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+
+                    $list = Helpers::getScarInitiatorList($scar->division_id);
+                    //  return $list;
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $scar->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                         ['data' => $scar],
+                                      function ($message) use ($email) {
+                                          $message->to($email)
+                                              ->subject("Document is Sent By".Auth::user()->name);
+                                      }
+                                    );
+                                } catch (\Exception $e) {
+                                    \log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            // }
+                     }
+                  }
+
+                  $list = Helpers::getVendorList($scar->division_id);
+                    //  return $list;
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $scar->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                         ['data' => $scar],
+                                      function ($message) use ($email) {
+                                          $message->to($email)
+                                              ->subject("Document is Sent By".Auth::user()->name);
+                                      }
+                                    );
+                                } catch (\Exception $e) {
+                                    \log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            // }
+                     }
+                  }
+
                 $scar->update();
                 toastr()->success('Closed - Approved');
                 return back();
@@ -1277,26 +1328,28 @@ class SCARController extends Controller
             $history->save();
             $scar->update();
 
-            // foreach ($list as $u) {
-            //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-            //         $email = Helpers::getInitiatorEmail($u->user_id);
-            //         if ($email !== null) {
+            $list = Helpers::getVendorList($scar->division_id);
+            //  return $list;
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $scar->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                 ['data' => $scar],
+                              function ($message) use ($email) {
+                                  $message->to($email)
+                                      ->subject("Document is Sent By".Auth::user()->name);
+                              }
+                            );
+                        } catch (\Exception $e) {
+                            \log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    // }
+             }
+          }
 
-            //             try {
-            //                 Mail::send(
-            //                     'mail.view-mail',
-            //                     ['data' => $deviation],
-            //                     function ($message) use ($email) {
-            //                         $message->to($email)
-            //                             ->subject("Activity Performed By " . Auth::user()->name);
-            //                     }
-            //                 );
-            //             } catch (\Exception $e) {
-            //                 //log error
-            //             }
-            //         }
-            //     }
-            // }
             $scar->update();
             toastr()->success('Document Sent to Work in Progress');
             return back();

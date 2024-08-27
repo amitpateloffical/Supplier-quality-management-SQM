@@ -1820,26 +1820,27 @@ $history->save();
                 }
                 $history->save();
     
-                //     $list = Helpers::getQAUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //             if ($email !== null) {
-                //                 try {
-                //                     Mail::send(
-                //                         'mail.view-mail',
-                //                         ['data' => $root],
-                //                     function ($message) use ($email) {
-                //                         $message->to($email)
-                //                             ->subject("Document sent ".Auth::user()->name);
-                //                     }
-                //                     );
-                //                 } catch (\Exception $e) {
-                //                     // 
-                //                 }
-                //             }
-                //     } 
-                // }
+                    $list = Helpers::getInitiatorUserList($root->division_id);
+                  
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $root->division_id){
+                            $email = Helpers::getInitiatorEmail($root->user_id);
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $root],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("Document sent ".Auth::user()->name);
+                                    }
+                                    );
+                                } catch (\Exception $e) {
+                                    // 
+                                }
+                            }
+                    // } 
+                }
                 $root->update();
                 $history = new RootCauseAnalysisHistory();
                 $history->type = "Root Cause Analysis";

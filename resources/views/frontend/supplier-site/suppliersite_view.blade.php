@@ -379,7 +379,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id,'Supplier Site',18))
+                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id,'Supplier Site',37))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-supplier-approve">
                                 Audit Passed
                             </button>
@@ -393,7 +393,7 @@
                                 data-bs-target="#sendToPendingSupplierAudit">
                                 Conditionally Approved
                             </button>
-                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id,'Supplier Site',18))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id,'Supplier Site',38))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#sendToPendingSupplierAudit">
                                 Re-Audit
@@ -401,7 +401,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Supplier Obsolete
                             </button>
-                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id,'Supplier Site',18))
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id,'Supplier Site',38))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#supplierApprovedToObselete">
                                 Supplier Obsolete

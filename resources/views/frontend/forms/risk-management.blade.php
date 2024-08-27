@@ -815,13 +815,15 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Estimated Man-Hours">Estimated Man-Hours</label>
-                                            <input type="number" name="estimated_man_hours" id="estimated_man_hours" min="0">
+                                            <input type="number" name="estimated_man_hours" id="estimated_man_hours"
+                                                min="0">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Estimated Cost">Estimated Cost</label>
-                                            <input type="number" name="estimated_cost" id="estimated_cost" min="0">
+                                            <input type="number" name="estimated_cost" id="estimated_cost"
+                                                min="0">
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-6">
@@ -940,9 +942,11 @@
                                                             <div class="input-date ">
                                                                 <div class="calenderauditee">
                                                                     <input type="text" id="deadline' + serialNumber +'"
-                                                                        readonly placeholder="DD-MM-YYYY" />
+                                                                        readonly placeholder="DD-MM-YYYY"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
                                                                     <input type="date" name="deadline[]"
                                                                         class="hide-input"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                         oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
                                                                 </div>
                                                             </div>
@@ -1555,9 +1559,11 @@
                                                             <div class="input-date ">
                                                                 <div class="calenderauditee">
                                                                     <input type="text"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                         id="deadline2' + serialNumber +'" readonly
                                                                         placeholder="DD-MM-YYYY" />
                                                                     <input type="date" name="deadline2[]"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                         class="hide-input"
                                                                         oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" />
                                                                 </div>
@@ -2234,7 +2240,7 @@
                             // '<td><input type="date" name="deadline[]"></td>'
                             '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' +
                             serialNumber +
-                            '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' +
+                            '" readonly placeholder="DD-MM-YYYY" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" /><input type="date" name="deadline[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `deadline' +
                     serialNumber + '`)" /></div></div></div></td>' +
                             '<td><input type="text" name="item_static[]"></td>' +
                             '<td><button type="text" class="removeBtnMI">Remove</button></td>' +
@@ -2260,9 +2266,9 @@
                             '"></td>' +
                             '<td><input type="text" name="mitigation_steps[]"></td>' +
                             // '<td><input type="date" name="deadline2[]"></td>'
-                            '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' +
+                            '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="deadline2' +
                             serialNumber +
-                            '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' +
+                            '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="deadline2[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `deadline2' +
                     serialNumber + '`)" /></div></div></div></td>'
 
 

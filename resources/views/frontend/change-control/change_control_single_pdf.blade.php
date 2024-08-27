@@ -201,7 +201,7 @@
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    General Information kawhp983u98o
+                    General Information
                 </div>
                 <table>
                     <tr> On {{ Helpers::getDateFormat($data->created_at) }} added by {{ $data->originator }}
@@ -215,13 +215,13 @@
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">
                             @if ($data->division_id)
-                                {{ $data->division_id }}
+                                {{ Helpers::getDivisionName(session()->get('division')) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                         <th class="w-20">Record Number</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->record)
                                 {{ Helpers::divisionNameForQMS($data->division_id) }}//{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                             @else
@@ -241,11 +241,23 @@
                         </td>
 
                         <th class="w-20">CFT Reviewer</th>
-                        <td class="w-30">{{ $data->cft_reviewer }}</td>
+                        <td class="w-30">
+                            @if ($data->cft_reviewer)
+                                {{ $data->cft_reviewer }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     <tr>
 
                         <th class="w-20">CFT Reviewer Person </th>
-                        <td class="w-30">{{ $users }}</td>
+                        <td class="w-30">
+                            @if ($users)
+                                {{ $users }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
 
                         <th class="w-20">Due Date</th>
                         <td class="w-30" colspan="3">
@@ -306,7 +318,7 @@
                         </td>
                     </tr>
 
-                    <tr>                        
+                    <tr>
                         <th class="w-20">Others</th>
                         <td class="w-80" colspan="3">
                             @if ($data->initiated_through_req)
@@ -325,7 +337,7 @@
                             @else
                                 Not Applicable
                             @endif
-                        </td> 
+                        </td>
                     </tr>
 
                     <tr>
@@ -350,7 +362,7 @@
                         </td>
                     </tr>
 
-                    <tr> 
+                    <tr>
                         <th class="w-20">If Others</th>
                         <td class="w-80" colspan="3">
                             @if ($data->If_Others)
@@ -423,10 +435,14 @@
                             @foreach (unserialize($docdetail->current_doc_no) as $key => $datas)
                                 <tr>
                                     <td> {{ $key + 1 }}</td>
-                                    <td> {{ unserialize($docdetail->current_doc_no)[$key] ? unserialize($docdetail->current_doc_no)[$key] : '' }} </td>
-                                    <td> {{ unserialize($docdetail->current_version_no)[$key] ? unserialize($docdetail->current_version_no)[$key] : '' }} </td>
-                                    <td> {{ unserialize($docdetail->new_doc_no)[$key] ? unserialize($docdetail->new_doc_no)[$key] : '' }} </td>
-                                    <td> {{ unserialize($docdetail->new_version_no)[$key] ? unserialize($docdetail->new_version_no)[$key] : '' }} </td>
+                                    <td> {{ unserialize($docdetail->current_doc_no)[$key] ? unserialize($docdetail->current_doc_no)[$key] : '' }}
+                                    </td>
+                                    <td> {{ unserialize($docdetail->current_version_no)[$key] ? unserialize($docdetail->current_version_no)[$key] : '' }}
+                                    </td>
+                                    <td> {{ unserialize($docdetail->new_doc_no)[$key] ? unserialize($docdetail->new_doc_no)[$key] : '' }}
+                                    </td>
+                                    <td> {{ unserialize($docdetail->new_version_no)[$key] ? unserialize($docdetail->new_version_no)[$key] : '' }}
+                                    </td>
                                 </tr>
                             @endforeach
                         @else
@@ -508,7 +524,7 @@
 
                 </table>
             </div>
-            
+
             <div class="block">
                 <div class="head">
                     <div class="block-head">
@@ -517,20 +533,36 @@
                     <table>
                         <tr>
                             <th class="w-20">Type of Change</th>
-                            <td class="w-80">{{ ucfirst($data->type_chnage) }}</td>
+                            <td class="w-80">
+                                @if ($data->type_chnage)
+                                    {{ ucfirst($data->type_chnage) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
                         </tr>
 
                         <tr>
                             <th class="w-20">QA Review Comments</th>
                             <td>
                                 <div>
-                                    {{ $data->qa_comments }}
+                                    @if ($data->qa_comments)
+                                        {{ $data->qa_comments }}
+                                    @else
+                                        Not Applicable
+                                    @endif
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <th class="w-20">Related Records</th>
-                            <td class="w-80"> {{ $data->related_records }}</td>
+                            <td class="w-80">
+                                @if ($data->related_records)
+                                    {{ $data->related_records }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
                         </tr>
 
                     </table>
@@ -574,7 +606,12 @@
                             <td>
                 </div>
                 <div>
-                    {{ $data->qa_eval_comments }}
+                    @if ($data->qa_eval_comments)
+                        {{ $data->qa_eval_comments }}
+                    @else
+                        Not Applicable
+                    @endif
+
                 </div>
                 </td>
                 </tr>
@@ -583,14 +620,26 @@
 
                 <tr>
                     <th class="w-20">Training Required</th>
-                    <td class="w-80"> {{ ucfirst($data->training_required) }}</td>
+                    <td class="w-80">
+                        @if ($data->training_required)
+                            {{ ucfirst($data->training_required) }}
+                        @else
+                            Not Applicable
+                        @endif
+
+                    </td>
                 </tr>
                 <tr>
                     <th class="w-20">Training Comments</th>
                     <td>
             </div>
             <div>
-                {{ $data->train_comments }}
+                @if ($data->train_comments)
+                    {{ $data->train_comments }}
+                @else
+                    Not Applicable
+                @endif
+
             </div>
             </td>
             </tr>
@@ -633,7 +682,13 @@
                     <table>
                         <tr>
                             <th class="w-20">Comments</th>
-                            <td class="w-80" colspan="3">{{ $data->cft_comments }}</td>
+                            <td class="w-80" colspan="3">
+                                @if ($data->cft_comments)
+                                    {{ $data->cft_comments }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -673,7 +728,11 @@
                         <th class="w-20">QA Comments</th>
                         <td class="w-80">
                             <div>
-                                {{ $data->qa_comments }}
+                                @if ($data->qa_comments)
+                                    {{ $data->qa_comments }}
+                                @else
+                                    Not Applicable
+                                @endif
                             </div>
                         </td>
                     </tr>
@@ -683,7 +742,11 @@
 
             </div>
             <div>
-                {{ $data->designee_comments }}
+                @if ($data->designee_comments)
+                    {{ $data->designee_comments }}
+                @else
+                    Not Applicable
+                @endif
             </div>
             </td>
             </tr>
@@ -693,7 +756,11 @@
 
         </div>
         <div>
-            {{ $data->Warehouse_comments }}
+            @if ($data->Warehouse_comments)
+                {{ $data->Warehouse_comments }}
+            @else
+                Not Applicable
+            @endif
         </div>
         </td>
         </tr>
@@ -703,7 +770,11 @@
 
     </div>
     <div>
-        {{ $data->Engineering_comments }}
+        @if ($data->Engineering_comments)
+            {{ $data->Engineering_comments }}
+        @else
+            Not Applicable
+        @endif
     </div>
     </td>
     </tr>
@@ -713,7 +784,11 @@
 
             </div>
             <div>
-                {{ $data->Instrumentation_comments }}
+                @if ($data->Instrumentation_comments)
+                    {{ $data->Instrumentation_comments }}
+                @else
+                    Not Applicable
+                @endif
             </div>
         </td>
     </tr>
@@ -723,7 +798,11 @@
 
             </div>
             <div>
-                {{ $data->Validation_comments }}
+                @if ($data->Validation_comments)
+                    {{ $data->Validation_comments }}
+                @else
+                    Not Applicable
+                @endif
             </div>
         </td>
     </tr>
@@ -733,7 +812,11 @@
 
             </div>
             <div>
-                {{ $data->Others_comments }}
+                @if ($data->Others_comments)
+                    {{ $data->Others_comments }}
+                @else
+                    Not Applicable
+                @endif
             </div>
         </td>
     </tr>
@@ -743,7 +826,11 @@
 
             </div>
             <div>
-                {{ $data->Group_comments }}
+                @if ($data->Group_comments)
+                    {{ $data->Group_comments }}
+                @else
+                    Not Applicable
+                @endif
             </div>
         </td>
     </tr>
@@ -789,74 +876,82 @@
                     <!-- <div><strong>On {{ Helpers::getDateFormat($data->created_at) }} added by
                             {{ $data->originator }}</strong></div> -->
                     <div>
-                        {{ $data->risk_identification }}
+                        @if ($data->risk_identification)
+                            {{ $data->risk_identification }}
+                        @else
+                            Not Applicable
+                        @endif
                     </div>
                 </td>
             </tr>
             <th class="w-20">Severity</th>
-                <td class="w-30">
-                    @if ($data->severity)
-                        @if ($data->severity == 1)
-                            Negligible
-                        @elseif($data->severity == 2)
-                            Minor
-                        @elseif($data->severity == 3)
-                            Moderate
-                        @elseif($data->severity == 4)
-                            Major
-                        @else
-                            Fatel
-                        @endif
+            <td class="w-30">
+                @if ($data->severity)
+                    @if ($data->severity == 1)
+                        Negligible
+                    @elseif($data->severity == 2)
+                        Minor
+                    @elseif($data->severity == 3)
+                        Moderate
+                    @elseif($data->severity == 4)
+                        Major
                     @else
-                        Not Applicable
+                        Fatel
                     @endif
-                </td>
+                @else
+                    Not Applicable
+                @endif
+            </td>
 
 
-<th class="w-20">Occurance</th>
-                <td class="w-30">
-                    @if ($data->occurrence)
-                        @if ($data->Occurance == 1)
-                            Extremely Unlikely
-                        @elseif($data->Occurance == 2)
-                            Rare
-                        @elseif($data->Occurance == 3)
-                            Unlikely
-                        @elseif($data->Occurance == 4)
-                            Likely
-                        @else
-                            Very Likely
-                        @endif
+            <th class="w-20">Occurance</th>
+            <td class="w-30">
+                @if ($data->occurrence)
+                    @if ($data->Occurance == 1)
+                        Extremely Unlikely
+                    @elseif($data->Occurance == 2)
+                        Rare
+                    @elseif($data->Occurance == 3)
+                        Unlikely
+                    @elseif($data->Occurance == 4)
+                        Likely
                     @else
-                        Not Applicable
+                        Very Likely
                     @endif
-                </td>
+                @else
+                    Not Applicable
+                @endif
+            </td>
 
 
 
 
-<th class="w-20">Detection</th>
-                <td class="w-30">
-                    @if ($data->detection)
-                        @if ($data->Detection == 1)
-                            Impossible
-                        @elseif($data->Detection == 2)
-                            Rare
-                        @elseif($data->Detection == 3)
-                            Unlikely
-                        @else
-                            Very Likely
-                        @endif
+            <th class="w-20">Detection</th>
+            <td class="w-30">
+                @if ($data->detection)
+                    @if ($data->Detection == 1)
+                        Impossible
+                    @elseif($data->Detection == 2)
+                        Rare
+                    @elseif($data->Detection == 3)
+                        Unlikely
                     @else
-                        Not Applicable
+                        Very Likely
                     @endif
-                </td>
+                @else
+                    Not Applicable
+                @endif
+            </td>
 
             <tr>
                 <th class="w-20">Mitigation Action</th>
                 <td class="w-80" colspan="3">
                     <div>
-                        {{ $data->migration_action }}
+                        @if ($data->migration_action)
+                            {{ $data->migration_action }}
+                        @else
+                            Not Applicable
+                        @endif
                     </div>
                 </td>
             </tr>
@@ -872,7 +967,11 @@
                 <th class="w-20">QA Approval Comments</th>
                 <td class="w-80">
                     <div>
-                        {{ $data->risk_identification }}
+                        @if ($data->qa_appro_comments)
+                            {{ $data->qa_appro_comments }}
+                        @else
+                            Not Applicable
+                        @endif
                     </div>
                 </td>
             </tr>
@@ -881,7 +980,11 @@
                 <td class="w-80">
     </div>
     <div>
-        {{ $data->feedback }}
+        @if ($data->feedback)
+            {{ $data->feedback }}
+        @else
+            Not Applicable
+        @endif
     </div>
     </td>
     </tr>
@@ -933,7 +1036,13 @@
             </tr> -->
             <tr>
                 <th class="w-20">QA Closure Comments</th>
-                <td class="w-30"> {{ $data->qa_closure_comments }}</td>
+                <td class="w-30">
+                    @if ($data->qa_closure_comments)
+                        {{ $data->qa_closure_comments }}
+                    @else
+                        Not Applicable
+                    @endif
+                </td>
             </tr>
         </table>
         <div class="border-table">
@@ -975,7 +1084,13 @@
         <table>
             <tr>
                 <th class="w-20">Due Date Extension Justification</th>
-                <td class="w-30"> {{ $data->qa_closure_comments }}</td>
+                <td class="w-30">
+                    @if ($data->due_date_extension)
+                        {{ $data->due_date_extension }}
+                    @else
+                        Not Applicable
+                    @endif
+                </td>
             </tr>
         </table>
     </div>
@@ -1153,7 +1268,7 @@
     </div>
     </div>
 
-   
+
 
 </body>
 

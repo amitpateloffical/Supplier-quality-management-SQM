@@ -834,7 +834,7 @@
                             @elseif($data->stage == 8 && Helpers::check_roles($data->division_id, 'Deviation ', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Opened
-                                
+
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pending-initiator-update">
                             Send to Pending Initiator Update
@@ -10688,11 +10688,15 @@
                         @enderror
                     </div>
                     {{-- EXISTING ATTACHMENTS START --}}
-                    @if ($data->QA_attachments)
-                    @foreach (json_decode($data->QA_attachments) as $file)
-                        <input id="QAATFile-{{ $loop->index  }}" type="hidden" name="existing_QA_attachments[{{ $loop->index  }}]" value="{{ $file }}">
-                    @endforeach
+
+                    @if ($data->Initial_attachment)
+                        @foreach (json_decode($data->Initial_attachment) as $file)
+                            <input id="ATFIFile_4-{{ $loop->index }}" type="hidden"
+                                name="existing_qa_attachments_files[{{ $loop->index }}]" value="{{ $file }}">
+                        @endforeach
                     @endif
+
+
                     {{-- EXISTING ATTACHMENTS END --}}
                     <div class="col-12">
                         <div class="group-input">
@@ -10710,7 +10714,8 @@
                                                         class="fa fa-eye text-primary"
                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                 <a type="button" class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11]) ? 'pointer-events: none;' : '' }}"
-                                                data-remove-id="QAATFile-{{ $loop->index }}"
+
+                                                    data-remove-id="ATFIFile_4-{{ $loop->index }}"
                                                     data-file-name="{{ $file }}"><i
                                                         class="fa-solid fa-circle-xmark"
                                                         style="color:red; font-size:20px;"></i></a>

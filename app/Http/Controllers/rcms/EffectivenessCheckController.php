@@ -1288,6 +1288,46 @@ class EffectivenessCheckController extends Controller
                 }
                 $history->save();
 
+                $list = Helpers::getSupervisorUserList($effectiveness->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $effectiveness->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $effectiveness],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                }
+
+                $list = Helpers::getInitiatorUserList($effectiveness->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $effectiveness->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $effectiveness],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                }
+
                 $effectiveness->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -1297,6 +1337,7 @@ class EffectivenessCheckController extends Controller
                 $history->stage_id = $effectiveness->stage;
                 $history->status = $effectiveness->status;
                 $history->save();
+
                 toastr()->success('Document Sent');
 
                 return back();
@@ -1417,6 +1458,46 @@ class EffectivenessCheckController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
+
+                $list = Helpers::getSupervisorUserList($effectiveness->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $effectiveness->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $effectiveness],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                }
+
+                $list = Helpers::getInitiatorUserList($effectiveness->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $effectiveness->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $effectiveness],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                }
 
                 $effectiveness->update();
                 $history = new CCStageHistory();

@@ -4560,22 +4560,26 @@ class SupplierSiteController extends Controller
 
                     
                     $history->save();
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $supplierSite],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+                     $list = Helpers::getSupplierAuditorDepartmentList($supplierSite->division_id);
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $supplierSite->division_id){
+                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                 if ($email !== null) {
+                                 try {
+                                  Mail::send(
+                                      'mail.view-mail',
+                                       ['data' => $supplierSite],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("Document is Send By".Auth::user()->name);
+                                    }
+                                  );
+                                  } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                  }
+                                }
+                        //  }
+                      }
                     $supplierSite->update();
                     
                     toastr()->success('Document Sent');
@@ -4622,22 +4626,26 @@ class SupplierSiteController extends Controller
                     }
 
                     $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplierSite],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                 $list = Helpers::getInitiatorUserList($supplierSite->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $supplierSite->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            if ($email !== null) {
+                            try {
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' => $supplierSite],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Send By".Auth::user()->name);
+                                }
+                               );
+                            } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                    //  }
+                  }
                 $supplierSite->update();
 
                 toastr()->success('Document Sent');
@@ -4977,22 +4985,26 @@ class SupplierSiteController extends Controller
                       $history->action_name = 'Update';
                     }
                     $history->save();
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $supplierSite],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+                     $list = Helpers::getSupplierAuditorDepartmentList($supplierSite->division_id);
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $supplierSite->division_id){
+                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                 if ($email !== null) {
+                                try {
+                                  Mail::send(
+                                      'mail.view-mail',
+                                       ['data' => $supplierSite],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("Document is Send By".Auth::user()->name);
+                                    }
+                                  );
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        //  }
+                      }
                     $supplierSite->update();
 
                     toastr()->success('Document Sent');
@@ -5101,22 +5113,26 @@ class SupplierSiteController extends Controller
                     }
                     
                     $history->save();
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $supplierSite],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+                     $list = Helpers::getInitiatorUserList($supplierSite->division_id);
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $supplierSite->division_id){
+                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                  Mail::send(
+                                      'mail.view-mail',
+                                       ['data' => $supplierSite],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("Document is Send By".Auth::user()->name);
+                                    }
+                                  );
+                                  } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                                }
+                        //  }
+                      }
                     $supplierSite->update();
                     
                     toastr()->success('Document Sent');

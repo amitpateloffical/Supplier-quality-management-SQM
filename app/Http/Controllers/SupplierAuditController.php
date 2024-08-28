@@ -2977,25 +2977,47 @@ if ($lastDocument->due_date_extension != $internalAudit->due_date_extension) {
                 $history->save();
                     
                 $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
+                  
                 foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
+                    // if($u->q_m_s_divisions_id == $root->division_id){
+                        $email = Helpers::getInitiatorEmail($changeControl->user_id);
+                        if ($email !== null) {
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changeControl],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $root],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document sent ".Auth::user()->name);
+                                }
                                 );
                             } catch (\Exception $e) {
-                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                                // 
                             }
                         }
-                    // }
-                }
+                // } 
+            }
+                // $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $supplier->division_id){
+                //         $email = Helpers::getInitiatorEmail($u->user_id);
+                //         if (!empty($email)) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $changeControl],
+                //                     function ($message) use ($email) {
+                //                         $message->to($email)
+                //                                 ->subject("Document is Sent By " . Auth::user()->name);
+                //                     }
+                //                 );
+                //             } catch (\Exception $e) {
+                //                 \Log::error('Mail failed to send: ' . $e->getMessage());
+                //             }
+                //         }
+                //     // }
+                // }
+                
                     
                 $changeControl->update();
                 toastr()->success('Document Sent');

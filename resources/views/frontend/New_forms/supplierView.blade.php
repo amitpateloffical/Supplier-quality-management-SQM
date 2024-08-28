@@ -227,7 +227,7 @@
             }
         }
     </script> -
-    
+
     <script>
         $(document).on('click', '.removeRowBtn', function() {
             $(this).closest('tr').remove();
@@ -264,7 +264,7 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowexternalAuditTrials', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 &&  Helpers::check_roles($data->division_id,'Supplier Audit',13))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Supplier Audit', 13))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Schedule Audit
                             </button>
@@ -290,9 +290,9 @@
                                 data-bs-target="#rejection-modal">
                                 Reject
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
-                            </button>
+                            </button> --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Issue Report</button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
@@ -573,25 +573,25 @@
 
                                         </div>
                                         <!-- <div class="col-12">
-                                                    <div class="group-input">
-                                                        <label for="Short Description">Short Description <span
-                                                                class="text-danger">*</span></label>
-                                                                <div><small class="text-primary">Please mention brief summary</small></div>
-                                                        <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                    </div>
-                                                </div>  -->
+                                                            <div class="group-input">
+                                                                <label for="Short Description">Short Description <span
+                                                                        class="text-danger">*</span></label>
+                                                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                                                <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                            </div>
+                                                        </div>  -->
                                         <!-- <div class="col-12">
-                                                    <div class="group-input">
-                                                        <label for="Short Description">Short Description<span
-                                                                class="text-danger">*</span></label><span id="rchars">255</span>
-                                                        characters remaining
-                                                        
-                                                        <textarea name="short_description" id="docname" type="text" maxlength="255" required
-                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                    </div>
-                                                    <p id="docnameError" style="color:red">**Short Description is required</p>
-                
-                                                </div> -->
+                                                            <div class="group-input">
+                                                                <label for="Short Description">Short Description<span
+                                                                        class="text-danger">*</span></label><span id="rchars">255</span>
+                                                                characters remaining
+
+                                                                <textarea name="short_description" id="docname" type="text" maxlength="255" required
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                            </div>
+                                                            <p id="docnameError" style="color:red">**Short Description is required</p>
+
+                                                        </div> -->
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
@@ -599,7 +599,7 @@
                                                 <span id="rchars">255</span> characters remaining
                                                 <div class="relative-container">
                                                     <textarea name="short_description" class="mic-input" id="docname" type="text" maxlength="255" required
-                                                        {{ $data->stage == 0 || $data->stage == 6? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                                     @component('frontend.forms.language-model')
                                                     @endcomponent
 
@@ -660,8 +660,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="initiated_if_other" id="initiated_if_other" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initiated_if_other }}</textarea>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                        @endcomponent
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -724,8 +724,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="if_other" id="if_other_textarea" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_other }}</textarea>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                        @endcomponent
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -757,7 +757,7 @@
                                                         @if ($data->external_agencies == 'others') selected @endif>Others</option>
                                                 </select>
                                             </div>
-                                        </div> 
+                                        </div>
 
                                         <div class="col-lg-6" id="others_group">
                                             <div class="group-input">
@@ -773,8 +773,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="initial_comments" id="initial_comments" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_comments }}</textarea>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                        @endcomponent
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -833,7 +833,8 @@
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button"
+                                            <button type="submit" id="ChangesaveButton"
+                                                class="saveButton on-submit-disable-button"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         @endif
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
@@ -1013,8 +1014,8 @@
                                                     <input type="text" name="material_name" id="material_name"
                                                         class="mic-input" value="{{ $data->material_name }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                        @endcomponent
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1025,8 +1026,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="if_comments" id="if_comments" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_comments }}</textarea>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 4])
-                                                        @endcomponent
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 4])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1034,7 +1035,8 @@
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button"
+                                            <button type="submit" id="ChangesaveButton"
+                                                class="saveButton on-submit-disable-button"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         @endif
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1088,7 +1090,8 @@
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file"
-                                                                    data-remove-id="FIATFile-{{ $loop->index }}" style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"
+                                                                        data-remove-id="FIATFile-{{ $loop->index }}"
+                                                                        style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"
                                                                         data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
@@ -1255,8 +1258,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="Auditor_Details" id="Auditor_Details" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Auditor_Details }}</textarea>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                        @endcomponent
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1267,8 +1270,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="External_Auditing_Agency" id="External_Auditing_Agency" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->External_Auditing_Agency }}</textarea>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                        @endcomponent
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1280,8 +1283,8 @@
                                                 <div class="relative-container">
                                                     <textarea name="Relevant_Guidelines" id="Relevant_Guidelines" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Relevant_Guidelines }}</textarea>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                        @endcomponent
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
@@ -1292,12 +1295,12 @@
                                                 <div class="relative-container">
                                                     <textarea name="QA_Comments" id="QA_Comments" class="mic-input"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->QA_Comments }}</textarea>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                        @endcomponent
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
                                                 </div>
                                             </div>
                                         </div>
-{{--                           
+                                        {{--
                                         @if ($data->file_attachment_guideline)
                                         @foreach (json_decode($data->file_attachment_guideline) as $file)
                                             <input id="ATFIFile-{{ $loop->index }}" type="hidden"
@@ -1345,256 +1348,32 @@
                                             </div>
                                         </div> --}}
                                         @if ($data->file_attachment_guideline)
-                                        @foreach (json_decode($data->file_attachment_guideline) as $file)
-                                            <input id="ATFIFile-{{ $loop->index }}" type="hidden"
-                                                name="existing_file_attachment_guideline[{{ $loop->index }}]"
-                                                value="{{ $file }}">
-                                        @endforeach
-                                    @endif
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Guideline Attachment">Guideline Attachment</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small></div>
-                                            <div class="file-attachment-field">
-                                                <div disabled class="file-attachment-list" id="file_attachment_guideline">
-                                                    @if ($data->file_attachment_guideline)
-                                                        @foreach (json_decode($data->file_attachment_guideline) as $file)
-                                                            <h6 type="button" class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                        class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
-                                                                    data-remove-id="ATFIFile-{{ $loop->index }}"
-                                                                    data-file-name="{{ $file }}"
-                                                                    style="@if ($data->stage == 0 ||  $data->stage == 6) pointer-events: none; @endif"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input
-                                                        {{ $data->stage == 0 || $data->stage == 6  ? 'disabled' : '' }}
-                                                        type="file" id="myfile" name="file_attachment_guideline[]"
-                                                        oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-    
-    
-                                        
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Audit Category">Audit Category</label>
-                                                <select name="Audit_Category"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
-                                                    <option @if ($data->Audit_Category == '1') selected @endif
-                                                        value="1">Internal Audit/Self Inspection</option>
-                                                    <option @if ($data->Audit_Category == '2') selected @endif
-                                                        value="2">Supplier Audit</option>
-                                                    <option @if ($data->Audit_Category == '3') selected @endif
-                                                        value="3">Regulatory Audit</option>
-                                                    <option @if ($data->Audit_Category == '4') selected @endif
-                                                        value="4">Consultant Audit</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Supplier_Details">Supplier/Vendor/Manufacturer Details</label>
-                                                <div class="relative-container">
-                                                    <textarea name="Supplier_Details" id="Supplier_Details" class="mic-input"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Details }}</textarea>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                        @endcomponent
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Supplier_Site">Supplier/Vendor/Manufacturer Site</label>
-                                                <div class="relative-container">
-                                                    <textarea name="Supplier_Site" id="Supplier_Site" class="mic-input"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Site }}</textarea>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                        @endcomponent
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Comments">Comments</label>
-                                                <div class="relative-container">
-                                                    <textarea name="Comments" id="Comments" class="mic-input"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Comments }}</textarea>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                        @endcomponent
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="button-block">
-                                        @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                            @foreach (json_decode($data->file_attachment_guideline) as $file)
+                                                <input id="ATFIFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_file_attachment_guideline[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
                                         @endif
-                                        <button type="button" class="backButton"
-                                            onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
-                                                class="text-white"> Exit </a> </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Audit Execution content -->
-                            <div id="CCForm4" class="inner-block cctabcontent">
-                                <div class="inner-block-content">
-                                    <div class="row">
-                                        {{-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Due Date">Due Date</label>
-                                                <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                                                <div class="static">{{ $data->due_date }}</div>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-lg-6 new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="Audit Start Date">Audit Start Date</label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="audit_start_date" readonly
-                                                        placeholder="DD-MM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                    <input type="date" id="audit_start_date_checkdate"
-                                                        name="audit_start_date"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') ?? '' }}"
-                                                        value="{{ $data->audit_start_date ? $data->audit_start_date->format('Y-m-d') : '' }}"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        class="hide-input"
-                                                        oninput="handleDateInput(this, 'audit_start_date');updateEndDateMinAudit();" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="Audit End Date">Audit End Date</label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="audit_end_date" readonly
-                                                        placeholder="DD-MM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                    <input type="date" id="audit_end_date_checkdate"
-                                                        name="audit_end_date"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') ?? '' }}"
-                                                        value="{{ $data->audit_end_date ? $data->audit_end_date->format('Y-m-d') : '' }}"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        class="hide-input"
-                                                        oninput="handleDateInput(this, 'audit_end_date');" />
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="audit-agenda-grid">
-                                                    Observation Details
-                                                    <button type="button" name="audit-agenda-grid"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        id="ObservationAdd">+</button>
-                                                    <span class="text-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#observation-field-instruction-modal"
-                                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                        (Launch Instruction)
-                                                    </span>
-                                                </label>
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered" id="onservation-field-table"
-                                                        style="width: 100%;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="width: 4%;">Row#</th>
-                                                                <th>Observation Details</th>
-                                                                <th>Pre Comments</th>
-                                                                <th>CAPA Details if any</th>
-                                                                <th>Post Comments</th>
-                                                                <th>Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="observationDetail">
-                                                            @if ($grid_data1->observation_id)
-                                                                @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
-                                                                    <tr>
-                                                                        <td>{{ $key + 1 }}</td>
-                                                                        <td><input type="text"
-                                                                                name="observation_id[]"
-                                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                                value="{{ $tempData ? $tempData : '' }}">
-                                                                        </td>
-                                                                        <td><input type="text"
-                                                                                name="observation_description[]"
-                                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                                value="{{ unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key] : '' }}">
-                                                                        </td>
-                                                                        <td><input type="text" name="area[]"
-                                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                                value="{{ unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key] : '' }}">
-                                                                        </td>
-                                                                        <td><input type="text"
-                                                                                name="auditee_response[]"
-                                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                                value="{{ unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key] : '' }}">
-                                                                        </td>
-                                                                        <td><button type="button" class="removeRowBtn"
-                                                                                style="background-color: black;color: white;">Remove</button>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        @if ($data->Audit_file)
-                                        @foreach (json_decode($data->Audit_file) as $file)
-                                            <input id="ANFILE-{{ $loop->index }}" type="hidden"
-                                                name="existing_Audit_file[{{ $loop->index }}]"
-                                                value="{{ $file }}">
-                                        @endforeach
-                                    @endif
-                                        <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="Audit Attachments">Audit Attachments</label>
+                                                <label for="Guideline Attachment">Guideline Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
-                                                
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="Audit_file">
-                                                        @if ($data->Audit_file)
-                                                            @foreach (json_decode($data->Audit_file) as $file)
+                                                    <div disabled class="file-attachment-list"
+                                                        id="file_attachment_guideline">
+                                                        @if ($data->file_attachment_guideline)
+                                                            @foreach (json_decode($data->file_attachment_guideline) as $file)
                                                                 <h6 type="button" class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
                                                                     <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i
-                                                                            class="fa fa-eye text-primary"
+                                                                        target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file"
-                                                                     data-remove-id="ANFILE-{{ $loop->index }}"
+                                                                        data-remove-id="ATFIFile-{{ $loop->index }}"
                                                                         data-file-name="{{ $file }}"
-                                                                          style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif">
-                                                                        <i
+                                                                        style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
@@ -1603,68 +1382,290 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input type="file" id="myfile"
-                                                            name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Audit_file')" multiple>
+                                                        <input
+                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                            type="file" id="myfile"
+                                                            name="file_attachment_guideline[]"
+                                                            oninput="addMultipleFiles(this, 'file_attachment_guideline')"
+                                                            multiple>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                     
+                                    </div>
 
 
 
-
-
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Audit_Comments1">Audit Comments</label>
-                                                <div class="relative-container">
-                                                    <textarea name="Audit_Comments1" id="Audit_Comments1" class="mic-input"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments1 }}</textarea>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                        @endcomponent
-                                                </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Audit Category">Audit Category</label>
+                                            <select name="Audit_Category"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <option value="0">-- Select --</option>
+                                                <option @if ($data->Audit_Category == '1') selected @endif value="1">
+                                                    Internal Audit/Self Inspection</option>
+                                                <option @if ($data->Audit_Category == '2') selected @endif value="2">
+                                                    Supplier Audit</option>
+                                                <option @if ($data->Audit_Category == '3') selected @endif value="3">
+                                                    Regulatory Audit</option>
+                                                <option @if ($data->Audit_Category == '4') selected @endif value="4">
+                                                    Consultant Audit</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Supplier_Details">Supplier/Vendor/Manufacturer Details</label>
+                                            <div class="relative-container">
+                                                <textarea name="Supplier_Details" id="Supplier_Details" class="mic-input"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Details }}</textarea>
+                                                @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                @endcomponent
                                             </div>
                                         </div>
+                                    </div>
 
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Supplier_Site">Supplier/Vendor/Manufacturer Site</label>
+                                            <div class="relative-container">
+                                                <textarea name="Supplier_Site" id="Supplier_Site" class="mic-input"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Site }}</textarea>
+                                                @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                @endcomponent
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="button-block">
-                                        @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        @endif
-                                        <button type="button" class="backButton"
-                                            onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
-                                                class="text-white"> Exit </a> </button>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="relative-container">
+                                                <textarea name="Comments" id="Comments" class="mic-input"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Comments }}</textarea>
+                                                @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                @endcomponent
+                                            </div>
+                                        </div>
                                     </div>
+
+                                </div>
+                                <div class="button-block">
+                                    @if ($data->stage != 0)
+                                        <button type="submit" id="ChangesaveButton"
+                                            class="saveButton on-submit-disable-button"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                    @endif
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Audit Response & Closure content -->
-                            <div id="CCForm5" class="inner-block cctabcontent">
-                                <div class="inner-block-content">
-                                    <div class="row">
-                                        <div class="sub-head">
-                                            Audit Response
+                        <!-- Audit Execution content -->
+                        <div id="CCForm4" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                <div class="row">
+                                    {{-- <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Due Date">Due Date</label>
+                                                <input type="hidden" name="due_date" value="{{ $data->due_date }}">
+                                                <div class="static">{{ $data->due_date }}</div>
+                                            </div>
+                                        </div> --}}
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Audit Start Date">Audit Start Date</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="audit_start_date" readonly
+                                                    placeholder="DD-MM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                <input type="date" id="audit_start_date_checkdate"
+                                                    name="audit_start_date"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') ?? '' }}"
+                                                    value="{{ $data->audit_start_date ? $data->audit_start_date->format('Y-m-d') : '' }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'audit_start_date');updateEndDateMinAudit();" />
+                                            </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="Remarks">Remarks</label>
-                                                    <div class="relative-container">
-                                                        <textarea name="Remarks" id="Remarks" class="mic-input"
-                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
-                                                            @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                            @endcomponent
-                                                    </div>
+                                    </div>
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Audit End Date">Audit End Date</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="audit_end_date" readonly
+                                                    placeholder="DD-MM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                <input type="date" id="audit_end_date_checkdate" name="audit_end_date"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') ?? '' }}"
+                                                    value="{{ $data->audit_end_date ? $data->audit_end_date->format('Y-m-d') : '' }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'audit_end_date');" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="audit-agenda-grid">
+                                                Observation Details
+                                                <button type="button" name="audit-agenda-grid"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    id="ObservationAdd">+</button>
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#observation-field-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="onservation-field-table"
+                                                    style="width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 4%;">Row#</th>
+                                                            <th>Observation Details</th>
+                                                            <th>Pre Comments</th>
+                                                            <th>CAPA Details if any</th>
+                                                            <th>Post Comments</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="observationDetail">
+                                                        @if ($grid_data1->observation_id)
+                                                            @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
+                                                                <tr>
+                                                                    <td>{{ $key + 1 }}</td>
+                                                                    <td><input type="text" name="observation_id[]"
+                                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                            value="{{ $tempData ? $tempData : '' }}">
+                                                                    </td>
+                                                                    <td><input type="text"
+                                                                            name="observation_description[]"
+                                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                            value="{{ unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key] : '' }}">
+                                                                    </td>
+                                                                    <td><input type="text" name="area[]"
+                                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                            value="{{ unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key] : '' }}">
+                                                                    </td>
+                                                                    <td><input type="text" name="auditee_response[]"
+                                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                            value="{{ unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key] : '' }}">
+                                                                    </td>
+                                                                    <td><button type="button" class="removeRowBtn"
+                                                                            style="background-color: black;color: white;">Remove</button>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @if ($data->Audit_file)
+                                        @foreach (json_decode($data->Audit_file) as $file)
+                                            <input id="ANFILE-{{ $loop->index }}" type="hidden"
+                                                name="existing_Audit_file[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
+                                    <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="Audit Attachments">Audit Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="Audit_file">
+                                                    @if ($data->Audit_file)
+                                                        @foreach (json_decode($data->Audit_file) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-remove-id="ANFILE-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"
+                                                                    style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif">
+                                                                    <i class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile"
+                                                        name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'Audit_file')" multiple>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
 
 
-                                            {{-- <div class="col-lg-12">
+
+
+
+
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Audit_Comments1">Audit Comments</label>
+                                            <div class="relative-container">
+                                                <textarea name="Audit_Comments1" id="Audit_Comments1" class="mic-input"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments1 }}</textarea>
+                                                @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                @endcomponent
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="button-block">
+                                    @if ($data->stage != 0)
+                                        <button type="submit" id="ChangesaveButton"
+                                            class="saveButton on-submit-disable-button"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                    @endif
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Audit Response & Closure content -->
+                        <div id="CCForm5" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                <div class="row">
+                                    <div class="sub-head">
+                                        Audit Response
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Remarks">Remarks</label>
+                                                <div class="relative-container">
+                                                    <textarea name="Remarks" id="Remarks" class="mic-input"
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
+                                                    @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                    @endcomponent
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        {{-- <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="Reference Recores">Reference Record</label>
                                                     <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -1676,390 +1677,392 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
-                                                </div>--}}
-                                            </div> 
+                                                </div> --}}
+                                    </div>
 
 
-                                      <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="Reference Recores">Reference Record</label>
-                                              <select  multiple id="reference_record" name="refrence_record[]" id=""  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                 multiple id="reference_record" name="refrence_record[]" id="">
-                                                   
-                                                    @foreach ($old_record as $new)
-                                                        @php
-                                                            $recordValue = Helpers::getDivisionName($new->division_id) .'/SA/'.date('Y') .'/' .
+                                    <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="Reference Recores">Reference Record</label>
+                                            <select multiple id="reference_record" name="refrence_record[]"
+                                                id=""
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple
+                                                id="reference_record" name="refrence_record[]" id="">
+
+                                                @foreach ($old_record as $new)
+                                                    @php
+                                                        $recordValue =
+                                                            Helpers::getDivisionName($new->division_id) .
+                                                            '/SA/' .
+                                                            date('Y') .
+                                                            '/' .
                                                             Helpers::recordFormat($new->record);
-                                                                $selected = in_array($recordValue,explode(',', $data->refrence_record),)
-                                                                ? 'selected'
-                                                                : '';
-                                                        @endphp
-                                                        <option value="{{ $recordValue }}" {{ $selected }}>
-                                                            {{ $recordValue }}
-                                                        </option>
-                                                    @endforeach
+                                                        $selected = in_array(
+                                                            $recordValue,
+                                                            explode(',', $data->refrence_record),
+                                                        )
+                                                            ? 'selected'
+                                                            : '';
+                                                    @endphp
+                                                    <option value="{{ $recordValue }}" {{ $selected }}>
+                                                        {{ $recordValue }}
+                                                    </option>
+                                                @endforeach
 
-                                                </select>
-                                            </div>
+                                            </select>
                                         </div>
-                                            @if ($data->report_file)
-                                              @foreach (json_decode($data->report_file) as $file)
-                                                <input id="FTFile-{{ $loop->index }}" type="hidden"
-                                                    name="existing_report_file[{{ $loop->index }}]"
-                                                    value="{{ $file }}">
-                                            @endforeach
-                                           @endif
+                                    </div>
+                                    @if ($data->report_file)
+                                        @foreach (json_decode($data->report_file) as $file)
+                                            <input id="FTFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_report_file[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
 
 
-                                            <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="Report Attachments">Report Attachments</label>
-                                                    <div><small class="text-primary">Please Attach all relevant or
-                                                            supporting documents</small></div>
-                                                    {{-- <input type="file" id="myfile" name="report_file"
+                                    <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="Report Attachments">Report Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or
+                                                    supporting documents</small></div>
+                                            {{-- <input type="file" id="myfile" name="report_file"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
-                                                    <div class="file-attachment-field">
-                                                        <div class="file-attachment-list" id="report_attachment">
-                                                            @if ($data->report_file)
-                                                                @foreach (json_decode($data->report_file) as $file)
-                                                                    <h6 type="button" class="file-container text-dark"
-                                                                        style="background-color: rgb(243, 242, 240);">
-                                                                        <b>{{ $file }}</b>
-                                                                        <a href="{{ asset('upload/' . $file) }}"
-                                                                            target="_blank"><i
-                                                                                class="fa fa-eye text-primary"
-                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file"
-                                                                         data-remove-id="FTFile-{{ $loop->index }}"
-                                                                            data-file-name="{{ $file }}"
-                                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif">><i
-                                                                                class="fa-solid fa-circle-xmark"
-                                                                                style="color:red; font-size:20px;"></i></a>
-                                                                    </h6>
-                                                                @endforeach
-                                                            @endif
-                                                        </div>
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                type="file" id="myfile" name="report_file[]"
-                                                                oninput="addMultipleFiles(this, 'report_attachment')"
-                                                                multiple>
-                                                        </div>
-                                                    </div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="report_attachment">
+                                                    @if ($data->report_file)
+                                                        @foreach (json_decode($data->report_file) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-remove-id="FTFile-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"
+                                                                    style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif">><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="report_file[]"
+                                                        oninput="addMultipleFiles(this, 'report_attachment')" multiple>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
 
-                                            @if ($data->myfile)
-                                            @foreach (json_decode($data->myfile) as $file)
-                                                <input id="ATFIFile-{{ $loop->index }}" type="hidden"
-                                                    name="existing_myfile[{{ $loop->index }}]"
-                                                    value="{{ $file }}">
-                                            @endforeach
-                                        @endif
-                                            <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="Audit Attachments">Audit Attachments *</label>
-                                                    <div><small class="text-primary">Please Attach all relevant or
-                                                            supporting documents</small></div>
-                                                    {{-- <input type="file" id="myfile" name="myfile"
+                                    @if ($data->myfile)
+                                        @foreach (json_decode($data->myfile) as $file)
+                                            <input id="ATFIFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_myfile[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Audit Attachments">Audit Attachments *</label>
+                                            <div><small class="text-primary">Please Attach all relevant or
+                                                    supporting documents</small></div>
+                                            {{-- <input type="file" id="myfile" name="myfile"
                                                     value="{{ $data->myfile }}"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
-                                                    <div class="file-attachment-field">
-                                                        <div class="file-attachment-list" id="audit_attachment">
-                                                            @if ($data->myfile)
-                                                                @foreach (json_decode($data->myfile) as $file)
-                                                                    <h6 type="button" class="file-container text-dark"
-                                                                        style="background-color: rgb(243, 242, 240);">
-                                                                        <b>{{ $file }}</b>
-                                                                        <a href="{{ asset('upload/' . $file) }}"
-                                                                            target="_blank"><i
-                                                                                class="fa fa-eye text-primary"
-                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file"
-                                                                        data-remove-id="ATFIFile-{{ $loop->index }}"
-                                                                            data-file-name="{{ $file }}"
-                                                                            style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
-                                                                                class="fa-solid fa-circle-xmark"
-                                                                                style="color:red; font-size:20px;"></i></a>
-                                                                    </h6>
-                                                                @endforeach
-                                                            @endif
-                                                        </div>
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                type="file" id="myfile" name="myfile[]"
-                                                                oninput="addMultipleFiles(this, 'audit_attachment')"
-                                                                multiple>
-                                                        </div>
-                                                    </div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="audit_attachment">
+                                                    @if ($data->myfile)
+                                                        @foreach (json_decode($data->myfile) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-remove-id="ATFIFile-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"
+                                                                    style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
                                                 </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="Audit_Comments2">Audit Comments</label>
-                                                    <div class="relative-container">
-                                                        <textarea name="Audit_Comments2" id="Audit_Comments2" class="mic-input"
-                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments2 }}</textarea>
-                                                            @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                            @endcomponent
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="myfile[]"
+                                                        oninput="addMultipleFiles(this, 'audit_attachment')" multiple>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Audit_Comments2">Audit Comments</label>
+                                            <div class="relative-container">
+                                                <textarea name="Audit_Comments2" id="Audit_Comments2" class="mic-input"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments2 }}</textarea>
+                                                @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                @endcomponent
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="due_date_extension">Due Date Extension Justification</label>
-                                                <div><small class="text-primary">Please Mention justification if due date
-                                                        is crossed</small></div>
-                                                <div class="relative-container">
-                                                    <textarea name="due_date_extension" id="due_date_extension" class="mic-input"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
-                                                        @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
-                                                        @endcomponent
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="due_date_extension">Due Date Extension Justification</label>
+                                            <div><small class="text-primary">Please Mention justification if due date
+                                                    is crossed</small></div>
+                                            <div class="relative-container">
+                                                <textarea name="due_date_extension" id="due_date_extension" class="mic-input"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
+                                                @component('frontend.forms.language-model', ['disabled' => $data->stage == 0 || $data->stage == 6])
+                                                @endcomponent
                                             </div>
                                         </div>
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button"
+                                            <button type="submit" id="ChangesaveButton"
+                                                class="saveButton on-submit-disable-button"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         @endif
-                                        <button type="button" class="backButton"
-                                            onclick="previousStep()">Back</button>
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
-                            <!-- Activity Log content -->
-                            <div id="CCForm6" class="inner-block cctabcontent">
-                                <div class="inner-block-content">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Schedule On">Schedule Audit By</label>
-                                                <div class="static">{{ $data->audit_schedule_by }}</div>
-                                            </div>
+                        <!-- Activity Log content -->
+                        <div id="CCForm6" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Schedule On">Schedule Audit By</label>
+                                            <div class="static">{{ $data->audit_schedule_by }}</div>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Schedule On">Schedule Audit On</label>
-                                                <div class="static">{{ $data->audit_schedule_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Schedule On">Comment</label>
-                                                <div class="static">{{ $data->comment }}</div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Completed Audit Preparation
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_preparation_completed_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Completed Audit Preparation
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_preparation_completed_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Schedule On">Comment</label>
-                                                <div class="static">{{ $data->audit_preparation_comment }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified By"> Rejected By
-                                                </label>
-                                                <div class="static">{{ $data->rejected_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified On"> Rejected On
-                                                </label>
-                                                <div class="static">{{ $data->rejected_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Schedule On">Comment</label>
-                                                <div class="static">{{ $data->comment_rejected_comment }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Cancelled By">Cancelled By</label>
-                                                <div class="static">{{ $data->cancelled_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Cancelled On">Cancelled On</label>
-                                                <div class="static">{{ $data->cancelled_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Schedule On"> Comment</label>
-                                                <div class="static">{{ $data->comment_cancelled_comment }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="No CAPA Required By">No CAPA Required By</label>
-                                                <div class="static">{{ $data->audit_response_completed_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="No Capa Required On">No CAPA Required On</label>
-                                                <div class="static">{{ $data->audit_response_completed_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Schedule On"> Comment</label>
-                                                <div class="static">{{ $data->comment_closed_done_by_comment }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd By">Issue Report
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_mgr_more_info_reqd_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd On">Issue Report
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_mgr_more_info_reqd_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Schedule On">Comment</label>
-                                                <div class="static">{{ $data->pending_response_comment }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Observation Submitted By">CAPA Plan Proposed
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_observation_submitted_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Observation Submitted On">CAPA Plan Proposed
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_observation_submitted_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Schedule On">Comment</label>
-                                                <div class="static">{{ $data->capa_execution_in_progress_comment }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Lead More Info Reqd By">All CAPA Closed By</label>
-                                                <div class="static">{{ $data->audit_lead_more_info_reqd_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Lead More Info Reqd On">All CAPA Closed On</label>
-                                                <div class="static">{{ $data->audit_lead_more_info_reqd_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Schedule On">Comment</label>
-                                                <div class="static">{{ $data->comment_closed_done_by_comment }}</div>
-                                            </div>
-                                        </div>
-                                        <!-- <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="Audit Response Completed By">Audit Response Completed
-                                                            By</label>
-                                                        <div class="static">{{ $data->audit_response_completed_by }}</div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="Audit Response Completed On">Audit Response Completed
-                                                            On</label>
-                                                        <div class="static">{{ $data->audit_response_completed_on }}</div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="Response Feedback Verified By">Response Feedback Verified
-                                                            By</label>
-                                                        <div class="static">{{ $data->response_feedback_verified_by }}</div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="Response Feedback Verified On">Response Feedback Verified
-                                                            On</label>
-                                                        <div class="static">{{ $data->response_feedback_verified_on }}</div>
-                                                    </div>
-                                                </div> -->
-
-
                                     </div>
-                                    <div class="button-block">
-                                        <!-- @if ($data->stage != 0)
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Schedule On">Schedule Audit On</label>
+                                            <div class="static">{{ $data->audit_schedule_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Schedule On">Comment</label>
+                                            <div class="static">{{ $data->comment }}</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Preparation Completed On">Completed Audit Preparation
+                                                By</label>
+                                            <div class="static">{{ $data->audit_preparation_completed_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Preparation Completed On">Completed Audit Preparation
+                                                On</label>
+                                            <div class="static">{{ $data->audit_preparation_completed_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Schedule On">Comment</label>
+                                            <div class="static">{{ $data->audit_preparation_comment }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Response Feedback Verified By"> Rejected By
+                                            </label>
+                                            <div class="static">{{ $data->rejected_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Response Feedback Verified On"> Rejected On
+                                            </label>
+                                            <div class="static">{{ $data->rejected_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Schedule On">Comment</label>
+                                            <div class="static">{{ $data->comment_rejected_comment }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Cancelled By">Cancelled By</label>
+                                            <div class="static">{{ $data->cancelled_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Cancelled On">Cancelled On</label>
+                                            <div class="static">{{ $data->cancelled_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Schedule On"> Comment</label>
+                                            <div class="static">{{ $data->comment_cancelled_comment }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="No CAPA Required By">No CAPA Required By</label>
+                                            <div class="static">{{ $data->audit_response_completed_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="No Capa Required On">No CAPA Required On</label>
+                                            <div class="static">{{ $data->audit_response_completed_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Schedule On"> Comment</label>
+                                            <div class="static">{{ $data->comment_closed_done_by_comment }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Mgr.more Info Reqd By">Issue Report
+                                                By</label>
+                                            <div class="static">{{ $data->audit_mgr_more_info_reqd_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Mgr.more Info Reqd On">Issue Report
+                                                On</label>
+                                            <div class="static">{{ $data->audit_mgr_more_info_reqd_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Schedule On">Comment</label>
+                                            <div class="static">{{ $data->pending_response_comment }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Observation Submitted By">CAPA Plan Proposed
+                                                By</label>
+                                            <div class="static">{{ $data->audit_observation_submitted_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Observation Submitted On">CAPA Plan Proposed
+                                                On</label>
+                                            <div class="static">{{ $data->audit_observation_submitted_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Schedule On">Comment</label>
+                                            <div class="static">{{ $data->capa_execution_in_progress_comment }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Lead More Info Reqd By">All CAPA Closed By</label>
+                                            <div class="static">{{ $data->audit_lead_more_info_reqd_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Lead More Info Reqd On">All CAPA Closed On</label>
+                                            <div class="static">{{ $data->audit_lead_more_info_reqd_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Schedule On">Comment</label>
+                                            <div class="static">{{ $data->comment_closed_done_by_comment }}</div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-lg-6">
+                                                            <div class="group-input">
+                                                                <label for="Audit Response Completed By">Audit Response Completed
+                                                                    By</label>
+                                                                <div class="static">{{ $data->audit_response_completed_by }}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input">
+                                                                <label for="Audit Response Completed On">Audit Response Completed
+                                                                    On</label>
+                                                                <div class="static">{{ $data->audit_response_completed_on }}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input">
+                                                                <label for="Response Feedback Verified By">Response Feedback Verified
+                                                                    By</label>
+                                                                <div class="static">{{ $data->response_feedback_verified_by }}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input">
+                                                                <label for="Response Feedback Verified On">Response Feedback Verified
+                                                                    On</label>
+                                                                <div class="static">{{ $data->response_feedback_verified_on }}</div>
+                                                            </div>
+                                                        </div> -->
+
+
+                                </div>
+                                <div class="button-block">
+                                    <!-- @if ($data->stage != 0)
     <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
     @endif -->
-                                        <button type="button" class="backButton"
-                                            onclick="previousStep()">Back</button>
-                                        <!-- <button type="submit"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button> -->
-                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
-                                                class="text-white"> Exit </a> </button>
-                                    </div>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <!-- <button type="submit"
+                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button> -->
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
                                 </div>
                             </div>
-
                         </div>
-                    </form>
 
                 </div>
-            </div>
-            <div class="modal fade" id="child-modal1">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
+                </form>
 
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Child</h4>
-                        </div>
-                        <form action="{{ route('extension_child', $data->id) }}" method="POST">
-                            @csrf
-                            <!-- Modal body -->
-                            {{-- <div class="modal-body">
+            </div>
+        </div>
+        <div class="modal fade" id="child-modal1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Child</h4>
+                    </div>
+                    <form action="{{ route('extension_child', $data->id) }}" method="POST">
+                        @csrf
+                        <!-- Modal body -->
+                        {{-- <div class="modal-body">
                                 <div class="group-input">
                                     <label for="major">
                                         <input type="hidden" name="parent_name" value="External_audit">
@@ -2072,341 +2075,343 @@
 
                             </div> --}}
 
-                            <!-- Modal footer -->
-                            <div class="modal-footer">
-                                <button type="button" data-bs-dismiss="modal">Close</button>
-                                <button type="submit">Continue</button>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="modal fade" id="signature-modal">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">E-Signature</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" data-bs-dismiss="modal">Close</button>
+                            <button type="submit">Continue</button>
                         </div>
-                        <form class="formforward" action="{{ route('SupplierAuditStateChange_view', $data->id) }}" method="POST">
-                            @csrf
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                                <div class="mb-3 text-justify">
-                                    Please select a meaning and a outcome for this task and enter your username
-                                    and password for this task. You are performing an electronic signature,
-                                    which is legally binding equivalent of a hand written signature.
-                                </div>
-                                <div class="group-input">
-                                    <label for="username">Username <span class="text-danger">*</span></label>
-                                    <input type="text" name="username" required>
-                                </div>
-                                <div class="group-input">
-                                    <label for="password">Password <span class="text-danger">*</span></label>
-                                    <input type="password" name="password" required>
-                                </div>
-                                <div class="group-input">
-                                    <label for="comment">Comment</label>
-                                    <input type="comment" name="comment">
-                                </div>
-                            </div>
+                    </form>
 
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                        <button>Close</button>
-                                    </div> -->
-                            <div class="modal-footer">
-                                <button class="on-submit-disable-button" type="submit">Submit</button>
-                                <button type="button" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
+        </div>
 
 
-            <div class="modal fade" id="rejection-modal">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
+        <div class="modal fade" id="signature-modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
 
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">E-Signature</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form class="formforward" action="{{ route('SupplierAuditStateChange_view', $data->id) }}"
+                        method="POST">
+                        @csrf
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="mb-3 text-justify">
+                                Please select a meaning and a outcome for this task and enter your username
+                                and password for this task. You are performing an electronic signature,
+                                which is legally binding equivalent of a hand written signature.
+                            </div>
+                            <div class="group-input">
+                                <label for="username">Username <span class="text-danger">*</span></label>
+                                <input type="text" name="username" required>
+                            </div>
+                            <div class="group-input">
+                                <label for="password">Password <span class="text-danger">*</span></label>
+                                <input type="password" name="password" required>
+                            </div>
+                            <div class="group-input">
+                                <label for="comment">Comment</label>
+                                <input type="comment" name="comment">
+                            </div>
                         </div>
 
-                        <form id="rejectform" action="{{ url('RejectStateAuditee', $data->id) }}" method="POST">
-                            @csrf
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                                <div class="mb-3 text-justify">
-                                    Please select a meaning and a outcome for this task and enter your username
-                                    and password for this task. You are performing an electronic signature,
-                                    which is legally binding equivalent of a hand written signature.
-                                </div>
-                                <div class="group-input">
-                                    <label for="username">Username <span class="text-danger">*</span></label>
-                                    <input type="text" name="username" required>
-                                </div>
-                                <div class="group-input">
-                                    <label for="password">Password <span class="text-danger">*</span></label>
-                                    <input type="password" name="password" required>
-                                </div>
-                                <div class="group-input">
-                                    <label for="comment">Comment <span class="text-danger">*</span></label>
-                                    <input type="comment" name="comment" required>
-                                </div>
-                            </div>
-
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                        <button>Close</button>
-                                    </div> -->
-                            <div class="modal-footer">
-                                <button type="submit" class="on-submit-disable-button">Submit</button>
-                                <button type="button" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </div>
+                        <!-- Modal footer -->
+                        <!-- <div class="modal-footer">
+                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                <button>Close</button>
+                                            </div> -->
+                        <div class="modal-footer">
+                            <button class="on-submit-disable-button" type="submit">Submit</button>
+                            <button type="button" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
 
-            <div class="modal fade" id="cancel-modal">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
 
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">E-Signature</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal fade" id="rejection-modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <form id="rejectform" action="{{ url('RejectStateAuditee', $data->id) }}" method="POST">
+                        @csrf
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="mb-3 text-justify">
+                                Please select a meaning and a outcome for this task and enter your username
+                                and password for this task. You are performing an electronic signature,
+                                which is legally binding equivalent of a hand written signature.
+                            </div>
+                            <div class="group-input">
+                                <label for="username">Username <span class="text-danger">*</span></label>
+                                <input type="text" name="username" required>
+                            </div>
+                            <div class="group-input">
+                                <label for="password">Password <span class="text-danger">*</span></label>
+                                <input type="password" name="password" required>
+                            </div>
+                            <div class="group-input">
+                                <label for="comment">Comment <span class="text-danger">*</span></label>
+                                <input type="comment" name="comment" required>
+                            </div>
                         </div>
 
-                        <form class="formforward" action="{{ route('CancelStateSupplierAudit', $data->id) }}" method="POST">
-                            @csrf
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                                <div class="mb-3 text-justify">
-                                    Please select a meaning and a outcome for this task and enter your username
-                                    and password for this task. You are performing an electronic signature,
-                                    which is legally binding equivalent of a hand written signature.
-                                </div>
-                                <div class="group-input">
-                                    <label for="username">Username <span class="text-danger">*</span></label>
-                                    <input type="text" name="username" required>
-                                </div>
-                                <div class="group-input">
-                                    <label for="password">Password <span class="text-danger">*</span></label>
-                                    <input type="password" name="password" required>
-                                </div>
-                                <div class="group-input">
-                                    <label for="comment">Comment <span class="text-danger">*</span></label>
-                                    <input type="comment" name="comment"required>
-                                </div>
-                            </div>
-
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                        <button>Close</button>
-                                    </div> -->
-                            <div class="modal-footer">
-                                <button class="on-submit-disable-button" type="submit">Submit</button>
-                                <button data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="modal fade" id="child-modal">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Child</h4>
+                        <!-- Modal footer -->
+                        <!-- <div class="modal-footer">
+                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                <button>Close</button>
+                                            </div> -->
+                        <div class="modal-footer">
+                            <button type="submit" class="on-submit-disable-button">Submit</button>
+                            <button type="button" data-bs-dismiss="modal">Close</button>
                         </div>
-                        <form action="{{ route('child_external_Supplier', $data->id) }}" method="POST">
-                            @csrf
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                                <div class="group-input">
-                                    <label></lable>
-                                        <label for="major">
-                                            <input type="radio" name="child_type" value="Observation">
-                                            Observation
-                                        </label>
-                                </div>
-                            </div>
-
-                            <!-- Modal footer -->
-                            <div class="modal-footer">
-                                <button type="button" data-bs-dismiss="modal">Close</button>
-                                <button type="submit">Continue</button>
-                            </div>
-                        </form>
-
-                    </div>
+                    </form>
                 </div>
             </div>
+        </div>
 
-            <style>
-                #step-form>div {
-                    display: none
-                }
+        <div class="modal fade" id="cancel-modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
 
-                #step-form>div:nth-child(1) {
-                    display: block;
-                }
-            </style>
-            <script>
-                VirtualSelect.init({
-                    ele: '#Facility, #Group, #Audit, #Auditee , #reference_record'
-                });
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
 
-                function openCity(evt, cityName) {
-                    var i, cctabcontent, cctablinks;
-                    cctabcontent = document.getElementsByClassName("cctabcontent");
-                    for (i = 0; i < cctabcontent.length; i++) {
-                        cctabcontent[i].style.display = "none";
-                    }
-                    cctablinks = document.getElementsByClassName("cctablinks");
-                    for (i = 0; i < cctablinks.length; i++) {
-                        cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-                    }
-                    document.getElementById(cityName).style.display = "block";
-                    evt.currentTarget.className += " active";
-                }
+                    <form class="formforward" action="{{ route('CancelStateSupplierAudit', $data->id) }}"
+                        method="POST">
+                        @csrf
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="mb-3 text-justify">
+                                Please select a meaning and a outcome for this task and enter your username
+                                and password for this task. You are performing an electronic signature,
+                                which is legally binding equivalent of a hand written signature.
+                            </div>
+                            <div class="group-input">
+                                <label for="username">Username <span class="text-danger">*</span></label>
+                                <input type="text" name="username" required>
+                            </div>
+                            <div class="group-input">
+                                <label for="password">Password <span class="text-danger">*</span></label>
+                                <input type="password" name="password" required>
+                            </div>
+                            <div class="group-input">
+                                <label for="comment">Comment <span class="text-danger">*</span></label>
+                                <input type="comment" name="comment"required>
+                            </div>
+                        </div>
 
-                function openCity(evt, cityName) {
-                    var i, cctabcontent, cctablinks;
-                    cctabcontent = document.getElementsByClassName("cctabcontent");
-                    for (i = 0; i < cctabcontent.length; i++) {
-                        cctabcontent[i].style.display = "none";
-                    }
-                    cctablinks = document.getElementsByClassName("cctablinks");
-                    for (i = 0; i < cctablinks.length; i++) {
-                        cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-                    }
-                    document.getElementById(cityName).style.display = "block";
-                    evt.currentTarget.className += " active";
-                    // Find the index of the clicked tab button
-                    const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
-                    // Update the currentStep to the index of the clicked tab
-                    currentStep = index;
-                }
-                const saveButtons = document.querySelectorAll(".saveButton");
-                const nextButtons = document.querySelectorAll(".nextButton");
-                const form = document.getElementById("step-form");
-                const stepButtons = document.querySelectorAll(".cctablinks");
-                const steps = document.querySelectorAll(".cctabcontent");
-                let currentStep = 0;
+                        <!-- Modal footer -->
+                        <!-- <div class="modal-footer">
+                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                <button>Close</button>
+                                            </div> -->
+                        <div class="modal-footer">
+                            <button class="on-submit-disable-button" type="submit">Submit</button>
+                            <button data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-                function nextStep() {
-                    // Check if there is a next step
-                    if (currentStep < steps.length - 1) {
-                        // Hide current step
-                        steps[currentStep].style.display = "none";
-                        // Show next step
-                        steps[currentStep + 1].style.display = "block";
-                        // Add active class to next button
-                        stepButtons[currentStep + 1].classList.add("active");
-                        // Remove active class from current button
-                        stepButtons[currentStep].classList.remove("active");
-                        // Update current step
-                        currentStep++;
-                    }
-                }
 
-                function previousStep() {
-                    // Check if there is a previous step
-                    if (currentStep > 0) {
-                        // Hide current step
-                        steps[currentStep].style.display = "none";
-                        // Show previous step
-                        steps[currentStep - 1].style.display = "block";
-                        // Add active class to previous button
-                        stepButtons[currentStep - 1].classList.add("active");
-                        // Remove active class from current button
-                        stepButtons[currentStep].classList.remove("active");
-                        // Update current step
-                        currentStep--;
-                    }
+        <div class="modal fade" id="child-modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Child</h4>
+                    </div>
+                    <form action="{{ route('child_external_Supplier', $data->id) }}" method="POST">
+                        @csrf
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="group-input">
+                                <label></lable>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" value="Observation">
+                                        Observation
+                                    </label>
+                            </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" data-bs-dismiss="modal">Close</button>
+                            <button type="submit">Continue</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <style>
+            #step-form>div {
+                display: none
+            }
+
+            #step-form>div:nth-child(1) {
+                display: block;
+            }
+        </style>
+        <script>
+            VirtualSelect.init({
+                ele: '#Facility, #Group, #Audit, #Auditee , #reference_record'
+            });
+
+            function openCity(evt, cityName) {
+                var i, cctabcontent, cctablinks;
+                cctabcontent = document.getElementsByClassName("cctabcontent");
+                for (i = 0; i < cctabcontent.length; i++) {
+                    cctabcontent[i].style.display = "none";
                 }
-            </script>
-            <script>
-                document.getElementById('initiator_group').addEventListener('change', function() {
-                    var selectedValue = this.value;
-                    document.getElementById('initiator_group_code').value = selectedValue;
-                });
-            </script>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const removeButtons = document.querySelectorAll('.remove-file');
-                    removeButtons.forEach(button => {
-                        button.addEventListener('click', function() {
-                            const fileName = this.getAttribute('data-file-name');
-                            const fileContainer = this.closest('.file-container');
-                            // Hide the file container
-                            if (fileContainer) {
-                                fileContainer.style.display = 'none';
-                            }
-                        });
+                cctablinks = document.getElementsByClassName("cctablinks");
+                for (i = 0; i < cctablinks.length; i++) {
+                    cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+
+            function openCity(evt, cityName) {
+                var i, cctabcontent, cctablinks;
+                cctabcontent = document.getElementsByClassName("cctabcontent");
+                for (i = 0; i < cctabcontent.length; i++) {
+                    cctabcontent[i].style.display = "none";
+                }
+                cctablinks = document.getElementsByClassName("cctablinks");
+                for (i = 0; i < cctablinks.length; i++) {
+                    cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+                // Find the index of the clicked tab button
+                const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+                // Update the currentStep to the index of the clicked tab
+                currentStep = index;
+            }
+            const saveButtons = document.querySelectorAll(".saveButton");
+            const nextButtons = document.querySelectorAll(".nextButton");
+            const form = document.getElementById("step-form");
+            const stepButtons = document.querySelectorAll(".cctablinks");
+            const steps = document.querySelectorAll(".cctabcontent");
+            let currentStep = 0;
+
+            function nextStep() {
+                // Check if there is a next step
+                if (currentStep < steps.length - 1) {
+                    // Hide current step
+                    steps[currentStep].style.display = "none";
+                    // Show next step
+                    steps[currentStep + 1].style.display = "block";
+                    // Add active class to next button
+                    stepButtons[currentStep + 1].classList.add("active");
+                    // Remove active class from current button
+                    stepButtons[currentStep].classList.remove("active");
+                    // Update current step
+                    currentStep++;
+                }
+            }
+
+            function previousStep() {
+                // Check if there is a previous step
+                if (currentStep > 0) {
+                    // Hide current step
+                    steps[currentStep].style.display = "none";
+                    // Show previous step
+                    steps[currentStep - 1].style.display = "block";
+                    // Add active class to previous button
+                    stepButtons[currentStep - 1].classList.add("active");
+                    // Remove active class from current button
+                    stepButtons[currentStep].classList.remove("active");
+                    // Update current step
+                    currentStep--;
+                }
+            }
+        </script>
+        <script>
+            document.getElementById('initiator_group').addEventListener('change', function() {
+                var selectedValue = this.value;
+                document.getElementById('initiator_group_code').value = selectedValue;
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const removeButtons = document.querySelectorAll('.remove-file');
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const fileName = this.getAttribute('data-file-name');
+                        const fileContainer = this.closest('.file-container');
+                        // Hide the file container
+                        if (fileContainer) {
+                            fileContainer.style.display = 'none';
+                        }
                     });
                 });
-            </script>
-            <script>
-                var maxLength = 255;
-                $('#docname').keyup(function() {
-                    var textlen = maxLength - $(this).val().length;
-                    $('#rchars').text(textlen);
-                });
-            </script>
-            <script>
-                var maxLength = 255;
-                $('#docname').keyup(function() {
-                    var textlen = maxLength - $(this).val().length;
-                    $('#rchars').text(textlen);
-                });
-            </script>
+            });
+        </script>
+        <script>
+            var maxLength = 255;
+            $('#docname').keyup(function() {
+                var textlen = maxLength - $(this).val().length;
+                $('#rchars').text(textlen);
+            });
+        </script>
+        <script>
+            var maxLength = 255;
+            $('#docname').keyup(function() {
+                var textlen = maxLength - $(this).val().length;
+                $('#rchars').text(textlen);
+            });
+        </script>
 
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    const externalAgencies = document.getElementById('external_agencies');
-                    const othersGroup = document.getElementById('others_group');
-                    const othersField = document.getElementById('others');
-                    const othersLabel = othersField.previousElementSibling;
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const externalAgencies = document.getElementById('external_agencies');
+                const othersGroup = document.getElementById('others_group');
+                const othersField = document.getElementById('others');
+                const othersLabel = othersField.previousElementSibling;
 
-                    function toggleOthersField() {
-                        if (externalAgencies.value === 'others') {
-                            othersGroup.style.display = 'block';
-                            othersField.required = true;
-                            othersLabel.querySelector('span').classList.remove('d-none');
-                        } else {
-                            othersGroup.style.display = 'none';
-                            othersField.required = false;
-                            othersLabel.querySelector('span').classList.add('d-none');
-                        }
+                function toggleOthersField() {
+                    if (externalAgencies.value === 'others') {
+                        othersGroup.style.display = 'block';
+                        othersField.required = true;
+                        othersLabel.querySelector('span').classList.remove('d-none');
+                    } else {
+                        othersGroup.style.display = 'none';
+                        othersField.required = false;
+                        othersLabel.querySelector('span').classList.add('d-none');
                     }
+                }
 
-                    // Initial check
-                    toggleOthersField();
+                // Initial check
+                toggleOthersField();
 
-                    // Add event listener
-                    externalAgencies.addEventListener('change', toggleOthersField);
-                });
-            </script>
+                // Add event listener
+                externalAgencies.addEventListener('change', toggleOthersField);
+            });
+        </script>
 
-            <!-- for Voice Access -->
-            {{-- <script>
+        <!-- for Voice Access -->
+        {{-- <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
                     const docnameInput = document.getElementById('docname');
@@ -2724,7 +2729,7 @@
                     let selectedLanguage = 'en-us'; // Default language
                     let inputText = '';
 
-                    // When the user clicks the button, open the mini modal 
+                    // When the user clicks the button, open the mini modal
                     $(document).on('click', '.speak-btn', function() {
                         let inputField = $(this).siblings('textarea, input');
                         inputText = inputField.val();
@@ -2845,8 +2850,8 @@
 
 
 
-            <!-- Ensure this CSS is present to initially hide the Others field and its group -->
-            {{-- <style>
+        <!-- Ensure this CSS is present to initially hide the Others field and its group -->
+        {{-- <style>
                 #others_group {
                     display: none;
                 }
@@ -2967,73 +2972,73 @@
                 }
             </style> --}}
 
-            <script>
-                $(document).ready(function() {
-                    $('.remove-file').click(function() {
-                        const removeId = $(this).data('remove-id')
-                        console.log('removeId', removeId);
-                        $('#' + removeId).remove();
-                    })
-                })
-            </script>
-            <script>
-                function handleDateInput(inputElement, displayElementId) {
-                    var displayElement = document.getElementById(displayElementId);
-                    var dateValue = new Date(inputElement.value);
-                    displayElement.value = dateValue.toLocaleDateString('en-GB', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric'
-                    });
-                }
-
-                function updateEndDateMinAudit() {
-                    var startDate = document.getElementById('audit_start_date_checkdate').value;
-                    var endDateInput = document.getElementById('audit_end_date_checkdate');
-                    endDateInput.min = startDate;
-                }
-
-                document.addEventListener("DOMContentLoaded", function() {
-                    updateEndDateMinAudit(); // Initialize the end date min on page load
-
-                    document.getElementById('audit_start_date_checkdate').addEventListener('input', function() {
-                        updateEndDateMin();
-                    });
-                });
-            </script>
-
-
-            <script>
-                function handleDateInput(inputElement, displayElementId) {
-                    var displayElement = document.getElementById(displayElementId);
-                    var dateValue = new Date(inputElement.value);
-                    displayElement.value = dateValue.toLocaleDateString('en-GB', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric'
-                    });
-                }
-
-                function updateEndDateMin() {
-                    var startDate = document.getElementById('start_date_checkdate').value;
-                    var endDateInput = document.getElementById('end_date_checkdate');
-                    if (startDate) {
-                        endDateInput.setAttribute('min', startDate);
-                    }
-                }
-
-                document.addEventListener("DOMContentLoaded", function() {
-                    updateEndDateMin(); // Initialize the end date min on page load
-
-                    // Reapply the min attribute whenever the start date is changed
-                    document.getElementById('start_date_checkdate').addEventListener('input', function() {
-                        updateEndDateMin();
-                    });
-                });
-            </script> 
-           <script>
+        <script>
             $(document).ready(function() {
-                
+                $('.remove-file').click(function() {
+                    const removeId = $(this).data('remove-id')
+                    console.log('removeId', removeId);
+                    $('#' + removeId).remove();
+                })
+            })
+        </script>
+        <script>
+            function handleDateInput(inputElement, displayElementId) {
+                var displayElement = document.getElementById(displayElementId);
+                var dateValue = new Date(inputElement.value);
+                displayElement.value = dateValue.toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+            }
+
+            function updateEndDateMinAudit() {
+                var startDate = document.getElementById('audit_start_date_checkdate').value;
+                var endDateInput = document.getElementById('audit_end_date_checkdate');
+                endDateInput.min = startDate;
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+                updateEndDateMinAudit(); // Initialize the end date min on page load
+
+                document.getElementById('audit_start_date_checkdate').addEventListener('input', function() {
+                    updateEndDateMin();
+                });
+            });
+        </script>
+
+
+        <script>
+            function handleDateInput(inputElement, displayElementId) {
+                var displayElement = document.getElementById(displayElementId);
+                var dateValue = new Date(inputElement.value);
+                displayElement.value = dateValue.toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+            }
+
+            function updateEndDateMin() {
+                var startDate = document.getElementById('start_date_checkdate').value;
+                var endDateInput = document.getElementById('end_date_checkdate');
+                if (startDate) {
+                    endDateInput.setAttribute('min', startDate);
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+                updateEndDateMin(); // Initialize the end date min on page load
+
+                // Reapply the min attribute whenever the start date is changed
+                document.getElementById('start_date_checkdate').addEventListener('input', function() {
+                    updateEndDateMin();
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function() {
+
                 $('.formforward').on('submit', function(e) {
                     $('.on-submit-disable-button').prop('disabled', true);
                 });
@@ -3041,7 +3046,7 @@
         </script>
         <script>
             $(document).ready(function() {
-                
+
                 $('#rejectform').on('submit', function(e) {
                     $('.on-submit-disable-button').prop('disabled', true);
                 });
@@ -3049,4 +3054,4 @@
         </script>
 
 
-        @endsection
+    @endsection

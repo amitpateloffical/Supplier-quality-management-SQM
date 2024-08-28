@@ -1119,31 +1119,31 @@ class ActionItemController extends Controller
                 }
                 $history->save();
 
+                $list = Helpers::getInitiatorUserList($openState->division_id);
+                  
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $root->division_id){
+                        $email = Helpers::getInitiatorEmail($openState->user_id);
+                        if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $openState],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document sent ".Auth::user()->name);
+                                }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                            }
+                        }
+                // } 
+            }
 
                 
-                $list = Helpers::getActionOwnerUserList($openState->division_id);
-                foreach ($list as $u) {
-                    // if ($u->q_m_s_divisions_id == $openState->division_id) {
-                        $email = Helpers::getActionOwnerUserList($u->user_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $root->division_id){
-                                $email = Helpers::getInitiatorEmail($openState->user_id);
-                                if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $openState],
-                                        function ($message) use ($email) {
-                                            $message->to($email)
-                                                ->subject("Document sent ".Auth::user()->name);
-                                        }
-                                        );
-                                    } catch (\Exception $e) {
-                                        // 
-                                    }
-                                }
-                        // } 
-                    }}
+              
                 $changeControl->update();
 
                 $history = new CCStageHistory();
@@ -1199,7 +1199,7 @@ class ActionItemController extends Controller
                 $history->save();
 
 
-                $list = Helpers::getInitiatorUserList($openState->division_id);
+                $list = Helpers::getActionOwnerUserList($openState->division_id);
                   
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
@@ -1233,28 +1233,11 @@ class ActionItemController extends Controller
                 $history->save();
 
 
-          
-                // $list = Helpers::getInitiatorUserList();
-                // foreach ($list as $u) {
-             
-                        // if ($email !== null) {
-
-                        //     Mail::send(
-                        //         'mail.view-mail',
-                        //         ['data' => $openState],
-                        //         function ($message) use ($email) {
-                        //             $message->to($email)
-                        //                 ->subject("Document is Send By " . Auth::user()->name);
-                        //         }
-                        //     );
-                        // }
-                //     }
-                // }
                 toastr()->success('Document Sent');
 
                 return back();
             }
-        } else {
+         else {
             toastr()->error('E-signature Not match');
 
             return back();
@@ -1330,30 +1313,29 @@ class ActionItemController extends Controller
                 $history->save();
 
 
-                
-                $list = Helpers::getActionOwnerUserList($openState->division_id);
+
+             $list = Helpers::getInitiatorUserList($openState->division_id);
+                  
                 foreach ($list as $u) {
-                    // if ($u->q_m_s_divisions_id == $openState->division_id) {
-                        $email = Helpers::getActionOwnerUserList($u->user_id);
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $root->division_id){
-                                $email = Helpers::getInitiatorEmail($openState->user_id);
-                                if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            ['data' => $openState],
-                                        function ($message) use ($email) {
-                                            $message->to($email)
-                                                ->subject("Document sent ".Auth::user()->name);
-                                        }
-                                        );
-                                    } catch (\Exception $e) {
-                                        // 
-                                    }
+                    // if($u->q_m_s_divisions_id == $root->division_id){
+                        $email = Helpers::getInitiatorEmail($openState->user_id);
+                        if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $openState],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document sent ".Auth::user()->name);
                                 }
-                        // } 
-                    }}
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                            }
+                        }
+                // } 
+            }
                 $changeControl->update();
 
                 $history = new CCStageHistory();
@@ -1366,29 +1348,12 @@ class ActionItemController extends Controller
                 $history->save();
 
 
-                // $list = Helpers::getActionOwnerUserList();
-                // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $openState->division_id) {
-                //         $email = Helpers::getInitiatorEmail($u->user_id);
-                //         if ($email !== null) {
-
-                //             Mail::send(
-                //                 'mail.view-mail',
-                //                 ['data' => $openState],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Cancel By " . Auth::user()->name);
-                //                 }
-                //             );
-                //         }
-                //     }
-                // }
                 toastr()->success('Document Sent');
                 return redirect('rcms/actionItem/' . $id);
             }
 
 
-        } else {
+         else {
             toastr()->error('E-signature Not match');
             return back();
         }
@@ -1434,7 +1399,7 @@ class ActionItemController extends Controller
                 $history->stage = "More Information Required";
                 $history->save();
 
-                $list = Helpers::getInitiatorUserList($openState->division_id);
+                $list = Helpers::getActionOwnerUserList($openState->division_id);
                   
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
@@ -1450,7 +1415,8 @@ class ActionItemController extends Controller
                                 }
                                 );
                             } catch (\Exception $e) {
-                                // 
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            } 
                             }
                         }
                 // } 
@@ -1468,27 +1434,11 @@ class ActionItemController extends Controller
                 $history->stage_id = $changeControl->stage;
                 $history->status = "More-information Required";
                 $history->save();
-                // $list = Helpers::getInitiatorUserList();
-                // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $openState->division_id) {
-                //         $email = Helpers::getInitiatorEmail($u->user_id);
-                //         if ($email !== null) {
-
-                //             Mail::send(
-                //                 'mail.view-mail',
-                //                 ['data' => $openState],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By " . Auth::user()->name);
-                //                 }
-                //             );
-                //         }
-                //     }
-                // }
+               
                 toastr()->success('Document Sent');
                 return redirect('rcms/actionItem/' . $id);
             }
-        } else {
+         else {
             toastr()->error('E-signature Not match');
             return back();
         }

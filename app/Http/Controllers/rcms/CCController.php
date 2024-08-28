@@ -1755,8 +1755,8 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'CFT Reviewer Person';
-            $history->previous = $lastDocument->cft_reviewer_person;
-            $history->current = $openState->cft_reviewer_person;
+            $history->previous= Helpers::getInitiatorName($lastDocument->cft_reviewer_person);
+            $history->current = Helpers::getInitiatorName($openState->cft_reviewer_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3137,7 +3137,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
                             } catch (\Exception $e) {
@@ -3195,7 +3195,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
                                } catch (\Exception $e) {
@@ -3255,7 +3255,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
                               } catch (\Exception $e) {
@@ -3315,7 +3315,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
                                } catch (\Exception $e) {
@@ -3336,7 +3336,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
                             } catch (\Exception $e) {
@@ -3398,7 +3398,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
 
@@ -3420,7 +3420,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
                             } catch (\Exception $e) {
@@ -3441,7 +3441,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
                             } catch (\Exception $e) {
@@ -3478,7 +3478,7 @@ class CCController extends Controller
                 $history = new RcmDocHistory;
                 $history->cc_id = $id;
                 
-                $history->activity_type = 'Request More Information By, Request More Information On';
+                $history->activity_type = 'More Information Required By, More Information Required On';
                 if (is_null($openState->sent_to_opened_by) || $openState->sent_to_opened_by === '') {
                     $history->previous = "";
                 } else {
@@ -3536,7 +3536,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
                              } catch (\Exception $e) {
@@ -3559,7 +3559,7 @@ class CCController extends Controller
                 $history = new RcmDocHistory;
                 $history->cc_id = $id;
                 
-                $history->activity_type = 'Request More Information By, Request More Information On';
+                $history->activity_type = 'More Information Required By, More Information Required On';
                 if (is_null($openState->requested_to_hod_by) || $openState->requested_to_hod_by === '') {
                     $history->previous = "";
                 } else {
@@ -3594,7 +3594,7 @@ class CCController extends Controller
                                ['data' => $changeControl],
                             function ($message) use ($email) {
                                 $message->to($email)
-                                    ->subject("Document is Send By".Auth::user()->name);
+                                    ->subject("Document is Sent By".Auth::user()->name);
                             }
                           );
                           } catch (\Exception $e) {
@@ -3652,7 +3652,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
                               } catch (\Exception $e) {
@@ -3673,7 +3673,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
                               } catch (\Exception $e) {
@@ -3746,7 +3746,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
                                } catch (\Exception $e) {
@@ -3767,7 +3767,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
                                } catch (\Exception $e) {
@@ -3839,7 +3839,7 @@ class CCController extends Controller
                                    ['data' => $changeControl],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Send By".Auth::user()->name);
+                                        ->subject("Document is Sent By".Auth::user()->name);
                                 }
                               );
                                } catch (\Exception $e) {
@@ -3848,6 +3848,49 @@ class CCController extends Controller
                             }
                     //  } 
                   }
+                  
+                  $list = Helpers::getCFTUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                             if ($email !== null) {
+                                try {
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' => $changeControl],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Sent By".Auth::user()->name);
+                                }
+                              );
+                               } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                    //  } 
+                  }
+
+                  $list = Helpers::getQAUserList($changeControl->division_id);
+                  foreach ($list as $u) {
+                      // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                          $email = Helpers::getInitiatorEmail($u->user_id);
+                           if ($email !== null) {
+                              try {
+                            Mail::send(
+                                'mail.view-mail',
+                                 ['data' => $changeControl],
+                              function ($message) use ($email) {
+                                  $message->to($email)
+                                      ->subject("Document is Sent By".Auth::user()->name);
+                              }
+                            );
+                             } catch (\Exception $e) {
+                                  \Log::error('Mail failed to send: ' . $e->getMessage());
+                              }
+                          }
+                  //  } 
+                }
+
 
             $changeControl->update();
             toastr()->success('Document Sent');

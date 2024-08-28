@@ -1003,6 +1003,27 @@ class ExtensionNewController extends Controller
                         // }
                     }
 
+                    $list = Helpers::getQaApproverList($extensionNew->division_id);
+                    foreach ($list as $u) {
+                        // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $extensionNew],
+                                        function ($message) use ($email) {
+                                            $message->to($email)
+                                                ->subject("Document is Sent By" . Auth::user()->name);
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    \log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        // }
+                    }
+
             $extensionNew->update();
             toastr()->success('Document Sent to Close Cancelled');
             return back();
@@ -1144,6 +1165,29 @@ class ExtensionNewController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
+
+                    $list = Helpers::getHodUserList($extensionNew->division_id);
+                    foreach ($list as $u) {
+                        // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            if (!empty($email)) {
+
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $extensionNew],
+                                        function ($message) use ($email) {
+                                            $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    \log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        // }
+                    }
+
                     $extensionNew->update();
                     return back();
                 }
@@ -1345,26 +1389,26 @@ class ExtensionNewController extends Controller
                     $history->stage = 'Completed';
                     $history->save();
 
-                    $list = Helpers::getQaApproverList($extensionNew->division_id);
-                    foreach ($list as $u) {
-                        // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $extensionNew],
-                                        function ($message) use ($email) {
-                                            $message->to($email)
-                                                ->subject("Document is Sent By" . Auth::user()->name);
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    \log::error('Mail failed to send: ' . $e->getMessage());
-                                }
-                            }
-                        // }
-                    }
+                    // $list = Helpers::getQaApproverList($extensionNew->division_id);
+                    // foreach ($list as $u) {
+                    //     // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $extensionNew],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Document is Sent By" . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 \log::error('Mail failed to send: ' . $e->getMessage());
+                    //             }
+                    //         }
+                    //     // }
+                    // }
 
                     $list = Helpers::getHodUserList($extensionNew->division_id);
                     foreach ($list as $u) {

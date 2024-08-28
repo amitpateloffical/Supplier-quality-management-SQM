@@ -3564,8 +3564,8 @@ class RiskManagementController extends Controller
                                 \log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
-                 }
-            //   }
+                //  }
+              }
                 $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3720,6 +3720,44 @@ class RiskManagementController extends Controller
                 }
                 $history->save();
 
+
+                $riskAssessment->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($riskAssessment->stage == 6) {
+                $riskAssessment->stage = "7";
+                $riskAssessment->status = 'Closed - Done';
+                $riskAssessment->residual_risk_completed_by = Auth::user()->name;
+                $riskAssessment->residual_risk_completed_on = Carbon::now()->format('d-M-Y');
+                $riskAssessment->residual_risk_completed_comment = $request->comments;
+
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Residual Risk Evaluation Completed By, Residual Risk Evaluation Completed On';
+                if (is_null($lastDocument->residual_risk_completed_by) || $lastDocument->residual_risk_completed_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->residual_risk_completed_by . ' , ' . $lastDocument->residual_risk_completed_on;
+                }
+                $history->action = 'Residual Risk Evaluation Completed';
+                $history->current = $riskAssessment->residual_risk_completed_by . ' , ' . $riskAssessment->residual_risk_completed_on;
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Residual Risk Evaluation Completed';
+                $history->change_to = "Closed - Done";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->residual_risk_completed_by) || $lastDocument->residual_risk_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+
                 $list = Helpers::getInitiatorUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
@@ -3764,42 +3802,27 @@ class RiskManagementController extends Controller
                 //  }
               }
 
-                $riskAssessment->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
+              $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                //  }
+              }
 
-            if ($riskAssessment->stage == 6) {
-                $riskAssessment->stage = "7";
-                $riskAssessment->status = 'Closed - Done';
-                $riskAssessment->residual_risk_completed_by = Auth::user()->name;
-                $riskAssessment->residual_risk_completed_on = Carbon::now()->format('d-M-Y');
-                $riskAssessment->residual_risk_completed_comment = $request->comments;
-
-                $history = new RiskAuditTrail();
-                $history->risk_id = $id;
-                $history->activity_type = 'Residual Risk Evaluation Completed By, Residual Risk Evaluation Completed On';
-                if (is_null($lastDocument->residual_risk_completed_by) || $lastDocument->residual_risk_completed_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->residual_risk_completed_by . ' , ' . $lastDocument->residual_risk_completed_on;
-                }
-                $history->action = 'Residual Risk Evaluation Completed';
-                $history->current = $riskAssessment->residual_risk_completed_by . ' , ' . $riskAssessment->residual_risk_completed_on;
-                $history->comment = $request->comments;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage='Residual Risk Evaluation Completed';
-                $history->change_to = "Closed - Done";
-                $history->change_from = $lastDocument->status;
-                if (is_null($lastDocument->residual_risk_completed_by) || $lastDocument->residual_risk_completed_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                $history->save();
                 $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3849,27 +3872,69 @@ class RiskManagementController extends Controller
                 }
                 $history->save();
 
-            //     $list = Helpers::getHodUserList($riskAssessment->division_id);
-            //     //  return $list;
-            //     foreach ($list as $u) {
-            //         // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //             if (!empty($email)) {
-            //                 try {
-            //                     Mail::send(
-            //                         'mail.view-mail',
-            //                          ['data' => $riskAssessment],
-            //                       function ($message) use ($email) {
-            //                           $message->to($email)
-            //                               ->subject("Document is Sent By".Auth::user()->name);
-            //                       }
-            //                     );
-            //                 } catch (\Exception $e) {
-            //                     \log::error('Mail failed to send: ' . $e->getMessage());
-            //                 }
-            //             // }
-            //      }
-            //   }
+                $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                //  }
+              }
+
+                $list = Helpers::getHodUserList($riskAssessment->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                //  }
+              }
+
+              $list = Helpers::getQAUserList($riskAssessment->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                //  }
+              }
 
                 $riskAssessment->update();
                 toastr()->success('Document Sent');
@@ -3908,27 +3973,69 @@ class RiskManagementController extends Controller
                 }
                 $history->save();
 
-            //     $list = Helpers::getHodUserList($riskAssessment->division_id);
-            //     //  return $list;
-            //     foreach ($list as $u) {
-            //         // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //             if (!empty($email)) {
-            //                 try {
-            //                     Mail::send(
-            //                         'mail.view-mail',
-            //                          ['data' => $riskAssessment],
-            //                       function ($message) use ($email) {
-            //                           $message->to($email)
-            //                               ->subject("Document is Sent By".Auth::user()->name);
-            //                       }
-            //                     );
-            //                 } catch (\Exception $e) {
-            //                     \log::error('Mail failed to send: ' . $e->getMessage());
-            //                 }
-            //             // }
-            //      }
-            //   }
+                $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                //  }
+              }
+
+                $list = Helpers::getHodUserList($riskAssessment->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                //  }
+              }
+
+              $list = Helpers::getQAUserList($riskAssessment->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                     ['data' => $riskAssessment],
+                                  function ($message) use ($email) {
+                                      $message->to($email)
+                                          ->subject("Document is Sent By".Auth::user()->name);
+                                  }
+                                );
+                            } catch (\Exception $e) {
+                                \log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                //  }
+              }
 
                 $riskAssessment->update();
                 toastr()->success('Document Sent');

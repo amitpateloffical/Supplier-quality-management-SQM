@@ -509,6 +509,13 @@ static function getFullDepartmentName($code)
     {
         return   User::where('id',$id)->value('name');
     }
+
+    public static function getInitiatorNames($ids)
+    {
+        if (is_array($ids)) {
+            return User::whereIn('id', $ids)->pluck('name')->implode(', ');
+        }
+    }
     public static function record($id)
     {
         return   str_pad($id, 5, '0', STR_PAD_LEFT);

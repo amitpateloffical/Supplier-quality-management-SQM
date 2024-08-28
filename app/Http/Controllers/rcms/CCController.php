@@ -392,22 +392,46 @@ class CCController extends Controller
         //     $history->save();
         // }
         
-        if(!empty($openState->cft_reviewer_person)){
+        // if(!empty($request->cft_reviewer_person)){
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $openState->id;
+        //     $history->activity_type = 'CFT Reviewer Person ';
+        //     $history->previous = "Null";
+        //     $history->current = Helpers::getInitiatorName($request->cft_reviewer_person);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $openState->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
+
+        if (!empty($openState->cft_reviewer_person)) {
+            $reviewerIds = explode(',', $openState->cft_reviewer_person);
+        
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'CFT Reviewer Person ';
             $history->previous = "Null";
-            $history->current = $openState->cft_reviewer_person;
+            
+            // Use the modified function to get names
+            $history->current = Helpers::getInitiatorNames($reviewerIds);
+            
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
-            $history->change_to =   "Opened";
+            $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
         }
+        
+        
 
         if(!empty($request->cft_reviewer)){
             $history = new RcmDocHistory;
@@ -445,7 +469,7 @@ class CCController extends Controller
         if(!empty($request->Initiator_Group)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Inititator Group';
+            $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorGroupFullName($openState->Initiator_Group);
             $history->comment = "Not Applicable";
@@ -462,7 +486,7 @@ class CCController extends Controller
         if(!empty($request->initiator_group_code)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Inititator Group Code';
+            $history->activity_type = 'Initiator Group Code';
             $history->previous = "Null";
             $history->current = $request->initiator_group_code;
             $history->comment = "Not Applicable";
@@ -1700,15 +1724,15 @@ class CCController extends Controller
 
 
         /******** Audit Trail Code ********/
-        if ($lastDocument->assign_to != $request->assign_to) {
+        if ($lastDocument->assign_to != $openState->assign_to) {
             $existingHistory = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Assign To')
+            ->where('activity_type', 'Assigned To')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Assign To';
+            $history->activity_type = 'Assigned To';
             $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);
-            $history->current = Helpers::getInitiatorName($request->assign_to);
+            $history->current = Helpers::getInitiatorName($openState->assign_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1748,29 +1772,67 @@ class CCController extends Controller
             $history->save();
         }
 
+        // if (!empty($openState->cft_reviewer_person)) {
+        //     $reviewerIds = explode(',', $openState->cft_reviewer_person);
+        //     $reviewerNames = [];
+        
+        //     foreach ($reviewerIds as $id) {
+        //         $reviewerNames[] = Helpers::getInitiatorName($id);
+        //     }
+        
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $openState->id;
+        //     $history->activity_type = 'CFT Reviewer Person ';
+        //     $history->previous = "Null";
+            
+        //     // Join all names into a comma-separated string
+        //     $history->current = implode(', ', $reviewerNames);
+            
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $openState->status;
+        //     $history->change_to = "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
+
         if ($lastDocument->cft_reviewer_person != $openState->cft_reviewer_person) {
             $existingHistory = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'CFT Reviewer Person')
-            ->exists();
+                ->where('activity_type', 'CFT Reviewer Person')
+                ->exists();
+        
+            $lastReviewerIds = explode(',', $lastDocument->cft_reviewer_person);
+            $currentReviewerIds = explode(',', $openState->cft_reviewer_person);
+        
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'CFT Reviewer Person';
-            $history->previous= Helpers::getInitiatorName($lastDocument->cft_reviewer_person);
-            $history->current = Helpers::getInitiatorName($openState->cft_reviewer_person);
+            
+            // Use the modified getInitiatorName function
+            $history->previous = Helpers::getInitiatorNames($lastReviewerIds);
+            $history->current = Helpers::getInitiatorNames($currentReviewerIds);
+            
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
+        
             if ($existingHistory) {
                 $history->action_name = "Update";
             } else {
                 $history->action_name = "New";
             }
+        
             $history->save();
         }
+        
+
 
         if ($lastDocument->short_description != $openState->short_description) {
             $existingHistory = RcmDocHistory::where('cc_id', $id)
@@ -1796,13 +1858,13 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->Initiator_Group != $request->Initiator_Group) {
+        if ($lastDocument->Initiator_Group != $openState->Initiator_Group) {
             $existingHistory = RcmDocHistory::where('cc_id', $id)
             ->where('activity_type', 'Inititator Group')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Inititator Group';
+            $history->activity_type = 'Initiator Group';
             $history->previous = Helpers::getInitiatorGroupFullName($lastDocument->Initiator_Group);
             $history->current = Helpers::getInitiatorGroupFullName($openState->Initiator_Group);
             $history->comment = "Not Appliccable";
@@ -1820,7 +1882,7 @@ class CCController extends Controller
             $history->save();
         }
         
-        if ($lastDocument->initiator_group_code != $request->initiator_group_code) {
+        if ($lastDocument->initiator_group_code != $openState->initiator_group_code) {
             $existingHistory = RcmDocHistory::where('cc_id', $id)
             ->where('activity_type', 'Initiator Group Code')
             ->exists();
@@ -1828,7 +1890,7 @@ class CCController extends Controller
             $history->cc_id = $id;
             $history->activity_type = 'Initiator Group Code';
             $history->previous = $lastDocument->initiator_group_code;
-            $history->current = $request->initiator_group_code;
+            $history->current = $openState->initiator_group_code;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3264,6 +3326,27 @@ class CCController extends Controller
                             }
                     //  } 
                   }
+
+                 $list = Helpers::getQAUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                             if ($email !== null) {
+                            try {
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' => $changeControl],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Sent By".Auth::user()->name);
+                                }
+                              );
+                              } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                    //  } 
+                  }
                 $changeControl->update();
                 // Helpers::hodMail($changeControl);
                 toastr()->success('Document Sent');
@@ -3304,47 +3387,47 @@ class CCController extends Controller
                 }
 
                 $history->save();
-                 $list = Helpers::getHodUserList($changeControl->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
-                                 try {
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
-                                }
-                              );
-                               } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
-                                }
-                            }
-                    //  } 
-                  }
+                //  $list = Helpers::getHodUserList($changeControl->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //                  try {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Sent By".Auth::user()->name);
+                //                 }
+                //               );
+                //                } catch (\Exception $e) {
+                //                     \Log::error('Mail failed to send: ' . $e->getMessage());
+                //                 }
+                //             }
+                //     //  } 
+                //   }
 
-                 $list = Helpers::getInitiatorUserList($changeControl->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
-                                try {
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
-                                }
-                              );
-                            } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
-                                }
-                            }
-                    //  } 
-                  }
+                //  $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //                 try {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Sent By".Auth::user()->name);
+                //                 }
+                //               );
+                //             } catch (\Exception $e) {
+                //                     \Log::error('Mail failed to send: ' . $e->getMessage());
+                //                 }
+                //             }
+                //     //  } 
+                //   }
                 $changeControl->update();
                 // Helpers::hodMail($changeControl);
                 toastr()->success('Document Sent');
@@ -3493,7 +3576,7 @@ class CCController extends Controller
                 $history->origin_state = $openState->status;
                 $history->change_from = $openState->status;
                 $history->change_to = "Opened";
-                $history->action = 'Request More Information';
+                $history->action = 'More Information Required';
 
                 if (is_null($openState->sent_to_opened_by) || $openState->sent_to_opened_on === '') {
                     $history->action_name = 'New';
@@ -3574,7 +3657,7 @@ class CCController extends Controller
                 $history->origin_state = $openState->status;
                 $history->change_from = $openState->status;
                 $history->change_to = "HOD Review";
-                $history->action = 'Request More Information';
+                $history->action = 'More Information Required';
 
                 if (is_null($openState->requested_to_hod_by) || $openState->requested_to_hod_on === '') {
                     $history->action_name = 'New';
@@ -3641,6 +3724,7 @@ class CCController extends Controller
                 }
 
                 $history->save();
+                
                 $list = Helpers::getHodUserList($changeControl->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -3662,26 +3746,26 @@ class CCController extends Controller
                     //  } 
                   }
 
-                $list = Helpers::getInitiatorUserList($changeControl->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
-                                try {
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
-                                }
-                              );
-                              } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
-                                }
-                            }
-                    //  } 
-                  }
+                // $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //                 try {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Sent By".Auth::user()->name);
+                //                 }
+                //               );
+                //               } catch (\Exception $e) {
+                //                     \Log::error('Mail failed to send: ' . $e->getMessage());
+                //                 }
+                //             }
+                //     //  } 
+                //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3735,47 +3819,91 @@ class CCController extends Controller
 
             $history->save();
             
-              $list = Helpers::getHodUserList($changeControl->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
-                                try {
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
-                                }
-                              );
-                               } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
-                                }
-                            }
-                    //  } 
-                  }
+            //   $list = Helpers::getHodUserList($changeControl->division_id);
+            //         foreach ($list as $u) {
+            //             // if($u->q_m_s_divisions_id == $changeControl->division_id){
+            //                 $email = Helpers::getInitiatorEmail($u->user_id);
+            //                  if ($email !== null) {
+            //                     try {
+            //                   Mail::send(
+            //                       'mail.view-mail',
+            //                        ['data' => $changeControl],
+            //                     function ($message) use ($email) {
+            //                         $message->to($email)
+            //                             ->subject("Document is Sent By".Auth::user()->name);
+            //                     }
+            //                   );
+            //                    } catch (\Exception $e) {
+            //                         \Log::error('Mail failed to send: ' . $e->getMessage());
+            //                     }
+            //                 }
+            //         //  } 
+            //       }
 
-                  $list = Helpers::getInitiatorUserList($changeControl->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
-                                try {
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
-                                }
-                              );
-                               } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
-                                }
+                //   $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //                 try {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Sent By".Auth::user()->name);
+                //                 }
+                //               );
+                //                } catch (\Exception $e) {
+                //                     \Log::error('Mail failed to send: ' . $e->getMessage());
+                //                 }
+                //             }
+                //     //  } 
+                //   }
+
+                $list = Helpers::getCFTUserList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                        try {
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Sent By".Auth::user()->name);
                             }
-                    //  } 
-                  }
+                          );
+                          } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                //  } 
+              }
+
+               $list = Helpers::getQAUserList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                        try {
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Sent By".Auth::user()->name);
+                            }
+                          );
+                          } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                //  } 
+              }
+
+              
             $changeControl->update();
             toastr()->success('Document Sent');
             return back();

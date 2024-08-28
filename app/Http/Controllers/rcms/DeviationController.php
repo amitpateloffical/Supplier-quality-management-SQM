@@ -218,7 +218,7 @@ class DeviationController extends Controller
                                         ['data' => $deviation],
                                         function ($message) use ($email) {
                                             $message->to($email)
-                                                ->subject("Activity Performed By " . Auth::user()->name);
+                                                ->subject("Document Sent By " . Auth::user()->name);
                                         }
                                     );
                                 } catch (\Exception $e) {
@@ -244,7 +244,7 @@ class DeviationController extends Controller
                                                     ['data' => $deviation],
                                                     function ($message) use ($email) {
                                                         $message->to($email)
-                                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                                            ->subject("Document Sent By " . Auth::user()->name);
                                                     }
                                                 );
                                             } catch (\Exception $e) {
@@ -268,7 +268,7 @@ class DeviationController extends Controller
                                                             ['data' => $deviation],
                                                             function ($message) use ($email) {
                                                                 $message->to($email)
-                                                                    ->subject("Activity Performed By " . Auth::user()->name);
+                                                                    ->subject("Document Sent By " . Auth::user()->name);
                                                             }
                                                         );
                                                     } catch (\Exception $e) {
@@ -293,7 +293,7 @@ class DeviationController extends Controller
                                                                 ['data' => $deviation],
                                                                 function ($message) use ($email) {
                                                                     $message->to($email)
-                                                                        ->subject("Activity Performed By " . Auth::user()->name);
+                                                                        ->subject("Document Sent By " . Auth::user()->name);
                                                                 }
                                                             );
                                                         } catch (\Exception $e) {
@@ -317,7 +317,7 @@ class DeviationController extends Controller
                                                                             ['data' => $deviation],
                                                                             function ($message) use ($email) {
                                                                                 $message->to($email)
-                                                                                    ->subject("Activity Performed By " . Auth::user()->name);
+                                                                                    ->subject("Document Sent By " . Auth::user()->name);
                                                                             }
                                                                         );
                                                                     } catch (\Exception $e) {
@@ -341,7 +341,7 @@ class DeviationController extends Controller
                                                                                     ['data' => $deviation],
                                                                                     function ($message) use ($email) {
                                                                                         $message->to($email)
-                                                                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                                                                            ->subject("Document Sent By " . Auth::user()->name);
                                                                                     }
                                                                                 );
                                                                             } catch (\Exception $e) {
@@ -1776,14 +1776,17 @@ class DeviationController extends Controller
             $deviation->QA_Feedbacks = $request->QA_Feedbacks;
             $deviation->Closure_Comments = $request->Closure_Comments;
             $deviation->Disposition_Batch = $request->Disposition_Batch;
-            $files = is_array($request->existing_closure_attachment) ? $request->existing_closure_attachment : [];
-            if (!empty ($request->closure_attachment)) {
+
+            //new code navneet
+
+            $files = is_array($request->existing_clouser_files) ? $request->existing_clouser_files : null;
+
+            if (!empty($request->closure_attachment)) {
                 if ($deviation->closure_attachment) {
                     $existingFiles = json_decode($deviation->closure_attachment, true); // Convert to associative array
                     if (is_array($existingFiles)) {
                         $files = $existingFiles;
                     }
-                    // $files = is_array(json_decode($deviation->closure_attachment)) ? $deviation->closure_attachment : [];
                 }
 
                 if ($request->hasfile('closure_attachment')) {
@@ -1794,7 +1797,29 @@ class DeviationController extends Controller
                     }
                 }
             }
-            $deviation->closure_attachment = json_encode($files);
+
+            // If no files are attached, set to null
+            $deviation->closure_attachment = !empty($files) ? json_encode($files) : null;
+
+            //$files = is_array($request->existing_closure_attachment) ? $request->existing_closure_attachment : [];
+            //if (!empty ($request->closure_attachment)) {
+            //    if ($deviation->closure_attachment) {
+            //        $existingFiles = json_decode($deviation->closure_attachment, true); // Convert to associative array
+            //        if (is_array($existingFiles)) {
+            //            $files = $existingFiles;
+            //        }
+            //        // $files = is_array(json_decode($deviation->closure_attachment)) ? $deviation->closure_attachment : [];
+            //    }
+
+            //    if ($request->hasfile('closure_attachment')) {
+            //        foreach ($request->file('closure_attachment') as $file) {
+            //            $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //            $file->move('upload/', $name);
+            //            $files[] = $name;
+            //        }
+            //    }
+            //}
+            //$deviation->closure_attachment = json_encode($files);
         }
 
 
@@ -3810,7 +3835,7 @@ class DeviationController extends Controller
 
         //new code navneet
 
-        $files = is_array($request->existing_qa_attachments_files) ? $request->existing_qa_attachments_files : null;
+        $files = is_array($request->qa_attachments_files) ? $request->qa_attachments_files : null;
 
         if (!empty($request->QA_attachments)) {
             if ($deviation->QA_attachments) {
@@ -3858,60 +3883,109 @@ class DeviationController extends Controller
             $deviation->initiator_final_remarks = $request->initiator_final_remarks;
             // dd($deviation->initiator_final_remarks);
 
-            $files = is_array($request->existing_initiator_final_attachments) ? $request->existing_initiator_final_attachments : [];
-            if (!empty ($request->initiator_final_attachments)) {
-                if ($deviation->initiator_final_attachments) {
-                    $existingFiles = json_decode($deviation->initiator_final_attachments, true); // Convert to associative array
-                    if (is_array($existingFiles)) {
-                        $files = $existingFiles;
+                //new code navneet
+
+                $files = is_array($request->initiator_files) ? $request->initiator_files : null;
+
+                if (!empty($request->initiator_final_attachments)) {
+                    if ($deviation->initiator_final_attachments) {
+                        $existingFiles = json_decode($deviation->initiator_final_attachments, true); // Convert to associative array
+                        if (is_array($existingFiles)) {
+                            $files = $existingFiles;
+                        }
                     }
-                    // $files = is_array(json_decode($deviation->initiator_final_attachments)) ? $deviation->initiator_final_attachments : [];
+
+                    if ($request->hasfile('initiator_final_attachments')) {
+                        foreach ($request->file('initiator_final_attachments') as $file) {
+                            $name = $request->name . 'initiator_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move('upload/', $name);
+                            $files[] = $name;
+                        }
+                    }
                 }
 
-                if ($request->hasfile('initiator_final_attachments')) {
-                    foreach ($request->file('initiator_final_attachments') as $file) {
-                        $name = $request->name . 'initiator_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-            }
-            $deviation->initiator_final_attachments = json_encode($files);
+                // If no files are attached, set to null
+                $deviation->initiator_final_attachments = !empty($files) ? json_encode($files) : null;
+
+            //$files = is_array($request->existing_initiator_final_attachments) ? $request->existing_initiator_final_attachments : [];
+            //if (!empty ($request->initiator_final_attachments)) {
+            //    if ($deviation->initiator_final_attachments) {
+            //        $existingFiles = json_decode($deviation->initiator_final_attachments, true); // Convert to associative array
+            //        if (is_array($existingFiles)) {
+            //            $files = $existingFiles;
+            //        }
+            //        // $files = is_array(json_decode($deviation->initiator_final_attachments)) ? $deviation->initiator_final_attachments : [];
+            //    }
+
+            //    if ($request->hasfile('initiator_final_attachments')) {
+            //        foreach ($request->file('initiator_final_attachments') as $file) {
+            //            $name = $request->name . 'initiator_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //            $file->move('upload/', $name);
+            //            $files[] = $name;
+            //        }
+            //    }
+            //}
+            //$deviation->initiator_final_attachments = json_encode($files);
         }
         if($deviation->stage == 8){
             $deviation->hod_final_remarks = $request->hod_final_remarks;
 
-            $files = is_array($request->existing_hod_final_attachments) ? $request->existing_hod_final_attachments : [];
-            if (!empty ($request->hod_final_attachments)) {
-                if ($deviation->hod_final_attachments) {
-                    $existingFiles = json_decode($deviation->hod_final_attachments, true); // Convert to associative array
-                    if (is_array($existingFiles)) {
-                        $files = $existingFiles;
-                    }
-                    // $files = is_array(json_decode($deviation->hod_final_attachments)) ? $deviation->hod_final_attachments : [];
-                }
+        //new code navneet
 
-                if ($request->hasfile('hod_final_attachments')) {
-                    foreach ($request->file('hod_final_attachments') as $file) {
-                        $name = $request->name . 'hod_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
+        $files = is_array($request->hod_final_attachment_files) ? $request->hod_final_attachment_files : null;
+
+        if (!empty($request->hod_final_attachments)) {
+            if ($deviation->hod_final_attachments) {
+                $existingFiles = json_decode($deviation->hod_final_attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
                 }
             }
-            $deviation->hod_final_attachments = json_encode($files);
+
+            if ($request->hasfile('hod_final_attachments')) {
+                foreach ($request->file('hod_final_attachments') as $file) {
+                    $name = $request->name . 'hod_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+        }
+
+        // If no files are attached, set to null
+        $deviation->hod_final_attachments = !empty($files) ? json_encode($files) : null;
+
+            //$files = is_array($request->existing_hod_final_attachments) ? $request->existing_hod_final_attachments : [];
+            //if (!empty ($request->hod_final_attachments)) {
+            //    if ($deviation->hod_final_attachments) {
+            //        $existingFiles = json_decode($deviation->hod_final_attachments, true); // Convert to associative array
+            //        if (is_array($existingFiles)) {
+            //            $files = $existingFiles;
+            //        }
+            //        // $files = is_array(json_decode($deviation->hod_final_attachments)) ? $deviation->hod_final_attachments : [];
+            //    }
+
+            //    if ($request->hasfile('hod_final_attachments')) {
+            //        foreach ($request->file('hod_final_attachments') as $file) {
+            //            $name = $request->name . 'hod_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //            $file->move('upload/', $name);
+            //            $files[] = $name;
+            //        }
+            //    }
+            //}
+            //$deviation->hod_final_attachments = json_encode($files);
         }
         if($deviation->stage == 9){
             $deviation->qa_final_remarks = $request->qa_final_remarks;
 
-            $files = is_array($request->existing_qa_final_attachments) ? $request->existing_qa_final_attachments : [];
-            if (!empty ($request->qa_final_attachments)) {
+
+            $files = is_array($request->existing_qa_final_files) ? $request->existing_qa_final_files : null;
+
+            if (!empty($request->qa_final_attachments)) {
                 if ($deviation->qa_final_attachments) {
                     $existingFiles = json_decode($deviation->qa_final_attachments, true); // Convert to associative array
                     if (is_array($existingFiles)) {
                         $files = $existingFiles;
                     }
-                    // $files = is_array(json_decode($deviation->qa_final_attachments)) ? $deviation->qa_final_attachments : [];
                 }
 
                 if ($request->hasfile('qa_final_attachments')) {
@@ -3922,7 +3996,29 @@ class DeviationController extends Controller
                     }
                 }
             }
-            $deviation->qa_final_attachments = json_encode($files);
+
+            // If no files are attached, set to null
+            $deviation->qa_final_attachments = !empty($files) ? json_encode($files) : null;
+
+            //$files = is_array($request->existing_qa_final_attachments) ? $request->existing_qa_final_attachments : [];
+            //if (!empty ($request->qa_final_attachments)) {
+            //    if ($deviation->qa_final_attachments) {
+            //        $existingFiles = json_decode($deviation->qa_final_attachments, true); // Convert to associative array
+            //        if (is_array($existingFiles)) {
+            //            $files = $existingFiles;
+            //        }
+            //        // $files = is_array(json_decode($deviation->qa_final_attachments)) ? $deviation->qa_final_attachments : [];
+            //    }
+
+            //    if ($request->hasfile('qa_final_attachments')) {
+            //        foreach ($request->file('qa_final_attachments') as $file) {
+            //            $name = $request->name . 'qa_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //            $file->move('upload/', $name);
+            //            $files[] = $name;
+            //        }
+            //    }
+            //}
+            //$deviation->qa_final_attachments = json_encode($files);
         }
 
         $deviation->form_progress = isset($form_progress) ? $form_progress : null;
@@ -5340,7 +5436,7 @@ class DeviationController extends Controller
                                      ['data' => $deviation],
                                      function ($message) use ($email) {
                                          $message->to($email)
-                                             ->subject("Activity Performed By " . Auth::user()->name);
+                                             ->subject("Document Sent By " . Auth::user()->name);
                                      }
                                  );
                              } catch (\Exception $e) {
@@ -5435,7 +5531,7 @@ class DeviationController extends Controller
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -5557,7 +5653,7 @@ class DeviationController extends Controller
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -5580,7 +5676,7 @@ class DeviationController extends Controller
                                                     ['data' => $deviation],
                                                     function ($message) use ($email) {
                                                         $message->to($email)
-                                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                                            ->subject("Document Sent By " . Auth::user()->name);
                                                     }
                                                 );
                                             } catch (\Exception $e) {
@@ -5604,7 +5700,7 @@ class DeviationController extends Controller
                                                             ['data' => $deviation],
                                                             function ($message) use ($email) {
                                                                 $message->to($email)
-                                                                    ->subject("Activity Performed By " . Auth::user()->name);
+                                                                    ->subject("Document Sent By " . Auth::user()->name);
                                                             }
                                                         );
                                                     } catch (\Exception $e) {
@@ -5628,7 +5724,7 @@ class DeviationController extends Controller
                                                                     ['data' => $deviation],
                                                                     function ($message) use ($email) {
                                                                         $message->to($email)
-                                                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                                                            ->subject("Document Sent By " . Auth::user()->name);
                                                                     }
                                                                 );
                                                             } catch (\Exception $e) {
@@ -5728,23 +5824,23 @@ class DeviationController extends Controller
 //                }
 
 
-$getCft = DeviationCft::find($id);
-$Cft = DeviationCft::withoutTrashed()->where('deviation_id', $id)->first();
+                $getCft = DeviationCft::find($id);
+                $Cft = DeviationCft::withoutTrashed()->where('deviation_id', $id)->first();
 
-$IsCFTRequired = DeviationCftsResponse::withoutTrashed()->where(['is_required' => 1, 'deviation_id' => $id])->latest()->first();
-$cftUsers = DB::table('deviationcfts')->where(['deviation_id' => $id])->first();
-// Define the column names
-$columns = ['Production_person','Warehouse_notification','Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person'];
-// $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
+                $IsCFTRequired = DeviationCftsResponse::withoutTrashed()->where(['is_required' => 1, 'deviation_id' => $id])->latest()->first();
+                $cftUsers = DB::table('deviationcfts')->where(['deviation_id' => $id])->first();
+                // Define the column names
+                $columns = ['Production_person','Warehouse_notification','Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person'];
+                // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
 
-// Initialize an array to store the values
-$valuesArray = [];
+                // Initialize an array to store the values
+                $valuesArray = [];
 
-// Iterate over the columns and retrieve the values
-foreach ($columns as $index => $column) {
-    $value = $cftUsers->$column;
-    $counter = 0;
-    //if($column == 'Production_person' && $cftUsers->$column == Auth::user()->id){
+                // Iterate over the columns and retrieve the values
+                foreach ($columns as $index => $column) {
+                    $value = $cftUsers->$column;
+                    $counter = 0;
+                    //if($column == 'Production_person' && $cftUsers->$column == Auth::user()->id){
                     if($index == 0 && $cftUsers->$column == Auth::user()->id){
                         $counter++;
 
@@ -6692,7 +6788,7 @@ foreach ($columns as $index => $column) {
                     $history->save();
 
 
-                    $list = Helpers::getQAUserList($deviation->division_id);
+                    $list = Helpers::getQAHeadUserList($deviation->division_id);
                      foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $deviation->division_id) {
                              $email = Helpers::getInitiatorEmail($u->user_id);
@@ -6703,7 +6799,7 @@ foreach ($columns as $index => $column) {
                                          ['data' => $deviation],
                                          function ($message) use ($email) {
                                              $message->to($email)
-                                                 ->subject("Activity Performed By " . Auth::user()->name);
+                                                 ->subject("Document Sent By " . Auth::user()->name);
                                          }
                                      );
                                  } catch (\Exception $e) {
@@ -6776,26 +6872,26 @@ foreach ($columns as $index => $column) {
                 }
 
                 $history->save();
-                $list = Helpers::getQAHeadUserList($deviation->division_id);
-                foreach ($list as $u) {
-                    //if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                \Log::error('Mail failed to send: ' . $e->getMessage());
-                            }
-                        }
-                    //}
-                }
+                //$list = Helpers::getQAHeadUserList($deviation->division_id);
+                //foreach ($list as $u) {
+                //    //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //        $email = Helpers::getInitiatorEmail($u->user_id);
+                //        if ($email !== null) {
+                //            try {
+                //                Mail::send(
+                //                    'mail.view-mail',
+                //                    ['data' => $deviation],
+                //                    function ($message) use ($email) {
+                //                        $message->to($email)
+                //                            ->subject("Document Sent By " . Auth::user()->name);
+                //                    }
+                //                );
+                //            } catch (\Exception $e) {
+                //                \Log::error('Mail failed to send: ' . $e->getMessage());
+                //            }
+                //        }
+                //    //}
+                //}
                 $deviation->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -6882,26 +6978,26 @@ foreach ($columns as $index => $column) {
                 }
 
                 $history->save();
-                $list = Helpers::getQAUserList($deviation->division_id);
-                foreach ($list as $u) {
-                    //if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                \Log::error('Mail failed to send: ' . $e->getMessage());
-                            }
-                        }
-                    //}
-                }
+                //$list = Helpers::getQAUserList($deviation->division_id);
+                //foreach ($list as $u) {
+                //    //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //        $email = Helpers::getInitiatorEmail($u->user_id);
+                //        if ($email !== null) {
+                //            try {
+                //                Mail::send(
+                //                    'mail.view-mail',
+                //                    ['data' => $deviation],
+                //                    function ($message) use ($email) {
+                //                        $message->to($email)
+                //                            ->subject("Document Sent By " . Auth::user()->name);
+                //                    }
+                //                );
+                //            } catch (\Exception $e) {
+                //                \Log::error('Mail failed to send: ' . $e->getMessage());
+                //            }
+                //        }
+                //    //}
+                //}
 
                 $list = Helpers::getInitiatorUserList($deviation->division_id);
                 foreach ($list as $u) {
@@ -6914,7 +7010,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6924,26 +7020,26 @@ foreach ($columns as $index => $column) {
                     //}
                 }
 
-                $list = Helpers::getCFTUserList($deviation->division_id);
-                foreach ($list as $u) {
-                    //if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                \Log::error('Mail failed to send: ' . $e->getMessage());
-                            }
-                        }
-                    //}
-                }
+                //$list = Helpers::getCFTUserList($deviation->division_id);
+                //foreach ($list as $u) {
+                //    //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                //        $email = Helpers::getInitiatorEmail($u->user_id);
+                //        if ($email !== null) {
+                //            try {
+                //                Mail::send(
+                //                    'mail.view-mail',
+                //                    ['data' => $deviation],
+                //                    function ($message) use ($email) {
+                //                        $message->to($email)
+                //                            ->subject("Document Sent By " . Auth::user()->name);
+                //                    }
+                //                );
+                //            } catch (\Exception $e) {
+                //                \Log::error('Mail failed to send: ' . $e->getMessage());
+                //            }
+                //        }
+                //    //}
+                //}
                 $deviation->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7015,7 +7111,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7083,7 +7179,7 @@ foreach ($columns as $index => $column) {
                 }
 
                 $history->save();
-                 $list = Helpers::getQAHeadUserList($deviation->division_id);
+                 $list = Helpers::getQaReviewerList($deviation->division_id);
                  foreach ($list as $u) {
                     // if ($u->q_m_s_divisions_id == $deviation->division_id) {
                          $email = Helpers::getInitiatorEmail($u->user_id);
@@ -7094,7 +7190,7 @@ foreach ($columns as $index => $column) {
                                      ['data' => $deviation],
                                      function ($message) use ($email) {
                                          $message->to($email)
-                                             ->subject("Activity Performed By " . Auth::user()->name);
+                                             ->subject("Document Sent By " . Auth::user()->name);
                                      }
                                  );
                              } catch (\Exception $e) {
@@ -7162,26 +7258,26 @@ foreach ($columns as $index => $column) {
                 }
 
                 $history->save();
-                //$list = Helpers::getQAUserList();
-                //foreach ($list as $u) {
-                //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                //        $email = Helpers::getInitiatorEmail($u->user_id);
-                //        if ($email !== null) {
-                //            try {
-                //                Mail::send(
-                //                    'mail.view-mail',
-                //                    ['data' => $deviation],
-                //                    function ($message) use ($email) {
-                //                        $message->to($email)
-                //                            ->subject("Activity Performed By " . Auth::user()->name);
-                //                    }
-                //                );
-                //            } catch (\Exception $e) {
-                //                //log error
-                //            }
-                //        }
-                //    }
-                //}
+                $list = Helpers::getQAHeadUserList($deviation->division_id);
+                foreach ($list as $u) {
+                    //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $deviation],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                //log error
+                            }
+                        }
+                    //}
+                }
                 $deviation->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7290,7 +7386,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7312,7 +7408,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7334,7 +7430,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7356,7 +7452,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7378,7 +7474,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7442,7 +7538,7 @@ foreach ($columns as $index => $column) {
                 }
 
                 $history->save();
-                $list = Helpers::getQAUserList($deviation->division_id);
+                $list = Helpers::getQAHeadUserList($deviation->division_id);
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -7453,7 +7549,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7537,7 +7633,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7559,7 +7655,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7581,7 +7677,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7603,7 +7699,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7625,7 +7721,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7635,6 +7731,28 @@ foreach ($columns as $index => $column) {
                     //}
                 }
 
+
+                $list = Helpers::getQaReviewerList($deviation->division_id);
+                foreach ($list as $u) {
+                    //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if ($email !== null) {
+
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $deviation],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("Document Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    //}
+                }
 
                 toastr()->success('Document Sent');
                 return back();
@@ -7691,7 +7809,7 @@ foreach ($columns as $index => $column) {
                                                 ['data' => $deviation],
                                                 function ($message) use ($email) {
                                                     $message->to($email)
-                                                        ->subject("Activity Performed By " . Auth::user()->name);
+                                                        ->subject("Document Sent By " . Auth::user()->name);
                                                 }
                                             );
                                         } catch (\Exception $e) {
@@ -7713,7 +7831,7 @@ foreach ($columns as $index => $column) {
                                                 ['data' => $deviation],
                                                 function ($message) use ($email) {
                                                     $message->to($email)
-                                                        ->subject("Activity Performed By " . Auth::user()->name);
+                                                        ->subject("Document Sent By " . Auth::user()->name);
                                                 }
                                             );
                                         } catch (\Exception $e) {
@@ -7735,7 +7853,7 @@ foreach ($columns as $index => $column) {
                                                 ['data' => $deviation],
                                                 function ($message) use ($email) {
                                                     $message->to($email)
-                                                        ->subject("Activity Performed By " . Auth::user()->name);
+                                                        ->subject("Document Sent By " . Auth::user()->name);
                                                 }
                                             );
                                         } catch (\Exception $e) {
@@ -7757,7 +7875,7 @@ foreach ($columns as $index => $column) {
                                                 ['data' => $deviation],
                                                 function ($message) use ($email) {
                                                     $message->to($email)
-                                                        ->subject("Activity Performed By " . Auth::user()->name);
+                                                        ->subject("Document Sent By " . Auth::user()->name);
                                                 }
                                             );
                                         } catch (\Exception $e) {
@@ -7779,7 +7897,7 @@ foreach ($columns as $index => $column) {
                                                 ['data' => $deviation],
                                                 function ($message) use ($email) {
                                                     $message->to($email)
-                                                        ->subject("Activity Performed By " . Auth::user()->name);
+                                                        ->subject("Document Sent By " . Auth::user()->name);
                                                 }
                                             );
                                         } catch (\Exception $e) {
@@ -8197,26 +8315,29 @@ foreach ($columns as $index => $column) {
         $history->stage_id = $deviation->stage;
         $history->status = "Send to Pending Initiator Update";
         $history->save();
-        //foreach ($list as $u) {
-        //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-        //        $email = Helpers::getInitiatorEmail($u->user_id);
-        //        if ($email !== null) {
 
-        //            try {
-        //                Mail::send(
-        //                    'mail.view-mail',
-        //                    ['data' => $deviation],
-        //                    function ($message) use ($email) {
-        //                        $message->to($email)
-        //                            ->subject("Activity Performed By " . Auth::user()->name);
-        //                    }
-        //                );
-        //            } catch (\Exception $e) {
-        //                //log error
-        //            }
-        //        }
-        //    }
-        //}
+        $list = Helpers::getInitiatorUserList($deviation->division_id);
+        foreach ($list as $u) {
+            //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                $email = Helpers::getInitiatorEmail($u->user_id);
+                if ($email !== null) {
+
+                    try {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $deviation],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document Sent By " . Auth::user()->name);
+                            }
+                        );
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            //}
+        }
+
         $deviation->update();
         toastr()->success('Document Sent');
         return back();
@@ -8258,6 +8379,29 @@ foreach ($columns as $index => $column) {
             }
 
             $history->save();
+
+            $list = Helpers::getQAUserList($deviation->division_id);
+            foreach ($list as $u) {
+                //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if ($email !== null) {
+
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $deviation],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                //}
+            }
+
             $deviation->update();
             toastr()->success('Document Sent');
             return back();
@@ -8299,6 +8443,29 @@ foreach ($columns as $index => $column) {
             }
 
             $history->save();
+
+            $list = Helpers::getInitiatorUserList($deviation->division_id);
+            foreach ($list as $u) {
+                //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if ($email !== null) {
+
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $deviation],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                //}
+            }
+
             $deviation->update();
             toastr()->success('Document Sent');
             return back();
@@ -8371,26 +8538,28 @@ foreach ($columns as $index => $column) {
         $history->stage_id = $deviation->stage;
         $history->status = "Send to Opened";
         $history->save();
-        //foreach ($list as $u) {
-        //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-        //        $email = Helpers::getInitiatorEmail($u->user_id);
-        //        if ($email !== null) {
 
-        //            try {
-        //                Mail::send(
-        //                    'mail.view-mail',
-        //                    ['data' => $deviation],
-        //                    function ($message) use ($email) {
-        //                        $message->to($email)
-        //                            ->subject("Activity Performed By " . Auth::user()->name);
-        //                    }
-        //                );
-        //            } catch (\Exception $e) {
-        //                //log error
-        //            }
-        //        }
-        //    }
-        //}
+        $list = Helpers::getInitiatorUserList($deviation->division_id);
+        foreach ($list as $u) {
+            //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                $email = Helpers::getInitiatorEmail($u->user_id);
+                if ($email !== null) {
+                    try {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $deviation],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document Sent By " . Auth::user()->name);
+                            }
+                        );
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            //}
+        }
+
         $deviation->update();
         toastr()->success('Document Sent');
         return back();
@@ -8434,8 +8603,29 @@ foreach ($columns as $index => $column) {
         }
 
         $history->save();
-        $deviation->update();
 
+        $list = Helpers::getInitiatorUserList($deviation->division_id);
+        foreach ($list as $u) {
+            //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                $email = Helpers::getInitiatorEmail($u->user_id);
+                if ($email !== null) {
+                    try {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $deviation],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                ->subject("Document Sent By " . Auth::user()->name);
+                            }
+                        );
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+                //}
+            }
+
+        $deviation->update();
         toastr()->success('Document Sent');
         return back();
     }
@@ -8478,8 +8668,30 @@ foreach ($columns as $index => $column) {
         }
 
         $history->save();
-        $deviation->update();
 
+
+        $list = Helpers::getInitiatorUserList($deviation->division_id);
+        foreach ($list as $u) {
+            //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                $email = Helpers::getInitiatorEmail($u->user_id);
+                if ($email !== null) {
+                    try {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $deviation],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document Sent By " . Auth::user()->name);
+                            }
+                        );
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            //}
+        }
+
+        $deviation->update();
         toastr()->success('Document Sent');
         return back();
     }
@@ -8551,8 +8763,30 @@ foreach ($columns as $index => $column) {
         }
 
         $history->save();
-        $deviation->update();
 
+
+        $list = Helpers::getInitiatorUserList($deviation->division_id);
+        foreach ($list as $u) {
+            //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                $email = Helpers::getInitiatorEmail($u->user_id);
+                if ($email !== null) {
+                    try {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $deviation],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document Sent By " . Auth::user()->name);
+                            }
+                        );
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            //}
+        }
+
+        $deviation->update();
         toastr()->success('Document Sent');
         return back();
     }
@@ -8595,8 +8829,30 @@ foreach ($columns as $index => $column) {
         }
 
         $history->save();
-        $deviation->update();
 
+
+        $list = Helpers::getInitiatorUserList($deviation->division_id);
+        foreach ($list as $u) {
+            //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                $email = Helpers::getInitiatorEmail($u->user_id);
+                if ($email !== null) {
+                    try {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $deviation],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document Sent By " . Auth::user()->name);
+                            }
+                        );
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            //}
+        }
+
+        $deviation->update();
         toastr()->success('Document Sent');
         return back();
     }
@@ -8664,26 +8920,28 @@ foreach ($columns as $index => $column) {
         $history->stage_id = $deviation->stage;
         $history->status = "Send to HOD Review";
         $history->save();
-        //foreach ($list as $u) {
-        //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-        //        $email = Helpers::getInitiatorEmail($u->user_id);
-        //        if ($email !== null) {
 
-        //            try {
-        //                Mail::send(
-        //                    'mail.view-mail',
-        //                    ['data' => $deviation],
-        //                    function ($message) use ($email) {
-        //                        $message->to($email)
-        //                            ->subject("Activity Performed By " . Auth::user()->name);
-        //                    }
-        //                );
-        //            } catch (\Exception $e) {
-        //                //log error
-        //            }
-        //        }
-        //    }
-        //}
+        $list = Helpers::getHodUserList($deviation->division_id);
+        foreach ($list as $u) {
+            //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                $email = Helpers::getInitiatorEmail($u->user_id);
+                if ($email !== null) {
+                    try {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $deviation],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document Sent By " . Auth::user()->name);
+                            }
+                        );
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            //}
+        }
+
         $deviation->update();
         toastr()->success('Document Sent');
         return back();
@@ -8727,6 +8985,28 @@ foreach ($columns as $index => $column) {
         }
 
         $history->save();
+
+        $list = Helpers::getHodUserList($deviation->division_id);
+        foreach ($list as $u) {
+            //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                $email = Helpers::getInitiatorEmail($u->user_id);
+                if ($email !== null) {
+                    try {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $deviation],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document Sent By " . Auth::user()->name);
+                            }
+                        );
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            //}
+        }
+
         $deviation->update();
         toastr()->success('Document Sent');
         return back();
@@ -8769,6 +9049,29 @@ foreach ($columns as $index => $column) {
         }
 
         $history->save();
+
+
+        $list = Helpers::getHodUserList($deviation->division_id);
+        foreach ($list as $u) {
+            //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                $email = Helpers::getInitiatorEmail($u->user_id);
+                if ($email !== null) {
+                    try {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $deviation],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document Sent By " . Auth::user()->name);
+                            }
+                        );
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            //}
+        }
+
         $deviation->update();
         toastr()->success('Document Sent');
         return back();
@@ -8810,6 +9113,29 @@ foreach ($columns as $index => $column) {
         }
 
         $history->save();
+
+
+        $list = Helpers::getHodUserList($deviation->division_id);
+        foreach ($list as $u) {
+            //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                $email = Helpers::getInitiatorEmail($u->user_id);
+                if ($email !== null) {
+                    try {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $deviation],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document Sent By " . Auth::user()->name);
+                            }
+                        );
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            //}
+        }
+
         $deviation->update();
         toastr()->success('Document Sent');
         return back();
@@ -8880,26 +9206,28 @@ foreach ($columns as $index => $column) {
             $history->stage_id = $deviation->stage;
             $history->status = "Send to QA Initial Review";
             $history->save();
-            //foreach ($list as $u) {
-            //    if ($u->q_m_s_divisions_id == $deviation->division_id) {
-            //        $email = Helpers::getInitiatorEmail($u->user_id);
-            //        if ($email !== null) {
 
-            //            try {
-            //                Mail::send(
-            //                    'mail.view-mail',
-            //                    ['data' => $deviation],
-            //                    function ($message) use ($email) {
-            //                        $message->to($email)
-            //                            ->subject("Activity Performed By " . Auth::user()->name);
-            //                    }
-            //                );
-            //            } catch (\Exception $e) {
-            //                //log error
-            //            }
-            //        }
-            //    }
-            //}
+            $list = Helpers::getQAUserList($deviation->division_id);
+                foreach ($list as $u) {
+                    //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $deviation],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("Document Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    //}
+                }
+
             $deviation->update();
             toastr()->success('Document Sent');
             return back();
@@ -8943,6 +9271,27 @@ foreach ($columns as $index => $column) {
             }
 
             $history->save();
+
+            $list = Helpers::getQAUserList($deviation->division_id);
+            foreach ($list as $u) {
+                //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $deviation],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                //}
+            }
             $deviation->update();
 
             toastr()->success('Document Sent');
@@ -8988,6 +9337,28 @@ foreach ($columns as $index => $column) {
             }
 
             $history->save();
+
+            $list = Helpers::getQAUserList($deviation->division_id);
+            foreach ($list as $u) {
+                //if ($u->q_m_s_divisions_id == $deviation->division_id) {
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $deviation],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document Sent By " . Auth::user()->name);
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                //}
+            }
+
             $deviation->update();
 
             toastr()->success('Document Sent');
@@ -9062,7 +9433,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -9167,7 +9538,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -9279,7 +9650,7 @@ foreach ($columns as $index => $column) {
                                     ['data' => $deviation],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                            ->subject("Document Sent By " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {

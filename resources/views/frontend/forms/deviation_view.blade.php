@@ -842,7 +842,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             HOD Final Review Complete
                             </button>
-                        @elseif($data->stage == 9 && Helpers::check_roles($data->division_id, 'Deviation ', 44))
+                            @elseif($data->stage == 9 && Helpers::check_roles($data->division_id, 'Deviation ', 44))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Opened
                             </button>
@@ -9569,10 +9569,12 @@
             </div>
 
             @if ($data->hod_final_attachments)
-                    @foreach (json_decode($data->hod_final_attachments) as $file)
-                        <input id="hodfinalFile-{{ $loop->index  }}" type="hidden" name="existing_hod_final_attachments[{{ $loop->index  }}]" value="{{ $file }}">
-                    @endforeach
-                    @endif
+                @foreach (json_decode($data->hod_final_attachments) as $file)
+                    <input id="ATFIFile_6-{{ $loop->index }}" type="hidden"
+                    name="hod_final_attachment_files[{{ $loop->index }}]" value="{{ $file }}">
+                @endforeach
+            @endif
+
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Inv Attachments">HOD Final Attachments</label>
@@ -9589,7 +9591,7 @@
                                             target="_blank"><i class="fa fa-eye text-primary"
                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                         <a class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]) ? 'pointer-events: none;' : '' }}"
-                                        data-remove-id="hodfinalFile-{{ $loop->index }}"
+                                        data-remove-id="ATFIFile_6-{{ $loop->index }}"
                                             data-file-name="{{ $file }}"><i
                                                 class="fa-solid fa-circle-xmark"
                                                 style="color:red; font-size:20px;"></i></a>
@@ -9660,10 +9662,14 @@
             </div>
 
             @if ($data->qa_final_attachments)
-                    @foreach (json_decode($data->qa_final_attachments) as $file)
-                        <input id="qafinalattFile-{{ $loop->index  }}" type="hidden" name="existing_qa_final_attachments[{{ $loop->index  }}]" value="{{ $file }}">
-                    @endforeach
-                    @endif
+                @foreach (json_decode($data->qa_final_attachments) as $file)
+                    <input id="ATFIFile_7-{{ $loop->index }}" type="hidden"
+                    name="existing_qa_final_files[{{ $loop->index }}]"
+                    value="{{ $file }}">
+                @endforeach
+            @endif
+
+
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Inv Attachments">QA Final Attachments</label>
@@ -9680,7 +9686,7 @@
                                             target="_blank"><i class="fa fa-eye text-primary"
                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                         <a class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11]) ? 'pointer-events: none;' : '' }}"
-                                        data-remove-id="qafinalattFile-{{ $loop->index }}"
+                                       data-remove-id="ATFIFile_7-{{ $loop->index }}"
                                             data-file-name="{{ $file }}"><i
                                                 class="fa-solid fa-circle-xmark"
                                                 style="color:red; font-size:20px;"></i></a>
@@ -10687,12 +10693,12 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    {{-- EXISTING ATTACHMENTS START --}}
 
-                    @if ($data->Initial_attachment)
-                        @foreach (json_decode($data->Initial_attachment) as $file)
+
+                    @if ($data->QA_attachments)
+                        @foreach (json_decode($data->QA_attachments) as $file)
                             <input id="ATFIFile_4-{{ $loop->index }}" type="hidden"
-                                name="existing_qa_attachments_files[{{ $loop->index }}]" value="{{ $file }}">
+                                name="qa_attachments_files[{{ $loop->index }}]" value="{{ $file }}">
                         @endforeach
                     @endif
 
@@ -10797,12 +10803,15 @@
                         @enderror
                     </div>
 
-                    {{-- EXISTING ATTACHMENTS START --}}
                     @if ($data->initiator_final_attachments)
-                    @foreach (json_decode($data->initiator_final_attachments) as $file)
-                        <input id="initorUpdateFile-{{ $loop->index  }}" type="hidden" name="existing_initiator_final_attachments[{{ $loop->index  }}]" value="{{ $file }}">
-                    @endforeach
+                        @foreach (json_decode($data->initiator_final_attachments) as $file)
+                            <input id="ATFIFile_5-{{ $loop->index }}" type="hidden"
+                             name="initiator_files[{{ $loop->index }}]"
+                             value="{{ $file }}">
+                        @endforeach
                     @endif
+
+
                     {{-- EXISTING ATTACHMENTS END --}}
                     <div class="col-lg-12">
                         <div class="group-input">
@@ -10820,7 +10829,9 @@
                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                 <a class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11]) ? 'pointer-events: none;' : '' }}"
-                                                data-remove-id="initorUpdateFile-{{ $loop->index }}"
+
+                                                    data-remove-id="ATFIFile_5-{{ $loop->index }}"
+
                                                     data-file-name="{{ $file }}"><i
                                                         class="fa-solid fa-circle-xmark"
                                                         style="color:red; font-size:20px;"></i></a>
@@ -10975,10 +10986,13 @@
                     </div>
 
                     @if ($data->closure_attachment)
-                    @foreach (json_decode($data->closure_attachment) as $file)
-                        <input id="closureattachmentFile-{{ $loop->index  }}" type="hidden" name="existing_closure_attachment[{{ $loop->index  }}]" value="{{ $file }}">
-                    @endforeach
+                        @foreach (json_decode($data->closure_attachment) as $file)
+                            <input id="ATFIFile_8-{{ $loop->index }}" type="hidden"
+                            name="existing_clouser_files[{{ $loop->index }}]"
+                            value="{{ $file }}">
+                        @endforeach
                     @endif
+
                     <div class="col-12">
                         <div class="group-input">
                             <label for="closure attachment">Closure Attachments</label>
@@ -10995,7 +11009,9 @@
                                                         class="fa fa-eye text-primary"
                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                 <a type="button" class="remove-file" style="{{ in_array($data->stage, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11]) ? 'pointer-events: none;' : '' }}"
-                                                data-remove-id="closureattachmentFile-{{ $loop->index }}"
+
+                                                    data-remove-id="ATFIFile_8-{{ $loop->index }}"
+
                                                     data-file-name="{{ $file }}"><i
                                                         class="fa-solid fa-circle-xmark"
                                                         style="color:red; font-size:20px;"></i></a>

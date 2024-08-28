@@ -842,7 +842,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             HOD Final Review Complete
                             </button>
-                        @elseif($data->stage == 9 && Helpers::check_roles($data->division_id, 'Deviation ', 18))
+                        @elseif($data->stage == 9 && Helpers::check_roles($data->division_id, 'Deviation ', 44))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Opened
                             </button>

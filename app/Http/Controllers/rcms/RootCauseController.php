@@ -1671,26 +1671,30 @@ $history->save();
                 }
 
                 $history->save();
-            //     $list = Helpers::getQAUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $root->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-            //               try {
-            //                 Mail::send(
-            //                     'mail.view-mail',
-            //                      ['data' => $root],
-            //                   function ($message) use ($email) {
-            //                       $message->to($email)
-            //                           ->subject("Document sent ".Auth::user()->name);
-            //                   }
-            //                 );
-            //               } catch (\Throwable $e) {
-            //                 //throw $th;
-            //               }
-            //             }
-            //      } 
-            //   }
+
+                $list = Helpers::getInitiatorUserList($root->division_id);
+                  
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $root->division_id){
+                        $email = Helpers::getInitiatorEmail($root->user_id);
+                        if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $root],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document sent ".Auth::user()->name);
+                                }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                            }
+                        }
+                // } 
+            }
+         
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1774,7 +1778,8 @@ $history->save();
                 toastr()->success('Document Sent');
                 return back();
             }
-        } else {
+        
+    else {
             toastr()->error('E-signature Not match');
             return back();
         }
@@ -1820,7 +1825,7 @@ $history->save();
                 }
                 $history->save();
     
-                    $list = Helpers::getInitiatorUserList($root->division_id);
+                $list = Helpers::getInitiatorUserList($root->division_id);
                   
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $root->division_id){
@@ -1836,7 +1841,7 @@ $history->save();
                                     }
                                     );
                                 } catch (\Exception $e) {
-                                    // 
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             }
                     // } 

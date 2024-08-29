@@ -4574,10 +4574,10 @@ class SupplierSiteController extends Controller
                                     //         ->subject("Document is Sent By".Auth::user()->name);
                                     // }
 
-                                    ['data' => $supplierSite,'history'=>"Qualification Complete Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_qualification_comment,'user'=> Auth::user()->name],
+                                    ['data' => $supplierSite,'site'=>'SS','history'=>"Qualification Complete",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_qualification_comment,'user'=> Auth::user()->name],
                                    function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Qualification Complete Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Qualification Complete Performed");
                                     }
                                   );
                                   } catch (\Exception $e) {
@@ -4646,10 +4646,10 @@ class SupplierSiteController extends Controller
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }
 
-                                ['data' => $supplierSite,'history'=>"Audit Failed Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_supplier_audit_comment,'user'=> Auth::user()->name],
+                                ['data' => $supplierSite,'site'=>"SS",'history'=>"Audit Failed",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_supplier_audit_comment,'user'=> Auth::user()->name],
                                    function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Audit Failed Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Failed Performed");
                                     }
                                );
                             } catch (\Exception $e) {
@@ -4717,10 +4717,10 @@ class SupplierSiteController extends Controller
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }
 
-                                ['data' => $supplierSite,'history'=>"Supplier Obsolete Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_rejection_comment,'user'=> Auth::user()->name],
+                                ['data' => $supplierSite,'site'=>"SS",'history'=>"Supplier Obsolete",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_rejection_comment,'user'=> Auth::user()->name],
                                    function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Supplier Obsolete Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Supplier Obsolete Performed");
                                     }
                                );
                             } catch (\Exception $e) {
@@ -4744,10 +4744,10 @@ class SupplierSiteController extends Controller
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }
 
-                                ['data' => $supplierSite,'history'=>"Supplier Obsolete Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_rejection_comment,'user'=> Auth::user()->name],
+                                ['data' => $supplierSite,'site'=>"SS",'history'=>"Supplier Obsolete",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_rejection_comment,'user'=> Auth::user()->name],
                                    function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Supplier Obsolete Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Supplier Obsolete Performed");
                                     }
                                );
                             } catch (\Exception $e) {
@@ -4824,10 +4824,10 @@ class SupplierSiteController extends Controller
                         //         ->subject("Document is Sent By".Auth::user()->name);
                         // }
 
-                        ['data' => $supplierSite,'history'=>"Audit Passed Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->supplier_approved_comment,'user'=> Auth::user()->name],
+                        ['data' => $supplierSite,'site'=>"SS",'history'=>"Audit Passed",'process' => 'Supplier Site', 'comment' => $supplierSite->supplier_approved_comment,'user'=> Auth::user()->name],
                                    function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Audit Passed Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Passed Performed");
                                     }
                        );
                     } catch (\Exception $e) {
@@ -4906,10 +4906,10 @@ class SupplierSiteController extends Controller
                         //         ->subject("Document is Sent By".Auth::user()->name);
                         // }
 
-                        ['data' => $supplierSite,'history'=>"Supplier Obsolete Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->supplier_approved_to_obselete_comment,'user'=> Auth::user()->name],
+                        ['data' => $supplierSite,'site'=>"SS",'history'=>"Supplier Obsolete",'process' => 'Supplier Site', 'comment' => $supplierSite->supplier_approved_to_obselete_comment,'user'=> Auth::user()->name],
                              function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Supplier Obsolete Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Supplier Obsolete Performed");
                                 }
                        );
                     } catch (\Exception $e) {
@@ -4933,10 +4933,10 @@ class SupplierSiteController extends Controller
                         //         ->subject("Document is Sent By".Auth::user()->name);
                         // }
 
-                        ['data' => $supplierSite,'history'=>"Supplier Obsolete Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->supplier_approved_to_obselete_comment,'user'=> Auth::user()->name],
+                        ['data' => $supplierSite,'site'=>"SS",'history'=>"Supplier Obsolete",'process' => 'Supplier Site', 'comment' => $supplierSite->supplier_approved_to_obselete_comment,'user'=> Auth::user()->name],
                              function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Supplier Obsolete Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Supplier Obsolete Performed");
                                 }
 
                         
@@ -5038,10 +5038,10 @@ class SupplierSiteController extends Controller
                                     //         ->subject("Document is Sent By".Auth::user()->name);
                                     // }
 
-                                    ['data' => $supplierSite,'history'=>"Cancel Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->cancelled_comment,'user'=> Auth::user()->name],
+                                    ['data' => $supplierSite,'site'=>"SS",'history'=>"Cancel",'process' => 'Supplier Site', 'comment' => $supplierSite->cancelled_comment,'user'=> Auth::user()->name],
                                     function ($message) use ($email,$supplierSite) {
                                                $message->to($email)
-                                               ->subject("QMS Notification: Supplier Site, Record " . $openState->record . " - Activity: Cancel Performed");
+                                               ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT). " - Activity: Cancel Performed");
                                        }
                                   );
                                   } catch (\Exception $e) {
@@ -5065,10 +5065,10 @@ class SupplierSiteController extends Controller
                                     //         ->subject("Document is Sent By".Auth::user()->name);
                                     // }
 
-                                    ['data' => $supplierSite,'history'=>"Cancel Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->cancelled_comment,'user'=> Auth::user()->name],
+                                    ['data' => $supplierSite,'site'=>"SS",'history'=>"Cancel Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->cancelled_comment,'user'=> Auth::user()->name],
                                     function ($message) use ($email,$supplierSite) {
                                                $message->to($email)
-                                               ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Cancel Performed");
+                                               ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                        }
                                   );
                                   } catch (\Exception $e) {
@@ -5148,10 +5148,10 @@ class SupplierSiteController extends Controller
                                     // }
 
                                     
-                                    ['data' => $supplierSite,'history'=>"Re-Audit Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->reAudit_comment,'user'=> Auth::user()->name],
+                                    ['data' => $supplierSite,'site'=>"SS",'history'=>"Re-Audit",'process' => 'Supplier Site', 'comment' => $supplierSite->reAudit_comment,'user'=> Auth::user()->name],
                                     function ($message) use ($email,$supplierSite) {
                                                $message->to($email)
-                                               ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Re-Audit Performed");
+                                               ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Re-Audit Performed");
                                        }
                                   );
                                 } catch (\Exception $e) {
@@ -5218,10 +5218,10 @@ class SupplierSiteController extends Controller
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }
 
-                                ['data' => $supplierSite,'history'=>"Reject Due To Quality Issues Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->rejectedDueToQuality_comment,'user'=> Auth::user()->name],
+                                ['data' => $supplierSite,'site'=>"SS",'history'=>"Reject Due To Quality Issues",'process' => 'Supplier Site', 'comment' => $supplierSite->rejectedDueToQuality_comment,'user'=> Auth::user()->name],
                                     function ($message) use ($email,$supplierSite) {
                                                $message->to($email)
-                                               ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Reject Due To Quality Issues Performed");
+                                               ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Due To Quality Issues Performed");
                                        }
                               );
                             } catch (\Exception $e) {
@@ -5294,11 +5294,11 @@ class SupplierSiteController extends Controller
 
                                 // ['data' => $riskAssessment, 'history' => 'Submit Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->submitted_comment,'user'=> Auth::user()->name],
 
-                                ['data' => $supplierSite,'history'=>"Conditionally Approved Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->conditionally_approved_comments,'user'=> Auth::user()->name],
+                                ['data' => $supplierSite,'site'=>"SS",'history'=>"Conditionally Approved",'process' => 'Supplier Site', 'comment' => $supplierSite->conditionally_approved_comments,'user'=> Auth::user()->name],
                                 
                                 function ($message) use ($email,$supplierSite) {
                                            $message->to($email)
-                                           ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Conditionally Approved Performed");
+                                           ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Conditionally Approved Performed");
                                    }
                                );
                             } catch (\Exception $e) {

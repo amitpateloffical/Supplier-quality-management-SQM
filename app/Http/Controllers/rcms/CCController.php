@@ -3198,10 +3198,10 @@ class CCController extends Controller
                             try {
                               Mail::send(
                                   'mail.view-mail',
-                                  ['data' => $changeControl,'history'=>"Submit Performed",'process' => 'Change Control', 'comment' => $changeControl->submitted_comment,'user'=> Auth::user()->name],
+                                  ['data' => $changeControl,'site'=>"CC",'history'=>"Submit",'process' => 'Change Control', 'comment' => $changeControl->submitted_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Submit Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
                                 }
                               );
                             } catch (\Exception $e) {
@@ -3261,10 +3261,10 @@ class CCController extends Controller
                                 //     $message->to($email)
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }
-                                ['data' => $changeControl,'history'=>"HOD review Complete Performed",'process' => 'Change Control', 'comment' => $changeControl->hod_review_completed_comment,'user'=> Auth::user()->name],
+                                ['data' => $changeControl,'site'=>"CC",'history'=>"HOD review Complete",'process' => 'Change Control', 'comment' => $changeControl->hod_review_completed_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: HOD review Complete Performed");
+                                        ->subject("QMS Notification: Change Control, Record " .str_pad($changeControl->record, 4, '0', STR_PAD_LEFT). " - Activity: HOD review Complete Performed");
                                 }
                               );
                                } catch (\Exception $e) {
@@ -3327,10 +3327,10 @@ class CCController extends Controller
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }
 
-                                ['data' => $changeControl,'history'=>"Send to CFT/SME/QA Review Performed",'process' => 'Change Control', 'comment' => $changeControl->cft_review_comment,'user'=> Auth::user()->name],
+                                ['data' => $changeControl,'site'=>"CC",'history'=>"Send to CFT/SME/QA Review",'process' => 'Change Control', 'comment' => $changeControl->cft_review_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Send to CFT/SME/QA Review Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to CFT/SME/QA Review Performed");
                                 }
                               );
                               } catch (\Exception $e) {
@@ -3354,10 +3354,10 @@ class CCController extends Controller
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }
 
-                                ['data' => $changeControl,'history'=>"Send to CFT/SME/QA Review Performed",'process' => 'Change Control', 'comment' => $changeControl->cft_review_comment,'user'=> Auth::user()->name],
+                                ['data' => $changeControl,'site'=>"CC",'history'=>"Send to CFT/SME/QA Review",'process' => 'Change Control', 'comment' => $changeControl->cft_review_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Send to CFT/SME/QA Review Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to CFT/SME/QA Review Performed");
                                 }
                               );
                               } catch (\Exception $e) {
@@ -3503,10 +3503,10 @@ class CCController extends Controller
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }
 
-                                ['data' => $changeControl,'history'=>"Implemented Performed",'process' => 'Change Control', 'comment' => $changeControl->implemented_comment,'user'=> Auth::user()->name],
+                                ['data' => $changeControl,'site'=>"CC",'history'=>"Implemented",'process' => 'Change Control', 'comment' => $changeControl->implemented_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Implemented Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Implemented Performed");
                                 }
                               );
 
@@ -3531,10 +3531,10 @@ class CCController extends Controller
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }
 
-                                ['data' => $changeControl,'history'=>"Implemented Performed",'process' => 'Change Control', 'comment' => $changeControl->implemented_comment,'user'=> Auth::user()->name],
+                                ['data' => $changeControl,'site'=>"CC",'history'=>"Implemented",'process' => 'Change Control', 'comment' => $changeControl->implemented_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Implemented Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Implemented Performed");
                                 }
                               );
                             } catch (\Exception $e) {
@@ -3558,10 +3558,10 @@ class CCController extends Controller
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }
 
-                                ['data' => $changeControl,'history'=>"Implemented Performed",'process' => 'Change Control', 'comment' => $changeControl->implemented_comment,'user'=> Auth::user()->name],
+                                ['data' => $changeControl,'site'=>"CC",'history'=>"Implemented",'process' => 'Change Control', 'comment' => $changeControl->implemented_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Implemented Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Implemented Performed");
                                 }
                               );
                             } catch (\Exception $e) {
@@ -3659,10 +3659,10 @@ class CCController extends Controller
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }.
 
-                                ['data' => $changeControl,'history'=>"More Information Required Performed",'process' => 'Change Control', 'comment' => $changeControl->sent_to_opened_comment,'user'=> Auth::user()->name],
+                                ['data' => $changeControl,'site'=>"CC",'history'=>"More Information Required",'process' => 'Change Control', 'comment' => $changeControl->sent_to_opened_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: More Information Required Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
                                 }
                               );
                              } catch (\Exception $e) {
@@ -3723,10 +3723,10 @@ class CCController extends Controller
                             //         ->subject("Document is Sent By".Auth::user()->name);
                             // }
 
-                            ['data' => $changeControl,'history'=>"More Information Required Performed",'process' => 'Change Control', 'comment' => $changeControl->requested_to_hod_comment,'user'=> Auth::user()->name],
+                            ['data' => $changeControl,'site'=>"CC",'history'=>"More Information Required",'process' => 'Change Control', 'comment' => $changeControl->requested_to_hod_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: More Information Required Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
                                 }
                           );
                           } catch (\Exception $e) {
@@ -3788,10 +3788,10 @@ class CCController extends Controller
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }
 
-                                ['data' => $changeControl,'history'=>"Request More Information Performed",'process' => 'Change Control', 'comment' => $changeControl->requested_to_hod_comment,'user'=> Auth::user()->name],
+                                ['data' => $changeControl,'site'=>"CC",'history'=>"Request More Information",'process' => 'Change Control', 'comment' => $changeControl->requested_to_hod_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Request More Information Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Information Performed");
                                 }
                               );
                               } catch (\Exception $e) {
@@ -3930,10 +3930,10 @@ class CCController extends Controller
                             //         ->subject("Document is Sent By".Auth::user()->name);
                             // }
 
-                            ['data' => $changeControl,'history'=>"CFT/SME/QA Review Not Required Performed",'process' => 'Change Control', 'comment' => $changeControl->cftNot_required_comment,'user'=> Auth::user()->name],
+                            ['data' => $changeControl,'site'=>"CC",'history'=>"CFT/SME/QA Review Not Required",'process' => 'Change Control', 'comment' => $changeControl->cftNot_required_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: CFT/SME/QA Review Not Required Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT/SME/QA Review Not Required Performed");
                                 }
                           );
                           } catch (\Exception $e) {
@@ -3957,10 +3957,10 @@ class CCController extends Controller
                             //         ->subject("Document is Sent By".Auth::user()->name);
                             // }
 
-                            ['data' => $changeControl,'history'=>"CFT/SME/QA Review Not Required Performed",'process' => 'Change Control', 'comment' => $changeControl->cftNot_required_comment,'user'=> Auth::user()->name],
+                            ['data' => $changeControl,'site'=>"CC",'history'=>"CFT/SME/QA Review Not Required",'process' => 'Change Control', 'comment' => $changeControl->cftNot_required_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: CFT/SME/QA Review Not Required Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT/SME/QA Review Not Required Performed");
                                 }
 
                             
@@ -4039,10 +4039,10 @@ class CCController extends Controller
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }
 
-                                ['data' => $changeControl,'history'=>"Cancel Performed",'process' => 'Change Control', 'comment' => $changeControl->cancelled_comment,'user'=> Auth::user()->name],
+                                ['data' => $changeControl,'site'=>"CC",'history'=>"Cancel",'process' => 'Change Control', 'comment' => $changeControl->cancelled_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                 }
                               );
                                } catch (\Exception $e) {
@@ -4066,10 +4066,10 @@ class CCController extends Controller
                                 //         ->subject("Document is Sent By".Auth::user()->name);
                                 // }
 
-                                ['data' => $changeControl,'history'=>"Cancel Performed",'process' => 'Change Control', 'comment' => $changeControl->cancelled_comment,'user'=> Auth::user()->name],
+                                ['data' => $changeControl,'site'=>"CC",'history'=>"Cancel",'process' => 'Change Control', 'comment' => $changeControl->cancelled_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                 }
                               );
                                } catch (\Exception $e) {
@@ -4093,10 +4093,10 @@ class CCController extends Controller
                             //           ->subject("Document is Sent By".Auth::user()->name);
                             //   }
 
-                            ['data' => $changeControl,'history'=>"Cancel Performed",'process' => 'Change Control', 'comment' => $changeControl->cancelled_comment,'user'=> Auth::user()->name],
+                            ['data' => $changeControl,'site'=>"CC",'history'=>"Cancel",'process' => 'Change Control', 'comment' => $changeControl->cancelled_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Change Control, Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                 }
                             );
                              } catch (\Exception $e) {

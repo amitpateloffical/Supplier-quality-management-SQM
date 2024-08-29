@@ -3499,14 +3499,14 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Submit Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->submitted_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Submit', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->submitted_comment, 'user' => Auth::user()->name],
                                 //   function ($message) use ($email) {
                                 //       $message->to($email)
                                 //         //   ->subject("Document is Sent By".Auth::user()->name);
                                 //   }
                                 function ($message) use ($email, $riskAssessment, $history) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Submit Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -3561,10 +3561,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Evaluation Complete Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->evaluated_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Evaluation Complete', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->evaluated_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Evaluation Complete Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Evaluation Complete Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -3617,10 +3617,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Action Plan Complete Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->plan_approved_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Action Plan Complete', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->plan_approved_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Action Plan Complete Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Action Plan Complete Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -3677,10 +3677,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Action Plan Approved Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->action_plan_approved_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Action Plan Approved', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->action_plan_approved_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Action Plan Approved Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Action Plan Approved Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -3774,10 +3774,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Residual Risk Evaluation Completed Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->residual_risk_completed_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Residual Risk Evaluation Completed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->residual_risk_completed_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Residual Risk Evaluation Completed Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Residual Risk Evaluation Completed Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -3796,10 +3796,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => "Residual Risk Evaluation Completed Performed", 'process' => 'Risk Assessment', 'comment' => $riskAssessment->residual_risk_completed_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => "Residual Risk Evaluation Completed", 'process' => 'Risk Assessment', 'comment' => $riskAssessment->residual_risk_completed_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Residual Risk Evaluation Completed Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Residual Risk Evaluation Completed Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -3817,10 +3817,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Residual Risk Evaluation Completed Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->residual_risk_completed_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Residual Risk Evaluation Completed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->residual_risk_completed_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Residual Risk Evaluation Completed Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Residual Risk Evaluation Completed Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -3887,10 +3887,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Cancel Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Cancel', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -3909,10 +3909,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Cancel Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Cancel', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -3930,10 +3930,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Cancel Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Cancel', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -3988,10 +3988,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Cancel Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Cancel', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -4010,10 +4010,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Cancel Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Cancel', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -4031,10 +4031,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Cancel Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Cancel', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -4102,10 +4102,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'More Information Required Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->analysis_more_info_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'More Information Required', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->analysis_more_info_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: More Information Required Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -4161,10 +4161,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Request More-Info Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->request_more_info_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Request More-Info', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->request_more_info_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Request More-Info Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More-Info Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -4219,10 +4219,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Reject Action Plan Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->reject_action_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Reject Action Plan', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->reject_action_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Reject Action Plan Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Action Plan Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -4277,10 +4277,10 @@ class RiskManagementController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $riskAssessment, 'history' => 'Request More Info Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->action_request_action_comment, 'user' => Auth::user()->name],
+                                ['data' => $riskAssessment, 'site' => 'RA', 'history' => 'Request More Info', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->action_request_action_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Request More Info Performed");
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . str_pad($riskAssessment->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
                                 }
                             );
                         } catch (\Exception $e) {

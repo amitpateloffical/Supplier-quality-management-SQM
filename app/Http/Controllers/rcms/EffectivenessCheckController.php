@@ -1146,10 +1146,10 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness, 'history' => 'Submit Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->submit_comment, 'user' => Auth::user()->name],
+                                ['data' => $effectiveness, 'site' => 'EC', 'history' => 'Submit', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->submit_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Submit Performed");
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . str_pad($effectiveness->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -1229,10 +1229,10 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness, 'history' => 'Effective Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->effective_comment, 'user' => Auth::user()->name],
+                                ['data' => $effectiveness, 'site' => 'EC', 'history' => 'Effective', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->effective_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Effective Performed");
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . str_pad($effectiveness->record, 4, '0', STR_PAD_LEFT) . " - Activity: Effective Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -1297,10 +1297,10 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness, 'history' => 'Effective Approval Completed Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->effective_approval_complete_comment, 'user' => Auth::user()->name],
+                                ['data' => $effectiveness, 'site' => 'EC', 'history' => 'Effective Approval Completed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->effective_approval_complete_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Effective Approval Completed Performed");
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . str_pad($effectiveness->record, 4, '0', STR_PAD_LEFT) . " - Activity: Effective Approval Completed Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -1317,10 +1317,10 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness, 'history' => 'Effective Approval Completed Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->effective_approval_complete_comment, 'user' => Auth::user()->name],
+                                ['data' => $effectiveness, 'site' => 'EC', 'history' => 'Effective Approval Completed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->effective_approval_complete_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Effective Approval Completed Performed");
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . str_pad($effectiveness->record, 4, '0', STR_PAD_LEFT) . " - Activity: Effective Approval Completed Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -1399,10 +1399,10 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness, 'history' => 'Not Effective Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->not_effective_comment, 'user' => Auth::user()->name],
+                                ['data' => $effectiveness, 'site' => 'EC', 'history' => 'Not Effective', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->not_effective_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Not Effective Performed");
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . str_pad($effectiveness->record, 4, '0', STR_PAD_LEFT) . " - Activity: Not Effective Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -1468,10 +1468,10 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness, 'history' => 'Not Effective Approval Complete Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->not_effective_approval_complete_comment, 'user' => Auth::user()->name],
+                                ['data' => $effectiveness, 'site' => 'EC', 'history' => 'Not Effective Approval Complete', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->not_effective_approval_complete_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Not Effective Approval Complete Performed");
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . str_pad($effectiveness->record, 4, '0', STR_PAD_LEFT) . " - Activity: Not Effective Approval Complete Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -1488,10 +1488,10 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness, 'history' => 'Not Effective Approval Complete Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->not_effective_approval_complete_comment, 'user' => Auth::user()->name],
+                                ['data' => $effectiveness, 'site' => 'EC', 'history' => 'Not Effective Approval Complete', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->not_effective_approval_complete_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Not Effective Approval Complete Performed");
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . str_pad($effectiveness->record, 4, '0', STR_PAD_LEFT) . " - Activity: Not Effective Approval Complete Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -1569,10 +1569,10 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness, 'history' => 'More Information Required Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->more_effective_comment, 'user' => Auth::user()->name],
+                                ['data' => $effectiveness, 'site' => 'EC', 'history' => 'More Information Required', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->more_effective_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: More Information Required Performed");
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . str_pad($effectiveness->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -1640,10 +1640,10 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness, 'history' => 'More Information Required Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->more_not_effective_comment, 'user' => Auth::user()->name],
+                                ['data' => $effectiveness, 'site' => 'EC', 'history' => 'More Information Required', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->more_not_effective_comment, 'user' => Auth::user()->name],
                                 function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: More Information Required Performed");
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . str_pad($effectiveness->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
                                 }
                             );
                         } catch (\Exception $e) {

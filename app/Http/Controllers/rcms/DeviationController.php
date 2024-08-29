@@ -4079,7 +4079,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->hod_final_remarks) || $lastDeviation->hod_final_remarks === '') {
                 $history->action_name = 'New';
@@ -4120,7 +4120,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->hod_final_attachments) || $lastDeviation->hod_final_attachments === '') {
                 $history->action_name = 'New';
@@ -4143,7 +4143,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->qa_final_remarks) || $lastDeviation->qa_final_remarks === '') {
                 $history->action_name = 'New';
@@ -4165,7 +4165,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->qa_final_attachments) || $lastDeviation->qa_final_attachments === '') {
                 $history->action_name = 'New';
@@ -4188,7 +4188,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->initiator_final_remarks) || $lastDeviation->initiator_final_remarks === '') {
                 $history->action_name = 'New';
@@ -4210,7 +4210,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->initiator_final_attachments) || $lastDeviation->initiator_final_attachments === '') {
                 $history->action_name = 'New';
@@ -4232,7 +4232,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->short_description) || $lastDeviation->short_description === '') {
                 $history->action_name = 'New';
@@ -4254,7 +4254,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Initiator_Group) || $lastDeviation->Initiator_Group === '') {
                 $history->action_name = 'New';
@@ -4276,7 +4276,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Deviation_date) || $lastDeviation->Deviation_date === '') {
                 $history->action_name = 'New';
@@ -4298,7 +4298,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->deviation_time) || $lastDeviation->deviation_time === '') {
                 $history->action_name = 'New';
@@ -4320,7 +4320,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Delay_Justification) || $lastDeviation->Delay_Justification === '') {
                 $history->action_name = 'New';
@@ -4342,7 +4342,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Facility) || $lastDeviation->Facility === '') {
                 $history->action_name = 'New';
@@ -4364,7 +4364,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Observed_by) || $lastDeviation->Observed_by === '') {
                 $history->action_name = 'New';
@@ -4386,7 +4386,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Deviation_reported_date) || $lastDeviation->Deviation_reported_date === '') {
                 $history->action_name = 'New';
@@ -4408,7 +4408,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->audit_type) || $lastDeviation->audit_type === '') {
                 $history->action_name = 'New';
@@ -4430,7 +4430,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Others) || $lastDeviation->Others === '') {
                 $history->action_name = 'New';
@@ -4452,7 +4452,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Facility_Equipment) || $lastDeviation->Facility_Equipment === '') {
                 $history->action_name = 'New';
@@ -4474,7 +4474,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Document_Details_Required) || $lastDeviation->Document_Details_Required === '') {
                 $history->action_name = 'New';
@@ -4496,7 +4496,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Description_Deviation) || $lastDeviation->Description_Deviation === '') {
                 $history->action_name = 'New';
@@ -4518,7 +4518,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Immediate_Action) || $lastDeviation->Immediate_Action === '') {
                 $history->action_name = 'New';
@@ -4540,7 +4540,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Preliminary_Impact) || $lastDeviation->Preliminary_Impact === '') {
                 $history->action_name = 'New';
@@ -4569,7 +4569,7 @@ class DeviationController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDeviation->status;
-                    $history->change_to =   "Not Applicable";
+                    $history->change_to = "Not Applicable";
                     $history->change_from = $lastDeviation->status;
                     if ($existingHistory) {
                         $history->action_name = "Update";
@@ -4615,7 +4615,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->HOD_Remarks) || $lastDeviation->HOD_Remarks === '') {
                 $history->action_name = 'New';
@@ -4865,7 +4865,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->short_description_required) || $lastDeviation->short_description_required === '') {
                 $history->action_name = 'New';
@@ -4887,7 +4887,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->nature_of_repeat) || $lastDeviation->nature_of_repeat === '') {
                 $history->action_name = 'New';
@@ -4910,7 +4910,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Customer_notification) || $lastDeviation->Customer_notification === '') {
                 $history->action_name = 'New';
@@ -4932,7 +4932,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->customers) || $lastDeviation->customers === '') {
                 $history->action_name = 'New';
@@ -4954,7 +4954,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->QAInitialRemark) || $lastDeviation->QAInitialRemark === '') {
                 $history->action_name = 'New';
@@ -4989,7 +4989,7 @@ class DeviationController extends Controller
                      $history->user_name = Auth::user()->name;
                      $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                      $history->origin_state = $lastDeviation->status;
-                     $history->change_to =   "Not Applicable";
+                     $history->change_to = "Not Applicable";
                      $history->change_from = $lastDeviation->status;
                      if ($existingHistory) {
                          $history->action_name = "Update";
@@ -5033,7 +5033,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Root_cause) || $lastDeviation->Root_cause === '') {
                 $history->action_name = 'New';
@@ -5056,7 +5056,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Post_Categorization) || $lastDeviation->Post_Categorization === '') {
                 $history->action_name = 'New';
@@ -5078,7 +5078,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Investigation_Of_Review) || $lastDeviation->Investigation_Of_Review === '') {
                 $history->action_name = 'New';
@@ -5100,7 +5100,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->QA_Feedbacks) || $lastDeviation->QA_Feedbacks === '') {
                 $history->action_name = 'New';
@@ -5129,7 +5129,7 @@ class DeviationController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDeviation->status;
-                    $history->change_to =   "Not Applicable";
+                    $history->change_to = "Not Applicable";
                     $history->change_from = $lastDeviation->status;
                     if ($existingHistory) {
                         $history->action_name = "Update";
@@ -5175,7 +5175,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Closure_Comments) || $lastDeviation->Closure_Comments === '') {
                 $history->action_name = 'New';
@@ -5197,7 +5197,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->Disposition_Batch) || $lastDeviation->Disposition_Batch === '') {
                 $history->action_name = 'New';
@@ -5219,7 +5219,7 @@ class DeviationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDeviation->status;
             if (is_null($lastDeviation->closure_attachment) || $lastDeviation->closure_attachment === '') {
                 $history->action_name = 'New';
@@ -5412,7 +5412,7 @@ class DeviationController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "HOD Review";
+                $history->change_to = "HOD Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 if (is_null($lastDocument->submit_by) || $lastDocument->submit_by === '') {
@@ -5433,7 +5433,7 @@ class DeviationController extends Controller
                              try {
                                  Mail::send(
                                      'mail.view-mail',
-                                     ['data' => $deviation, 'history' => 'Submit Performed', 'process' => 'Deviation', 'comment' => $deviation->submit_comment, 'user'=> Auth::user()->name],
+                                     ['data' => $deviation, 'site' => 'DEV', 'history' => 'Submit', 'process' => 'Deviation', 'comment' => $deviation->submit_comment, 'user'=> Auth::user()->name],
                                      //     function ($message) use ($email) {
                                 //         $message->to($email)
                                 //             ->subject("Document Sent By " . Auth::user()->name);
@@ -5441,7 +5441,7 @@ class DeviationController extends Controller
                                 // );
                                  function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Submit Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed"); }
                                 );
                              } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -5514,7 +5514,7 @@ class DeviationController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "QA Initial Review";
+                $history->change_to = "QA Initial Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Approved';
                 if (is_null($lastDocument->HOD_Review_Complete_By) || $lastDocument->HOD_Review_Complete_By === '') {
@@ -5532,7 +5532,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'HOD Review Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->HOD_Review_Comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'HOD Review Complete', 'process' => 'Deviation', 'comment' => $deviation->HOD_Review_Comments, 'user'=> Auth::user()->name],
                                     //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -5540,7 +5540,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: HOD Review Complete Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -5565,7 +5565,7 @@ class DeviationController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Not Applicable";
+                    $history->change_to = "Not Applicable";
                     $history->change_from = $lastDocument->status;
                     if (is_null($lastDocument->record_number) || $lastDocument->record_number === '') {
                         $history->action_name = 'New';
@@ -5637,7 +5637,7 @@ class DeviationController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->change_to =   "CFT Review";
+                $history->change_to = "CFT Review";
                 $history->change_from = $lastDocument->status;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
@@ -5658,7 +5658,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'QA Initial Review Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Initial_Review_Comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'QA Initial Review Complete', 'process' => 'Deviation', 'comment' => $deviation->QA_Initial_Review_Comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -5666,7 +5666,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Initial Review Complete Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Initial Review Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -5870,7 +5870,7 @@ class DeviationController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             //$history->origin_state = $lastDeviation->status;
-                            $history->change_to =   "Not Applicable";
+                            $history->change_to = "Not Applicable";
                             $history->change_from = "CFT";
                             if (is_null($getCft->production_by) || $getCft->production_by === '') {
                                 $history->action_name = 'New';
@@ -5894,7 +5894,7 @@ class DeviationController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             //$history->origin_state = $lastDeviation->status;
-                            $history->change_to =   "Not Applicable";
+                            $history->change_to = "Not Applicable";
                             $history->change_from = "CFT";
                             if (is_null($getCft->production_on) || $getCft->production_on === '') {
                                 $history->action_name = 'New';
@@ -5922,7 +5922,7 @@ class DeviationController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             //$history->origin_state = $lastDeviation->status;
-                            $history->change_to =   "Not Applicable";
+                            $history->change_to = "Not Applicable";
                             $history->change_from = "CFT";
                             if (is_null($getCft->Warehouse_by) || $getCft->Warehouse_by === '') {
                                 $history->action_name = 'New';
@@ -5946,7 +5946,7 @@ class DeviationController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             //$history->origin_state = $lastDeviation->status;
-                            $history->change_to =   "Not Applicable";
+                            $history->change_to = "Not Applicable";
                             $history->change_from = "CFT";
                             if (is_null($getCft->Warehouse_on) || $getCft->Warehouse_on === '') {
                                 $history->action_name = 'New';
@@ -5974,7 +5974,7 @@ class DeviationController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             //$history->origin_state = $lastDeviation->status;
-                            $history->change_to =   "Not Applicable";
+                            $history->change_to = "Not Applicable";
                             $history->change_from = "CFT";
                             if (is_null($getCft->Quality_Control_by) || $getCft->Quality_Control_by === '') {
                                 $history->action_name = 'New';
@@ -5998,7 +5998,7 @@ class DeviationController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             //$history->origin_state = $lastDeviation->status;
-                            $history->change_to =   "Not Applicable";
+                            $history->change_to = "Not Applicable";
                             $history->change_from = "CFT";
                             if (is_null($getCft->Quality_Control_on) || $getCft->Quality_Control_on === '') {
                                 $history->action_name = 'New';
@@ -6026,7 +6026,7 @@ class DeviationController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             //$history->origin_state = $lastDeviation->status;
-                            $history->change_to =   "Not Applicable";
+                            $history->change_to = "Not Applicable";
                             $history->change_from = "CFT";
                             if (is_null($getCft->QualityAssurance_by) || $getCft->QualityAssurance_by === '') {
                                 $history->action_name = 'New';
@@ -6050,7 +6050,7 @@ class DeviationController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             //$history->origin_state = $lastDeviation->status;
-                            $history->change_to =   "Not Applicable";
+                            $history->change_to = "Not Applicable";
                             $history->change_from = "CFT";
                             if (is_null($getCft->QualityAssurance_on) || $getCft->QualityAssurance_on === '') {
                                 $history->action_name = 'New';
@@ -6077,7 +6077,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         //$history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Engineering_by) || $updateCFT->Engineering_by === '') {
                             $history->action_name = 'New';
@@ -6101,7 +6101,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         //$history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Engineering_on) || $getCft->Engineering_on === '') {
                             $history->action_name = 'New';
@@ -6128,7 +6128,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         //$history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Analytical_Development_by) || $getCft->Analytical_Development_by === '') {
                             $history->action_name = 'New';
@@ -6152,7 +6152,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         //$history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Analytical_Development_on) || $getCft->Analytical_Development_on === '') {
                             $history->action_name = 'New';
@@ -6179,7 +6179,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Kilo_Lab_attachment_by) || $getCft->Kilo_Lab_attachment_by === '') {
                             $history->action_name = 'New';
@@ -6231,7 +6231,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Technology_transfer_by) || $getCft->Technology_transfer_by === '') {
                             $history->action_name = 'New';
@@ -6255,7 +6255,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Technology_transfer_on) || $getCft->Technology_transfer_on === '') {
                             $history->action_name = 'New';
@@ -6282,7 +6282,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Environment_Health_Safety_by) || $getCft->Environment_Health_Safety_by === '') {
                             $history->action_name = 'New';
@@ -6306,7 +6306,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Environment_Health_Safety_on) || $getCft->Environment_Health_Safety_on === '') {
                             $history->action_name = 'New';
@@ -6333,7 +6333,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Human_Resource_by) || $getCft->Human_Resource_by === '') {
                             $history->action_name = 'New';
@@ -6357,7 +6357,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Human_Resource_on) || $getCft->Human_Resource_on === '') {
                             $history->action_name = 'New';
@@ -6385,7 +6385,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Information_Technology_by) || $getCft->Information_Technology_by === '') {
                             $history->action_name = 'New';
@@ -6409,7 +6409,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Information_Technology_on) || $getCft->Information_Technology_on === '') {
                             $history->action_name = 'New';
@@ -6436,7 +6436,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Project_management_by) || $getCft->Project_management_by === '') {
                             $history->action_name = 'New';
@@ -6460,7 +6460,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Project_management_on) || $getCft->Project_management_on === '') {
                             $history->action_name = 'New';
@@ -6487,7 +6487,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Other1_by) || $getCft->Other1_by === '') {
                             $history->action_name = 'New';
@@ -6511,7 +6511,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Other1_on) || $getCft->Other1_on === '') {
                             $history->action_name = 'New';
@@ -6539,7 +6539,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Other2_by) || $getCft->Other2_by === '') {
                             $history->action_name = 'New';
@@ -6563,7 +6563,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Other2_on) || $getCft->Other2_on === '') {
                             $history->action_name = 'New';
@@ -6589,7 +6589,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Other3_by) || $getCft->Other3_by === '') {
                             $history->action_name = 'New';
@@ -6613,7 +6613,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Other3_on) || $getCft->Other3_on === '') {
                             $history->action_name = 'New';
@@ -6640,7 +6640,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Other4_by) || $getCft->Other4_by === '') {
                             $history->action_name = 'New';
@@ -6665,7 +6665,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Other4_on) || $getCft->Other4_on === '') {
                             $history->action_name = 'New';
@@ -6692,7 +6692,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Other5_by) || $getCft->Other5_by === '') {
                             $history->action_name = 'New';
@@ -6716,7 +6716,7 @@ class DeviationController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDeviation->status;
-                        $history->change_to =   "Not Applicable";
+                        $history->change_to = "Not Applicable";
                         $history->change_from = "CFT";
                         if (is_null($getCft->Other5_on) || $getCft->Other5_on === '') {
                             $history->action_name = 'New';
@@ -6788,7 +6788,7 @@ class DeviationController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA Secondary Review";
+                    $history->change_to = "QA Secondary Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Complete';
 
@@ -6808,7 +6808,7 @@ class DeviationController extends Controller
                                  try {
                                      Mail::send(
                                          'mail.view-mail',
-                                         ['data' => $deviation, 'history' => 'CFT Review Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->CFT_Review_Comments, 'user'=> Auth::user()->name],
+                                         ['data' => $deviation, 'site' => 'DEV', 'history' => 'CFT Review Complete', 'process' => 'Deviation', 'comment' => $deviation->CFT_Review_Comments, 'user'=> Auth::user()->name],
                                          //     function ($message) use ($email) {
                                     //         $message->to($email)
                                     //             ->subject("Document Sent By " . Auth::user()->name);
@@ -6816,7 +6816,7 @@ class DeviationController extends Controller
                                     // );
                                            function ($message) use ($email, $deviation, $history) {
                                                 $message->to($email)
-                                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: CFT Review Complete Performed"); }
+                                                ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Complete Performed"); }
                                             );
                                  } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -6877,7 +6877,7 @@ class DeviationController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "QA Head/Manager Designee Primary Approval";
+                $history->change_to = "QA Head/Manager Designee Primary Approval";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'QAH Primary Approved Completed';
 
@@ -6983,7 +6983,7 @@ class DeviationController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Pending Initiator Update";
+                $history->change_to = "Pending Initiator Update";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Completed';
 
@@ -7023,7 +7023,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'QAH Primary Approval Completed Performed', 'process' => 'Deviation', 'comment' => $deviation->Approved_Comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'QAH Primary Approval Completed Performed', 'process' => 'Deviation', 'comment' => $deviation->Approved_Comments, 'user'=> Auth::user()->name],
                                     //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7031,7 +7031,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QAH Primary Approval Completed Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH Primary Approval Completed Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7109,7 +7109,7 @@ class DeviationController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "HOD Final Review";
+                $history->change_to = "HOD Final Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Completed';
 
@@ -7128,7 +7128,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'Initiator Update Completed Performed', 'process' => 'Deviation', 'comment' => $deviation->Initiator_Update_Completed_Comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'Initiator Update Completed Performed', 'process' => 'Deviation', 'comment' => $deviation->Initiator_Update_Completed_Comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7136,7 +7136,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Initiator Update Completed Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Initiator Update Completed Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7192,7 +7192,7 @@ class DeviationController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "QA Final Review";
+                $history->change_to = "QA Final Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Completed';
 
@@ -7211,7 +7211,7 @@ class DeviationController extends Controller
                              try {
                                  Mail::send(
                                      'mail.view-mail',
-                                     ['data' => $deviation, 'history' => 'HOD Final Review Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->HOD_Final_Review_Comments, 'user'=> Auth::user()->name],
+                                     ['data' => $deviation, 'site' => 'DEV', 'history' => 'HOD Final Review Complete', 'process' => 'Deviation', 'comment' => $deviation->HOD_Final_Review_Comments, 'user'=> Auth::user()->name],
                                      //     function ($message) use ($email) {
                                 //         $message->to($email)
                                 //             ->subject("Document Sent By " . Auth::user()->name);
@@ -7220,7 +7220,7 @@ class DeviationController extends Controller
 
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: HOD Final Review Complete Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed"); }
                                 );
                              } catch (\Exception $e) {
                                  //log error
@@ -7276,7 +7276,7 @@ class DeviationController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "QA Final Approval";
+                $history->change_to = "QA Final Approval";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Completed';
 
@@ -7295,7 +7295,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'QA Final Review Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Review_Comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'QA Final Review Complete', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Review_Comments, 'user'=> Auth::user()->name],
                                     //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Activity Performed By " . Auth::user()->name);
@@ -7303,7 +7303,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Final Review Complete Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Final Review Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 //log error
@@ -7396,7 +7396,7 @@ class DeviationController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Closed-Done";
+                $history->change_to = "Closed-Done";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Completed';
 
@@ -7416,7 +7416,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'QA Final Approval Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'QA Final Approval Complete', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7424,7 +7424,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Final Approval Complete Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Final Approval Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7442,7 +7442,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'QA Final Approval Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'QA Final Approval Complete', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7450,7 +7450,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Final Approval Complete Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Final Approval Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7468,7 +7468,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'QA Final Approval Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'QA Final Approval Complete', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7476,7 +7476,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Final Approval Complete Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Final Approval Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7494,7 +7494,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'QA Final Approval Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'QA Final Approval Complete', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7502,7 +7502,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Final Approval Complete Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Final Approval Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7520,7 +7520,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'QA Final Approval Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'QA Final Approval Complete', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7528,7 +7528,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Final Approval Complete Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Final Approval Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7580,7 +7580,7 @@ class DeviationController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "QA Secondary Review";
+                $history->change_to = "QA Secondary Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'QA Secondary Review';
 
@@ -7600,7 +7600,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'CFT Review Not Required Performed', 'process' => 'Deviation', 'comment' => $deviation->CFT_Review_Not_Required_Comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'CFT Review Not Required', 'process' => 'Deviation', 'comment' => $deviation->CFT_Review_Not_Required_Comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7608,7 +7608,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: CFT Review Not Required Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Not Required Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7655,7 +7655,7 @@ class DeviationController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $deviation->status;
-                $history->change_to =   "Closed-Cancelled";
+                $history->change_to = "Closed-Cancelled";
                 $history->change_from = $lastDocument->status;
                 $history->action = 'Cancel';
                 $history->stage = 'Closed-Cancelled';
@@ -7688,7 +7688,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'Cancel', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7696,7 +7696,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7714,7 +7714,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'Cancel', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7722,7 +7722,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7740,7 +7740,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'Cancel', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7748,7 +7748,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7766,7 +7766,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7774,7 +7774,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7792,7 +7792,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7800,7 +7800,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7819,7 +7819,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7827,7 +7827,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7865,7 +7865,7 @@ class DeviationController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $deviation->status;
-                            $history->change_to =   "Closed-Cancelled";
+                            $history->change_to = "Closed-Cancelled";
                             $history->change_from = $lastDocument->status;
                             $history->action = 'Cancel';
                             $history->stage = 'Closed-Cancelled';
@@ -7888,7 +7888,7 @@ class DeviationController extends Controller
                                         try {
                                             Mail::send(
                                                 'mail.view-mail',
-                                                ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
+                                                ['data' => $deviation, 'site' => 'DEV', 'history' => 'Cancel', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
                                                 //    function ($message) use ($email) {
                                             //        $message->to($email)
                                             //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7896,7 +7896,7 @@ class DeviationController extends Controller
                                             //);
                                             function ($message) use ($email, $deviation, $history) {
                                                 $message->to($email)
-                                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
+                                                ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
                                             );
                                         } catch (\Exception $e) {
                                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7914,7 +7914,7 @@ class DeviationController extends Controller
                                         try {
                                             Mail::send(
                                                 'mail.view-mail',
-                                                ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
+                                                ['data' => $deviation, 'site' => 'DEV', 'history' => 'Cancel', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
                                             //    function ($message) use ($email) {
                                             //        $message->to($email)
                                             //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7922,7 +7922,7 @@ class DeviationController extends Controller
                                             //);
                                             function ($message) use ($email, $deviation, $history) {
                                                 $message->to($email)
-                                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
+                                                ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
                                             );
                                         } catch (\Exception $e) {
                                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7940,7 +7940,7 @@ class DeviationController extends Controller
                                         try {
                                             Mail::send(
                                                 'mail.view-mail',
-                                                ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
+                                                ['data' => $deviation, 'site' => 'DEV', 'history' => 'Cancel', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
                                             //    function ($message) use ($email) {
                                             //        $message->to($email)
                                             //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7948,7 +7948,7 @@ class DeviationController extends Controller
                                             //);
                                             function ($message) use ($email, $deviation, $history) {
                                                 $message->to($email)
-                                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
+                                                ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
                                             );
                                         } catch (\Exception $e) {
                                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7966,7 +7966,7 @@ class DeviationController extends Controller
                                         try {
                                             Mail::send(
                                                 'mail.view-mail',
-                                                ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
+                                                ['data' => $deviation, 'site' => 'DEV', 'history' => 'Cancel', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
                                             //    function ($message) use ($email) {
                                             //        $message->to($email)
                                             //            ->subject("Document Sent By " . Auth::user()->name);
@@ -7974,7 +7974,7 @@ class DeviationController extends Controller
                                             //);
                                             function ($message) use ($email, $deviation, $history) {
                                                 $message->to($email)
-                                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
+                                                ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
                                             );
                                         } catch (\Exception $e) {
                                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7992,7 +7992,7 @@ class DeviationController extends Controller
                                         try {
                                             Mail::send(
                                                 'mail.view-mail',
-                                                ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
+                                                ['data' => $deviation, 'site' => 'DEV', 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
                                             //    function ($message) use ($email) {
                                             //        $message->to($email)
                                             //            ->subject("Document Sent By " . Auth::user()->name);
@@ -8000,7 +8000,7 @@ class DeviationController extends Controller
                                             //);
                                             function ($message) use ($email, $deviation, $history) {
                                                 $message->to($email)
-                                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
+                                                ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
                                             );
                                         } catch (\Exception $e) {
                                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8427,7 +8427,7 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation, 'history' => 'Send to Pending Initiator Update Performed', 'process' => 'Deviation', 'comment' => $deviation->HOD_Final_Send_to_Initiator_Comments, 'user'=> Auth::user()->name],
+                            ['data' => $deviation, 'site' => 'DEV', 'history' => 'Send to Pending Initiator Update', 'process' => 'Deviation', 'comment' => $deviation->HOD_Final_Send_to_Initiator_Comments, 'user'=> Auth::user()->name],
                             //    function ($message) use ($email) {
                         //        $message->to($email)
                         //            ->subject("Document Sent By " . Auth::user()->name);
@@ -8435,7 +8435,7 @@ class DeviationController extends Controller
                         //);
                         function ($message) use ($email, $deviation, $history) {
                             $message->to($email)
-                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity:  Send to Pending Initiator Update Performed"); }
+                            ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity:  Send to Pending Initiator Update Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8495,7 +8495,7 @@ class DeviationController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $deviation, 'history' => 'Send to QA Initiator Update Performed', 'process' => 'Deviation', 'comment' => $deviation->Send_to_QA_Initiator_Comments, 'user'=> Auth::user()->name],
+                                ['data' => $deviation, 'site' => 'DEV', 'history' => 'Send to QA Initiator Update', 'process' => 'Deviation', 'comment' => $deviation->Send_to_QA_Initiator_Comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                             //        $message->to($email)
                             //            ->subject("Document Sent By " . Auth::user()->name);
@@ -8503,7 +8503,7 @@ class DeviationController extends Controller
                             //);
                             function ($message) use ($email, $deviation, $history) {
                                 $message->to($email)
-                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to QA Initiator Update Performed"); }
+                                ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to QA Initiator Update Performed"); }
                             );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8563,7 +8563,7 @@ class DeviationController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $deviation, 'history' => 'Send to Pending Initiator Update Performed', 'process' => 'Deviation', 'comment' => $deviation->Send_to_Pending_Initiator_Updated_Comments, 'user'=> Auth::user()->name],
+                                ['data' => $deviation, 'site' => 'DEV', 'history' => 'Send to Pending Initiator Update', 'process' => 'Deviation', 'comment' => $deviation->Send_to_Pending_Initiator_Updated_Comments, 'user'=> Auth::user()->name],
                             //    function ($message) use ($email) {
                             //        $message->to($email)
                             //            ->subject("Document Sent By " . Auth::user()->name);
@@ -8571,7 +8571,7 @@ class DeviationController extends Controller
                             //);
                             function ($message) use ($email, $deviation, $history) {
                                 $message->to($email)
-                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to Pending Initiator Update Performed"); }
+                                ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to Pending Initiator Update Performed"); }
                             );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8661,7 +8661,7 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation, 'history' => 'Send to Opened Performed', 'process' => 'Deviation', 'comment' => $deviation->send_to_opened_comments, 'user'=> Auth::user()->name],
+                            ['data' => $deviation, 'site' => 'DEV', 'history' => 'Send to Opened', 'process' => 'Deviation', 'comment' => $deviation->send_to_opened_comments, 'user'=> Auth::user()->name],
                             //    function ($message) use ($email) {
                         //        $message->to($email)
                         //            ->subject("Document Sent By " . Auth::user()->name);
@@ -8669,7 +8669,7 @@ class DeviationController extends Controller
                         //);
                         function ($message) use ($email, $deviation, $history) {
                             $message->to($email)
-                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to Opened Performed"); }
+                            ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to Opened Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8730,7 +8730,7 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation, 'history' => 'Send to Opened Performed', 'process' => 'Deviation', 'comment' => $deviation->Send_to_initialStage_Comments, 'user'=> Auth::user()->name],
+                            ['data' => $deviation, 'site' => 'DEV', 'history' => 'Send to Opened', 'process' => 'Deviation', 'comment' => $deviation->Send_to_initialStage_Comments, 'user'=> Auth::user()->name],
                         //    function ($message) use ($email) {
                         //        $message->to($email)
                         //        ->subject("Document Sent By " . Auth::user()->name);
@@ -8738,7 +8738,7 @@ class DeviationController extends Controller
                         //);
                         function ($message) use ($email, $deviation, $history) {
                             $message->to($email)
-                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to opened Performed"); }
+                            ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to opened Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8800,7 +8800,7 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation, 'history' => 'Send to Opened Performed', 'process' => 'Deviation', 'comment' => $deviation->HOD_Final_Send_to_Opened_Comments, 'user'=> Auth::user()->name],
+                            ['data' => $deviation, 'site' => 'DEV', 'history' => 'Send to Opened', 'process' => 'Deviation', 'comment' => $deviation->HOD_Final_Send_to_Opened_Comments, 'user'=> Auth::user()->name],
                         //    function ($message) use ($email) {
                         //        $message->to($email)
                         //            ->subject("Document Sent By " . Auth::user()->name);
@@ -8808,7 +8808,7 @@ class DeviationController extends Controller
                         //);
                         function ($message) use ($email, $deviation, $history) {
                             $message->to($email)
-                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to opened Performed"); }
+                            ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to opened Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8899,7 +8899,7 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation, 'history' => 'Send to Opened Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Send_to_Opened_Comments, 'user'=> Auth::user()->name],
+                            ['data' => $deviation, 'site' => 'DEV', 'history' => 'Send to Opened', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Send_to_Opened_Comments, 'user'=> Auth::user()->name],
                         //    function ($message) use ($email) {
                         //        $message->to($email)
                         //            ->subject("Document Sent By " . Auth::user()->name);
@@ -8907,7 +8907,7 @@ class DeviationController extends Controller
                         //);
                         function ($message) use ($email, $deviation, $history) {
                             $message->to($email)
-                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to opened Performed"); }
+                            ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to opened Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8969,7 +8969,7 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation, 'history' => 'Send to Opened Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Approval_Send_to_Opened_Comments, 'user'=> Auth::user()->name],
+                            ['data' => $deviation, 'site' => 'DEV', 'history' => 'Send to Opened', 'process' => 'Deviation', 'comment' => $deviation->QA_Approval_Send_to_Opened_Comments, 'user'=> Auth::user()->name],
                         //    function ($message) use ($email) {
                         //        $message->to($email)
                         //            ->subject("Document Sent By " . Auth::user()->name);
@@ -8977,7 +8977,7 @@ class DeviationController extends Controller
                         //);
                         function ($message) use ($email, $deviation, $history) {
                             $message->to($email)
-                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to opened Performed"); }
+                            ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to opened Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9063,7 +9063,7 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation, 'history' => 'Send to HOD Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Secondary_Send_to_Hod_Comments, 'user'=> Auth::user()->name],
+                            ['data' => $deviation, "site" => "DEV", 'history' => 'Send to HOD', 'process' => 'Deviation', 'comment' => $deviation->QA_Secondary_Send_to_Hod_Comments, 'user'=> Auth::user()->name],
                         //    function ($message) use ($email) {
                         //        $message->to($email)
                         //            ->subject("Document Sent By " . Auth::user()->name);
@@ -9071,7 +9071,7 @@ class DeviationController extends Controller
                         //);
                         function ($message) use ($email, $deviation, $history) {
                             $message->to($email)
-                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to HOD Performed"); }
+                            ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to HOD Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9132,7 +9132,7 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation, 'history' => 'Send to HOD Review Performed', 'process' => 'Deviation', 'comment' => $deviation->Send_to_Hod_Comments, 'user'=> Auth::user()->name],
+                            ['data' => $deviation, "site" => "DEV", 'history' => 'Send to HOD Review', 'process' => 'Deviation', 'comment' => $deviation->Send_to_Hod_Comments, 'user'=> Auth::user()->name],
                         //    function ($message) use ($email) {
                         //        $message->to($email)
                         //            ->subject("Document Sent By " . Auth::user()->name);
@@ -9140,7 +9140,7 @@ class DeviationController extends Controller
                         //);
                         function ($message) use ($email, $deviation, $history) {
                             $message->to($email)
-                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to HOD Review Performed"); }
+                            ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to HOD Review Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9201,7 +9201,7 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation, 'history' => 'Send to HOD Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Send_to_HOD_Comments, 'user'=> Auth::user()->name],
+                            ['data' => $deviation, "site" => "DEV", 'history' => 'Send to HOD', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Send_to_HOD_Comments, 'user'=> Auth::user()->name],
                         //    function ($message) use ($email) {
                         //        $message->to($email)
                         //            ->subject("Document Sent By " . Auth::user()->name);
@@ -9209,7 +9209,7 @@ class DeviationController extends Controller
                         //);
                         function ($message) use ($email, $deviation, $history) {
                             $message->to($email)
-                            ->subject("QMS Notification: Deviation, Record" . $deviation->record . " - Activity: Send to HOD Performed"); }
+                            ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to HOD Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9269,7 +9269,7 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation, 'history' => 'HOD Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Approval_Send_to_HOD_Comments, 'user'=> Auth::user()->name],
+                            ['data' => $deviation, 'history' => 'HOD', "site" => "DEV", 'process' => 'Deviation', 'comment' => $deviation->QA_Approval_Send_to_HOD_Comments, 'user'=> Auth::user()->name],
                         //    function ($message) use ($email) {
                         //        $message->to($email)
                         //            ->subject("Document Sent By " . Auth::user()->name);
@@ -9277,7 +9277,7 @@ class DeviationController extends Controller
                         //);
                         function ($message) use ($email, $deviation, $history) {
                             $message->to($email)
-                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to HOD Performed"); }
+                            ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to HOD Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9365,7 +9365,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'Send to QA Initial Review Performed', 'process' => 'Deviation', 'comment' => $deviation->Send_to_QA_Initial_Review_Comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'history' => 'Send to QA Initial Review',"site" => "DEV", 'process' => 'Deviation', 'comment' => $deviation->Send_to_QA_Initial_Review_Comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -9373,7 +9373,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to QA Initial Review Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to QA Initial Review Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9434,7 +9434,7 @@ class DeviationController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $deviation, 'history' => 'Send to QA Initial Review Performed', 'process' => 'Deviation', 'comment' => $deviation->Send_to_QA_Initial_Comments, 'user'=> Auth::user()->name],
+                                ['data' => $deviation, 'history' => 'Send to QA Initial Review', "site" => "DEV", 'process' => 'Deviation', 'comment' => $deviation->Send_to_QA_Initial_Comments, 'user'=> Auth::user()->name],
                             //    function ($message) use ($email) {
                             //        $message->to($email)
                             //            ->subject("Document Sent By " . Auth::user()->name);
@@ -9442,7 +9442,7 @@ class DeviationController extends Controller
                             //);
                             function ($message) use ($email, $deviation, $history) {
                                 $message->to($email)
-                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to QA Initial Review Performed"); }
+                                ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to QA Initial Review Performed"); }
                             );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9504,7 +9504,7 @@ class DeviationController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $deviation, 'history' => 'Send to QA Initial Review Performed', 'process' => 'Deviation', 'comment' => $deviation->Approval_Send_to_QA_Initial_Comments, 'user'=> Auth::user()->name],
+                                ['data' => $deviation, 'history' => 'Send to QA Initial Review', "site" => "DEV", 'process' => 'Deviation', 'comment' => $deviation->Approval_Send_to_QA_Initial_Comments, 'user'=> Auth::user()->name],
                             //    function ($message) use ($email) {
                             //        $message->to($email)
                             //            ->subject("Document Sent By " . Auth::user()->name);
@@ -9512,7 +9512,7 @@ class DeviationController extends Controller
                             //);
                             function ($message) use ($email, $deviation, $history) {
                                 $message->to($email)
-                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to QA Initial Review Performed"); }
+                                ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to QA Initial Review Performed"); }
                             );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9592,7 +9592,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'More Information Required Performed', 'process' => 'Deviation', 'comment' => $deviation->hod_more_info_required_comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'More Information Required', 'process' => 'Deviation', 'comment' => $deviation->hod_more_info_required_comments, 'user'=> Auth::user()->name],
                                     //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -9600,7 +9600,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: More Information Required Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9701,7 +9701,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'More Information Required Performed', 'process' => 'Deviation', 'comment' => $deviation->qa_more_info_required_comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'More Information Required', 'process' => 'Deviation', 'comment' => $deviation->qa_more_info_required_comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -9709,7 +9709,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: More Information Required Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9817,7 +9817,7 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation, 'history' => 'More Information Required Performed', 'process' => 'Deviation', 'comment' => $deviation->cft_more_info_required_comments, 'user'=> Auth::user()->name],
+                                    ['data' => $deviation, 'site' => 'DEV', 'history' => 'More Information Required', 'process' => 'Deviation', 'comment' => $deviation->cft_more_info_required_comments, 'user'=> Auth::user()->name],
                                 //    function ($message) use ($email) {
                                 //        $message->to($email)
                                 //            ->subject("Document Sent By " . Auth::user()->name);
@@ -9825,7 +9825,7 @@ class DeviationController extends Controller
                                 //);
                                 function ($message) use ($email, $deviation, $history) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: More Information Required Performed"); }
+                                    ->subject("QMS Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());

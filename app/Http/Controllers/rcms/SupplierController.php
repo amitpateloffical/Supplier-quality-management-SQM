@@ -6013,7 +6013,7 @@ class SupplierController extends Controller
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $supplier, 'history' => "Need for Sourcing of Starting Material Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        ['data' => $supplier, 'history' => "Need for Sourcing of Starting Material ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                         function ($message) use ($email, $supplier) {
                                             $message->to($email)
                                             ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Need for Sourcing of Starting Material Performed");
@@ -6071,7 +6071,7 @@ class SupplierController extends Controller
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $supplier, 'history' => "Request Justified Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        ['data' => $supplier, 'history' => "Request Justified ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                         function ($message) use ($email, $supplier) {
                                             $message->to($email)
                                             ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request Justified Performed");
@@ -6130,7 +6130,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Pre-Purchase Sample Required Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Pre-Purchase Sample Required ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Pre-Purchase Sample Required Performed");
@@ -6187,7 +6187,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Purchase Sample Request Initiated & Acknowledgement By PD Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Purchase Sample Request Initiated & Acknowledgement By PD ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Purchase Sample Request Initiated & Acknowledgement By PD Performed");
@@ -6247,7 +6247,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Purchase Sample Analysis Satisfactory Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Purchase Sample Analysis Satisfactory ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Purchase Sample Analysis Satisfactory Performed");
@@ -6305,7 +6305,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "F&D Review Completed Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "F&D Review Completed ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: F&D Review Completed Performed");
@@ -6362,7 +6362,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Acknowledgement By Purchase Department Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Acknowledgement By Purchase Department ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledgement By Purchase Department Performed");
@@ -6684,7 +6684,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Manufacturer Audit Failed Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Manufacturer Audit Failed ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Manufacturer Audit Failed Performed");
@@ -6705,7 +6705,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Manufacturer Audit Failed Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Manufacturer Audit Failed ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Manufacturer Audit Failed Performed");
@@ -6726,7 +6726,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Manufacturer Audit Failed Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Manufacturer Audit Failed ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Manufacturer Audit Failed Performed");
@@ -7075,7 +7075,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Request More Info ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
@@ -7134,7 +7134,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Request More Info ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
@@ -7193,7 +7193,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Request More Info ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
@@ -7252,7 +7252,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Purchase Sample Analysis Not Satisfactory Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Purchase Sample Analysis Not Satisfactory ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Purchase Sample Analysis Not Satisfactory Performed");
@@ -7309,7 +7309,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Request More Info ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
@@ -7366,7 +7366,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Request More Info ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
@@ -7423,7 +7423,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Request Not Justified Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Request Not Justified ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request Not Justified Performed");
@@ -7481,7 +7481,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Cancel ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
@@ -7502,7 +7502,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Cancel ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
@@ -7523,7 +7523,7 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $supplier, 'history' => "Cancel ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
@@ -7592,7 +7592,7 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier, 'history' => "Pre-Purchase Sample Not Required Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $supplier, 'history' => "Pre-Purchase Sample Not Required ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Pre-Purchase Sample Not Required Performed");
@@ -7728,7 +7728,7 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier, 'history' => "All Requirements Not Fulfilled Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $supplier, 'history' => "All Requirements Not Fulfilled ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Requirements Not Fulfilled Performed");
@@ -7749,7 +7749,7 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier, 'history' => "All Requirements Not Fulfilled Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $supplier, 'history' => "All Requirements Not Fulfilled ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Requirements Not Fulfilled Performed");
@@ -7770,7 +7770,7 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier, 'history' => "All Requirements Not Fulfilled Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $supplier, 'history' => "All Requirements Not Fulfilled ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Requirements Not Fulfilled Performed");
@@ -7837,7 +7837,7 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $supplier, 'history' => "Cancel ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
@@ -7858,7 +7858,7 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $supplier, 'history' => "Cancel ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
@@ -7879,7 +7879,7 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $supplier, 'history' => "Cancel ", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");

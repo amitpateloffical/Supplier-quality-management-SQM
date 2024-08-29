@@ -1944,7 +1944,7 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Report Issued Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changestage) { 
                                         $message->to($email)
                                         ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued Performed");
@@ -2003,7 +2003,7 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Complete Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Complete", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changestage) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Performed");
@@ -2116,7 +2116,7 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage, 'site' => "OBS", 'history' => "All CAPA Closed Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changestage, 'site' => "OBS", 'history' => "All CAPA Closed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changestage) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: All CAPA Closed Performed");
@@ -2176,7 +2176,7 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Final Approval Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Final Approval", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changestage) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Approval Performed");
@@ -2197,7 +2197,7 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Final Approval Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Final Approval", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changestage) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Approval Performed");
@@ -2219,7 +2219,7 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Final Approval Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Final Approval", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changestage) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Approval Performed");
@@ -2290,7 +2290,7 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changeControl, 'site' => "OBS", 'history' => "Cancel Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changeControl, 'site' => "OBS", 'history' => "Cancel", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changeControl) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
@@ -2311,7 +2311,7 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changeControl, 'site' => "OBS", 'history' => "Cancel Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changeControl, 'site' => "OBS", 'history' => "Cancel", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changeControl) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
@@ -2563,7 +2563,7 @@ class ObservationController extends Controller
 
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "OBS", 'history' => "QA Approval Without CAPA Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                ['data' => $changeControl, 'site' => "OBS", 'history' => "QA Approval Without CAPA", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
                                     ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Approval Without CAPA Performed");

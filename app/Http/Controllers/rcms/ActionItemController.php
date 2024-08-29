@@ -1133,7 +1133,7 @@ class ActionItemController extends Controller
                                 //     $message->to($email)
                                 //         ->subject("Document sent ".Auth::user()->name);
                                 // }
-                                ['data' => $openState, 'history'=>" - Activity: Submit Permormed" , 'process' => ' Action Item', 'comment' => $openState->submitted_comment,'user'=> Auth::user()->name],
+                                ['data' => $openState, 'site'=>'AI', 'history'=>" - Activity: Submit " , 'process' => ' Action Item', 'comment' => $openState->submitted_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$openState) {
                                     $message->to($email)
                                         ->subject("QMS Notification: Action Item, Record " . $openState->record . " - Activity: Submit Permormed");
@@ -1216,10 +1216,10 @@ class ActionItemController extends Controller
                                 //     $message->to($email)
                                 //         ->subject("Document sent ".Auth::user()->name);
                                 // }
-                                ['data' => $openState, 'history'=>" - Activity: Complete Permormed" , 'process' => ' Action Item', 'comment' => $openState->completed_comment,'user'=> Auth::user()->name],
+                                ['data' => $openState, 'site'=>'AI',  'history'=>" - Activity: Complete " , 'process' => ' Action Item', 'comment' => $openState->completed_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$openState) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Action Item, Record " . $openState->record . " - Activity: Complete Permormed");
+                                        ->subject("QMS Notification: Action Item, Record " .  str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Permormed");
                                 }
                                 );
                             } catch (\Exception $e) {
@@ -1331,10 +1331,10 @@ class ActionItemController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $openState, 'history'=>" - Activity: Cancel Permormed" , 'process' => ' Action Item', 'comment' => $openState->cancelled_comment,'user'=> Auth::user()->name],
+                                    ['data' => $openState, 'site'=>'AI', 'history'=>" - Activity: Cancel " , 'process' => ' Action Item', 'comment' => $openState->cancelled_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$openState) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Action Item, Record " . $openState->record . " - Activity: Cancel Permormed");
+                                        ->subject("QMS Notification: Action Item, Record " . str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Permormed");
                                 }
                                 );
                             } catch (\Exception $e) {
@@ -1421,10 +1421,10 @@ class ActionItemController extends Controller
                                 //     $message->to($email)
                                 //         ->subject("Document sent ".Auth::user()->name);
                                 // }
-                                ['data' => $openState, 'history'=>" - Activity: More Information Required Permormed" , 'process' => ' Action Item', 'comment' => $openState->more_information_required_comment,'user'=> Auth::user()->name],
+                                ['data' => $openState,'site'=>'AI', 'history'=>" - Activity: More Information Required " , 'process' => ' Action Item', 'comment' => $openState->more_information_required_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$openState) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Action Item, Record " . $openState->record . " - Activity: More Information Required Permormed");
+                                        ->subject("QMS Notification: Action Item, Record " . str_pad($openState->record, 4, '0', STR_PAD_LEFT). " - Activity: More Information Required Permormed");
                                 }
                                 );
                             } catch (\Exception $e) {

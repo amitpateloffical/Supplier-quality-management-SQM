@@ -21,7 +21,7 @@
                             <div class="tab">
                                 @php
                                     // Get the user's roles
-                                    $userRoles = DB::table('user_roles')->where('user_id', Auth::user()->id)->get();
+                                    $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id])->whereIn('q_m_s_roles_id', [3, 23, 34, 10, 14])->get();
                                     // Initialize an empty array to store division IDs
                                     $divisionIds = [];
                                     // Loop through user's roles
@@ -56,10 +56,10 @@
                                     @php
                                         // Get the user's roles
                                         $userRoles = DB::table('user_roles')
-                                                        ->where([
-                                                            'user_id' => Auth::user()->id,
-                                                            'q_m_s_divisions_id' => $temp->division_id
-                                                        ])->get();
+                                                    ->where('user_id', Auth::user()->id)
+                                                    ->where('q_m_s_divisions_id', $temp->division_id)
+                                                    ->whereIn('q_m_s_roles_id', [3, 23, 34, 10, 14])
+                                                    ->get();
 
                                         // Initialize an empty array to store process IDs
                                         $processIds = [];

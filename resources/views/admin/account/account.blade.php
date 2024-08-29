@@ -41,16 +41,16 @@
                             
                             <tr>
                                     @php
-                                    $RoleList = DB::table('user_roles')->where(['user_id' =>$user->id])->pluck('role_id')->toArray();
-                                    $role = '';
-                                    $roleName = '';
-                                    if($RoleList){
-                                        $role = implode(',', $RoleList);
-                                        $roleNameList = DB::table('q_m_s_roles')
-                                            ->whereIn('id', $RoleList)
-                                            ->pluck('name')->toArray();
-                                        $roleName = implode(',', $roleNameList);
-                                    }
+                                        $RoleList = DB::table('user_roles')->where(['user_id' =>$user->id])->pluck('q_m_s_roles_id')->toArray();
+                                        $role = '';
+                                        $roleName = '';
+                                        if($RoleList){
+                                            $role = implode(',', $RoleList);
+                                            $roleNameList = DB::table('q_m_s_roles')
+                                                ->whereIn('id', $RoleList)
+                                                ->pluck('name')->toArray();
+                                            $roleName = implode(',', $roleNameList);
+                                        }
                                     @endphp
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>

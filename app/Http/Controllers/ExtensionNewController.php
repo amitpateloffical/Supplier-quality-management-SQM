@@ -959,8 +959,6 @@ class ExtensionNewController extends Controller
 
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $id;
-            // $history->activity_type = 'Activity Log';
-            // $history->previous = "";
             $history->activity_type = 'Cancelled By, Cancelled  On';
             if (is_null($lastDocument->Cancelled_by) || $lastDocument->Cancelled_by === '') {
                 $history->previous = "";
@@ -968,8 +966,6 @@ class ExtensionNewController extends Controller
                 $history->previous = $lastDocument->Cancelled_by . ' , ' . $lastDocument->Cancelled_on;
             }
             $history->current =  $extensionNew->cancelled_bys . ' , ' .  $extensionNew->cancelled_on;
-            // $history->action = 'Cancel';
-            // $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -992,10 +988,10 @@ class ExtensionNewController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $extensionNew],
-                            function ($message) use ($email) {
+                            ['data' => $extensionNew, 'history' => "Cancelled Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                            function ($message) use ($email, $extensionNew) {
                                 $message->to($email)
-                                    ->subject("Document is Sent By" . Auth::user()->name);
+                                ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: Cancelled Performed");
                             }
                         );
                     } catch (\Exception $e) {
@@ -1013,10 +1009,10 @@ class ExtensionNewController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $extensionNew],
-                            function ($message) use ($email) {
+                            ['data' => $extensionNew, 'history' => "Cancelled Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                            function ($message) use ($email, $extensionNew) {
                                 $message->to($email)
-                                    ->subject("Document is Sent By" . Auth::user()->name);
+                                ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: Cancelled Performed");
                             }
                         );
                     } catch (\Exception $e) {
@@ -1081,8 +1077,6 @@ class ExtensionNewController extends Controller
 
                     $history = new ExtensionNewAuditTrail();
                     $history->extension_id = $id;
-                    // $history->activity_type = 'Activity Log';
-                    // $history->previous = "";
                     $history->activity_type = 'More Info Required By, More Info Required On';
                     if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
                         $history->previous = "";
@@ -1092,13 +1086,10 @@ class ExtensionNewController extends Controller
                     $history->current = $extensionNew->more_info_review_by . ' , ' . $extensionNew->more_info_review_on;
                     $history->comment = $request->comment;
                     $history->action = 'Submit';
-                    // $history->current = $extensionNew->more_info_review_by;
-                    // $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    // $history->stage = 'Plan Proposed';
                     $history->change_to = "Opened";
                     $history->change_from = "In Review";
                     if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
@@ -1116,10 +1107,10 @@ class ExtensionNewController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $extensionNew],
-                                    function ($message) use ($email) {
+                                    ['data' => $extensionNew, 'history' => "More Info Required Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $extensionNew) {
                                         $message->to($email)
-                                            ->subject("Document is Sent By" . Auth::user()->name);
+                                        ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: More Info Required Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -1141,8 +1132,6 @@ class ExtensionNewController extends Controller
 
                     $history = new ExtensionNewAuditTrail();
                     $history->extension_id = $id;
-                    // $history->activity_type = 'Activity Log';
-                    // $history->previous = "";
                     $history->activity_type = 'More Info Required By (In Approval), More Info Required On (In Approval)';
                     if (is_null($lastDocument->more_info_inapproved_by) || $lastDocument->more_info_inapproved_by === '') {
                         $history->previous = "";
@@ -1152,13 +1141,10 @@ class ExtensionNewController extends Controller
                     $history->current = $extensionNew->more_info_inapproved_by . ' , ' . $extensionNew->more_info_inapproved_on;
                     $history->comment = $request->comment;
                     $history->action = 'Submit';
-                    // $history->current = $extensionNew->more_info_inapproved_by;
-                    // $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    // $history->stage = 'Plan Proposed';
                     $history->change_to =   "In Review";
                     $history->change_from = "In Approved";
                     if (is_null($lastDocument->more_info_inapproved_by) || $lastDocument->more_info_inapproved_by === '') {
@@ -1177,10 +1163,10 @@ class ExtensionNewController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $extensionNew],
-                                    function ($message) use ($email) {
+                                    ['data' => $extensionNew, 'history' => "More Info Required Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $extensionNew) {
                                         $message->to($email)
-                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: More Info Required Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -1220,8 +1206,6 @@ class ExtensionNewController extends Controller
 
                     $history = new ExtensionNewAuditTrail();
                     $history->extension_id = $id;
-                    // $history->activity_type = 'Activity Log';
-                    // $history->previous = "";
                     $history->activity_type = 'Submitted By, Submitted On';
                     if (is_null($lastDocument->submit_by) || $lastDocument->submit_by === '') {
                         $history->previous = "";
@@ -1231,8 +1215,6 @@ class ExtensionNewController extends Controller
                     $history->current = $extensionNew->submit_by . ' , ' . $extensionNew->submit_on;
                     $history->comment = $request->comment;
                     $history->action = 'Submit';
-                    // $history->current = $extensionNew->submit_by;
-                    // $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1259,10 +1241,10 @@ class ExtensionNewController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $extensionNew],
-                                function ($message) use ($email) {
+                                ['data' => $extensionNew, 'history' => "Submitted Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $extensionNew) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
+                                    ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: Submitted Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -1300,15 +1282,12 @@ class ExtensionNewController extends Controller
 
                     $history = new ExtensionNewAuditTrail();
                     $history->extension_id = $id;
-                    // $history->activity_type = 'Activity Log';
-                    // $history->previous = "";
                     $history->activity_type = 'Reviewed By, Reviewed  On';
                     if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
                         $history->previous = "";
                     } else {
                         $history->previous = $lastDocument->submit_by_review . ' , ' . $lastDocument->submit_on_review;
                     }
-                    // $history->current = $extensionNew->HOD_Review_Complete_By;
                     $history->current = $extensionNew->submit_by_review . ' , ' . $extensionNew->submit_on_review;
                     $history->comment = $request->comment;
                     $history->action = 'Review';
@@ -1335,10 +1314,10 @@ class ExtensionNewController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $extensionNew],
-                                    function ($message) use ($email) {
+                                    ['data' => $extensionNew, 'history' => "Reviewed Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $extensionNew) {
                                         $message->to($email)
-                                            ->subject("Document is Sent By" . Auth::user()->name);
+                                        ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: Reviewed Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -1365,14 +1344,12 @@ class ExtensionNewController extends Controller
 
                     $history = new ExtensionNewAuditTrail();
                     $history->extension_id = $id;
-                    // $history->activity_type = 'Activity Log';
                     $history->activity_type = 'Approved By, Approved On';
                     if (is_null($lastDocument->submit_by_approved) || $lastDocument->submit_by_approved === '') {
                         $history->previous = "";
                     } else {
                         $history->previous = $lastDocument->submit_by_approved . ' , ' . $lastDocument->submit_on_approved;
                     }
-                    // $history->previous = "";
                     $history->action = 'Approved';
                     $history->current = $extensionNew->submit_by_approved . ' , ' . $extensionNew->submit_on_approved;
                     $history->comment = $request->comment;
@@ -1385,8 +1362,6 @@ class ExtensionNewController extends Controller
                     } else {
                         $history->action_name = 'Update';
                     }
-                    // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    // $history->origin_state = $lastDocument->status;
                     $history->stage = 'Completed';
                     $history->save();
 
@@ -1419,10 +1394,10 @@ class ExtensionNewController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $extensionNew],
-                                    function ($message) use ($email) {
+                                    ['data' => $extensionNew, 'history' => "Approved Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $extensionNew) {
                                         $message->to($email)
-                                            ->subject("Document is Sent By" . Auth::user()->name);
+                                        ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: Approved Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -1440,10 +1415,10 @@ class ExtensionNewController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $extensionNew],
-                                    function ($message) use ($email) {
+                                    ['data' => $extensionNew, 'history' => "Approved Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $extensionNew) {
                                         $message->to($email)
-                                            ->subject("Document is Sent By" . Auth::user()->name);
+                                        ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: Approved Performed");
                                     }
                                 );
                             } catch (\Exception $e) {

@@ -6013,10 +6013,10 @@ class SupplierController extends Controller
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $supplier],
-                                        function ($message) use ($email) {
+                                        ['data' => $supplier, 'history' => "Need for Sourcing of Starting Material Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $supplier) {
                                             $message->to($email)
-                                                    ->subject("Document is Sent By " . Auth::user()->name);
+                                            ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Need for Sourcing of Starting Material Performed");
                                         }
                                     );
                                 } catch (\Exception $e) {
@@ -6048,7 +6048,6 @@ class SupplierController extends Controller
                     }
                     $history->current = $supplier->request_justified_by . ' , ' . $supplier->request_justified_on;
                     $history->action = 'Request Justified';
-                    // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -6072,10 +6071,10 @@ class SupplierController extends Controller
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $supplier],
-                                        function ($message) use ($email) {
+                                        ['data' => $supplier, 'history' => "Request Justified Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $supplier) {
                                             $message->to($email)
-                                                    ->subject("Document is Sent By " . Auth::user()->name);
+                                            ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request Justified Performed");
                                         }
                                     );
                                 } catch (\Exception $e) {
@@ -6131,10 +6130,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Pre-Purchase Sample Required Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Pre-Purchase Sample Required Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6188,10 +6187,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Purchase Sample Request Initiated & Acknowledgement By PD Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Purchase Sample Request Initiated & Acknowledgement By PD Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6248,10 +6247,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Purchase Sample Analysis Satisfactory Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Purchase Sample Analysis Satisfactory Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6306,10 +6305,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "F&D Review Completed Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: F&D Review Completed Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6340,7 +6339,6 @@ class SupplierController extends Controller
                 }
                 $history->current = $supplier->acknowledgByPD_by . ' , ' . $supplier->acknowledgByPD_on;
                 $history->action = 'Acknowledgement By Purchase Department';
-                // $history->current = $supplier->submit_by;
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6364,10 +6362,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Acknowledgement By Purchase Department Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Acknowledgement By Purchase Department Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6399,7 +6397,6 @@ class SupplierController extends Controller
                     }
                     $history->current = $supplier->requirementFullfilled_by . ' , ' . $supplier->requirementFullfilled_on;
                     $history->action = 'All Requirements Fulfilled';
-                    // $history->current = $supplier->submit_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -6687,10 +6684,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Manufacturer Audit Failed Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Manufacturer Audit Failed Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6708,10 +6705,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Manufacturer Audit Failed Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Manufacturer Audit Failed Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6729,10 +6726,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Manufacturer Audit Failed Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Manufacturer Audit Failed Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6752,6 +6749,74 @@ class SupplierController extends Controller
         }
     }
 
+
+    public function pendingManufacturerAuditMoreInfo(Request $request, $id){
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $supplier = Supplier::find($id);
+            $lastDocument = Supplier::find($id);
+
+            $supplier->stage = "12";
+            $supplier->status = "Approved Manufacture/Supplier";
+            $supplier->pendingManufacturerAuditMoreInfoBy = Auth::user()->name;
+            $supplier->pendingManufacturerAuditMoreInfoOn = Carbon::now()->format('d-M-Y');
+            $supplier->pendingManufacturerAuditMoreInfoComment = $request->comments;
+
+            $history = new SupplierAuditTrail();
+            $history->supplier_id = $id;
+
+            $history->activity_type = 'Request More Info By , Request More Info On';
+            if (is_null($lastDocument->pendingManufacturerAuditMoreInfoBy) || $lastDocument->pendingManufacturerAuditMoreInfoBy === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->pendingManufacturerAuditMoreInfoBy . ' , ' . $lastDocument->pendingManufacturerAuditMoreInfoOn;
+            }
+            $history->current = $supplier->pendingManufacturerAuditMoreInfoBy . ' , ' . $supplier->pendingManufacturerAuditMoreInfoOn;
+
+            $history->action = 'Request More Info Required';
+            $history->comment = $request->comments;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Approved Manufacture/Supplier";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->pendingManufacturerAuditMoreInfoBy) || $lastDocument->pendingManufacturerAuditMoreInfoBy === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+           
+            // $list = Helpers::getCqaDepartmentList($supplier->division_id);
+            // foreach ($list as $u) {
+            //     if($u->q_m_s_divisions_id == $supplier->division_id){
+            //         $email = Helpers::getInitiatorEmail($u->user_id);
+            //         if (!empty($email)) {
+            //             try {
+            //                 Mail::send(
+            //                     'mail.view-mail',
+            //                     ['data' => $supplier, 'history' => "Pre-Purchase Sample Not Required Performed"],
+            //                     function ($message) use ($email, $supplier) {
+            //                         $message->to($email)
+            //                         ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Pre-Purchase Sample Not Required Performed");
+            //                     }
+            //                 );
+            //             } catch (\Exception $e) {
+            //                 \Log::error('Mail failed to send: ' . $e->getMessage());
+            //             }
+            //         }
+            //     }
+            // }
+
+            $supplier->update();
+            toastr()->success('Document Sent');
+            return back();
+
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
 
     public function supplierStageReject(Request $request, $id)
     {
@@ -6829,7 +6894,6 @@ class SupplierController extends Controller
                     }
                     $history->current = $supplier->requestedToPendingManufacturerAudit_by . ' , ' . $supplier->requestedToPendingManufacturerAudit_on;
                     $history->action = 'Request More Info';
-                    // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -6882,7 +6946,6 @@ class SupplierController extends Controller
                     }
                     $history->current = $supplier->requestedToPendigManufacturerRA_by . ' , ' . $supplier->requirementFullfilled_on;
                     $history->action = 'Request More Info';
-                    // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -6935,7 +6998,6 @@ class SupplierController extends Controller
                     }
                     $history->current = $supplier->requestedToPendingCQAFinal_by . ' , ' . $supplier->submitterequestedToPendingCQAFinal_on;
                     $history->action = 'Request More Info';
-                    // $history->current = $supplier->submit_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -7013,10 +7075,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request More Info Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7072,10 +7134,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request More Info Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7131,10 +7193,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request More Info Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7190,10 +7252,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Purchase Sample Analysis Not Satisfactory Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Purchase Sample Analysis Not Satisfactory Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7224,7 +7286,6 @@ class SupplierController extends Controller
                 }
                 $history->current = $supplier->requestedToPendingCQA_by . ' , ' . $supplier->requestedToPendingCQA_on;
                 $history->action = 'Request More Info';
-                // $history->current = $supplier->submit_by;
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -7248,10 +7309,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request More Info Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7282,7 +7343,6 @@ class SupplierController extends Controller
                 }
                 $history->current = $supplier->requestedTo_initiating_department_by . ' , ' . $supplier->requestedTo_initiating_department_on;
                 $history->action = 'Request More Info';
-                // $history->current = $supplier->submit_by;
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -7306,10 +7366,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request More Info Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7340,7 +7400,6 @@ class SupplierController extends Controller
                 }
                 $history->current = $supplier->request_justified_by . ' , ' . $supplier->request_justified_on;
                 $history->action = 'Request Not Justified';
-                // $history->current = $supplier->submit_by;
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -7364,10 +7423,10 @@ class SupplierController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $supplier],
-                                    function ($message) use ($email) {
+                                    ['data' => $supplier, 'history' => "Request Not Justified Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request Not Justified Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7389,46 +7448,94 @@ class SupplierController extends Controller
                 $supplier->cancelled_comment = $request->comments;
 
                 $history = new SupplierAuditTrail();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Cancel By , Cancel On';
-                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
-                    }
-                    $history->current = $supplier->cancelled_by . ' , ' . $supplier->cancelled_on;
-                    $history->action = 'Cancel';
-                    // $history->current = $supplier->submit_by;
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Closed - Cancelled";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $supplier->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $supplier],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $history->supplier_id = $id;
+                $history->activity_type = 'Cancel By , Cancel On';
+                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                }
+                $history->current = $supplier->cancelled_by . ' , ' . $supplier->cancelled_on;
+                $history->action = 'Cancel';
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Closed - Cancelled";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                    
+
+                $list = Helpers::getCqaDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Cancel Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
+
+                $list = Helpers::getInitiatorUserList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Cancel Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
+
+                $list = Helpers::getFormulationDepartmentList($supplier->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $supplier) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Cancel Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
+
                 $supplier->update();
 
                 toastr()->success('Document Sent');
@@ -7485,10 +7592,10 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier],
-                                function ($message) use ($email) {
+                                ['data' => $supplier, 'history' => "Pre-Purchase Sample Not Required Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Pre-Purchase Sample Not Required Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -7598,9 +7705,7 @@ class SupplierController extends Controller
                 $history->previous = $lastDocument->requiredNotFulfilled_by . ' , ' . $lastDocument->requiredNotFulfilled_on;
             }
             $history->current = $supplier->requiredNotFulfilled_by . ' , ' . $supplier->requiredNotFulfilled_on;
-            // $history->previous = "";
             $history->action = 'All Requirements Not Fulfilled';
-            // $history->current = "";
             $history->comment = $request->comments;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7623,10 +7728,10 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier],
-                                function ($message) use ($email) {
+                                ['data' => $supplier, 'history' => "All Requirements Not Fulfilled Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: All Requirements Not Fulfilled Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -7644,10 +7749,10 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier],
-                                function ($message) use ($email) {
+                                ['data' => $supplier, 'history' => "All Requirements Not Fulfilled Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: All Requirements Not Fulfilled Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -7665,10 +7770,10 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier],
-                                function ($message) use ($email) {
+                                ['data' => $supplier, 'history' => "All Requirements Not Fulfilled Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: All Requirements Not Fulfilled Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -7732,10 +7837,10 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier],
-                                function ($message) use ($email) {
+                                ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Cancel Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -7753,10 +7858,10 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier],
-                                function ($message) use ($email) {
+                                ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Cancel Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -7774,10 +7879,10 @@ class SupplierController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $supplier],
-                                function ($message) use ($email) {
+                                ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                            ->subject("Document is Sent By " . Auth::user()->name);
+                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Cancel Performed");
                                 }
                             );
                         } catch (\Exception $e) {

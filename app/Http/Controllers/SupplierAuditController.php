@@ -62,8 +62,8 @@ class SupplierAuditController extends Controller
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date = $request->due_date;
-        $internalAudit->Initiator_Group = $request->Initiator_Group;
         $internalAudit->initiator_group_code = $request->initiator_group_code;
+        $internalAudit->Initiator_Group = $request->Initiator_Group;
         $internalAudit->recordNumber = $request->recordNumber;
 
         $internalAudit->short_description = $request->short_description;
@@ -694,36 +694,29 @@ class SupplierAuditController extends Controller
             $history->save();
         }
 
-        if (!empty($internalAudit->Initiator_Group)) {
-            // Define the mapping array for Initiator Group names
-            $initiatorGroupNames = [
-                'CQA' => 'Corporate Quality Assurance',
-                'QAB' => 'Quality Assurance Biopharma',
-                'CQC' => 'Central Quality Control',
-                'MANU' => 'Manufacturing',
-                'PSG' => 'Plasma Sourcing Group',
-                'CS' => 'Central Stores',
-                'ITG' => 'Information Technology Group',
-                'MM' => 'Molecular Medicine',
-                'CL' => 'Central Laboratory',
-                'TT' => 'Tech team',
-                'QA' => 'Quality Assurance',
-                'QM' => 'Quality Management',
-                'IA' => 'IT Administration',
-                'ACC' => 'Accounting',
-                'LOG' => 'Logistics',
-                'SM' => 'Senior Management',
-                'BA' => 'Business Administration',
-            ];
+        if (!empty($request->initiator_group_code)) {
+            $history = new ExternalAuditTrailSupplier();
+            $history->supplier_id = $internalAudit->id;
+            $history->activity_type = 'Initiator Group Code';
+            $history->previous = "Null";
+            $history->current = $request->initiator_group_code;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = 'Opened';
+            $history->change_from = 'Initiation';
+            $history->action_name = "Create";
+            $history->origin_state = $internalAudit->status;
+            $history->save();
+        }
 
-            // Get the full name for the Initiator Group
-            $initiatorGroupFullName = $initiatorGroupNames[$internalAudit->Initiator_Group] ?? $internalAudit->Initiator_Group;
-
+        if (!empty($request->initiator_group_code)) {
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $internalAudit->id;
             $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
-            $history->current = $initiatorGroupFullName; // Use the full name here
+            $history->current = Helpers::getInitiatorGroupFullName($request->initiator_group_code);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1200,10 +1193,10 @@ class SupplierAuditController extends Controller
         $internalAudit->assign_to = $request->assign_to;
 
         $internalAudit->initiator_group_code = $request->initiator_group_code;
+        $internalAudit->Initiator_Group = $request->Initiator_Group;
         $internalAudit->short_description = $request->short_description;
         $internalAudit->audit_type = $request->audit_type;
         $internalAudit->if_other = $request->if_other;
-        $internalAudit->Initiator_Group = $request->Initiator_Group;
 
         $internalAudit->initiated_through = $request->initiated_through;
         $internalAudit->initiated_if_other = $request->initiated_if_other;
@@ -1653,117 +1646,83 @@ class SupplierAuditController extends Controller
         }
 
 
-        if ($lastDocument->Initiator_Group != $internalAudit->Initiator_Group || !empty($request->Initiator_Group_comment)) {
+
+        if ($lastDocument->initiator_group_code != $request->initiator_group_code) {
             $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
-                ->where('activity_type', 'Intiator Group')
-                ->exists();
-
-            // Define the mapping array for Initiator Group names
-            $initiatorGroupNames = [
-                'CQA' => 'Corporate Quality Assurance',
-                'QAB' => 'Quality Assurance Biopharma',
-                'CQC' => 'Central Quality Control',
-                'MANU' => 'Manufacturing',
-                'PSG' => 'Plasma Sourcing Group',
-                'CS' => 'Central Stores',
-                'ITG' => 'Information Technology Group',
-                'MM' => 'Molecular Medicine',
-                'CL' => 'Central Laboratory',
-                'TT' => 'Tech team',
-                'QA' => 'Quality Assurance',
-                'QM' => 'Quality Management',
-                'IA' => 'IT Administration',
-                'ACC' => 'Accounting',
-                'LOG' => 'Logistics',
-                'SM' => 'Senior Management',
-                'BA' => 'Business Administration',
-            ];
-
-            // Get the full name for the previous and current Initiator Group
-            $previousInitiatorGroupFullName = $initiatorGroupNames[$lastDocument->Initiator_Group] ?? $lastDocument->Initiator_Group;
-            $currentInitiatorGroupFullName = $initiatorGroupNames[$internalAudit->Initiator_Group] ?? $internalAudit->Initiator_Group;
-
-
-            $history = new ExternalAuditTrailSupplier();
-            $history->supplier_id = $id;
-            $history->activity_type = 'Intiator Group ';
-            $history->previous = $lastDocument->Initiator_Group;
-            $history->current = $internalAudit->Initiator_Group;
-            $history->comment = $request->Initiator_Group_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-
-            // Determine the action name based on whether an existing history entry is found
-            if ($existingHistory) {
-                $history->action_name = "Update";
-            } else {
-                $history->action_name = "New";
-            }
-
-            $history->save();
-        }
-
-
-
-        if ($lastDocument->initiator_group_code != $internalAudit->initiator_group_code || !empty($request->initiator_group_code_comment)) {
-
-            $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
-                ->where('activity_type', 'Intiator Group Code')
+                ->where('activity_type', 'Initiator Group Code')
                 ->exists();
 
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $id;
-            $history->activity_type = 'Intiator Group Code';
+            $history->activity_type = 'Initiator Group Code';
             $history->previous = $lastDocument->initiator_group_code;
-            $history->current = $internalAudit->initiator_group_code;
-            $history->comment = $request->initiator_group_code_comment;
+            $history->current = $request->initiator_group_code;
+            $history->comment = "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-
-            // Determine the action name based on whether an existing history entry is found
             if ($existingHistory) {
                 $history->action_name = "Update";
             } else {
                 $history->action_name = "New";
             }
+            $history->save();
+        }
 
+        if ($lastDocument->initiator_group_code != $request->initiator_group_code) {
+            $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
+                ->where('activity_type', 'Initiator Group')
+                ->exists();
+
+            $history = new ExternalAuditTrailSupplier();
+            $history->supplier_id = $id;
+            $history->activity_type = 'Initiator Group';
+            $history->previous = Helpers::getInitiatorGroupFullName($lastDocument->initiator_group_code);
+            $history->current = Helpers::getInitiatorGroupFullName($request->initiator_group_code);
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($existingHistory) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
             $history->save();
         }
 
 
 
 
-        if ($lastDocument->short_description != $internalAudit->short_description || !empty($request->short_description_comment)) {
-
-            $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
-                ->where('activity_type', 'Short Description')
-                ->exists();
-
-            $history = new ExternalAuditTrailSupplier();
-            $history->supplier_id = $id;
-            $history->activity_type = 'Short Description';
-            $history->previous = $lastDocument->short_description;
-            $history->current = $internalAudit->short_description;
-            $history->comment = $request->date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            //  $history->action_name = "Update";
-
-            if ($existingHistory) {
-                $history->action_name = "Update";
-            } else {
+        $history->change_from = $lastDocument->status;
+        //  $history->action_name = "Update";
+        
+        if ($existingHistory) {
+            $history->action_name = "Update";
+        } else {
+                if ($lastDocument->short_description != $internalAudit->short_description || !empty($request->short_description_comment)) {
+        
+                    $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
+                        ->where('activity_type', 'Short Description')
+                        ->exists();
+        
+                    $history = new ExternalAuditTrailSupplier();
+                    $history->supplier_id = $id;
+                    $history->activity_type = 'Short Description';
+                    $history->previous = $lastDocument->short_description;
+                    $history->current = $internalAudit->short_description;
+                    $history->comment = $request->date_comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Not Applicable";
                 $history->action_name = "New";
             }
 
@@ -2983,12 +2942,16 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                ['data' => $changeControl, 'history' => 'Submit Performed', 'process' => 'SCAR', 'comment' => $changeControl->comment,'user'=> Auth::user()->name],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By " . Auth::user()->name);
+                                // }
+                                function ($message) use ($email, $changeControl) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
-                                }
-                            );
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: Submit Performed"); }
+                                );
+                            
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -3078,12 +3041,16 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                ['data' => $changeControl, 'history' => 'Issue Report Performed', 'process' => 'SCAR', 'comment' => $changeControl->pending_response_comment,'user'=> Auth::user()->name],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By " . Auth::user()->name);
+                                // }
+                                function ($message) use ($email, $changeControl, $history) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
-                                }
-                            );
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: Issue Report Performed"); }
+                                );
+                            
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -3177,11 +3144,16 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
-                                }
+                               
+                                ['data' => $changeControl, 'history' => 'All Capa Closed Performed', 'process' => 'SCAR', 'comment' => $changeControl->comment_closed_done_by_comment,'user'=> Auth::user()->name],
+                            //     function ($message) use ($email) {
+                            //         $message->to($email)
+                            //             ->subject("Document is Sent By " . Auth::user()->name);
+                            //     }
+                            // );
+                            function ($message) use ($email, $changeControl) {
+                                $message->to($email)
+                                ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: All Capa Closed Performed"); }
                             );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3198,11 +3170,15 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
-                                }
+                                ['data' => $changeControl, 'history' => 'All Capa Closed Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_closed_done_by_comment,'user'=> Auth::user()->name],
+                            //     function ($message) use ($email) {
+                            //         $message->to($email)
+                            //             ->subject("Document is Sent By " . Auth::user()->name);
+                            //     }
+                            // );
+                            function ($message) use ($email, $changeControl) {
+                                $message->to($email)
+                                ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: All Capa Closed Performed"); }
                             );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3219,11 +3195,15 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
-                                }
+                                ['data' => $changeControl, 'history' => 'All Capa Closed Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_closed_done_by_comment,'user'=> Auth::user()->name],
+                            //     function ($message) use ($email) {
+                            //         $message->to($email)
+                            //             ->subject("Document is Sent By " . Auth::user()->name);
+                            //     }
+                            // );
+                            function ($message) use ($email, $changeControl ) {
+                                $message->to($email)
+                                ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' =>Audit Lead More Info Reqd performed"); }
                             );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3323,12 +3303,12 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                ['data' => $changeControl, 'history' => 'Reject Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_rejected_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
-                                }
-                            );
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' =>Reject performed"); }
+                                );
+                            
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -3381,12 +3361,11 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                ['data' => $changeControl, 'history' => 'Reject Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_rejected_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
-                                }
-                            );
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' =>Rejected performed"); }
+                                );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -3453,12 +3432,11 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                ['data' => $changeControl, 'history' => 'Cancel Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->capa_execution_in_progress_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
-                                }
-                            );
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' =>Cancel  performed"); }
+                                );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -3474,12 +3452,12 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                ['data' => $changeControl, 'history' => 'Cancel Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->capa_execution_in_progress_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
-                                }
-                            );
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' =>Cancel Performed"); }
+                                );
+                            
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -3527,12 +3505,12 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                ['data' => $changeControl, 'history' => 'Cancel Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_cancelled_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
-                                }
-                            );
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' => Cancel performed"); }
+                                );
+                            
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -3549,11 +3527,11 @@ class SupplierAuditController extends Controller
                             Mail::send(
                                 'mail.view-mail',
                                 ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                ['data' => $changeControl, 'history' => 'Cancel Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_cancelled_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
-                                }
-                            );
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' => Cancel performed"); }
+                                );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -3595,12 +3573,11 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                ['data' => $changeControl, 'history' => 'Cancel Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_cancelled_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
-                                }
-                            );
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' => Cancel performed"); }
+                                );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -3616,12 +3593,11 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                ['data' => $changeControl, 'history' => 'Cancel Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_cancelled_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
-                                }
-                            );
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' => Cancel performed"); }
+                                );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }

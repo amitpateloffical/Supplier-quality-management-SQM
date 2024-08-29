@@ -2961,7 +2961,8 @@ class CapaController extends Controller
         if ($request->child_type == "Change_control") {
             return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
-        if ($request->child_type == "extension") {
+        if ($request->child_type == "extension") 
+        {
             $parent_due_date = "";
             $parent_id = $id;
             $parent_name = $request->parent_name;

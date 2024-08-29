@@ -2215,10 +2215,14 @@ class CapaController extends Controller
                                 try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $capa],
-                                function ($message) use ($email) {
+                                  ['data' => $capa, 'site' => "CAPA", 'history' => "Propose Plan", 'process' => 'CAPA', 'comment' => $capa->plan_proposed_comment, 'user'=> Auth::user()->name],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is sent By ".Auth::user()->name);
+                                // }
+                                function ($message) use ($email, $capa) {
                                     $message->to($email)
-                                        ->subject("Document is sent By ".Auth::user()->name);
+                                    ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Propose Plan Performed");
                                 }
                               );
                             } catch (\Exception $e) {
@@ -2280,10 +2284,14 @@ class CapaController extends Controller
 
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $capa],
-                                    function ($message) use ($email) {
+                                    ['data' => $capa, 'site' => "CAPA", 'history' => "Approve Plan", 'process' => 'CAPA', 'comment' => $capa->plan_approved_comment, 'user'=> Auth::user()->name],
+                                    // function ($message) use ($email) {
+                                    //     $message->to($email)
+                                    //         ->subject("Document is sent By ".Auth::user()->name);
+                                    // }
+                                    function ($message) use ($email, $capa) {
                                         $message->to($email)
-                                            ->subject("Document is sent By ".Auth::user()->name);
+                                        ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approve Plan Performed");
                                     }
                                 );
                                 } catch (\Exception $e) {
@@ -2378,10 +2386,14 @@ class CapaController extends Controller
     
                                   Mail::send(
                                       'mail.view-mail',
-                                       ['data' => $capa],
-                                    function ($message) use ($email) {
+                                      ['data' => $capa, 'site' => "CAPA", 'history' => "Approve ", 'process' => 'CAPA', 'comment' => $capa->approved_comment, 'user'=> Auth::user()->name],
+                                    // function ($message) use ($email) {
+                                    //     $message->to($email)
+                                    //         ->subject("Document is sent By ".Auth::user()->name);
+                                    // }
+                                    function ($message) use ($email, $capa) {
                                         $message->to($email)
-                                            ->subject("Document is sent By ".Auth::user()->name);
+                                        ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approve  Performed");
                                     }
                                   );
                                 } catch (\Exception $e) {
@@ -2437,10 +2449,14 @@ class CapaController extends Controller
             
                                         Mail::send(
                                             'mail.view-mail',
-                                            ['data' => $capa],
-                                            function ($message) use ($email) {
+                                            ['data' => $capa, 'site' => "CAPA", 'history' => "All Action Completed", 'process' => 'CAPA', 'comment' => $capa->all_actions_completed_comment, 'user'=> Auth::user()->name],
+                                            // function ($message) use ($email) {
+                                            //     $message->to($email)
+                                            //         ->subject("Document is sent By ".Auth::user()->name);
+                                            // }
+                                            function ($message) use ($email, $capa) {
                                                 $message->to($email)
-                                                    ->subject("Document is sent By ".Auth::user()->name);
+                                                ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Action Completed Performed");
                                             }
                                         );
                                         } catch (\Exception $e) {
@@ -2459,11 +2475,16 @@ class CapaController extends Controller
             
                                         Mail::send(
                                             'mail.view-mail',
-                                            ['data' => $capa],
-                                            function ($message) use ($email) {
+                                            ['data' => $capa, 'site' => "CAPA", 'history' => "All Action Completed", 'process' => 'CAPA', 'comment' => $capa->all_actions_completed_comment, 'user'=> Auth::user()->name],
+                                            // function ($message) use ($email) {
+                                            //     $message->to($email)
+                                            //         ->subject("Document is sent By ".Auth::user()->name);
+                                            // }
+                                            function ($message) use ($email, $capa) {
                                                 $message->to($email)
-                                                    ->subject("Document is sent By ".Auth::user()->name);
+                                                ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Action Completed Performed");
                                             }
+                                            
                                         );
                                         } catch (\Exception $e) {
                                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -2481,10 +2502,14 @@ class CapaController extends Controller
             
                                         Mail::send(
                                             'mail.view-mail',
-                                            ['data' => $capa],
-                                            function ($message) use ($email) {
+                                             ['data' => $capa, 'site' => "CAPA", 'history' => "All Action Completed", 'process' => 'CAPA', 'comment' => $capa->all_actions_completed_comment, 'user'=> Auth::user()->name],
+                                            // function ($message) use ($email) {
+                                            //     $message->to($email)
+                                            //         ->subject("Document is sent By ".Auth::user()->name);
+                                            // }
+                                            function ($message) use ($email, $capa) {
                                                 $message->to($email)
-                                                    ->subject("Document is sent By ".Auth::user()->name);
+                                                ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Action Completed Performed");
                                             }
                                         );
                                         } catch (\Exception $e) {
@@ -2551,10 +2576,14 @@ class CapaController extends Controller
 
                                         Mail::send(
                                             'mail.view-mail',
-                                            ['data' => $capa],
-                                            function ($message) use ($email) {
+                                            ['data' => $capa, 'site' => "CAPA", 'history' => "Cancelled", 'process' => 'CAPA', 'comment' => $capa->cancelled_comment, 'user'=> Auth::user()->name],
+                                            // function ($message) use ($email) {
+                                            //     $message->to($email)
+                                            //         ->subject("Document is Sent By ".Auth::user()->name);
+                                            // }
+                                            function ($message) use ($email, $capa) {
                                                 $message->to($email)
-                                                    ->subject("Document is Sent By ".Auth::user()->name);
+                                                ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed");
                                             }
                                         );
                                         } catch (\Exception $e) {
@@ -2572,10 +2601,14 @@ class CapaController extends Controller
             
                                         Mail::send(
                                             'mail.view-mail',
-                                            ['data' => $capa],
-                                            function ($message) use ($email) {
+                                            ['data' => $capa, 'site' => "CAPA", 'history' => "Cancelled", 'process' => 'CAPA', 'comment' => $capa->cancelled_comment, 'user'=> Auth::user()->name],
+                                            // function ($message) use ($email) {
+                                            //     $message->to($email)
+                                            //         ->subject("Document is Sent By ".Auth::user()->name);
+                                            // }
+                                            function ($message) use ($email, $capa) {
                                                 $message->to($email)
-                                                    ->subject("Document is Sent By ".Auth::user()->name);
+                                                ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed");
                                             }
                                         );
                                         } catch (\Exception $e) {
@@ -2672,10 +2705,14 @@ class CapaController extends Controller
 
                                         Mail::send(
                                             'mail.view-mail',
-                                            ['data' => $capa],
-                                        function ($message) use ($email) {
+                                            ['data' => $capa, 'site' => "CAPA", 'history' => "More Info Required", 'process' => 'CAPA', 'comment' => $capa->more_info_review_comment, 'user'=> Auth::user()->name],
+                                        // function ($message) use ($email) {
+                                        //     $message->to($email)
+                                        //         ->subject("Document is sent By ".Auth::user()->name);
+                                        // }
+                                        function ($message) use ($email, $capa) {
                                             $message->to($email)
-                                                ->subject("Document is sent By ".Auth::user()->name);
+                                            ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                         }
                                         );
                                     } catch (\Exception $e) {
@@ -2732,10 +2769,14 @@ class CapaController extends Controller
 
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $capa],
-                                function ($message) use ($email) {
+                                  ['data' => $capa, 'site' => "CAPA", 'history' => "More Info Required", 'process' => 'CAPA', 'comment' => $capa->more_info_review_comment, 'user'=> Auth::user()->name],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is sent By ".Auth::user()->name);
+                                // }
+                                function ($message) use ($email, $capa) {
                                     $message->to($email)
-                                        ->subject("Document is sent By ".Auth::user()->name);
+                                    ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                 }
                               );
                             } catch (\Exception $e) {
@@ -2800,25 +2841,30 @@ class CapaController extends Controller
         $history->user_name = Auth::user()->name;
         $history->stage_id = $capa->stage;
         $history->status = $capa->status;
-        $history->save();;
-            // $list = Helpers::getInitiatorUserList();
-            // foreach ($list as $u) {
-            //     if($u->q_m_s_divisions_id == $capa->division_id){
-            //     $email = Helpers::getInitiatorEmail($u->user_id);
-            //     if ($email !== null) {
+        $history->save();
 
-            //         Mail::send(
-            //             'mail.view-mail',
-            //             ['data' => $capa],
-            //             function ($message) use ($email) {
-            //                 $message->to($email)
-            //                     ->subject("More Info Required ".Auth::user()->name);
-            //             }
-            //         );
-            //       }
-            //     }
-            // }
-            // $history->save();
+            $list = Helpers::getInitiatorUserList(division_id);
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $capa->division_id){
+                $email = Helpers::getInitiatorEmail($u->user_id);
+                if ($email !== null) {
+
+                    Mail::send(
+                        'mail.view-mail',
+                        ['data' => $capa, 'site' => "CAPA", 'history' => "Reject", 'process' => 'CAPA', 'comment' => $capa->reject_more_info_requierd_comment, 'user'=> Auth::user()->name],
+                        // function ($message) use ($email) {
+                        //     $message->to($email)
+                        //         ->subject("More Info Required ".Auth::user()->name);
+                        // }
+                        function ($message) use ($email, $capa) {
+                            $message->to($email)
+                            ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Performed");
+                        }
+                    );
+                  }
+                // }
+            }
+            $history->save();
 
             toastr()->success('Document Sent');
             return back();
@@ -2851,6 +2897,7 @@ class CapaController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $capa->stage;
                 $history->status = "Opened";
+
                 $list = Helpers::getInitiatorUserList();
                 foreach ($list as $u) {
                     if($u->q_m_s_divisions_id == $capa->division_id){
@@ -2859,10 +2906,14 @@ class CapaController extends Controller
 
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $capa],
-                            function ($message) use ($email) {
+                            ['data' => $capa, 'site' => "CAPA", 'history' => "Cancel", 'process' => 'CAPA', 'comment' => $request->rejected_comment, 'user'=> Auth::user()->name],
+                            // function ($message) use ($email) {
+                            //     $message->to($email)
+                            //         ->subject("More Info Required ".Auth::user()->name);
+                            // }
+                            function ($message) use ($email, $capa) {
                                 $message->to($email)
-                                    ->subject("More Info Required ".Auth::user()->name);
+                                ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                             }
                         );
                       }

@@ -953,11 +953,11 @@ class SCARController extends Controller
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
-                                         ['data' => $scar ,'history'=> 'Submit performed','process' => 'SCAR','comment' => $scar->submitted_comment,'user'=> Auth::user()->name],
+                                         ['data' => $scar ,'site'=>'SCAR','history'=> 'Submit ','process' => 'SCAR','comment' => $scar->submitted_comment,'user'=> Auth::user()->name],
                                 
                                          function ($message) use ($email, $scar ) {
                                              $message->to($email)
-                                             ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity: Submit performed"); }
+                                             ->subject("QMS Notification: SCAR , Record #" . str_pad( $scar->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit performed"); }
                                          );
                                     
                                 } catch (\Exception $e) {
@@ -1136,13 +1136,13 @@ class SCARController extends Controller
                                     //           ->subject("Document is Sent By".Auth::user()->name);
                                     //   }
                                     // );
-                                    ['data' => $scar ,'history'=> 'Response performed' ,'process' => 'SCAR','comment' => $scar->response_submitted_comment,'user'=> Auth::user()->name],
+                                    ['data' => $scar ,'site'=>'SCAR','history'=> 'Response ' ,'process' => 'SCAR','comment' => $scar->response_submitted_comment,'user'=> Auth::user()->name],
                                
                                          
                                     ['data' => $scar ,'history'=> 'Response performed'],
                                     function ($message) use ($email, $scar ) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity: Response performed"); }
+                                        ->subject("QMS Notification: SCAR , Record " . str_pad( $scar->record, 4, '0', STR_PAD_LEFT) . " - Activity: Response performed"); }
                                     );
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -1197,10 +1197,10 @@ class SCARController extends Controller
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $scar ,'history'=> 'Approve performed','process' => 'SCAR', 'comment' => $scar->approved_comment,'user'=> Auth::user()->name],
+                                        ['data' => $scar ,'site'=>'SCAR','history'=> 'Approve ','process' => 'SCAR', 'comment' => $scar->approved_comment,'user'=> Auth::user()->name],
                                          function ($message) use ($email, $scar ) {
                                              $message->to($email)
-                                             ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity: Approve performed"); }
+                                             ->subject("QMS Notification: SCAR , Record " . str_pad( $scar->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approve performed"); }
                                          );
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -1218,10 +1218,10 @@ class SCARController extends Controller
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $scar ,'history'=> 'Approve performed','process' => 'SCAR', 'comment' => $scar->approved_comment,'user'=> Auth::user()->name],
+                                        ['data' => $scar,'site'=>'SCAR','history'=> 'Approve ','process' => 'SCAR', 'comment' => $scar->approved_comment,'user'=> Auth::user()->name],
                                         function ($message) use ($email, $scar ) {
                                             $message->to($email)
-                                            ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity: Approve performed"); }
+                                            ->subject("QMS Notification: SCAR , Record " . str_pad( $scar->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approve performed"); }
                                         );
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -1345,10 +1345,10 @@ class SCARController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $scar ,'history'=> 'Reject performed','process' => 'SCAR', 'comment' => $scar->rejected_comment,'user'=> Auth::user()->name],
+                                ['data' => $scar ,'site'=>'SCAR','history'=> 'Reject','process' => 'SCAR', 'comment' => $scar->rejected_comment,'user'=> Auth::user()->name],
                                          function ($message) use ($email, $scar ) {
                                              $message->to($email)
-                                             ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity:  Reject performed"); }
+                                             ->subject("QMS Notification: SCAR , Record #" . str_pad( $scar->record, 4, '0', STR_PAD_LEFT) . " - Activity:  Reject performed"); }
                                          );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());

@@ -1123,7 +1123,7 @@ class ActionItemController extends Controller
                   
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
-                        $email = Helpers::getInitiatorEmail($openState->user_id);
+                        $email = Helpers::getInitiatorEmail($u->user_id);
                         if ($email !== null) {
                             try {
                                 Mail::send(
@@ -1133,7 +1133,7 @@ class ActionItemController extends Controller
                                 //     $message->to($email)
                                 //         ->subject("Document sent ".Auth::user()->name);
                                 // }
-                                ['data' => $openState, 'site'=>'AI', 'history'=>" - Activity: Submit " , 'process' => ' Action Item', 'comment' => $openState->submitted_comment,'user'=> Auth::user()->name],
+                                ['data' => $openState, 'site'=>'AI', 'history'=>" - Activity: Submit " , 'process' => 'Action Item', 'comment' => $openState->submitted_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$openState) {
                                     $message->to($email)
                                         ->subject("QMS Notification: Action Item, Record " . $openState->record . " - Activity: Submit Permormed");
@@ -1206,7 +1206,7 @@ class ActionItemController extends Controller
                 $list = Helpers::getActionOwnerUserList($openState->division_id);
               foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
-                        $email = Helpers::getInitiatorEmail($openState->user_id);
+                        $email = Helpers::getInitiatorEmail($u->user_id);
                         if ($email !== null) {
                             try {
                                 Mail::send(
@@ -1216,7 +1216,7 @@ class ActionItemController extends Controller
                                 //     $message->to($email)
                                 //         ->subject("Document sent ".Auth::user()->name);
                                 // }
-                                ['data' => $openState, 'site'=>'AI',  'history'=>" - Activity: Complete " , 'process' => ' Action Item', 'comment' => $openState->completed_comment,'user'=> Auth::user()->name],
+                                ['data' => $openState, 'site'=>'AI',  'history'=>" - Activity: Complete " , 'process' => 'Action Item', 'comment' => $openState->completed_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$openState) {
                                     $message->to($email)
                                         ->subject("QMS Notification: Action Item, Record " .  str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Permormed");
@@ -1326,12 +1326,12 @@ class ActionItemController extends Controller
                   
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
-                        $email = Helpers::getInitiatorEmail($openState->user_id);
+                        $email = Helpers::getInitiatorEmail($u->user_id);
                         if ($email !== null) {
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $openState, 'site'=>'AI', 'history'=>" - Activity: Cancel " , 'process' => ' Action Item', 'comment' => $openState->cancelled_comment,'user'=> Auth::user()->name],
+                                    ['data' => $openState, 'site'=>'AI', 'history'=>" - Activity: Cancel " , 'process' => 'Action Item', 'comment' => $openState->cancelled_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$openState) {
                                     $message->to($email)
                                         ->subject("QMS Notification: Action Item, Record " . str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Permormed");
@@ -1411,7 +1411,7 @@ class ActionItemController extends Controller
                   
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
-                        $email = Helpers::getInitiatorEmail($openState->user_id);
+                        $email = Helpers::getInitiatorEmail($u->user_id);
                         if ($email !== null) {
                             try {
                                 Mail::send(
@@ -1421,7 +1421,7 @@ class ActionItemController extends Controller
                                 //     $message->to($email)
                                 //         ->subject("Document sent ".Auth::user()->name);
                                 // }
-                                ['data' => $openState,'site'=>'AI', 'history'=>" - Activity: More Information Required " , 'process' => ' Action Item', 'comment' => $openState->more_information_required_comment,'user'=> Auth::user()->name],
+                                ['data' => $openState,'site'=>'AI', 'history'=>" - Activity: More Information Required " , 'process' => 'Action Item', 'comment' => $openState->more_information_required_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$openState) {
                                     $message->to($email)
                                         ->subject("QMS Notification: Action Item, Record " . str_pad($openState->record, 4, '0', STR_PAD_LEFT). " - Activity: More Information Required Permormed");

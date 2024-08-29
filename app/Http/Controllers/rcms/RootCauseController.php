@@ -1676,7 +1676,7 @@ $history->save();
                 $list = Helpers::getInitiatorUserList($root->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
-                        $email = Helpers::getInitiatorEmail($root->user_id);
+                        $email = Helpers::getInitiatorEmail($u->user_id);
                         if ($email !== null) {
                             try {
                                 Mail::send(
@@ -1855,7 +1855,7 @@ $history->save();
                   
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getInitiatorEmail($root->user_id);
+                            $email = Helpers::getInitiatorEmail($u->user_id);
                             if ($email !== null) {
                                 try {
                                     Mail::send(

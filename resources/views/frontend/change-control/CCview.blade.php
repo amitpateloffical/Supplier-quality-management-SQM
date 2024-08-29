@@ -1828,6 +1828,81 @@
                                                     <div class="static"> {{  $data->implemented_comment }}</div>
                                                 </div>
                                             </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Cancelled By">Closed - Cancelled By</label>
+                                                    <div class="static"> {{  $data->cancelled_by }} </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Cancelled On">Closed - Cancelled On</label>
+                                                    <div class="static">  {{  $data->cancelled_on }} </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Cancelled On">Closed - Cancelled Comment</label>
+                                                    <div class="static"> {{  $data->cancelled_comment }}</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Cancelled By">Request More Information By</label>
+                                                    <div class="static"> {{  $data->requested_to_hod_by }} </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Cancelled On">Request More Information On</label>
+                                                    <div class="static">  {{  $data->requested_to_hod_on }} </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Cancelled On">Request More Information Comment</label>
+                                                    <div class="static"> {{  $data->requested_to_hod_comment }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Cancelled By">More Information Required By</label>
+                                                    <div class="static"> {{  $data->requested_to_hod_by }} </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Cancelled On">More Information Required On</label>
+                                                    <div class="static">  {{  $data->requested_to_hod_on }} </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Cancelled On">More Information Required Comment</label>
+                                                    <div class="static"> {{  $data->requested_to_hod_comment }}</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Cancelled By">More Information Required By</label>
+                                                    <div class="static"> {{  $data->sent_to_opened_by }} </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="group-input">
+                                                    <label for="Cancelled On">More Information Required On</label>
+                                                    <div class="static">  {{  $data->sent_to_opened_on }} </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Cancelled On">More Information Required Comment</label>
+                                                    <div class="static"> {{  $data->sent_to_opened_comment }}</div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="button-block">
                                             <!-- <button type="submit" class="saveButton">Save</button> -->

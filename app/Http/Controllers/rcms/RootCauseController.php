@@ -1635,6 +1635,7 @@ $history->save();
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $root = RootCauseAnalysis::find($id);
             $lastDocument =  RootCauseAnalysis::find($id);
+           
 
             if ($root->stage == 1) {
                 $root->stage = "2";
@@ -1673,7 +1674,6 @@ $history->save();
                 $history->save();
 
                 $list = Helpers::getInitiatorUserList($root->division_id);
-                  
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
                         $email = Helpers::getInitiatorEmail($root->user_id);
@@ -1684,27 +1684,29 @@ $history->save();
                                     ['data' => $root],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document sent ".Auth::user()->name);
+                                        ->subject("Document sent 6 ".Auth::user()->name);
                                 }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
-                            }
                         }
                 // } 
             }
-         
+
+                  
+                
                 $root->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Document Sent 2');
                 return back();
             }
-            if ($root->stage == 2) {
+            if($root->stage == 2) {
                 $root->stage = "3";
                 $root->status = 'Pending QA Review';
                 $root->submitted_by = Auth::user()->name;
                 $root->submitted_on = Carbon::now()->format('d-M-Y');
                 $root->submitted_comment = $request->comment;
+                $root->update();
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
@@ -1733,8 +1735,7 @@ $history->save();
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                $root->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Document Sent 3');
                 return back();
             }
             
@@ -1773,13 +1774,32 @@ $history->save();
                     $history->action_name = 'Update';
                 }
                 $history->save();
-
+                $list = Helpers::getQAUserList($root->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $root],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    // }
+                }
                 $root->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Document Sent 5');
                 return back();
             }
-        
-    else {
+        }
+        else {
             toastr()->error('E-signature Not match');
             return back();
         }
@@ -1837,7 +1857,7 @@ $history->save();
                                         ['data' => $root],
                                     function ($message) use ($email) {
                                         $message->to($email)
-                                            ->subject("Document sent ".Auth::user()->name);
+                                            ->subject("Document sent 6 ".Auth::user()->name);
                                     }
                                     );
                                 } catch (\Exception $e) {
@@ -1855,7 +1875,7 @@ $history->save();
                 $history->stage_id = $root->stage;
                 $history->status = $root->status;
                 $history->save();
-                toastr()->success('Document Sent');
+                toastr()->success('Document Sent 7');
                 return back();
             }
            
@@ -1907,7 +1927,7 @@ $history->save();
                 $history->save();
 
                 $root->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Document Sent 8');
                 return back();
             }
         } else {

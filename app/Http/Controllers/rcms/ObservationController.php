@@ -1944,10 +1944,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage],
-                                    function ($message) use ($email) {
+                                    ['data' => $changestage, 'history' => "Report Issued Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changestage) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Observation, Record " . $changestage->record . " - Activity: Report Issued Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2003,10 +2003,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage],
-                                    function ($message) use ($email) {
+                                    ['data' => $changestage, 'history' => "Complete Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changestage) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Observation, Record " . $changestage->record . " - Activity: Complete Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2026,10 +2026,9 @@ class ObservationController extends Controller
                 $changestage->QA_Approved_By = Auth::user()->name;
                 $changestage->QA_Approved_on = Carbon::now()->format('d-M-Y');
                 $changestage->QA_Approved_Comment = $request->comment;
+
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                // $history->activity_type = 'Activity Log';
-                // $history->current = $changestage->QA_Approved_By;
                 $history->activity_type = 'QA Approved By, QA Approved On';
                 if (is_null($lastDocument->QA_Approved_By) || $lastDocument->QA_Approved_By === '') {
                     $history->previous = "";
@@ -2046,7 +2045,6 @@ class ObservationController extends Controller
                 $history->stage = "QA Approved";
                 $history->change_to = 'CAPA Execution in Progress';
                 $history->change_from = 'Pending Approval';
-                // $history->action_name = 'Not Applicable';
                 if (is_null($lastDocument->QA_Approved_By) || $lastDocument->QA_Approved_By === '') {
                     $history->action_name = 'New';
                 } else {
@@ -2118,10 +2116,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage],
-                                    function ($message) use ($email) {
+                                    ['data' => $changestage, 'history' => "All CAPA Closed Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changestage) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Observation, Record " . $changestage->record . " - Activity: All CAPA Closed Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2178,10 +2176,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage],
-                                    function ($message) use ($email) {
+                                    ['data' => $changestage, 'history' => "Final Approval Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changestage) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Observation, Record " . $changestage->record . " - Activity: Final Approval Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2199,10 +2197,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage],
-                                    function ($message) use ($email) {
+                                    ['data' => $changestage, 'history' => "Final Approval Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changestage) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Observation, Record " . $changestage->record . " - Activity: Final Approval Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2221,10 +2219,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage],
-                                    function ($message) use ($email) {
+                                    ['data' => $changestage, 'history' => "Final Approval Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changestage) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Observation, Record " . $changestage->record . " - Activity: Final Approval Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2292,10 +2290,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage],
-                                    function ($message) use ($email) {
+                                    ['data' => $changeControl, 'history' => "Cancel Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Observation, Record " . $changeControl->record . " - Activity: Cancel Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2313,10 +2311,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage],
-                                    function ($message) use ($email) {
+                                    ['data' => $changeControl, 'history' => "Cancel Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Observation, Record " . $changeControl->record . " - Activity: Cancel Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2351,8 +2349,6 @@ class ObservationController extends Controller
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                // $history->activity_type = 'Activity Log';
-                // $history->current = $changeControl->Completed_By;
                 $history->activity_type = 'Final Approval By, Final Approval On';
                 if (is_null($lastDocument->Cancelled_By) || $lastDocument->Cancelled_By === '') {
                     $history->previous = "";
@@ -2369,7 +2365,6 @@ class ObservationController extends Controller
                 $history->stage = "Cancel";
                 $history->change_to = 'Closed - Cancelled';
                 $history->change_from = 'Opened';
-                // $history->action_name = 'Not Applicable';
                 if (is_null($lastDocument->Cancelled_By) || $lastDocument->Cancelled_By === '') {
                     $history->action_name = 'New';
                 } else {
@@ -2442,10 +2437,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changeControl],
-                                    function ($message) use ($email) {
+                                    ['data' => $changeControl, 'history' => "Reject CAPA Plan", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Observation, Record " . $changeControl->record . " - Activity: Reject CAPA Plan");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2537,8 +2532,6 @@ class ObservationController extends Controller
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                // $history->activity_type = 'Activity Log';
-                // $history->current = $changeControl->Completed_By;
                 $history->activity_type = 'Final Approval By, Final Approval On';
                 if (is_null($lastDocument->QA_Approval_Without_CAPA_By) || $lastDocument->QA_Approval_Without_CAPA_By === '') {
                     $history->previous = "";
@@ -2555,7 +2548,6 @@ class ObservationController extends Controller
                 $history->stage = "QA Approval Without CAPA";
                 $history->change_to = 'Closed - Done';
                 $history->change_from = 'Pending Approval';
-                // $history->action_name = 'Not Applicable';
                 if (is_null($lastDocument->QA_Approval_Without_CAPA_By) || $lastDocument->QA_Approval_Without_CAPA_By === '') {
                     $history->action_name = 'New';
                 } else {
@@ -2571,10 +2563,10 @@ class ObservationController extends Controller
 
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                ['data' => $changeControl, 'history' => "QA Approval Without CAPA Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
                                     $message->to($email)
-                                        ->subject("Document sent " . Auth::user()->name);
+                                    ->subject("QMS Notification: Observation, Record " . $changeControl->record . " - Activity: QA Approval Without CAPA Performed");
                                 }
                             );
                         }

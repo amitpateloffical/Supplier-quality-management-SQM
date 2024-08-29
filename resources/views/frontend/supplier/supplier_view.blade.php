@@ -564,9 +564,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">
                                 Link Manufacturer Code to Material Code through MPN in SAP
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
+                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#backword-modal">
                                 Request More Info
-                            </button>
+                            </button> -->
                         @elseif($data->stage == 13 && Helpers::check_roles($data->division_id, 'Supplier', 35))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Risk Rating Observed as High/Medium
@@ -577,6 +577,9 @@
                         @elseif($data->stage == 14 && Helpers::check_roles($data->division_id, 'Supplier', 35))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Manufacturer Audit Failed
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pending-manufacturer-audit-more-info">
+                                Request More Info
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
@@ -4512,6 +4515,44 @@
                                 <div class="group-input mt-3">
                                     <label for="comment">Comment</label>
                                     <input type="comment" name="comments" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="pending-manufacturer-audit-more-info">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ url('rcms/pending-manufacturer-audit-more-info', $data->id) }}" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input type="text" name="username" required class="form-control">
+                                </div>
+                                <div class="group-input mt-3">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input type="password" name="password" required class="form-control">
+                                </div>
+                                <div class="group-input mt-3">
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
+                                    <input type="comment" name="comments" required class="form-control">
                                 </div>
                             </div>
                             <div class="modal-footer">

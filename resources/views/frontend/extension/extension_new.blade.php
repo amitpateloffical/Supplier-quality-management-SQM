@@ -176,15 +176,13 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Assigned To">HOD review </label>
+                                        <label for="Assigned To">HOD Reviewer </label>
                                         <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                             name="reviewers" placeholder="Select Reviewers">
                                             <option value="">-- Select --</option>
                                             @if (!empty($users))
-                                                s
-
                                                 @foreach ($users as $lan)
-                                                    @if (Helpers::checkUserRolesreviewer($lan))
+                                                    @if (Helpers::getHODDropdown($lan))
                                                         <option value="{{ $lan->id }}">
                                                             {{ $lan->name }}
                                                         </option>
